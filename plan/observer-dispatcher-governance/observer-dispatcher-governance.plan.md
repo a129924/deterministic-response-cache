@@ -76,16 +76,19 @@
 
 ## Status / Allowed Transitions
 
-- **Current**: 尚未進入 `planned`；Plan-Creator 已完成的 planning artifacts 必須先
-  由獨立 Implementer 建立 planning artifact commit，才成為 repo-visible contract。
-- **Execution model**: planning baseline commit 後，Plan-Reviewer 寫入 declared
-  review log 的 latest JSON verdict；由獨立 Implementer 在 Planner preflight 前提交
-  review-log-only evidence commit。Planner 只讀 plan、required step 與 review log 作
+- **Current**: `planned`。planning artifacts 已由 commit `dd6d5a7`
+  (`docs(governance): establish observer dispatcher plan`) 固化為 repo-visible
+  contract；尚未取得 implementation approval，亦不得開始 implementation。
+- **Next gate**: 獨立 Plan-Reviewer 審核已提交的 planning baseline，並依
+  `Reviewer Handoff` 寫入 latest review-log JSON verdict。若 verdict 為 `approved`，
+  獨立 Implementer 必須先建立 review-log-only evidence commit，之後 Planner 才能
   preflight。
-  evidence approved 後才可由 Implementer 完成 bounded change、Tester 驗證、獨立
-  Reviewer review 與 Planner Phase 4.5。使用者已明示 git publish 授權時，
-  Implementer 才可 commit、push 並開 draft PR；之後停止於 human review boundary。
-  此 topic 不進入 release。
+- **Execution model**: topic 在 planning review、review-log evidence commit 與
+  Planner preflight 期間維持 `planned`。只有 preflight 證實 required evidence 已
+  approved，才可進入 `creator-in-progress` 並由 Implementer 完成 bounded change；其後
+  依序由 Tester 驗證、獨立 Reviewer review 與 Planner Phase 4.5 判定。使用者已明示
+  git publish 授權時，Implementer 才可 commit、push 並開 draft PR；之後停止於 human
+  review boundary。本 topic 不進入 release。
 - **Allowed transitions**:
   - `planned` -> `creator-in-progress`
   - `creator-in-progress` -> `review-ready`
@@ -212,14 +215,8 @@ Routing notes:
 2. Implementer 建立 `GOAL.md`，以 `docs/project-direction.md` 的
    provider-agnostic response-reuse mission 為方向，並明示它不具 task / phase
    authority。
-3. Implementer 在 declared path set 內完成 bounded changes，保留既有 tests；完成後
-   僅將 work 交給獨立 Reviewer，不自行產出 reviewer verdict 或處理 reviewer
-   feedback。
-4. Tester 執行 declared repository checks；Reviewer 獨立審核 implementation，
-   並處理任何 PR comment 的 classification / routing。
-5. Planner 在 implementation Reviewer 的 `approved` 後執行 Phase 4.5；只有它允許
-   `publish-in-progress` 時，Implementer 才可依既有 human authorization commit、push
-   並開 draft PR。
+3. Implementer 的 implementation diff 僅可包含 `AGENTS.md` 與 `GOAL.md`，並須
+   保留既有 tests 的 direct-import 行為及 manifest 的所有 locked scope。
 
 ## Validation / Acceptance Checks
 

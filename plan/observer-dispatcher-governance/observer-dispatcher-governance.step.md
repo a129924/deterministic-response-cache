@@ -9,7 +9,7 @@ created: 2026-08-31
 ## Workflow Stages
 
 - [X] plan-authoring
-- [ ] planning-artifact-commit
+- [X] planning-artifact-commit
 - [ ] plan-review
 - [ ] implementation
 - [ ] testing
@@ -22,11 +22,12 @@ created: 2026-08-31
 - [X] **Actor:** Plan-Creator — **Action:** 建立 canonical plan、spec、step，並將
   locked Implementation Dispatch Manifest 放在 `Implementation Steps` 開頭，並完成
   workflow / shared-contract 的 bounded alignment；不得 commit。
-- [ ] **Actor:** Implementer — **Action:** 在既有 human topic authorization 下，僅將
+- [X] **Actor:** Implementer — **Action:** 在既有 human topic authorization 下，僅將
   `observer-dispatcher-governance.plan.md`、`.spec.md`、`.step.md`、
   `plan/agent-handoff-workflow.md` 與 `plan/topic-plan-contract.md` 建立為 planning
-  artifact commit；不得夾帶 `AGENTS.md`、`GOAL.md` 或 implementation diff。完成後
-  topic 才為 `planned` repo-visible contract。
+  artifact commit；不得夾帶 `AGENTS.md`、`GOAL.md` 或 implementation diff。已由
+  `dd6d5a7` (`docs(governance): establish observer dispatcher plan`) 完成；topic 現為
+  `planned` repo-visible contract。
 - [ ] **Actor:** Plan-Reviewer — **Action:** 獨立審核已提交 planning baseline 的
   plan、spec、step、shared contract、scope、artifact path 與 workflow alignment；完成時
   在 `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md`
@@ -59,8 +60,9 @@ created: 2026-08-31
 
 ## Handoff / Gate Notes
 
-- `plan-authoring` 已完成；下一個必經 gate 是 planning artifact commit。其完成前，
-  topic 不是 `planned` repo-visible contract。
+- `plan-authoring` 與 planning artifact commit 已完成；topic 現為 `planned`，但尚未
+  implementation-approved。下一個必經 gate 是 independent Plan-Reviewer 的 planning
+  review；在其完成前不得開始 implementation。
 - Plan-Reviewer 的 verdict 必須以 declared review log 的最後 nonblank NDJSON line
   符合 `Reviewer Handoff` 固定 JSON object；在其 `approved` 前不得開始 implementation，
   且不得在 plan 自行加入 approval marker。
