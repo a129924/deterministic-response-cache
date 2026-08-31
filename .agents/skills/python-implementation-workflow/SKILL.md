@@ -25,12 +25,18 @@ description: Wrapper workflow recipe for parent Codex sessions that need to coor
   - `implementer`
   - `reviewer`
 - 當建立或審查 workflow artifacts 時，需使用共享的 `workflow-artifact-contract` skill
+- canonical `plan/<topic>/<topic>.plan.md`；Python topic 必須含有
+  `Python implementation metadata`，而不是第二份 Python plan
 
 ## Wrapper Handoff Recipe
 
-1. 使用 `planner` 依據目前的 repo artifacts 確認或細化 topic execution plan。
-2. 使用 `implementer` 進行滿足已核准 plan 的 scoped repository changes。
-3. 使用 `reviewer` 檢查 correctness、path compliance、contract boundaries 與 validation coverage。
+1. 使用 `planner` 產出 canonical topic plan、Python metadata、spec 與 step artifact。
+2. 使用 `python-plan-review` 驗證 Python metadata，並由獨立 `plan-reviewer`
+   回傳官方 JSON plan verdict。
+3. 使用 `python-tdd-test-authoring` 依 spec 撰寫 RED tests，再由 `implementer`
+   進行滿足已核准 plan 的 scoped repository changes。
+4. 使用 `python-implementation-review` 與 `reviewer` 檢查 traceability、path
+   compliance、contract boundaries 與 validation coverage。
 4. 所有 workflow artifacts 只能保留在正式的 repo-local paths。
 
 ## Required Returned Artifacts

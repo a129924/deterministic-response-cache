@@ -1,6 +1,6 @@
 ---
 name: python-plan-review
-description: Review a Python *.plan.md for executability — verifying all 13 required sections, decision completeness, explicit async trigger or exemption citation, async-planning coverage when triggered, step precision, test specificity, and validation coverage before implementation begins.
+description: Review the Python metadata profile inside a canonical repo topic plan before implementation begins.
 complexity: high
 risk_profile:
   - ambiguity_sensitive
@@ -27,6 +27,16 @@ do_not_use_when:
 # Purpose
 Review a Python `*.plan.md` document for plan quality and return a structured verdict before any implementation starts. The central question is: **can this plan be executed without guessing?**
 
+## Canonical profile — authoritative
+
+Read [the shared profile](../python-plan-authoring/references/canonical-topic-plan-profile.md)
+before reviewing. Require the eleven canonical topic-plan headings and the
+complete `## Python implementation metadata` section. The canonical Goal,
+Implementation Steps, Validation / Acceptance Checks, and Open Questions
+sections replace their retired Python-only top-level counterparts. Any
+13-top-level-section requirement later in this historical document is
+superseded and must not block review.
+
 # Trigger / When to use
 Use this skill when:
 - a drafted Python `*.plan.md` already exists and needs review before implementation
@@ -45,6 +55,11 @@ Do not use this skill when:
 - [optional] the project `pyproject.toml`, `Makefile`, or `README` path — only needed when checking whether a `Validation Commands` reference is resolvable
 
 # Process
+
+> Historical procedure notice: apply the checks below to the canonical plan
+> and its `## Python implementation metadata`. Any old Python-only top-level
+> heading means the corresponding metadata subsection; do not require a
+> separate 13-top-level-section document.
 1. Confirm the task is plan-document quality review only.
    - Reject authoring, code review, implementation review, and PR diff review.
    - If the input is not a `*.plan.md`, return `insufficient-context` with a reroute note in `blocking_issues`.
@@ -58,8 +73,9 @@ Do not use this skill when:
     - Do not trigger on syntax-only teaching, a single missing `await`, typing-only work, pure CPU work, or explicitly unchanged async baselines.
     - If the plan text itself contains the async evidence, review must not ignore it just because the author did not label the topic async.
     - Review the plan artifact, not skill invocation history. Contract-critical validity comes from plan text alone, and the designated evidence slot is `- Async-planning status:` inside `## Decisions`.
-5. Check that all 13 required top-level sections are present in the document.
-   Required sections (any order is acceptable):
+5. Check the eleven canonical topic-plan sections and all required Python
+   metadata subsections are present in the document.
+   Retired Python-only sections map to the canonical profile as follows:
    1. Goal
    2. Non-goals
    3. Current Context
@@ -74,7 +90,9 @@ Do not use this skill when:
    12. Rollback Plan
    13. Open Questions
 
-   Any missing section → return `needs-rework` immediately and stop further quality checks. Name every missing section in `blocking_issues`.
+   Any missing canonical section or metadata subsection → return `needs-rework`
+   immediately and stop further quality checks. Name every missing item in
+   `blocking_issues`.
 
 6. Validate the **Decisions** section.
    - It must begin with a designated async-routing line in repo-visible plan text:
@@ -138,7 +156,9 @@ Do not use this skill when:
 
 # Examples
 
-**Positive (approved):** All 13 sections present, all quality bars met, and `## Decisions` records `Async-planning status` plus async-planning subsections when triggered.
+**Positive (approved):** All canonical sections and Python metadata are present,
+all quality bars are met, and `### Decisions` records `Async-planning status`
+plus async-planning subsections when triggered.
 ```yaml
 verdict: approved
 blocking_issues: []
@@ -182,7 +202,7 @@ blocking_issues:
 # Validation
 
 ## Required Checks
-- all 13 required top-level sections are present in the document (Goal, Non-goals, Current Context, Requirements, Decisions, Public Contract / API Changes, Affected Files / Modules, Implementation Steps, Test Plan, Validation Commands, Risks, Rollback Plan, Open Questions)
+- all canonical topic-plan sections and required Python metadata subsections are present
 - Decisions section addresses all 7 required decision topics (module/package placement, public API, interface changes, breaking changes, new dependencies, error-handling strategy, typing strategy)
 - Decisions includes a designated `Async-planning status` line with cited trigger or exemption evidence
 - plan-visible async-capable evidence is evaluated instead of ignored
@@ -226,7 +246,7 @@ blocking_issues:
 
 # Verification
 - confirm the input is a `*.plan.md`, not code or a PR diff
-- confirm all 13 required top-level sections are present before running quality checks
+- confirm the canonical topic-plan and Python metadata profile before running quality checks
 - confirm the Decisions section addresses all 7 required decision topics
 - confirm `Async-planning status` is present and exemptions were not hand-waved
 - confirm triggered async plans include the exact seven async-planning subsections
@@ -270,7 +290,7 @@ blocking_issues:
 - Do not look at any code, PR diff, or implementation artifact.
 - Do not judge whether architecture decisions are correct — only that they are explicitly stated.
 - Do not evaluate code style.
-- Do not approve a plan that is missing any of the 13 required top-level sections.
+- Do not approve a plan that is missing a canonical section or required Python metadata subsection.
 - Do not approve a plan whose Decisions section omits any required decision topic.
 - Do not let async-capable evidence pass without either the required async-planning coverage or a justified exemption recorded in `Async-planning status`.
 - Do not silently override or normalize contradictions in the async baseline.

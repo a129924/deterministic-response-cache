@@ -1,5 +1,14 @@
 # `python-implementation-plan` adapter
 
+## Canonical profile — authoritative
+
+Python eligibility requires the eleven canonical repo topic-plan headings and
+the complete `## Python implementation metadata` section defined in
+`../../python-plan-authoring/references/canonical-topic-plan-profile.md`.
+Do not require the retired 13-top-level-section schema described later in this
+historical adapter. Render the five step headings shown below, and use only
+`## Implementation Steps` for implementation-completion parsing.
+
 `python-plan-authoring` remains the authority for Python plan shape. This
 adapter adds no competing Python schema.
 
@@ -8,7 +17,7 @@ adapter adds no competing Python schema.
 - The caller explicitly selects `python-implementation-plan`; the source need
   not contain that literal profile name.
 - The source explicitly describes bounded Python implementation work and
-  satisfies the canonical 13 top-level sections in order.
+  satisfies the canonical topic-plan / Python-metadata profile.
 - Its Decisions include reviewable async-planning status plus required triggered
   subsections where applicable; it has one top-level Implementation Steps,
   five Test Plan categories, and explicit Validation Commands/config reference.
@@ -83,9 +92,10 @@ created: YYYY-MM-DD
 ```
 
 The frozen profile wire owns the `### Main Agent — Fixed Head` heading; the
-shared shell supplies its two rows only. After the canonical 13-section
-eligibility preflight succeeds, render the literal `[X] plan-authoring` stage
-exactly as wired by `skills/python-plan-authoring/templates/step-template.md`.
+shared shell supplies its two rows only. After the canonical topic-plan /
+Python-metadata eligibility preflight succeeds, render the literal `[X]
+plan-authoring` stage exactly as wired by
+`.agents/skills/python-plan-authoring/templates/canonical-step-template.md`.
 It is a fixed template marker, not execution-completion evidence. Render actual
 `[X]` or `[ ]` from exact evidence in place of every remaining
 `<resolved-checkbox>` placeholder; no other marker is literal output. An

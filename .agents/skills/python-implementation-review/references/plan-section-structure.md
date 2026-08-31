@@ -1,5 +1,11 @@
 # Plan Section Structure
 
+> Superseded schema notice: Python topics use the canonical repo topic-plan
+> headings plus `## Python implementation metadata`, as defined in
+> `../../python-plan-authoring/references/canonical-topic-plan-profile.md`.
+> The retired 13-section list below is historical context only and is not a
+> review prerequisite.
+
 Plans produced by `python-plan-authoring` contain 13 sections in this order:
 
 1. `## Goal`

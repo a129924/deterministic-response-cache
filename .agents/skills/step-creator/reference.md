@@ -21,7 +21,8 @@ contracts live in the selected profile reference.
   remove the temporary file, preserve the final file if present, and never leave
   a partial final destination.
 - Base/Agent source extraction and frozen wires are owned by their profile
-  references. Python eligibility is canonical intent plus the 13-section
+  references. Python eligibility is canonical intent plus the canonical
+  topic-plan and Python-metadata profile; the retired 13-section
   `python-plan-authoring` contract only; its fixed contextual action is adapter
   behavior, not a new Python source-plan requirement.
 - Freeze exactly one complete selector tuple: topic, governed topic-branch
@@ -33,9 +34,11 @@ contracts live in the selected profile reference.
 
 - `[X]` requires exact one-to-one repo-visible evidence for its rendered
   action. `[ ]` means planned, pending, or unproved. The only exception is the
-  Python profile wire: after an eligible source passes the canonical 13-section
+  Python profile wire: after an eligible source passes the canonical
+  topic-plan and Python-metadata preflight (not the retired 13-section
   preflight, it renders the fixed `[X] plan-authoring` stage prescribed by
-  `skills/python-plan-authoring/templates/step-template.md`. That marker is a
+  `.agents/skills/python-plan-authoring/templates/canonical-step-template.md`.
+  That marker is a
   template wire, not execution-completion evidence; the other five Python
   stages still require exact evidence. Generated artifacts may output only
   those two checkbox markers; textual placeholders in templates are never

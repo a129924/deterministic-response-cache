@@ -1,13 +1,16 @@
 # Python Plan Review Examples
 
-Use these examples after `SKILL.md` has already narrowed the task to reviewing a Python `*.plan.md` for executability.
+Use these historical examples only after applying the canonical mapping in
+`SKILL.md`: each old Python-only `##` heading is now the corresponding `###`
+heading under `## Python implementation metadata`; the eleven canonical
+topic-plan headings remain required.
 
 ---
 
 ## Approved / fully complete async-capable plan
 
 A plan that:
-- contains all 13 required top-level sections
+- contains every canonical topic-plan section and required Python metadata subsection
 - Decisions section addresses all 7 required decision topics with concrete answers
 - includes the exact triggered async-planning subsections because the topic uses `AsyncSession`, `httpx.AsyncClient`, and timeout ownership
 - Non-goals has 3 explicit `will not` items

@@ -26,7 +26,8 @@ Implementation Steps.
 ## Valid Python generation without a literal profile marker
 
 Caller explicitly selects `python-implementation-plan`. The source is a bounded
-Python change with all 13 canonical sections, an explicit async exemption, five
+Python change with all canonical topic-plan sections, complete Python metadata,
+an explicit async exemption, five
 test categories, Validation Commands, and top-level Implementation Steps. It
 does not contain the text `python-implementation-plan`, a status, a next actor,
 or a stage-local action. This is eligible: retain the exact Python frontmatter,

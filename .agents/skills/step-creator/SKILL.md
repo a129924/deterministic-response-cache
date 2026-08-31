@@ -68,8 +68,11 @@ Do not use this skill when:
    exact source status, allowed transitions, next actor, stage-local action,
    top-level Implementation Steps, declared paths, and source-declared
    lifecycle truth. For Python, validate only Python intent and the canonical
-   13-section contract, then extract top-level Implementation Steps and
+   canonical topic-plan / Python-metadata contract, then extract top-level Implementation Steps and
    lifecycle truth; never require Base/Agent status, actor, or action fields.
+   For Python, the canonical topic-plan headings plus `Python implementation
+   metadata` are the only plan-shape prerequisite; the retired 13-top-level
+   schema is not a prerequisite.
    Any profile-required missing, duplicate, contradictory, nested-only, or
    incompatible input is `BLOCKED`.
 4. Freeze one complete selector tuple: topic, governed topic-branch selector,
@@ -87,9 +90,10 @@ Do not use this skill when:
    checkbox is always exactly `[X]` or `[ ]`: `[X]` normally requires exact
    one-to-one repo-visible completion evidence, while planned or unproved work
    is `[ ]`. The sole profile-wire exception is an eligible canonical Python
-   source: after its 13-section preflight succeeds, render the fixed
+   source: after its canonical topic-plan / Python-metadata preflight succeeds, render the fixed
    `[X] plan-authoring` stage from
-   `skills/python-plan-authoring/templates/step-template.md`. That stage is not
+   `.agents/skills/python-plan-authoring/templates/canonical-step-template.md`.
+   That stage is not
    execution-completion evidence; all other Python stages remain evidence-only.
    Never emit a template placeholder as a marker. The tracker parses the
    one-character checkbox form matched by `^- \[(.)\](.*)`; lowercase `[x]`
@@ -126,7 +130,7 @@ Do not use this skill when:
   handoff at `review-ready`, and a missing destination. Generate the Agent wire
   with source wording preserved and a pending fixed head/tail.
 - Positive: the caller selects `python-implementation-plan`; the source has
-  bounded Python intent and the canonical 13 sections but no status, next
+  bounded Python intent and the canonical topic-plan / Python-metadata profile but no status, next
   actor, or stage-local action. Generate the Python wire with its fixed
   adapter-owned contextual action; do not impose a second source-plan schema.
 - Negative: a caller says "make the right tracker" for a Python-shaped source.

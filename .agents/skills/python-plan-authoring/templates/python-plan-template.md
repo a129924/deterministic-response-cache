@@ -1,3 +1,7 @@
+> Deprecated: use `canonical-python-topic-plan-template.md`. This retained
+> migration reference must not be used to create a second plan or require a
+> 13-top-level-section schema.
+
 # <Feature / Change Name>
 
 <!-- Copy this template into your project, rename the file to describe the feature,

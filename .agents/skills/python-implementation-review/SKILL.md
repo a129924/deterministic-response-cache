@@ -1,6 +1,6 @@
 ---
 name: python-implementation-review
-description: Review a Python implementation against its approved plan to confirm all Implementation Steps are complete, no scope has crept beyond Non-goals, the Public Contract is unchanged, and the Test Plan cases are present. Run BEFORE python-code-review.
+description: Review a Python implementation against an approved canonical topic plan and its Python metadata before code review.
 complexity: high
 
 risk_profile:
@@ -35,9 +35,22 @@ do_not_use_when:
 # Purpose
 Verify that a Python implementation satisfies its approved plan — all steps done, no scope creep, Public Contract unchanged, and Test Plan cases present — while honoring the pre-review `*.step.md` gate when that file exists.
 
+## Canonical profile — authoritative
+
+Read [the shared profile](../python-plan-authoring/references/canonical-topic-plan-profile.md).
+Trace `## Implementation Steps` and the Python metadata subsections
+`Non-goals`, `Public Contract / API Changes`, and `Test Plan`; do not require
+the retired Python-only top-level sections. Formal topic approval comes from
+the repository `plan-reviewer` JSON handoff, optionally preceded by the
+specialised `python-plan-review` check.
+
 # Sequencing rule
 Run `python-implementation-review` **before** `python-code-review`.
 Do not optimize code quality on an incomplete or drifted implementation.
+
+When the historical procedure below names `## Non-goals`, `## Public Contract /
+API Changes`, or `## Test Plan`, read the matching `###` subsection inside
+`## Python implementation metadata` instead.
 
 # Trigger / When to use
 Use this skill when:

@@ -1,5 +1,9 @@
 # Python Plan Review Checklist
 
+> Canonical profile: use the eleven repo topic-plan headings plus
+> `## Python implementation metadata`; do not require a second 13-section
+> top-level plan. See `../python-plan-authoring/references/canonical-topic-plan-profile.md`.
+
 Use this checklist before returning a verdict for a Python `*.plan.md`.
 
 ## Pre-review checks
@@ -18,7 +22,7 @@ Use this checklist before returning a verdict for a Python `*.plan.md`.
 - [ ] If async risk is discovered in an already-started plan with no async-planning subsections, the blocking issue says `retrofit required`.
 - [ ] If async claims conflict, or if plan-visible async evidence conflicts with an exemption claim, require `### Async contradiction log` or `retrofit required` instead of silently choosing one side.
 
-## Section completeness — all 13 required top-level sections
+## Section completeness — canonical plan plus Python metadata
 
 - [ ] **Goal** — present and states a single concrete, measurable outcome
 - [ ] **Non-goals** — present; ≥3 explicit "will not" items (see Non-goals quality below)

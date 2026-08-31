@@ -13,7 +13,8 @@
 - [ ] Selected profile reference was used; no inference/fallback occurred.
 - [ ] Base/Agent eligibility has unique compatible status, transition, next
   actor/action, top-level Implementation Steps, selector tuple, and required
-  conditional truth; Python has canonical intent/13-section eligibility without
+  conditional truth; Python has canonical intent plus canonical topic-plan /
+  Python-metadata eligibility without
   requiring Base/Agent status/actor/action fields.
 
 ## Fidelity and markers
@@ -33,7 +34,7 @@
   tracker; every `[X]` has exact one-to-one repo-visible evidence except an
   eligible Python source's fixed template-defined `[X] plan-authoring` stage.
 - [ ] A Python source receives fixed `[X] plan-authoring` only after its
-  canonical 13-section eligibility preflight succeeds; its other five stages
+  canonical topic-plan / Python-metadata eligibility preflight succeeds; its other five stages
   remain evidence-only, and every ineligible, incomplete, or ambiguous Python
   source is `BLOCKED` without rendered output or this marker.
 

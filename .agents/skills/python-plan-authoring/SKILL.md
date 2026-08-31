@@ -1,6 +1,6 @@
 ---
 name: python-plan-authoring
-description: Create an executable Python implementation plan that freezes scope, contracts, decisions, affected files, tests, and validation commands before coding begins. Not a todo list — an implementation contract that executor can follow and reviewer can verify.
+description: Create a canonical repo topic plan for Python work, including bounded Python metadata, a spec, and a step tracker before coding begins.
 complexity: high   # creates multi-section plans that gate execution; required sections follow
 risk_profile:
   - ambiguity_sensitive   # missing input fundamentally changes plan scope
@@ -17,7 +17,7 @@ inputs:
   - async-capable evidence and async baseline inputs when the topic needs a frozen async baseline; use `python-async-planning` as the routing aid when helpful
   - any open questions the author cannot resolve alone
 outputs:
-  - "*.plan.md with all 13 required sections in order"
+  - "one canonical plan/<topic>/<topic>.plan.md with Python implementation metadata"
   - "*.step.md required co-artifact at plan/<topic>/<topic>.step.md"
   - "when D1 verdict is non-trivial: required co-artifact plan/<topic>/<topic>.spec.md"
   - frozen decisions, affected files, test plan, and validation commands
@@ -39,6 +39,15 @@ do_not_use_when:
 
 # Purpose
 Turn Python implementation intent into a review-ready `*.plan.md` plus required `plan/<topic>/<topic>.step.md` that freeze scope, decisions, affected files, tests, and validation commands before any code changes begin. The plan is an executable implementation contract, not a todo list.
+
+## Canonical profile — authoritative
+
+Use [canonical-topic-plan-profile.md](references/canonical-topic-plan-profile.md)
+and `templates/canonical-python-topic-plan-template.md`. The eleven canonical
+sections from `plan/topic-plan-contract.md` are mandatory; Python-specific
+content belongs in `## Python implementation metadata`. This rule supersedes
+the retired 13-top-level-section wording retained below for migration context.
+Do not create a second Python plan.
 
 # Trigger / When to use
 Use this skill when:
@@ -83,6 +92,14 @@ Stop before drafting. Ask the user for the missing information when any of the f
 3. **No Validation Commands** — no commands are given and no project config file (`pyproject.toml`, `Makefile`, `README`) is referenced.
 4. **Vague Implementation Steps** — the user describes high-level wishes rather than executable steps. `"Refactor the parser"` is not acceptable. `"1. Inspect src/parser.py. 2. Extract validate() into validators.py..."` IS acceptable.
 5. **Async-capable topic without a frozen async baseline** — the request introduces async-capable evidence but does not yet answer the async boundary, resource lifecycle, concurrency model, failure model, cancellation / timeout policy, validation plan, and implementer handoff notes needed to freeze the triggered async baseline. Use `python-async-planning` only as the routing aid for gathering that baseline.
+
+## Historical procedure notice
+
+The detailed procedure below predates the repository topic-plan contract. Read
+every old `## Non-goals`, `## Decisions`, or other Python-only heading as the
+matching `###` subsection of `## Python implementation metadata`; read old
+`## Validation Commands` as `## Validation / Acceptance Checks`. It must not
+be used to require a separate 13-top-level-section document.
 
 ## Authoring steps
 1. Confirm this is a Python implementation planning task. If the request is execution or review, stop and redirect.
@@ -177,7 +194,9 @@ Stop before drafting. Ask the user for the missing information when any of the f
 
    **13. Open Questions**
    List unresolved questions and who can answer them. State `"None"` if all questions are resolved.
-5. Produce `plan/<topic>/<topic>.step.md` alongside the `*.plan.md` using `templates/step-template.md` as the canonical scaffold, then mirror every numbered item from `## Implementation Steps` as pending `- [ ]` entries.
+5. Produce `plan/<topic>/<topic>.step.md` alongside the plan using
+   `templates/canonical-step-template.md`, then mirror every numbered item
+   from `## Implementation Steps` as pending `- [ ]` entries.
 
    Keep `plan-step-tracker/reference.md` as the read-only format authority. Do not omit any of the 6 Workflow Stages, and do not use lowercase `[x]` to mark completed work.
 
@@ -204,7 +223,8 @@ Stop before drafting. Ask the user for the missing information when any of the f
 
 # Examples
 
-**Positive** — `validate_email()` feature plan with all 13 sections present and correctly filled:
+**Positive** — `validate_email()` feature plan with all canonical sections and
+complete Python metadata:
 - `Decisions` begins with `- Async-planning status: exempt — cite exemption evidence: synchronous validation helper with no async boundary, lifecycle, timeout, or concurrency change.`
 - `Decisions` then names `src/utils/validation.py` as the target module, states the signature `validate_email(email: str) -> bool`, confirms no breaking changes, no new dependencies, raises `ValueError` on malformed input, and uses fully-typed annotations.
 - `Non-goals` states: no changes to the existing `validate_url()` function, no CLI command added, no external dependency introduced.
@@ -222,7 +242,7 @@ Stop before drafting. Ask the user for the missing information when any of the f
 - Async-capable evidence such as `AsyncClient` or a queue worker is present, but the plan omits `Async-planning status`, omits the async-planning subsections, or claims exemption without a cited reason and expects the implementer to decide later.
 
 # Outputs
-- a `*.plan.md` with all 13 required sections in order
+- a canonical `plan/<topic>/<topic>.plan.md` with complete Python metadata
 - a required `plan/<topic>/<topic>.step.md` co-artifact with the canonical step-tracking template
 - when D1 verdict is `non-trivial`, a required `plan/<topic>/<topic>.spec.md` co-artifact with the 3-part spec structure
 - frozen decisions, affected files, test plan, and validation commands recorded before coding begins
@@ -233,7 +253,7 @@ Stop before drafting. Ask the user for the missing information when any of the f
 # Validation
 
 ## Required Checks
-- All 13 required sections are present and in order
+- All canonical topic-plan sections and Python metadata subsections are present
 - `plan/<topic>/<topic>.step.md` is produced alongside the plan and contains `topic`, `phase: plan-authoring`, and `created`
 - when D1 verdict is `non-trivial`, `plan/<topic>/<topic>.spec.md` is produced alongside plan/step artifacts and follows the required 3-part structure
 - `Decisions` section addresses all 7 required items (no TBD placeholders in contract-critical fields)
@@ -289,6 +309,6 @@ Stop before drafting. Ask the user for the missing information when any of the f
 
 # Local references
 - `examples.md`: complete positive examples, async-capable routing examples, anti-pattern plans, and stop-and-ask cases
-- `templates/python-plan-template.md`: blank 13-section template for executor copy-paste use, including the conditional async-planning scaffold
+- `templates/canonical-python-topic-plan-template.md`: canonical repo topic-plan template with Python metadata
 - `templates/spec-template.md`: canonical 3-part spec template for mandatory non-trivial co-artifact authoring
-- `templates/step-template.md`: canonical step-tracking template for required `plan/<topic>/<topic>.step.md` co-artifact
+- `templates/canonical-step-template.md`: canonical step-tracking template for required `plan/<topic>/<topic>.step.md` co-artifact

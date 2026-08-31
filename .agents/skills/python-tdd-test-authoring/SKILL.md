@@ -35,6 +35,15 @@ do_not_use_when:
 
 Create RED (failing) tests from an approved implementation plan, mapping all requirements to test cases before implementation starts. Output a machine-readable YAML result with verdict enum: `red-tests-ready`, `needs-rework`, `insufficient-context`, `skip_with_reason`, or `BLOCKED`.
 
+## Canonical profile
+
+Read [the shared profile](../python-plan-authoring/references/canonical-topic-plan-profile.md).
+For Python topics, obtain requirements and test intent from `## Python
+implementation metadata` and obtain executable steps and validation gates from
+the canonical topic-plan sections. The approved repo `plan-reviewer` JSON
+handoff is the formal plan approval; a specialised `python-plan-review` result
+may be additional evidence.
+
 # Trigger / When to use
 
 Use this skill when:

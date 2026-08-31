@@ -1,6 +1,8 @@
 # Python Plan Authoring Examples
 
-Detailed examples for `python-plan-authoring`.
+Historical examples for `python-plan-authoring`. Map every old Python-only
+`##` heading to the matching `###` heading under `## Python implementation
+metadata`; use the canonical topic-plan template for new work.
 
 ---
 

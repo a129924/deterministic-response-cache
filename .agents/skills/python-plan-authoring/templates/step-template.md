@@ -1,3 +1,6 @@
+> Deprecated: use `canonical-step-template.md`, which includes the repository
+> `Actionable Steps` and `Handoff / Gate Notes` sections.
+
 ---
 topic: <topic>
 phase: plan-authoring
