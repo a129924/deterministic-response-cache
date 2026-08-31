@@ -1,0 +1,273 @@
+# Observer / Dispatcher Governance
+
+## Goal / Outcome
+
+- 建立 repository mission 型 `GOAL.md`，並將 `AGENTS.md`、repo workflow
+  與 shared topic-plan contract 對齊為可審計的 Observer / Dispatcher
+  governance。
+- 完成後，Observer 只讀取狀態、依已核准 topic plan 與 step tracker
+  派遣單一專責角色、彙整結果並於 human boundary 停止；它不取得任何
+  實作、git publish、PR、release 或自我核准權限。
+
+> **Analysis-layer warning:** `analysis/observer-dispatcher-governance/requirements.md`
+> 與 `analysis/observer-dispatcher-governance/technical-spec.md` 均不存在。
+> 本 plan 僅以已確認的 human topic specification、`AGENTS.md` 與 `docs/`
+> 架構輸入 author；不得將此 warning 當作重新開啟 architecture、path 或
+> contract decision 的授權。
+
+## Scope
+
+- **In scope**:
+  - `GOAL.md` 的 repository 長期 mission 與非-routing authority boundary。
+  - `AGENTS.md` 的 Observer / Dispatcher governance、角色分離、human
+    boundary 與既有測試 direct-import preservation rule。
+  - `plan/agent-handoff-workflow.md` 與 `plan/topic-plan-contract.md` 的
+    ownership、candidate resolution 與 approved-evidence 對齊。
+  - 本 topic 的 plan、spec、step、review-log 與 human-close summary
+    handoff artifacts。
+
+- **Out of scope**:
+  - `src/**`、`tests/**`、public API、Business Capability、Identity、Response
+    Reuse、CacheStore、runtime、model execution、provider adapter 與 architecture
+    docs。
+  - `.github/agents/**`、README、VERSION、CI、依賴、release metadata，及任何
+    未在本 plan `Artifact Paths` 列出的檔案。
+
+## Locked Decisions
+
+- `GOAL.md` 只描述 repository 的最終 mission 與成功方向；它不是 workflow、
+  active topic、current phase、task routing 或 release state 的 authority。
+- active-topic routing 的唯一可接受輸入為 Planner 判定的 candidate，其中必須有
+  planning artifact commit、required step tracker 與 Plan-Reviewer 寫入的 latest
+  approved review-log JSON record；chat、branch、summary、`GOAL.md` 與
+  `.github/agents/**` 均不得用於推測或選擇 task。
+- Observer 是 repo 頂層 readonly dispatcher：只盤點、單一派遣、彙整與 triage
+  （`可直接前進`、`needs-rework`、`blocked`、`human-check`）；不得實作、改檔、
+  git/PR/release、手算 gate、處理 review comments 或重新解讀 locked decisions。
+- Planner 是唯一可判定 candidate、phase、gate 與 next role 的角色；若無
+  candidate 則 `blocked`，多 candidate 或 plan/step 指向不同 topic 則
+  `human-check`，同 topic 狀態或 scope 矛盾則 `blocked`，除非 Planner 指定
+  Plan-Creator 可做 bounded repair。
+- planning approval evidence 固定為
+  `plan/<topic>/<topic>.review-log.md` 最後一筆完整 reviewer-handoff JSON record
+  的 `"verdict": "approved"`。它由 Plan-Reviewer 在獨立 planning review 完成時
+  寫入，並由獨立 Implementer 在 Planner preflight 前以 review-log-only evidence
+  commit 固化；topic plan 不得含或依賴任何 self-authored approval marker。frozen
+  `.github/agents/**` 僅為 provenance，不可修改，也不可作 runtime 或 routing
+  dependency。
+- 保留所有既有測試的 direct import、fixture、mock 與 assertion 行為；不得以
+  `importlib`、`__import__` 或 `sys.modules` 動態載入取代。只有 approved topic
+  明定 import 行為本身為被測需求時，才可新增專用測試，且不得取代 regression test。
+- 本 topic 為 review-ready-only、無 stable-library surface；不修改 README 或
+  VERSION，且不執行 release 或 tagging。
+
+## Boundaries / Exclusions
+
+- Identity BC 仍是模型身分與完整請求身分唯一 authority；本 governance topic
+  不得創建、推測或重解其規則。
+- CacheStore 仍只是 Response Reuse BC 內部保存元件；不得將它升為頂層 BC 或使其
+  管理 identity、runtime 或執行。
+- Loaded Runtime Cache、Model Execution 與 Provider Adapter 維持各自獨立的未來
+  topic；不得由本 topic 提前引入。
+- 計畫 author、實作、獨立 review 及 human git boundary 必須真實分離；不可藉由
+  hidden chat context 或同一角色宣稱多重 gate 已完成。
+- 若執行需要未列 path、改變 locked contract 或觸及 frozen provenance，必須停止並
+  回交 Planner / human，而不是擴張 scope。
+
+## Status / Allowed Transitions
+
+- **Current**: 尚未進入 `planned`；Plan-Creator 已完成的 planning artifacts 必須先
+  由獨立 Implementer 建立 planning artifact commit，才成為 repo-visible contract。
+- **Execution model**: planning baseline commit 後，Plan-Reviewer 寫入 declared
+  review log 的 latest JSON verdict；由獨立 Implementer 在 Planner preflight 前提交
+  review-log-only evidence commit。Planner 只讀 plan、required step 與 review log 作
+  preflight。
+  evidence approved 後才可由 Implementer 完成 bounded change、Tester 驗證、獨立
+  Reviewer review 與 Planner Phase 4.5。使用者已明示 git publish 授權時，
+  Implementer 才可 commit、push 並開 draft PR；之後停止於 human review boundary。
+  此 topic 不進入 release。
+- **Allowed transitions**:
+  - `planned` -> `creator-in-progress`
+  - `creator-in-progress` -> `review-ready`
+  - `review-ready` -> `reviewer-in-progress`
+  - `reviewer-in-progress` -> `approved`
+  - `reviewer-in-progress` -> `needs-rework`
+  - `needs-rework` -> `creator-in-progress`
+  - `approved` -> `creator-in-progress`
+  - `approved` -> `publish-in-progress`
+  - `publish-in-progress` -> `pr-open`
+  - `pr-open` -> `needs-rework`
+  - `pr-open` -> `merged`
+  - `merged` -> terminal
+
+Routing notes:
+
+- planning evidence 的 `approved` 不改變 topic execution status；`approved` status
+  只屬 independent implementation Reviewer verdict。
+- Phase 4.5 Planner contract alignment is required after each independent
+  implementation `approved` verdict; it may return the topic to
+  `creator-in-progress` on contract drift, otherwise it permits
+  `publish-in-progress`.
+- `pr-open` means draft PR 已開啟且等待 human review；Reviewer 處理 comments 的
+  classification / routing；Observer 與 Implementer 不得自行處理 comments、merge 或
+  post-merge work。
+
+## Artifact Paths
+
+| Artifact | Path | Owner | Role |
+| --- | --- | --- | --- |
+| Repository mission | `GOAL.md` | Implementer | Project long-term mission only; never active-task or phase authority |
+| Governance | `AGENTS.md` | Implementer | Repo-level Observer / Dispatcher and test-preservation rules |
+| Repo workflow | `plan/agent-handoff-workflow.md` | Plan-Creator | Phase, ownership, stop-point and routing alignment |
+| Shared topic-plan contract | `plan/topic-plan-contract.md` | Plan-Creator | Candidate and reviewer-evidence contract alignment |
+| Topic plan | `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md` | Plan-Creator | Current execution contract |
+| Topic specification | `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md` | Plan-Creator | Acceptance scenarios and scope guardrail |
+| Step tracker | `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md` | Plan-Creator | Progression truth and gate state |
+| Review log | `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md` | Plan-Reviewer | Reviewer routing history; never replaces the plan |
+| Topic summary | `plan/observer-dispatcher-governance/observer-dispatcher-governance.summary.md` | Human operator | Required close / next-handoff truth at human boundary |
+
+- `README.md`, `VERSION`, `.github/copilot-instructions.md`, `src/**`, `tests/**`,
+  `docs/**`，以及 `.github/agents/**` 不可修改；其中 `.github/agents/**` 為 frozen
+  provenance 且不可用於 routing。
+- 若後續工作需要 artifact table 之外的檔案，先由 Planner 修復 topic plan，再開始
+  該工作；不得 broad-stage 或隱性納入。
+
+## Implementation Steps
+
+### Implementation Dispatch Manifest
+
+#### Goal
+
+- 建立 project-mission 型 `GOAL.md`，並完成 Observer / Dispatcher governance
+  與既有 workflow / topic-plan contract 的 bounded 對齊。
+
+#### Non-Goal
+
+- 不變更產品程式碼、public API、BC、Identity、Response Reuse、CacheStore、runtime、
+  model execution、provider adapter 或 architecture decisions。
+- 不修改 tests，不以動態 import 取代原有測試行為，且不執行 release、tagging、merge
+  或 post-merge 動作。
+
+#### In-Scope
+
+- `GOAL.md`、`AGENTS.md`、`plan/agent-handoff-workflow.md`、
+  `plan/topic-plan-contract.md` 與本 topic artifact table 所列檔案。
+
+#### Out-Of-Scope
+
+- 本 manifest 的 `ReadOnly`、`Deleted` 所列路徑，以及任何未在 `Written` 或
+  `Modify` 所列的檔案。
+
+#### ReadOnly
+
+- `docs/project-direction.md` — 架構與 project mission 參考。
+- `docs/business-capability-architecture.md` — BC boundary 參考。
+- `docs/architecture/business-capability/architecture-brief.md` — BC architecture
+  brief 參考。
+- `docs/architecture/business-capability/index.html` — BC diagram 參考。
+- `tests/test_package_import.py` — direct-import regression 行為參考。
+- `pyproject.toml` — repository validation configuration 參考。
+- `.github/agents/**` — frozen provenance；不可修改且不可作 runtime / routing
+  dependency。
+
+#### Written
+
+| Path | Owner | Role |
+| --- | --- | --- |
+| `GOAL.md` | Implementer | Repository 長期 mission；非 task / phase authority |
+| `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md` | Plan-Creator | Topic execution contract |
+| `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md` | Plan-Creator | Acceptance scenarios |
+| `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md` | Plan-Creator | Progression truth |
+| `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md` | Plan-Reviewer | Reviewer verdict history |
+| `plan/observer-dispatcher-governance/observer-dispatcher-governance.summary.md` | Human operator | Close / next-handoff truth |
+
+#### Modify
+
+| Path | Owner | Role |
+| --- | --- | --- |
+| `AGENTS.md` | Implementer | Observer / Dispatcher governance and import-preservation policy |
+| `plan/agent-handoff-workflow.md` | Plan-Creator | Workflow roles, stop points and phase routing alignment |
+| `plan/topic-plan-contract.md` | Plan-Creator | Topic-plan authority and approved-evidence alignment |
+
+#### Deleted
+
+- None.
+
+#### TestCase
+
+- `tests/test_package_import.py::test_package_imports` 繼續以
+  `import deterministic_response_cache` 直接匯入並通過既有 pytest check。
+- 本 topic diff 不得修改既有 tests，亦不得新增 `importlib`、`__import__` 或
+  `sys.modules` 作為 direct import 的替代。
+- `GOAL.md` 僅包含 project mission / success direction；不得包含 active topic、
+  current phase、workflow status、dispatcher routing 或 release state。
+- `ReadOnly` 與 `.github/agents/**` 必須為零 diff；所有 diff 僅能落在 `Written`
+  或 `Modify` 中列出的 exact paths。
+- 獨立 Reviewer 驗證角色分離、manifest / artifact-path 一致性、frozen provenance
+  boundary 與 import-preservation compliance。
+
+1. Implementer 在 `AGENTS.md` 寫入 repo 頂層 Observer / Dispatcher 規則：只讀
+   state、委派單一角色、彙整 triage，並明確禁止實作、git / PR / release、gate
+   推測及 review-comment handling。
+2. Implementer 建立 `GOAL.md`，以 `docs/project-direction.md` 的
+   provider-agnostic response-reuse mission 為方向，並明示它不具 task / phase
+   authority。
+3. Implementer 在 declared path set 內完成 bounded changes，保留既有 tests；完成後
+   僅將 work 交給獨立 Reviewer，不自行產出 reviewer verdict 或處理 reviewer
+   feedback。
+4. Tester 執行 declared repository checks；Reviewer 獨立審核 implementation，
+   並處理任何 PR comment 的 classification / routing。
+5. Planner 在 implementation Reviewer 的 `approved` 後執行 Phase 4.5；只有它允許
+   `publish-in-progress` 時，Implementer 才可依既有 human authorization commit、push
+   並開 draft PR。
+
+## Validation / Acceptance Checks
+
+- `GOAL.md` 符合 project mission boundary，且不含 active-work authority。
+- `AGENTS.md` 的 Observer / Dispatcher 規則符合 locked decisions，且角色只使用
+  已允許的 Planner、Plan-Creator、Plan-Reviewer、Reviewer、Tester、Implementer、
+  Explorer。
+- workflow 與 shared contract 的 active routing、planning evidence、conflict triage、
+  human boundary 彼此一致：Planner 執行 preflight / Phase 4.5、Reviewer 處理 comments、
+  Implementer 僅在 required evidence 與既有 human authorization 下 publish；沒有
+  legacy publisher authority。
+- artifact table 和 dispatch manifest 路徑、owner、role 完全一致；`Written` /
+  `Modify` 外無 diff，`.github/agents/**` 零 diff。
+- existing test direct import 未被替換；相關 repository checks 在後續 Tester
+  階段通過：`uv run pytest`、`uv run pyright`、`uv run tach check`、
+  `uv run pre-commit run --all-files`。
+- Plan-Reviewer 對已提交的 plan、spec、step 做獨立 review，將 latest fixed JSON
+  verdict 記入 declared review log；只有最後一筆 record 為 `approved`，Planner 才可
+  preflight implementation。
+
+## Reviewer Handoff
+
+Planning review log 使用 NDJSON；Plan-Reviewer 在完成 planning review 後，將下列
+object 作為 `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md`
+的最後 nonblank line。這不是 topic plan 的 self-authored approval marker。
+
+```json
+{
+  "verdict": "approved|needs-rework",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  }
+}
+```
+
+## Post-merge / release actions
+
+- 本 topic 無 repository release、VERSION bump 或 tagging action。
+- draft PR 開啟後進入 human review boundary；Observer、Planner、Implementer 與
+  Reviewer 均不得自行 merge、post-merge sync 或更新 close summary。
+- human 於適當的 close / handoff 時建立 declared summary，至少包含 `current state`、
+  `completed`、`not completed`、`required follow-up` 與 `next handoff`（含 next
+  actor 與 next step）。
+
+## Open Questions / Unresolved Items
+
+- 無阻塞問題。optional analysis-layer artifacts 缺失已在 Goal / Outcome 警告中記錄；
+  本 topic 不重新開啟已鎖定的 architecture、path 或 contract decisions。
