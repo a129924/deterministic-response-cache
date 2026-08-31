@@ -79,10 +79,11 @@
 - **Current**: `planned`。planning artifacts 已由 commit `dd6d5a7`
   (`docs(governance): establish observer dispatcher plan`) 固化為 repo-visible
   contract；尚未取得 implementation approval，亦不得開始 implementation。
-- **Next gate**: 獨立 Plan-Reviewer 審核已提交的 planning baseline，並依
-  `Reviewer Handoff` 寫入 latest review-log JSON verdict。若 verdict 為 `approved`，
-  獨立 Implementer 必須先建立 review-log-only evidence commit，之後 Planner 才能
-  preflight。
+- **Next gate**: Planner 只讀 preflight 已提交的 topic plan、required step tracker
+  與 latest approved review-log JSON record；三者均存在且 latest verdict 為
+  `approved` 時，才可 route `creator-in-progress`。planning review 與
+  review-log evidence commit 已完成，因此不得再次派遣 Plan-Reviewer 或
+  Implementer 執行 planning-evidence 工作。
 - **Execution model**: topic 在 planning review、review-log evidence commit 與
   Planner preflight 期間維持 `planned`。只有 preflight 證實 required evidence 已
   approved，才可進入 `creator-in-progress` 並由 Implementer 完成 bounded change；其後
