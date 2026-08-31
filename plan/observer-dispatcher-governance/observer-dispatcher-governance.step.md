@@ -1,6 +1,6 @@
 ---
 topic: observer-dispatcher-governance
-phase: planning-artifact-commit
+phase: implementation
 created: 2026-08-31
 ---
 
@@ -33,9 +33,9 @@ created: 2026-08-31
   `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md`
   追加固定 reviewer-handoff JSON object 作為最後 nonblank NDJSON line；verdict 僅以
   review log 為 authority，不在本 tracker 改寫。
-- [ ] **Actor:** Implementer — **Action:** 在 Planner preflight 前，於既有 human
-  topic authorization 下，將 review log 與本次 progression update 建立為僅含 planning
-  evidence 的 commit；不得夾帶 implementation diff。完成後交給 Planner preflight。
+- [X] **Actor:** Implementer — **Action:** 已在既有 human topic authorization 下，將
+  review log 與 progression update 固化為僅含 planning evidence 的 commit；未夾帶
+  implementation diff。完成後交給 Planner preflight。
 - [ ] **Actor:** Planner — **Action:** 在 committed plan、required step tracker 與
   review log evidence 存在後，只讀三者作 preflight；latest JSON verdict 為 `approved`
   才可 route `creator-in-progress`。
@@ -62,12 +62,12 @@ created: 2026-08-31
 
 ## Handoff / Gate Notes
 
-- `plan-authoring`、planning artifact commit 與 independent `plan-review` 已完成；
-  implementation 維持 pending，topic 仍為 `planned`，不得開始 implementation。
+- `plan-authoring`、planning artifact commit、independent `plan-review` 與 review
+  evidence progression commit 已完成；implementation 維持 pending。下一個必經 gate 是
+  Planner 對 committed plan、required step tracker 與 review log 的只讀 preflight；通過後
+  才可派遣 Implementer。
 - Plan-Reviewer 的 verdict 只存在 declared review log 的最後 nonblank NDJSON line，
-  本 tracker 不重述或取代該 verdict。review log 與本次 progression update 尚須以
-  planning-evidence-only commit 固化；完成後下一個必經 gate 是 Planner 對 committed
-  plan、required step tracker 與 review log 的只讀 preflight。
+  本 tracker 不重述或取代該 verdict。
 - `GOAL.md` 不是 active topic 或 phase authority。routing 必須由 Planner 根據
   plan、required step tracker 與 review log 判定。
 - `.github/agents/**` 是 frozen provenance；不得修改，亦不得作 runtime / routing
