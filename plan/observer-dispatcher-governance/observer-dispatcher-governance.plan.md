@@ -76,20 +76,27 @@
 
 ## Status / Allowed Transitions
 
-- **Current**: `planned`。planning artifacts 已由 commit `dd6d5a7`
+- **Current**: `creator-in-progress`。planning artifacts 已由 commit `dd6d5a7`
   (`docs(governance): establish observer dispatcher plan`) 固化為 repo-visible
-  contract；尚未取得 implementation approval，亦不得開始 implementation。
-- **Next gate**: Planner 只讀 preflight 已提交的 topic plan、required step tracker
-  與 latest approved review-log JSON record；三者均存在且 latest verdict 為
-  `approved` 時，才可 route `creator-in-progress`。planning review 與
-  review-log evidence commit 已完成，因此不得再次派遣 Plan-Reviewer 或
-  Implementer 執行 planning-evidence 工作。
+  contract；Planner preflight 已完成，Implementer 的 bounded work 尚未宣告完成。
+- **Bounded historical recovery**: preflight 曾在 implementation 前完成，但 step
+  tracker 漏記該事實。Planner-authorized backfill 以 commit
+  `490066f6753271181d289abdd593f119bd9ef48c`
+  (`docs(governance): confirm observer plan preflight`) 為 evidence，將 parent plan /
+  step 同步至 `creator-in-progress`。這只是 progression truth correction：不重跑或要求
+  重跑 planning review、review-log evidence 或 preflight，不重開任何 locked decision，
+  亦不宣稱 implementation 或 testing 已完成。
+- **Next gate**: current bounded implementation draft 可交 Tester 執行 declared
+  repository checks；testing evidence 仍為 pending。planning review、review-log evidence
+  commit 與 Planner preflight 已完成，不得再次派遣 Plan-Reviewer 或 Implementer 執行
+  planning-evidence 工作。
 - **Execution model**: topic 在 planning review、review-log evidence commit 與
-  Planner preflight 期間維持 `planned`。只有 preflight 證實 required evidence 已
-  approved，才可進入 `creator-in-progress` 並由 Implementer 完成 bounded change；其後
-  依序由 Tester 驗證、獨立 Reviewer review 與 Planner Phase 4.5 判定。使用者已明示
-  git publish 授權時，Implementer 才可 commit、push 並開 draft PR；之後停止於 human
-  review boundary。本 topic 不進入 release。
+  Planner preflight 期間維持 `planned`。preflight 證實 required evidence 已
+  approved 後進入 `creator-in-progress`，由 Implementer 完成 bounded change，並交由
+  Tester 驗證；implementation 與 testing 都必須有真實完成證據後，才可進入
+  `review-ready`、獨立 Reviewer review 與 Planner Phase 4.5 判定。使用者已明示 git
+  publish 授權時，Implementer 才可 commit、push 並開 draft PR；之後停止於 human review
+  boundary。本 topic 不進入 release。
 - **Allowed transitions**:
   - `planned` -> `creator-in-progress`
   - `creator-in-progress` -> `review-ready`

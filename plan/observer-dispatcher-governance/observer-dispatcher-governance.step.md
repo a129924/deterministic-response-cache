@@ -1,6 +1,6 @@
 ---
 topic: observer-dispatcher-governance
-phase: planned
+phase: creator-in-progress
 created: 2026-08-31
 ---
 
@@ -36,14 +36,19 @@ created: 2026-08-31
 - [X] **Actor:** Implementer — **Action:** 已在既有 human topic authorization 下，將
   review log 與 progression update 固化為僅含 planning evidence 的 commit；未夾帶
   implementation diff。完成後交給 Planner preflight。
-- [ ] **Actor:** Planner — **Action:** 在 committed plan、required step tracker 與
-  review log evidence 存在後，只讀三者作 preflight；latest JSON verdict 為 `approved`
-  才可 route `creator-in-progress`。
+- [X] **Actor:** Planner — **Action:** 已在 committed plan、required step tracker 與
+  review log evidence 存在後，只讀三者完成 preflight；latest JSON verdict 為
+  `approved`，並已 route `creator-in-progress`。此 preflight 由 commit
+  `490066f6753271181d289abdd593f119bd9ef48c`
+  (`docs(governance): confirm observer plan preflight`) 證實；本回填不重跑 planning
+  evidence 或 preflight。
 
 ## Implementation Steps
 
 - [ ] 1. Implementer 依 approved topic plan 修改 `AGENTS.md`、建立 `GOAL.md`，並
-  保留既有 tests 的 direct-import 行為。
+  保留既有 tests 的 direct-import 行為。**Current state:** `in-progress`；目前 bounded
+  draft 已可交 Tester 驗證，但此項仍未完成，且不得因 ready-for-Tester 而宣稱
+  implementation 完成。
 - [ ] 2. Tester 執行 declared repository checks，確認 allowed path set 與
   import-preservation compliance。
 - [ ] 3. Reviewer 獨立審核 bounded implementation，並對 PR comments 做
@@ -62,11 +67,15 @@ created: 2026-08-31
 
 ## Handoff / Gate Notes
 
-- `plan-authoring`、planning artifact commit、independent `plan-review` 與 review
-  evidence progression commit 已完成；topic 維持 `planned`，implementation 尚未開始。
-  下一個必經 gate 是
-  Planner 對 committed plan、required step tracker 與 review log 的只讀 preflight；通過後
-  才可派遣 Implementer。
+- `plan-authoring`、planning artifact commit、independent `plan-review`、review
+  evidence progression commit 與 Planner preflight 均已完成；topic 為
+  `creator-in-progress`。preflight evidence 為 commit
+  `490066f6753271181d289abdd593f119bd9ef48c`
+  (`docs(governance): confirm observer plan preflight`)；此前歷史漏記在此作 bounded
+  correction，且不要求重新執行 planning evidence 或 preflight。
+- implementation 仍為 `in-progress`，testing 仍為 pending；current draft ready for
+  Tester 執行 declared checks。只有真實 Tester evidence 與 Implementer completion 後，
+  才能轉為 `review-ready`，不得在本 tracker 將任一項預先標記完成。
 - Plan-Reviewer 的 verdict 只存在 declared review log 的最後 nonblank NDJSON line，
   本 tracker 不重述或取代該 verdict。
 - `GOAL.md` 不是 active topic 或 phase authority。routing 必須由 Planner 根據
