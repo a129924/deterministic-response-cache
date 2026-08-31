@@ -1,6 +1,6 @@
 ---
 topic: observer-dispatcher-governance
-phase: implementation
+phase: planned
 created: 2026-08-31
 ---
 
@@ -63,7 +63,8 @@ created: 2026-08-31
 ## Handoff / Gate Notes
 
 - `plan-authoring`、planning artifact commit、independent `plan-review` 與 review
-  evidence progression commit 已完成；implementation 維持 pending。下一個必經 gate 是
+  evidence progression commit 已完成；topic 維持 `planned`，implementation 尚未開始。
+  下一個必經 gate 是
   Planner 對 committed plan、required step tracker 與 review log 的只讀 preflight；通過後
   才可派遣 Implementer。
 - Plan-Reviewer 的 verdict 只存在 declared review log 的最後 nonblank NDJSON line，
