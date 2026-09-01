@@ -16,7 +16,8 @@ Authority ordering 為：
 4. `plan/<topic>/<topic>.plan.md`：單一 topic 的 locked execution contract。
 5. `plan/<topic>/<topic>.step.md`：該 topic 當前 stage / next action truth。
 6. `plan/<topic>/<topic>.review-log.md`：Plan-Reviewer / Reviewer 的已記錄 verdict
-   truth；不取代 plan 或 step。
+   truth；不取代 plan 或 step。僅當個別已授權 replan 明定 exact special evidence path
+   時，該 path 才在該 replan gate 內作 routing evidence；它不會一般化取代 review log。
 
 `GOAL.md` 只描述 repository mission；chat、branch、summary 與
 `.github/agents/**` 不可作 active-topic、phase 或 routing authority。
@@ -30,11 +31,11 @@ dependency。
 | Observer / Dispatcher | 唯讀盤點；派遣一個合適角色；彙整 `可直接前進`、`needs-rework`、`blocked`、`human-check` | 實作、改檔、commit、push、PR、release、手算 gate、comment triage 或重解 locked decision |
 | Planner | candidate / phase / gate / next-role preflight；Phase 4.5 contract alignment；bounded repair routing | 改 planning artifact、實作、review own work、git publish 或 release |
 | Plan-Creator | 建立或 bounded repair plan、spec、step 與 shared planning contract | commit、Plan-Reviewer verdict、implementation、publish |
-| Plan-Reviewer | 獨立審核 planning artifacts；寫入 planning verdict 到 exact review log path | 修改被審 plan/spec/step、commit、implementation 或 publish |
+| Plan-Reviewer | 獨立審核 planning artifacts；依 shared contract 寫入 exact review-log path，或僅在 human-authorized current-topic replan 已明定時寫入其 exact special evidence path | 修改被審 plan/spec/step、commit、implementation 或 publish |
 | Implementer | 在 approved scope 內實作；在既有 human authorization 下 commit by topic、push、開 draft PR | 自行核准、處理 PR comments、merge、release 或 post-merge |
 | Tester | 執行 declared checks 並回報證據 | 改 tests 以迴避既有行為、核准或 publish |
 | Reviewer | 獨立審核 implementation、處理 PR comments 的 classification / review routing、寫入 reviewer verdict | author own implementation、commit、push、merge、release 或 post-merge |
-| Human | 授權 git publish；review / merge；post-merge；release；最後 close summary | 將 authority 交由 Observer 推測 |
+| Human | 授權 commit、push、draft PR；執行 human review、merge、post-merge、release、tagging 與 final summary | 將 merge、post-merge、release、tagging 或 final-summary action 以重新授權委派給任何非 Human actor |
 
 所有 planner、creator、reviewer、implementer gate 必須由獨立 actor 真實執行；不得以
 同一 actor 宣稱多重 gate 已完成。
@@ -65,6 +66,23 @@ planning approval evidence 固定為：
 
 topic plan 不得包含、要求或依賴任何 self-authored approval marker。缺少 planning
 artifact commit、required step 或上述 evidence 時，implementation 不可開始。
+
+### Human-authorized current-topic replan exception
+
+一般 planning baseline 與 future / new review-log NDJSON 規則維持不變。唯一已授權的
+例外是 current topic `observer-dispatcher-governance` 的目前 `needs-rework` replan：
+在任何 replan commit 前，independent Plan-Reviewer 必須且只能寫入
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md`。
+該單一 machine-JSON record 是此次 latest replan 的 routing evidence；它必須依 shared
+`Reviewer Handoff` schema 記錄 replan 的五個 reviewed artifact revisions / head，且
+`"verdict": "approved"` 才允許 Implementer 在既有 Human authorization 下 commit / push。
+
+此 exception 是 Human-authorized、current-topic、latest-replan-only 的 gate，不遷移、
+改寫、重讀或一般化任何 existing legacy `review-log.md`。legacy review logs 保持 frozen
+provenance，並非此 replan 的 routing authority。`needs-rework` evidence 維持 topic
+`needs-rework`；後續 bounded replan 必須再有 Human 明示授權。special evidence 不改變
+PR #1 Ready 的 `pr-open` external fact，也不構成 merge、implementation approval 或
+same-head Tester / Reviewer completion。
 
 Planner preflight 的 routing 為：無 candidate 為 `blocked`；多 candidate 或 plan / step
 指向不同 topic 為 `human-check`；同 topic 的 status 或 scope conflict 為 `blocked`，除非
@@ -118,13 +136,17 @@ drift 才可進入 `publish-in-progress`。Observer 不得執行或推測 Phase 
 - draft PR comments、check failures 與 review feedback 一律先交 Reviewer；Reviewer 可
   route to `needs-rework`，不得由 Observer 或 Implementer 自行 triage。
 - scope drift、contract drift 或 workflow drift 一律保守收斂：停止 publish，交 Planner，
-  必要時由 Plan-Creator bounded repair 後重新走 required planning review。
+  必要時由 Plan-Creator bounded repair 後重新走 required planning review；若已明定
+  human-authorized special replan evidence path，該次 replan 依其 exact path 與 schema
+  進入 Plan-Reviewer gate，不得推廣為 generic migration。
 
 ## Human boundaries
 
 - commit、push、draft PR 只在既有明示 human authorization、required evidence、Tester
   evidence 及 Planner publish route 都存在時由 Implementer 執行。
-- draft PR 開啟後即停於 human review boundary；不得自動 merge、release、post-merge
-  sync 或寫 close summary。
-- merge、post-merge、release、tagging 與 final summary 均由 Human 執行或明確重新
-  授權；Observer 不得自行恢復或輪詢。
+- draft PR 開啟後即停於 human review boundary；Ready 只表示可供 Human review，絕不
+  等同 merge approval 或已 merge；不得自動 merge、release、post-merge sync 或寫
+  final summary。
+- merge、post-merge、release、tagging 與 final summary 是不可委派的 Human-only
+  action。重新授權只可涵蓋本節第一點的 commit、push、draft PR，絕不會把前述
+  Human-only action 交給任何非 Human actor；Observer 不得自行恢復或輪詢。

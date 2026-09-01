@@ -23,8 +23,17 @@
     boundary 與既有測試 direct-import preservation rule。
   - `plan/agent-handoff-workflow.md` 與 `plan/topic-plan-contract.md` 的
     ownership、candidate resolution 與 approved-evidence 對齊。
-  - 本 topic 的 plan、spec、step、planning review-log、tester-evidence、
-    implementation-review-log 與 human-close summary handoff artifacts。
+  - 本 topic 的 plan、spec、step、frozen planning review-log、此次 replan 的 exact
+    planning-review evidence、tester-evidence、implementation-review-log 與 human-close
+    summary handoff artifacts。
+  - 本次 Human-authorized `needs-rework` bounded replan 的精確 Plan-Creator 路徑集：
+    `plan/agent-handoff-workflow.md`（將 merge、post-merge、release、tagging 與 final
+    summary 鎖為不可委派的 Human-only action）、
+    `plan/topic-plan-contract.md`（將 future / new review-log NDJSON 規則鎖為
+    prospective-only，並保留 legacy logs 為 frozen provenance），以及本 topic 的
+    `.plan.md`、`.spec.md`、`.step.md`。這五個路徑同屬已存在 diff 的 bounded repair；
+    前二者由 Plan-Creator 依 shared-contract alignment 負責，後三者由 Plan-Creator
+    依 current-topic execution contract 負責。
 
 - **Out of scope**:
   - `src/**`、`tests/**`、public API、Business Capability、Identity、Response
@@ -48,13 +57,22 @@
   candidate 則 `blocked`，多 candidate 或 plan/step 指向不同 topic 則
   `human-check`，同 topic 狀態或 scope 矛盾則 `blocked`，除非 Planner 指定
   Plan-Creator 可做 bounded repair。
-- planning approval evidence 固定為
-  `plan/<topic>/<topic>.review-log.md` 最後一筆完整 reviewer-handoff JSON record
-  的 `"verdict": "approved"`。它由 Plan-Reviewer 在獨立 planning review 完成時
-  寫入，並由獨立 Implementer 在 Planner preflight 前以 review-log-only evidence
-  commit 固化；topic plan 不得含或依賴任何 self-authored approval marker。frozen
-  `.github/agents/**` 僅為 provenance，不可修改，也不可作 runtime 或 routing
+- planning approval evidence 不得由 topic plan 自我宣稱。對本 shared contract 生效後
+  新建的 future review log，最後一筆完整 reviewer-handoff NDJSON JSON record 的
+  `"verdict": "approved"` 才是 planning evidence；它由 Plan-Reviewer 寫入，並由
+  獨立 Implementer 在 Planner preflight 前以 review-log-only evidence commit 固化。
+  此規則只 prospective 適用於 future / new logs；既有 review logs 是 frozen
+  provenance，不能被遷移、改寫、重讀或僅因格式被判定失效。其分類、reader 與長期
+  policy 明確 defer 至另一個 future policy topic，不在本 topic 建立、命名或執行。
+  frozen `.github/agents/**` 亦僅為 provenance，不可修改，也不可作 runtime / routing
   dependency。
+- 此次 Human-authorized `needs-rework` replan 是不遷移 legacy log 的狹義例外：唯一
+  routing evidence 為 exact path
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md`。
+  它只由 independent Plan-Reviewer 在 latest replan 後寫入一個完整 shared
+  `Reviewer Handoff` JSON object，並覆蓋五個 declared replan artifacts 的 latest
+  revisions / head；它不改變 generic future NDJSON rule，也不給其他 topic 建立第二種
+  evidence 的先例。
 - 保留所有既有測試的 direct import、fixture、mock 與 assertion 行為；不得以
   `importlib`、`__import__` 或 `sys.modules` 動態載入取代。只有 approved topic
   明定 import 行為本身為被測需求時，才可新增專用測試，且不得取代 regression test。
@@ -76,12 +94,16 @@
 - `step-creator` 的角色模型衝突不屬本 topic 的 governance implementation 或本次
   evidence repair 範圍；明確 defer 至新 topic
   `step-creator-role-model-alignment`，不得藉此重開既有 topic。
+- legacy review-log NDJSON finding 只是一項 prospective-policy defer：不得在本 topic
+  遷移 legacy logs、建立 reader / compatibility layer、改動其他 topic 或以此重開既有
+  evidence。完整 policy 僅能由另一個 future topic 決定。
 
 ## Status / Allowed Transitions
 
-- **Current**: `pr-open`。PR #1 維持 **Ready**；`pr-open` 可為 Draft 或 Ready，
-  而 Ready 只表示 PR 可供 human review，絕不等同 independent implementation
-  approval、human merge approval 或已 merge。
+- **Current**: `needs-rework`。PR #1 仍是外部可見的 **Ready** `pr-open`，但 topic
+  execution state 已因 blocking review finding 回到 `needs-rework`。Ready 只表示 PR
+  可供 Human review，絕不等同 independent implementation approval、merge approval 或
+  已 merge。
 - **Bounded historical recovery**: preflight 曾在 implementation 前完成，但 step
   tracker 漏記該事實。Planner-authorized backfill 以 commit
   `490066f6753271181d289abdd593f119bd9ef48c`
@@ -89,17 +111,29 @@
   step 同步至 `creator-in-progress`。這只是 progression truth correction：不重跑或要求
   重跑 planning review、review-log evidence 或 preflight，不重開任何 locked decision，
   亦不宣稱 implementation 或 testing 已完成。
-- **Current corrective gate**: Tester 必須先在 declared tester-evidence artifact 寫入
-  passing evidence；其後 Reviewer 必須在 declared implementation-review-log reference
-  該 evidence，並獨立寫入 `approved` 或 `needs-rework` verdict。兩份 artifact 在本次
-  replan 時均為 pending；不得將既有口頭、step 或 PR state 當成已完成 evidence。
-- **Thread gate**: 只有上述 Tester passing evidence 與 Reviewer independent verdict
-  都存在且對同一 PR head 時，Reviewer 才可處理 PR #1 的已 addressed threads；在此之前
-  reviewer-comments replan 維持 pending。此 gate 不授權任何 actor merge、resolve human
-  approval 或把 Ready 重解為 approval。
+- **Current corrective gate**: 在任何人 commit 最新 replan 前，獨立 Plan-Reviewer
+  必須先寫入 exact
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md`
+  的 single machine-JSON record，且其 verdict 為 `approved`。
+  evidence 必須涵蓋最新 replan 的 plan、spec、step、
+  `plan/agent-handoff-workflow.md` 與 `plan/topic-plan-contract.md` revisions / head；
+  frozen legacy `review-log.md` 不具此 current-replan routing authority。若 verdict 為
+  `needs-rework`，topic 保持 `needs-rework`，且後續 prospective bounded replan 只能在
+  Human 明示授權下由 Plan-Creator 修訂；不得 commit、push 或開始 Tester / Reviewer 的
+  same-head gate。只有此 evidence 通過後，Implementer 才可在既有 Human authorization
+  下 commit / push replan，令 PR #1 產生新的 head。既有 tester-evidence 與
+  implementation-review-log 都是舊 head 的 frozen provenance，不能滿足新 head 的
+  same-head gate。新 head 上，Tester 必須先寫入 passing evidence；其後 Reviewer 必須
+  reference 該 evidence，並獨立寫入 `approved` 或 `needs-rework` verdict。這些 future
+  actions 均為 pending；不得把舊 evidence、口頭說法、step 或 PR Ready state 當成完成。
+- **Thread gate**: 只有上述新 head 的 Tester passing evidence 與 Reviewer independent
+  verdict 都存在且對同一 PR head 時，Reviewer 才可處理 PR #1 的已 addressed threads；
+  在此之前 reviewer-comments replan 維持 pending。此 gate 不授權任何 actor merge、
+  resolve human approval 或把 Ready 重解為 approval。
 - **Recorded nonconformance**: PR #1 已存在的 Ready state 是 current external fact，
-  不補正為不存在，也不治癒 missing evidence；本 bounded replan 在不變更 PR state 的
-  前提下補足 evidence-first comment routing。
+  不補正為不存在，也不治癒 rework requirement。舊 head evidence 僅保留為 frozen
+  provenance；本 bounded replan 不修改它們，並要求 rework 後以新 same-head evidence
+  重新進 gate。
 - **Execution model**: topic 在 planning review、review-log evidence commit 與
   Planner preflight 期間維持 `planned`。preflight 證實 required evidence 已
   approved 後進入 `creator-in-progress`，由 Implementer 完成 bounded change，並交由
@@ -146,7 +180,8 @@ Routing notes:
 | Topic plan | `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md` | Plan-Creator | Current execution contract |
 | Topic specification | `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md` | Plan-Creator | Acceptance scenarios and scope guardrail |
 | Step tracker | `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md` | Plan-Creator | Progression truth and gate state |
-| Review log | `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md` | Plan-Reviewer | Reviewer routing history; never replaces the plan |
+| Frozen legacy review log | `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md` | Plan-Reviewer | Frozen provenance only; never current-replan routing authority |
+| Planning-review evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md` | Plan-Reviewer | 此次 Human-authorized latest replan 唯一的 single machine-JSON routing evidence；不是 generic migration，且 required before replan commit or same-head continuation |
 | Tester evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.tester-evidence.md` | Tester | PR #1 current-head 的 declared checks、結果與 passing verdict；必須先於 implementation review log |
 | Implementation review log | `plan/observer-dispatcher-governance/observer-dispatcher-governance.implementation-review-log.md` | Reviewer | Reference tester evidence 的獨立 implementation verdict；是 addressed-thread handling 的前置 gate |
 | Topic summary | `plan/observer-dispatcher-governance/observer-dispatcher-governance.summary.md` | Human operator | Required close / next-handoff truth at human boundary |
@@ -156,6 +191,13 @@ Routing notes:
   provenance 且不可用於 routing。
 - 若後續工作需要 artifact table 之外的檔案，先由 Planner 修復 topic plan，再開始
   該工作；不得 broad-stage 或隱性納入。
+- 本次 Human-authorized `needs-rework` 的 Plan-Creator repair 精確修改本 plan、`.spec.md`、
+  `.step.md`、`plan/agent-handoff-workflow.md` 與 `plan/topic-plan-contract.md`：兩個
+  shared-contract 文件分別限於 Human-only / 不可委派 boundary、future / new review-log 的
+  prospective-only wording，以及此次 special evidence topology 的對齊；不得建立
+  planning-review evidence。其後
+  只有獨立 Plan-Reviewer 可寫入 declared planning-review evidence。既有 review-log、
+  tester-evidence、implementation-review-log 皆為唯讀 frozen provenance；不得修改。
 
 ## Implementation Steps
 
@@ -203,10 +245,6 @@ Routing notes:
 | `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md` | Plan-Creator | Topic execution contract |
 | `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md` | Plan-Creator | Acceptance scenarios |
 | `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md` | Plan-Creator | Progression truth |
-| `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md` | Plan-Reviewer | Reviewer verdict history |
-| `plan/observer-dispatcher-governance/observer-dispatcher-governance.tester-evidence.md` | Tester | Current PR-head test evidence; created before implementation review |
-| `plan/observer-dispatcher-governance/observer-dispatcher-governance.implementation-review-log.md` | Reviewer | Independent review verdict that references current passing tester evidence |
-| `plan/observer-dispatcher-governance/observer-dispatcher-governance.summary.md` | Human operator | Close / next-handoff truth |
 
 #### Modify
 
@@ -215,6 +253,11 @@ Routing notes:
 | `AGENTS.md` | Implementer | Observer / Dispatcher governance and import-preservation policy |
 | `plan/agent-handoff-workflow.md` | Plan-Creator | Workflow roles, stop points and phase routing alignment |
 | `plan/topic-plan-contract.md` | Plan-Creator | Topic-plan authority and approved-evidence alignment |
+
+本 manifest 僅列出 Plan-Creator 與 Implementer 的 bounded implementation work；Tester、
+Reviewer、Plan-Reviewer 與 Human operator 的 evidence、verdict、routing 或 close
+artifact 不在此 manifest 內，仍依既有 `Status / Allowed Transitions`、`Reviewer Handoff`
+與 step tracker contract 管理。
 
 #### Deleted
 
@@ -228,10 +271,9 @@ Routing notes:
   `sys.modules` 作為 direct import 的替代。
 - `GOAL.md` 僅包含 project mission / success direction；不得包含 active topic、
   current phase、workflow status、dispatcher routing 或 release state。
-- `ReadOnly` 與 `.github/agents/**` 必須為零 diff；所有 diff 僅能落在 `Written`
-  或 `Modify` 中列出的 exact paths。
-- 獨立 Reviewer 驗證角色分離、manifest / artifact-path 一致性、frozen provenance
-  boundary 與 import-preservation compliance。
+- 本 manifest 所涵蓋的 Plan-Creator／Implementer diff，除 `ReadOnly` 與
+  `.github/agents/**` 必須為零 diff 外，僅能落在 `Written` 或 `Modify` 中列出的
+  exact paths。
 
 1. Implementer 在 `AGENTS.md` 寫入 repo 頂層 Observer / Dispatcher 規則：只讀
    state、委派單一角色、彙整 triage，並明確禁止實作、git / PR / release、gate
@@ -241,6 +283,12 @@ Routing notes:
    authority。
 3. Implementer 的 implementation diff 僅可包含 `AGENTS.md` 與 `GOAL.md`，並須
    保留既有 tests 的 direct-import 行為及 manifest 的所有 locked scope。
+4. 本次 Human-authorized bounded replan 僅由 Plan-Creator 修正本 plan、`.spec.md`、
+   `.step.md`、`plan/agent-handoff-workflow.md` 與 `plan/topic-plan-contract.md`；後兩個
+   shared-contract 路徑只對齊 Human-only / 不可委派 boundary、future / new review-log 的
+   prospective-only wording與已授權 special evidence topology。不得遷移或修改任何 legacy
+   log、建立 reader / compatibility layer、觸及其他 topic，或由 Plan-Creator 建立 evidence；
+   evidence gate 與後續 routing 只在 `Reviewer Handoff` 與 step tracker 定義。
 
 ## Validation / Acceptance Checks
 
@@ -252,36 +300,66 @@ Routing notes:
   human boundary 彼此一致：Planner 執行 preflight / Phase 4.5、Reviewer 處理 comments、
   Implementer 僅在 required evidence 與既有 human authorization 下 publish；沒有
   legacy publisher authority。
-- artifact table 和 dispatch manifest 路徑、owner、role 完全一致；`Written` /
-  `Modify` 外無 diff，`.github/agents/**` 零 diff。
+- 僅比較 manifest 所涵蓋的 Plan-Creator／Implementer paths：artifact table 與
+  dispatch manifest 的 path、owner、role 必須一致，且該兩個角色的 diff 不得落在
+  `Written` / `Modify` 外。此比較明確排除 `Reviewer Handoff`、step-owned special
+  planning evidence 與 Reviewer-owned implementation-review evidence；它們不屬
+  manifest，並持續依既有 `Reviewer Handoff`、status 與 step routing gates 驗證。
 - existing test direct import 未被替換；相關 repository checks 在後續 Tester
   階段執行：`uv run pytest`、`uv run pyright`、`uv run tach check`、
   `uv run pre-commit run --all-files`。尚未有 declared tester-evidence artifact 前，
   不得聲稱這些 checks 已通過。
-- Plan-Reviewer 對已提交的 plan、spec、step 做獨立 review，將 latest fixed JSON
-  verdict 記入 declared review log；只有最後一筆 record 為 `approved`，Planner 才可
-  preflight implementation。
+- latest replan 必須先由獨立 Plan-Reviewer 審核，並由其唯一寫入 declared
+  planning-review evidence。single JSON record 必須完整符合 `Reviewer Handoff` schema，
+  包含五個 declared replan artifacts 的 reviewed revisions / head、review basis、
+  `verdict: approved|needs-rework`、`blocking_issues`、完整 `copilot_feedback_triage` 與
+  timestamp，且必須涵蓋 latest replan revision。只有 `approved` record 可在既有 Human authorization
+  下 commit replan，並讓後續 Tester / implementation-review same-head gates 繼續；frozen
+  legacy review-log 不能取代此 gate。
 - PR #1 的 current head 必須先有 Tester 的 passing evidence，再由 Reviewer 寫入
   reference 該 evidence 的 independent implementation verdict；只有 `approved` 或
   `needs-rework` 的有效 verdict 存在後，Reviewer 才可處理已 addressed threads。
+- legacy review-log NDJSON finding 已明確 defer 為 prospective-only future policy；本
+  topic 不進行 migration、reader、compatibility 或其他 topic 變更。既有 evidence logs
+  維持 frozen provenance。
+- 本 rework 產生新 PR #1 head 後，任何舊 head 的 Tester / Reviewer evidence 均不再
+  滿足 same-head gate；必須重新執行，且本 plan 不宣稱新的 Tester 或 Reviewer completion。
 
 ## Reviewer Handoff
 
-Planning review log 使用 NDJSON；Plan-Reviewer 在完成 planning review 後，將下列
-object 作為 `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md`
-的最後 nonblank line。這不是 topic plan 的 self-authored approval marker。
-
 ```json
 {
+  "reviewed_artifacts": [
+    {
+      "path": "<exact repo-visible path>",
+      "revision": "<latest reviewed revision or head>"
+    }
+  ],
+  "review_basis": "<independent review basis>",
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
   "copilot_feedback_triage": {
     "ADDRESS": [],
     "DISCUSS": [],
     "SKIP": []
-  }
+  },
+  "timestamp": "<RFC 3339 timestamp>"
 }
 ```
+
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md`
+是 current replan 唯一的 planning-review routing evidence。它只可由獨立
+Plan-Reviewer 在審核 latest replan 後寫入；Plan-Creator、Implementer、Tester、Reviewer
+或 Planner 不得代寫。它必須只含一個完整 JSON object，不可附帶 Markdown 或 prose；
+`reviewed_artifacts` 必須恰好記錄 plan、spec、step、`plan/agent-handoff-workflow.md` 與
+`plan/topic-plan-contract.md` 的 latest revisions / head，並完整包含 schema 的
+`review_basis`、`verdict`、`blocking_issues`、`copilot_feedback_triage` 與 `timestamp`。
+
+此 artifact 必須先覆蓋 latest replan revision，並具有 `approved` verdict，才可 commit
+replan 或繼續 same-head Tester / implementation-review gates。`needs-rework` verdict 不可
+自行恢復：topic 維持 `needs-rework`，僅可由 Human 再授權 prospective bounded replan。
+existing `review-log.md` 是 frozen legacy provenance；不遷移、改寫、重讀，也不是 current
+replan routing authority。這不是 topic plan 的 self-authored approval marker。
 
 ### Implementation Evidence and Review Gate
 
@@ -290,10 +368,12 @@ object 作為 `plan/observer-dispatcher-governance/observer-dispatcher-governanc
   `command` 與 `result`，以及最終 `verdict: passing|failing`。只有同一 PR #1 head 的
   `verdict: passing` 可進入下一 gate；此 artifact 尚未建立時一律為 pending。
 - `observer-dispatcher-governance.implementation-review-log.md` 的最小 schema 為一筆
-  JSON object，明列 `pr_number`、`head_sha`、`tester_evidence_path`、
-  `tester_evidence_verdict`、`verdict: approved|needs-rework`、
-  `blocking_issues`，以及 `copilot_feedback_triage`（`ADDRESS`、`DISCUSS`、`SKIP`
-  arrays）。Reviewer 必須獨立產生此 verdict；它不可由 Tester 或 Implementer 代寫。
+  JSON object，除 `pr_number`、`head_sha`、`tester_evidence_path` 與
+  `tester_evidence_verdict` 外，必須完整符合 shared `Reviewer Handoff`：
+  `reviewed_artifacts`（current PR head 的 exact paths / revisions）、`review_basis`、
+  `verdict: approved|needs-rework`、`blocking_issues`、完整
+  `copilot_feedback_triage`（`ADDRESS`、`DISCUSS`、`SKIP` arrays）與 RFC 3339
+  `timestamp`。Reviewer 必須獨立產生此 verdict；它不可由 Tester 或 Implementer 代寫。
 - Reviewer 僅可在 implementation-review-log reference 到同一 head 的
   `verdict: passing` tester evidence 後，處理 PR #1 的已 addressed threads。此限制不
   改變 PR #1 的 Ready state，亦不授權 merge 或人類 approval。
@@ -302,15 +382,23 @@ object 作為 `plan/observer-dispatcher-governance/observer-dispatcher-governanc
 
 - 本 topic 無 repository release、VERSION bump 或 tagging action。
 - draft PR 開啟後進入 human review boundary；Observer、Planner、Implementer 與
-  Reviewer 均不得自行 merge、post-merge sync 或更新 close summary。
+  Reviewer 均不得自行 merge、post-merge sync、release、tagging 或更新 final summary；
+  這些 Human-only action 不可經由重新授權委派。
 - human 於適當的 close / handoff 時建立 declared summary，至少包含 `current state`、
   `completed`、`not completed`、`required follow-up` 與 `next handoff`（含 next
   actor 與 next step）。
 
 ## Open Questions / Unresolved Items
 
-- PR #1 的 tester evidence、implementation-review-log 與 reviewer-comments replan
-  均為 pending；在真實 evidence 寫入前不得宣稱完成。
+- topic execution state 是 `needs-rework`；latest replan（本 plan、spec、step、
+  `plan/agent-handoff-workflow.md` 與 `plan/topic-plan-contract.md`）的 independent
+  planning-review evidence、approved replan commit、rework 後新 head 的 Tester evidence、
+  Reviewer verdict 與 reviewer-comments routing 均為 pending。前一項 planning-review
+  evidence 未有 `approved` 前，不可 commit replan 或繼續 same-head gates。舊 head 的
+  same-head evidence 已失效於新 gate，不得宣稱新的 Tester 或 Reviewer completion。
+- legacy review-log NDJSON finding 已 defer 至未建立的 future policy topic；本 topic
+  只採 prospective interpretation，不遷移 logs、不建立 reader / compatibility layer，
+  也不修改其他 topic。
 - `step-creator` role-model conflict 已 out-of-scope defer 至
   `step-creator-role-model-alignment`；本 topic 不重新開啟它。
 - optional analysis-layer artifacts 缺失已在 Goal / Outcome 警告中記錄；本 topic 不

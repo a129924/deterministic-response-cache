@@ -60,16 +60,46 @@ planning review 的唯一 approved evidence 是 exact path：
 
 `plan/<topic>/<topic>.review-log.md`
 
-該檔案由 Plan-Reviewer 在完成獨立 review 後寫入。它必須是 chronological NDJSON：
-每一個 nonblank line 是一個完整 JSON object，且最後一個 nonblank line 是 latest
-verdict。當且僅當該最後 record 符合下列 `Reviewer Handoff` schema 並具有
-`"verdict": "approved"`，planning evidence 才有效。
+對於本條生效後**新建的 future review log**，該檔案由 Plan-Reviewer 在完成獨立
+review 後寫入，並必須是 chronological NDJSON：每一個 nonblank line 是一個完整 JSON
+object，且最後一個 nonblank line 是 latest verdict。當且僅當該最後 record 符合下列
+`Reviewer Handoff` schema 並具有 `"verdict": "approved"`，planning evidence 才有效。
+
+本 NDJSON 規則僅 prospective 適用於 future / new logs。此條生效前已存在的 review
+logs 是 frozen provenance：本 contract 不會遷移、改寫、關閉、重讀或以格式不符使其
+失效，也不會改變其所屬 topic 的既有 evidence status。legacy log 的分類、讀取與任何
+長期 policy，必須由另一個 future policy topic 明確定義；不得在本 shared contract 或
+無關 topic 內推導或補作。
 
 Plan-Reviewer 不得修改被審的 plan、spec 或 step；Plan-Creator、Planner、Implementer
 均不得寫入或自我宣稱此 verdict。在 Planner preflight 前，只有具既有 human topic
 authorization 的獨立 Implementer 可提交 review-log-only evidence commit。
 
 topic plan 不得有 self-authored approval marker 或任何等價 field。
+
+### Human-authorized current-topic replan evidence topology
+
+此 shared contract 不建立 generic legacy-log migration 或第二種一般 planning-review
+evidence。僅對已由 Human 明示授權的 current-topic replan，個別 topic plan 可列出一個
+exact、Plan-Reviewer-owned special evidence path，並必須同時列明它覆蓋的 latest replan
+artifacts、revisions / head、gate 與 status。當前唯一適用實例是：
+
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md`
+
+它只為 `observer-dispatcher-governance` 的目前 `needs-rework` bounded replan 提供 routing
+evidence。independent Plan-Reviewer 在完成該 latest replan review 後，將一個完整 JSON
+object 寫入此 exact path；Plan-Creator、Planner、Implementer、Tester 與 Reviewer 不得
+代寫。該 object 的 `reviewed_artifacts` 必須只涵蓋本次 replan 的 plan、spec、step、
+`plan/agent-handoff-workflow.md` 與 `plan/topic-plan-contract.md`，並記錄每個 artifact 的
+latest revision / head。
+
+只有這個 exact record 完整符合下列 `Reviewer Handoff` schema 且
+`"verdict": "approved"`，Implementer 才可在既有 Human authorization 下 commit / push
+此 replan，然後啟動新 head 的 Tester / Reviewer same-head gates。`needs-rework` 維持
+topic `needs-rework`，不得自行恢復，後續 replan 必須另有 Human 明示授權。existing
+`review-log.md` 仍是 frozen provenance：不得遷移、改寫、重讀，且不是此 special replan
+的 routing authority。本 exception 不可被其他 topic、legacy log 或 future policy 推導或
+複製。
 
 ### Planner preflight
 
@@ -82,7 +112,9 @@ Planner 只讀取 candidate 的下列三個 artifact：
 它據此判定唯一 candidate、phase、gate 與 next role。沒有 candidate 為 `blocked`；多
 candidate 或 plan / step 指向不同 topic 為 `human-check`；同一 topic 的 status / scope
 矛盾為 `blocked`，除非 Planner 明確 route Plan-Creator 進行 bounded repair。缺少 step、
-review log 或 latest approved record 時不得開始 implementation。
+review log 或 required approved record 時不得開始 implementation。對 legacy log，不得
+只因本 prospective NDJSON 規則而推定 record 缺失或不合格；其既有 topic contract
+仍是唯一可用的 evidence interpretation，直至 future policy topic 明確變更。
 
 planning approval evidence 不會把 topic execution status 設為 `approved`；`approved`
 只保留給 workflow 中 independent implementation Reviewer 的 verdict。
@@ -106,8 +138,9 @@ exact path、owner、role。若 work 需要未列 path，停止並交 Planner；
 
 - `Implementation Steps` 僅描述 locked implementation work，不得混入
   Plan-Reviewer verdict、Planner routing、Reviewer acceptance 或 human-only action。
-- `Reviewer Handoff` 是 Plan-Reviewer 與 Reviewer 都使用的 machine-consumable schema；
-  topic plan 必須完整嵌入一份。
+- `Reviewer Handoff` 是 Plan-Reviewer 與 Reviewer 都使用的 fixed machine-JSON schema；
+  topic plan 必須完整嵌入一份。若是 human-authorized special replan evidence，必須於
+  此 section 而非 `Implementation Steps` 宣告其 exact path、ownership 與 gate。
 - `Post-merge / release actions` 必須符合 topic 的 stable-library / release intent，
   並將 merge、post-merge、release 留在 human boundary。
 - 若 execution 需 frozen analysis artifacts，只可 read / validate；不得隱性重開或
@@ -116,23 +149,35 @@ exact path、owner、role。若 work 需要未列 path，停止並交 Planner；
 
 ## Reviewer Handoff
 
-每一筆 review-log record 與 topic plan 的 `Reviewer Handoff` 必須符合以下固定 JSON
-object：
+future / new review-log record、human-authorized special replan evidence 與 topic plan 的
+`Reviewer Handoff` 必須符合以下固定 machine JSON object：
 
 ```json
 {
+  "reviewed_artifacts": [
+    {
+      "path": "<exact repo-visible path>",
+      "revision": "<latest reviewed revision or head>"
+    }
+  ],
+  "review_basis": "<independent review basis>",
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
   "copilot_feedback_triage": {
     "ADDRESS": [],
     "DISCUSS": [],
     "SKIP": []
-  }
+  },
+  "timestamp": "<RFC 3339 timestamp>"
 }
 ```
 
-`blocking_issues` 只列 true contract-breaking issue。記錄不能有 JSON 外的 trailing
-prose；最新 verdict 以 review log 最後 nonblank NDJSON line 為準。
+`reviewed_artifacts` 的每個 item 都必須有 exact `path` 與其 `revision`；`review_basis`
+必須足以辨識獨立審核依據；`timestamp` 必須是產生 verdict 的 RFC 3339 時間。`blocking_issues`
+只列 true contract-breaking issue，`copilot_feedback_triage` 必須完整保有 `ADDRESS`、
+`DISCUSS`、`SKIP` arrays。對 future / new logs，記錄不能有 JSON 外的 trailing prose，
+最新 verdict 以 review log 最後 nonblank NDJSON line 為準；special evidence path 則必須
+只含一個完整 JSON object。此段不追溯適用 frozen legacy logs。
 
 ## Blocking Semantics
 
@@ -142,9 +187,11 @@ prose；最新 verdict 以 review log 最後 nonblank NDJSON line 為準。
   evidence 缺失；
 - status transition 無效；
 - artifact path scope drift、undeclared stable-library intent 或錯誤 release timing；
-- review log 最新 record 非有效 JSON、shape 不符或 verdict 非 `approved`；
+- future / new review log 或已明定 special replan evidence 的 latest record 非有效 JSON、
+  shape 不符、reviewed revision 未覆蓋 required latest artifact，或 verdict 非 `approved`；
 - self-authored approval marker、混合 role ownership 或 simulated separation；
-- plan、step、review-log 或 required repo contract 的 execution meaning 衝突；
+- plan、step、review-log、已明定 special replan evidence 或 required repo contract 的
+  execution meaning 衝突；
 - 以 chat、branch、summary、`GOAL.md` 或 frozen provenance 取代 required evidence。
 
 Plan-Creator 遇到缺失 planning input 必須停止；Plan-Reviewer 對 contract-breaking
@@ -158,3 +205,5 @@ issue 必須回傳 `needs-rework`；Planner 對 unresolved conflict 必須 route
 - 本文件不把 planning baseline 或 planning-review approval 轉換成 implementation
   approval。
 - 本文件不授權 product、BC、runtime、identity、provider 或 release work。
+- 本文件不授權對 frozen legacy review logs 的 migration、reader、compatibility layer 或
+  其他 topic 修改；這些只可由獨立 future policy topic 規劃。
