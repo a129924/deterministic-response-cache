@@ -72,17 +72,28 @@ artifact commit、required step 或上述 evidence 時，implementation 不可�
 一般 planning baseline 與 future / new review-log NDJSON 規則維持不變。唯一已授權的
 例外是 current topic `observer-dispatcher-governance` 的目前 `needs-rework` replan：
 在任何 replan commit 前，independent Plan-Reviewer 必須且只能寫入
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md`。
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-planning-review-evidence.md`。
 該單一 machine-JSON record 是此次 latest replan 的 routing evidence；它必須依 shared
-`Reviewer Handoff` schema 記錄 replan 的五個 reviewed artifact revisions / head，且
-`"verdict": "approved"` 才允許 Implementer 在既有 Human authorization 下 commit / push。
+`Reviewer Handoff` schema 記錄 replan 的五個 reviewed artifact revisions / head。只有
+`"verdict": "approved"` 才允許獨立 Implementer 建立唯一的 planning-evidence commit；
+該 commit 固化五個 replan artifacts 與 recovery planning-review record，並在 commit 建立
+後成為 immutable `implementation_subject_sha`。
+
+此 subject 之後只允許兩個線性、evidence-only commits：先由 Tester 寫入 declared
+recovery Tester evidence，再由 Reviewer 寫入 declared recovery implementation-review
+record。兩個 record 必須 attest 相同 `implementation_subject_sha`，Reviewer 必須 reference
+passing Tester evidence。最終 descendant 無 merge，且
+`git diff --name-status <implementation_subject_sha>..HEAD` 恰好只列出兩個 declared
+recovery implementation-evidence paths；不得有其他 path。這個狹義 recovery sequence
+不授權 push、PR thread action、merge、post-merge、release、tagging 或 final summary。
 
 此 exception 是 Human-authorized、current-topic、latest-replan-only 的 gate，不遷移、
-改寫、重讀或一般化任何 existing legacy `review-log.md`。legacy review logs 保持 frozen
+改寫、重讀或一般化任何 existing legacy `review-log.md`。`df137326363cce4f68e43124156731a50cf29a03`
+中的 planning-review、Tester 與 implementation-review evidence 均保持 frozen, superseded
 provenance，並非此 replan 的 routing authority。`needs-rework` evidence 維持 topic
 `needs-rework`；後續 bounded replan 必須再有 Human 明示授權。special evidence 不改變
 PR #1 Ready 的 `pr-open` external fact，也不構成 merge、implementation approval 或
-same-head Tester / Reviewer completion。
+same-subject Tester / Reviewer completion。
 
 Planner preflight 的 routing 為：無 candidate 為 `blocked`；多 candidate 或 plan / step
 指向不同 topic 為 `human-check`；同 topic 的 status 或 scope conflict 為 `blocked`，除非

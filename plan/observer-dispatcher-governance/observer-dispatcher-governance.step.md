@@ -55,34 +55,31 @@ created: 2026-08-31
   repair，並由 Plan-Creator 負責。不得 commit、建立 evidence、遷移或修改任何 legacy
   review / evidence log、建立 reader / compatibility layer，或修改其他 topic。
 - [ ] 2. **Actor:** Plan-Reviewer — **Action:** 僅在 step 1 latest replan 完成後，獨立寫入
-  `plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md`。
-  該 path 必須只含一個完整 shared `Reviewer Handoff` machine-JSON record：
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-planning-review-evidence.md`。
+  該 path 必須只含一個完整 shared `Reviewer Handoff` machine-JSON record，且
   `reviewed_artifacts` 恰好涵蓋 plan、spec、step、`plan/agent-handoff-workflow.md` 與
-  `plan/topic-plan-contract.md` 的 latest revisions / head，並有 `review_basis`、
-  `verdict: approved|needs-rework`、`blocking_issues`、完整 `copilot_feedback_triage`
-  （`ADDRESS`、`DISCUSS`、`SKIP` arrays）及 RFC 3339 `timestamp`。只有 `approved` 才可
-  進入 step 3；`needs-rework` 保持 current `needs-rework` status，且後續 replan 只能在
-  Human 再授權下進行。frozen legacy `review-log.md` 不是此 replan 的 routing authority。
-- [ ] 3. **Actor:** Implementer — **Action:** 僅在 step 2 對 latest replan 的 `approved`
-  evidence 存在，且既有 Human authorization 仍有效時，commit / push replan，令 PR #1
-  產生 new head。不得修改任何 legacy review / evidence log、建立 reader /
-  compatibility layer，或修改其他 topic。
-- [ ] 4. **Actor:** Tester — **Action:** 只對 step 3 的 PR #1 new head 執行 declared
-  checks，並先寫入
-  `plan/observer-dispatcher-governance/observer-dispatcher-governance.tester-evidence.md`。
-  record 必須含 `pr_number`、`head_sha`、`actor: Tester`、每項 `command` / `result`
-  與 `verdict: passing|failing`；舊 head evidence 是 frozen provenance，不能完成 new-head
-  gate，故此 step 不可標記完成。
-- [ ] 5. **Actor:** Reviewer — **Action:** 僅在同一 PR #1 new head 的 Tester
-  `verdict: passing` evidence 存在後，寫入
-  `plan/observer-dispatcher-governance/observer-dispatcher-governance.implementation-review-log.md`。
-  record 必須 reference tester evidence，並完整符合 shared `Reviewer Handoff`：
-  `reviewed_artifacts`（current PR head exact paths / revisions）、`review_basis`、
-  `approved|needs-rework`、`blocking_issues`、完整 `copilot_feedback_triage` 及 RFC 3339
-  `timestamp`；舊 head record 不能完成 new-head gate，故不可標記完成。
-- [ ] 6. **Actor:** Reviewer — **Action:** 完成 step 4 與 5 的同-head evidence gate 後，
-  處理 PR #1 已 addressed threads。此 reviewer-comments replan 為 pending；不得在
-  evidence 前處理 threads，亦不得視 Ready 為 merge approval。
+  `plan/topic-plan-contract.md` 的 latest revisions。`needs-rework` 保持 current
+  `needs-rework` status，後續 replan 只能等待新的 Human authorization。
+- [ ] 3. **Actor:** Independent Implementer — **Action:** 僅在 step 2 為 `approved` 時，
+  建立唯一 planning-evidence commit，固化 step 1 的五個 replan artifacts 與 recovery
+  planning-review evidence。此 commit SHA 是 immutable `implementation_subject_sha`；不得
+  push、修改 legacy evidence、修改其他 topic、建立新 PR head、處理 threads 或執行任何
+  human-only lifecycle action。
+- [ ] 4. **Actor:** Tester -> Independent Implementer — **Action:** Tester 僅對 immutable
+  `implementation_subject_sha` 執行 declared checks，並寫入
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-tester-evidence.md`。
+  record 必須含相同完整 subject SHA、`actor: Tester`、每項 `command` / `result`、subject
+  verification、RFC 3339 timestamp 與 `verdict: passing|failing`。若固化，Implementer 只能
+  建立此單一路徑的 evidence-only child commit；不得 push 或夾帶其他 path。
+- [ ] 5. **Actor:** Reviewer -> Independent Implementer — **Action:** 僅在 step 4 對相同
+  subject 有 `passing` record 時，Reviewer 寫入
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-implementation-review-log.md`。
+  JSON 必須含相同 `implementation_subject_sha`、Tester path / revision / passing verdict，及
+  完整 shared `Reviewer Handoff` fields。若固化，Implementer 只能建立此單一路徑的第二個
+  evidence-only linear child commit；最後以 `git diff --name-status
+  <implementation_subject_sha>..HEAD` 驗證恰好兩個 recovery implementation evidence paths
+  且 range 無 merge。此步完成後停止；不得 push、處理 threads、merge、post-merge、release、
+  tagging 或 final summary。
 
 ## Publish / Human Boundary
 
@@ -102,23 +99,21 @@ created: 2026-08-31
   correction，且不要求重新執行 planning evidence 或 preflight。
 - topic execution current state 為 `needs-rework`；PR #1 維持 Ready 的外部 `pr-open`
   fact，但 Ready 不是 independent implementation approval、merge approval 或已 merge。
-  existing Tester / Reviewer evidence log 均對舊 head，並在 rework 後的新 same-head gate
-  失效；本 tracker 不宣稱新的 Tester、Reviewer 或 Phase 4.5 completion。
-- corrective sequence 是 Human-authorized Plan-Creator first 完成 prospective replan（本
-  topic plan、spec、step，及 `plan/agent-handoff-workflow.md` 的 Human-only / 不可委派
-  wording、`plan/topic-plan-contract.md` 的 future / new review-log prospective-only wording
-  與 special evidence topology），independent Plan-Reviewer second 唯一寫入涵蓋五個 latest
-  replan artifact revisions / head、完整 shared `Reviewer Handoff` schema 的 `approved`
-  planning-review evidence，Implementer third 才 commit /
-  push new head，Tester fourth
-  寫入該 head 的 passing evidence，Reviewer fifth reference 同一 head evidence 並給出
-  independent `approved|needs-rework` verdict，才可處理已 addressed threads。若 step 2
-  verdict 為 `needs-rework`，topic 維持 `needs-rework` 且不得進入 commit 或 same-head
-  gates；所有 future steps 均為 pending。
-- existing `review-log.md` 與 implementation evidence logs 都是 frozen provenance；
-  `review-log.md` 不具 current-replan routing authority。新的 planning-review evidence
-  僅 prospective 適用於 latest replan；legacy policy、migration、reader 與 compatibility
-  明確 defer 至 separate future topic。本 topic 不建立該 topic，也不修改其他 topic。
+  `df137326363cce4f68e43124156731a50cf29a03` 的 planning-review、Tester 與 Reviewer
+  evidence 都是 frozen, superseded provenance；本 tracker 不宣稱新的 Tester、Reviewer
+  或 Phase 4.5 completion。
+- corrective sequence 是 Human-authorized Plan-Creator first 完成 exact five-path replan，
+  independent Plan-Reviewer second 寫入 recovery planning-review JSON，independent
+  Implementer third 建立唯一 planning-evidence commit。該 commit 是 immutable
+  `implementation_subject_sha`。Tester fourth attest subject 並只能產生第一個
+  evidence-only descendant；Reviewer fifth reference passing Tester record、attest 同一
+  subject，並只能產生第二個 evidence-only descendant。最終 range 必須無 merge，且
+  `git diff --name-status <implementation_subject_sha>..HEAD` 恰好只有兩個 recovery
+  implementation evidence paths。若 step 2 `needs-rework`，維持 `needs-rework`；所有
+  future steps 均 pending。
+- 此 recovery sequence 到 step 5 即停止：不 push、建立新 PR head、處理 threads、merge、
+  post-merge、release、tagging 或 final summary。legacy policy、migration、reader 與
+  compatibility 維持 defer；本 topic 不修改其他 topic。
 - `GOAL.md` 不是 active topic 或 phase authority。routing 必須由 Planner 根據
   plan、required step tracker 與 review log 判定。
 - `.github/agents/**` 是 frozen provenance；不得修改，亦不得作 runtime / routing

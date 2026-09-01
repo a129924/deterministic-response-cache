@@ -84,7 +84,7 @@ evidence。僅對已由 Human 明示授權的 current-topic replan，個別 topi
 exact、Plan-Reviewer-owned special evidence path，並必須同時列明它覆蓋的 latest replan
 artifacts、revisions / head、gate 與 status。當前唯一適用實例是：
 
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md`
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-planning-review-evidence.md`
 
 它只為 `observer-dispatcher-governance` 的目前 `needs-rework` bounded replan 提供 routing
 evidence。independent Plan-Reviewer 在完成該 latest replan review 後，將一個完整 JSON
@@ -94,12 +94,27 @@ object 寫入此 exact path；Plan-Creator、Planner、Implementer、Tester 與 
 latest revision / head。
 
 只有這個 exact record 完整符合下列 `Reviewer Handoff` schema 且
-`"verdict": "approved"`，Implementer 才可在既有 Human authorization 下 commit / push
-此 replan，然後啟動新 head 的 Tester / Reviewer same-head gates。`needs-rework` 維持
-topic `needs-rework`，不得自行恢復，後續 replan 必須另有 Human 明示授權。existing
-`review-log.md` 仍是 frozen provenance：不得遷移、改寫、重讀，且不是此 special replan
-的 routing authority。本 exception 不可被其他 topic、legacy log 或 future policy 推導或
-複製。
+`"verdict": "approved"`，獨立 Implementer 才可建立唯一的 planning-evidence commit。該
+commit 同時固化五個已審 replan artifact 與這個 planning-review evidence，其 commit SHA
+在建立後固定為 immutable `implementation_subject_sha`；此 subject 不是可由 chat、PR
+Ready state、branch 名稱或 frozen evidence 推測或替換的值。`needs-rework` 維持 topic
+`needs-rework`，不得自行恢復，後續 replan 必須另有 Human 明示授權。
+
+在 `implementation_subject_sha` 之後，本 topic 僅允許兩個線性、evidence-only descendant
+commits：Tester evidence commit 僅新增
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-tester-evidence.md`，
+Reviewer evidence commit 僅新增
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-implementation-review-log.md`。
+Tester 與 Reviewer 分別擁有 record 的內容；若需要 git commit，獨立 Implementer 只能原樣
+固化該 role 已寫入的單一路徑 evidence，不能改寫 verdict、夾帶其他檔案或 push。
+兩個 record 都必須明列同一個 `implementation_subject_sha`；Reviewer record 還必須 reference
+passing Tester record。最後的 descendant range 必須無 merge 且
+`git diff --name-status <implementation_subject_sha>..HEAD` 恰好只列出這兩個 declared
+implementation evidence paths，不得有其他 path、thread、push、merge、release 或 summary
+action。existing `review-log.md`、planning-review evidence、Tester evidence 與
+implementation-review log 在 `df137326363cce4f68e43124156731a50cf29a03` 均為 frozen,
+superseded provenance：不得遷移、改寫、重讀或作此 recovery routing authority。本 exception
+不可被其他 topic、legacy log 或 future policy 推導或複製。
 
 ### Planner preflight
 
@@ -179,6 +194,13 @@ future / new review-log record、human-authorized special replan evidence 與 to
 最新 verdict 以 review log 最後 nonblank NDJSON line 為準；special evidence path 則必須
 只含一個完整 JSON object。此段不追溯適用 frozen legacy logs。
 
+唯一 current-topic recovery 的 Reviewer evidence record 除此 fixed schema 外，必須新增
+`implementation_subject_sha`（planning-evidence commit 的完整 immutable SHA）、
+`tester_evidence_path`、`tester_evidence_verdict: "passing"` 與 Tester record 的 revision。
+Recovery Tester Markdown record 必須含相同的 `implementation_subject_sha`、`actor: Tester`、
+每項 `command` / `result`、`verdict: passing|failing`、timestamp 及其 subject 驗證結果。
+這些是 topic-specific additional fields，不改寫 generic future / new review-log schema。
+
 ## Blocking Semantics
 
 下列情況是 contract-breaking：
@@ -189,6 +211,10 @@ future / new review-log record、human-authorized special replan evidence 與 to
 - artifact path scope drift、undeclared stable-library intent 或錯誤 release timing；
 - future / new review log 或已明定 special replan evidence 的 latest record 非有效 JSON、
   shape 不符、reviewed revision 未覆蓋 required latest artifact，或 verdict 非 `approved`；
+- recovery Tester / Reviewer record 的 `implementation_subject_sha` 不存在、不相同、不是
+  planning-evidence commit，或 recovery descendant 不是 linear / evidence-only，或其
+  `git diff --name-status <implementation_subject_sha>..HEAD` 不是恰好兩個 declared
+  implementation evidence paths；
 - self-authored approval marker、混合 role ownership 或 simulated separation；
 - plan、step、review-log、已明定 special replan evidence 或 required repo contract 的
   execution meaning 衝突；

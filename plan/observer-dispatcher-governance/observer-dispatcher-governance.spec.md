@@ -20,39 +20,22 @@
 5. 既有測試保留 direct import、fixture、mock 和 assertion 行為；本 topic 不修改
    `tests/**`，也不以 `importlib`、`__import__` 或 `sys.modules` 取代 direct import。
 6. 本次 Human-authorized `needs-rework` 的 Plan-Creator diff 僅能位於 current topic
-   plan、spec、step，以及 `plan/agent-handoff-workflow.md`（Human-only / 不可委派
-   boundary wording）與 `plan/topic-plan-contract.md`（future / new review-log
-   prospective-only wording及此 replan 的 special evidence topology）；前二者的 shared-contract alignment 與後三者的
-   current-topic execution contract 均由 Plan-Creator 負責。不得建立 planning-review
-   evidence、修改 legacy evidence logs、其他 topic 或 frozen provenance。replan 後只可由
-   獨立 Plan-Reviewer 新建
-   `plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md`，
-   寫入一個完整 `Reviewer Handoff` machine-JSON record，並審核上述五個 latest replan
-   artifacts 的 revisions / head。此 topic 不影響
-   stable-library surfaces、README、VERSION 或 release。commit / push /
-   draft PR 僅由 Implementer 在 required evidence 與既有 Human authorization 下執行；
-   Reviewer 處理 PR comment routing；merge、post-merge、release、tagging 與 final
-   summary 是不可委派的 Human-only action，重新授權不得移轉它們。
-7. topic execution state 為 `needs-rework`，PR #1 仍是 Ready 的外部 `pr-open` state；
-   Ready 只表示可供 Human review，絕不等同 independent implementation approval、merge
-   approval 或已 merge。最新 replan 必須先由 independent Plan-Reviewer 在
-   `plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md`
-   唯一寫入 evidence，涵蓋 plan、spec、step、`plan/agent-handoff-workflow.md` 與
-   `plan/topic-plan-contract.md` 的 latest revisions / head，並記錄 review basis、
-   `verdict: approved|needs-rework`、`blocking_issues`、完整
-   `copilot_feedback_triage`（`ADDRESS`、`DISCUSS`、`SKIP` arrays）與 timestamp。只有
-   `approved` 才可在既有 Human authorization 下 commit replan 或繼續 same-head Tester /
-   implementation-review gates；`needs-rework` 維持此 status，且任何後續 prospective
-   replan 都必須由 Human 明示授權。frozen legacy `review-log.md` 不得作為本 current
-   replan 的 routing authority。完成 approved replan 後的 PR 新 head 使舊 head evidence
-   不再符合 same-head gate。Tester 必須先在
-   `plan/observer-dispatcher-governance/observer-dispatcher-governance.tester-evidence.md`
-   對新的同一 PR head 寫入含 `pr_number`、`head_sha`、每項 check result 與
-   `verdict: passing` 的 evidence。其後 Reviewer 才能在
-   `plan/observer-dispatcher-governance/observer-dispatcher-governance.implementation-review-log.md`
-   reference 此 evidence，並獨立寫入 `approved|needs-rework` verdict；只有這個 verdict
-   存在後才可處理已 addressed threads。新 head 的兩份 evidence 在本 replan 時均為
-   pending，不得宣稱新的 Tester 或 Reviewer completion。
+   plan、spec、step，以及 `plan/agent-handoff-workflow.md` 與
+   `plan/topic-plan-contract.md`；不得建立 evidence、修改其他 topic 或 frozen provenance。
+   `df137326363cce4f68e43124156731a50cf29a03` 的 planning-review、Tester 與 Reviewer
+   evidence 均是 frozen, superseded provenance，不可改寫或作 recovery authority。
+7. Plan-Reviewer 後續唯一可新建
+   `plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-planning-review-evidence.md`，
+   並以完整 shared `Reviewer Handoff` JSON object 覆蓋五個 latest replan artifacts。若 verdict
+   為 `approved`，獨立 Implementer 建立唯一 planning-evidence commit；該 commit SHA 是 immutable
+   `implementation_subject_sha`。Tester 和 Reviewer 必須在各自的 recovery evidence record
+   attest 相同 subject；Tester 為
+   `plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-tester-evidence.md`，
+   Reviewer 為
+   `plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-implementation-review-log.md`。
+   subject 後的 history 必須 linear、無 merge，且 name-status 恰好只有這兩個 paths；不得
+   push、處理 thread、merge、post-merge、release、tagging 或 summary。Human-only lifecycle
+   boundary 與 non-stable / README / VERSION exclusion 維持不變。
 
 ## Behavioral Scenarios
 
@@ -101,24 +84,27 @@
 
 - **Given**: PR #1 已開啟且為 Ready，且 blocking finding 已將 topic execution state
   route 至 `needs-rework`；舊 head 的 Tester / Reviewer artifacts 都是 frozen provenance。
-- **When**: latest replan 等待 commit，或 Reviewer 準備處理已 addressed threads。
+- **When**: latest replan 等待 recovery planning evidence 與 immutable subject 建立。
 - **Then**: PR 仍維持 `pr-open` / Ready，但 independent Plan-Reviewer 先唯一寫入涵蓋
   latest plan、spec、step、`plan/agent-handoff-workflow.md` 與
-  `plan/topic-plan-contract.md` revisions / head 的 planning-review evidence，並給出
-  `approved|needs-rework`、review basis、blocking issues、完整
-  `copilot_feedback_triage` 與 timestamp。只有 `approved`
-  才可由 Implementer 在既有 Human authorization 下 commit / push replan 新 head；若為
-  `needs-rework`，topic 保持 `needs-rework`，僅可由 Human 再授權 prospective bounded
-  replan。新 head 後，Tester 對新 head 寫入 `verdict: passing` evidence，Reviewer 再獨立寫入
-  reference 該 evidence 的 `approved|needs-rework` verdict。前述 gate 未滿足時不得處理
-  threads，也不得把 Ready 當成 merge approval。
+  `plan/topic-plan-contract.md` revisions 的 recovery planning-review evidence。只有
+  `approved` 才可建立 planning-evidence commit，且其 SHA 固定為
+  `implementation_subject_sha`。Tester 先 attest subject 並取得 `passing`；Reviewer 再
+  reference Tester record 並 attest 同一 subject。subject 後的 final range 必須無 merge，且
+  `git diff --name-status <implementation_subject_sha>..HEAD` 恰好只有兩個 declared
+  recovery implementation-evidence paths。這個 recovery sequence 不得 push、處理 threads、
+  merge、post-merge、release、tagging 或 summary，也不得把 Ready 當成 approval。
 
 ## Error / Edge Cases
 
 - 缺少涵蓋 latest replan（plan、spec、step、`plan/agent-handoff-workflow.md` 與
-  `plan/topic-plan-contract.md`）revision 的 independent approved planning-review evidence 時，
-  不得 commit replan 或繼續 same-head Tester / implementation-review gate；不得由 branch、
-  chat、summary、`GOAL.md` 或 frozen legacy review-log 補推；維持 `needs-rework`。
+  `plan/topic-plan-contract.md`）revision 的 independent approved recovery planning-review
+  evidence 時，不得建立 `implementation_subject_sha` 或開始 Tester / Reviewer recovery
+  gate；不得由 branch、chat、summary、`GOAL.md` 或 frozen evidence 補推；維持
+  `needs-rework`。
+- Tester / Reviewer 的 `implementation_subject_sha` 不同、subject 不是 planning-evidence
+  commit、range 含 merge，或 name-status 不是恰好兩個 declared recovery implementation
+  evidence paths 時，recovery evidence 無效；不得以補寫、thread action 或另一個 path 修復。
 - 若新增的測試需求本身是 import 行為，只有 approved topic 明定時才可新增專用測試；
   原有 regression test 仍必須保持 direct import。
 - 如果 implementation 需要 `Written` / `Modify` 以外檔案，先停止，由 Planner 決定
