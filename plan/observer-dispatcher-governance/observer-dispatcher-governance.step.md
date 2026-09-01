@@ -1,6 +1,6 @@
 ---
 topic: observer-dispatcher-governance
-phase: publish-in-progress
+phase: pr-open
 created: 2026-08-31
 ---
 
@@ -12,9 +12,9 @@ created: 2026-08-31
 - [X] planning-artifact-commit
 - [X] plan-review
 - [X] implementation
-- [X] testing
-- [X] code-review
-- [ ] publish
+- [ ] testing
+- [ ] code-review
+- [X] publish
 - [ ] human-review
 
 ## Actionable Steps
@@ -43,45 +43,51 @@ created: 2026-08-31
   (`docs(governance): confirm observer plan preflight`) 證實；本回填不重跑 planning
   evidence 或 preflight。
 
-## Implementation Steps
+## Implementation / Evidence Replan
 
-- [X] 1. Implementer 已依 approved topic plan 修改 `AGENTS.md`、建立 `GOAL.md`，並
-  保留既有 tests 的 direct-import 行為。implementation diff 僅含這兩個 manifest
-  允許的 paths；實作 authoring 已完成並交付獨立 Reviewer。
-- [X] 2. Tester 已執行 declared repository checks，確認 allowed path set 與
-  import-preservation compliance；所有 declared checks 均通過，且 worktree diff
-  僅為 `AGENTS.md` 與 `GOAL.md`。
-- [X] 3. Reviewer 已獨立審核 bounded implementation，並完成 review routing；latest
-  implementation verdict 為 `approved`，故交由 Planner 做 Phase 4.5 contract
-  alignment。
-- [X] 4. Planner 已在 implementation Reviewer `approved` 後完成 Phase 4.5；確認無
-  contract drift，並 route `publish-in-progress`。
+- [X] 1. Implementer 已完成 PR #1 的 current draft；PR #1 維持 `pr-open` / Ready。
+  Ready 不等同 independent implementation approval、human merge approval 或已 merge。
+- [ ] 2. **Actor:** Tester — **Action:** 對 PR #1 current head 執行 declared checks，並
+  先寫入
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.tester-evidence.md`。
+  record 必須含 `pr_number`、`head_sha`、`actor: Tester`、每項 `command` / `result`
+  與 `verdict: passing|failing`；目前沒有 evidence，故不可標記完成。
+- [ ] 3. **Actor:** Reviewer — **Action:** 僅在同一 PR #1 head 的 Tester
+  `verdict: passing` evidence 存在後，寫入
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.implementation-review-log.md`。
+  record 必須 reference tester evidence，並獨立給出 `approved|needs-rework`、
+  `blocking_issues` 及 `copilot_feedback_triage` verdict；目前沒有 independent verdict，
+  故不可標記完成。
+- [ ] 4. **Actor:** Reviewer — **Action:** 完成 step 2 與 3 的同-head evidence gate 後，
+  處理 PR #1 已 addressed threads。此 reviewer-comments replan 為 pending；不得在
+  evidence 前處理 threads，亦不得視 Ready 為 merge approval。
 
 ## Publish / Human Boundary
 
-- [ ] **Actor:** Implementer — **Action:** 在 independent review、Planner Phase 4.5、
-  Tester evidence 與既有 human authorization 都通過後，將已驗證 topic changes
-  commit by topic、push 並開啟 draft PR。
+- [X] **Actor:** Implementer — **Action:** 已在既有 human authorization 下完成 bounded
+  commit、push 並開啟 PR #1；PR #1 目前為 Ready 的 `pr-open`，非 merge approval。
 - [ ] **Actor:** Human — **Action:** draft PR 開啟後執行 human review、merge、
   post-merge、release（若有）與 close summary；其他角色不得自行執行。
 
 ## Handoff / Gate Notes
 
 - `plan-authoring`、planning artifact commit、independent `plan-review`、review
-  evidence progression commit 與 Planner preflight 均已完成；topic 現為
-  `publish-in-progress`。preflight evidence 為 commit
+  evidence progression commit 與 Planner preflight 均已完成；preflight evidence 為 commit
   `490066f6753271181d289abdd593f119bd9ef48c`
   (`docs(governance): confirm observer plan preflight`)；此前歷史漏記在此作 bounded
   correction，且不要求重新執行 planning evidence 或 preflight。
-- Implementer 已完成 bounded authoring，Tester 已完成 declared checks 並確認 allowed
-  path set 與 direct-import preservation；independent implementation Reviewer 的 latest
-  verdict 為 `approved`，且 Planner 已完成 Phase 4.5 contract alignment，確認無
-  contract drift。故 topic 已真實轉為 `publish-in-progress`；下一關仍是 Implementer
-  在既有 human authorization 下完成 bounded commit、push 與 draft PR。draft PR 尚未
-  開啟，human review 仍為 pending。
+- topic 的 current state 為 `pr-open`：PR #1 維持 Ready，但 Ready 不是 independent
+  implementation approval、human merge approval 或已 merge。既有 step 對 Tester、
+  Reviewer 及 Phase 4.5 的完成敘述並非 declared evidence，不可回填為完成。
+- current corrective sequence 是 Tester first 寫入 passing evidence，Reviewer second
+  reference 同一 PR head evidence 並給出 independent `approved|needs-rework` verdict，
+  才可處理已 addressed threads；這個 reviewer-comments replan 以及兩份 evidence 均為
+  pending。
 - Plan-Reviewer 的 verdict 只存在 declared review log 的最後 nonblank NDJSON line，
   本 tracker 不重述或取代該 verdict。
 - `GOAL.md` 不是 active topic 或 phase authority。routing 必須由 Planner 根據
   plan、required step tracker 與 review log 判定。
 - `.github/agents/**` 是 frozen provenance；不得修改，亦不得作 runtime / routing
   dependency。
+- `step-creator` role-model conflict 不屬本 topic；已 out-of-scope defer 至新 topic
+  `step-creator-role-model-alignment`，不得重開既有 topic。

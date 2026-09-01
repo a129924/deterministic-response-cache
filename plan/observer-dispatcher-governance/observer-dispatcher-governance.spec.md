@@ -20,6 +20,14 @@
    stable-library surfaces、README、VERSION 或 release。commit / push / draft PR 僅由
    Implementer 在 required evidence 與既有 human authorization 下執行；Reviewer 處理
    PR comment routing，merge / release / post-merge 為 human boundary。
+7. PR #1 維持 Ready 的 `pr-open` state；Ready 只表示可供 human review，絕不等同
+   independent implementation approval、merge approval 或已 merge。Tester 必須先在
+   `plan/observer-dispatcher-governance/observer-dispatcher-governance.tester-evidence.md`
+   對同一 PR head 寫入含 `pr_number`、`head_sha`、每項 check result 與
+   `verdict: passing` 的 evidence。其後 Reviewer 才能在
+   `plan/observer-dispatcher-governance/observer-dispatcher-governance.implementation-review-log.md`
+   reference 此 evidence，並獨立寫入 `approved|needs-rework` verdict；只有這個 verdict
+   存在後才可處理已 addressed threads。兩份 evidence 在本 replan 時均為 pending。
 
 ## Behavioral Scenarios
 
@@ -64,6 +72,16 @@
   planning artifact commit 不表示 implementation approval；仍須 Plan-Reviewer
   之後寫入 latest `approved` review-log record。
 
+### Scenario 6: Ready PR 的 evidence-first comment routing
+
+- **Given**: PR #1 已開啟且為 Ready，但 current head 尚無 declared tester evidence 或
+  implementation review log。
+- **When**: Reviewer 準備處理已 addressed threads。
+- **Then**: PR 仍維持 `pr-open` / Ready，但 Reviewer 先等待 Tester 對同一 head 寫入
+  `verdict: passing` evidence，再獨立寫入 reference 該 evidence 的
+  `approved|needs-rework` verdict；前述 gate 未滿足時不得處理 threads，也不得把 Ready
+  當成 merge approval。
+
 ## Error / Edge Cases
 
 - 缺少 planning artifact commit、required step tracker 或 latest approved review-log
@@ -73,3 +91,5 @@
   原有 regression test 仍必須保持 direct import。
 - 如果 implementation 需要 `Written` / `Modify` 以外檔案，先停止，由 Planner 決定
   是否需 bounded plan repair；不得自行擴張。
+- `step-creator` 的角色模型衝突一律 defer 至新 topic
+  `step-creator-role-model-alignment`；不可用本 topic 的 evidence repair 重新開啟。

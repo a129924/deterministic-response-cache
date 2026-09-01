@@ -23,8 +23,8 @@
     boundary 與既有測試 direct-import preservation rule。
   - `plan/agent-handoff-workflow.md` 與 `plan/topic-plan-contract.md` 的
     ownership、candidate resolution 與 approved-evidence 對齊。
-  - 本 topic 的 plan、spec、step、review-log 與 human-close summary
-    handoff artifacts。
+  - 本 topic 的 plan、spec、step、planning review-log、tester-evidence、
+    implementation-review-log 與 human-close summary handoff artifacts。
 
 - **Out of scope**:
   - `src/**`、`tests/**`、public API、Business Capability、Identity、Response
@@ -73,12 +73,15 @@
   hidden chat context 或同一角色宣稱多重 gate 已完成。
 - 若執行需要未列 path、改變 locked contract 或觸及 frozen provenance，必須停止並
   回交 Planner / human，而不是擴張 scope。
+- `step-creator` 的角色模型衝突不屬本 topic 的 governance implementation 或本次
+  evidence repair 範圍；明確 defer 至新 topic
+  `step-creator-role-model-alignment`，不得藉此重開既有 topic。
 
 ## Status / Allowed Transitions
 
-- **Current**: `creator-in-progress`。planning artifacts 已由 commit `dd6d5a7`
-  (`docs(governance): establish observer dispatcher plan`) 固化為 repo-visible
-  contract；Planner preflight 已完成，Implementer 的 bounded work 尚未宣告完成。
+- **Current**: `pr-open`。PR #1 維持 **Ready**；`pr-open` 可為 Draft 或 Ready，
+  而 Ready 只表示 PR 可供 human review，絕不等同 independent implementation
+  approval、human merge approval 或已 merge。
 - **Bounded historical recovery**: preflight 曾在 implementation 前完成，但 step
   tracker 漏記該事實。Planner-authorized backfill 以 commit
   `490066f6753271181d289abdd593f119bd9ef48c`
@@ -86,10 +89,17 @@
   step 同步至 `creator-in-progress`。這只是 progression truth correction：不重跑或要求
   重跑 planning review、review-log evidence 或 preflight，不重開任何 locked decision，
   亦不宣稱 implementation 或 testing 已完成。
-- **Next gate**: current bounded implementation draft 可交 Tester 執行 declared
-  repository checks；testing evidence 仍為 pending。planning review、review-log evidence
-  commit 與 Planner preflight 已完成，不得再次派遣 Plan-Reviewer 或 Implementer 執行
-  planning-evidence 工作。
+- **Current corrective gate**: Tester 必須先在 declared tester-evidence artifact 寫入
+  passing evidence；其後 Reviewer 必須在 declared implementation-review-log reference
+  該 evidence，並獨立寫入 `approved` 或 `needs-rework` verdict。兩份 artifact 在本次
+  replan 時均為 pending；不得將既有口頭、step 或 PR state 當成已完成 evidence。
+- **Thread gate**: 只有上述 Tester passing evidence 與 Reviewer independent verdict
+  都存在且對同一 PR head 時，Reviewer 才可處理 PR #1 的已 addressed threads；在此之前
+  reviewer-comments replan 維持 pending。此 gate 不授權任何 actor merge、resolve human
+  approval 或把 Ready 重解為 approval。
+- **Recorded nonconformance**: PR #1 已存在的 Ready state 是 current external fact，
+  不補正為不存在，也不治癒 missing evidence；本 bounded replan 在不變更 PR state 的
+  前提下補足 evidence-first comment routing。
 - **Execution model**: topic 在 planning review、review-log evidence commit 與
   Planner preflight 期間維持 `planned`。preflight 證實 required evidence 已
   approved 後進入 `creator-in-progress`，由 Implementer 完成 bounded change，並交由
@@ -122,6 +132,8 @@ Routing notes:
 - `pr-open` means draft PR 已開啟且等待 human review；Reviewer 處理 comments 的
   classification / routing；Observer 與 Implementer 不得自行處理 comments、merge 或
   post-merge work。
+- PR #1 的 Ready state 保持不變；本 replan 只補足 evidence / review routing，並不
+  回填、模擬或重新宣告先前 testing、review 或 Phase 4.5 已完成。
 
 ## Artifact Paths
 
@@ -135,6 +147,8 @@ Routing notes:
 | Topic specification | `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md` | Plan-Creator | Acceptance scenarios and scope guardrail |
 | Step tracker | `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md` | Plan-Creator | Progression truth and gate state |
 | Review log | `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md` | Plan-Reviewer | Reviewer routing history; never replaces the plan |
+| Tester evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.tester-evidence.md` | Tester | PR #1 current-head 的 declared checks、結果與 passing verdict；必須先於 implementation review log |
+| Implementation review log | `plan/observer-dispatcher-governance/observer-dispatcher-governance.implementation-review-log.md` | Reviewer | Reference tester evidence 的獨立 implementation verdict；是 addressed-thread handling 的前置 gate |
 | Topic summary | `plan/observer-dispatcher-governance/observer-dispatcher-governance.summary.md` | Human operator | Required close / next-handoff truth at human boundary |
 
 - `README.md`, `VERSION`, `.github/copilot-instructions.md`, `src/**`, `tests/**`,
@@ -190,6 +204,8 @@ Routing notes:
 | `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md` | Plan-Creator | Acceptance scenarios |
 | `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md` | Plan-Creator | Progression truth |
 | `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md` | Plan-Reviewer | Reviewer verdict history |
+| `plan/observer-dispatcher-governance/observer-dispatcher-governance.tester-evidence.md` | Tester | Current PR-head test evidence; created before implementation review |
+| `plan/observer-dispatcher-governance/observer-dispatcher-governance.implementation-review-log.md` | Reviewer | Independent review verdict that references current passing tester evidence |
 | `plan/observer-dispatcher-governance/observer-dispatcher-governance.summary.md` | Human operator | Close / next-handoff truth |
 
 #### Modify
@@ -239,11 +255,15 @@ Routing notes:
 - artifact table 和 dispatch manifest 路徑、owner、role 完全一致；`Written` /
   `Modify` 外無 diff，`.github/agents/**` 零 diff。
 - existing test direct import 未被替換；相關 repository checks 在後續 Tester
-  階段通過：`uv run pytest`、`uv run pyright`、`uv run tach check`、
-  `uv run pre-commit run --all-files`。
+  階段執行：`uv run pytest`、`uv run pyright`、`uv run tach check`、
+  `uv run pre-commit run --all-files`。尚未有 declared tester-evidence artifact 前，
+  不得聲稱這些 checks 已通過。
 - Plan-Reviewer 對已提交的 plan、spec、step 做獨立 review，將 latest fixed JSON
   verdict 記入 declared review log；只有最後一筆 record 為 `approved`，Planner 才可
   preflight implementation。
+- PR #1 的 current head 必須先有 Tester 的 passing evidence，再由 Reviewer 寫入
+  reference 該 evidence 的 independent implementation verdict；只有 `approved` 或
+  `needs-rework` 的有效 verdict 存在後，Reviewer 才可處理已 addressed threads。
 
 ## Reviewer Handoff
 
@@ -263,6 +283,21 @@ object 作為 `plan/observer-dispatcher-governance/observer-dispatcher-governanc
 }
 ```
 
+### Implementation Evidence and Review Gate
+
+- `observer-dispatcher-governance.tester-evidence.md` 的最小 schema 為一個可讀的
+  Markdown record，明列 `pr_number`、`head_sha`、`actor: Tester`、每項
+  `command` 與 `result`，以及最終 `verdict: passing|failing`。只有同一 PR #1 head 的
+  `verdict: passing` 可進入下一 gate；此 artifact 尚未建立時一律為 pending。
+- `observer-dispatcher-governance.implementation-review-log.md` 的最小 schema 為一筆
+  JSON object，明列 `pr_number`、`head_sha`、`tester_evidence_path`、
+  `tester_evidence_verdict`、`verdict: approved|needs-rework`、
+  `blocking_issues`，以及 `copilot_feedback_triage`（`ADDRESS`、`DISCUSS`、`SKIP`
+  arrays）。Reviewer 必須獨立產生此 verdict；它不可由 Tester 或 Implementer 代寫。
+- Reviewer 僅可在 implementation-review-log reference 到同一 head 的
+  `verdict: passing` tester evidence 後，處理 PR #1 的已 addressed threads。此限制不
+  改變 PR #1 的 Ready state，亦不授權 merge 或人類 approval。
+
 ## Post-merge / release actions
 
 - 本 topic 無 repository release、VERSION bump 或 tagging action。
@@ -274,5 +309,9 @@ object 作為 `plan/observer-dispatcher-governance/observer-dispatcher-governanc
 
 ## Open Questions / Unresolved Items
 
-- 無阻塞問題。optional analysis-layer artifacts 缺失已在 Goal / Outcome 警告中記錄；
-  本 topic 不重新開啟已鎖定的 architecture、path 或 contract decisions。
+- PR #1 的 tester evidence、implementation-review-log 與 reviewer-comments replan
+  均為 pending；在真實 evidence 寫入前不得宣稱完成。
+- `step-creator` role-model conflict 已 out-of-scope defer 至
+  `step-creator-role-model-alignment`；本 topic 不重新開啟它。
+- optional analysis-layer artifacts 缺失已在 Goal / Outcome 警告中記錄；本 topic 不
+  重新開啟已鎖定的 architecture、path 或 contract decisions。
