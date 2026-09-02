@@ -1,6 +1,93 @@
 # Observer / Dispatcher Governance
 
+> **B3 corrective override — current execution truth:** B0/B1/B2/S1/S3/T1/T3/V1/V3 and all
+> normal/recovery records are frozen historical provenance, never current routing, gates, or subjects.
+> V3's frozen `needs-rework` outcome has no repo-visible V3 review log and must not be backfilled.
+> The only current route is non-subject B3 -> test-only non-merge S4 -> T4 -> V4. Before S4,
+> Plan-Reviewer tree/blob reviews exactly the two shared contracts, parent plan/spec/step, and
+> `correction-b3-plan.md` / `correction-b3-step.md` through a temporary index seeded from HEAD,
+> `git write-tree`, `git rev-parse`, and `git cat-file`. B3 is committed unchanged with its approved
+> review record and only that reviewed set. S4 may modify only
+> `tests/test_observer_dispatcher_governance_contract.py`, preserving direct imports and adding
+> fail-closed assertions for frozen provenance/nonrouting, S4-only subject, and S4/T4/V4 topology.
+> V4's pre-commit record targets pre-existing T4 with `review_target_commit_sha`; it must not require
+> or self-reference a V4 SHA. Post-commit validation independently identifies V4 and checks named
+> `git diff --name-status S4..V4` contains exactly B3 T4/V4 evidence paths, never HEAD.
+
+## B3 Current Artifact Delta
+
+| Artifact | Path | Write owner |
+| --- | --- | --- |
+| B3 correction plan | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b3-plan.md` | Plan-Creator |
+| B3 correction step | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b3-step.md` | Plan-Creator |
+| B3 correction review | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b3-review-log.md` | Plan-Reviewer |
+| B3 Tester evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b3-tester-evidence.md` | Tester |
+| B3 implementation review | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b3-implementation-review-log.md` | Reviewer |
+
 ## Goal / Outcome
+
+- B3 exclusively repairs the current governance evidence contract: verified-tree non-subject B3,
+  test-only S4, then T4 and V4 evidence. All earlier epochs stay frozen provenance.
+
+## Scope
+
+- **In scope:** exactly the seven B3 planning paths before review and, after validated B3, only
+  `tests/test_observer_dispatcher_governance_contract.py` for S4.
+- **Out of scope:** any old correction artifact, product or architecture work, import replacement,
+  PR/thread activity, publication, merge, release, or provenance migration.
+
+## Locked Decisions
+
+- B3 is never an `implementation_subject_sha`; S4 is the sole current subject.
+- S4 tests use direct imports and fail closed if B0/B1/B2/S1/S3/T1/T3/V1/V3 become routing evidence,
+  B3/prior work becomes subject, topology/range is not S4/T4/V4 and `S4..V4`, evidence paths differ,
+  HEAD is used, or mutation negatives remove these invariants.
+- V4's pre-commit schema contains only `review_target_commit_sha` for existing T4; post-commit
+  validation, not the record, identifies V4.
+
+## Boundaries / Exclusions
+
+- Each role writes only its declared artifact; Planner owns routing. B3 review uses a reproducible
+  temporary-index tree/blob procedure over the exact seven planning paths.
+
+## Status / Allowed Transitions
+
+- Current status is `needs-rework` / `PLANNER_REPLAN`; only B3 -> S4 -> T4 -> V4 is current.
+
+## Artifact Paths
+
+The B3 Current Artifact Delta table above is the complete current executable path set. All B2 and
+earlier table entries below are historical provenance, not current artifacts.
+
+## Implementation Steps
+
+1. Tree/blob review and commit non-subject B3 from the exact reviewed set.
+2. Create S4 only on the declared test path with the direct, fail-closed assertions above.
+3. Create T4 then pre-commit V4 targeting T4; independently verify named exact `S4..V4` range.
+
+## Validation / Acceptance Checks
+
+- B3 review tree/blobs and post-commit one-log diff are reproducible.
+- S4 mutation negatives fail for missing frozen markers, B3/prior-subject use, changed direct imports,
+  alternate topology, extra evidence, or HEAD range.
+- V4 has no self-reference and final range has exactly B3 T4/V4 evidence paths.
+
+## Reviewer Handoff
+
+Only the B3 review log and B3 schemas in `plan/topic-plan-contract.md#b3-correction-evidence-schemas`
+are current. V4 reviews pre-existing T4; no frozen log or outcome supplies a current gate.
+
+## Post-merge / release actions
+
+Stop at the Human boundary; none are authorized.
+
+## Open Questions / Unresolved Items
+
+B3 review, B3 baseline commit, S4, T4, and V4 are pending.
+
+## Historical B2 Record (frozen provenance)
+
+### Historical B2 Goal / Outcome
 
 - 完成 B2 high-severity corrective baseline：以可驗證 Git tree object 取代已失效 B1 review
   record，並只補強 governance contract test 對 frozen provenance、subject reset 與 exact
@@ -14,7 +101,7 @@
 > Planner 已核准的 B2 corrective direction author；此 warning 不授權重新開啟
 > architecture、BC、identity 或未列 path。
 
-## Scope
+### Historical B2 Scope
 
 - **In scope**: two shared contracts、parent plan/spec/step、B2 correction plan/step；B2 approval
   後唯一 implementation path 為 `tests/test_observer_dispatcher_governance_contract.py`。
@@ -22,7 +109,7 @@
   runtime、architecture docs、README、VERSION、release、tag、push、PR / thread、merge、post-merge、
   summary、legacy evidence migration / reader / compatibility layer，以及未列 path。
 
-## Locked Decisions
+### Historical B2 Locked Decisions
 
 - 這是 Planner-confirmed `high` B2 correction，routing state 為 `PLANNER_REPLAN`；B0/S1/T1/V1、
   B1 及其 invalid review record 都是 frozen provenance，不能作為 B2 gate 或 subject，且不可修改。
@@ -52,7 +139,7 @@
   standalone correction skill 只可在另開 topic 且 repeated instability 或
   cross-workflow reuse 已證實時再考慮。
 
-## Boundaries / Exclusions
+### Historical B2 Boundaries / Exclusions
 
 - Observer 只讀 state、依 Planner 決定派遣一個角色、彙整 bounded result 並回報
   `可直接前進`、`needs-rework`、`blocked` 或 `human-check`；不得實作、改檔、git、
@@ -65,7 +152,7 @@
   CacheStore 與其餘 deferred BC boundaries 維持不變。任何未列 path 或 direction change
   都停止並回交 Planner，chat、branch、PR Ready、summary 或舊 evidence 不得補推 gate。
 
-## Status / Allowed Transitions
+### Historical B2 Status / Allowed Transitions
 
 - **Current**: `needs-rework`；correction routing state 為 `PLANNER_REPLAN`。
 - **Execution model**: narrow `B2` exception 下 Plan-Reviewer 先以 temporary-index verified
@@ -87,7 +174,7 @@
   並要求新的 Planner-frozen direction。final correction implementation review
   `needs-rework` 使 new chain 無效；不得用 patch、extra descendant 或 prior evidence 修復。
 
-## Artifact Paths
+### Historical B2 Artifact Paths
 
 | Artifact | Path | Write owner | Decision authority | Role |
 | --- | --- | --- | --- | --- |
@@ -114,7 +201,7 @@
 `README.md`、`VERSION`、`.github/copilot-instructions.md`、`.github/agents/**`、`src/**`、
 docs、其他 tests 與 summary 均不在 write scope。未列 path 需先由 Planner 修復 parent plan。
 
-## Implementation Steps
+### Historical B2 Implementation Steps
 
 1. Plan-Creator 只同步七個 B2 planning paths 並建立 B2 correction plan/step；不寫 evidence、
    不 commit、也不開始 implementation。
@@ -125,7 +212,7 @@ docs、其他 tests 與 summary 均不在 write scope。未列 path 需先由 Pl
 3. Tester 只寫同一 S3 的 T3 factual evidence；Reviewer 僅在 passing T3 後寫 V3 verdict；兩者都
    不得改 subject、route、status 或 implementation。
 
-## Validation / Acceptance Checks
+### Historical B2 Validation / Acceptance Checks
 
 - B2 review pins a verified Git tree object and one tree-derived path/blob revision for each exact
   seven B2 planning paths; its approved record is committed unchanged with exactly that set as
@@ -143,7 +230,7 @@ docs、其他 tests 與 summary 均不在 write scope。未列 path 需先由 Pl
   correction artifacts; then stop, with no publish, PR action, merge, release, tag, summary
   or self-approval.
 
-## Reviewer Handoff
+### Historical B2 Reviewer Handoff
 
 Current B2 pre-subject gate:
 
@@ -203,13 +290,13 @@ The B2 review, T3 Tester, and V3 final implementation-review records use the com
 schemas in `plan/topic-plan-contract.md#current-topic-correction-evidence-schemas`; those schemas
 are the authoritative field contract for correction review and the exact named `S3..V3` topology.
 
-## Post-merge / release actions
+### Historical B2 Post-merge / release actions
 
 - No merge, release, VERSION bump, tag, post-merge sync, PR action or summary is authorized.
   The final correction implementation-review record is a terminal Human boundary; every
   later lifecycle action needs new explicit Human direction.
 
-## Open Questions / Unresolved Items
+### Historical B2 Open Questions / Unresolved Items
 
 - Correction review, replacement subject, new Tester evidence and new independent
   implementation review are pending. Existing evidence is frozen provenance and cannot

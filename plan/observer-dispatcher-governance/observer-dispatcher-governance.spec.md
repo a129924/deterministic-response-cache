@@ -1,12 +1,35 @@
 # Observer / Dispatcher Governance Specification
 
+> **B3 correction override:** B0/B1/B2/S1/S3/T1/T3/V1/V3 plus normal/recovery evidence are frozen
+> and nonrouting; V3 is a frozen needs-rework outcome without a repo-visible review log. B3 is a
+> temporary-index verified-tree non-subject baseline over exactly seven B3 planning paths. S4 alone
+> changes `tests/test_observer_dispatcher_governance_contract.py` and becomes the current subject;
+> direct imports remain mandatory. Only T4 then V4 may descend. The V4 record is written before V4
+> exists and names pre-existing T4 through `review_target_commit_sha`, never a V4 SHA. Post-commit
+> validation identifies V4 independently and checks exact named `S4..V4` evidence-only range.
+
+## B3 Current Acceptance Criteria
+
+1. B0/B1/B2/S1/S3/T1/T3/V1/V3 and normal/recovery evidence are frozen nonrouting provenance;
+   V3's historical needs-rework outcome has no review log.
+2. B3 is verified through a temporary index over exactly seven planning paths and is non-subject.
+3. S4 alone modifies the governance contract test. It retains direct imports and fail-closed mutation
+   negatives for frozen markers, B3/prior subject use, alternate S4/T4/V4 topology, evidence paths,
+   HEAD ranges, and dynamic-import substitution.
+4. T4 then V4 are the only non-merge evidence descendants; V4 pre-commit JSON targets T4 through
+   `review_target_commit_sha` and never contains/requires a V4 SHA.
+5. External post-commit validation identifies V4 and verifies exact named `S4..V4` range with only
+   the two B3 evidence paths.
+
+## Historical B2 Record (frozen provenance)
+
 > **B2 correction override:** B0/S1/T1/V1、B1 及其 invalid review record are frozen provenance.
 > Before implementation, only the seven B2 planning artifacts receive a temporary-index verified
 > Git tree/blob review and non-subject B2 baseline commit with post-commit validation. The sole
 > subsequent subject is test-only S3; its only allowed non-merge descendants are T3 then V3,
 > verified as `S3..V3`, never `HEAD`.
 
-## Acceptance Criteria
+### Historical B2 Acceptance Criteria
 
 1. Declared governance, custom-agent, workflow-skill and test surfaces use one
    model: Planner alone resolves candidate, phase, gate, severity, correction
@@ -34,7 +57,7 @@
 8. `tests/test_observer_dispatcher_governance_contract.py` detects expanded-schema
    drift without replacing direct-import regressions or adding dynamic imports.
 
-## Behavioral Scenarios
+### Historical B2 Behavioral Scenarios
 
 ### Scenario 1: High correction begins
 
@@ -67,7 +90,7 @@
 - **When**: the new contract test or independent review runs.
 - **Then**: correction remains `needs-rework`; no lifecycle action is inferred.
 
-## Error / Edge Cases
+### Historical B2 Error / Edge Cases
 
 - Missing/non-approved correction review, or correction review evidence written after any
   implementation change, blocks implementation and subject creation.

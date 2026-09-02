@@ -6,12 +6,36 @@ created: 2026-09-01
 
 # observer-dispatcher-governance — Step Tracking
 
+> **B3 correction override — current stage:** B0/B1/B2/S1/S3/T1/T3/V1/V3 and normal/recovery
+> artifacts are frozen, nonrouting provenance; V3's frozen needs-rework outcome has no log. The
+> current route is verified-tree non-subject B3, then test-only S4, T4, and pre-commit V4 targeting
+> T4 via `review_target_commit_sha`. Exact final verification is named `S4..V4`, never HEAD.
+
+## B3 Actionable Steps
+
+- [X] **Plan-Creator:** synchronize only the seven B3 planning paths and create B3 plan/step.
+- [ ] **Independent Plan-Reviewer:** review tree/blob state of exactly those seven paths and write B3 record.
+- [ ] **Independent Implementer:** commit unchanged approved record and reviewed set as non-subject B3.
+- [ ] **Independent Implementer:** create S4 changing only the governance contract test.
+- [ ] **Tester:** create T4 evidence for same S4.
+- [ ] **Reviewer:** create V4 pre-commit record targeting T4; validate V4 post-commit and `S4..V4`.
+
+## B3 Current Gate Notes
+
+- Only B3 -> S4 -> T4 -> V4 is current. B0/B1/B2/S1/S3/T1/T3/V1/V3 and normal/recovery artifacts
+  are frozen, nonrouting provenance; V3 has no review-log file.
+- S4 direct tests must fail closed for every frozen-marker removal, B3/prior subject substitution,
+  topology/range/evidence mutation, HEAD range, or dynamic-import substitution.
+- B3 is non-subject; V4 targets existing T4 via `review_target_commit_sha`, never its own SHA.
+
+## Historical B2 Record (frozen provenance)
+
 > **B2 correction override:** B0/S1/T1/V1、B1 and its invalid review record are frozen provenance.
 > The current route is a temporary-index verified Git tree/blob review of seven B2 planning artifacts,
 > non-subject B2 with post-commit validation, test-only S3, then T3 and V3;
 > no evidence, commit, or thread is created in this Plan-Creator step.
 
-## Workflow Stages
+### Historical B2 Workflow Stages
 
 - [X] original-plan-authoring
 - [X] original-planning-review
@@ -23,7 +47,7 @@ created: 2026-09-01
 - [ ] b2-implementation-review
 - [ ] human-boundary
 
-## Actionable Steps
+### Historical B2 Actionable Steps
 
 - [X] **Actor:** Plan-Creator — **Action:** synchronized the seven B2 planning artifacts only:
   `plan/agent-handoff-workflow.md`, `plan/topic-plan-contract.md`,
@@ -52,7 +76,7 @@ created: 2026-09-01
   `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b2-implementation-review-log.md`
   as non-merge `V3`, verify exact `S3..V3`, then stop at the Human boundary.
 
-## Implementation Steps
+### Historical B2 Implementation Steps
 
 - [ ] 1. Before implementation, hand the synchronized seven B2 planning artifacts to the independent
   Plan-Reviewer. Stop unless its temporary-index verified-tree review is `approved`, committed
@@ -65,12 +89,12 @@ created: 2026-09-01
   `git diff --name-status S3..V3` range contains exactly their two declared evidence paths; never
   substitute `HEAD`, a merge, or an extra descendant.
 
-## Main Agent Actionable Steps — Fixed Tail
+### Historical B2 Main Agent Actionable Steps — Fixed Tail
 
 - [ ] After final new Reviewer evidence, stop. Do not publish, push, act on PR threads,
   merge, sync, release, tag or create summary without new explicit Human direction.
 
-## Handoff / Gate Notes
+### Historical B2 Handoff / Gate Notes
 
 - State is `needs-rework` / `PLANNER_REPLAN`. B0/S1/T1/V1, B1 and its invalid review record, every
   normal/recovery record, and all old correction artifacts are frozen provenance only: they are never

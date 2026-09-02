@@ -76,39 +76,39 @@ artifact commit、required step 或上述 evidence 時，implementation 不可�
 ### Human-authorized current-topic correction route
 
 一般 planning baseline 與 future / new review-log NDJSON 規則維持不變。Human 對 current
-topic `observer-dispatcher-governance` 的唯一 scope expansion authorization 是：
+topic `observer-dispatcher-governance` 的 scope expansion authorization 是：
 
 > `2. 授權擴張 current topic。`
 
-依此授權，current authoritative correction route 是 shared contracts、parent
-`.plan.md` / `.spec.md` / `.step.md` 與 `correction-b2-plan.md` / `correction-b2-step.md` 的組合；
-parent artifacts 是 current execution truth，B2 correction artifacts 是 retained、bounded delta，
-不能取代 parent。B0/S1/T1/V1、B1 與無效的 `correction-b1-review-log.md`（連同其所有
-correction artifacts）、以及 old epoch `R0=cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9` 均為 frozen
-historical provenance，不能作為 current gate 或新 subject；old epoch 的唯一 predicate 仍為
-`ecc5b6f61bacc5493ca3a9f1012d1bfdd43a810c..cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`。
+current authoritative route 是 shared contracts、parent `.plan.md` / `.spec.md` / `.step.md` 與
+`correction-b3-plan.md` / `correction-b3-step.md` 的組合；parent artifacts 是 current execution
+truth，B3 artifacts 是 retained bounded delta，不能取代 parent。normal / recovery provenance，
+`B0`、`B1`、`B2`、`S1`、`S3`、`T1`、`T3`、`V1` 與 `V3` 都是 frozen historical provenance：
+它們不可作為 current gate、current route 或新 subject。`V3` 的 `needs-rework` outcome 沒有
+repo-visible V3 review log；不得補寫、推定或重用它。
 
-這是狹義的一次性 `B2` correction baseline。before any `S3` test-path change，independent
-Plan-Reviewer 只可 tree/blob review 同一 working tree 的七個**未提交** B2 planning artifacts：
+這是狹義的一次性 `B3` corrective baseline。before any `S4` test-path change，independent
+Plan-Reviewer 只可 tree/blob review 同一 working tree 的七個**未提交** B3 planning artifacts：
 `plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md`、parent `.plan.md` / `.spec.md` /
-`.step.md`、`correction-b2-plan.md` 與 `correction-b2-step.md`。Reviewer 必須以不改寫 shared
+`.step.md`、`correction-b3-plan.md` 與 `correction-b3-step.md`。Reviewer 必須以不改寫 shared
 index 的 temporary index 載入 `HEAD`、只加入這七個 paths，執行 `git write-tree`，再以
 `git rev-parse <tree>^{tree}` 與 `git cat-file -e <tree>^{tree}` 驗證 actual Git tree object，並從
 該 tree 取得每一個 path/blob revision；然後只寫入 schema-complete
-`correction-b2-review-log.md`。在既有 Human commit authorization 下，Independent Implementer
-將未改寫的 record 與正是該七個 reviewed artifacts 一起提交為 non-subject `B2`。post-commit
-必須驗證 recorded tree object 仍存在、該 tree 與 `B2` 對七個 paths 的 blobs 全數相同，且
-`git diff --name-status <reviewed_tree_sha> <B2^{tree}>` 只列出 B2 review log。`B2` 是
-planning baseline，絕不是 subject，也不授權其他 uncommitted review 或任何 implementation path。
+`correction-b3-review-log.md`。在既有 Human commit authorization 下，Independent Implementer
+將 unchanged record 與正是該七個 reviewed artifacts 一起提交為 non-subject `B3`。post-commit
+必須驗證 recorded tree object 仍存在、該 tree 與 `B3` 對七個 paths 的 blobs 全數相同，且
+`git diff --name-status <reviewed_tree_sha> <B3^{tree}>` 只列出 B3 review log。`B3` 是
+planning baseline，絕不是 subject。
 
-只有 approved `B2` 後，Implementer 才可建立單一 non-merge `S3`，且 `S3` 的完整 subject diff
-只能改變 `tests/test_observer_dispatcher_governance_contract.py`。`S3` 是新的 immutable
-`implementation_subject_sha`。其後嚴格只有兩個 linear、non-merge、evidence-only commits：
-Tester 寫入 `correction-b2-tester-evidence.md` 為 `T3`，再由 Reviewer 寫入
-`correction-b2-implementation-review-log.md` 為 `V3`。兩個 record 必須 attest `S3`，Reviewer
-必須 reference passing `T3` evidence。final verification 必須以具名 commits 執行
-`git diff --name-status S3..V3`，恰好列出兩個 declared B2 evidence paths；不得以 `HEAD` 代替
-`V3` 或用 `S3..HEAD` 推測 chain。
+只有 approved/validated `B3` 後，Implementer 才可建立單一 non-merge `S4`，且完整 subject diff
+只能改變 `tests/test_observer_dispatcher_governance_contract.py`。`S4` 是唯一 current immutable
+`implementation_subject_sha`。其後嚴格只有 Tester `T4` 寫入
+`correction-b3-tester-evidence.md`，再由 Reviewer 在 **V4 commit 前** 寫入
+`correction-b3-implementation-review-log.md` 的兩個 linear、non-merge、evidence-only descendants。
+V4 record 必須指向 pre-existing `review_target_commit_sha = T4`，不可要求或含自我引用的 V4 SHA；
+V4 commit SHA 只在 post-commit validation 由外部辨識。final verification 必須以具名 commits 執行
+`git diff --name-status S4..V4`，恰好列出兩個 declared B3 evidence paths；不得以 `HEAD` 代替
+`V4` 或用 `S4..HEAD` 推測 chain。
 
 此 exception 不授權 evidence 現在寫入、commit、push、PR thread action、merge、post-merge、
 release、tagging 或 final summary，亦不一般化為其他 topic 的 evidence topology。
