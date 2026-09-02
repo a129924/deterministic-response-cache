@@ -1,15 +1,15 @@
 # Agent handoff workflow
 
-> **B6R4 current-route override:** 本文件其餘 normal/recovery、B0–B6、B6R–B6R3 route 文字均為 frozen
-> nonrouting provenance，不得作 current authority。唯一 current route 是
-> `B6R4 -> R14 -> S12 -> T12 -> V12 -> Q12 -> comment-classification/human-check`。B6R4/R14 均為
-> non-subject；B6R4 為已提交的 non-merge、first-parent exact-seven planning baseline（shared workflow/contract、parent
-> plan/spec/step、B6R4 plan/step）。R14 clean-checkout review 後，S12 是唯一 subject，僅可改
-> `tests/test_observer_dispatcher_governance_contract.py`，保留 direct imports，並以 complete explicit
-> `ODG_S12_SHA`/`ODG_T12_SHA`/`ODG_V12_SHA` 的 real subprocess Git contract fail closed 驗證。T12/V12
-> 是 exact non-merge evidence-only descendants，named `S12..V12` 僅含兩個 declared evidence paths。Q12 是
-> committed-full-V12-SHA-only read-only query，無 artifact、lifecycle 或 thread authority；唯有 Q12 後獨立
-> Reviewer 逐 thread `addressed-and-resolvable` classification 可允許 resolution。
+> **B6R5 current-route override:** 本文件其餘 normal/recovery、B0–B6、B6R–B6R4、R14、S12 與所有較早
+> route 文字均為 frozen nonrouting provenance，不得作 current authority。唯一 current route 是
+> `B6R5 -> R15 -> S13 -> T13 -> V13 -> Q13 -> comment-classification/human-check`。B6R5/R15 均為
+> non-subject；S13 是唯一 subject，且只可改 `tests/test_observer_dispatcher_governance_contract.py` 並保留
+> direct imports。T13 truthful 記錄 passing full suite 與 one no-environment actual-graph
+> `skip`/`unverified`，不得宣稱 complete triple。V13 只驗證 exact structural non-merge
+> `S13 -> T13 -> V13` 及 `S13..T13` evidence range。Q13 僅在 V13 committed 後以 complete explicit full
+> `ODG_S13_SHA`/`ODG_T13_SHA`/`ODG_V13_SHA` 和 real subprocess Git 做唯一 non-skipped actual gate；
+> absent/partial/invalid/`HEAD`/merge/wrong graph/range 均 fail closed。Q13 後獨立 Reviewer 逐 thread
+> `addressed-and-resolvable` classification 才可允許 resolution。
 
 ## Purpose
 
@@ -30,8 +30,8 @@ actions 為 human review、merge、release、post-merge、tagging 與 final summ
 
 ## Frozen provenance
 
-`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S10、T1–T10、V1–V10、Q7–Q10，及所有較早
-correction artifacts 均為 immutable historical provenance；僅保留追溯用途，排除於 B6R4 route。
+`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S12、T1–T12、V1–V12、Q7–Q12，及所有較早
+correction artifacts（包含 B6R4/R14/S12）均為 immutable historical provenance；僅保留追溯用途，排除於 B6R5 route。
 `step-creator` work 維持 deferred。
 
 ## Frozen B6R historical route
@@ -77,6 +77,6 @@ Q9 只可在 V9 commit 後，以 committed full V9 SHA 執行 read-only actual q
 ## Gates and human boundary
 
 缺少 required evidence 為 `blocked`；candidate conflict 為 `human-check`；contract drift 保守回到
-Planner。Ready for review 不是 merge approval。comment classification 僅能由獨立 Reviewer 在 Q11 後執行；
+Planner。Ready for review 不是 merge approval。comment classification 僅能由獨立 Reviewer 在 Q13 後執行；
 thread resolution 需要該 Reviewer 對每一 thread 明確標記 `addressed-and-resolvable`。merge、release、
 post-merge 與 final summary 均為 Human boundary。

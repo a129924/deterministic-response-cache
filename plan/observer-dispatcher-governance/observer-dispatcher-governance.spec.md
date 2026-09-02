@@ -1,13 +1,15 @@
 # Observer / Dispatcher Governance Specification
 
-> **B6R4 acceptance override:** B6R–B6R3 與下列 historical acceptance text 均為 frozen nonrouting provenance。
-> B6R4/R14 均不得建立 subject；only S12 可只改 governance contract test，保留 direct imports 且以 real
-> subprocess Git query 驗證 complete `ODG_S12_SHA`/`ODG_T12_SHA`/`ODG_V12_SHA`。T12/V12 必為 exact
-> non-merge `S12 -> T12 -> V12` evidence paths，`S12..V12` 僅含兩 evidence paths。Q12 是 sole read-only
-> shared human boundary；Q8–Q10 不可替代，且 resolve 需 Q11 後逐 thread `addressed-and-resolvable`。
+> **B6R5 acceptance override:** B6R–B6R4、R14、S12 與下列 historical acceptance text 均為 frozen
+> nonrouting provenance。B6R5/R15 均不得建立 subject；only S13 可只改 governance contract test 並保留 direct
+> imports。T13 必須 truthfully 記錄 passing full suite 與 one no-environment actual-graph
+> `skip`/`unverified`，不得宣稱 complete triple。V13 僅驗證 exact structural non-merge
+> `S13 -> T13 -> V13` 與 `S13..T13`。Q13 是 committed V13 後唯一 non-skipped actual Git gate，必用 complete
+> explicit full `ODG_S13_SHA`/`ODG_T13_SHA`/`ODG_V13_SHA` 的 real subprocess queries；缺失、partial、invalid、
+> `HEAD`、merge、wrong graph 或 widened range 均 fail closed；其後才可逐 thread classification/resolution。
 
 > **Frozen provenance:** `b900366`, normal/recovery records, B0–B6 (including R8/R9/R10), S1–S10, T1–T10,
-> V1–V10, Q7–Q11 and all earlier correction artifacts are immutable historical provenance, excluded from B6R4.
+> V1–V12, Q7–Q12 and all earlier correction artifacts are immutable historical provenance, excluded from B6R5.
 
 ## B6R4 Acceptance Criteria
 

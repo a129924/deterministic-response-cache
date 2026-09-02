@@ -1,14 +1,16 @@
 ---
 topic: observer-dispatcher-governance
-correction: high-b6r4
-state: B6R4_REVIEW_PENDING
+correction: high-b6r5
+state: B6R5_REVIEW_PENDING
 ---
 
 # Observer / Dispatcher Governance Steps
 
-> **B6R4 tracker override:** 下列 B6R–B6R3 tracker 是 frozen nonrouting provenance。Current state 為
-> `B6R4_REVIEW_PENDING`，唯一 route 為 `B6R4 -> R14 -> S12 -> T12 -> V12 -> Q12`；Q12 以外沒有 shared
-> human boundary。執行順序以 `observer-dispatcher-governance.correction-b6r4-step.md` 為唯一 tracker。
+> **B6R5 tracker override:** 下列 normal/recovery、B0–B6、B6R–B6R4 tracker、R14/S12 均為 frozen
+> nonrouting provenance。Current state 為 `B6R5_REVIEW_PENDING`，唯一 route 為
+> `B6R5 -> R15 -> S13 -> T13 -> V13 -> Q13 -> comment-classification/human-check`；Q13 是唯一 actual Git gate
+> 與 pre-classification human boundary。執行順序以 `observer-dispatcher-governance.correction-b6r5-step.md` 為
+> 唯一 tracker。
 
 ## Frozen Provenance
 

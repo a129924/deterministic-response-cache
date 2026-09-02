@@ -1,15 +1,16 @@
 # Observer / Dispatcher Governance
 
-> **B6R4 current-route override:** 其餘 normal/recovery、B0–B6、B6R–B6R3 route 文字均為 frozen
-> nonrouting provenance。唯一 current route 是
-> `B6R4 -> R14 -> S12 -> T12 -> V12 -> Q12 -> comment-classification/human-check`。B6R4/R14 non-subject；
-> S12 是唯一 subject 且只可改 `tests/test_observer_dispatcher_governance_contract.py`。T12/V12 是 exact
-> evidence-only descendants，Q12 為唯一 shared human boundary；Q8–Q11 無 current authority。comment
-> resolution 僅限 Q12 後由獨立 Reviewer 對逐 thread 明示 `addressed-and-resolvable` 者。
+> **B6R5 current-route override:** 其餘 normal/recovery、B0–B6、B6R–B6R4、R14、S12 與所有較早 route
+> 文字均為 frozen nonrouting provenance。唯一 current route 是
+> `B6R5 -> R15 -> S13 -> T13 -> V13 -> Q13 -> comment-classification/human-check`。B6R5/R15 non-subject；
+> S13 是唯一 subject 且只可改 `tests/test_observer_dispatcher_governance_contract.py`，保留 direct imports。
+> T13 是 truthful passing full-suite evidence，one no-environment actual graph 為 `skip`/`unverified`，不得宣稱
+> complete triple。V13 只審 structural `S13 -> T13 -> V13` 與 `S13..T13`。Q13 在 committed V13 後以 complete
+> explicit full SHA triple 執行唯一 non-skipped actual Git gate；失敗閉鎖，才可進獨立 comment classification。
 
 > **Frozen provenance:** `b900366`, normal/recovery records, B0–B6 (including R8/R9/R10), S1–S10, T1–T10,
 > V1–V10, Q7–Q11, and all earlier correction artifacts are immutable historical provenance. They are excluded
-> from the B6R4 route. `step-creator` work remains deferred.
+> from the B6R5 route. `step-creator` work remains deferred. B6R4/R14/S12 為 failed frozen nonrouting provenance。
 
 ## Goal / Outcome
 

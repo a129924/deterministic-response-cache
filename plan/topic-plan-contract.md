@@ -1,13 +1,13 @@
 # Topic Plan Contract
 
-> **B6R4 current-contract override:** 下列 B6R–B6R3 contract 文字均屬 frozen nonrouting provenance。唯一
-> current contract 是 `B6R4 -> R14 -> S12 -> T12 -> V12 -> Q12`。B6R4 admission 只含
-> `plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md`、parent plan/spec/step 與 B6R4 plan/step
-> 七 paths，且 pre-commit 不含 B6R4 SHA/blob SHA/`HEAD`/review outcome。R14 只寫
-> `observer-dispatcher-governance.correction-b6r4-review-log.md`；B6R4/R14 都非 subject。S12 only 改 test
-> path，保留 direct imports，並以 complete `ODG_S12_SHA`/`ODG_T12_SHA`/`ODG_V12_SHA` 和 real subprocess
-> git queries fail-closed 驗證。T12/V12 的 exact evidence-only range 為 `S12..V12`。Q12 是唯一 shared
-> human boundary；Q8–Q10 不可作 human boundary、classification 或 resolution authority。
+> **B6R5 current-contract override:** 下列 B6R–B6R4、R14、S12 與所有較早 contract 文字均屬 frozen
+> nonrouting provenance。唯一 current contract 是 `B6R5 -> R15 -> S13 -> T13 -> V13 -> Q13`。B6R5 admission
+> 只含 shared workflow/contract、parent plan/spec/step 與 B6R5 plan/step 七 paths，且 pre-commit 不含
+> B6R5 SHA/blob SHA/`HEAD`/review outcome。R15 寫 B6R5 review-log；B6R5/R15 都非 subject。S13 only 改 test
+> path 並保留 direct imports。T13 記錄 passing full suite 與 one no-environment `skip`/`unverified`，不宣稱
+> complete triple。V13 只證明 structural `S13 -> T13 -> V13` 與 `S13..T13`。只有 committed V13 後的 Q13
+> 能用 complete explicit full SHA triple 與 real subprocess Git 執行 non-skipped actual gate；所有缺失或
+> 無效輸入 fail closed，Q13 才是 classification/resolution boundary。
 
 ## Purpose
 
@@ -36,8 +36,8 @@ non-stable intent。
 
 ## Frozen provenance
 
-`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S10、T1–T10、V1–V10、Q7–Q10，及所有較早
-correction artifacts 是 immutable historical provenance；只作追溯，排除於 B6R4 route。`step-creator`
+`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S12、T1–T12、V1–V12、Q7–Q12，及所有較早
+correction artifacts（包含 B6R4/R14/S12）是 immutable historical provenance；只作追溯，排除於 B6R5 route。`step-creator`
 work 維持 deferred。
 
 ## Frozen B6R correction contract
