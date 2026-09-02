@@ -3,9 +3,10 @@
 """Conformance checks for the current Observer / Dispatcher governance route."""
 
 import json
+import os
 import re
 import subprocess
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, cast
@@ -13,6 +14,8 @@ from typing import Any, cast
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
+TEST_PATH = "tests/test_observer_dispatcher_governance_contract.py"
+COMMIT_AND_PARENT_SIZE = 2
 
 S6_ALLOWLIST = (
     "AGENTS.md",
@@ -74,6 +77,45 @@ B4R7_ROUTE_PATHS = {
     ),
     "r7_review": B4R7_R7_PATH,
 }
+
+B6R4_BASELINE_PATHS = (
+    "plan/agent-handoff-workflow.md",
+    "plan/topic-plan-contract.md",
+    "plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md",
+    "plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md",
+    "plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md",
+    "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r4-plan.md",
+    "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r4-step.md",
+)
+B6R4_REVIEW_PATH = (
+    "plan/observer-dispatcher-governance/"
+    "observer-dispatcher-governance.correction-b6r4-review-log.md"
+)
+B6R4_EVIDENCE_PATHS = (
+    (
+        "plan/observer-dispatcher-governance/"
+        "observer-dispatcher-governance.correction-b6r4-tester-evidence.md"
+    ),
+    (
+        "plan/observer-dispatcher-governance/"
+        "observer-dispatcher-governance.correction-b6r4-implementation-review-log.md"
+    ),
+)
+B6R4_ROUTE_PATHS = {
+    "workflow": "plan/agent-handoff-workflow.md",
+    "topic_contract": "plan/topic-plan-contract.md",
+    "parent_plan": "plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md",
+    "parent_spec": "plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md",
+    "parent_step": "plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md",
+    "b6r4_plan": (
+        "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r4-plan.md"
+    ),
+    "b6r4_step": (
+        "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r4-step.md"
+    ),
+    "r14_review": B6R4_REVIEW_PATH,
+}
+S12_ENV_KEYS = ("ODG_S12_SHA", "ODG_T12_SHA", "ODG_V12_SHA")
 
 SHA_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 S6_ALLOWLIST_SIZE = 15
@@ -251,6 +293,147 @@ def assert_direct_import_behavior(source: str) -> None:
         assert forbidden not in source
 
 
+def read_b6r4_route() -> dict[str, str]:
+    """Read only the current B6R4 route and its approved R14 record."""
+    return {name: read(path) for name, path in B6R4_ROUTE_PATHS.items()}
+
+
+def assert_b6r4_r14_schema(record: object) -> None:
+    """Reject an incomplete, widened, or substituted committed R14 review."""
+    assert isinstance(record, dict)
+    payload = cast("JsonObject", record)
+    assert set(payload) == {
+        "schema_version",
+        "correction_id",
+        "review_kind",
+        "reviewed_commit_sha",
+        "reviewed_tree_sha",
+        "reviewed_artifacts",
+        "first_parent_admission",
+        "review_basis",
+        "verdict",
+        "blocking_issues",
+        "copilot_feedback_triage",
+        "timestamp",
+    }
+    assert (
+        payload["schema_version"] == "observer-dispatcher-governance.correction-b6r4-plan-review.v1"
+    )
+    assert payload["correction_id"] == "observer-dispatcher-governance/high/b6r4"
+    assert payload["review_kind"] == "correction-b6r4-plan-review"
+    assert payload["verdict"] == "approved"
+    assert payload["blocking_issues"] == []
+    assert payload["copilot_feedback_triage"] == {"ADDRESS": [], "DISCUSS": [], "SKIP": []}
+    for key in ("reviewed_commit_sha", "reviewed_tree_sha"):
+        assert isinstance(payload[key], str)
+        assert SHA_PATTERN.fullmatch(payload[key])
+
+    artifacts = cast("list[JsonObject]", payload["reviewed_artifacts"])
+    assert tuple(artifact.get("path") for artifact in artifacts) == B6R4_BASELINE_PATHS
+    for artifact in artifacts:
+        assert set(artifact) == {"path", "blob_sha"}
+        assert SHA_PATTERN.fullmatch(cast("str", artifact["blob_sha"]))
+
+    admission = cast("JsonObject", payload["first_parent_admission"])
+    assert set(admission) == {
+        "candidate_parent_sha",
+        "observed_parent_sha",
+        "non_merge",
+        "exact_declared_paths",
+        "name_status",
+    }
+    assert admission["candidate_parent_sha"] == admission["observed_parent_sha"]
+    assert SHA_PATTERN.fullmatch(cast("str", admission["candidate_parent_sha"]))
+    assert admission["non_merge"] is True
+    assert admission["exact_declared_paths"] is True
+    assert isinstance(admission["name_status"], str)
+
+
+def assert_b6r4_route_is_fail_closed(route: Mapping[str, str]) -> None:
+    """Reject frozen-route activation, subject drift, or topology substitution."""
+    assert tuple(route) == tuple(B6R4_ROUTE_PATHS)
+    authority = "".join(route.values())
+    assert "B6R4 -> R14 -> S12 -> T12 -> V12 -> Q12" in authority
+    assert "sole current route" in authority
+    assert "frozen nonrouting provenance" in authority
+    assert "normal/recovery" in authority
+    assert "step-creator" in authority
+    assert "deferred" in authority
+    for frozen_marker in (
+        "b900366",
+        "B0" + "\u2013" + "B6",
+        "S1" + "\u2013" + "S10",
+        "T1" + "\u2013" + "T10",
+        "V1" + "\u2013" + "V10",
+        "Q7" + "\u2013" + "Q11",
+    ):
+        assert frozen_marker in authority
+
+    baseline_paths = numbered_paths(
+        route["b6r4_plan"],
+        "The B6R4 admission changed exactly once each:",
+        "Before admission",
+    )
+    assert baseline_paths == B6R4_BASELINE_PATHS
+    assert "B6R4 -> R14 -> S12 -> T12 -> V12 -> Q12" in route["b6r4_plan"]
+    assert "frozen nonrouting provenance" in route["b6r4_plan"]
+    assert "B6R4 is a non-subject" in route["b6r4_plan"]
+    assert "neither B6R4 nor R14 creates `implementation_subject_sha`" in route["b6r4_plan"]
+    assert "S12 is one non-merge subject modifying only" in route["b6r4_plan"]
+    assert TEST_PATH in route["b6r4_plan"]
+    assert "complete explicit" in route["b6r4_plan"]
+    assert all(key in route["parent_spec"] for key in S12_ENV_KEYS)
+    assert "S12 -> T12 -> V12" in route["b6r4_plan"]
+    assert "S12..V12" in route["b6r4_plan"]
+    assert all(path in authority for path in B6R4_EVIDENCE_PATHS)
+    assert "read-only" in authority
+    assert "addressed-and-resolvable" in authority
+    assert_b6r4_r14_schema(json.loads(route["r14_review"]))
+
+
+def explicit_s12_triple(environment: Mapping[str, str]) -> tuple[str, str, str] | None:
+    """Return only a complete explicit triple; absence is the sole skip condition."""
+    values = tuple(environment.get(key) for key in S12_ENV_KEYS)
+    if all(value is None for value in values):
+        return None
+    assert all(value is not None for value in values)
+    triple = cast("tuple[str, str, str]", values)
+    for value in triple:
+        assert SHA_PATTERN.fullmatch(value)
+        assert value != "HEAD"
+    assert len(set(triple)) == len(triple)
+    return triple
+
+
+def single_parent(sha: str) -> str:
+    """Resolve exactly one real commit parent and reject root or merge commits."""
+    parents = run_git("rev-list", "--parents", "-n", "1", sha).split()
+    assert parents[0] == sha
+    assert len(parents) == COMMIT_AND_PARENT_SIZE
+    return parents[1]
+
+
+def assert_actual_s12_graph(s12_sha: str, t12_sha: str, v12_sha: str) -> None:
+    """Use real Git objects to prove the complete S12/T12/V12 contract."""
+    for sha in (s12_sha, t12_sha, v12_sha):
+        assert run_git("rev-parse", "--verify", f"{sha}^{{commit}}") == sha
+    assert single_parent(t12_sha) == s12_sha
+    assert single_parent(v12_sha) == t12_sha
+    single_parent(s12_sha)
+
+    subject_lines = run_git("diff", "--name-status", f"{s12_sha}^..{s12_sha}").splitlines()
+    assert len(subject_lines) == 1
+    assert tuple(line.split("\t", 1)[1] for line in subject_lines) == (TEST_PATH,)
+
+    named_range = f"{s12_sha}..{v12_sha}"
+    assert "HEAD" not in named_range
+    assert run_git("rev-list", "--reverse", named_range).splitlines() == [t12_sha, v12_sha]
+    assert run_git("diff", "--name-status", named_range).splitlines() == [
+        f"A\t{B6R4_EVIDENCE_PATHS[0]}",
+        f"A\t{B6R4_EVIDENCE_PATHS[1]}",
+    ]
+
+
 @pytest.fixture(scope="module")
 def surfaces() -> dict[str, str]:
     """Provide the declared S6-governed surfaces without replacing their imports."""
@@ -307,9 +490,9 @@ def test_role_configs_and_wrappers_keep_the_locked_boundaries(surfaces: dict[str
     assert "must not require the legacy file at runtime" in surfaces["python_workflow_reference"]
 
 
-def test_b4r7_route_uses_only_current_artifacts_and_s6_subject() -> None:
-    """Require B4R7/R7 to remain gates while S6 is the only implementation subject."""
-    assert_b4r7_s6_route_is_fail_closed(read_b4r7_route())
+def test_b6r4_route_uses_only_current_artifacts_and_s12_subject() -> None:
+    """Require B6R4/R14 gates while S12 is the only implementation subject."""
+    assert_b6r4_route_is_fail_closed(read_b6r4_route())
 
 
 def test_actual_b4r7_admission_and_r7_review_match_their_named_git_objects() -> None:
@@ -342,33 +525,27 @@ def test_actual_b4r7_admission_and_r7_review_match_their_named_git_objects() -> 
 @pytest.mark.parametrize(
     ("source", "required_text", "replacement"),
     [
+        ("b6r4_plan", "frozen nonrouting provenance", "current routing provenance"),
+        ("b6r4_plan", "B6R4 is a non-subject", "B6R4 is the subject"),
         (
-            "b4r7_plan",
-            "B4R7 is the\nsole current non-subject baseline.",
-            "B4R7 is current subject.",
+            "b6r4_plan",
+            "B6R4 -> R14 -> S12 -> T12 -> V12 -> Q12",
+            "B6R4 -> R14 -> S12 -> V12 -> T12 -> Q12",
         ),
-        ("b4r7_plan", B4R7_BASELINE_PATHS[-1], "plan/unlisted.md"),
-        (
-            "topic_contract",
-            "S6 alone establishes\n`implementation_subject_sha`",
-            "R7 establishes subject",
-        ),
-        ("parent_plan", S6_ALLOWLIST[-1], "tests/extra_governance_test.py"),
-        ("parent_plan", "step-creator` threads 持續 deferred", "step-creator` threads are current"),
-        ("topic_contract", "S6..V6", "S6..HEAD"),
+        ("parent_spec", "ODG_T12_SHA", "ODG_T12_ALIAS"),
     ],
 )
-def test_b4r7_route_rejects_frozen_subject_admission_allowlist_and_range_mutations(
+def test_b6r4_route_rejects_frozen_subject_and_topology_mutations(
     source: str,
     required_text: str,
     replacement: str,
 ) -> None:
-    """Make add/remove/substitute-style route mutations fail closed."""
-    route = read_b4r7_route()
+    """Make required provenance, subject, and topology removals fail closed."""
+    route = read_b6r4_route()
     assert required_text in route[source]
-    route[source] = route[source].replace(required_text, replacement, 1)
+    route[source] = route[source].replace(required_text, replacement)
     with pytest.raises(AssertionError):
-        assert_b4r7_s6_route_is_fail_closed(route)
+        assert_b6r4_route_is_fail_closed(route)
 
 
 def remove_review_kind(record: JsonObject) -> None:
@@ -438,6 +615,63 @@ def test_named_s6_t6_v6_graph_rejects_head_merge_and_range_mutations() -> None:
     ):
         with pytest.raises(AssertionError):
             assert_named_s6_evidence_graph(replace(graph, **mutation))
+
+
+def test_actual_b6r4_admission_and_r14_match_named_git_objects() -> None:
+    """Check the committed B6R4 baseline, every blob, and R14's sole evidence diff."""
+    record = json.loads(read(B6R4_REVIEW_PATH))
+    assert_b6r4_r14_schema(record)
+    b6r4_sha = cast("str", record["reviewed_commit_sha"])
+    reviewed_tree_sha = cast("str", record["reviewed_tree_sha"])
+    admission = cast("JsonObject", record["first_parent_admission"])
+
+    assert run_git("rev-parse", f"{b6r4_sha}^{{tree}}") == reviewed_tree_sha
+    assert single_parent(b6r4_sha) == admission["observed_parent_sha"]
+    observed_lines = run_git("diff", "--name-status", f"{b6r4_sha}^..{b6r4_sha}").splitlines()
+    observed_name_status = "\\n".join(line.replace("\t", "\\t") for line in observed_lines)
+    assert observed_name_status == admission["name_status"]
+    observed_paths = tuple(line.split("\t", 1)[1] for line in observed_lines)
+    assert len(observed_paths) == len(B6R4_BASELINE_PATHS)
+    assert set(observed_paths) == set(B6R4_BASELINE_PATHS)
+    for artifact in cast("list[JsonObject]", record["reviewed_artifacts"]):
+        path = cast("str", artifact["path"])
+        assert run_git("rev-parse", f"{b6r4_sha}:{path}") == artifact["blob_sha"]
+
+    r14_sha = run_git("log", "-1", "--format=%H", "--", B6R4_REVIEW_PATH)
+    assert single_parent(r14_sha) == b6r4_sha
+    assert run_git("diff", "--name-status", f"{b6r4_sha}..{r14_sha}").splitlines() == [
+        f"A\t{B6R4_REVIEW_PATH}",
+    ]
+
+
+def test_all_absent_s12_environment_is_an_explicit_skip_condition() -> None:
+    """Allow no graph claim until all three post-commit identities exist."""
+    assert explicit_s12_triple({}) is None
+
+
+@pytest.mark.parametrize(
+    "environment",
+    [
+        {"ODG_S12_SHA": "1" * 40},
+        {"ODG_S12_SHA": "1" * 40, "ODG_T12_SHA": "2" * 40},
+        {"ODG_S12_SHA": "", "ODG_T12_SHA": "2" * 40, "ODG_V12_SHA": "3" * 40},
+        {"ODG_S12_SHA": "HEAD", "ODG_T12_SHA": "2" * 40, "ODG_V12_SHA": "3" * 40},
+        {"ODG_S12_SHA": "1" * 39, "ODG_T12_SHA": "2" * 40, "ODG_V12_SHA": "3" * 40},
+        {"ODG_S12_SHA": "1" * 40, "ODG_T12_SHA": "1" * 40, "ODG_V12_SHA": "3" * 40},
+    ],
+)
+def test_partial_or_invalid_s12_environment_fails_closed(environment: dict[str, str]) -> None:
+    """Reject every supplied environment that is not a complete named triple."""
+    with pytest.raises(AssertionError):
+        explicit_s12_triple(environment)
+
+
+def test_actual_s12_t12_v12_graph_requires_a_complete_real_triple() -> None:
+    """Run the actual Git proof only with explicit complete post-commit SHAs."""
+    triple = explicit_s12_triple(os.environ)
+    if triple is None:
+        pytest.skip("explicit skip/unverified: all ODG S12/T12/V12 SHAs are absent")
+    assert_actual_s12_graph(*triple)
 
 
 def test_b4r7_contract_test_preserves_direct_import_behavior() -> None:
