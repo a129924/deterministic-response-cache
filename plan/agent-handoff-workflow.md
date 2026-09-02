@@ -73,29 +73,31 @@ planning approval evidence 固定為：
 topic plan 不得包含、要求或依賴任何 self-authored approval marker。缺少 planning
 artifact commit、required step 或上述 evidence 時，implementation 不可開始。
 
-### Human-authorized current-topic B4 correction route
+### Human-authorized current-topic B4R3 correction route
 
 一般 planning baseline 與 future / new review-log NDJSON 規則維持不變。Human 對 current
 topic `observer-dispatcher-governance` 的 scope expansion authorization 是：
 
 > `2. 授權擴張 current topic。`
 
-current authoritative route 是 shared contracts、parent `.plan.md` / `.spec.md` / `.step.md` 與
-`correction-b4-plan.md` / `correction-b4-step.md`。B0–B3、S1–S4、T1–T4、V1–V4、normal/recovery
-evidence 與所有舊 correction artifacts 都是 frozen historical provenance，不可選擇 candidate、
-提供 gate、建立 subject 或 routing。兩個既有 `step-creator` PR threads 維持 deferred。
+`0800dc11181cdbd7d93d85e0298ea78dc33d06d3` 已提交 B4R2，但其 clean-checkout planning review
+為 failed；B4R2 及其 review 均為 frozen historical nonrouting provenance。current authoritative
+route 只能是 shared contracts、parent `.plan.md` / `.spec.md` / `.step.md` 與
+`correction-b4r3-plan.md` / `correction-b4r3-step.md` 所宣告的 B4R3。B0–B4R2、S1–S4、T1–T4、
+V1–V4、normal/recovery evidence 與所有舊 correction artifacts 都不可選擇 candidate、提供 gate、
+建立 subject 或 routing。兩個既有 `step-creator` PR threads 維持 deferred。
 
-B4 的七個 planning paths 先由 Independent Implementer 提交為 clean-checkout 可重現的非
-subject baseline。Independent Plan-Reviewer 只能從該 committed B4 clean checkout 審查，並另寫
-`correction-b4-review-log.md`；其 evidence 必須以另一個 evidence-only commit 提交。B4 與其
+B4R3 的七個 planning paths 先由 Independent Implementer 提交為 clean-checkout 可重現的非
+subject baseline。Independent Plan-Reviewer 只能從該 committed B4R3 clean checkout 審查，並另寫
+`correction-b4r3-review-log.md`；其 evidence 必須以另一個 evidence-only commit 提交。B4R3 與其
 review evidence 都不得成為 `implementation_subject_sha`。
 
-只有 approved 的 B4 review evidence 才允許一個 non-merge S5 subject。S5 完整 diff 只能使用
+只有 approved 的 B4R3 review evidence 才允許一個 non-merge S5 subject。S5 完整 diff 只能使用
 parent plan 的 exact 15-path allowlist；T5、V5 只寫各自 declared evidence path，形成唯一 linear
 non-merge `S5 -> T5 -> V5`。所有 graph、parent、path 與 range assertions 均以 actual SHA 與
 具名 `git diff --name-status S5..V5` 執行，絕不使用 `HEAD` 或文字 heuristic。
 
-candidate selector 只讀 parent plan、parent step 與 B4 review evidence；恰一 topic candidate
+candidate selector 只讀 parent plan、parent step 與 B4R3 review evidence；恰一 topic candidate
 且 review approved 才前進。Observer 唯一 bootstrap dispatch 是 `Observer -> Planner`；Planner
 才可選擇下一角色，並可 dispatch Tester 或 Explorer。wrapper 只可描述 role boundary，不得自行
 orchestration、routing 或 lifecycle 決策。
