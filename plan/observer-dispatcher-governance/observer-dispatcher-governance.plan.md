@@ -2,13 +2,10 @@
 
 ## Goal / Outcome
 
-- 完成 high-severity correction，讓 Observer / Dispatcher governance、custom-agent
-  instructions、workflow skills 與 executable contract test 共用可審計的派遣與
-  evidence contract。
-- topic 保持 `needs-rework`，直到新 correction chain 完整通過；old epoch terminal
-  `R0=cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9` 的唯一 predicate 是
-  `ecc5b6f61bacc5493ca3a9f1012d1bfdd43a810c..cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`。
-  narrow `B0` exception 之後，只有 `S1 -> T1 -> V1`；驗證使用 `S1..V1`，絕不以 `HEAD` 代替。
+- 完成 B1 high-severity correction：只補強 governance contract test 對 frozen provenance、
+  subject reset 與 exact two-evidence topology 的 fail-closed assertions。
+- topic 保持 `needs-rework`，直到 B1 chain 通過；B0/S1/T1/V1 均是 frozen provenance。
+  narrow `B1` exception 之後，只有 test-only `S2 -> T2 -> V2`；驗證使用 `S2..V2`，絕不以 `HEAD` 代替。
 
 > **Analysis-layer warning:** `analysis/observer-dispatcher-governance/requirements.md`
 > 與 `analysis/observer-dispatcher-governance/technical-spec.md` 不存在。本 plan 依
@@ -17,40 +14,36 @@
 
 ## Scope
 
-- **In scope**: `AGENTS.md`、僅 `.codex/agents/planner.toml` 與
-  `.codex/agents/implementer.toml`（唯一 narrow `.codex` exception）、workflow / topic-plan
-  contract、Plan-Creator / Plan-Reviewer / Python workflow surfaces、Python plan
-  template、governance contract test、本 topic parent plan/spec/step，以及五份
-  `correction-*` artifacts。
-- **Out of scope**: 產品 library、public API、BC、Identity、Response Reuse、CacheStore、
-  runtime、architecture docs、README、VERSION、release、tag、push、PR / thread、merge、
-  post-merge、summary、`.github/agents/**`、legacy evidence migration / reader /
-  compatibility layer，以及未列於 `Artifact Paths` 的任何檔案。
+- **In scope**: two shared contracts、parent plan/spec/step、B1 correction plan/step；B1 approval
+  後唯一 implementation path 為 `tests/test_observer_dispatcher_governance_contract.py`。
+- **Out of scope**: `AGENTS.md`、`.codex/**`、`.agents/**`、產品 library、public API、BC、Identity、
+  runtime、architecture docs、README、VERSION、release、tag、push、PR / thread、merge、post-merge、
+  summary、legacy evidence migration / reader / compatibility layer，以及未列 path。
 
 ## Locked Decisions
 
-- 這是 Planner-confirmed `high` correction，routing state 為 `PLANNER_REPLAN`；現有
-  implementation / evidence confidence 視為失效，直至新 correction chain 通過。
+- 這是 Planner-confirmed `high` B1 correction，routing state 為 `PLANNER_REPLAN`；B0/S1/T1/V1
+  implementation / evidence 都是 frozen provenance，不能作為 B1 gate 或 subject。
 - Human 的此 scope expansion authorization 為 `2. 授權擴張 current topic。`；current
   correction route 的 authoritative source 是兩份 shared contracts、parent plan/spec/step、
-  correction plan/step，及其 exact pre-implementation correction review evidence。
+  `correction-b1-plan.md` / `correction-b1-step.md`，及其 exact B1 pre-subject review evidence。
 - Parent plan、spec 與 step 在 Plan-Creator backfill 後仍是 current execution truth；
-  correction plan / step 是 retained historical correction delta，不取代 parent。
-  `correction-review-log.md` 僅在其 pre-implementation gate 尚未完成時是 current routing
+  `correction-b1-plan.md` / `correction-b1-step.md` 是 retained historical correction delta，不取代 parent。
+  `correction-b1-review-log.md` 僅在其 pre-subject gate 尚未完成時是 current routing
   evidence；completed 後仍保留為 evidence，不成為 parent execution truth。
-- 下列既有 artifacts 與其任何 SHA / verdict 都是 frozen, superseded provenance，不得
-  修改、遷移、重讀為 current gate 或推導新 subject：`review-log.md`、
-  `planning-review-evidence.md`、`tester-evidence.md`、`implementation-review-log.md`，
-  以及所有 `recovery-*` evidence files。
+- B0=8556d41282eb2388ff22e45623dd20052a2bf70f、S1=f1a2ae1334b03ea0c5eea7612909ef77c089f38c、
+  T1=b96c484e78bdc1ea004c7629616f216657e64e07、V1=2b0e6fa653bb58537523ae4010945dadbab7b34e，
+  normal / `recovery-*` evidence 與其 SHA / verdict 都是 frozen provenance，不得修改、遷移、
+  重讀為 current gate 或推導新 subject。
 - Old epoch terminal 是 `R0=cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`，唯一 predicate 為
   `ecc5b6f61bacc5493ca3a9f1012d1bfdd43a810c..cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`。
-  narrow `B0` exception 僅容許 Plan-Reviewer 以同一 tree/blob 審閱七個未提交 planning
-  artifacts，寫入 correction review log，並由 Independent Implementer 將該 log 與七個
-  reviewed artifacts 一起提交為 `B0`；`B0` 絕非 subject。
-- 只有 `B0` 後的 declared implementation non-merge `S1` commit 建立 replacement immutable
-  `implementation_subject_sha`。新 subject 後嚴格只允許 `T1`（Tester evidence）再 `V1`
+  narrow `B1` exception 僅容許 Plan-Reviewer 以同一 tree/blob 審閱七個未提交 B1 planning
+  artifacts，寫入 `correction-b1-review-log.md`，並由 Independent Implementer 將該 unchanged log
+  與七個 reviewed artifacts 一起提交為 `B1`；`B1` 絕非 subject。
+- 只有 `B1` 後唯一 test-path 的 non-merge `S2` commit 建立 replacement immutable
+  `implementation_subject_sha`。新 subject 後嚴格只允許 `T2`（Tester evidence）再 `V2`
   （Reviewer evidence）兩個 linear、non-merge、evidence-only commits。第三個 path、merge、
-  lifecycle action 或以 `HEAD` 取代 `S1..V1` 驗證使 chain 無效並回交 Planner。
+  lifecycle action 或以 `HEAD` 取代 `S2..V2` 驗證使 chain 無效並回交 Planner。
 - 這是 non-stable、review-ready-only topic：README / VERSION 不修改，無 release / tag；
   standalone correction skill 只可在另開 topic 且 repeated instability 或
   cross-workflow reuse 已證實時再考慮。
@@ -71,18 +64,18 @@
 ## Status / Allowed Transitions
 
 - **Current**: `needs-rework`；correction routing state 為 `PLANNER_REPLAN`。
-- **Execution model**: narrow `B0` exception 下 Plan-Reviewer 先 tree/blob review 七個未提交
-  planning artifacts 並寫 correction-plan review record；Independent Implementer 原樣將 record
-  加七個 reviewed artifacts commit 成 `B0`，其非 subject。只有其後單一 non-merge `S1` declared
-  implementation commit 建立 immutable subject；Tester `T1`、再 Reviewer `V1` 各自 attest `S1`；
-  僅以 `S1..V1` 驗證後停止於 Human boundary。
+- **Execution model**: narrow `B1` exception 下 Plan-Reviewer 先 tree/blob review 七個未提交
+  B1 planning artifacts 並寫 correction-b1 review record；Independent Implementer 原樣將 record
+  加七個 reviewed artifacts commit 成 `B1`，其非 subject。只有其後 test-only non-merge `S2`
+  建立 immutable subject；Tester `T2`、再 Reviewer `V2` 各自 attest `S2`；僅以 `S2..V2`
+  驗證後停止於 Human boundary。
 - **Allowed transitions**:
   - `needs-rework` -> `creator-in-progress`
   - `creator-in-progress` -> `review-ready`
   - `review-ready` -> `reviewer-in-progress`
   - `reviewer-in-progress` -> `approved|needs-rework`
   - `approved` -> `creator-in-progress|publish-in-progress`
-  - `publish-in-progress` -> `pr-open|merged`
+  - `publish-in-progress` -> `pr-open`
   - `pr-open` -> `needs-rework|merged`
   - `merged` -> terminal
 - **Correction routing**: correction review `needs-rework` 保持 topic `needs-rework`
@@ -93,29 +86,18 @@
 
 | Artifact | Path | Write owner | Decision authority | Role |
 | --- | --- | --- | --- | --- |
-| Governance | `AGENTS.md` | Implementer | Planner | Observer / Dispatcher runtime governance and frozen-provenance boundary |
-| Planner custom agent | `.codex/agents/planner.toml` | Implementer | Planner | Planner-only routing and correction authority |
-| Implementer custom agent | `.codex/agents/implementer.toml` | Implementer | Planner | Implementer scope and evidence-only commit boundary |
 | Repo workflow | `plan/agent-handoff-workflow.md` | Plan-Creator | Planner | Canonical correction routing and Human stop boundary |
 | Shared topic-plan contract | `plan/topic-plan-contract.md` | Plan-Creator | Planner | Parent/current-truth and correction-artifact contract |
-| Plan-Creator skill | `.agents/skills/plan-creator/SKILL.md` | Implementer | Planner | Correction-aware authoring contract |
-| Plan-Creator checklist | `.agents/skills/plan-creator/checklist.md` | Implementer | Planner | Correction-plan validation |
-| Plan-Creator template | `.agents/skills/plan-creator/templates/topic-plan-template.md` | Implementer | Planner | Exact correction prompts |
-| Plan-Reviewer skill | `.agents/skills/plan-reviewer/SKILL.md` | Implementer | Planner | Independent correction review protocol |
-| Plan-Reviewer checklist | `.agents/skills/plan-reviewer/checklist.md` | Implementer | Planner | Correction review checks |
-| Plan-Reviewer reference | `.agents/skills/plan-reviewer/reference.md` | Implementer | Planner | Current truth / retention / subject guidance |
-| Plan-Reviewer examples | `.agents/skills/plan-reviewer/examples.md` | Implementer | Planner | Bounded high-correction examples |
-| Python workflow | `.agents/skills/python-implementation-workflow/SKILL.md` | Implementer | Planner | Bounded workflow alignment |
-| Python template | `.agents/skills/python-plan-authoring/templates/canonical-python-topic-plan-template.md` | Implementer | Planner | Bounded workflow alignment |
 | Governance contract test | `tests/test_observer_dispatcher_governance_contract.py` | Implementer | Planner | Executable expanded-schema checks |
 | Topic plan | `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md` | Plan-Creator | Planner | Parent current execution contract |
 | Topic specification | `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md` | Plan-Creator | Planner | Parent current execution contract |
 | Step tracker | `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md` | Plan-Creator | Planner | Parent current execution contract |
-| Correction plan | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-plan.md` | Plan-Creator | Planner | Retained bounded correction delta |
-| Correction step | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-step.md` | Plan-Creator | Planner | Retained bounded correction delta |
-| Correction review log | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-review-log.md` | Plan-Reviewer | Plan-Reviewer verdict; Planner route | Required independent, pre-implementation correction-plan review |
-| Correction Tester evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-tester-evidence.md` | Tester | Tester factual result; Planner route | First evidence-only descendant |
-| Correction implementation review | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-implementation-review-log.md` | Reviewer | Reviewer verdict; Planner route | Second/final evidence-only descendant |
+| B1 correction plan | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-plan.md` | Plan-Creator | Planner | Retained B1 correction delta |
+| B1 correction step | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-step.md` | Plan-Creator | Planner | Retained B1 checkpoints |
+| B1 correction review log | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-review-log.md` | Plan-Reviewer | Plan-Reviewer verdict; Planner route | One-time pre-subject tree/blob review |
+| B1 Tester evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-tester-evidence.md` | Tester | Tester factual result; Planner route | T2 only, first evidence descendant |
+| B1 implementation review | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-implementation-review-log.md` | Reviewer | Reviewer verdict; Planner route | V2 only, final evidence descendant |
+| Frozen B0/S1/T1/V1 correction provenance | Existing `correction-*.md` paths | Historical (no write) | None | Never current routing, subject, Tester, or Reviewer evidence |
 | Frozen normal provenance | `plan/observer-dispatcher-governance/observer-dispatcher-governance.review-log.md` | Historical (no write) | None | Never current routing, Tester or Reviewer evidence |
 | Frozen normal provenance | `plan/observer-dispatcher-governance/observer-dispatcher-governance.planning-review-evidence.md` | Historical (no write) | None | Never current routing, Tester or Reviewer evidence |
 | Frozen normal provenance | `plan/observer-dispatcher-governance/observer-dispatcher-governance.tester-evidence.md` | Historical (no write) | None | Never current routing, Tester or Reviewer evidence |
@@ -129,70 +111,74 @@ docs、其他 tests 與 summary 均不在 write scope。未列 path 需先由 Pl
 
 ## Implementation Steps
 
-1. Implementer 對齊 `AGENTS.md`、兩份 custom-agent TOML、workflow / shared contract、
-   列出的 Plan-Creator / Plan-Reviewer / Python surfaces，使其共用 expanded
-   Observer / Dispatcher、high-correction、frozen-provenance 與 immutable-subject rules。
-2. Implementer 新增 `tests/test_observer_dispatcher_governance_contract.py`，以 direct
-   file-content assertions 驗證 exact paths、role separation、conditional artifacts、
-   old-provenance exclusion、new subject reset 與 two-descendant invariant；不得替代
-   existing direct-import regression tests。
-3. Implementer 僅在 schema-complete approved `correction-review-log.md` 已先被原樣固化為
-   evidence-only pre-implementation commit 後完成 declared scope；該 review-evidence commit
-   不是 subject。其後唯一一個完成 declared implementation 的 non-merge commit 才建立
-   replacement immutable `implementation_subject_sha`；不得寫 correction review / Tester /
-   Reviewer evidence。
+1. Plan-Creator 只同步七個 B1 planning paths 並建立 B1 correction plan/step；不寫 evidence、
+   不 commit、也不開始 implementation。
+2. Independent Plan-Reviewer approved B1 tree/blob record 已原樣與該七個 paths commit 成 non-subject
+   `B1` 後，Implementer 才可在唯一 non-merge `S2` 改動
+   `tests/test_observer_dispatcher_governance_contract.py`，以 direct assertions 驗證 frozen
+   B0/S1/T1/V1、S2 reset 與 exact `T2 -> V2` topology，且不得替代 direct-import regressions。
+3. Tester 只寫同一 S2 的 T2 factual evidence；Reviewer 僅在 passing T2 後寫 V2 verdict；兩者都
+   不得改 subject、route、status 或 implementation。
 
 ## Validation / Acceptance Checks
 
-- All declared implementation surfaces use the same Planner-only authority, Human-only
-  lifecycle, frozen `.github/agents/**`, high-correction and legacy-evidence semantics.
-- `tests/test_observer_dispatcher_governance_contract.py` verifies exact roles/paths, five
-  conditional correction artifacts, parent-current versus correction-historical truth,
-  immutable subject reset and exactly two ordered post-subject evidence paths.
+- B1 review pins one tree SHA and one path/blob revision for each exact seven B1 planning paths;
+  its approved record is committed unchanged with exactly that set as non-subject B1.
+- S2 is non-merge and changes only `tests/test_observer_dispatcher_governance_contract.py`, which
+  fails for current use of frozen B0/S1/T1/V1, a descendant as subject, or topology other than T2 then V2.
 - New Tester state is `pending` until the new subject exists. Tester then records subject
   verification, exact command/results, the new test, repository validation, timestamp and
   `passing|failing`; no prior Tester record may satisfy this gate.
-- `correction-review-log.md` is the schema-complete `correction-plan` review record defined in
-  the shared contract. It lists exactly the seven planning artifacts and is written and committed
-  as an evidence-only pre-implementation prerequisite; its commit is not the subject. Only
-  `approved` authorizes implementation to start, after which the single non-merge declared
-  implementation commit creates the replacement immutable `implementation_subject_sha`.
-- The final reviewer record carries the same `S1` subject SHA, `T1` Tester path/revision/`passing`
-  and shared reviewer fields. `git diff --name-status S1..V1` must be exactly the two new correction
-  Tester / Reviewer evidence paths with no merge; `HEAD` is not an accepted verification endpoint.
+- The B1 review record is the schema-complete `correction-b1-plan` object defined in the shared
+  contract. Only approved B1 authorizes test-only S2.
+- The final reviewer record carries the same S2 SHA and passing T2 reference. `git diff --name-status
+  S2..V2` must be exactly the two B1 Tester / Reviewer evidence paths with no merge; `HEAD` is not accepted.
 - Parent sync and independent reviews must pass before correction resolution. Retain all
   correction artifacts; then stop, with no publish, PR action, merge, release, tag, summary
   or self-approval.
 
 ## Reviewer Handoff
 
-Current correction pre-implementation gate:
+Current B1 pre-subject gate:
 
-- The sole correction-review record path is
-  `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-review-log.md`.
-  An independent Plan-Reviewer is its sole writer.
-- Under the narrow `B0` exception and before any declared implementation path changes, the
-  Plan-Reviewer must independently tree/blob review each of these seven **uncommitted** planning
-  artifacts at one exact reviewed tree SHA:
-  `plan/agent-handoff-workflow.md`, `plan/topic-plan-contract.md`,
+- The sole current correction-review record path is
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-review-log.md`.
+  An independent Plan-Reviewer is its sole writer. All old B0/S1/T1/V1 correction paths and their
+  records are frozen provenance, never current routing or evidence.
+- Under the one-time `B1` exception and before the test-only S2 change, the Plan-Reviewer must
+  independently tree/blob review these seven **uncommitted** B1 planning artifacts at one exact
+  reviewed tree SHA: `plan/agent-handoff-workflow.md`, `plan/topic-plan-contract.md`,
   `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md`,
   `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md`,
   `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md`,
-  `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-plan.md`, and
-  `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-step.md`.
-- The record must be a single schema-complete `correction-plan` JSON object with `reviewed_tree_sha`
-  and exactly one path/blob revision per artifact, under
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-plan.md`, and
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-step.md`.
+- The record must be the single schema-complete `correction-b1-plan` JSON object with
+  `reviewed_tree_sha` and exactly one path/blob revision per artifact, under
   `plan/topic-plan-contract.md#current-topic-correction-evidence-schemas`, with an `approved`
   verdict. Only an independent Implementer, under existing Human commit authorization, may commit
-  that approved record unchanged together with the seven reviewed artifacts as `B0`; `B0` is not a
-  subject, and implementation may begin only after that commit.
+  that approved record unchanged together with exactly the seven reviewed artifacts as non-subject
+  `B1`. Only then may a non-merge `S2` modify
+  `tests/test_observer_dispatcher_governance_contract.py` and become the immutable subject.
+- Only Tester `T2` at
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-tester-evidence.md`
+  and then Reviewer `V2` at
+  `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-implementation-review-log.md`
+  may be non-merge evidence-only descendants of the same S2. V2 references passing T2 and final
+  verification is exactly `git diff --name-status S2..V2`, containing only those two named paths.
 
 ```json
 {
+  "schema_version": "observer-dispatcher-governance.correction-b1-plan-review.v1",
+  "correction_id": "observer-dispatcher-governance/high/b1",
+  "review_kind": "correction-b1-plan",
+  "severity": "high",
+  "routing_state": "PLANNER_REPLAN",
+  "reviewed_tree_sha": "<exact B1 tree SHA>",
   "reviewed_artifacts": [
     {
       "path": "<exact repo-visible path>",
-      "revision": "<latest reviewed revision or head>"
+      "blob_sha": "<exact reviewed working-tree blob SHA>"
     }
   ],
   "review_basis": "<independent review basis>",
@@ -207,9 +193,9 @@ Current correction pre-implementation gate:
 }
 ```
 
-Current correction evidence additionally uses the complete three-object schemas in
-`plan/topic-plan-contract.md#current-topic-correction-evidence-schemas`; those schemas are the
-authoritative field contract for correction review, Tester evidence and final implementation review.
+The B1 review, T2 Tester, and V2 final implementation-review records use the complete three-object
+schemas in `plan/topic-plan-contract.md#current-topic-correction-evidence-schemas`; those schemas
+are the authoritative field contract for correction review and the exact named `S2..V2` topology.
 
 ## Post-merge / release actions
 

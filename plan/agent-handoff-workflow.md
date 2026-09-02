@@ -81,34 +81,32 @@ topic `observer-dispatcher-governance` 的唯一 scope expansion authorization �
 > `2. 授權擴張 current topic。`
 
 依此授權，current authoritative correction route 是 shared contracts、parent
-`.plan.md` / `.spec.md` / `.step.md`、以及 correction plan / step 的組合；其中 parent
-artifacts 是 current execution truth，correction artifacts 是 retained、bounded delta，不能
-取代 parent。此 route 的唯一 pre-implementation correction review evidence path 是：
+`.plan.md` / `.spec.md` / `.step.md` 與 `correction-b1-plan.md` / `correction-b1-step.md` 的組合；
+parent artifacts 是 current execution truth，B1 correction artifacts 是 retained、bounded delta，
+不能取代 parent。B0/S1/T1/V1（含其所有 correction artifacts）與 old epoch
+`R0=cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9` 均為 frozen provenance，不能作為 current gate
+或新 subject；old epoch 的唯一 predicate 仍為
+`ecc5b6f61bacc5493ca3a9f1012d1bfdd43a810c..cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`。
 
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-review-log.md`
+這是狹義的一次性 `B1` exception。before any `S2` test-path change，independent Plan-Reviewer
+只可 tree/blob review 同一 working tree 的七個**未提交** B1 planning artifacts：
+`plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md`、parent
+`.plan.md` / `.spec.md` / `.step.md`、`correction-b1-plan.md` 與 `correction-b1-step.md`；然後只寫入
+schema-complete `correction-b1-review-log.md`。在既有 Human commit authorization 下，Independent
+Implementer 將未改寫的 record 與正是該七個 reviewed artifacts 一起提交為 `B1`。`B1` 是
+planning baseline，絕不是 subject，也不授權其他 uncommitted review 或任何 implementation path。
 
-舊 epoch 的 terminal 是 `R0=cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`；其唯一識別
-predicate 是 `ecc5b6f61bacc5493ca3a9f1012d1bfdd43a810c..cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`。
-它及所有 normal / `recovery-*` evidence 均為 frozen provenance，不能作為 current gate。
+只有 approved `B1` 後，Implementer 才可建立單一 non-merge `S2`，且 `S2` 的完整 subject diff
+只能改變 `tests/test_observer_dispatcher_governance_contract.py`。`S2` 是新的 immutable
+`implementation_subject_sha`。其後嚴格只有兩個 linear、non-merge、evidence-only commits：
+Tester 寫入 `correction-b1-tester-evidence.md` 為 `T2`，再由 Reviewer 寫入
+`correction-b1-implementation-review-log.md` 為 `V2`。兩個 record 必須 attest `S2`，Reviewer
+必須 reference passing `T2` evidence。final verification 必須以具名 commits 執行
+`git diff --name-status S2..V2`，恰好列出兩個 declared B1 evidence paths；不得以 `HEAD` 代替
+`V2` 或用 `S2..HEAD` 推測 chain。
 
-這是狹義的一次性 `B0` exception：在尚未有 planning-artifact commit 時，independent
-Plan-Reviewer 可只以同一 working tree 的 tree SHA 與七個未提交 planning artifact 的 path/blob
-revisions 審閱；然後只寫入 schema-complete `correction-review-log.md`。在既有 Human commit
-authorization 下，Independent Implementer 將該七個 reviewed planning artifacts 與未改寫的
-correction review record 一起提交為 `B0`。`B0` 是 correction gate baseline，絕不是 subject，
-且不授權任何其他未列 path、evidence、lifecycle 或 generic uncommitted-review route。
-
-只有 `B0` approved 後，Implementer 才可提交 declared implementation 的單一 non-merge `S1`；
-`S1` 是新的 immutable `implementation_subject_sha`。其後嚴格只有兩個 linear、non-merge、
-evidence-only commits：Tester 寫入 `correction-tester-evidence.md` 為 `T1`，再由 Reviewer
-寫入 `correction-implementation-review-log.md` 為 `V1`。兩個 record 必須 attest `S1`，Reviewer
-必須 reference passing `T1` evidence。final verification 必須以具名 commits 執行
-`git diff --name-status S1..V1`，恰好列出兩個 declared correction evidence paths；不得以
-`HEAD` 代替 `V1` 或用 `S1..HEAD` 推測 chain。
-
-此 exception 不授權 push、PR thread
-action、merge、post-merge、release、tagging 或 final summary，亦不一般化為其他 topic 的
-second evidence topology。
+此 exception 不授權 evidence 現在寫入、commit、push、PR thread action、merge、post-merge、
+release、tagging 或 final summary，亦不一般化為其他 topic 的 evidence topology。
 
 Planner preflight 的 routing 為：無 candidate 為 `blocked`；多 candidate 或 plan / step
 指向不同 topic 為 `human-check`；同 topic 的 status 或 scope conflict 為 `blocked`，除非
@@ -128,7 +126,7 @@ commit 已存在。plan review 是從 `planned` 進入 creator work 前的 requi
 | `reviewer-in-progress` | Reviewer 正在審核 implementation 或 comment routing | Reviewer | `approved`, `needs-rework` |
 | `needs-rework` | Reviewer 發現 blocking issue 並退回 work | Reviewer -> Planner | `creator-in-progress` |
 | `approved` | Reviewer 接受 latest draft，等待 Planner Phase 4.5 | Reviewer -> Planner | `creator-in-progress`, `publish-in-progress` |
-| `publish-in-progress` | required evidence、validation 與 human authorization 齊備；Implementer commit / push / 開 draft PR | Implementer | `pr-open`, `merged` |
+| `publish-in-progress` | required evidence、validation 與 human authorization 齊備；Implementer commit / push / 開 draft PR | Implementer | `pr-open` |
 | `pr-open` | draft PR 等待 human review；Reviewer 處理 comments 的 classification / routing | Human / Reviewer | `needs-rework`, `merged` |
 | `merged` | Human 已 merge；post-merge 與 optional release 皆為 human boundary | Human | `released`, terminal |
 | `released` | Human 已完成版本與 tag action（若 topic 要求） | Human | terminal |
