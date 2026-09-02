@@ -1,5 +1,14 @@
 # Topic Plan Contract
 
+> **B6R2 current-contract override:** 下列 B6R contract 僅屬 frozen nonrouting provenance。唯一 current
+> contract 是 `B6R2 -> R12 -> S10 -> T10 -> V10 -> Q10`。B6R2 admission 只含
+> `plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md`、parent plan/spec/step 與 B6R2 plan/step
+> 七 paths，且 pre-commit 不含 B6R2 SHA/blob SHA/`HEAD`/review outcome。R12 只寫
+> `observer-dispatcher-governance.correction-b6r2-review-log.md`；B6R2/R12 都非 subject。S10 only 改 test
+> path，保留 direct imports，並以 complete `ODG_S10_SHA`/`ODG_T10_SHA`/`ODG_V10_SHA` 和 real subprocess
+> git queries fail-closed 驗證。T10/V10 的 exact evidence-only range 為 `S10..V10`。Q10 是唯一 shared
+> human boundary；Q8/Q9 不可作 human boundary、classification 或 resolution authority。
+
 ## Purpose
 
 定義 repo-visible topic plan 的 authority、required structure、planning evidence 與 preflight contract。

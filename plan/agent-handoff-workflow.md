@@ -1,5 +1,15 @@
 # Agent handoff workflow
 
+> **B6R2 current-route override:** 本文件其餘 B6R route 文字是 frozen nonrouting provenance，
+> 不得作 current authority。唯一 current route 是
+> `B6R2 -> R12 -> S10 -> T10 -> V10 -> Q10 -> comment-classification/human-check`。
+> B6R2 為 non-subject、non-merge、first-parent exact-seven planning baseline；七 paths 是 shared
+> workflow/contract、parent plan/spec/step、B6R2 plan/step。R12 clean-checkout review 後，S10 只可改
+> `tests/test_observer_dispatcher_governance_contract.py`；T10/V10 只可寫 B6R2 Tester/Reviewer evidence，
+> 且 named `S10..V10` 僅含該兩 paths。Q10 是 committed-full-V10-SHA-only read-only query，無 artifact、
+> lifecycle 或 thread authority，也是唯一 shared human boundary。Q8/Q9 均為 frozen provenance；僅 Q10
+> 後獨立 Reviewer 的逐 thread `addressed-and-resolvable` classification 可允許 resolution。
+
 ## Purpose
 
 定義 repo-visible topic workflow、角色權責、status transition 與 human boundary。本文件不取代

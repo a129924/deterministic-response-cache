@@ -1,5 +1,12 @@
 # Observer / Dispatcher Governance
 
+> **B6R2 current-route override:** 其餘 B6R route 文字均為 frozen nonrouting provenance。唯一 current
+> route 是 `B6R2 -> R12 -> S10 -> T10 -> V10 -> Q10 -> comment-classification/human-check`。B6R2/R12
+> non-subject；S10 是唯一 subject 且只可改
+> `tests/test_observer_dispatcher_governance_contract.py`。T10/V10 是 exact evidence-only descendants，
+> Q10 為唯一 shared human boundary；Q8/Q9 無 current authority。comment resolution 僅限 Q10 後由獨立
+> Reviewer 對逐 thread 明示 `addressed-and-resolvable` 者。
+
 > **Frozen provenance:** `b900366`, normal/recovery records, B0–B6 (including R8/R9/R10), S1–S8, T1–T8,
 > V1–V8, Q7/Q8, and all earlier correction artifacts are immutable historical provenance. They are excluded
 > from the B6R route. `step-creator` work remains deferred.

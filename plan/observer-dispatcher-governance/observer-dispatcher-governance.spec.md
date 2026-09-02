@@ -1,5 +1,11 @@
 # Observer / Dispatcher Governance Specification
 
+> **B6R2 acceptance override:** B6R/R11 與下列 B6R acceptance text 均為 frozen nonrouting provenance。
+> B6R2/R12 均不得建立 subject；only S10 可只改 governance contract test，保留 direct imports 且以 real
+> subprocess Git query 驗證 complete `ODG_S10_SHA`/`ODG_T10_SHA`/`ODG_V10_SHA`。T10/V10 必為 exact
+> non-merge `S10 -> T10 -> V10` evidence paths，`S10..V10` 僅含兩 evidence paths。Q10 是 sole read-only
+> shared human boundary；Q8/Q9 不可替代，且 resolve 需 Q10 後逐 thread `addressed-and-resolvable`。
+
 > **Frozen provenance:** `b900366`, normal/recovery records, B0–B6 (including R8/R9/R10), S1–S8, T1–T8,
 > V1–V8, Q7/Q8 and all earlier correction artifacts are immutable historical provenance, excluded from B6R.
 
