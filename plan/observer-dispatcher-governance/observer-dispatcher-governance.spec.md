@@ -1,5 +1,11 @@
 # Observer / Dispatcher Governance Specification
 
+> **B4R5 supersession:** `8190dbb` B4R4 and its bootstrap-test route are frozen nonrouting
+> provenance. B4R5 is the sole current seven-blob non-subject baseline; its locked clean-checkout
+> seven-blob schema and separately committed approved review record precede S5. S5 retains the exact
+> 15-path allowlist and adds only the three B4R5 regression groups declared in
+> `correction-b4r5-plan.md`.
+
 > **B4R4 is sole current route.** `8b87aab` B4R3 clean-checkout review is failed frozen provenance.
 > B0–B4R3, S1–S4, T1–T4, V1–V4 and normal/recovery records are not active schemas, blockers,
 > checklists, pending work, subjects or evidence. `step-creator` threads remain deferred.

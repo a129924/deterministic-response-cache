@@ -1,5 +1,11 @@
 # Observer / Dispatcher Governance
 
+> **B4R5 supersession:** `8190dbb` B4R4 and its bootstrap-test route are frozen nonrouting
+> provenance. B4R5 is the sole current seven-blob pre-subject route: its separately committed
+> approved clean-checkout review record is required before S5. The exact B4R5 contract, seven-path
+> baseline, preserved 15-path S5 allowlist, direct-import rule, deferred `step-creator` threads, and
+> S5's three future regression groups are authoritative in `correction-b4r5-plan.md`.
+
 > **B4R4 current execution truth:** `8b87aab` B4R3 clean-checkout review failed. B0–B4R3,
 > S1–S4, T1–T4, V1–V4, normal/recovery records and their active, pending, schema, blocker and
 > checklist semantics are frozen nonrouting history. The two `step-creator` threads remain

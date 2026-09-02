@@ -73,35 +73,33 @@ planning approval evidence 固定為：
 topic plan 不得包含、要求或依賴任何 self-authored approval marker。缺少 planning
 artifact commit、required step 或上述 evidence 時，implementation 不可開始。
 
-### Human-authorized current-topic B4R4 correction route
+### Human-authorized current-topic B4R5 correction route
 
 一般 planning baseline 與 future / new review-log NDJSON 規則維持不變。Human 對 current
 topic `observer-dispatcher-governance` 的 scope expansion authorization 是：
 
 > `2. 授權擴張 current topic。`
 
-`8b87aab` B4R3 的 clean-checkout planning review 為 failed；B4R3 與其 failed-review semantics
-都是 frozen historical nonrouting provenance。B0–B4R3、S1–S4、T1–T4、V1–V4、normal/recovery
-evidence 和所有舊 correction artifacts 都不可選擇 candidate、提供 gate、建立 subject 或 routing。
+`8190dbb` B4R4 的 clean-review baseline 與其未完成的 bootstrap-test route 都是 frozen
+historical nonrouting provenance。B0–B4R4、S1–S4、T1–T4、V1–V4、normal/recovery evidence
+和所有舊 correction artifacts 都不可選擇 candidate、提供 gate、建立 subject 或 routing。
 兩個既有 `step-creator` PR threads 維持 deferred。
 
 current authoritative route 只能是 shared contracts、parent `.plan.md` / `.spec.md` / `.step.md` 與
-`correction-b4r4-plan.md` / `correction-b4r4-step.md` 所宣告的 B4R4。B4R4 是唯一 current
-pre-subject baseline，且有一個 narrowly scoped bootstrap exception：Plan-Creator 只寫七個 declared
-planning paths；Independent Implementer 依 B4R4 plan 的 exact test adaptation，將
-`tests/test_observer_dispatcher_governance_contract.py` 作為第八 path 一併提交。此 exception 只授權
-該 test adaptation 與 eight-path baseline commit，不得建立 subject、審查 verdict、route 或擴張
-implementation scope。
+`correction-b4r5-plan.md` / `correction-b4r5-step.md` 所宣告的 B4R5。B4R5 是唯一 current
+pre-subject baseline，僅由 Plan-Creator 寫入並由 Independent Implementer 提交下列七個 declared
+planning paths；不得在 baseline 夾帶 test、implementation、evidence、routing 或第八 path。
 
-Independent Plan-Reviewer 必須從 committed B4R4 的 clean checkout 審查實際八個 blobs，並只寫
-`correction-b4r4-review-log.md`；Independent Implementer 以另一個 evidence-only commit 提交未改動的
-approved record。B4R4 baseline 與其 review-evidence commit 都不得成為
+Independent Plan-Reviewer 必須從 committed B4R5 的 clean checkout 審查實際七個 blobs，並只寫
+`correction-b4r5-review-log.md`；Independent Implementer 以另一個 evidence-only commit 提交未改動的
+approved record。B4R5 baseline 與其 review-evidence commit 都不得成為
 `implementation_subject_sha`。
 
-只有 approved 的 B4R4 review evidence 才允許一個 non-merge S5 subject。S5 完整 diff 只能使用
-parent plan 的 exact preserved 15-path allowlist；T5、V5 只寫各自 B4R4 declared evidence path，形成
-唯一 linear non-merge `S5 -> T5 -> V5`。所有 graph、parent、path 與 range assertions 均以 actual
-SHA 與具名 `git diff --name-status S5..V5` 執行，絕不使用 `HEAD` 或文字 heuristic。
+只有 approved 的 B4R5 review evidence 才允許一個 non-merge S5 subject。S5 完整 diff 只能使用
+parent plan 的 exact preserved 15-path allowlist（其 test path 承載未來三項 regression assertions）；
+T5、V5 只寫各自 B4R5 declared evidence path，形成唯一 linear non-merge `S5 -> T5 -> V5`。所有
+graph、parent、path 與 range assertions 均以 actual SHA 與具名 `git diff --name-status S5..V5`
+執行，絕不使用 `HEAD` 或文字 heuristic。
 
 candidate selector 只讀 parent plan、parent step 與 B4R4 review evidence；恰一 topic candidate
 且 review approved 才前進。Observer 唯一 bootstrap dispatch 是 `Observer -> Planner`；Planner
