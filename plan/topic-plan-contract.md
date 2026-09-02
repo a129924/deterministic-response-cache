@@ -27,55 +27,56 @@ non-stable intent。
 
 ## Frozen provenance
 
-`b900366`、normal/recovery records、B0–B5R（含 R8/R9）、S1–S7、T1–T7、V1–V7、Q7，及所有較早
-correction artifacts 是 immutable historical provenance；只作追溯，排除於 B6 route。`step-creator`
+`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S8、T1–T8、V1–V8、Q7/Q8，及所有較早
+correction artifacts 是 immutable historical provenance；只作追溯，排除於 B6R route。`step-creator`
 work 維持 deferred。
 
-## B6 correction contract
+## B6R correction contract
 
-B6 是唯一 non-subject、non-merge seven-path planning baseline。其 named first-parent diff 必須恰好含：
+B6R 是唯一 non-subject、non-merge seven-path planning baseline。其 named first-parent diff 必須恰好含：
 
 1. `plan/agent-handoff-workflow.md`
 2. `plan/topic-plan-contract.md`
 3. `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md`
 4. `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md`
 5. `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md`
-6. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-plan.md`
-7. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-step.md`
+6. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-plan.md`
+7. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-step.md`
 
-Before admission, B6 planning artifacts contain no B6 SHA/blob SHA/`HEAD`/review outcome. Independent
-Plan-Reviewer clean-checkout-reviews every B6 blob and writes only R10 at
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-review-log.md`.
-Independent Implementer separately commits unchanged approved R10. B6/R10 never create
-`implementation_subject_sha`.
+Before admission, B6R planning artifacts contain no B6R SHA/blob SHA/`HEAD`/review outcome. Independent
+Plan-Reviewer clean-checkout-reviews every B6R blob and writes only R11 at
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-review-log.md`.
+Independent Implementer separately commits unchanged approved R11. B6R/R11 never create
+`implementation_subject_sha`. R11 records each reviewed artifact/blob and actual first-parent exact-seven
+admission result.
 
 ```json
-{"schema_version":"observer-dispatcher-governance.correction-b6-plan-review.v1","correction_id":"observer-dispatcher-governance/high/b6","reviewed_commit_sha":"<B6 SHA>","reviewed_artifacts":[{"path":"<one exact B6 planning path>","blob_sha":"<B6 blob SHA>"}],"review_basis":"independent clean-checkout seven-blob review after exact first-parent admission","verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"timestamp":"<RFC 3339 timestamp>"}
+{"schema_version":"observer-dispatcher-governance.correction-b6r-plan-review.v1","correction_id":"observer-dispatcher-governance/high/b6r","reviewed_commit_sha":"<B6R SHA>","reviewed_artifacts":[{"path":"<one exact B6R planning path>","blob_sha":"<B6R blob SHA>"}],"first_parent_admission":{"non_merge":true,"exact_declared_paths":true,"name_status":"<exact seven path entries>"},"review_basis":"independent clean-checkout fields and first-parent seven-blob review","verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"timestamp":"<RFC 3339 timestamp>"}
 ```
 
-Only approved R10 permits S8, the only non-merge implementation subject. S8 changes only
+Only approved R11 permits S9, the only non-merge implementation subject. S9 changes only
 `tests/test_observer_dispatcher_governance_contract.py`, retains direct imports, and rejects `importlib`,
 `__import__`, and `sys.modules` substitution. Its actual graph assertion uses only complete explicit
-`ODG_S8_SHA`/`ODG_T8_SHA`/`ODG_V8_SHA` plus real subprocess `git rev-parse`, `git rev-list`, and
+`ODG_S9_SHA`/`ODG_T9_SHA`/`ODG_V9_SHA` plus real subprocess `git rev-parse`, `git rev-list`, and
 `git diff --name-status`. All absent values are an explicit `skip`/`unverified`; partial/invalid/`HEAD`/
 nonexistent/merge/wrong-parent-or-graph/multi-path input fails closed.
 
-T8 then V8 are S8's only linear non-merge evidence-only descendants. Named `git diff --name-status S8..V8`
+T9 then V9 are S9's only linear non-merge evidence-only descendants. Named `git diff --name-status S9..V9`
 contains exactly:
 
-1. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-tester-evidence.md`
-2. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-implementation-review-log.md`
+1. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-tester-evidence.md`
+2. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-implementation-review-log.md`
 
 ```json
-{"schema_version":"observer-dispatcher-governance.correction-b6-tester-evidence.v1","correction_id":"observer-dispatcher-governance/high/b6","actor":"Tester","implementation_subject_sha":"<S8 SHA>","subject_verification":{"expected_sha":"<S8 SHA>","observed_sha":"<S8 SHA>","command":"<exact command>","result":"passing|failing"},"actual_graph_assertion":{"environment":"complete-real-triple","result":"passing|failing","skipped":false},"commands":[{"command":"<exact command>","exit_code":0,"result":"passing|failing"}],"verdict":"passing|failing","timestamp":"<RFC 3339 timestamp>"}
+{"schema_version":"observer-dispatcher-governance.correction-b6r-tester-evidence.v1","correction_id":"observer-dispatcher-governance/high/b6r","actor":"Tester","implementation_subject_sha":"<S9 SHA>","subject_verification":{"expected_sha":"<S9 SHA>","observed_sha":"<S9 SHA>","command":"<exact command>","result":"passing|failing"},"actual_graph_assertion":{"environment":"complete-real-triple","result":"passing|failing","skipped":false},"commands":[{"command":"<exact command>","exit_code":0,"result":"passing|failing"}],"verdict":"passing|failing","timestamp":"<RFC 3339 timestamp>"}
 ```
 
 ```json
-{"schema_version":"observer-dispatcher-governance.correction-b6-implementation-review.v1","correction_id":"observer-dispatcher-governance/high/b6","review_kind":"correction-b6-implementation","implementation_subject_sha":"<S8 SHA>","review_target_commit_sha":"<pre-existing T8 SHA>","tester_evidence":{"path":"plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-tester-evidence.md","revision":"<T8 SHA>","implementation_subject_sha":"<S8 SHA>","verdict":"passing"},"reviewed_artifacts":[{"path":"tests/test_observer_dispatcher_governance_contract.py","revision":"<S8 SHA>"}],"review_basis":"independent implementation review with named actual-SHA graph queries","verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"timestamp":"<RFC 3339 timestamp>"}
+{"schema_version":"observer-dispatcher-governance.correction-b6r-implementation-review.v1","correction_id":"observer-dispatcher-governance/high/b6r","review_kind":"correction-b6r-implementation","implementation_subject_sha":"<S9 SHA>","review_target_commit_sha":"<pre-existing T9 SHA>","tester_evidence":{"path":"plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-tester-evidence.md","revision":"<T9 SHA>","implementation_subject_sha":"<S9 SHA>","verdict":"passing"},"reviewed_artifacts":[{"path":"tests/test_observer_dispatcher_governance_contract.py","revision":"<S9 SHA>"}],"review_basis":"independent implementation review with named actual-SHA graph queries","verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"timestamp":"<RFC 3339 timestamp>"}
 ```
 
-V8 is authored before its own commit; post-commit validation independently identifies V8 and verifies named
-actual-SHA non-merge `S8 -> T8 -> V8` with the exact range. Q8 uses committed full V8 SHA only; it is
+V9 is authored before its own commit; post-commit validation independently identifies V9 and verifies named
+actual-SHA non-merge `S9 -> T9 -> V9` with the exact range. Q9 uses committed full V9 SHA only; it is
 read-only, writes no artifact and has no lifecycle or thread authority.
 
 ## Planner preflight

@@ -19,15 +19,15 @@ actions 為 human review、merge、release、post-merge、tagging 與 final summ
 
 ## Frozen provenance
 
-`b900366`、normal/recovery records、B0–B5R（含 R8/R9）、S1–S7、T1–T7、V1–V7、Q7，及所有較早
-correction artifacts 均為 immutable historical provenance；僅保留追溯用途，排除於 B6 route。
+`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S8、T1–T8、V1–V8、Q7/Q8，及所有較早
+correction artifacts 均為 immutable historical provenance；僅保留追溯用途，排除於 B6R route。
 `step-creator` work 維持 deferred。
 
-## Current B6 route
+## Current B6R route
 
-`B6 -> R10 -> S8 -> T8 -> V8 -> Q8 -> comment-classification/human-check` 是唯一 current route。
+`B6R -> R11 -> S9 -> T9 -> V9 -> Q9 -> comment-classification/human-check` 是唯一 current route。
 
-B6 是 non-subject、non-merge 的七-path planning baseline。其 first-parent named diff 必須只含以下
+B6R 是 non-subject、non-merge 的七-path planning baseline。其 first-parent named diff 必須只含以下
 paths，各一次：
 
 1. `plan/agent-handoff-workflow.md`
@@ -35,31 +35,32 @@ paths，各一次：
 3. `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md`
 4. `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md`
 5. `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md`
-6. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-plan.md`
-7. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-step.md`
+6. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-plan.md`
+7. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-step.md`
 
-Pre-commit B6 planning artifacts 不得嵌入 B6 SHA、blob SHA、`HEAD` 或 review outcome。Independent
-Plan-Reviewer 只在 committed B6 clean checkout 審全部七 blobs，並寫唯一 R10：
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-review-log.md`。
-Independent Implementer 必須另以 evidence-only commit 提交 unchanged approved R10。B6/R10 都不得建立
+Pre-commit B6R planning artifacts 不得嵌入 B6R SHA、blob SHA、`HEAD` 或 review outcome。Independent
+Plan-Reviewer 只在 committed B6R clean checkout 審全部七 blobs，並寫唯一 R11：
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-review-log.md`。
+R11 必須記錄 reviewed commit、每一 reviewed artifact 的 blob revision，以及 first-parent exact-seven
+path result。Independent Implementer 必須另以 evidence-only commit 提交 unchanged approved R11。B6R/R11 都不得建立
 `implementation_subject_sha`。
 
-只有 approved R10 可以開始 one non-merge S8；S8 complete diff 只可修改
+只有 approved R11 可以開始 one non-merge S9；S9 complete diff 只可修改
 `tests/test_observer_dispatcher_governance_contract.py`。Direct imports 維持 mandatory，禁止 `importlib`、
-`__import__` 與 `sys.modules` substitution。S8 的 actual Git assertion 只可使用完整 explicit
-`ODG_S8_SHA`/`ODG_T8_SHA`/`ODG_V8_SHA` triple 和真實 subprocess `git rev-parse`、`git rev-list`、
+`__import__` 與 `sys.modules` substitution。S9 的 actual Git assertion 只可使用完整 explicit
+`ODG_S9_SHA`/`ODG_T9_SHA`/`ODG_V9_SHA` triple 和真實 subprocess `git rev-parse`、`git rev-list`、
 `git diff --name-status`。三值全 absent 時必須明確 `skip`/`unverified`；部分值、`HEAD`、不存在 revision、
 merge、wrong parent/graph 或 multi-path range 都必須 fail closed。
 
-T8、V8 是唯一 linear、non-merge 的 S8 descendants。Tester 只寫
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-tester-evidence.md`；
+T9、V9 是唯一 linear、non-merge 的 S9 descendants。Tester 只寫
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-tester-evidence.md`；
 Reviewer 只寫
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-implementation-review-log.md`。
-Named `git diff --name-status S8..V8` 必須只列這兩個 paths。T8 必須用 complete real triple 執行
-actual assertion 並記錄 non-skipped passing result；V8 在自身 commit 前撰寫且僅在 same-S8 passing T8 後
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-implementation-review-log.md`。
+Named `git diff --name-status S9..V9` 必須只列這兩個 paths。T9 必須用 complete real triple 執行
+actual assertion 並記錄 non-skipped passing result；V9 在自身 commit 前撰寫且僅在 same-S9 passing T9 後
 撰寫。
 
-Q8 只可在 V8 commit 後，以 committed full V8 SHA 執行 read-only actual query。Q8 不得建立 artifact、
+Q9 只可在 V9 commit 後，以 committed full V9 SHA 執行 read-only actual query。Q9 不得建立 artifact、
 不得使用或推論 `HEAD`、不得 routing lifecycle、不得 resolve PR threads。
 
 ## Gates and human boundary
