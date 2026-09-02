@@ -144,3 +144,49 @@ for unresolved conflict.
 summary。Observer only dispatches Planner; Planner is routing authority; Plan-Creator authors planning
 artifacts; Implementer performs bounded implementation/commits; Tester and Reviewer independently
 write only declared evidence.
+
+## B5 Supersession and Current Route
+
+All B4R7 text above is frozen historical nonrouting provenance. This B5 section is the sole current
+`observer-dispatcher-governance` correction contract. B4R7/S6/T6, missing V6, and all older epochs cannot
+be a candidate, gate, subject, evidence source, or pending work; `step-creator` stays deferred.
+
+B5 is the sole non-subject non-merge baseline. Its first-parent named diff contains exactly:
+
+1. `plan/agent-handoff-workflow.md`
+2. `plan/topic-plan-contract.md`
+3. `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md`
+4. `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md`
+5. `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md`
+6. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b5-plan.md`
+7. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b5-step.md`
+
+Before admission, B5 planning artifacts contain no B5 SHA/blob SHA/`HEAD`/review outcome. Independent
+Plan-Reviewer clean-checkout-reviews every B5 blob and writes only B5 R8; Independent Implementer separately
+commits unchanged approved R8. B5/R8 never create `implementation_subject_sha`.
+
+Only approved R8 permits non-merge S7, whose sole changed path is
+`tests/test_observer_dispatcher_governance_contract.py`. S7 uses only the complete explicit environment
+triple `ODG_S7_SHA`, `ODG_T7_SHA`, `ODG_V7_SHA` and subprocess real `git rev-parse`, `git rev-list`, and
+`git diff --name-status`; no env triple explicitly skips rather than passes. Missing/partial/`HEAD`/
+nonexistent/merge/wrong-parent/multi-path input fails closed. Direct imports remain mandatory.
+
+T7 and V7 are the only non-merge linear S7 descendants. Named `S7..V7` diff contains exactly
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b5-tester-evidence.md` and
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b5-implementation-review-log.md`.
+After V7 commits, Q7 is read-only actual query with V7 full SHA, no artifact, no `HEAD`, and no lifecycle/
+thread authority.
+
+### B5 evidence schemas
+
+```json
+{"schema_version":"observer-dispatcher-governance.correction-b5-plan-review.v1","correction_id":"observer-dispatcher-governance/high/b5","reviewed_commit_sha":"<B5 SHA>","reviewed_artifacts":[{"path":"<B5 path>","blob_sha":"<B5 blob SHA>"}],"verdict":"approved|needs-rework","blocking_issues":[]}
+```
+
+```json
+{"schema_version":"observer-dispatcher-governance.correction-b5-tester-evidence.v1","correction_id":"observer-dispatcher-governance/high/b5","implementation_subject_sha":"<S7 SHA>","verdict":"passing|failing"}
+```
+
+```json
+{"schema_version":"observer-dispatcher-governance.correction-b5-implementation-review.v1","correction_id":"observer-dispatcher-governance/high/b5","implementation_subject_sha":"<S7 SHA>","review_target_commit_sha":"<T7 SHA>","verdict":"approved|needs-rework"}
+```

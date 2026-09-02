@@ -117,3 +117,19 @@ Stop at the Human boundary; none are authorized.
 
 The sole pending action is B4R7 commit admission. B4R7's commit SHA is intentionally unknown until that
 admission completes; all B4R6 and earlier evidence remains frozen.
+
+## B5 Current-Route Supersession
+
+All B4R7 content above is frozen nonrouting provenance. B5 is the only current route:
+`B5 -> R8 -> S7 -> T7 -> V7 -> Q7 -> comment-classification/human-check`. B5 is a non-subject exact
+seven-planning-path baseline; R8 is a separate clean-checkout review. B4R7/S6/T6 and missing V6 cannot
+route current work.
+
+S7 is the sole non-merge subject and changes only
+`tests/test_observer_dispatcher_governance_contract.py`. Its actual graph/range test relies only on complete
+explicit `ODG_S7_SHA`, `ODG_T7_SHA`, `ODG_V7_SHA` input and real subprocess `git rev-parse`, `git rev-list`,
+and `git diff --name-status`; no variables explicitly skip, partial/invalid/`HEAD`/merge/wrong-parent/
+multi-path input fails closed. Direct imports and deferred `step-creator` remain locked.
+
+T7/V7 are evidence-only descendants. Q7 is post-V7 read-only actual query using full V7 SHA, with no artifact,
+no `HEAD`, no lifecycle decision, and no PR-thread resolution authority.
