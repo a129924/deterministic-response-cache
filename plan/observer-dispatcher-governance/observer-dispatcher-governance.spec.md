@@ -1,9 +1,10 @@
 # Observer / Dispatcher Governance Specification
 
-> **B1 correction override:** B0/S1/T1/V1 are frozen provenance. Before implementation, only the
-> seven B1 planning artifacts receive one tree/blob review and non-subject B1 baseline commit. The
-> sole subsequent subject is test-only S2; its only allowed non-merge descendants are T2 then V2,
-> verified as `S2..V2`, never `HEAD`.
+> **B2 correction override:** B0/S1/T1/V1、B1 及其 invalid review record are frozen provenance.
+> Before implementation, only the seven B2 planning artifacts receive a temporary-index verified
+> Git tree/blob review and non-subject B2 baseline commit with post-commit validation. The sole
+> subsequent subject is test-only S3; its only allowed non-merge descendants are T3 then V3,
+> verified as `S3..V3`, never `HEAD`.
 
 ## Acceptance Criteria
 
@@ -11,21 +12,22 @@
    model: Planner alone resolves candidate, phase, gate, severity, correction
    route and next role; Observer is readonly and dispatches one Planner-selected role.
 2. All declared surfaces classify the issue as `high` / `PLANNER_REPLAN`, keep parent plan/spec/step
-   current after backfill, retain `correction-b1-plan.md` / `correction-b1-step.md` as historical
-   B1 correction delta, and recognize `correction-b1-review-log.md` as the sole current B1
+   current after backfill, retain `correction-b2-plan.md` / `correction-b2-step.md` as bounded
+   B2 correction delta, and recognize `correction-b2-review-log.md` as the sole current B2
    pre-subject gate until that gate is completed.
-3. The five exact B1 correction artifacts are conditionally required: correction-b1 plan,
-   correction-b1 step, correction-b1 review log, correction-b1 Tester evidence, and correction-b1
+3. The five exact B2 correction artifacts are conditionally required: correction-b2 plan,
+   correction-b2 step, correction-b2 review log, correction-b2 Tester evidence, and correction-b2
    implementation-review log; their owners, order, and schemas are explicit.
 4. B0/S1/T1/V1, all existing normal evidence, and all `recovery-*` evidence are frozen provenance:
    no current routing / subject / Tester / Reviewer meaning, migration, reader, compatibility, or rewrite.
-5. Before any S2 change, under the one-time B1 exception, Plan-Reviewer tree/blob reviews exactly
-   seven uncommitted B1 planning artifacts—two shared contracts, parent plan/spec/step, and B1
-   correction plan/step—then Independent Implementer commits that unchanged approved record and
-   exact reviewed set as non-subject B1.
-6. Only after approved non-subject `B1`, test-only non-merge `S2` becomes the replacement immutable
-   subject; exactly `T2` Tester then `V2` Reviewer evidence-only commits may follow. Verification is
-   `S2..V2`, never a `HEAD` range.
+5. Before any S3 change, under the one-time B2 exception, Plan-Reviewer uses a temporary index
+   seeded from `HEAD` to build and verify a Git tree over exactly seven uncommitted B2 planning
+   artifacts—two shared contracts, parent plan/spec/step, and B2 correction plan/step—then
+   Independent Implementer commits that unchanged approved record and exact reviewed set as
+   non-subject B2 and verifies the record/tree/blob relationship post-commit.
+6. Only after approved, post-commit-validated non-subject `B2`, test-only non-merge `S3` becomes
+   the replacement immutable subject; exactly `T3` Tester then `V3` Reviewer evidence-only commits
+   may follow. Verification is `S3..V3`, never a `HEAD` range.
 7. Tester starts `pending`, tests only the replacement subject and records exact
    commands/results and `passing|failing`; Reviewer proceeds only from the same
    subject and a passing new Tester record.
@@ -43,19 +45,20 @@
 
 ### Scenario 2: Replacement immutable subject
 
-- **Given**: Correction Plan-Reviewer has tree/blob reviewed exactly the seven uncommitted B1
-  planning artifacts, written the approved schema-complete correction-b1 review record, and an
-  Independent Implementer has committed that unchanged record plus exact reviewed set as B1.
+- **Given**: Correction Plan-Reviewer has temporary-index tree/blob reviewed exactly the seven
+  uncommitted B2 planning artifacts, written the approved schema-complete correction-b2 review
+  record, and an Independent Implementer has committed that unchanged record plus exact reviewed
+  set as B2 and validated the retained tree/blob relation.
 - **When**: Implementer commits only `tests/test_observer_dispatcher_governance_contract.py`.
-- **Then**: that non-merge `S2` commit alone is the replacement immutable subject; B1 is never a subject.
+- **Then**: that non-merge `S3` commit alone is the replacement immutable subject; B2 is never a subject.
 
 ### Scenario 3: Two ordered descendants
 
 - **Given**: the replacement subject has no descendant.
 - **When**: Tester records evidence and Reviewer independently records a verdict against
   the same subject.
-- **Then**: each becomes its own named non-merge evidence-only descendant `T2` then `V2`;
-  name-status from `S2..V2` contains exactly the two named correction-b1 evidence paths and then stops.
+- **Then**: each becomes its own named non-merge evidence-only descendant `T3` then `V3`;
+  name-status from `S3..V3` contains exactly the two named correction-b2 evidence paths and then stops.
 
 ### Scenario 4: Drift fails closed
 

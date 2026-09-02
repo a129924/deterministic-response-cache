@@ -81,29 +81,34 @@ topic `observer-dispatcher-governance` 的唯一 scope expansion authorization �
 > `2. 授權擴張 current topic。`
 
 依此授權，current authoritative correction route 是 shared contracts、parent
-`.plan.md` / `.spec.md` / `.step.md` 與 `correction-b1-plan.md` / `correction-b1-step.md` 的組合；
-parent artifacts 是 current execution truth，B1 correction artifacts 是 retained、bounded delta，
-不能取代 parent。B0/S1/T1/V1（含其所有 correction artifacts）與 old epoch
-`R0=cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9` 均為 frozen provenance，不能作為 current gate
-或新 subject；old epoch 的唯一 predicate 仍為
+`.plan.md` / `.spec.md` / `.step.md` 與 `correction-b2-plan.md` / `correction-b2-step.md` 的組合；
+parent artifacts 是 current execution truth，B2 correction artifacts 是 retained、bounded delta，
+不能取代 parent。B0/S1/T1/V1、B1 與無效的 `correction-b1-review-log.md`（連同其所有
+correction artifacts）、以及 old epoch `R0=cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9` 均為 frozen
+historical provenance，不能作為 current gate 或新 subject；old epoch 的唯一 predicate 仍為
 `ecc5b6f61bacc5493ca3a9f1012d1bfdd43a810c..cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`。
 
-這是狹義的一次性 `B1` exception。before any `S2` test-path change，independent Plan-Reviewer
-只可 tree/blob review 同一 working tree 的七個**未提交** B1 planning artifacts：
-`plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md`、parent
-`.plan.md` / `.spec.md` / `.step.md`、`correction-b1-plan.md` 與 `correction-b1-step.md`；然後只寫入
-schema-complete `correction-b1-review-log.md`。在既有 Human commit authorization 下，Independent
-Implementer 將未改寫的 record 與正是該七個 reviewed artifacts 一起提交為 `B1`。`B1` 是
+這是狹義的一次性 `B2` correction baseline。before any `S3` test-path change，independent
+Plan-Reviewer 只可 tree/blob review 同一 working tree 的七個**未提交** B2 planning artifacts：
+`plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md`、parent `.plan.md` / `.spec.md` /
+`.step.md`、`correction-b2-plan.md` 與 `correction-b2-step.md`。Reviewer 必須以不改寫 shared
+index 的 temporary index 載入 `HEAD`、只加入這七個 paths，執行 `git write-tree`，再以
+`git rev-parse <tree>^{tree}` 與 `git cat-file -e <tree>^{tree}` 驗證 actual Git tree object，並從
+該 tree 取得每一個 path/blob revision；然後只寫入 schema-complete
+`correction-b2-review-log.md`。在既有 Human commit authorization 下，Independent Implementer
+將未改寫的 record 與正是該七個 reviewed artifacts 一起提交為 non-subject `B2`。post-commit
+必須驗證 recorded tree object 仍存在、該 tree 與 `B2` 對七個 paths 的 blobs 全數相同，且
+`git diff --name-status <reviewed_tree_sha> <B2^{tree}>` 只列出 B2 review log。`B2` 是
 planning baseline，絕不是 subject，也不授權其他 uncommitted review 或任何 implementation path。
 
-只有 approved `B1` 後，Implementer 才可建立單一 non-merge `S2`，且 `S2` 的完整 subject diff
-只能改變 `tests/test_observer_dispatcher_governance_contract.py`。`S2` 是新的 immutable
+只有 approved `B2` 後，Implementer 才可建立單一 non-merge `S3`，且 `S3` 的完整 subject diff
+只能改變 `tests/test_observer_dispatcher_governance_contract.py`。`S3` 是新的 immutable
 `implementation_subject_sha`。其後嚴格只有兩個 linear、non-merge、evidence-only commits：
-Tester 寫入 `correction-b1-tester-evidence.md` 為 `T2`，再由 Reviewer 寫入
-`correction-b1-implementation-review-log.md` 為 `V2`。兩個 record 必須 attest `S2`，Reviewer
-必須 reference passing `T2` evidence。final verification 必須以具名 commits 執行
-`git diff --name-status S2..V2`，恰好列出兩個 declared B1 evidence paths；不得以 `HEAD` 代替
-`V2` 或用 `S2..HEAD` 推測 chain。
+Tester 寫入 `correction-b2-tester-evidence.md` 為 `T3`，再由 Reviewer 寫入
+`correction-b2-implementation-review-log.md` 為 `V3`。兩個 record 必須 attest `S3`，Reviewer
+必須 reference passing `T3` evidence。final verification 必須以具名 commits 執行
+`git diff --name-status S3..V3`，恰好列出兩個 declared B2 evidence paths；不得以 `HEAD` 代替
+`V3` 或用 `S3..HEAD` 推測 chain。
 
 此 exception 不授權 evidence 現在寫入、commit、push、PR thread action、merge、post-merge、
 release、tagging 或 final summary，亦不一般化為其他 topic 的 evidence topology。

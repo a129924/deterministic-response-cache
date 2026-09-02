@@ -83,43 +83,50 @@ topic plan 不得有 self-authored approval marker 或任何等價 field。
 本 shared contract 不建立 generic legacy-log migration 或第二種一般 planning-review
 evidence。Human 對 current topic `observer-dispatcher-governance` 的唯一 scope expansion
 authorization 是：`2. 授權擴張 current topic。` 依此授權，唯一 current correction route
-是 parent plan / spec / step 與 `correction-b1-plan.md` / `correction-b1-step.md` 在兩份 shared
-contracts 下的 bounded combination；parent artifacts 保持 current execution truth，B1
+是 parent plan / spec / step 與 `correction-b2-plan.md` / `correction-b2-step.md` 在兩份 shared
+contracts 下的 bounded combination；parent artifacts 保持 current execution truth，B2
 correction artifacts 只保留 correction delta，不能升格為 parent。
 
 `B0=8556d41282eb2388ff22e45623dd20052a2bf70f`、
 `S1=f1a2ae1334b03ea0c5eea7612909ef77c089f38c`、
 `T1=b96c484e78bdc1ea004c7629616f216657e64e07` 與
-`V1=2b0e6fa653bb58537523ae4010945dadbab7b34e`，連同其 correction artifacts、old epoch
+`V1=2b0e6fa653bb58537523ae4010945dadbab7b34e`、B1 與無效的
+`correction-b1-review-log.md`，連同其 correction artifacts、old epoch
 `R0=cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`、normal evidence 與 `recovery-*` evidence，
 都是 frozen provenance；不能作為 current gate、current review、或新 `implementation_subject_sha`。
 
-這是只適用 current topic 的狹義一次性 `B1` exception。normal planning-artifact-commit
-prerequisite 在此例外中暫停：在任何 `S2` test-path 寫入前，independent Plan-Reviewer 可審閱
-同一 working tree 的 tree SHA 與下列七個**未提交** B1 planning artifact 的 exact path/blob revision：
+這是只適用 current topic 的狹義一次性 `B2` exception。normal planning-artifact-commit
+prerequisite 在此例外中暫停：在任何 `S3` test-path 寫入前，independent Plan-Reviewer 可審閱
+同一 working tree 的 verified Git tree object 與下列七個**未提交** B2 planning artifact 的 exact path/blob revision：
 
 - `plan/agent-handoff-workflow.md`
 - `plan/topic-plan-contract.md`
 - `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md`
 - `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md`
 - `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md`
-- `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-plan.md`
-- `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-step.md`
+- `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b2-plan.md`
+- `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b2-step.md`
 
-Plan-Reviewer only owns its independent verdict, not topic routing. After that reviewer writes the
-single schema-complete `correction-b1-review-log.md`, an Independent Implementer under existing
-Human commit authorization commits exactly that unchanged record plus those seven reviewed planning
-artifacts as `B1`. `B1` is not an `implementation_subject_sha`. An `approved` `B1` permits only
-the declared test-path subject; `needs-rework` keeps the topic in `needs-rework` and Planner
-decides bounded repair.
+Plan-Reviewer must build the reviewed tree using a temporary index seeded from `HEAD` and containing
+only these seven changed paths; it must record the `git write-tree` result only after
+`git rev-parse <tree>^{tree}` and `git cat-file -e <tree>^{tree}` succeed. Its path/blob revisions
+must come from that tree, not a non-object working-tree identifier. Plan-Reviewer only owns its
+independent verdict, not topic routing. After that reviewer writes the single schema-complete
+`correction-b2-review-log.md`, an Independent Implementer under existing Human commit authorization
+commits exactly that unchanged record plus those seven reviewed planning artifacts as `B2`. The
+Implementer must then validate the retained record post-commit: its tree object exists; each of the
+seven recorded blobs equals both `<reviewed_tree_sha>:<path>` and `<B2>:<path>`; and the exact
+tree-to-`B2^{tree}` name-status diff lists only `correction-b2-review-log.md`. `B2` is not an
+`implementation_subject_sha`. An `approved` `B2` permits only the declared test-path subject;
+`needs-rework` keeps the topic in `needs-rework` and Planner decides bounded repair.
 
-The subsequent non-merge `S2` must modify only
+The subsequent non-merge `S3` must modify only
 `tests/test_observer_dispatcher_governance_contract.py`; it is the replacement immutable
-`implementation_subject_sha`. Only `T2` (Tester writes
-`observer-dispatcher-governance.correction-b1-tester-evidence.md`) then `V2` (Reviewer writes
-`observer-dispatcher-governance.correction-b1-implementation-review-log.md`) may descend from
-`S2`. Both attest `S2`, the second references passing `T2`, and verification is exactly
-`git diff --name-status S2..V2`; it must list only those two paths and never substitute `HEAD`.
+`implementation_subject_sha`. Only `T3` (Tester writes
+`observer-dispatcher-governance.correction-b2-tester-evidence.md`) then `V3` (Reviewer writes
+`observer-dispatcher-governance.correction-b2-implementation-review-log.md`) may descend from
+`S3`. Both attest `S3`, the second references passing `T3`, and verification is exactly
+`git diff --name-status S3..V3`; it must list only those two paths and never substitute `HEAD`.
 This current-topic exception grants no current evidence write, commit, push, PR-thread action,
 merge, post-merge, release, tagging or summary action, and cannot be generalized to another topic.
 
@@ -206,27 +213,28 @@ future / new review-log record、human-authorized special replan evidence 與 to
 
 ### Current-topic correction evidence schemas
 
-下列三個 JSON object 只適用 `observer-dispatcher-governance` 的 B1 correction route；每個
+下列三個 JSON object 只適用 `observer-dispatcher-governance` 的 B2 correction route；每個
 exact evidence path 只可含一個 object，不得附加 Markdown 或 prose。它們不改寫 generic future /
-new review-log schema，也不追溯適用 frozen B0/S1/T1/V1、legacy 或 recovery evidence。
+new review-log schema，也不追溯適用 frozen B0/S1/T1/V1、B1、legacy 或 recovery evidence。B1 的
+review record 是 frozen invalid provenance，不能更新或重用。
 
 先於 implementation 的 correction-plan review record 必須符合：
 
 ```json
 {
-  "schema_version": "observer-dispatcher-governance.correction-b1-plan-review.v1",
-  "correction_id": "observer-dispatcher-governance/high/b1",
-  "review_kind": "correction-b1-plan",
+  "schema_version": "observer-dispatcher-governance.correction-b2-plan-review.v1",
+  "correction_id": "observer-dispatcher-governance/high/b2",
+  "review_kind": "correction-b2-plan",
   "severity": "high",
   "routing_state": "PLANNER_REPLAN",
-  "reviewed_tree_sha": "<exact B1 tree SHA containing the seven uncommitted reviewed planning artifacts>",
+  "reviewed_tree_sha": "<verified Git tree object produced by temporary-index git write-tree>",
   "reviewed_artifacts": [
     {
-      "path": "<one of the seven exact B1 planning paths>",
-      "blob_sha": "<exact reviewed working-tree blob SHA>"
+      "path": "<one of the seven exact B2 planning paths>",
+      "blob_sha": "<blob from reviewed_tree_sha for that path>"
     }
   ],
-  "review_basis": "<independent correction-plan review basis>",
+  "review_basis": "<independent correction-plan review basis and tree-object verification>",
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
   "copilot_feedback_triage": {
@@ -238,18 +246,22 @@ new review-log schema，也不追溯適用 frozen B0/S1/T1/V1、legacy 或 recov
 }
 ```
 
-`reviewed_artifacts` must contain each of the seven paths enumerated in the B1 route exactly once.
-`reviewed_tree_sha` and every path/blob revision identify the exact uncommitted B1 state reviewed
-before `B1`. Only Plan-Reviewer writes `correction-b1-review-log.md`; its `approved` verdict is a
-precondition for the non-subject `B1` commit and then `S2`. Planner still owns route and status
-decisions.
+`reviewed_artifacts` must contain each of the seven paths enumerated in the B2 route exactly once.
+Before writing the record, Plan-Reviewer must use a temporary index seeded from `HEAD`, stage only
+the seven B2 paths into that temporary index, run `git write-tree`, and verify the returned object
+with both `git rev-parse <tree>^{tree}` and `git cat-file -e <tree>^{tree}`. Every recorded blob must
+equal `git rev-parse <tree>:<path>`. Only Plan-Reviewer writes `correction-b2-review-log.md`; its
+`approved` verdict is a precondition for the non-subject `B2` commit and then `S3`. After B2 is
+committed, Independent Implementer must verify that tree still exists, every recorded blob equals
+both the reviewed tree and `B2:<path>`, and the only name-status difference from reviewed tree to
+`B2^{tree}` is the B2 review-log path. Planner still owns route and status decisions.
 
 Tester evidence after the immutable implementation subject must conform to:
 
 ```json
 {
-  "schema_version": "observer-dispatcher-governance.correction-b1-tester-evidence.v1",
-  "correction_id": "observer-dispatcher-governance/high/b1",
+  "schema_version": "observer-dispatcher-governance.correction-b2-tester-evidence.v1",
+  "correction_id": "observer-dispatcher-governance/high/b2",
   "actor": "Tester",
   "implementation_subject_sha": "<full immutable implementation commit SHA>",
   "subject_verification": {
@@ -276,14 +288,14 @@ Implementation-review evidence after a passing Tester record must conform to:
 
 ```json
 {
-  "schema_version": "observer-dispatcher-governance.correction-b1-implementation-review.v1",
-  "correction_id": "observer-dispatcher-governance/high/b1",
-  "review_kind": "correction-b1-implementation",
+  "schema_version": "observer-dispatcher-governance.correction-b2-implementation-review.v1",
+  "correction_id": "observer-dispatcher-governance/high/b2",
+  "review_kind": "correction-b2-implementation",
   "severity": "high",
   "implementation_subject_sha": "<full immutable implementation commit SHA>",
-  "reviewed_commit_sha": "<V2 commit SHA containing only the two allowed evidence descendants from S2>",
+  "reviewed_commit_sha": "<V3 commit SHA containing only the two allowed evidence descendants from S3>",
   "tester_evidence": {
-    "path": "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b1-tester-evidence.md",
+    "path": "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b2-tester-evidence.md",
     "revision": "<Tester evidence commit SHA>",
     "implementation_subject_sha": "<same full immutable SHA>",
     "verdict": "passing"
@@ -319,14 +331,15 @@ write owner may change the subject, route, status or next role; those remain Pla
 - artifact path scope drift、undeclared stable-library intent 或錯誤 release timing；
 - future / new review log 或已明定 special replan evidence 的 latest record 非有效 JSON、
   shape 不符、reviewed revision 未覆蓋 required latest artifact，或 verdict 非 `approved`；
-- B1 correction review evidence is absent, not schema-complete, lacks `reviewed_tree_sha` or one
-  exact path/blob revision for each of the seven declared uncommitted B1 planning artifacts, is
-  not committed unchanged with exactly that reviewed set as non-subject `B1`, or is written after
-  the `S2` test-path change begins;
-- B1 correction Tester / Reviewer record 的 `implementation_subject_sha` 不存在、不相同、不是
-  only-test-path `S2` completed implementation commit，或 correction descendant 不是
-  `S2 -> T2 -> V2` linear / evidence-only chain，或 `git diff --name-status S2..V2` 不是恰好兩個
-  declared B1 evidence paths，或以 `HEAD` 取代具名 `V2`；
+- B2 correction review evidence is absent, not schema-complete, lacks a verified Git-object
+  `reviewed_tree_sha` or one exact tree-derived path/blob revision for each of the seven declared
+  uncommitted B2 planning artifacts, was not built from the prescribed temporary index, is not
+  committed unchanged with exactly that reviewed set as non-subject `B2`, fails post-commit tree/blob
+  validation, or is written after the `S3` test-path change begins;
+- B2 correction Tester / Reviewer record 的 `implementation_subject_sha` 不存在、不相同、不是
+  only-test-path `S3` completed implementation commit，或 correction descendant 不是
+  `S3 -> T3 -> V3` linear / evidence-only chain，或 `git diff --name-status S3..V3` 不是恰好兩個
+  declared B2 evidence paths，或以 `HEAD` 取代具名 `V3`；
 - self-authored approval marker、混合 role ownership 或 simulated separation；
 - plan、step、review-log、已明定 special replan evidence 或 required repo contract 的
   execution meaning 衝突；
