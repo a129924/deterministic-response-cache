@@ -36,38 +36,41 @@ Implementer 可作 bounded planning commit，這不表示 implementation approva
 schema 且 verdict 為 `approved`。legacy logs 保持 frozen provenance，不得遷移、重讀或以格式
 不符使其失效。
 
-### Current-topic B4R6 correction route
+### Current-topic B4R7 correction route
 
-本節僅適用 `observer-dispatcher-governance`。`b900366` 與 B0–B4R5、S1–S5、T1–T5、V1–V5、
-normal/recovery records，以及其 plan、step、review、schema、blocker、checklist 與 pending
-semantics 全部是 frozen nonrouting provenance；不得作為 candidate、gate、subject、evidence source
-或 current work。兩個 `step-creator` threads 維持 deferred。
+本節僅適用 `observer-dispatcher-governance`。`b900366`、B0–B4R6、S1–S5、T1–T5、V1–V5、
+normal/recovery records、`7d23e8c`、`6ede06b`、所有舊 correction artifacts，及任何 uncommitted
+B4R6 review log 與其 plan、step、review、schema、blocker、checklist、pending semantics 全部是 frozen
+nonrouting provenance；不得作為 candidate、gate、subject、evidence source 或 current work。兩個
+`step-creator` threads 維持 deferred。
 
-`B4R6` 是唯一 current pre-subject route。其 baseline 僅可包含下列七個 planning paths：
+`B4R7` 是唯一 current non-subject route。其 baseline 僅可包含下列七個 planning paths：
 
 1. `plan/agent-handoff-workflow.md`
 2. `plan/topic-plan-contract.md`
 3. `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md`
 4. `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md`
 5. `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md`
-6. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r6-plan.md`
-7. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r6-step.md`
+6. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-plan.md`
+7. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-step.md`
 
-An Independent Implementer commits exactly these seven paths as non-subject `B4R6`; it may not change
-`tests/test_observer_dispatcher_governance_contract.py` or any implementation/evidence path in that
-baseline. From a clean checkout of the committed B4R6 SHA, an Independent Plan-Reviewer reviews actual
-seven blobs and writes only
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r6-review-log.md`.
-An Independent Implementer separately commits that unchanged approved record. Neither B4R6 commit can
+An Independent Implementer first commits exactly these seven paths as non-subject `B4R7`; it may not
+change `tests/test_observer_dispatcher_governance_contract.py` or any implementation/evidence path in
+that baseline. That commit must be non-merge and the named first-parent `git diff --name-status` must
+contain the complete exact seven-path set, each once. Pre-commit B4R7 artifacts must not embed SHA, blob
+SHA, `HEAD`, or review outcome. From a clean checkout of committed B4R7, an Independent Plan-Reviewer
+reviews actual seven blobs and writes only
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-review-log.md`.
+An Independent Implementer separately commits that unchanged approved R7 record. Neither B4R7 commit can
 establish `implementation_subject_sha`.
 
-Only the separately committed approved B4R6 review record permits one non-merge `S6`. S6 alone
-establishes `implementation_subject_sha` and may change only the exact preserved 15-path allowlist in
-the parent plan. The S6 test path must add regression assertions for actual named graph/range, exact
-path sets, frozen B0–B4R5 provenance, and B4R6 review-schema mutation. `T6` then `V6` are its sole
-linear, non-merge, evidence-only descendants. Actual named SHA graph queries must prove
-`S6 -> T6 -> V6`; named `git diff --name-status S6..V6` must list exactly the B4R6 T6/V6 evidence
-paths. `HEAD`, a merge, a third descendant, or textual topology inference fails closed.
+Only the separately committed approved R7 record permits one non-merge `S6`. S6 alone establishes
+`implementation_subject_sha` and may change only the exact preserved 15-path allowlist in the parent
+plan. The S6 test path must add regression assertions for actual named graph/range, exact path sets,
+frozen B0–B4R6 provenance, B4R7 admission and R7 schema mutation. `T6` then `V6` are its sole linear,
+non-merge, evidence-only descendants. Actual named SHA graph queries must prove `S6 -> T6 -> V6`; named
+`git diff --name-status S6..V6` must list exactly the B4R7 T6/V6 evidence paths. `HEAD`, a merge, a
+third descendant, or textual topology inference fails closed.
 
 ### Planner preflight
 
@@ -97,40 +100,41 @@ ordinary future/new review record:
 {"reviewed_artifacts":[{"path":"<exact repo-visible path>","revision":"<revision>"}],"review_basis":"<independent review basis>","verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"timestamp":"<RFC 3339 timestamp>"}
 ```
 
-### B4R6 correction evidence schemas
+### B4R7 correction evidence schemas
 
-Only these B4R6 records are current correction evidence. Each exact evidence file contains one
+Only these B4R7 records are current correction evidence. Each exact evidence file contains one
 complete JSON object and no trailing prose. Tester records factual results only; Tester/Reviewer
 cannot route lifecycle or status.
 
 ```json
-{"schema_version":"observer-dispatcher-governance.correction-b4r6-plan-review.v1","correction_id":"observer-dispatcher-governance/high/b4r6","review_kind":"correction-b4r6-plan","severity":"high","reviewed_commit_sha":"<committed B4R6 SHA>","reviewed_artifacts":[{"path":"<one exact B4R6 baseline path>","blob_sha":"<B4R6 blob SHA>"}],"review_basis":"<independent clean-checkout seven-blob review>","verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"timestamp":"<RFC 3339 timestamp>"}
+{"schema_version":"observer-dispatcher-governance.correction-b4r7-plan-review.v1","correction_id":"observer-dispatcher-governance/high/b4r7","review_kind":"correction-b4r7-plan","severity":"high","reviewed_commit_sha":"<committed B4R7 SHA>","reviewed_artifacts":[{"path":"<one exact B4R7 baseline path>","blob_sha":"<B4R7 blob SHA>"}],"review_basis":"<independent clean-checkout seven-blob review after first-parent exact-path admission>","verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"timestamp":"<RFC 3339 timestamp>"}
 ```
 
-The B4R6 review record contains each seven B4R6 baseline paths exactly once, and no test path.
+The B4R7 review record contains each seven B4R7 baseline paths exactly once, and no test path.
 An approved record must be separately committed unchanged before S6; `needs-rework` returns only to
 Planner.
 
 ```json
-{"schema_version":"observer-dispatcher-governance.correction-b4r6-tester-evidence.v1","correction_id":"observer-dispatcher-governance/high/b4r6","actor":"Tester","implementation_subject_sha":"<S6 SHA>","subject_verification":{"expected_sha":"<S6 SHA>","observed_sha":"<S6 SHA>","command":"<exact command>","result":"passing|failing"},"commands":[{"command":"<exact command>","exit_code":0,"result":"passing|failing"}],"correction_test_result":"passing|failing","repository_validation_result":"passing|failing","verdict":"passing|failing","timestamp":"<RFC 3339 timestamp>"}
+{"schema_version":"observer-dispatcher-governance.correction-b4r7-tester-evidence.v1","correction_id":"observer-dispatcher-governance/high/b4r7","actor":"Tester","implementation_subject_sha":"<S6 SHA>","subject_verification":{"expected_sha":"<S6 SHA>","observed_sha":"<S6 SHA>","command":"<exact command>","result":"passing|failing"},"commands":[{"command":"<exact command>","exit_code":0,"result":"passing|failing"}],"correction_test_result":"passing|failing","repository_validation_result":"passing|failing","verdict":"passing|failing","timestamp":"<RFC 3339 timestamp>"}
 ```
 
 ```json
-{"schema_version":"observer-dispatcher-governance.correction-b4r6-implementation-review.v1","correction_id":"observer-dispatcher-governance/high/b4r6","review_kind":"correction-b4r6-implementation","severity":"high","implementation_subject_sha":"<S6 SHA>","review_target_commit_sha":"<pre-existing T6 SHA>","tester_evidence":{"path":"plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r6-tester-evidence.md","revision":"<T6 SHA>","implementation_subject_sha":"<S6 SHA>","verdict":"passing"},"reviewed_artifacts":[{"path":"<one exact S6 allowlist path>","revision":"<S6 revision>"}],"review_basis":"<independent implementation review basis including named SHA graph queries>","verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"timestamp":"<RFC 3339 timestamp>"}
+{"schema_version":"observer-dispatcher-governance.correction-b4r7-implementation-review.v1","correction_id":"observer-dispatcher-governance/high/b4r7","review_kind":"correction-b4r7-implementation","severity":"high","implementation_subject_sha":"<S6 SHA>","review_target_commit_sha":"<pre-existing T6 SHA>","tester_evidence":{"path":"plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-tester-evidence.md","revision":"<T6 SHA>","implementation_subject_sha":"<S6 SHA>","verdict":"passing"},"reviewed_artifacts":[{"path":"<one exact S6 allowlist path>","revision":"<S6 revision>"}],"review_basis":"<independent implementation review basis including named SHA graph queries>","verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"timestamp":"<RFC 3339 timestamp>"}
 ```
 
 V6 is authored before its own commit and cannot contain, require or infer a V6 SHA. Post-commit
 validation independently identifies V6 and proves named actual-SHA non-merge `S6 -> T6 -> V6`.
 `git diff --name-status S6..V6` lists exactly:
 
-1. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r6-tester-evidence.md`
-2. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r6-implementation-review-log.md`
+1. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-tester-evidence.md`
+2. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-implementation-review-log.md`
 
 ## Blocking Semantics
 
-Missing B4R6 evidence, non-approved B4R6 review, any path outside the seven-path B4R6 baseline or
-15-path S6 allowlist, a frozen epoch as current evidence, a subject other than S6, wrong T6/V6 path,
-merge, third descendant, `HEAD` substitution, or a range other than named `S6..V6` is
+Missing B4R7 admission/evidence, non-approved R7 review, a merge/non-complete/wrong-path B4R7 admission,
+embedded SHA/`HEAD`, any path outside the seven-path B4R7 baseline or 15-path S6 allowlist, a frozen epoch
+as current evidence, a subject other than S6, wrong T6/V6 path, merge, third descendant, `HEAD`
+substitution, or a range other than named `S6..V6` is
 contract-breaking. Plan-Reviewer returns `needs-rework`; Planner routes `blocked` or `human-check`
 for unresolved conflict.
 
