@@ -36,9 +36,12 @@ Reviewer independently write only declared evidence. The two `step-creator` thre
 
 ## Status / Allowed Transitions
 
-Current status is `needs-rework` / `PLANNER_REPLAN`. The sole executable route is:
-`B4R6 seven-blob review -> S6 -> T6 -> V6 -> human-check`. Any contract failure returns to Planner; no prior
-epoch is a fallback.
+`7d23e8c595af0a00ae1d122749614b39bf400506` is the completed immutable B4R6 non-subject
+baseline. Its seven committed blobs are now the sole review input; it must not be recommitted,
+rewritten, or treated as an implementation subject. The sole next action is an independent clean-checkout
+B4R6 seven-blob review. The preserved current route is:
+`B4R6 seven-blob review -> S6 -> T6 -> V6 -> human-check`. Any contract failure returns to Planner;
+no prior epoch is a fallback.
 
 ## Artifact Paths
 
@@ -75,19 +78,19 @@ After separately committed approved B4R6 review, S6 may modify exactly:
 
 ## Implementation Steps
 
-1. Independent Implementer commits exactly the seven B4R6 baseline paths as non-subject and reports
-   `git diff --name-status b900366..<B4R6-SHA>`.
-2. Independently review actual seven B4R6 blobs from a clean checkout and separately commit approved
+1. Independently review actual seven committed B4R6 blobs at
+   `7d23e8c595af0a00ae1d122749614b39bf400506` from a clean checkout and separately commit approved
    B4R6 review evidence.
-3. Planner verifies the B4R6 record before dispatching one non-merge S6 over the exact allowlist.
-4. Write T6 then V6 as the two evidence-only descendants, with actual named-SHA topology/range
+2. Planner verifies the B4R6 record before dispatching one non-merge S6 over the exact allowlist.
+3. Write T6 then V6 as the two evidence-only descendants, with actual named-SHA topology/range
    verification.
 
 ## Validation / Acceptance Checks
 
-- B4R6 baseline diff from `b900366` lists exactly the seven declared planning paths, without a test,
-  implementation, evidence, eighth path, merge, or `implementation_subject_sha`.
-- B4R6 review covers exactly its seven committed blobs once and is approved before S6.
+- Completed B4R6 baseline `7d23e8c595af0a00ae1d122749614b39bf400506` differs from `b900366` by
+  exactly the seven declared planning paths, without a test, implementation, evidence, eighth path,
+  merge, or `implementation_subject_sha`.
+- The sole pending B4R6 review covers exactly those seven committed blobs once and is approved before S6.
 - S6 is the only implementation subject and has no path outside the preserved 15-path allowlist.
 - T6 and V6 attest the same S6; V6 requires passing T6; each evidence path is exact.
 - Actual Git commands prove non-merge `S6 -> T6 -> V6` and `git diff --name-status S6..V6` lists
@@ -110,4 +113,5 @@ Stop at the Human boundary; none are authorized.
 
 ## Open Questions / Unresolved Items
 
-Only the B4R6 review and successor S6/T6/V6 gates remain; frozen history creates none.
+The sole pending action is the B4R6 clean-checkout seven-blob review; after its approved separately
+committed record, successor S6/T6/V6 gates remain. Frozen history creates none.
