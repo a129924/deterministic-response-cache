@@ -41,6 +41,27 @@ B2_EVIDENCE_PATHS = (
     "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b2-implementation-review-log.md",
 )
 
+B3_ROUTE_PATHS = {
+    "workflow": "plan/agent-handoff-workflow.md",
+    "topic_contract": "plan/topic-plan-contract.md",
+    "parent_plan": "plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md",
+    "parent_spec": "plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md",
+    "parent_step": "plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md",
+    "b3_plan": (
+        "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b3-plan.md"
+    ),
+    "b3_step": (
+        "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b3-step.md"
+    ),
+}
+
+B3_EVIDENCE_PATHS = (
+    "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b3-tester-evidence.md",
+    "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b3-implementation-review-log.md",
+)
+
+FROZEN_B3_EPOCHS = ("B0", "B1", "B2", "S1", "S3", "T1", "T3", "V1", "V3")
+
 
 def read(path: str) -> str:
     """Read one declared repository contract surface."""
@@ -53,12 +74,11 @@ def read_b2_route() -> dict[str, str]:
 
 
 def assert_b2_s3_route_is_fail_closed(route: dict[str, str]) -> None:
-    """Reject any route that reuses frozen provenance or broadens S3 descendants."""
+    """Keep the superseded B2/S3 record as frozen, fail-closed provenance."""
     assert set(route) == set(B2_ROUTE_PATHS)
 
-    assert "B0/S1/T1/V1、B1" in route["workflow"]
+    assert "B0/S1/T1/V1、B1" in route["parent_step"]
     assert "frozen provenance" in route["parent_step"]
-    assert "不能作為 current gate 或新 subject" in route["workflow"]
     assert "all old correction artifacts are frozen provenance only" in route["parent_step"]
 
     b2_subject_boundary = route["b2_plan"] + route["b2_step"] + route["parent_plan"]
@@ -71,18 +91,63 @@ def assert_b2_s3_route_is_fail_closed(route: dict[str, str]) -> None:
     assert "implementation_subject_sha" in s3_subject_boundary
     assert "tests/test_observer_dispatcher_governance_contract.py" in s3_subject_boundary
 
-    topology = (
-        route["workflow"]
-        + route["topic_contract"]
-        + route["parent_plan"]
-        + route["b2_plan"]
-        + route["b2_step"]
-    )
+    topology = route["b2_plan"] + route["b2_step"] + route["parent_plan"]
     assert "`S3..V3`" in topology
     assert "exactly T3 then V3" in route["b2_step"]
     assert "no merge, extra descendant, or `HEAD` range." in route["b2_step"]
     assert "never `HEAD`" in topology
     assert all(path in topology for path in B2_EVIDENCE_PATHS)
+
+
+def read_b3_route() -> dict[str, str]:
+    """Read every current B3 routing authority used by the S4 conformance gate."""
+    return {name: read(path) for name, path in B3_ROUTE_PATHS.items()}
+
+
+def assert_b3_s4_route_is_fail_closed(route: dict[str, str]) -> None:
+    """Reject any B3 route that reuses provenance or broadens S4 descendants."""
+    assert set(route) == set(B3_ROUTE_PATHS)
+
+    provenance = route["workflow"] + route["topic_contract"] + route["parent_plan"]
+    for epoch in FROZEN_B3_EPOCHS:
+        assert epoch in provenance
+    assert "frozen historical provenance" in provenance
+    assert "normal/recovery" in provenance
+    assert (
+        "B0/B1/B2/S1/S3/T1/T3/V1/V3 plus normal/recovery artifacts are frozen," in route["b3_plan"]
+    )
+    assert "cannot route, satisfy a gate, or establish a subject" in route["topic_contract"]
+    assert "V3 has no review-log artifact and cannot be fabricated." in route["b3_step"]
+
+    b3_boundary = route["b3_plan"] + route["b3_step"] + route["parent_plan"]
+    assert "B3 is non-subject." in b3_boundary
+    assert "B3 is never an `implementation_subject_sha`" in b3_boundary
+    assert "B3 or any prior commit becomes a subject" in route["b3_plan"]
+
+    s4_boundary = (
+        route["topic_contract"] + route["parent_plan"] + route["parent_spec"] + route["parent_step"]
+    )
+    assert "S4 alone is the current immutable" in s4_boundary
+    assert "implementation_subject_sha" in s4_boundary
+    assert "tests/test_observer_dispatcher_governance_contract.py" in s4_boundary
+
+    topology = "".join(route.values())
+    assert "S4 -> T4 -> V4" in topology
+    assert "non-merge" in topology
+    assert "`S4..V4`" in topology
+    assert "never `HEAD`" in topology
+    assert "The only valid descendant topology is non-merge `S4 -> T4 -> V4`." in route["b3_plan"]
+    assert "only two linear non-merge" in route["b3_step"]
+    assert "contains exactly the two B3 evidence paths, never HEAD." in route["b3_plan"]
+    assert "或用 `S4..HEAD` 推測 chain。" in route["workflow"]
+    assert "exactly the two B3 evidence paths" in route["b3_plan"]
+    assert all(path in topology for path in B3_EVIDENCE_PATHS)
+
+
+def assert_direct_import_behavior(source: str) -> None:
+    """Keep this conformance test free of dynamic-import substitutions."""
+    for forbidden in ("import" + "lib", "__" + "import__", "sys." + "modules"):
+        assert forbidden not in source
 
 
 @pytest.fixture(scope="module")
@@ -218,7 +283,7 @@ def test_b2_route_freezes_prior_epochs_and_resets_the_subject_at_s3() -> None:
     ("source", "required_text", "replacement"),
     [
         (
-            "workflow",
+            "parent_step",
             "B0/S1/T1/V1、B1",
             "B0/T1/V1、B1",
         ),
@@ -253,8 +318,68 @@ def test_b2_s3_route_rejects_provenance_subject_and_topology_mutations(
         assert_b2_s3_route_is_fail_closed(mutated_route)
 
 
+def test_b3_route_freezes_all_prior_epochs_and_resets_the_subject_at_s4() -> None:
+    """Require B3 to stay a baseline while S4 is the only current subject."""
+    assert_b3_s4_route_is_fail_closed(read_b3_route())
+
+
+@pytest.mark.parametrize(
+    ("source", "required_text", "replacement"),
+    [
+        (
+            "b3_plan",
+            "B0/B1/B2/S1/S3/T1/T3/V1/V3 plus normal/recovery artifacts are frozen,",
+            "B0/B1/B2/S1/S3/T1/T3/V1 plus normal/recovery artifacts are frozen,",
+        ),
+        (
+            "topic_contract",
+            "cannot route, satisfy a gate, or establish a subject",
+            "may establish a subject",
+        ),
+        (
+            "b3_step",
+            "B3 is non-subject. S4 is the only current subject.",
+            "B3 establishes the implementation subject.",
+        ),
+        (
+            "b3_plan",
+            "The only valid descendant topology is non-merge `S4 -> T4 -> V4`.",
+            "The only valid descendant topology is non-merge `S4 -> T4 -> V4 -> X4`.",
+        ),
+        (
+            "b3_plan",
+            (
+                "`git diff --name-status S4..V4` contains exactly the two B3 evidence paths, "
+                "never HEAD."
+            ),
+            "`git diff --name-status S4..HEAD` contains extra evidence paths.",
+        ),
+    ],
+)
+def test_b3_s4_route_rejects_provenance_subject_and_topology_mutations(
+    source: str,
+    required_text: str,
+    replacement: str,
+) -> None:
+    """Make B3 frozen, subject, topology, and named-range invariants fail closed."""
+    mutated_route = read_b3_route()
+    assert required_text in mutated_route[source]
+    mutated_route[source] = mutated_route[source].replace(required_text, replacement, 1)
+
+    with pytest.raises(AssertionError):
+        assert_b3_s4_route_is_fail_closed(mutated_route)
+
+
 def test_s3_contract_test_preserves_direct_import_behavior() -> None:
     """Keep this conformance test free of dynamic-import substitutions."""
     source = read("tests/test_observer_dispatcher_governance_contract.py")
-    for forbidden in ("import" + "lib", "__" + "import__", "sys." + "modules"):
-        assert forbidden not in source
+    assert_direct_import_behavior(source)
+
+
+def test_s4_contract_test_rejects_dynamic_import_mutation() -> None:
+    """Make a dynamic-import substitution fail closed instead of changing test behavior."""
+    source = read("tests/test_observer_dispatcher_governance_contract.py")
+    mutated_source = source + "\nimport " + "import" + "lib\n"
+
+    with pytest.raises(AssertionError):
+        assert_direct_import_behavior(mutated_source)
