@@ -1,5 +1,11 @@
 # Topic Plan Contract
 
+> **B6R6 current-contract override:** only `B6R6 -> R16 -> S14 -> T14 -> V14 -> Q14` is current. B6R6/R16 are
+> non-subject; S14 alone modifies `tests/test_observer_dispatcher_governance_contract.py`, preserves direct imports,
+> and asserts full explicit `ODG_S14_SHA`/`ODG_T14_SHA`/`ODG_V14_SHA` actual graph semantics. T14/V14 are the only
+> exact `S14..V14` evidence descendants. Q14 is post-V14 read-only full-triple gate. B6R5 and all earlier routes are
+> frozen nonrouting provenance; `step-creator` stays deferred.
+
 > **B6R5 current-contract override:** 下列 B6R–B6R4、R14、S12 與所有較早 contract 文字均屬 frozen
 > nonrouting provenance。唯一 current contract 是 `B6R5 -> R15 -> S13 -> T13 -> V13 -> Q13`。B6R5 admission
 > 只含 shared workflow/contract、parent plan/spec/step 與 B6R5 plan/step 七 paths，且 pre-commit 不含
@@ -89,6 +95,11 @@ actual-SHA non-merge `S9 -> T9 -> V9` with the exact range. Q9 uses committed fu
 read-only, writes no artifact and has no lifecycle or thread authority.
 
 ## Planner preflight
+
+**B6R6 schema/matrix:** R16 must record schema/correction id, committed tree and per-path blob facts, first-parent
+exact-seven admission, verdict, blockers, triage, timestamp. T14 records same-subject/full-suite/no-env-or-complete
+actual-graph commands and verdict. V14 records same subject, T14 result/revision, reviewed test artifact, non-merge
+topology/exact range, verdict, blockers, triage, timestamp. Actual revisions are written only in post-admission evidence.
 
 Planner reads only current parent plan, parent step and exact current approved review record. It selects
 candidate, phase, gate and next role. Missing evidence is `blocked`; multiple candidates or conflict is

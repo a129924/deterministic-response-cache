@@ -1,10 +1,27 @@
 ---
 topic: observer-dispatcher-governance
 correction: high-b6r5
-state: B6R5_REVIEW_PENDING
+state: B6R6_REVIEW_PENDING
 ---
 
 # Observer / Dispatcher Governance Steps
+
+> **B6R6 tracker override:** only `B6R6 -> R16 -> S14 -> T14 -> V14 -> Q14 -> comment-classification/human-check`
+> routes current work. B6R5 and all earlier tracker rows are frozen nonrouting provenance; `step-creator` remains deferred.
+
+## B6R6 Current Steps
+
+- [X] Plan-Creator: synchronize exactly seven B6R6 planning paths and create B6R6 plan/step.
+- [X] Independent Implementer: commit the B6R6 non-merge first-parent exact-seven admission.
+- [ ] Independent Plan-Reviewer: clean-checkout-review B6R6 and write only R16.
+- [ ] Independent Implementer: separately commit unchanged approved R16.
+- [ ] Planner: verify R16 then dispatch test-only S14.
+- [ ] Implementer: create S14 with direct imports and fail-closed actual-input semantics.
+- [ ] Tester: write truthful same-S14 T14 after passing full suite; no-env graph remains skip/unverified.
+- [ ] Reviewer: write V14 after T14 and prove exact `S14 -> T14 -> V14` plus `S14..V14`.
+- [ ] Reviewer: after committed V14 execute read-only actual full-triple Q14.
+- [ ] Independent Reviewer: after passed Q14 classify threads; only explicit addressed-and-resolvable permits resolve.
+- [ ] Stop at Human boundary.
 
 > **B6R5 tracker override:** 下列 normal/recovery、B0–B6、B6R–B6R4 tracker、R14/S12 均為 frozen
 > nonrouting provenance。Current state 為 `B6R5_REVIEW_PENDING`，唯一 route 為

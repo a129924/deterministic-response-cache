@@ -1,5 +1,11 @@
 # Observer / Dispatcher Governance Specification
 
+> **B6R6 acceptance override:** B6R6/R16 are non-subject; only S14 is a one-test-path direct-import subject. S14
+> must prove older B6R5/earlier routes are frozen, `S14 -> T14 -> V14` is sole non-merge topology, and `S14..V14`
+> contains just T14/V14 evidence. Complete explicit actual triple uses `ODG_S14_SHA`/`ODG_T14_SHA`/`ODG_V14_SHA`; all
+> absent means no-env skip/unverified and every partial/invalid/symbolic/nonexistent/merge/wrong graph/range input
+> fails closed. Q14 follows committed V14, read-only, before independent thread classification.
+
 > **B6R5 acceptance override:** B6R–B6R4、R14、S12 與下列 historical acceptance text 均為 frozen
 > nonrouting provenance。B6R5/R15 均不得建立 subject；only S13 可只改 governance contract test 並保留 direct
 > imports。T13 必須 truthfully 記錄 passing full suite 與 one no-environment actual-graph

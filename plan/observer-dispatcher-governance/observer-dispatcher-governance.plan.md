@@ -1,5 +1,14 @@
 # Observer / Dispatcher Governance
 
+> **B6R6 current-plan override:** only `B6R6 -> R16 -> S14 -> T14 -> V14 -> Q14 -> comment-classification/human-check`
+> is current. B6R6/R16 are non-subject; S14 only changes the governance contract test with direct imports. T14/V14 are
+> the only linear non-merge descendants and Q14 is the post-V14 actual full-triple read-only gate. B6R5 and every older
+> normal/recovery/correction route is frozen nonrouting provenance; `step-creator` remains deferred.
+
+> **B6R6 status:** `B6R6_REVIEW_PENDING`. Creator/admission are complete; R16, S14, T14, V14, Q14 and independent
+> classification are pending. Exact B6R6 admission paths are shared workflow/contract, parent plan/spec/step and B6R6
+> plan/step; no unlisted path is allowed.
+
 > **B6R5 current-route override:** 其餘 normal/recovery、B0–B6、B6R–B6R4、R14、S12 與所有較早 route
 > 文字均為 frozen nonrouting provenance。唯一 current route 是
 > `B6R5 -> R15 -> S13 -> T13 -> V13 -> Q13 -> comment-classification/human-check`。B6R5/R15 non-subject；

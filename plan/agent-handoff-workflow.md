@@ -1,5 +1,15 @@
 # Agent handoff workflow
 
+> **B6R6 current-route override:** `B6R6 -> R16 -> S14 -> T14 -> V14 -> Q14 -> comment-classification/human-check`
+> 是唯一 current route。B6R6/R16 non-subject；only S14 establishes the subject and only changes
+> `tests/test_observer_dispatcher_governance_contract.py` while retaining direct imports. T14 truthfully records
+> same-S14 passing full suite plus no-environment actual graph skip/unverified; V14 proves structural non-merge
+> `S14 -> T14 -> V14` and exact `S14..V14` two-evidence range. Q14 is post-committed-V14, read-only, and runs the
+> sole non-skipped actual full explicit `ODG_S14_SHA`/`ODG_T14_SHA`/`ODG_V14_SHA` subprocess Git gate. All earlier
+> normal/recovery, B0–B6, B6R–B6R5, R1–R15, S1–S13, T1–T13, V1–V13, Q1–Q13 text is concise frozen nonrouting
+> provenance only; `step-creator` remains deferred. Partial/invalid/symbolic/nonexistent/merge/wrong graph/range
+> actual input fails closed; only a passed Q14 permits independent per-thread `addressed-and-resolvable` classification.
+
 > **B6R5 current-route override:** 本文件其餘 normal/recovery、B0–B6、B6R–B6R4、R14、S12 與所有較早
 > route 文字均為 frozen nonrouting provenance，不得作 current authority。唯一 current route 是
 > `B6R5 -> R15 -> S13 -> T13 -> V13 -> Q13 -> comment-classification/human-check`。B6R5/R15 均為
@@ -75,6 +85,11 @@ Q9 只可在 V9 commit 後，以 committed full V9 SHA 執行 read-only actual q
 不得使用或推論 `HEAD`、不得 routing lifecycle、不得 resolve PR threads。
 
 ## Gates and human boundary
+
+**B6R6 admission:** non-merge first-parent exact-seven paths are this workflow, shared contract, parent plan/spec/step,
+and B6R6 plan/step. Creator and admission are complete; current state is `B6R6_REVIEW_PENDING`; R16 onward is pending.
+R16 clean-checkout reviews committed tree/blob/path facts and writes only B6R6 review log. B6R6/R16 never create subject.
+S14 is test-only; T14 and V14 write only their declared evidence paths. Q14 has no written artifact/thread authority.
 
 缺少 required evidence 為 `blocked`；candidate conflict 為 `human-check`；contract drift 保守回到
 Planner。Ready for review 不是 merge approval。comment classification 僅能由獨立 Reviewer 在 Q13 後執行；
