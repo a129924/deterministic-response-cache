@@ -1,14 +1,14 @@
 # Agent handoff workflow
 
-> **B6R3 current-route override:** 本文件其餘 normal/recovery、B0–B6、B6R 與 B6R2 route 文字均為 frozen
+> **B6R4 current-route override:** 本文件其餘 normal/recovery、B0–B6、B6R–B6R3 route 文字均為 frozen
 > nonrouting provenance，不得作 current authority。唯一 current route 是
-> `B6R3 -> R13 -> S11 -> T11 -> V11 -> Q11 -> comment-classification/human-check`。B6R3/R13 均為
-> non-subject；B6R3 為 non-merge、first-parent exact-seven planning baseline（shared workflow/contract、parent
-> plan/spec/step、B6R3 plan/step）。R13 clean-checkout review 後，S11 是唯一 subject，僅可改
+> `B6R4 -> R14 -> S12 -> T12 -> V12 -> Q12 -> comment-classification/human-check`。B6R4/R14 均為
+> non-subject；B6R4 為已提交的 non-merge、first-parent exact-seven planning baseline（shared workflow/contract、parent
+> plan/spec/step、B6R4 plan/step）。R14 clean-checkout review 後，S12 是唯一 subject，僅可改
 > `tests/test_observer_dispatcher_governance_contract.py`，保留 direct imports，並以 complete explicit
-> `ODG_S11_SHA`/`ODG_T11_SHA`/`ODG_V11_SHA` 的 real subprocess Git contract fail closed 驗證。T11/V11
-> 是 exact non-merge evidence-only descendants，named `S11..V11` 僅含兩個 declared evidence paths。Q11 是
-> committed-full-V11-SHA-only read-only query，無 artifact、lifecycle 或 thread authority；唯有 Q11 後獨立
+> `ODG_S12_SHA`/`ODG_T12_SHA`/`ODG_V12_SHA` 的 real subprocess Git contract fail closed 驗證。T12/V12
+> 是 exact non-merge evidence-only descendants，named `S12..V12` 僅含兩個 declared evidence paths。Q12 是
+> committed-full-V12-SHA-only read-only query，無 artifact、lifecycle 或 thread authority；唯有 Q12 後獨立
 > Reviewer 逐 thread `addressed-and-resolvable` classification 可允許 resolution。
 
 ## Purpose
@@ -31,7 +31,7 @@ actions 為 human review、merge、release、post-merge、tagging 與 final summ
 ## Frozen provenance
 
 `b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S10、T1–T10、V1–V10、Q7–Q10，及所有較早
-correction artifacts 均為 immutable historical provenance；僅保留追溯用途，排除於 B6R3 route。
+correction artifacts 均為 immutable historical provenance；僅保留追溯用途，排除於 B6R4 route。
 `step-creator` work 維持 deferred。
 
 ## Frozen B6R historical route
