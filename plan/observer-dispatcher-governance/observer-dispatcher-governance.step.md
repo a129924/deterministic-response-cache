@@ -1,28 +1,27 @@
 ---
 topic: observer-dispatcher-governance
-correction: high-b4r3
+correction: high-b4r4
 state: PLANNER_REPLAN
 ---
 
-# B4R3 Current Steps
+# B4R4 Current Steps
 
-- [X] Independent Implementer: commit B4R2 exactly as `0800dc11181cdbd7d93d85e0298ea78dc33d06d3`;
-  it is frozen non-subject provenance, not a pending B4R2 action.
-- [X] Independent Plan-Reviewer: complete B4R2 clean-checkout review with a failed result; it is
-  frozen provenance and cannot route S5.
-- [X] Plan-Creator: synchronize exactly the seven B4R3 planning paths and create B4R3 plan/step.
-- [ ] Independent Implementer: commit exactly those seven B4R3 paths as non-subject B4R3.
-- [ ] Independent Plan-Reviewer: clean-checkout review committed B4R3 and write only B4R3 review log.
-- [ ] Independent Implementer: separately commit unchanged approved B4R3 review record.
-- [ ] Planner: verify B4R3 approval and dispatch S5 only then.
+- [X] Freeze `8b87aab` B4R3 and its failed clean review as nonrouting provenance.
+- [X] Plan-Creator: synchronize exactly the seven B4R4 planning paths and create B4R4 plan/step.
+- [ ] Independent Implementer: apply only B4R4 fixed test adaptation and commit exactly the eight
+  B4R4 baseline paths as non-subject; report named `8b87aab..<B4R4-SHA>` path diff.
+- [ ] Independent Plan-Reviewer: clean-checkout review all eight committed B4R4 blobs and write only
+  B4R4 review log.
+- [ ] Independent Implementer: separately commit unchanged approved B4R4 review record.
+- [ ] Planner: verify B4R4 approval and dispatch S5 only then.
 - [ ] Independent Implementer: make one non-merge S5 over the exact preserved 15-path allowlist.
-- [ ] Tester: write factual same-S5 B4R3 T5 evidence only.
+- [ ] Tester: write factual same-S5 B4R4 T5 evidence only.
 - [ ] Reviewer: require same-S5 passing T5, write V5, and prove named actual-SHA `S5..V5` contains
-  only B4R3 T5/V5 evidence paths.
+  only B4R4 T5/V5 evidence paths.
 - [ ] Stop at the Human boundary; do not resolve PR threads, merge, release or post-merge.
 
 ## Frozen History
 
-B2, B3, B4, B4R and B4R2 steps/checklists are frozen nonrouting provenance. They are not current
-pending boxes and may not be reopened or used to route B4R3. The two `step-creator` deferred steps
-remain deferred.
+B0–B4R3, S1–S4, T1–T4, V1–V4, normal/recovery records and their steps/checklists are frozen
+nonrouting provenance. They are not current pending boxes and may not be reopened or used to route
+B4R4. The two `step-creator` deferred steps remain deferred.
