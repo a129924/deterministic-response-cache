@@ -130,32 +130,23 @@ The subsequent non-merge `S3` must modify only
 This current-topic exception grants no current evidence write, commit, push, PR-thread action,
 merge, post-merge, release, tagging or summary action, and cannot be generalized to another topic.
 
-### Human-authorized current-topic B3 correction route
+### Human-authorized current-topic B4 correction route
 
-The B2 route above is frozen historical provenance and is not a current gate. For current topic
-`observer-dispatcher-governance`, the Human scope-expansion authorization `2. 授權擴張 current
-topic。` now permits only this bounded B3 route: the parent plan / spec / step, the two shared
-contracts, `correction-b3-plan.md`, and `correction-b3-step.md` are the current planning truth.
-B0, B1, B2, S1, S3, T1, T3, V1, V3, normal evidence, and `recovery-*` evidence are frozen
-provenance and cannot route, satisfy a gate, or establish a subject. V3 has a frozen
-`needs-rework` outcome but no repo-visible review-log artifact; it must never be reconstructed.
+The B0–B3/S1–S4/T1–T4/V1–V4, normal/recovery and prior correction artifacts are frozen historical
+provenance, never a candidate, gate, route or subject. The two `step-creator` threads are deferred.
+The Human scope-expansion authorization `2. 授權擴張 current topic。` permits only B4: two shared
+contracts, parent plan/spec/step, and correction-b4 plan/step.
 
-Before S4, an independent Plan-Reviewer reviews exactly seven uncommitted B3 planning paths using a
-temporary index seeded from `HEAD`: the two shared contracts, parent plan/spec/step, and
-`correction-b3-plan.md` / `correction-b3-step.md`. It runs `git write-tree`, verifies the resulting
-Git tree object with both `git rev-parse <tree>^{tree}` and `git cat-file -e <tree>^{tree}`, and
-records one tree-derived blob for every path in `correction-b3-review-log.md`. An Independent
-Implementer commits that unchanged approved record plus exactly the reviewed seven paths as
-non-subject B3, then proves each blob matches the reviewed tree and B3, and that the only
-reviewed-tree-to-B3 diff path is the B3 review log.
+An Independent Implementer commits exactly those seven paths as non-subject B4. From a clean
+checkout at that B4 commit, an Independent Plan-Reviewer reviews the committed blobs and writes
+only `correction-b4-review-log.md`; an Independent Implementer commits that unchanged review record
+separately. B4 and its review-evidence commit are never subjects.
 
-Only then may non-merge S4 modify
-`tests/test_observer_dispatcher_governance_contract.py`; S4 alone is the current immutable
-`implementation_subject_sha`. Its only descendants are T4 Tester evidence and V4 Reviewer
-evidence. The V4 record is authored before V4 exists, so it must identify the pre-existing
-`review_target_commit_sha` equal to T4; it must not demand or contain a self-referential V4 SHA.
-Post-commit validation discovers V4 separately. The named `git diff --name-status S4..V4` range
-must contain only the B3 Tester and Reviewer evidence paths, never `HEAD`.
+S5 is the sole immutable subject and may change only the exact 15-path allowlist in the parent plan.
+T5 then V5 are the only linear non-merge evidence-only descendants. All verification uses actual
+named commit SHA graph queries and exact `git diff --name-status S5..V5`; `HEAD` and textual topology
+inference are invalid. Tester reports only factual `passing|failing`, without `next_gate`, routing or
+lifecycle fields. Reviewer requires the same S5 SHA and passing exact T5 evidence path.
 
 ### Planner preflight
 
@@ -348,20 +339,20 @@ Implementation-review evidence after a passing Tester record must conform to:
 Tester writes only factual test evidence. Reviewer writes only its independent verdict. Neither
 write owner may change the subject, route, status or next role; those remain Planner decisions.
 
-### B3 correction evidence schemas
+### B4 correction evidence schemas
 
 The following three single-JSON-object records are the only current correction evidence for this
-topic. They are prospective B3 artifacts and do not rewrite frozen provenance.
+topic. They are prospective B4 artifacts and do not rewrite frozen provenance.
 
 ```json
 {
-  "schema_version": "observer-dispatcher-governance.correction-b3-plan-review.v1",
-  "correction_id": "observer-dispatcher-governance/high/b3",
-  "review_kind": "correction-b3-plan",
+  "schema_version": "observer-dispatcher-governance.correction-b4-plan-review.v1",
+  "correction_id": "observer-dispatcher-governance/high/b4",
+  "review_kind": "correction-b4-plan",
   "severity": "high",
   "routing_state": "PLANNER_REPLAN",
-  "reviewed_tree_sha": "<verified temporary-index Git tree object>",
-  "reviewed_artifacts": [{"path": "<one exact B3 planning path>", "blob_sha": "<tree-derived blob SHA>"}],
+  "reviewed_commit_sha": "<committed B4 SHA>",
+  "reviewed_artifacts": [{"path": "<one exact B4 planning path>", "blob_sha": "<B4-commit blob SHA>"}],
   "review_basis": "<independent tree/blob review basis>",
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
@@ -370,17 +361,17 @@ topic. They are prospective B3 artifacts and do not rewrite frozen provenance.
 }
 ```
 
-`reviewed_artifacts` contains each of the seven B3 planning paths exactly once. The Plan-Reviewer
-alone writes `correction-b3-review-log.md`; an approved record is committed unchanged with the exact
-reviewed set as non-subject B3.
+`reviewed_artifacts` contains each of the seven B4 planning paths exactly once. The Plan-Reviewer
+alone writes `correction-b4-review-log.md` from a clean B4 checkout; an approved record is committed
+unchanged in a separate evidence-only commit.
 
 ```json
 {
-  "schema_version": "observer-dispatcher-governance.correction-b3-tester-evidence.v1",
-  "correction_id": "observer-dispatcher-governance/high/b3",
+  "schema_version": "observer-dispatcher-governance.correction-b4-tester-evidence.v1",
+  "correction_id": "observer-dispatcher-governance/high/b4",
   "actor": "Tester",
-  "implementation_subject_sha": "<S4 SHA>",
-  "subject_verification": {"expected_sha": "<S4 SHA>", "observed_sha": "<S4 SHA>", "command": "<exact command>", "result": "passing|failing"},
+  "implementation_subject_sha": "<S5 SHA>",
+  "subject_verification": {"expected_sha": "<S5 SHA>", "observed_sha": "<S5 SHA>", "command": "<exact command>", "result": "passing|failing"},
   "commands": [{"command": "<exact command>", "exit_code": 0, "result": "passing|failing"}],
   "correction_test_result": "passing|failing",
   "repository_validation_result": "passing|failing",
@@ -391,13 +382,13 @@ reviewed set as non-subject B3.
 
 ```json
 {
-  "schema_version": "observer-dispatcher-governance.correction-b3-implementation-review.v1",
-  "correction_id": "observer-dispatcher-governance/high/b3",
-  "review_kind": "correction-b3-implementation",
+  "schema_version": "observer-dispatcher-governance.correction-b4-implementation-review.v1",
+  "correction_id": "observer-dispatcher-governance/high/b4",
+  "review_kind": "correction-b4-implementation",
   "severity": "high",
-  "implementation_subject_sha": "<S4 SHA>",
-  "review_target_commit_sha": "<pre-existing T4 SHA>",
-  "tester_evidence": {"path": "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b3-tester-evidence.md", "revision": "<T4 SHA>", "implementation_subject_sha": "<S4 SHA>", "verdict": "passing"},
+  "implementation_subject_sha": "<S5 SHA>",
+  "review_target_commit_sha": "<pre-existing T5 SHA>",
+  "tester_evidence": {"path": "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4-tester-evidence.md", "revision": "<T5 SHA>", "implementation_subject_sha": "<S5 SHA>", "verdict": "passing"},
   "reviewed_artifacts": [{"path": "<exact declared path>", "revision": "<reviewed revision>"}],
   "review_basis": "<independent implementation review basis>",
   "verdict": "approved|needs-rework",
@@ -407,9 +398,10 @@ reviewed set as non-subject B3.
 }
 ```
 
-The V4 record is written before the V4 commit and therefore must not contain, require, or infer a
-V4 commit SHA. Post-commit validation independently identifies V4 and verifies exact non-merge
-`S4 -> T4 -> V4` topology and `git diff --name-status S4..V4`.
+The V5 record is written before the V5 commit and therefore must not contain, require, or infer a
+V5 commit SHA. Post-commit validation independently identifies V5 and verifies exact non-merge
+`S5 -> T5 -> V5` topology and `git diff --name-status S5..V5`. Tester evidence has no `next_gate`,
+routing or lifecycle field.
 
 ## Blocking Semantics
 

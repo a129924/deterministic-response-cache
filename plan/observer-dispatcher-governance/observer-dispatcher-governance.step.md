@@ -6,6 +6,20 @@ created: 2026-09-01
 
 # observer-dispatcher-governance — Step Tracking
 
+> **B4 current route:** B0–B3/S1–S4/T1–T4/V1–V4 and normal/recovery are frozen; `step-creator` threads are deferred. Only B4 -> S5 -> T5 -> V5 routes current work.
+
+## B4 Actionable Steps
+
+- [X] Plan-Creator: synchronize exactly seven B4 planning paths and create B4 plan/step.
+- [ ] Independent Implementer: commit the seven paths as non-subject B4.
+- [ ] Independent Plan-Reviewer: clean-checkout review committed B4; write only B4 review log.
+- [ ] Independent Implementer: separately commit unchanged B4 review log.
+- [ ] Planner: run exact candidate selector; dispatch S5 only when B4 review is approved.
+- [ ] Independent Implementer: make one non-merge S5 using exact 15-path allowlist.
+- [ ] Tester: write factual same-S5 T5 evidence only.
+- [ ] Reviewer: require same-S5 passing exact T5, write V5, and verify named actual-SHA `S5..V5`.
+- [ ] Human boundary: no PR-thread, merge, release or post-merge action.
+
 > **B3 correction override — current stage:** B0/B1/B2/S1/S3/T1/T3/V1/V3 and normal/recovery
 > artifacts are frozen, nonrouting provenance; V3's frozen needs-rework outcome has no log. The
 > current route is verified-tree non-subject B3, then test-only S4, T4, and pre-commit V4 targeting

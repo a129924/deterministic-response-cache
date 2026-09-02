@@ -1,5 +1,22 @@
 # Observer / Dispatcher Governance
 
+> **B4 corrective override — current execution truth:** B0–B3, S1–S4, T1–T4, V1–V4, normal/recovery and all prior correction records are frozen nonrouting provenance; the two `step-creator` PR threads are deferred. B4 is a committed, clean-checkout-reviewed, non-subject seven-path planning baseline. Only S5 may establish `implementation_subject_sha`, using exactly the B4 15-path allowlist; only T5 then V5 may descend, verified with actual SHA graph queries and named `S5..V5`, never `HEAD` or a text heuristic.
+
+## B4 Current Artifact Delta
+
+| Artifact | Exact path | Write owner |
+| --- | --- | --- |
+| B4 plan / step | `correction-b4-plan.md`, `correction-b4-step.md` | Plan-Creator |
+| B4 review | `correction-b4-review-log.md` | Plan-Reviewer |
+| T5 evidence | `correction-b4-tester-evidence.md` | Tester |
+| V5 evidence | `correction-b4-implementation-review-log.md` | Reviewer |
+
+## B4 Current Route
+
+The seven B4 planning paths are committed first as non-subject B4. Plan-Reviewer reviews their committed blobs from a clean B4 checkout and writes separately committed B4 review evidence. Candidate selector reads only this parent plan, parent step and approved B4 review evidence. Observer bootstrap-dispatches Planner only; Planner alone routes the next role and may dispatch Tester or Explorer. Wrappers are descriptive only and do not orchestrate.
+
+S5 may modify exactly the 15 paths in `correction-b4-plan.md`. Tester emits factual `passing|failing` evidence only—no `next_gate`, routing or lifecycle fields. Reviewer requires the same S5 SHA and passing T5 at the exact path before V5.
+
 > **B3 corrective override — current execution truth:** B0/B1/B2/S1/S3/T1/T3/V1/V3 and all
 > normal/recovery records are frozen historical provenance, never current routing, gates, or subjects.
 > V3's frozen `needs-rework` outcome has no repo-visible V3 review log and must not be backfilled.

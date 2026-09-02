@@ -73,7 +73,7 @@ planning approval evidence 固定為：
 topic plan 不得包含、要求或依賴任何 self-authored approval marker。缺少 planning
 artifact commit、required step 或上述 evidence 時，implementation 不可開始。
 
-### Human-authorized current-topic correction route
+### Human-authorized current-topic B4 correction route
 
 一般 planning baseline 與 future / new review-log NDJSON 規則維持不變。Human 對 current
 topic `observer-dispatcher-governance` 的 scope expansion authorization 是：
@@ -81,37 +81,24 @@ topic `observer-dispatcher-governance` 的 scope expansion authorization 是：
 > `2. 授權擴張 current topic。`
 
 current authoritative route 是 shared contracts、parent `.plan.md` / `.spec.md` / `.step.md` 與
-`correction-b3-plan.md` / `correction-b3-step.md` 的組合；parent artifacts 是 current execution
-truth，B3 artifacts 是 retained bounded delta，不能取代 parent。normal / recovery provenance，
-`B0`、`B1`、`B2`、`S1`、`S3`、`T1`、`T3`、`V1` 與 `V3` 都是 frozen historical provenance：
-它們不可作為 current gate、current route 或新 subject。`V3` 的 `needs-rework` outcome 沒有
-repo-visible V3 review log；不得補寫、推定或重用它。
+`correction-b4-plan.md` / `correction-b4-step.md`。B0–B3、S1–S4、T1–T4、V1–V4、normal/recovery
+evidence 與所有舊 correction artifacts 都是 frozen historical provenance，不可選擇 candidate、
+提供 gate、建立 subject 或 routing。兩個既有 `step-creator` PR threads 維持 deferred。
 
-這是狹義的一次性 `B3` corrective baseline。before any `S4` test-path change，independent
-Plan-Reviewer 只可 tree/blob review 同一 working tree 的七個**未提交** B3 planning artifacts：
-`plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md`、parent `.plan.md` / `.spec.md` /
-`.step.md`、`correction-b3-plan.md` 與 `correction-b3-step.md`。Reviewer 必須以不改寫 shared
-index 的 temporary index 載入 `HEAD`、只加入這七個 paths，執行 `git write-tree`，再以
-`git rev-parse <tree>^{tree}` 與 `git cat-file -e <tree>^{tree}` 驗證 actual Git tree object，並從
-該 tree 取得每一個 path/blob revision；然後只寫入 schema-complete
-`correction-b3-review-log.md`。在既有 Human commit authorization 下，Independent Implementer
-將 unchanged record 與正是該七個 reviewed artifacts 一起提交為 non-subject `B3`。post-commit
-必須驗證 recorded tree object 仍存在、該 tree 與 `B3` 對七個 paths 的 blobs 全數相同，且
-`git diff --name-status <reviewed_tree_sha> <B3^{tree}>` 只列出 B3 review log。`B3` 是
-planning baseline，絕不是 subject。
+B4 的七個 planning paths 先由 Independent Implementer 提交為 clean-checkout 可重現的非
+subject baseline。Independent Plan-Reviewer 只能從該 committed B4 clean checkout 審查，並另寫
+`correction-b4-review-log.md`；其 evidence 必須以另一個 evidence-only commit 提交。B4 與其
+review evidence 都不得成為 `implementation_subject_sha`。
 
-只有 approved/validated `B3` 後，Implementer 才可建立單一 non-merge `S4`，且完整 subject diff
-只能改變 `tests/test_observer_dispatcher_governance_contract.py`。`S4` 是唯一 current immutable
-`implementation_subject_sha`。其後嚴格只有 Tester `T4` 寫入
-`correction-b3-tester-evidence.md`，再由 Reviewer 在 **V4 commit 前** 寫入
-`correction-b3-implementation-review-log.md` 的兩個 linear、non-merge、evidence-only descendants。
-V4 record 必須指向 pre-existing `review_target_commit_sha = T4`，不可要求或含自我引用的 V4 SHA；
-V4 commit SHA 只在 post-commit validation 由外部辨識。final verification 必須以具名 commits 執行
-`git diff --name-status S4..V4`，恰好列出兩個 declared B3 evidence paths；不得以 `HEAD` 代替
-`V4` 或用 `S4..HEAD` 推測 chain。
+只有 approved 的 B4 review evidence 才允許一個 non-merge S5 subject。S5 完整 diff 只能使用
+parent plan 的 exact 15-path allowlist；T5、V5 只寫各自 declared evidence path，形成唯一 linear
+non-merge `S5 -> T5 -> V5`。所有 graph、parent、path 與 range assertions 均以 actual SHA 與
+具名 `git diff --name-status S5..V5` 執行，絕不使用 `HEAD` 或文字 heuristic。
 
-此 exception 不授權 evidence 現在寫入、commit、push、PR thread action、merge、post-merge、
-release、tagging 或 final summary，亦不一般化為其他 topic 的 evidence topology。
+candidate selector 只讀 parent plan、parent step 與 B4 review evidence；恰一 topic candidate
+且 review approved 才前進。Observer 唯一 bootstrap dispatch 是 `Observer -> Planner`；Planner
+才可選擇下一角色，並可 dispatch Tester 或 Explorer。wrapper 只可描述 role boundary，不得自行
+orchestration、routing 或 lifecycle 決策。
 
 Planner preflight 的 routing 為：無 candidate 為 `blocked`；多 candidate 或 plan / step
 指向不同 topic 為 `human-check`；同 topic 的 status 或 scope conflict 為 `blocked`，除非
