@@ -15,7 +15,8 @@ topic-plan 問題的 authority 依序為：
 3. `plan/topic-plan-contract.md`
 4. `plan/<topic>/<topic>.plan.md`
 5. `plan/<topic>/<topic>.step.md`
-6. `plan/<topic>/<topic>.review-log.md`
+6. `plan/<topic>/<topic>.review-log.md`，或在本文件明定的 current-topic correction
+   route 中，該 route 的 exact correction-review evidence path
 7. local planning skill guidance
 
 `GOAL.md` 是 project mission，非 topic / phase authority。chat、branch、summary 與
@@ -77,44 +78,50 @@ authorization 的獨立 Implementer 可提交 review-log-only evidence commit。
 
 topic plan 不得有 self-authored approval marker 或任何等價 field。
 
-### Human-authorized current-topic replan evidence topology
+### Human-authorized current-topic correction route
 
-此 shared contract 不建立 generic legacy-log migration 或第二種一般 planning-review
-evidence。僅對已由 Human 明示授權的 current-topic replan，個別 topic plan 可列出一個
-exact、Plan-Reviewer-owned special evidence path，並必須同時列明它覆蓋的 latest replan
-artifacts、revisions / head、gate 與 status。當前唯一適用實例是：
+本 shared contract 不建立 generic legacy-log migration 或第二種一般 planning-review
+evidence。Human 對 current topic `observer-dispatcher-governance` 的唯一 scope expansion
+authorization 是：`2. 授權擴張 current topic。` 依此授權，唯一 current correction route
+是 parent plan / spec / step 與 correction plan / step 在兩份 shared contracts 下的
+bounded combination；parent artifacts 保持 current execution truth，correction artifacts
+只保留 correction delta，不能升格為 parent。
 
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-planning-review-evidence.md`
+此 route 的 exact pre-implementation evidence path 是：
 
-它只為 `observer-dispatcher-governance` 的目前 `needs-rework` bounded replan 提供 routing
-evidence。independent Plan-Reviewer 在完成該 latest replan review 後，將一個完整 JSON
-object 寫入此 exact path；Plan-Creator、Planner、Implementer、Tester 與 Reviewer 不得
-代寫。該 object 的 `reviewed_artifacts` 必須只涵蓋本次 replan 的 plan、spec、step、
-`plan/agent-handoff-workflow.md` 與 `plan/topic-plan-contract.md`，並記錄每個 artifact 的
-latest revision / head。
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-review-log.md`
 
-只有這個 exact record 完整符合下列 `Reviewer Handoff` schema 且
-`"verdict": "approved"`，獨立 Implementer 才可建立唯一的 planning-evidence commit。該
-commit 同時固化五個已審 replan artifact 與這個 planning-review evidence，其 commit SHA
-在建立後固定為 immutable `implementation_subject_sha`；此 subject 不是可由 chat、PR
-Ready state、branch 名稱或 frozen evidence 推測或替換的值。`needs-rework` 維持 topic
-`needs-rework`，不得自行恢復，後續 replan 必須另有 Human 明示授權。
+舊 epoch 的 terminal 是 `R0=cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`；其唯一識別 predicate
+是 `ecc5b6f61bacc5493ca3a9f1012d1bfdd43a810c..cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`。
+它與所有 normal / `recovery-*` evidence 均為 frozen provenance，不能作為 current gate。
 
-在 `implementation_subject_sha` 之後，本 topic 僅允許兩個線性、evidence-only descendant
-commits：Tester evidence commit 僅新增
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-tester-evidence.md`，
-Reviewer evidence commit 僅新增
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-implementation-review-log.md`。
-Tester 與 Reviewer 分別擁有 record 的內容；若需要 git commit，獨立 Implementer 只能原樣
-固化該 role 已寫入的單一路徑 evidence，不能改寫 verdict、夾帶其他檔案或 push。
-兩個 record 都必須明列同一個 `implementation_subject_sha`；Reviewer record 還必須 reference
-passing Tester record。最後的 descendant range 必須無 merge 且
-`git diff --name-status <implementation_subject_sha>..HEAD` 恰好只列出這兩個 declared
-implementation evidence paths，不得有其他 path、thread、push、merge、release 或 summary
-action。existing `review-log.md`、planning-review evidence、Tester evidence 與
-implementation-review log 在 `df137326363cce4f68e43124156731a50cf29a03` 均為 frozen,
-superseded provenance：不得遷移、改寫、重讀或作此 recovery routing authority。本 exception
-不可被其他 topic、legacy log 或 future policy 推導或複製。
+這是只適用 current topic 的狹義一次性 `B0` exception。normal planning-artifact-commit
+prerequisite 在此例外中暫停：independent Plan-Reviewer 可在任何 declared implementation
+path 被寫入前，審閱同一 working tree 的 tree SHA 與下列七個**未提交** planning artifact 的
+exact path/blob revision：
+
+- `plan/agent-handoff-workflow.md`
+- `plan/topic-plan-contract.md`
+- `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md`
+- `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md`
+- `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md`
+- `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-plan.md`
+- `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-step.md`
+
+Plan-Reviewer only owns its independent verdict, not topic routing. After that reviewer writes the
+single schema-complete correction record, an Independent Implementer under existing Human commit
+authorization commits exactly that record plus those seven reviewed planning artifacts as `B0`.
+`B0` is not an `implementation_subject_sha`. An `approved` `B0` permits declared implementation;
+`needs-rework` keeps the topic in `needs-rework` and Planner decides bounded repair.
+
+The subsequent non-merge commit completing declared implementation is `S1`, the replacement
+immutable `implementation_subject_sha`. Only `T1` (Tester writes
+`observer-dispatcher-governance.correction-tester-evidence.md`) then `V1` (Reviewer writes
+`observer-dispatcher-governance.correction-implementation-review-log.md`) may descend from `S1`.
+Both attest `S1`, the second references passing `T1`, and verification is exactly
+`git diff --name-status S1..V1`; it must list only those two paths and never substitute `HEAD`.
+This current-topic exception grants no push, PR-thread action, merge, post-merge, release, tagging
+or summary action, and cannot be generalized to another topic.
 
 ### Planner preflight
 
@@ -137,7 +144,9 @@ planning approval evidence 不會把 topic execution status 設為 `approved`；
 ## Artifact Path Rules
 
 `Artifact Paths` 是 executable contract。每個列出 artifact 必須有 exact repo-visible
-path、owner 與 role；不得用 `docs`、`tests` 或 `skill folder` 等 catch-all 描述。
+path、**write owner**、**decision authority** 與 role；不得用 `docs`、`tests` 或 `skill
+folder` 等 catch-all 描述。write owner 不會因寫入 artifact 取得 route、status、gate 或
+lifecycle authority。
 
 每個 topic 至少明確列出：
 
@@ -147,7 +156,8 @@ path、owner 與 role；不得用 `docs`、`tests` 或 `skill folder` 等 catch-
 - `plan/<topic>/<topic>.review-log.md`（Plan-Reviewer）
 
 若 topic 需要 correction artifacts 或 human summary，也必須在 artifact table 中列出
-exact path、owner、role。若 work 需要未列 path，停止並交 Planner；不得自行擴張。
+exact path、write owner、decision authority、role。若 work 需要未列 path，停止並交 Planner；
+不得自行擴張。
 
 ## Topic-Plan Contract Rules
 
@@ -194,12 +204,111 @@ future / new review-log record、human-authorized special replan evidence 與 to
 最新 verdict 以 review log 最後 nonblank NDJSON line 為準；special evidence path 則必須
 只含一個完整 JSON object。此段不追溯適用 frozen legacy logs。
 
-唯一 current-topic recovery 的 Reviewer evidence record 除此 fixed schema 外，必須新增
-`implementation_subject_sha`（planning-evidence commit 的完整 immutable SHA）、
-`tester_evidence_path`、`tester_evidence_verdict: "passing"` 與 Tester record 的 revision。
-Recovery Tester Markdown record 必須含相同的 `implementation_subject_sha`、`actor: Tester`、
-每項 `command` / `result`、`verdict: passing|failing`、timestamp 及其 subject 驗證結果。
-這些是 topic-specific additional fields，不改寫 generic future / new review-log schema。
+### Current-topic correction evidence schemas
+
+下列三個 JSON object 只適用
+`observer-dispatcher-governance` 的 current correction route；每個 exact evidence path 只可
+含一個 object，不得附加 Markdown 或 prose。它們不改寫 generic future / new review-log
+schema，也不追溯適用 frozen legacy / recovery evidence。
+
+先於 implementation 的 correction-plan review record 必須符合：
+
+```json
+{
+  "schema_version": "observer-dispatcher-governance.correction-plan-review.v1",
+  "correction_id": "observer-dispatcher-governance/high",
+  "review_kind": "correction-plan",
+  "severity": "high",
+  "routing_state": "PLANNER_REPLAN",
+  "reviewed_tree_sha": "<exact tree SHA containing the seven uncommitted reviewed planning artifacts>",
+  "reviewed_artifacts": [
+    {
+      "path": "<one of the seven exact current correction planning paths>",
+      "blob_sha": "<exact reviewed working-tree blob SHA>"
+    }
+  ],
+  "review_basis": "<independent correction-plan review basis>",
+  "verdict": "approved|needs-rework",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "timestamp": "<RFC 3339 timestamp>"
+}
+```
+
+`reviewed_artifacts` must contain each of the seven paths enumerated in the current-topic route
+exactly once. `reviewed_tree_sha` and every path/blob revision identify the exact uncommitted
+correction state reviewed before `B0`. Only Plan-Reviewer writes this record; its `approved`
+verdict is a precondition for the `B0` commit and then implementation. Planner still owns route
+and status decisions.
+
+Tester evidence after the immutable implementation subject must conform to:
+
+```json
+{
+  "schema_version": "observer-dispatcher-governance.correction-tester-evidence.v1",
+  "correction_id": "observer-dispatcher-governance/high",
+  "actor": "Tester",
+  "implementation_subject_sha": "<full immutable implementation commit SHA>",
+  "subject_verification": {
+    "expected_sha": "<same full SHA>",
+    "observed_sha": "<same full SHA>",
+    "command": "<exact verification command>",
+    "result": "passing|failing"
+  },
+  "commands": [
+    {
+      "command": "<exact command>",
+      "exit_code": 0,
+      "result": "passing|failing"
+    }
+  ],
+  "correction_test_result": "passing|failing",
+  "repository_validation_result": "passing|failing",
+  "verdict": "passing|failing",
+  "timestamp": "<RFC 3339 timestamp>"
+}
+```
+
+Implementation-review evidence after a passing Tester record must conform to:
+
+```json
+{
+  "schema_version": "observer-dispatcher-governance.correction-implementation-review.v1",
+  "correction_id": "observer-dispatcher-governance/high",
+  "review_kind": "correction-implementation",
+  "severity": "high",
+  "implementation_subject_sha": "<full immutable implementation commit SHA>",
+  "reviewed_commit_sha": "<V1 commit SHA containing only the two allowed evidence descendants from S1>",
+  "tester_evidence": {
+    "path": "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-tester-evidence.md",
+    "revision": "<Tester evidence commit SHA>",
+    "implementation_subject_sha": "<same full immutable SHA>",
+    "verdict": "passing"
+  },
+  "reviewed_artifacts": [
+    {
+      "path": "<exact declared implementation or evidence path>",
+      "revision": "<reviewed revision>"
+    }
+  ],
+  "review_basis": "<independent implementation review basis>",
+  "verdict": "approved|needs-rework",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "timestamp": "<RFC 3339 timestamp>"
+}
+```
+
+Tester writes only factual test evidence. Reviewer writes only its independent verdict. Neither
+write owner may change the subject, route, status or next role; those remain Planner decisions.
 
 ## Blocking Semantics
 
@@ -211,10 +320,13 @@ Recovery Tester Markdown record 必須含相同的 `implementation_subject_sha`�
 - artifact path scope drift、undeclared stable-library intent 或錯誤 release timing；
 - future / new review log 或已明定 special replan evidence 的 latest record 非有效 JSON、
   shape 不符、reviewed revision 未覆蓋 required latest artifact，或 verdict 非 `approved`；
-- recovery Tester / Reviewer record 的 `implementation_subject_sha` 不存在、不相同、不是
-  planning-evidence commit，或 recovery descendant 不是 linear / evidence-only，或其
-  `git diff --name-status <implementation_subject_sha>..HEAD` 不是恰好兩個 declared
-  implementation evidence paths；
+- current correction review evidence is absent, not schema-complete, lacks `reviewed_tree_sha` or
+  one exact path/blob revision for each of the seven declared uncommitted planning artifacts, is
+  not committed with exactly that reviewed set as `B0`, or is written after declared implementation begins;
+- correction Tester / Reviewer record 的 `implementation_subject_sha` 不存在、不相同、不是
+  `S1` completed implementation commit，或 correction descendant 不是 `S1 -> T1 -> V1` linear /
+  evidence-only chain，或 `git diff --name-status S1..V1` 不是恰好兩個 declared implementation
+  evidence paths，或以 `HEAD` 取代具名 `V1`；
 - self-authored approval marker、混合 role ownership 或 simulated separation；
 - plan、step、review-log、已明定 special replan evidence 或 required repo contract 的
   execution meaning 衝突；
@@ -227,7 +339,8 @@ issue 必須回傳 `needs-rework`；Planner 對 unresolved conflict 必須 route
 ## Boundaries
 
 - 本文件不授權修改 `skills/**`、`.github/skills/**`、`.codex/skills/**`、
-  `.github/agents/**` 或 `.codex/agents/**`。
+  `.github/agents/**` 或 `.codex/agents/**`；本 correction 的唯一狹義 `.codex` exception 是
+  `.codex/agents/planner.toml` 與 `.codex/agents/implementer.toml`，不得擴及其他 `.codex/**` path。
 - 本文件不把 planning baseline 或 planning-review approval 轉換成 implementation
   approval。
 - 本文件不授權 product、BC、runtime、identity、provider 或 release work。

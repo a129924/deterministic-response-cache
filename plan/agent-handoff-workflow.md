@@ -16,26 +16,32 @@ Authority ordering 為：
 4. `plan/<topic>/<topic>.plan.md`：單一 topic 的 locked execution contract。
 5. `plan/<topic>/<topic>.step.md`：該 topic 當前 stage / next action truth。
 6. `plan/<topic>/<topic>.review-log.md`：Plan-Reviewer / Reviewer 的已記錄 verdict
-   truth；不取代 plan 或 step。僅當個別已授權 replan 明定 exact special evidence path
-   時，該 path 才在該 replan gate 內作 routing evidence；它不會一般化取代 review log。
+   truth；不取代 plan 或 step。對已明定的 current-topic correction route，該 route 的
+   exact correction-review evidence path 只在其特定 gate 作 routing evidence；它不會
+   一般化取代 review log。
 
 `GOAL.md` 只描述 repository mission；chat、branch、summary 與
 `.github/agents/**` 不可作 active-topic、phase 或 routing authority。
 `.github/agents/**` 是 frozen provenance，不得修改，也不可作 runtime / routing
 dependency。
 
-## Roles
+## Roles and authority separation
 
-| Role | May do | Must not do |
-| --- | --- | --- |
-| Observer / Dispatcher | 唯讀盤點；派遣一個合適角色；彙整 `可直接前進`、`needs-rework`、`blocked`、`human-check` | 實作、改檔、commit、push、PR、release、手算 gate、comment triage 或重解 locked decision |
-| Planner | candidate / phase / gate / next-role preflight；Phase 4.5 contract alignment；bounded repair routing | 改 planning artifact、實作、review own work、git publish 或 release |
-| Plan-Creator | 建立或 bounded repair plan、spec、step 與 shared planning contract | commit、Plan-Reviewer verdict、implementation、publish |
-| Plan-Reviewer | 獨立審核 planning artifacts；依 shared contract 寫入 exact review-log path，或僅在 human-authorized current-topic replan 已明定時寫入其 exact special evidence path | 修改被審 plan/spec/step、commit、implementation 或 publish |
-| Implementer | 在 approved scope 內實作；在既有 human authorization 下 commit by topic、push、開 draft PR | 自行核准、處理 PR comments、merge、release 或 post-merge |
-| Tester | 執行 declared checks 並回報證據 | 改 tests 以迴避既有行為、核准或 publish |
-| Reviewer | 獨立審核 implementation、處理 PR comments 的 classification / review routing、寫入 reviewer verdict | author own implementation、commit、push、merge、release 或 post-merge |
-| Human | 授權 commit、push、draft PR；執行 human review、merge、post-merge、release、tagging 與 final summary | 將 merge、post-merge、release、tagging 或 final-summary action 以重新授權委派給任何非 Human actor |
+artifact 的 **write owner** 只表示誰能寫入該 artifact；它不授予 candidate、phase、
+gate、severity、correction route、next role 或 lifecycle 的決策權。除下表明定的
+review verdict 外，這些 routing decisions 一律屬 Planner；Human-only lifecycle
+decisions 一律屬 Human。
+
+| Role | Write owner / may do | Bounded decision authority | Must not do |
+| --- | --- | --- | --- |
+| Observer / Dispatcher | 唯讀盤點；派遣一個 Planner-selected role；彙整 `可直接前進`、`needs-rework`、`blocked`、`human-check` | 無 | 實作、改檔、commit、push、PR、release、手算 gate、comment triage 或重解 locked decision |
+| Planner | 不寫 planning / evidence artifact；執行 preflight 與 Phase 4.5 | candidate、phase、gate、severity、correction route、next role 與 bounded-repair routing | 改 planning artifact、實作、review own work、git publish 或 release |
+| Plan-Creator | 建立或 bounded repair plan、spec、step、correction plan / step 與 shared planning contract | 無；只依 Planner 的 frozen direction 寫入 | commit、review verdict、implementation、publish |
+| Plan-Reviewer | 獨立審核 planning artifacts；寫入 review-log，或 current-topic correction 的 exact correction-review record | 自己的 independent planning / correction-plan verdict；不得決定 topic routing | 修改被審 plan/spec/step、commit、implementation 或 publish |
+| Implementer | 在 approved scope 內實作；僅在既有 Human authorization 下提交已由其他 role 寫入的 evidence 或自己的 implementation | 無；不得從 evidence 自行推導開始、publish 或 lifecycle | 自行核准、處理 PR comments、merge、release 或 post-merge |
+| Tester | 寫入 declared Tester evidence 並回報實際 checks | 測試結果的 factual `passing|failing` verdict；無 routing authority | 改 tests 以迴避既有行為、核准或 publish |
+| Reviewer | 獨立審核 implementation、處理 PR comments 的 classification / review routing、寫入 reviewer verdict | 自己的 implementation verdict；Planner 決定其後 route | author own implementation、commit、push、merge、release 或 post-merge |
+| Human | 授權 commit、push、draft PR；執行 human review、merge、post-merge、release、tagging 與 final summary | 所有 Human-only lifecycle action 與新的 scope expansion | 將 merge、post-merge、release、tagging 或 final-summary action 以重新授權委派給任何非 Human actor |
 
 所有 planner、creator、reviewer、implementer gate 必須由獨立 actor 真實執行；不得以
 同一 actor 宣稱多重 gate 已完成。
@@ -67,33 +73,42 @@ planning approval evidence 固定為：
 topic plan 不得包含、要求或依賴任何 self-authored approval marker。缺少 planning
 artifact commit、required step 或上述 evidence 時，implementation 不可開始。
 
-### Human-authorized current-topic replan exception
+### Human-authorized current-topic correction route
 
-一般 planning baseline 與 future / new review-log NDJSON 規則維持不變。唯一已授權的
-例外是 current topic `observer-dispatcher-governance` 的目前 `needs-rework` replan：
-在任何 replan commit 前，independent Plan-Reviewer 必須且只能寫入
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.recovery-planning-review-evidence.md`。
-該單一 machine-JSON record 是此次 latest replan 的 routing evidence；它必須依 shared
-`Reviewer Handoff` schema 記錄 replan 的五個 reviewed artifact revisions / head。只有
-`"verdict": "approved"` 才允許獨立 Implementer 建立唯一的 planning-evidence commit；
-該 commit 固化五個 replan artifacts 與 recovery planning-review record，並在 commit 建立
-後成為 immutable `implementation_subject_sha`。
+一般 planning baseline 與 future / new review-log NDJSON 規則維持不變。Human 對 current
+topic `observer-dispatcher-governance` 的唯一 scope expansion authorization 是：
 
-此 subject 之後只允許兩個線性、evidence-only commits：先由 Tester 寫入 declared
-recovery Tester evidence，再由 Reviewer 寫入 declared recovery implementation-review
-record。兩個 record 必須 attest 相同 `implementation_subject_sha`，Reviewer 必須 reference
-passing Tester evidence。最終 descendant 無 merge，且
-`git diff --name-status <implementation_subject_sha>..HEAD` 恰好只列出兩個 declared
-recovery implementation-evidence paths；不得有其他 path。這個狹義 recovery sequence
-不授權 push、PR thread action、merge、post-merge、release、tagging 或 final summary。
+> `2. 授權擴張 current topic。`
 
-此 exception 是 Human-authorized、current-topic、latest-replan-only 的 gate，不遷移、
-改寫、重讀或一般化任何 existing legacy `review-log.md`。`df137326363cce4f68e43124156731a50cf29a03`
-中的 planning-review、Tester 與 implementation-review evidence 均保持 frozen, superseded
-provenance，並非此 replan 的 routing authority。`needs-rework` evidence 維持 topic
-`needs-rework`；後續 bounded replan 必須再有 Human 明示授權。special evidence 不改變
-PR #1 Ready 的 `pr-open` external fact，也不構成 merge、implementation approval 或
-same-subject Tester / Reviewer completion。
+依此授權，current authoritative correction route 是 shared contracts、parent
+`.plan.md` / `.spec.md` / `.step.md`、以及 correction plan / step 的組合；其中 parent
+artifacts 是 current execution truth，correction artifacts 是 retained、bounded delta，不能
+取代 parent。此 route 的唯一 pre-implementation correction review evidence path 是：
+
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-review-log.md`
+
+舊 epoch 的 terminal 是 `R0=cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`；其唯一識別
+predicate 是 `ecc5b6f61bacc5493ca3a9f1012d1bfdd43a810c..cb3f66c60e95e5580cb2b30632d0d5ed9f0d0ee9`。
+它及所有 normal / `recovery-*` evidence 均為 frozen provenance，不能作為 current gate。
+
+這是狹義的一次性 `B0` exception：在尚未有 planning-artifact commit 時，independent
+Plan-Reviewer 可只以同一 working tree 的 tree SHA 與七個未提交 planning artifact 的 path/blob
+revisions 審閱；然後只寫入 schema-complete `correction-review-log.md`。在既有 Human commit
+authorization 下，Independent Implementer 將該七個 reviewed planning artifacts 與未改寫的
+correction review record 一起提交為 `B0`。`B0` 是 correction gate baseline，絕不是 subject，
+且不授權任何其他未列 path、evidence、lifecycle 或 generic uncommitted-review route。
+
+只有 `B0` approved 後，Implementer 才可提交 declared implementation 的單一 non-merge `S1`；
+`S1` 是新的 immutable `implementation_subject_sha`。其後嚴格只有兩個 linear、non-merge、
+evidence-only commits：Tester 寫入 `correction-tester-evidence.md` 為 `T1`，再由 Reviewer
+寫入 `correction-implementation-review-log.md` 為 `V1`。兩個 record 必須 attest `S1`，Reviewer
+必須 reference passing `T1` evidence。final verification 必須以具名 commits 執行
+`git diff --name-status S1..V1`，恰好列出兩個 declared correction evidence paths；不得以
+`HEAD` 代替 `V1` 或用 `S1..HEAD` 推測 chain。
+
+此 exception 不授權 push、PR thread
+action、merge、post-merge、release、tagging 或 final summary，亦不一般化為其他 topic 的
+second evidence topology。
 
 Planner preflight 的 routing 為：無 candidate 為 `blocked`；多 candidate 或 plan / step
 指向不同 topic 為 `human-check`；同 topic 的 status 或 scope conflict 為 `blocked`，除非
