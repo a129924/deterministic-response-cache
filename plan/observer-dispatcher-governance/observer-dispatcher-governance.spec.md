@@ -32,15 +32,21 @@ uses merge/third descendant, or replaces named S6/V6/range verification with `HE
 No legacy evidence migration, B4R6 log recovery, PR thread resolution, merge, release, post-merge action,
 architecture change, or unlisted implementation path is part of B4R7.
 
-## B5 Current Acceptance Criteria
+## Frozen B5 provenance
 
-All B4R7/S6/T6/missing-V6 content above is frozen provenance. B5 admission is exact seven planning paths,
-non-merge, non-subject, and SHA/blob-SHA/`HEAD`/review-outcome free before commit; R8 independently reviews
-the committed seven blobs and is separately committed unchanged. S7 is the only non-merge subject and edits
-only `tests/test_observer_dispatcher_governance_contract.py`.
+All B4R7/S6/T6/missing-V6 content above, B5/R8 and all older epochs are frozen provenance; none is current,
+pending, candidate or gate.
 
-S7 actual checks use only all three explicit `ODG_S7_SHA`, `ODG_T7_SHA`, `ODG_V7_SHA` variables and subprocess
-real `git rev-parse`, `git rev-list`, `git diff --name-status`; absent all three explicitly skips, while
-missing/partial/`HEAD`/nonexistent/merge/wrong-parent/multi-path values fail closed. T7/V7 must be the sole
-linear descendants. Q7 is a no-artifact post-V7 full-SHA read-only query and has no lifecycle or thread
-authority.
+## B5R Current Acceptance Criteria
+
+B5R is the sole current, non-subject, non-merge seven-planning-path baseline; its pre-commit artifacts embed
+no B5R SHA/blob SHA/`HEAD`/review outcome. R9 independently reviews every committed B5R blob and is separately
+committed unchanged. Only approved R9 permits test-only non-merge S7. Direct imports remain mandatory and
+`step-creator` remains deferred.
+
+The S7 actual Git graph assertion reads only all three explicit `ODG_S7_SHA`, `ODG_T7_SHA`, `ODG_V7_SHA` values
+through subprocess real `git rev-parse`, `git rev-list`, `git diff --name-status`. It is explicitly
+skip/unverified only when all three are absent. Partial/invalid/`HEAD`/nonexistent/merge/wrong-parent-or-graph/
+multi-path values fail closed. T7 executes it using a complete real triple and records a non-skipped passing
+result. T7/V7 are the only linear non-merge descendants and named `S7..V7` lists exactly their B5R evidence
+paths; Q7 remains full-V7-SHA read-only, no-artifact, without lifecycle or thread authority.

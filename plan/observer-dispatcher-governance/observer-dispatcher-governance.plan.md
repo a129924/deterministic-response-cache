@@ -12,20 +12,17 @@
 
 ## Scope
 
-- **In scope:** B4R7 seven planning paths、R7 review record、既有 S6 exact 15-path allowlist，
-  以及 B4R7 專屬 T6/V6 evidence paths。
-- **Out of scope:** B4R6 或更早 epoch、legacy migration、`step-creator` threads、未列 path、
+- **In scope:** B5R seven planning paths、R9 review record、S7 test-only path，以及 B5R 專屬 T7/V7
+  evidence paths。
+- **Out of scope:** B5/R8、B4R7 或更早 epoch、legacy migration、`step-creator` threads、未列 path、
   產品/architecture work、PR thread action、merge、release、post-merge。
 
 ## Locked Decisions
 
-- B4R7 是唯一 current non-subject baseline。它在 commit 前不嵌入 SHA、`HEAD`、預測 blob 或
-  review outcome；commit admission 以其 first-parent non-merge commit 的 named exact diff 作 truth。
-- R7 只在 committed B4R7 seven-blob baseline 上作獨立 review。只有 separately committed approved
-  R7 record 才能啟動 S6；B4R7 與 R7 都不能建立 `implementation_subject_sha`。
-- S6 是唯一 implementation subject，且只能修改下列既有 15-path allowlist；direct imports 保持
-  mandatory，禁止 `importlib`、`__import__`、`sys.modules` substitution。
-- 實際 named SHA graph 必須證明非 merge 的 `S6 -> T6 -> V6`；`git diff --name-status S6..V6`
+- B4R7/R7/S6/T6/V6 是 frozen historical provenance，不提供 current、pending、candidate 或 gate。
+- B5R/R9/S7/T7/V7 的 locked route 定義在本文件的 `B5R Current Route`；S7 只能修改 test path，
+  direct imports 保持 mandatory，禁止 `importlib`、`__import__`、`sys.modules` substitution。
+- B4R7 的實際 named SHA graph 曾要求非 merge `S6 -> T6 -> V6`；其 `git diff --name-status S6..V6`
   只可含 B4R7 的兩個 evidence paths，絕不使用 `HEAD` 或文字推論。
 - 兩個 `step-creator` threads 持續 deferred；本 topic 為 non-stable、review-ready-only work。
 
@@ -118,12 +115,10 @@ Stop at the Human boundary; none are authorized.
 The sole pending action is B4R7 commit admission. B4R7's commit SHA is intentionally unknown until that
 admission completes; all B4R6 and earlier evidence remains frozen.
 
-## B5 Current-Route Supersession
+## Frozen B5 provenance
 
-All B4R7 content above is frozen nonrouting provenance. B5 is the only current route:
-`B5 -> R8 -> S7 -> T7 -> V7 -> Q7 -> comment-classification/human-check`. B5 is a non-subject exact
-seven-planning-path baseline; R8 is a separate clean-checkout review. B4R7/S6/T6 and missing V6 cannot
-route current work.
+All B4R7 content above, B5/R8, and all prior epochs are frozen nonrouting provenance; none is current,
+pending, candidate or gate.
 
 S7 is the sole non-merge subject and changes only
 `tests/test_observer_dispatcher_governance_contract.py`. Its actual graph/range test relies only on complete
@@ -131,5 +126,17 @@ explicit `ODG_S7_SHA`, `ODG_T7_SHA`, `ODG_V7_SHA` input and real subprocess `git
 and `git diff --name-status`; no variables explicitly skip, partial/invalid/`HEAD`/merge/wrong-parent/
 multi-path input fails closed. Direct imports and deferred `step-creator` remain locked.
 
-T7/V7 are evidence-only descendants. Q7 is post-V7 read-only actual query using full V7 SHA, with no artifact,
-no `HEAD`, no lifecycle decision, and no PR-thread resolution authority.
+## B5R Current Route
+
+B5R is the sole current route: `B5R -> R9 -> S7 -> T7 -> V7 -> Q7 -> comment-classification/human-check`.
+B5R is a non-subject, exact seven-planning-path, non-merge baseline; R9 is its separately committed
+clean-checkout review. Only approved R9 can admit S7, which changes only
+`tests/test_observer_dispatcher_governance_contract.py` and preserves direct imports and deferred
+`step-creator` work.
+
+The actual Git graph assertion uses only complete explicit `ODG_S7_SHA`, `ODG_T7_SHA`, `ODG_V7_SHA` values and
+subprocess real `git rev-parse`, `git rev-list`, `git diff --name-status`. It explicitly skips/unverifies only
+when all are absent; partial, invalid, `HEAD`, merge, wrong graph, or multi-path values fail closed. T7 must
+run this assertion with a complete real triple and record passing, non-skipped evidence. T7/V7 are the only
+evidence-only descendants, and named `S7..V7` lists exactly their B5R paths. Q7 stays full-V7-SHA, read-only,
+no-artifact, no lifecycle or thread authority.

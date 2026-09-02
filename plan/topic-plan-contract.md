@@ -36,7 +36,7 @@ Implementer 可作 bounded planning commit，這不表示 implementation approva
 schema 且 verdict 為 `approved`。legacy logs 保持 frozen provenance，不得遷移、重讀或以格式
 不符使其失效。
 
-### Current-topic B4R7 correction route
+### Frozen B4R7 provenance
 
 本節僅適用 `observer-dispatcher-governance`。`b900366`、B0–B4R6、S1–S5、T1–T5、V1–V5、
 normal/recovery records、`7d23e8c`、`6ede06b`、所有舊 correction artifacts，及任何 uncommitted
@@ -44,7 +44,7 @@ B4R6 review log 與其 plan、step、review、schema、blocker、checklist、pen
 nonrouting provenance；不得作為 candidate、gate、subject、evidence source 或 current work。兩個
 `step-creator` threads 維持 deferred。
 
-`B4R7` 是唯一 current non-subject route。其 baseline 僅可包含下列七個 planning paths：
+`B4R7` is frozen nonrouting provenance. Its former baseline contained the following seven planning paths:
 
 1. `plan/agent-handoff-workflow.md`
 2. `plan/topic-plan-contract.md`
@@ -102,7 +102,7 @@ ordinary future/new review record:
 
 ### B4R7 correction evidence schemas
 
-Only these B4R7 records are current correction evidence. Each exact evidence file contains one
+These B4R7 records are frozen correction evidence. Each exact evidence file contains one
 complete JSON object and no trailing prose. Tester records factual results only; Tester/Reviewer
 cannot route lifecycle or status.
 
@@ -145,11 +145,11 @@ summary。Observer only dispatches Planner; Planner is routing authority; Plan-C
 artifacts; Implementer performs bounded implementation/commits; Tester and Reviewer independently
 write only declared evidence.
 
-## B5 Supersession and Current Route
+## Frozen B5 provenance
 
-All B4R7 text above is frozen historical nonrouting provenance. This B5 section is the sole current
-`observer-dispatcher-governance` correction contract. B4R7/S6/T6, missing V6, and all older epochs cannot
-be a candidate, gate, subject, evidence source, or pending work; `step-creator` stays deferred.
+All B4R7 text above, this B5 route, missing R8, and all older epochs are frozen historical nonrouting
+provenance. They cannot be a candidate, gate, subject, evidence source, or pending work; `step-creator`
+stays deferred.
 
 B5 is the sole non-subject non-merge baseline. Its first-parent named diff contains exactly:
 
@@ -189,4 +189,36 @@ thread authority.
 
 ```json
 {"schema_version":"observer-dispatcher-governance.correction-b5-implementation-review.v1","correction_id":"observer-dispatcher-governance/high/b5","implementation_subject_sha":"<S7 SHA>","review_target_commit_sha":"<T7 SHA>","verdict":"approved|needs-rework"}
+```
+
+## B5R Current Route
+
+B5R is the sole current correction route. B5R is a non-subject, non-merge seven-path planning baseline;
+its pre-commit artifacts contain neither B5R SHA/blob SHA nor `HEAD`/review outcome. Independent
+Plan-Reviewer clean-checkout-reviews the committed B5R blobs and writes only R9; independent Implementer
+separately commits unchanged approved R9. B5R/R9 never create `implementation_subject_sha`.
+
+Only approved R9 permits S7, the one non-merge implementation subject, changing only
+`tests/test_observer_dispatcher_governance_contract.py`. Direct imports remain required and `step-creator`
+remains deferred. The actual Git assertion uses only a complete explicit
+`ODG_S7_SHA`/`ODG_T7_SHA`/`ODG_V7_SHA` triple and subprocess `git rev-parse`, `git rev-list`, and
+`git diff --name-status`; it may be explicitly skipped/unverified only if all three values are absent.
+Partial/invalid/`HEAD`/merge/wrong-parent-or-graph/multi-path input fails closed.
+
+T7 and V7 are the only non-merge S7 descendants. Their named `S7..V7` diff lists exactly the B5R T7 and V7
+paths. T7 must record a passing non-skipped run with a complete real triple. Q7 is post-V7 full-SHA,
+read-only, no-artifact and has no lifecycle or thread authority.
+
+### B5R evidence schemas
+
+```json
+{"schema_version":"observer-dispatcher-governance.correction-b5r-plan-review.v1","correction_id":"observer-dispatcher-governance/high/b5r","reviewed_commit_sha":"<B5R SHA>","reviewed_artifacts":[{"path":"<B5R planning path>","blob_sha":"<B5R blob SHA>"}],"verdict":"approved|needs-rework","blocking_issues":[]}
+```
+
+```json
+{"schema_version":"observer-dispatcher-governance.correction-b5r-tester-evidence.v1","correction_id":"observer-dispatcher-governance/high/b5r","implementation_subject_sha":"<S7 SHA>","actual_graph_assertion":{"environment":"complete-real-triple","result":"passing","skipped":false},"verdict":"passing|failing"}
+```
+
+```json
+{"schema_version":"observer-dispatcher-governance.correction-b5r-implementation-review.v1","correction_id":"observer-dispatcher-governance/high/b5r","implementation_subject_sha":"<S7 SHA>","review_target_commit_sha":"<T7 SHA>","verdict":"approved|needs-rework"}
 ```
