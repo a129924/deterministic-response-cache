@@ -1,14 +1,15 @@
 # Agent handoff workflow
 
-> **B6R2 current-route override:** 本文件其餘 B6R route 文字是 frozen nonrouting provenance，
-> 不得作 current authority。唯一 current route 是
-> `B6R2 -> R12 -> S10 -> T10 -> V10 -> Q10 -> comment-classification/human-check`。
-> B6R2 為 non-subject、non-merge、first-parent exact-seven planning baseline；七 paths 是 shared
-> workflow/contract、parent plan/spec/step、B6R2 plan/step。R12 clean-checkout review 後，S10 只可改
-> `tests/test_observer_dispatcher_governance_contract.py`；T10/V10 只可寫 B6R2 Tester/Reviewer evidence，
-> 且 named `S10..V10` 僅含該兩 paths。Q10 是 committed-full-V10-SHA-only read-only query，無 artifact、
-> lifecycle 或 thread authority，也是唯一 shared human boundary。Q8/Q9 均為 frozen provenance；僅 Q10
-> 後獨立 Reviewer 的逐 thread `addressed-and-resolvable` classification 可允許 resolution。
+> **B6R3 current-route override:** 本文件其餘 normal/recovery、B0–B6、B6R 與 B6R2 route 文字均為 frozen
+> nonrouting provenance，不得作 current authority。唯一 current route 是
+> `B6R3 -> R13 -> S11 -> T11 -> V11 -> Q11 -> comment-classification/human-check`。B6R3/R13 均為
+> non-subject；B6R3 為 non-merge、first-parent exact-seven planning baseline（shared workflow/contract、parent
+> plan/spec/step、B6R3 plan/step）。R13 clean-checkout review 後，S11 是唯一 subject，僅可改
+> `tests/test_observer_dispatcher_governance_contract.py`，保留 direct imports，並以 complete explicit
+> `ODG_S11_SHA`/`ODG_T11_SHA`/`ODG_V11_SHA` 的 real subprocess Git contract fail closed 驗證。T11/V11
+> 是 exact non-merge evidence-only descendants，named `S11..V11` 僅含兩個 declared evidence paths。Q11 是
+> committed-full-V11-SHA-only read-only query，無 artifact、lifecycle 或 thread authority；唯有 Q11 後獨立
+> Reviewer 逐 thread `addressed-and-resolvable` classification 可允許 resolution。
 
 ## Purpose
 
@@ -29,13 +30,13 @@ actions 為 human review、merge、release、post-merge、tagging 與 final summ
 
 ## Frozen provenance
 
-`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S8、T1–T8、V1–V8、Q7/Q8，及所有較早
-correction artifacts 均為 immutable historical provenance；僅保留追溯用途，排除於 B6R route。
+`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S10、T1–T10、V1–V10、Q7–Q10，及所有較早
+correction artifacts 均為 immutable historical provenance；僅保留追溯用途，排除於 B6R3 route。
 `step-creator` work 維持 deferred。
 
-## Current B6R route
+## Frozen B6R historical route
 
-`B6R -> R11 -> S9 -> T9 -> V9 -> Q9 -> comment-classification/human-check` 是唯一 current route。
+`B6R -> R11 -> S9 -> T9 -> V9 -> Q9 -> comment-classification/human-check` is frozen historical provenance.
 
 B6R 是 non-subject、non-merge 的七-path planning baseline。其 first-parent named diff 必須只含以下
 paths，各一次：
@@ -76,6 +77,6 @@ Q9 只可在 V9 commit 後，以 committed full V9 SHA 執行 read-only actual q
 ## Gates and human boundary
 
 缺少 required evidence 為 `blocked`；candidate conflict 為 `human-check`；contract drift 保守回到
-Planner。Ready for review 不是 merge approval。comment classification 僅能由獨立 Reviewer 在 Q8 後執行；
+Planner。Ready for review 不是 merge approval。comment classification 僅能由獨立 Reviewer 在 Q11 後執行；
 thread resolution 需要該 Reviewer 對每一 thread 明確標記 `addressed-and-resolvable`。merge、release、
 post-merge 與 final summary 均為 Human boundary。

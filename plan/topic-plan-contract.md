@@ -1,13 +1,13 @@
 # Topic Plan Contract
 
-> **B6R2 current-contract override:** 下列 B6R contract 僅屬 frozen nonrouting provenance。唯一 current
-> contract 是 `B6R2 -> R12 -> S10 -> T10 -> V10 -> Q10`。B6R2 admission 只含
-> `plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md`、parent plan/spec/step 與 B6R2 plan/step
-> 七 paths，且 pre-commit 不含 B6R2 SHA/blob SHA/`HEAD`/review outcome。R12 只寫
-> `observer-dispatcher-governance.correction-b6r2-review-log.md`；B6R2/R12 都非 subject。S10 only 改 test
-> path，保留 direct imports，並以 complete `ODG_S10_SHA`/`ODG_T10_SHA`/`ODG_V10_SHA` 和 real subprocess
-> git queries fail-closed 驗證。T10/V10 的 exact evidence-only range 為 `S10..V10`。Q10 是唯一 shared
-> human boundary；Q8/Q9 不可作 human boundary、classification 或 resolution authority。
+> **B6R3 current-contract override:** 下列 B6R/B6R2 contract 文字均屬 frozen nonrouting provenance。唯一
+> current contract 是 `B6R3 -> R13 -> S11 -> T11 -> V11 -> Q11`。B6R3 admission 只含
+> `plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md`、parent plan/spec/step 與 B6R3 plan/step
+> 七 paths，且 pre-commit 不含 B6R3 SHA/blob SHA/`HEAD`/review outcome。R13 只寫
+> `observer-dispatcher-governance.correction-b6r3-review-log.md`；B6R3/R13 都非 subject。S11 only 改 test
+> path，保留 direct imports，並以 complete `ODG_S11_SHA`/`ODG_T11_SHA`/`ODG_V11_SHA` 和 real subprocess
+> git queries fail-closed 驗證。T11/V11 的 exact evidence-only range 為 `S11..V11`。Q11 是唯一 shared
+> human boundary；Q8–Q10 不可作 human boundary、classification 或 resolution authority。
 
 ## Purpose
 
@@ -36,11 +36,11 @@ non-stable intent。
 
 ## Frozen provenance
 
-`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S8、T1–T8、V1–V8、Q7/Q8，及所有較早
-correction artifacts 是 immutable historical provenance；只作追溯，排除於 B6R route。`step-creator`
+`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S10、T1–T10、V1–V10、Q7–Q10，及所有較早
+correction artifacts 是 immutable historical provenance；只作追溯，排除於 B6R3 route。`step-creator`
 work 維持 deferred。
 
-## B6R correction contract
+## Frozen B6R correction contract
 
 B6R 是唯一 non-subject、non-merge seven-path planning baseline。其 named first-parent diff 必須恰好含：
 
