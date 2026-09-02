@@ -1,142 +1,101 @@
 # Observer / Dispatcher Governance
 
-> **Frozen provenance:** `b900366`, B0–B4R6, S1–S5, T1–T5, V1–V5, normal/recovery records,
-> `7d23e8c`, `6ede06b`, every older correction artifact, and any uncommitted B4R6 review-log are
-> historical nonrouting provenance. They create no current candidate, status, gate, subject, schema,
-> checklist, or pending work.
+> **Frozen provenance:** `b900366`, normal/recovery records, B0–B5R (including R8/R9), S1–S7, T1–T7,
+> V1–V7, Q7, and all earlier correction artifacts are immutable historical provenance. They are excluded
+> from the B6 route. `step-creator` work remains deferred.
 
 ## Goal / Outcome
 
-完成 B4R7 correction baseline：以一次 commit-time exact-seven-path admission、獨立 R7 review，
-再以已鎖定的 S6 15-path subject 和 T6/V6 evidence 收斂至 Human boundary。
+完成 B6 correction baseline，建立可獨立驗證的 `B6 -> R10 -> S8 -> T8 -> V8 -> Q8` route：只補強
+governance contract test 的 route/provenance/topology assertions，並停在 Human boundary。
 
 ## Scope
 
-- **In scope:** B5R seven planning paths、R9 review record、S7 test-only path，以及 B5R 專屬 T7/V7
-  evidence paths。
-- **Out of scope:** B5/R8、B4R7 或更早 epoch、legacy migration、`step-creator` threads、未列 path、
-  產品/architecture work、PR thread action、merge、release、post-merge。
+- **In scope:** B6 seven planning paths、R10 review record、S8 single test path、T8/V8 evidence paths，及
+  Q8 read-only actual query。
+- **Out of scope:** frozen provenance、legacy migration、`step-creator` activation、產品或 architecture
+  work、未列 paths、PR thread resolution、merge、release、post-merge。
 
 ## Locked Decisions
 
-- B4R7/R7/S6/T6/V6 是 frozen historical provenance，不提供 current、pending、candidate 或 gate。
-- B5R/R9/S7/T7/V7 的 locked route 定義在本文件的 `B5R Current Route`；S7 只能修改 test path，
-  direct imports 保持 mandatory，禁止 `importlib`、`__import__`、`sys.modules` substitution。
-- B4R7 的實際 named SHA graph 曾要求非 merge `S6 -> T6 -> V6`；其 `git diff --name-status S6..V6`
-  只可含 B4R7 的兩個 evidence paths，絕不使用 `HEAD` 或文字推論。
-- 兩個 `step-creator` threads 持續 deferred；本 topic 為 non-stable、review-ready-only work。
+- B6 是唯一 current non-subject route；R10 是 B6 的 exact independent review record；S8 是唯一
+  implementation subject。
+- B6 admission 是 non-merge、first-parent exact seven-path baseline；B6 planning artifacts 不得包含
+  B6 SHA/blob SHA/`HEAD`/review outcome。
+- S8 complete diff 僅能修改 `tests/test_observer_dispatcher_governance_contract.py`。原有 direct imports
+  必須保留；禁止用 `importlib`、`__import__` 或 `sys.modules` 取代測試行為。
+- S8 actual graph assertion 只接受 complete explicit `ODG_S8_SHA`/`ODG_T8_SHA`/`ODG_V8_SHA`，並透過
+  real subprocess `git rev-parse`、`git rev-list`、`git diff --name-status` 驗證。三值全 absent 為
+  explicit skip/unverified；partial/invalid/`HEAD`/nonexistent/merge/wrong parent-or-graph/multi-path
+  全部 fail closed。
+- T8/V8 是唯一 linear non-merge S8 descendants；Q8 只讀、無 artifact、無 lifecycle 或 thread authority。
+- 本 topic 為 non-stable、review-ready-only work；`step-creator` 維持 deferred。
 
 ## Boundaries / Exclusions
 
-Observer bootstrap-dispatches Planner only; Planner is the sole routing authority. Plan-Creator writes
-only B4R7's seven planning artifacts; Plan-Reviewer writes only R7; Independent Implementer commits
-approved artifacts or S6; Tester and Reviewer independently write only their declared evidence. No actor
-may resolve PR threads, merge, release, or widen the allowlist.
+Observer 只 bootstrap-dispatch Planner；Planner 是唯一 routing authority。Plan-Creator 僅寫 B6
+planning artifacts；Plan-Reviewer 僅寫 R10；Independent Implementer 只提交 approved artifacts 或
+S8；Tester 和 Reviewer 僅寫已宣告 evidence。任何 actor 均不得 resolve PR threads、merge、release 或
+widen allowlist。
 
 ## Status / Allowed Transitions
 
-`B4R7_REVIEW_PENDING` means only this: an Independent Implementer must first create one non-merge
-baseline commit whose named first-parent admission diff contains the complete exact B4R7 seven-path set.
-The planning text contains no commit SHA or `HEAD` placeholder. After that admission succeeds, R7 reviews
-the committed seven blobs, then the route is `B4R7 -> R7 -> S6 -> T6 -> V6 -> human-check`.
-Any failure returns to Planner; frozen history is never a fallback.
+**Current:** `B6_ADMISSION_PENDING`。
+
+唯一 allowed route 是 `B6 -> R10 -> S8 -> T8 -> V8 -> Q8 -> comment-classification/human-check`。
+B6 admission 後 R10 才可 review；approved R10 才可 dispatch S8；T8/V8 需同一 S8 的 passing evidence。
+任何 failure 回到 Planner；Human boundary 前不會有 merge/release action。
 
 ## Artifact Paths
 
 | Artifact | Exact path | Write owner | Decision authority | Role |
 | --- | --- | --- | --- | --- |
-| Shared workflow | `plan/agent-handoff-workflow.md` | Plan-Creator | Planner | B4R7 contract |
-| Shared contract | `plan/topic-plan-contract.md` | Plan-Creator | Planner | B4R7 contract |
+| Shared workflow | `plan/agent-handoff-workflow.md` | Plan-Creator | Planner | B6 contract |
+| Shared contract | `plan/topic-plan-contract.md` | Plan-Creator | Planner | B6 contract |
 | Parent plan | `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md` | Plan-Creator | Planner | Current execution truth |
 | Parent spec | `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md` | Plan-Creator | Planner | Acceptance contract |
 | Parent step | `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md` | Plan-Creator | Planner | Current tracker |
-| B4R7 plan | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-plan.md` | Plan-Creator | Planner | B4R7 delta |
-| B4R7 step | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-step.md` | Plan-Creator | Planner | B4R7 tracker |
-| R7 review | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-review-log.md` | Plan-Reviewer | Plan-Reviewer verdict | Pre-S6 gate |
-| T6 evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-tester-evidence.md` | Tester | Factual test result | First descendant |
-| V6 evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-implementation-review-log.md` | Reviewer | Reviewer verdict; Planner route | Final descendant |
+| B6 plan | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-plan.md` | Plan-Creator | Planner | B6 delta |
+| B6 step | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-step.md` | Plan-Creator | Planner | B6 tracker |
+| R10 review | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-review-log.md` | Plan-Reviewer | Plan-Reviewer verdict | Pre-S8 gate |
+| S8 implementation | `tests/test_observer_dispatcher_governance_contract.py` | Implementer | Planner | Sole test-only subject |
+| T8 evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-tester-evidence.md` | Tester | Factual test result | First descendant |
+| V8 evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-implementation-review-log.md` | Reviewer | Reviewer verdict; Planner route | Final descendant |
 
-After separately committed approved R7 review, S6 may modify exactly:
-
-1. `AGENTS.md`
-2. `.codex/agents/planner.toml`
-3. `.codex/agents/implementer.toml`
-4. `.codex/agents/reviewer.toml`
-5. `.agents/skills/plan-creator/SKILL.md`
-6. `.agents/skills/plan-creator/checklist.md`
-7. `.agents/skills/plan-creator/templates/topic-plan-template.md`
-8. `.agents/skills/plan-reviewer/SKILL.md`
-9. `.agents/skills/plan-reviewer/checklist.md`
-10. `.agents/skills/plan-reviewer/reference.md`
-11. `.agents/skills/plan-reviewer/examples.md`
-12. `.agents/skills/python-implementation-workflow/SKILL.md`
-13. `.agents/skills/python-implementation-workflow/reference.md`
-14. `.agents/skills/python-plan-authoring/templates/canonical-python-topic-plan-template.md`
-15. `tests/test_observer_dispatcher_governance_contract.py`
+`README.md`、`VERSION`、`.github/copilot-instructions.md` 不修改。列外 path 必須停止並交 Planner。
 
 ## Implementation Steps
 
-1. Independent Implementer performs B4R7 commit admission: one non-merge commit, first containing
-   exactly the complete seven declared baseline paths, and reports the named exact diff against its
-   immediate first parent.
-2. Independent Plan-Reviewer writes R7 after reviewing every committed B4R7 blob once; Independent
-   Implementer separately commits the unchanged approved R7 record.
-3. Planner verifies R7 then dispatches one non-merge S6 over the exact 15-path allowlist. Tester writes
-   T6 and Reviewer writes V6 as its two evidence-only descendants.
+1. Independent Implementer 作一次 B6 non-merge admission commit，named first-parent diff 恰好為七個
+   declared planning paths。
+2. Independent Plan-Reviewer 在 committed B6 clean checkout 審七 blobs，寫 R10；Independent
+   Implementer 另行提交 unchanged approved R10。
+3. Planner 驗證 R10 後，dispatch one non-merge S8，僅補強 test 中 B6 frozen provenance、B6/R10
+   non-subject、S8 subject、T8/V8 topology/exact range、all-absent skip 和 partial/invalid fail-closed
+   assertions。
+4. Tester 寫 T8，Reviewer 寫 V8；二者均以 exact declared evidence paths 為限。
 
 ## Validation / Acceptance Checks
 
-- B4R7 admission commit is non-merge and its named first-parent diff is exactly the seven declared B4R7
-  paths, each present; no SHA/`HEAD` was embedded in the pre-commit planning artifacts.
-- R7 records the B4R7 committed SHA and each of those seven actual blobs exactly once; its approved record
-  is separately committed unchanged before S6.
-- S6 is the unique subject and has no path outside the preserved 15-path allowlist.
-- T6 and V6 attest the same S6; V6 requires passing T6; each uses its exact B4R7 evidence path.
-- Actual named Git commands prove non-merge `S6 -> T6 -> V6` and named `git diff --name-status S6..V6`
-  lists exactly the two B4R7 T6/V6 evidence paths.
-- Tests fail closed for frozen provenance as route/subject, B4R7/R7 as subject, admission/path mutation,
-  direct-import substitution, deferred-work activation, merge/third descendant, or wrong named range.
+- B6 admission 為 non-merge，named first-parent diff 恰好七 paths，各一次；pre-commit artifacts
+  不含 B6 SHA/blob SHA/`HEAD`/review outcome。
+- R10 審每個 B6 blob 一次，approved record 另行 unchanged commit；B6/R10 不建立 subject。
+- S8 是唯一 subject 且僅改 test path；direct imports 保持，dynamic import substitution 失敗。
+- Test 讀取 parent workflow/contract/plan/spec/step 與 B6 plan/step，驗證 historical provenance 不可
+  作 B6 route，並用 actual Git subprocess 驗證 complete S8/T8/V8 triple。
+- T8/V8 是唯一 non-merge `S8 -> T8 -> V8`；named `S8..V8` 僅含其兩 paths；Q8 只讀且無 artifact/thread
+  authority。
 
 ## Reviewer Handoff
 
 ```json
-{"current_route":"B4R7-admission->R7->S6->T6->V6","b4r7_review_path":"plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r7-review-log.md","implementation_subject":"S6 only","range":"S6..V6","verdict":"approved|needs-rework"}
+{"current_route":"B6->R10->S8->T8->V8->Q8","b6_review_path":"plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6-review-log.md","implementation_subject":"S8 only","range":"S8..V8","verdict":"approved|needs-rework"}
 ```
-
-The B4R7 R7/T6/V6 schemas are defined by
-`plan/topic-plan-contract.md#b4r7-correction-evidence-schemas`.
 
 ## Post-merge / release actions
 
-Stop at the Human boundary; none are authorized.
+Stop at the Human boundary; no release action is authorized.
 
 ## Open Questions / Unresolved Items
 
-The sole pending action is B4R7 commit admission. B4R7's commit SHA is intentionally unknown until that
-admission completes; all B4R6 and earlier evidence remains frozen.
-
-## Frozen B5 provenance
-
-All B4R7 content above, B5/R8, and all prior epochs are frozen nonrouting provenance; none is current,
-pending, candidate or gate.
-
-S7 is the sole non-merge subject and changes only
-`tests/test_observer_dispatcher_governance_contract.py`. Its actual graph/range test relies only on complete
-explicit `ODG_S7_SHA`, `ODG_T7_SHA`, `ODG_V7_SHA` input and real subprocess `git rev-parse`, `git rev-list`,
-and `git diff --name-status`; no variables explicitly skip, partial/invalid/`HEAD`/merge/wrong-parent/
-multi-path input fails closed. Direct imports and deferred `step-creator` remain locked.
-
-## B5R Current Route
-
-B5R is the sole current route: `B5R -> R9 -> S7 -> T7 -> V7 -> Q7 -> comment-classification/human-check`.
-B5R is a non-subject, exact seven-planning-path, non-merge baseline; R9 is its separately committed
-clean-checkout review. Only approved R9 can admit S7, which changes only
-`tests/test_observer_dispatcher_governance_contract.py` and preserves direct imports and deferred
-`step-creator` work.
-
-The actual Git graph assertion uses only complete explicit `ODG_S7_SHA`, `ODG_T7_SHA`, `ODG_V7_SHA` values and
-subprocess real `git rev-parse`, `git rev-list`, `git diff --name-status`. It explicitly skips/unverifies only
-when all are absent; partial, invalid, `HEAD`, merge, wrong graph, or multi-path values fail closed. T7 must
-run this assertion with a complete real triple and record passing, non-skipped evidence. T7/V7 are the only
-evidence-only descendants, and named `S7..V7` lists exactly their B5R paths. Q7 stays full-V7-SHA, read-only,
-no-artifact, no lifecycle or thread authority.
+The next action is B6 admission commit; its SHA is intentionally unknown until that commit exists.
