@@ -130,23 +130,28 @@ The subsequent non-merge `S3` must modify only
 This current-topic exception grants no current evidence write, commit, push, PR-thread action,
 merge, post-merge, release, tagging or summary action, and cannot be generalized to another topic.
 
-### Human-authorized current-topic B4 correction route
+### Human-authorized current-topic B4R correction route
 
-The B0–B3/S1–S4/T1–T4/V1–V4, normal/recovery and prior correction artifacts are frozen historical
-provenance, never a candidate, gate, route or subject. The two `step-creator` threads are deferred.
-The Human scope-expansion authorization `2. 授權擴張 current topic。` permits only B4: two shared
-contracts, parent plan/spec/step, and correction-b4 plan/step.
+`B4=979798e` is failed, unapproved, non-subject historical provenance. B0–B4, S1–S4, T1–T4,
+V1–V4, normal/recovery and all prior correction artifacts are frozen: they are never a candidate,
+gate, route, subject, or evidence source. The two `step-creator` threads remain deferred and are
+not reopened by this route.
 
-An Independent Implementer commits exactly those seven paths as non-subject B4. From a clean
-checkout at that B4 commit, an Independent Plan-Reviewer reviews the committed blobs and writes
-only `correction-b4-review-log.md`; an Independent Implementer commits that unchanged review record
-separately. B4 and its review-evidence commit are never subjects.
+The Human scope-expansion authorization `2. 授權擴張 current topic。` permits only B4R's six
+planning paths: this shared contract, parent plan/spec/step, and correction-b4r plan/step. An
+Independent Implementer commits exactly those six paths as non-subject `B4R`. From a clean checkout
+at that B4R commit, an Independent Plan-Reviewer reviews the committed blobs and writes only
+`correction-b4r-review-log.md`; an Independent Implementer commits that unchanged approved review
+record separately. Neither B4R nor its review-evidence commit is an implementation subject.
 
-S5 is the sole immutable subject and may change only the exact 15-path allowlist in the parent plan.
-T5 then V5 are the only linear non-merge evidence-only descendants. All verification uses actual
-named commit SHA graph queries and exact `git diff --name-status S5..V5`; `HEAD` and textual topology
-inference are invalid. Tester reports only factual `passing|failing`, without `next_gate`, routing or
-lifecycle fields. Reviewer requires the same S5 SHA and passing exact T5 evidence path.
+Only after that separately committed approved B4R review log may non-merge `S5` establish the sole
+`implementation_subject_sha`. S5 may modify only the exact 15-path allowlist in the parent plan;
+that allowlist explicitly includes `.codex/agents/reviewer.toml` despite the frozen historical B2
+boundary. `T5` then `V5` are the sole linear, non-merge, evidence-only descendants. Verification
+uses actual named SHA graph queries and exact `git diff --name-status S5..V5`; `HEAD`, textual
+topology inference, a merge, or a third descendant is invalid. Tester records only factual
+`passing|failing`, without routing, lifecycle, status, or `next_gate` fields. Reviewer requires the
+same S5 SHA and passing exact T5 evidence path.
 
 ### Planner preflight
 
@@ -402,6 +407,71 @@ The V5 record is written before the V5 commit and therefore must not contain, re
 V5 commit SHA. Post-commit validation independently identifies V5 and verifies exact non-merge
 `S5 -> T5 -> V5` topology and `git diff --name-status S5..V5`. Tester evidence has no `next_gate`,
 routing or lifecycle field.
+
+### B4R correction evidence schemas
+
+The following three single-JSON-object records are the only current correction evidence for this
+topic. B4 records remain frozen historical provenance. The Plan-Reviewer alone writes the B4R review
+record after reviewing the six committed B4R planning blobs from a clean checkout; an approved
+record is separately committed unchanged before S5. Tester and Reviewer records are separate
+evidence-only descendants and cannot select a route or alter topic state.
+
+```json
+{
+  "schema_version": "observer-dispatcher-governance.correction-b4r-plan-review.v1",
+  "correction_id": "observer-dispatcher-governance/high/b4r",
+  "review_kind": "correction-b4r-plan",
+  "severity": "high",
+  "reviewed_commit_sha": "<committed B4R SHA>",
+  "reviewed_artifacts": [{"path": "<one exact B4R planning path>", "blob_sha": "<B4R-commit blob SHA>"}],
+  "review_basis": "<independent clean-checkout tree/blob review basis>",
+  "verdict": "approved|needs-rework",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {"ADDRESS": [], "DISCUSS": [], "SKIP": []},
+  "timestamp": "<RFC 3339 timestamp>"
+}
+```
+
+`reviewed_artifacts` contains exactly the six B4R planning paths once each. A `needs-rework` verdict
+blocks S5 and returns bounded repair to Planner; it cannot be repaired with B4 or earlier evidence.
+
+```json
+{
+  "schema_version": "observer-dispatcher-governance.correction-b4r-tester-evidence.v1",
+  "correction_id": "observer-dispatcher-governance/high/b4r",
+  "actor": "Tester",
+  "implementation_subject_sha": "<S5 SHA>",
+  "subject_verification": {"expected_sha": "<S5 SHA>", "observed_sha": "<S5 SHA>", "command": "<exact command>", "result": "passing|failing"},
+  "commands": [{"command": "<exact command>", "exit_code": 0, "result": "passing|failing"}],
+  "correction_test_result": "passing|failing",
+  "repository_validation_result": "passing|failing",
+  "verdict": "passing|failing",
+  "timestamp": "<RFC 3339 timestamp>"
+}
+```
+
+```json
+{
+  "schema_version": "observer-dispatcher-governance.correction-b4r-implementation-review.v1",
+  "correction_id": "observer-dispatcher-governance/high/b4r",
+  "review_kind": "correction-b4r-implementation",
+  "severity": "high",
+  "implementation_subject_sha": "<S5 SHA>",
+  "review_target_commit_sha": "<pre-existing T5 SHA>",
+  "tester_evidence": {"path": "plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r-tester-evidence.md", "revision": "<T5 SHA>", "implementation_subject_sha": "<S5 SHA>", "verdict": "passing"},
+  "reviewed_artifacts": [{"path": "<one exact S5 allowlist path>", "revision": "<S5 revision>"}],
+  "review_basis": "<independent implementation review basis including named SHA graph queries>",
+  "verdict": "approved|needs-rework",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {"ADDRESS": [], "DISCUSS": [], "SKIP": []},
+  "timestamp": "<RFC 3339 timestamp>"
+}
+```
+
+V5 is written before the V5 commit and must not contain, require, or infer a V5 SHA. Post-commit
+validation independently identifies V5 and proves exact non-merge `S5 -> T5 -> V5`, with named
+`git diff --name-status S5..V5` listing only the B4R T5/V5 evidence paths. No Tester schema field
+may contain routing, lifecycle, status, or `next_gate` semantics.
 
 ## Blocking Semantics
 

@@ -6,18 +6,21 @@ created: 2026-09-01
 
 # observer-dispatcher-governance — Step Tracking
 
-> **B4 current route:** B0–B3/S1–S4/T1–T4/V1–V4 and normal/recovery are frozen; `step-creator` threads are deferred. Only B4 -> S5 -> T5 -> V5 routes current work.
+> **B4R current route:** `B4=979798e` failed before approval and is frozen non-subject provenance.
+> B0–B4/S1–S4/T1–T4/V1–V4 and normal/recovery are frozen; `step-creator` threads are deferred.
+> Only B4R -> S5 -> T5 -> V5 routes current work, with a separately committed approved B4R
+> clean-review record before S5.
 
-## B4 Actionable Steps
+## B4R Actionable Steps
 
-- [X] Plan-Creator: synchronize exactly seven B4 planning paths and create B4 plan/step.
-- [ ] Independent Implementer: commit the seven paths as non-subject B4.
-- [ ] Independent Plan-Reviewer: clean-checkout review committed B4; write only B4 review log.
-- [ ] Independent Implementer: separately commit unchanged B4 review log.
-- [ ] Planner: run exact candidate selector; dispatch S5 only when B4 review is approved.
-- [ ] Independent Implementer: make one non-merge S5 using exact 15-path allowlist.
-- [ ] Tester: write factual same-S5 T5 evidence only.
-- [ ] Reviewer: require same-S5 passing exact T5, write V5, and verify named actual-SHA `S5..V5`.
+- [X] Plan-Creator: synchronize only the six B4R planning paths and create B4R plan/step.
+- [ ] Independent Implementer: commit the six paths as non-subject B4R.
+- [ ] Independent Plan-Reviewer: clean-checkout review committed B4R; write only B4R review log.
+- [ ] Independent Implementer: separately commit unchanged approved B4R review log.
+- [ ] Planner: run exact candidate selector; dispatch S5 only when B4R review is approved.
+- [ ] Independent Implementer: make one non-merge S5 using the exact 15-path allowlist, including `.codex/agents/reviewer.toml`.
+- [ ] Tester: write factual same-S5 T5 evidence only; no routing, lifecycle, status or `next_gate` fields.
+- [ ] Reviewer: require same-S5 passing exact B4R T5, write V5, and verify named actual-SHA `S5..V5` contains only B4R T5/V5 evidence.
 - [ ] Human boundary: no PR-thread, merge, release or post-merge action.
 
 > **B3 correction override — current stage:** B0/B1/B2/S1/S3/T1/T3/V1/V3 and normal/recovery

@@ -1,14 +1,19 @@
 # Observer / Dispatcher Governance Specification
 
-> **B4 correction override:** B0–B3/S1–S4/T1–T4/V1–V4 and normal/recovery are frozen nonrouting provenance; two `step-creator` PR threads are deferred. B4 and B4 review evidence are committed non-subject planning/evidence commits. S5 alone is the immutable non-merge subject over the exact 15-path B4 allowlist; direct imports remain mandatory.
+> **B4R correction override:** `B4=979798e` is failed, unapproved, non-subject frozen provenance.
+> B0–B4/S1–S4/T1–T4/V1–V4 and normal/recovery are frozen nonrouting provenance; two
+> `step-creator` PR threads remain deferred. B4R and its separately committed approved clean-review
+> evidence are non-subject commits. Only then may S5 become the immutable non-merge subject over the
+> exact 15-path B4R allowlist, including `.codex/agents/reviewer.toml`; direct imports remain mandatory.
 
-## B4 Current Acceptance Criteria
+## B4R Current Acceptance Criteria
 
-1. Candidate selection reads only parent plan, parent step and approved B4 review evidence; Observer bootstrap-dispatches Planner only, then Planner may dispatch Tester/Explorer.
-2. Plan-Reviewer reviews actual B4 committed blobs from a clean checkout and B4 review evidence is separately committed.
-3. T5 then V5 are sole non-merge descendants; actual SHA graph checks and named exact `S5..V5` are mandatory, while `HEAD` and textual topology inference fail closed.
-4. Tester uses factual `passing|failing` only and no routing fields; Reviewer requires the exact same S5 plus passing exact T5 evidence.
-5. Mutation tests fail closed for removing frozen markers, treating B4/prior work as subject, widening S5, dynamic-import substitution, wrapper orchestration, T5 routing, mismatched/failing T5, merge/third descendant or range drift.
+1. Candidate selection reads only parent plan, parent step and approved B4R review evidence; Observer bootstrap-dispatches Planner only, then Planner may dispatch Tester/Explorer.
+2. B4R is exactly the six permitted planning paths; Plan-Reviewer clean-checkout reviews actual committed B4R blobs, and its approved review record is separately committed before S5.
+3. S5 is the only subject and changes only the exact 15-path B4R allowlist; B4, B4R, and every prior commit/evidence record are not subjects.
+4. T5 then V5 are sole non-merge descendants; actual SHA graph checks and named exact `S5..V5` are mandatory, while `HEAD` and textual topology inference fail closed.
+5. Tester uses factual `passing|failing` only, without routing, lifecycle, status, or `next_gate`; Reviewer requires the exact same S5 plus passing exact B4R T5 evidence.
+6. Mutation tests fail closed for removing frozen markers, treating B4/B4R/prior work as subject, widening S5, omitting the reviewer custom-agent path, dynamic-import substitution, wrapper orchestration, T5 routing, mismatched/failing T5, merge/third descendant or range drift.
 
 > **B3 correction override:** B0/B1/B2/S1/S3/T1/T3/V1/V3 plus normal/recovery evidence are frozen
 > and nonrouting; V3 is a frozen needs-rework outcome without a repo-visible review log. B3 is a

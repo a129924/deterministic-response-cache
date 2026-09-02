@@ -1,21 +1,55 @@
 # Observer / Dispatcher Governance
 
-> **B4 corrective override — current execution truth:** B0–B3, S1–S4, T1–T4, V1–V4, normal/recovery and all prior correction records are frozen nonrouting provenance; the two `step-creator` PR threads are deferred. B4 is a committed, clean-checkout-reviewed, non-subject seven-path planning baseline. Only S5 may establish `implementation_subject_sha`, using exactly the B4 15-path allowlist; only T5 then V5 may descend, verified with actual SHA graph queries and named `S5..V5`, never `HEAD` or a text heuristic.
+> **B4R corrective override — current execution truth:** `B4=979798e` is failed, unapproved,
+> non-subject frozen provenance. B0–B4, S1–S4, T1–T4, V1–V4, normal/recovery and all prior
+> correction records are nonrouting; the two `step-creator` PR threads remain deferred. B4R is the
+> sole six-path non-subject planning baseline. Only after a separately committed, approved B4R
+> clean-checkout review log may S5 establish `implementation_subject_sha`, using exactly the 15-path
+> allowlist below; only T5 then V5 may descend, verified with actual SHA graph queries and named
+> `S5..V5`, never `HEAD` or a text heuristic.
 
-## B4 Current Artifact Delta
+## B4R Current Artifact Delta
 
-| Artifact | Exact path | Write owner |
-| --- | --- | --- |
-| B4 plan / step | `correction-b4-plan.md`, `correction-b4-step.md` | Plan-Creator |
-| B4 review | `correction-b4-review-log.md` | Plan-Reviewer |
-| T5 evidence | `correction-b4-tester-evidence.md` | Tester |
-| V5 evidence | `correction-b4-implementation-review-log.md` | Reviewer |
+| Artifact | Exact path | Write owner | Decision authority | Role |
+| --- | --- | --- | --- | --- |
+| B4R plan | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r-plan.md` | Plan-Creator | Planner | B4R baseline delta |
+| B4R step | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r-step.md` | Plan-Creator | Planner | B4R baseline tracker |
+| B4R review | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r-review-log.md` | Plan-Reviewer | Plan-Reviewer verdict; Planner route | Separately committed pre-S5 gate |
+| T5 evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r-tester-evidence.md` | Tester | Factual test result only | First evidence descendant |
+| V5 evidence | `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b4r-implementation-review-log.md` | Reviewer | Reviewer verdict; Planner route | Final evidence descendant |
 
-## B4 Current Route
+## B4R Current Route
 
-The seven B4 planning paths are committed first as non-subject B4. Plan-Reviewer reviews their committed blobs from a clean B4 checkout and writes separately committed B4 review evidence. Candidate selector reads only this parent plan, parent step and approved B4 review evidence. Observer bootstrap-dispatches Planner only; Planner alone routes the next role and may dispatch Tester or Explorer. Wrappers are descriptive only and do not orchestrate.
+The B4R planning baseline contains only `plan/topic-plan-contract.md`, this parent plan, parent
+specification, parent step tracker, and the B4R plan/step. An Independent Implementer commits those
+six paths as non-subject B4R. An Independent Plan-Reviewer then clean-checkout reviews the committed
+B4R blobs and writes the B4R review record; an Independent Implementer separately commits that
+unchanged approved record. Candidate selection reads only this parent plan, parent step and approved
+B4R review evidence. Observer bootstrap-dispatches Planner only; Planner alone routes the next role
+and may dispatch Tester or Explorer. Wrappers are descriptive only and do not orchestrate.
 
-S5 may modify exactly the 15 paths in `correction-b4-plan.md`. Tester emits factual `passing|failing` evidence only—no `next_gate`, routing or lifecycle fields. Reviewer requires the same S5 SHA and passing T5 at the exact path before V5.
+Only then may S5 change exactly this 15-path allowlist:
+
+1. `AGENTS.md`
+2. `.codex/agents/planner.toml`
+3. `.codex/agents/implementer.toml`
+4. `.codex/agents/reviewer.toml`
+5. `.agents/skills/plan-creator/SKILL.md`
+6. `.agents/skills/plan-creator/checklist.md`
+7. `.agents/skills/plan-creator/templates/topic-plan-template.md`
+8. `.agents/skills/plan-reviewer/SKILL.md`
+9. `.agents/skills/plan-reviewer/checklist.md`
+10. `.agents/skills/plan-reviewer/reference.md`
+11. `.agents/skills/plan-reviewer/examples.md`
+12. `.agents/skills/python-implementation-workflow/SKILL.md`
+13. `.agents/skills/python-implementation-workflow/reference.md`
+14. `.agents/skills/python-plan-authoring/templates/canonical-python-topic-plan-template.md`
+15. `tests/test_observer_dispatcher_governance_contract.py`
+
+Tester emits only factual `passing|failing` evidence—no routing, lifecycle, status or `next_gate`
+fields. Reviewer requires the same S5 SHA and passing exact T5 path before V5. T5 and V5 are the
+only linear non-merge descendants, and named `git diff --name-status S5..V5` must list only their
+two B4R evidence paths.
 
 > **B3 corrective override — current execution truth:** B0/B1/B2/S1/S3/T1/T3/V1/V3 and all
 > normal/recovery records are frozen historical provenance, never current routing, gates, or subjects.
