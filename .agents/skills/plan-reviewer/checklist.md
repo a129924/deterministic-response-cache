@@ -20,10 +20,17 @@ Use this checklist when reviewing a repo-visible topic plan before later executi
   - [ ] `Reviewer Handoff`
   - [ ] `Post-merge / release actions`
   - [ ] `Open Questions / Unresolved Items`
-- [ ] `Status / Allowed Transitions` uses canonical workflow transitions only.
+- [ ] `Status / Allowed Transitions` uses canonical workflow transitions only: independent Tester
+  precedes reviewer work, `publish-in-progress` only reaches `pr-open`, and Human alone may merge
+  from `pr-open`.
 - [ ] The current status matches the actual topic state.
 - [ ] `Artifact Paths` are exact, bounded, repo-visible, and role-labeled.
 - [ ] If correction artifacts are used, each parent artifact, correction artifact, and any routing-controlling review-log / equivalent handoff artifact is listed explicitly.
+- [ ] If correction artifacts are used, review inputs are limited to that route's declared
+  allowlist; chat, branch, summary, `GOAL.md`, and `.github/agents/**` are excluded.
+- [ ] The conditional correction extension lists correction plan, correction step,
+  correction-plan review log, Tester evidence, and implementation-review log with exact
+  path/owner/order/schema authority.
 - [ ] Correction topics keep parent artifacts as current truth after backfill and correction artifacts as historical truth.
 - [ ] When correction artifacts are used, the minimum correction artifact contract lives in reference / examples, not as a workflow-body schema dump.
 - [ ] `Implementation Steps` remain creator-owned; reviewer verdict logging, reviewer acceptance tasks, and main-agent routing work are not mixed into them.

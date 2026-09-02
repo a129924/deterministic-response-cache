@@ -20,7 +20,24 @@
 ## Status / Allowed Transitions
 
 - **Current**: `planned`
-- **Allowed transitions**: use only `plan/agent-handoff-workflow.md` values.
+- **Execution model**: creator -> independent Tester -> reviewer -> bounded publish -> draft PR ->
+  Human merge.
+- **Allowed transitions**:
+  - `planned` -> `creator-in-progress`
+  - `creator-in-progress` -> `tester-in-progress`
+  - `tester-in-progress` -> `review-ready`
+  - `review-ready` -> `reviewer-in-progress`
+  - `reviewer-in-progress` -> `approved|needs-rework`
+  - `needs-rework` -> `creator-in-progress`
+  - `approved` -> `creator-in-progress|publish-in-progress`
+  - `publish-in-progress` -> `pr-open`
+  - `pr-open` -> `needs-rework`
+  - `pr-open` -> `merged`
+  - `merged` -> terminal
+
+Do not add a direct `publish-in-progress` -> `merged` transition. Tester evidence must attest the
+same immutable implementation subject later reviewed by Reviewer; only Human may merge from
+`pr-open`.
 
 ## Artifact Paths
 
@@ -29,6 +46,11 @@
 | Topic plan | `plan/<topic>/<topic>.plan.md` | Planning actor | Execution contract |
 | Topic spec | `plan/<topic>/<topic>.spec.md` | Planning actor | Behavior contract |
 | Step tracker | `plan/<topic>/<topic>.step.md` | Creator | Progression truth |
+
+If this topic declares a correction route, conditionally add exact rows for correction plan,
+correction step, correction-plan review log, Tester evidence, and implementation-review log.
+Each row must state its write owner, ordering, and schema authority;
+do not add this extension to topics without a declared correction route.
 
 ## Python implementation metadata
 

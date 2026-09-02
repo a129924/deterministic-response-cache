@@ -15,12 +15,21 @@
 - Observer / Dispatcher 是 repository 頂層的唯讀協調者：只可盤點 state、派遣一個專責角色、彙整 bounded result，並回報 `可直接前進`、`needs-rework`、`blocked` 或 `human-check`。
 - 只有 Planner 可執行 preflight，並判定 candidate、phase、gate 與 next role。Observer 不得自行選擇 active topic、手算或推測 gate，或重新解讀 locked decisions。
 - active-topic evidence 僅限已提交的 topic plan、required step tracker，以及由 Plan-Reviewer 寫入 latest approved review-log JSON record；不得以 chat、branch、summary、`GOAL.md` 或 `.github/agents/**` 補推或選擇 task。
-- Observer 每次只能依 Planner 的判定派遣一個允許角色：Planner、Plan-Creator、Plan-Reviewer、Implementer、Reviewer、Tester 或 Explorer；不得自我派遣、平行扮演多個角色，或擴增角色集合。
+- runtime bootstrap 的唯一入口是 Planner。Planner 擁有 runtime allowlist
+  `Planner`、`Plan-Creator`、`Plan-Reviewer`、`Implementer`、`Tester`、`Reviewer`、`Explorer`；Observer
+  只能在 Planner 對目前 candidate、phase、gate 與 next role 作出明確判定後，從此 allowlist
+  派遣其中一個角色。不得自我派遣、平行扮演多個角色，或擴增角色集合。
 - 角色必須真實分離：Plan-Creator author plan，Plan-Reviewer 獨立審核 planning evidence，Implementer 實作，Tester 驗證，Reviewer 獨立審核 implementation 並處理 PR comment classification / routing；Planner 依 gate 判定後續角色。不得以隱藏 chat context 或同一角色宣稱多重 gate 已完成。
 - 若無 candidate 或 required evidence 缺失，回報 `blocked`；多 candidate 或 plan 與 step 指向不同 topic，回報 `human-check`；同 topic 的 state 或 scope 矛盾，回報 `blocked`，除非 Planner 明定 Plan-Creator 可做 bounded repair。
 - Observer 不得實作或改檔，不得執行 git、commit、push、PR、merge、release、tagging 或 post-merge，不得處理 review comments，也不得自行宣告 approval、human check 或 workflow gate 完成。
 - `.github/agents/**` 是 frozen provenance：不得修改，且不得作為 runtime 或 routing dependency。
-- publish 僅能由 Implementer 在 required evidence、Tester evidence、independent Reviewer approval、Planner Phase 4.5 alignment 與既有 human authorization 均具備時執行。draft PR 開啟後即停止於 human review boundary；只有 Human 可 review、merge、post-merge、release 與建立 close summary。
+- Tester 是 implementation 與 independent Reviewer 之間的必要獨立 phase：Tester 只寫入
+  factual evidence，Reviewer 只能使用同一 immutable subject 的 passing Tester evidence 審核。
+  publish 僅能由 Implementer 在 required evidence、Tester evidence、independent Reviewer
+  approval、Planner Phase 4.5 alignment 與既有 human authorization 均具備時，對已列 scope
+  執行 bounded commit、push 與 draft PR。publish-in-progress 只能轉為 `pr-open`；draft PR
+  開啟後即停止於 human review boundary，只有 Human 可由 `pr-open` merge，並可 review、
+  post-merge、release 與建立 close summary。
 
 ## Test Preservation
 

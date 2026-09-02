@@ -19,7 +19,7 @@ inputs:
   - "the target `plan/<topic>/<topic>.plan.md`"
   - "the current workflow contract from `plan/agent-handoff-workflow.md`"
   - "the shared topic-plan contract from `plan/topic-plan-contract.md`"
-  - "any contextual review feedback, including Copilot feedback, if it exists"
+  - "only the declared review-input allowlist and any Copilot feedback explicitly recorded in it"
 outputs:
   - "exactly one machine-consumable JSON object with no trailing prose"
   - "verdict set to approved or needs-rework"
@@ -51,8 +51,13 @@ Do not use this skill when:
 
 # Process
 1. Confirm the task is topic-plan review, not plan authoring, skill review, publish routing, or workflow-spec editing.
-2. Read the target topic plan plus the shared contract sources before judging the plan.
-3. Verify the topic plan path, required sections, canonical status model, artifact-path exactness, stable-library intent, reviewer handoff JSON shape, post-merge timing, and role boundaries.
+2. Read the target topic plan plus the shared contract sources before judging the plan. For a
+   correction-plan review, accept only the declared correction-review input allowlist: the exact
+   planning artifacts, shared contract sources, and recorded feedback named by that route. Do not
+   infer input from chat, branch, summary, `GOAL.md`, or `.github/agents/**`.
+3. Verify the topic plan path, required sections, canonical status model (including independent
+   Tester before review and no direct publish-to-merged transition), artifact-path exactness,
+   stable-library intent, reviewer handoff JSON shape, post-merge timing, and role boundaries.
 4. Treat placeholders such as `TBD`, `later`, or `follow normal process` as contract failures when the workflow requires explicit decisions.
 5. Treat missing sections, invalid transitions, vague artifact paths, undeclared stable intent, wrong timing, non-JSON reviewer handoff, and role-boundary confusion as blocking issues.
 6. Keep the review focused on contract-breaking issues rather than wording polish or stylistic preferences that do not change workflow meaning.
@@ -79,6 +84,8 @@ Do not use this skill when:
 - confirm the review basis explicitly includes `plan/agent-handoff-workflow.md` and `plan/topic-plan-contract.md`
 - confirm required sections are present and named correctly
 - confirm transitions stay canonical and execution timing is coherent
+- confirm independent Tester is a required phase before reviewer evidence and
+  `publish-in-progress` cannot transition directly to `merged`
 - confirm `Artifact Paths` are exact, bounded, and repo-visible
 - confirm stable-library intent is explicit: clearly absent or explicitly declared
 - confirm the verdict stays JSON-only with no prose outside the object
@@ -89,6 +96,8 @@ Do not use this skill when:
 - stable-library timing is implied but not declared
 - `Reviewer Handoff` is a table, prose note, or mixed-format report instead of one JSON object
 - planning actor, creator, reviewer, and Main Agent responsibilities are blended together
+- correction review accepts undeclared inputs or derives authority from chat, branch, summary,
+  `GOAL.md`, or `.github/agents/**`
 
 # Common Rationalizations
 - "The reviewer can infer the missing contract later."

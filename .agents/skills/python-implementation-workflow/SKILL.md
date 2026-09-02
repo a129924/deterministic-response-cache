@@ -35,9 +35,11 @@ description: Wrapper workflow recipe for parent Codex sessions that need to coor
    回傳官方 JSON plan verdict。
 3. 使用 `python-tdd-test-authoring` 依 spec 撰寫 RED tests，再由 `implementer`
    進行滿足已核准 plan 的 scoped repository changes。
-4. 使用 `python-implementation-review` 與 `reviewer` 檢查 traceability、path
+4. 由獨立 `Tester` 對 immutable implementation subject 寫入 factual validation evidence；
+   沒有同一 subject 的 passing evidence，不得進入 implementation review。
+5. 使用 `python-implementation-review` 與 `reviewer` 檢查 traceability、path
    compliance、contract boundaries 與 validation coverage。
-4. 所有 workflow artifacts 只能保留在正式的 repo-local paths。
+6. 所有 workflow artifacts 只能保留在正式的 repo-local paths。
 
 ## Required Returned Artifacts
 
@@ -51,9 +53,16 @@ description: Wrapper workflow recipe for parent Codex sessions that need to coor
 
 - Planning gate: `planner` 必須先產出或確認可用的 topic plan，`implementer` 才能開始進行 scoped repository changes。
 - Implementation gate: `implementer` 必須維持在已核准的 topic scope 內，並在 handoff 給 `reviewer` 之前回傳已套用的 change summary 與 validation evidence。
-- Review gate: 在 parent Codex session 將 topic 視為 review-complete 之前，`reviewer` 必須驗證 correctness、path compliance、artifact-contract boundaries 與 validation coverage。
+- Tester gate: `Tester` 必須獨立 attest immutable implementation subject，並回傳 factual
+  passing|failing evidence；不可由 Implementer 或 Reviewer 代替。
+- Review gate: 在 parent Codex session 將 topic 視為 review-complete 之前，`reviewer` 必須以
+  同一 subject 的 passing Tester evidence 驗證 correctness、path compliance、artifact-contract
+  boundaries 與 validation coverage。
 - Path gate: 所有 workflow artifacts 必須留在正式的 repo-local paths；此 wrapper skill 不可將 runtime artifacts 轉導到 legacy `.github/agents/*.agent.md` 檔案或 repo-root `agents/openai.yaml`。
-- Workflow boundary gate: git commit、push 與 pull request actions 仍屬於此 workflow 之外，不屬於滿足這些 gates 的一部分。
+- Publish boundary gate: 只有 Planner 明確 permit、required evidence、same-subject passing
+  Tester evidence、independent Reviewer approval、Phase 4.5 alignment 與既有 Human authorization
+  全數具備時，Implementer 才可對 declared scope 執行 bounded commit、push 與 draft PR；publish
+  只能到 `pr-open`，絕不授權 merge。
 
 ## Human-Review Stop Boundary
 

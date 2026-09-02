@@ -14,6 +14,21 @@ Do not treat any one source as sufficient by itself. The workflow defines the ca
 
 When a topic uses correction / delta artifacts, also verify that the plan keeps the workflow body slim, lists exact parent/correction paths, makes parent-sync closure explicit, keeps review-log usage conditional on routing-controlling feedback, and leaves the minimum correction artifact contract in reference / examples instead of the workflow body.
 
+## Correction-review input allowlist
+
+For a declared correction route, review only the exact repo-visible inputs named by that route:
+the target plan, its required step tracker, its declared parent/correction artifacts, the shared
+workflow and topic-plan contracts, and recorded Copilot feedback explicitly attached to those
+artifacts. The Plan-Reviewer may write only the declared correction-plan verdict. Chat, branch,
+summary, `GOAL.md`, legacy `.github/agents/**`, and superseded normal/recovery evidence are never
+review inputs or routing authority.
+
+The correction-artifact extension is conditional, not a universal plan requirement. When a route
+declares it, the complete set is: correction plan, correction step, correction-plan review log,
+Tester evidence, and implementation-review log. Their exact paths, write owners, ordering, and
+schema authority must be declared. The correction-plan review log is the pre-implementation gate;
+Tester evidence attests the immutable subject before independent implementation review.
+
 If the topic is a correction-lifecycle contract refresh, verify that it refreshes existing workflow / plan surfaces now and does not create a standalone correction skill unless a separate topic explicitly justifies extraction because repeated instability or cross-workflow reuse has been demonstrated.
 
 ## What counts as blocking
@@ -22,6 +37,7 @@ Treat these as blocking issues:
 
 - missing required sections
 - invalid or non-canonical transitions
+- skipping the independent Tester phase or allowing `publish-in-progress` -> `merged`
 - vague or drifting `Artifact Paths`
 - undeclared or mixed stable-library intent
 - non-JSON reviewer handoff
@@ -35,6 +51,8 @@ Treat these as blocking issues:
 - unconditional review-log requirements when routing control or multi-round rework is absent
 - turning a sample round cap into a repository-wide invariant
 - a correction-lifecycle refresh topic that quietly broadens into standalone-skill creation without separate justification
+- correction review that accepts an undeclared input or treats chat, branch, summary, `GOAL.md`,
+  `.github/agents/**`, or superseded evidence as authority
 
 Do not raise blocking issues for tone, phrasing, or layout preferences that do not change contract meaning.
 
