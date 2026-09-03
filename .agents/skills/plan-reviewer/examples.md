@@ -30,6 +30,8 @@ Typical verdict:
 
 A plan that:
 - lists exact parent and correction-related artifact paths with owner/role labels
+- makes the conditional five-artifact correction extension explicit: correction plan, correction step, correction-plan review log, Tester evidence, and implementation-review log, each with exact owner/order/schema authority
+- limits correction-plan review to its declared repo-visible input allowlist
 - keeps workflow-body correction text limited to lifecycle / routing contract
 - defines the minimum correction artifact contract in reference / example surfaces instead of the workflow body
 - makes parent-sync closure explicit
@@ -84,6 +86,7 @@ Typical verdict:
 
 A plan that:
 - skips canonical transitions
+- skips the independent Tester phase or lets `publish-in-progress` transition directly to `merged`
 - routes `planned` directly to `review-ready`
 - declares release before PR or merge
 - or writes `Reviewer Handoff` as Markdown prose or a table
@@ -117,6 +120,8 @@ A plan that:
 - turns a sample three-round cap into a repository-wide rule
 - bloats the workflow body with field-by-field correction artifact schema
 - or quietly broadens the topic into creating a standalone correction skill now
+- or accepts correction-review authority from chat, branch, summary, `GOAL.md`,
+  `.github/agents/**`, or superseded evidence
 
 Typical verdict:
 

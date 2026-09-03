@@ -33,10 +33,12 @@ Delete prompt text after replacing it with real topic-specific content.
 ## Status / Allowed Transitions
 
 - **Current**: `planned`
-- **Execution model**: follow the canonical creator -> reviewer -> publish -> merge path; declare if this topic stops before release
+- **Execution model**: follow the canonical creator -> Tester -> reviewer -> publish -> draft-PR
+  -> Human-merge path; declare if this topic stops before release
 - **Allowed transitions**:
   - `planned` -> `creator-in-progress`
-  - `creator-in-progress` -> `review-ready`
+  - `creator-in-progress` -> `tester-in-progress`
+  - `tester-in-progress` -> `review-ready`
   - `review-ready` -> `reviewer-in-progress`
   - `reviewer-in-progress` -> `approved`
   - `reviewer-in-progress` -> `needs-rework`
@@ -44,7 +46,6 @@ Delete prompt text after replacing it with real topic-specific content.
   - `approved` -> `creator-in-progress`
   - `approved` -> `publish-in-progress`
   - `publish-in-progress` -> `pr-open`
-  - `publish-in-progress` -> `merged`
   - `pr-open` -> `needs-rework`
   - `pr-open` -> `merged`
   - `merged` -> terminal
@@ -72,6 +73,8 @@ Artifact path notes:
 - Say explicitly whether this topic modifies `README.md`, `VERSION`, or `.github/copilot-instructions.md`.
 - Treat listed paths as an executable contract.
 - If the topic uses correction artifacts, list each exact parent artifact, each exact correction artifact, and any repo-visible `review-log` / equivalent handoff artifact only when reviewer feedback controls routing or multi-round rework.
+- Correction-artifact extension is conditional. When declared, list exactly these five paths and
+  their owner/order/schema authority: correction plan, correction step, correction-plan review log, Tester evidence, and implementation-review log.
 - Do not use vague evidence labels such as `merged implementation`, `correction files`, or `latest feedback`.
 - Say what should happen if later work drifts outside these paths.
 

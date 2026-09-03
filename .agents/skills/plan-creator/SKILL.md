@@ -28,7 +28,7 @@ inputs:
 outputs:
   - a repo-visible `plan/<topic>/<topic>.plan.md`
   - explicit scope, boundaries, locked decisions, and analysis-layer routing for the topic
-  - exact artifact paths and workflow transitions
+  - exact artifact paths, conditional correction-artifact schemas, and workflow transitions
   - clear stable-library intent declared or explicitly absent
   - explicit semantic warnings when analysis inputs are missing or incomplete
   - a topic plan ready to hand to creator work
@@ -77,7 +77,13 @@ Do not use this skill when:
 7. Enumerate exact `Artifact Paths`; do not use vague catch-all path descriptions.
 8. Write the required topic-plan sections in canonical order from the template.
 9. If the topic affects stable-library surfaces, add a `## Stable library metadata` section and fill all workflow-required fields needed by later phases, including README row, VERSION bump, timing, and any release-related metadata. If it does not affect stable-library surfaces, make that non-stable intent explicit instead of leaving the contract implicit.
-10. Use only canonical workflow transitions and require machine-consumable reviewer handoff JSON.
+10. Use only canonical workflow transitions: `creator-in-progress` must pass through the
+    independent Tester phase before `review-ready`; `publish-in-progress` may only become
+    `pr-open`, and only Human may move `pr-open` to `merged`. Require machine-consumable
+    reviewer handoff JSON.
+11. When a correction route is declared, make its extension conditional and exact: list the five
+    correction artifacts (correction plan, correction step, correction-plan review log, Tester evidence, implementation-review log), their write owners, ordering, and schema authority.
+    Do not invent correction artifacts for topics that do not declare that route.
 11. If scope, artifact paths, role ownership, stable-library timing, stable-library metadata, release intent, or analysis-layer priority is unclear, stop and ask instead of filling placeholders.
 
 # Examples
@@ -103,7 +109,8 @@ Do not use this skill when:
 
 ## Quality Checks
 - all required topic-plan sections are present in canonical order and match `plan/topic-plan-contract.md`
-- current status and allowed transitions are explicit and canonical
+- current status and allowed transitions are explicit and canonical, including Tester before
+  independent review and no direct `publish-in-progress` -> `merged` transition
 - `Artifact Paths` are exact, bounded, and role-labeled (see `references/artifact-path-rule.md`)
 - reviewer handoff is a single machine-consumable JSON object
 - post-merge / release timing matches the topic's actual scope
@@ -123,6 +130,7 @@ Do not use this skill when:
 - the plan says `TBD`, `later`, or `follow normal process` where the workflow needs an explicit contract
 - artifact paths are broad labels instead of concrete repo-visible paths
 - creator, reviewer, and Main Agent ownership are blended together
+- a plan skips the independent Tester phase or lets publish move directly to `merged`
 - reviewer handoff is written as Markdown notes instead of JSON
 - existing analysis artifacts are ignored because chat context points somewhere else
 
@@ -141,6 +149,7 @@ Do not use this skill when:
 - Do not let absent analysis files fail silently; warn explicitly.
 - Do not let casual chat instructions override analysis artifacts without an explicit human `override`.
 - Do not generate a generic project-management plan for another repository.
+- Do not make correction artifacts or their extended schemas unconditional for unrelated topics.
 - `plan/topic-plan-contract.md` is the shared repo-level fallback contract when the topic-plan template is absent.
 
 # Failure Handling

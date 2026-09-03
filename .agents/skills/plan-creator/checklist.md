@@ -4,10 +4,15 @@ Use this checklist when drafting or sanity-checking a topic plan before handing 
 
 - [ ] The topic plan is repo-visible at `plan/<topic>/<topic>.plan.md`.
 - [ ] `Goal / Outcome`, `Scope`, `Locked Decisions`, and `Boundaries / Exclusions` are explicit.
-- [ ] `Status / Allowed Transitions` uses canonical workflow transitions only.
+- [ ] `Status / Allowed Transitions` uses canonical workflow transitions only: implementation
+  reaches independent Tester before `review-ready`, `publish-in-progress` reaches only `pr-open`,
+  and only Human may move `pr-open` to `merged`.
 - [ ] The current status matches the actual workflow phase.
 - [ ] `Artifact Paths` are exact, repo-visible, and role-labeled, not catch-all labels.
 - [ ] If correction artifacts are used, each parent artifact, correction artifact, and any review-log / equivalent handoff artifact is listed with an exact path, owner, and role.
+- [ ] If correction artifacts are used, their extension is conditional and lists exactly the
+  correction plan, correction step, correction-plan review log, Tester evidence, and
+  implementation-review log, with ordering and schema authority.
 - [ ] If correction artifacts are used, the minimum correction artifact contract is defined in reference / examples: `correction-plan` covers trigger, scope, what stays / changes, acceptance delta, affected artifacts, parent sync, and retention intent; `correction-step` appears only when multi-step repair / backfill is needed.
 - [ ] `Implementation Steps` stay creator-owned; reviewer verdict logging, reviewer acceptance work, and main-agent routing work are not written into creator steps.
 - [ ] When correction lifecycle text appears in the plan, the workflow body stays slim and does not become a field-by-field correction artifact schema dump.

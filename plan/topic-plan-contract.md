@@ -1,242 +1,97 @@
 # Topic Plan Contract
 
-## Purpose
+## Current correction contract
 
-Define the shared repo-level contract for topic-plan authority in this
-repository.
+`B6R13 -> R23 -> S17 -> T17 -> V17 -> Q17 -> thread-classification -> comment-resolve -> human-check` 是唯一 current
+contract；current state 是 `R23_REVIEW_PENDING`。B6R13/R23 are non-subject；S17 alone modifies the declared
+exact-fourteen runtime/template/test allowlist and retains direct imports。T17/V17 是唯一 S17 evidence descendants；Q17
+是 committed V17 後的 evidence-only actual full-triple gate。B6R12/R22/S16-Q16、B6R10/R20 and earlier are frozen
+predecessor provenance.
 
-This file is the shared repo-local authority for topic-plan structure,
-review basis, fallback behavior, and contract-level blocking semantics.
+## Authority and required plan structure
 
-This document governs topic-plan contract semantics. It does not replace:
+Authority ordering 是 AGENTS.md、plan/agent-handoff-workflow.md、本文件、parent plan、parent step、current exact
+review record、local planning skill。GOAL.md 是 project mission，不是 topic/phase authority；chat、branch、summary
+與 .github/agents/** 不可補推 planning evidence，後者只作 frozen provenance。
 
-- `AGENTS.md` as the governance canonical source
-- `plan/agent-handoff-workflow.md` as the repo-level workflow-phase contract
-- `plan/<topic>/<topic>.plan.md` as the topic-specific execution contract
+每個 topic plan 必須依 canonical order 包含 Goal / Outcome、Scope、Locked Decisions、Boundaries / Exclusions、
+Status / Allowed Transitions、Artifact Paths、Implementation Steps、Validation / Acceptance Checks、Reviewer Handoff、
+Post-merge / release actions、Open Questions / Unresolved Items。Artifact Paths 是 executable contract：每個 path
+都要有 exact path、write owner、decision authority 與 role；unlisted path 必須停止並返回 Planner。
 
-## Scope
+## Planner preflight and boundaries
 
-- This document defines the repo-level authority ordering for topic-plan
-  contract semantics.
-- This document defines the required section contract for
-  `plan/<topic>/<topic>.plan.md`.
-- This document defines repo-level reviewer handoff expectations and fallback
-  review basis for topic plans.
-- This document does not define workflow phases, stop points, release routing,
-  or PR-loop behavior.
-- This document does not authorize convergence, projection, runtime
-  adaptation, or skill-surface migration work.
+Planner bootstraps once, then reads only parent plan, parent step and committed approved R23. It selects candidate, phase,
+gate and one non-Planner next role; missing evidence is blocked, candidate conflict is human-check, and only Planner routes
+bounded rework. Planning approval never establishes execution approval. This contract grants no direct thread resolution,
+merge, release, post-merge, tag or summary.
 
-## Contract Version
+## Frozen B6R10 current-candidate contract
 
-- `contract_version`: `1.0`
-- Versioning is human-facing and repo-local.
-- Future strict verification may add `contract_hash`, but `contract_version`
-  remains the primary contract-language field for this repository topic-plan
-  surface.
+B6R10 admission is a non-merge, first-parent exact-eleven baseline: `AGENTS.md`, the three declared plan-reviewer
+skill files, shared workflow/contract, parent plan/spec/step, and B6R10 plan/step. Pre-admission artifacts contain no
+B6R10/R20 SHA, tree, blob, HEAD, or review outcome. R20 is the declared extended JSON correction record, not the
+generic three-field verdict. It records candidate id, committed revision/tree, all eleven path/blob entries,
+first-parent admission, review basis, verdict, blockers and Copilot triage. `needs-rework` has no active candidate,
+next phase, subject or close authorization. Only a separately committed approved R20 has exactly one active candidate,
+`R20_COMPLETE_S16_NEXT`, and next phase S16. Planner selects only that record and never asks Plan-Creator to refine,
+select, or self-close.
 
-## Authority Ordering
+Frozen B6R10 S16 was the sole non-merge test subject and preserved direct imports; `importlib`, `__import__`, and `sys.modules`
+substitution is forbidden. It verifies committed T16/V16 blob semantics: topology/path, one identical full S16 SHA,
+T16 `passing`, and V16 `APPROVED`. Q16 is a post-V16, actual full-triple, read-only Git gate which may write only
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r10-actual-gate-evidence.md` as an
+evidence-only active-candidate close record. That record authorizes classification only, never PR approval or merge.
+Reviewer is an implementation verifier; Human alone performs PR review and merge.
 
-When topic-plan authority questions arise, use this order:
+## Frozen B6R10 deterministic evidence contract
 
-1. `AGENTS.md`
-2. `plan/agent-handoff-workflow.md`
-3. `plan/topic-plan-contract.md`
-4. `plan/<topic>/<topic>.plan.md`
-5. `skills/plan-creator/**` and `skills/plan-reviewer/**`
+T16/V16/Q16 must each be a single JSON object. Exact key sets, nested key sets, exact paths, 40-character lowercase
+hexadecimal SHA values, enum case, parent relationships, and cross-evidence subject identity are mandatory; an omitted,
+extra, malformed, abbreviated, non-hex, or inconsistent value fails closed. T16 has exactly
+`schema_version`, `correction_id`, `phase`, `subject`, `test_run`, `timestamp`; subject has exactly
+`phase:S16`, `commit_sha`, `test_path`, while test_run has exactly `command`, `status:passing`, `exit_code:0`.
 
-Interpretation rules:
+V16 has exactly `schema_version`, `correction_id`, `phase`, `subject`, `tester_evidence`, `verdict`,
+`blocking_issues`, `timestamp`. It binds S16 plus committed T16 `commit_sha`, `path`, `blob_sha`, subject and
+`status:passing`; it requires `verdict:APPROVED` and `blocking_issues:[]`. Q16 has exactly `schema_version`,
+`correction_id`, `phase`, `artifacts`, `parsed_claims`, `actual_git`, `close_authorization`, `timestamp`. Its S16/T16/V16
+artifact entries bind committed commit/parent/path/blob facts; its parsed claims bind the same S16, `passing`, and
+`APPROVED`; its actual Git record binds the full explicit triple, linear status, `S16..V16`, and name-status. Q16 has
+no self commit/tree/blob field, may be written only after V16 is committed, and becomes active only after an independent
+Implementer commits the unchanged record as the sole evidence-only path. Its authorization is only
+`ACTIVE_CANDIDATE_CLOSED` with classification permitted; thread resolve, Human review, merge, release, and post-merge
+are forbidden.
 
-- `AGENTS.md` governs repo-level governance and source-of-truth boundaries.
-- `plan/agent-handoff-workflow.md` governs repo-level workflow phases, stop
-  points, roles, and status transitions.
-- This document governs repo-level topic-plan contract semantics.
-- Each topic plan governs one topic's bounded execution contract inside the
-  repo-level governance and workflow constraints above.
-- `skills/plan-creator/**` and `skills/plan-reviewer/**` are consumer guidance
-  and evidence surfaces only; they do not own repo-level contract authority.
+## B6R13 current-candidate contract
 
-## Required Topic-Plan Sections
+B6R13 admission is non-merge, first-parent, exact-eight: `AGENTS.md`, shared workflow/contract, parent plan/spec/step,
+and B6R13 plan/step. Pre-admission B6R13/R23 commit, tree, blob, HEAD and outcome facts are prohibited. R23 is the
+declared extended correction receipt, recording one candidate's committed revision/tree, all eight path/blob facts,
+first-parent admission, predecessor receipt, review basis, Copilot triage, verdict and blockers. `needs-rework` has no
+active candidate, next phase, subject or close authorization. Only separately committed unchanged approved R23 establishes
+the one active candidate, `R23_COMPLETE_S17_NEXT`, and next phase S17.
 
-Every repo-visible topic plan must include these sections:
+S17 is the sole non-merge subject and only changes its exact fourteen allowlisted wrapper, skill/template and governance
+test paths named in the shared workflow. It retains direct imports and forbids `importlib`, `__import__`, and `sys.modules`
+substitution. Planner bootstraps once and cannot select Planner as a later next role; Plan-Creator is the only planning
+writer; Tester factual evidence includes actual exit code; Reviewer consumes same-subject passing Tester evidence;
+Explorer is read-only. Implementer is bounded and may never merge. T17/V17/Q17 use only new B6R13 evidence paths; Q17
+actual full triple permits classification only. A later independent classification, not Q17, may permit an Implementer
+to respond to and resolve one explicit addressed-and-resolvable thread.
 
-1. `Goal / Outcome`
-2. `Scope`
-3. `Locked Decisions`
-4. `Boundaries / Exclusions`
-5. `Status / Allowed Transitions`
-6. `Artifact Paths`
-7. `Implementation Steps`
-8. `Validation / Acceptance Checks`
-9. `Reviewer Handoff`
-10. `Post-merge / release actions`
-11. `Open Questions / Unresolved Items`
+## B6R13 deterministic evidence contract
 
-Section rules:
+T17/V17/Q17 are single JSON objects whose exact key sets, nested key sets, paths, 40-character lowercase SHA values,
+enums, parents and same-subject references fail closed. T17 records S17, actual command, actual exit code and factual
+result. V17 binds committed T17 path/blob and S17, with `APPROVED` and empty blockers. Q17 binds committed S17/T17/V17
+commit/parent/path/blob facts and actual explicit full triple/linear/range/name-status, has no Q17 self commit/tree/blob,
+and after an unchanged independent Implementer evidence-only commit authorizes only `ACTIVE_CANDIDATE_CLOSED` with
+classification permitted. It never directly authorizes comment resolution, Human review, merge, release or post-merge.
 
-- Section names must stay canonical.
-- A topic plan may add bounded topic-specific sections only when they do not
-  contradict the required section set above.
-- Topics that affect stable-library surfaces must add `Stable library metadata`
-  and define timing explicitly.
-- Topics that do not affect stable-library surfaces must state that intent
-  explicitly instead of leaving it implicit.
+## Frozen provenance
 
-## Shared Review Basis
-
-Both planning skills must evaluate topic plans against this shared basis:
-
-1. `plan/agent-handoff-workflow.md`
-2. `plan/topic-plan-contract.md`
-3. the local skill's own examples, checklist, template, and references
-
-Local skill files may add implementation guidance or review heuristics, but
-they must not redefine required sections, role ownership, fallback authority,
-or blocking semantics away from this file.
-
-## Execution-Start Input Model
-
-For topic execution:
-
-- `plan/<topic>/<topic>.plan.md` is the unconditional execution-start
-  contract.
-- `plan/<topic>/<topic>.step.md`,
-  `plan/<topic>/<topic>.review-log.md`, and
-  `plan/<topic>/<topic>.summary.md` are topic-local truth artifacts, not
-  unconditional startup prerequisites.
-- When present, they must be read according to their role semantics.
-- When absent, execution may still begin unless the topic plan or repo-level
-  workflow contract makes them conditionally required for the current stage.
-
-## Artifact Path Rules
-
-`Artifact Paths` is an executable contract and must use exact repo-visible
-paths with owner and role.
-
-Each listed artifact must include:
-
-- exact repo-visible path
-- owner
-- role
-
-Do not use vague labels such as `docs`, `skill folder`, `maybe version files`,
-or other non-executable path descriptions.
-
-If execution needs files outside the listed paths, repair the topic plan before
-continuing.
-
-If a topic uses correction artifacts, each parent artifact, correction
-artifact, and any routing-controlling `review-log` or equivalent handoff path
-must be listed explicitly.
-
-## Topic-Plan Contract Rules
-
-- `Implementation Steps` stay creator-owned; reviewer verdict logging,
-  reviewer acceptance work, and Main Agent routing work do not belong there.
-- `Reviewer Handoff` must be one machine-consumable JSON object.
-- `Post-merge / release actions` must match the topic's actual stable-library
-  and release timing.
-- If a topic declares analysis artifacts as frozen prerequisites, execution may
-  read and validate them only. Execution must not silently reopen or
-  regenerate them without a separately approved scope change.
-- Unsafe placeholders such as `TBD`, `later`, or `follow normal process` are
-  contract failures when explicit workflow decisions are required.
-
-## Reviewer Handoff Contract
-
-The repo-level reviewer handoff contract for topic-plan review is:
-
-```json
-{
-  "verdict": "approved|needs-rework",
-  "blocking_issues": [],
-  "copilot_feedback_triage": {
-    "ADDRESS": [],
-    "DISCUSS": [],
-    "SKIP": []
-  }
-}
-```
-
-Rules:
-
-- The delivered reviewer handoff must be exactly one JSON object.
-- `blocking_issues` is reserved for true contract-breaking problems.
-- `copilot_feedback_triage` may be empty, but its three arrays must still be
-  present.
-- No prose may wrap or trail the final JSON reviewer verdict.
-
-## Stable-Library Contract
-
-If the topic affects stable-library surfaces, the plan must state:
-
-- whether `README.md` changes
-- whether `VERSION` changes
-- when those changes occur
-- whether post-merge release or tagging work exists
-
-Do not defer these decisions with placeholders such as `TBD`, `later`, or
-`follow normal process`.
-
-## Fallback Rules
-
-If the local topic-plan template is absent:
-
-- `plan-creator` must fall back to the required section list in this file
-- `plan-reviewer` must review against the required section list in this file
-
-Neither skill may invent a new topic-plan shape when the template is absent.
-
-## Blocking Semantics
-
-Treat these as contract-breaking issues:
-
-- missing required sections
-- non-canonical or invalid status transitions
-- vague or drifting `Artifact Paths`
-- undeclared or mixed stable-library intent
-- non-JSON reviewer handoff
-- wrong post-merge or release timing
-- mixed role ownership
-- missing, contradictory, or insufficient frozen analysis prerequisites when a
-  topic declares them as required execution inputs
-- execution-meaning conflicts among `plan.md`, `step.md`, `review-log.md`, and
-  `summary.md`
-- conflicts between a required repo-level contract file and a topic-local truth
-  artifact
-- simulated role separation where one actor claims planner, reviewer,
-  implementer, and final-gate completion without real separation
-- placeholders where explicit contract is required
-
-`plan-creator` must stop and ask when required planning inputs are missing or
-would require guessing.
-
-`plan-reviewer` must return `needs-rework` when any contract-breaking issue is
-found in an otherwise reviewable plan.
-
-If the plan file or required shared contract sources cannot be read, stop and
-record that the review could not proceed on valid contract grounds.
-
-Execution must stop and surface the issue when a contract-breaking conflict or
-fake-separation condition is encountered. The executor must not silently choose
-the more convenient artifact or role interpretation.
-
-## Boundaries
-
-- This document does not rewrite `skills/plan-creator/**` or
-  `skills/plan-reviewer/**`.
-- This document does not authorize edits under `skills/**`,
-  `.github/skills/**`, `.codex/skills/**`, `.github/agents/**`, or
-  `.codex/agents/**`.
-- This document does not treat accepted Phase 1 planning inputs as approved
-  implementation spec.
-- Convergence, projection, runtime adaptation, `python-blueprint-review`
-  absorption, and generic `copilot-instructions-init` convergence remain
-  deferred to later bounded topics.
-
-## Authority Boundaries
-
-- Keep this contract repo-local.
-- Do not externalize it to `~/.` or cross-repo shared storage in this topic.
-- Do not let compatibility surfaces redefine this contract.
-- Do not infer authority from `.github/skills/` or `.codex/skills/` presence.
+normal/recovery records and all B0–B6R9 / R1–R19 / S1–S15 / T1–T15 / V1–V15 / Q1–Q15 artifacts are frozen
+nonrouting predecessor provenance. They have no current routing, gate, next-phase, subject, candidate-selection or
+Planner authority. Q14's sole failure is raw `git diff --name-status` lexical ordering; it is frozen provenance, not
+an instruction for S16. step-creator remains deferred.
