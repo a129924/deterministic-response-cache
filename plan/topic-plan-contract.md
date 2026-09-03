@@ -2,10 +2,11 @@
 
 ## Current correction contract
 
-B6R10 -> R20 -> S16 -> T16 -> V16 -> Q16 是唯一 current contract；current state 是 R20_REVIEW_PENDING。
-B6R10/R20 are non-subject；S16 alone modifies tests/test_observer_dispatcher_governance_contract.py and retains
-direct imports。T16/V16 是唯一 S16..V16 evidence descendants；Q16 是 committed V16 後的 evidence-only actual
-full-triple gate。B6R9/Q15 是 frozen predecessor provenance。
+`B6R13 -> R23 -> S17 -> T17 -> V17 -> Q17 -> thread-classification -> comment-resolve -> human-check` 是唯一 current
+contract；current state 是 `R23_REVIEW_PENDING`。B6R13/R23 are non-subject；S17 alone modifies the declared
+exact-fourteen runtime/template/test allowlist and retains direct imports。T17/V17 是唯一 S17 evidence descendants；Q17
+是 committed V17 後的 evidence-only actual full-triple gate。B6R12/R22/S16-Q16、B6R10/R20 and earlier are frozen
+predecessor provenance.
 
 ## Authority and required plan structure
 
@@ -20,11 +21,12 @@ Post-merge / release actions、Open Questions / Unresolved Items。Artifact Path
 
 ## Planner preflight and boundaries
 
-Planner reads only parent plan, parent step and committed approved R20. It selects candidate, phase, gate and next role;
-missing evidence is blocked, candidate conflict is human-check, and only Planner routes bounded rework. Planning approval
-never establishes execution approval. This contract grants no thread resolution, merge, release, post-merge, tag or summary.
+Planner bootstraps once, then reads only parent plan, parent step and committed approved R23. It selects candidate, phase,
+gate and one non-Planner next role; missing evidence is blocked, candidate conflict is human-check, and only Planner routes
+bounded rework. Planning approval never establishes execution approval. This contract grants no direct thread resolution,
+merge, release, post-merge, tag or summary.
 
-## B6R10 current-candidate contract
+## Frozen B6R10 current-candidate contract
 
 B6R10 admission is a non-merge, first-parent exact-eleven baseline: `AGENTS.md`, the three declared plan-reviewer
 skill files, shared workflow/contract, parent plan/spec/step, and B6R10 plan/step. Pre-admission artifacts contain no
@@ -35,14 +37,14 @@ next phase, subject or close authorization. Only a separately committed approved
 `R20_COMPLETE_S16_NEXT`, and next phase S16. Planner selects only that record and never asks Plan-Creator to refine,
 select, or self-close.
 
-S16 is the sole non-merge test subject and preserves direct imports; `importlib`, `__import__`, and `sys.modules`
+Frozen B6R10 S16 was the sole non-merge test subject and preserved direct imports; `importlib`, `__import__`, and `sys.modules`
 substitution is forbidden. It verifies committed T16/V16 blob semantics: topology/path, one identical full S16 SHA,
 T16 `passing`, and V16 `APPROVED`. Q16 is a post-V16, actual full-triple, read-only Git gate which may write only
 `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r10-actual-gate-evidence.md` as an
 evidence-only active-candidate close record. That record authorizes classification only, never PR approval or merge.
 Reviewer is an implementation verifier; Human alone performs PR review and merge.
 
-## B6R10 deterministic evidence contract
+## Frozen B6R10 deterministic evidence contract
 
 T16/V16/Q16 must each be a single JSON object. Exact key sets, nested key sets, exact paths, 40-character lowercase
 hexadecimal SHA values, enum case, parent relationships, and cross-evidence subject identity are mandatory; an omitted,
@@ -60,6 +62,32 @@ no self commit/tree/blob field, may be written only after V16 is committed, and 
 Implementer commits the unchanged record as the sole evidence-only path. Its authorization is only
 `ACTIVE_CANDIDATE_CLOSED` with classification permitted; thread resolve, Human review, merge, release, and post-merge
 are forbidden.
+
+## B6R13 current-candidate contract
+
+B6R13 admission is non-merge, first-parent, exact-eight: `AGENTS.md`, shared workflow/contract, parent plan/spec/step,
+and B6R13 plan/step. Pre-admission B6R13/R23 commit, tree, blob, HEAD and outcome facts are prohibited. R23 is the
+declared extended correction receipt, recording one candidate's committed revision/tree, all eight path/blob facts,
+first-parent admission, predecessor receipt, review basis, Copilot triage, verdict and blockers. `needs-rework` has no
+active candidate, next phase, subject or close authorization. Only separately committed unchanged approved R23 establishes
+the one active candidate, `R23_COMPLETE_S17_NEXT`, and next phase S17.
+
+S17 is the sole non-merge subject and only changes its exact fourteen allowlisted wrapper, skill/template and governance
+test paths named in the shared workflow. It retains direct imports and forbids `importlib`, `__import__`, and `sys.modules`
+substitution. Planner bootstraps once and cannot select Planner as a later next role; Plan-Creator is the only planning
+writer; Tester factual evidence includes actual exit code; Reviewer consumes same-subject passing Tester evidence;
+Explorer is read-only. Implementer is bounded and may never merge. T17/V17/Q17 use only new B6R13 evidence paths; Q17
+actual full triple permits classification only. A later independent classification, not Q17, may permit an Implementer
+to respond to and resolve one explicit addressed-and-resolvable thread.
+
+## B6R13 deterministic evidence contract
+
+T17/V17/Q17 are single JSON objects whose exact key sets, nested key sets, paths, 40-character lowercase SHA values,
+enums, parents and same-subject references fail closed. T17 records S17, actual command, actual exit code and factual
+result. V17 binds committed T17 path/blob and S17, with `APPROVED` and empty blockers. Q17 binds committed S17/T17/V17
+commit/parent/path/blob facts and actual explicit full triple/linear/range/name-status, has no Q17 self commit/tree/blob,
+and after an unchanged independent Implementer evidence-only commit authorizes only `ACTIVE_CANDIDATE_CLOSED` with
+classification permitted. It never directly authorizes comment resolution, Human review, merge, release or post-merge.
 
 ## Frozen provenance
 

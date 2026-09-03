@@ -2,10 +2,10 @@
 
 ## Current route
 
-唯一 current route 是 B6R10 -> R20 -> S16 -> T16 -> V16 -> Q16 -> thread-classification -> human-check。
-current correction 是 observer-dispatcher-governance/high/b6r10，state 是 R20_REVIEW_PENDING。B6R10 與 R20 都是
-non-subject；只有 S16 建立 implementation subject，且完整 diff 只可修改
-tests/test_observer_dispatcher_governance_contract.py。B6R9/Q15 是 frozen predecessor provenance。
+唯一 current route 是 `B6R13 -> R23 -> S17 -> T17 -> V17 -> Q17 -> thread-classification -> comment-resolve -> human-check`。
+current correction 是 `observer-dispatcher-governance/high/b6r13`，state 是 `R23_REVIEW_PENDING`。B6R13/R23 都是
+non-subject；只有 S17 建立 implementation subject，且完整 diff 只可修改 declared exact-fourteen allowlist。
+B6R12/R22/S16-Q16、B6R10/R20 及更早 records 是 frozen predecessor provenance。
 
 ## Authority and roles
 
@@ -20,7 +20,7 @@ Plan-Reviewer 只審 committed baseline；Implementer 只做 approved bounded wo
 Reviewer 只做 independent implementation verification 與 passed Q gate 後的 thread classification。`Reviewer`
 不是 Human PR reviewer。Human-only actions 是 PR review、merge、release、post-merge、tag 與 final summary。
 
-## B6R10 admission and gates
+## Frozen B6R10 admission and gates
 
 B6R10 是 non-merge、first-parent 的 exact-eleven planning baseline。admission 的 named diff 必須恰好各一次包含
 以下十一個 paths：
@@ -57,7 +57,7 @@ nonexistent、merge、wrong graph 或 widened range 一律 fail closed。Q16 只
 evidence-only close record；該 record 只授權 thread classification，永不授權 PR approval 或 merge。只有通過 Q16
 後，獨立 Reviewer 才可對每一 PR thread 做 addressed-and-resolvable classification；未明確標記者不得 resolve。
 
-## B6R10 deterministic evidence schema
+## Frozen B6R10 deterministic evidence schema
 
 所有 B6R10 T16/V16/Q16 evidence 是單一 JSON object，exact keys（含 nested object keys）是 contract；缺鍵、
 多鍵、非 40 位 lowercase hexadecimal SHA、錯誤 enum、錯誤 path/blob/parent 或 cross-record subject mismatch 都
@@ -76,6 +76,43 @@ Q16 的 top-level keys 僅為 `schema_version`、`correction_id`、`phase`、`ar
 `ACTIVE_CANDIDATE_CLOSED` 與 classification permitted，並明列 thread resolve、Human review、merge、release、
 post-merge forbidden。Q16 不得記載其自身 commit/tree/blob。Reviewer 只可在 V16 committed 後寫 Q16；獨立
 Implementer 原樣以 sole evidence-only commit 提交後，該 close record 才 active。
+
+## B6R13 admission and gates
+
+B6R13 is a non-merge, first-parent exact-eight planning baseline. The admission named diff contains exactly once:
+`AGENTS.md`, `plan/agent-handoff-workflow.md`, `plan/topic-plan-contract.md`, parent plan/spec/step, and B6R13 plan/step.
+Pre-admission artifacts contain no B6R13/R23 commit, tree, blob, HEAD, or outcome claim. R23 reviews only a committed
+clean B6R13 checkout and writes only `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r13-review-log.md`.
+It records candidate id, committed revision/tree, eight path/blob facts, first-parent admission, predecessor receipt,
+review basis, Copilot triage, verdict and blockers. `needs-rework` has no active candidate, next phase, subject or close
+authorization. Only an independent Implementer committing an unchanged approved R23 activates `R23_COMPLETE_S17_NEXT`
+with next phase S17.
+
+S17 exact allowlist is only these fourteen paths:
+
+1. `.codex/agents/planner.toml`
+2. `.codex/agents/implementer.toml`
+3. `.codex/agents/reviewer.toml`
+4. `.codex/agents/tester.toml`
+5. `.agents/skills/plan-creator/SKILL.md`
+6. `.agents/skills/plan-creator/checklist.md`
+7. `.agents/skills/plan-creator/templates/topic-plan-template.md`
+8. `.agents/skills/plan-reviewer/SKILL.md`
+9. `.agents/skills/plan-reviewer/checklist.md`
+10. `.agents/skills/plan-reviewer/reference.md`
+11. `.agents/skills/plan-reviewer/examples.md`
+12. `.agents/skills/python-implementation-workflow/SKILL.md`
+13. `.agents/skills/python-plan-authoring/templates/canonical-python-topic-plan-template.md`
+14. `tests/test_observer_dispatcher_governance_contract.py`
+
+S17 must make Planner bootstrap exactly once with no later Planner next-role, Plan-Creator the sole planning writer,
+Tester independent/factual with actual exit code, Reviewer dependent on same-subject passing Tester evidence, Implementer
+bounded and never merge, and Explorer bounded read-only. The generic/Python templates must preserve these boundaries and
+conditional release transition. Direct imports remain direct; `importlib`, `__import__`, and `sys.modules` substitution
+is forbidden. T17 and V17 are new B6R13 evidence paths and sole non-merge S17 descendants. Q17 is post-V17 actual
+full-SHA triple/read-only evidence, authorizes classification only, and never authorizes comment resolution, PR approval,
+merge, release or post-merge. Only an independent per-thread classification may mark an exact thread
+`addressed-and-resolvable`; only then may an Implementer leave the bounded reply and resolve it.
 
 ## Frozen provenance
 
