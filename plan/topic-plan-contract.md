@@ -1,112 +1,53 @@
 # Topic Plan Contract
 
-> **B6R6 current-contract override:** only `B6R6 -> R16 -> S14 -> T14 -> V14 -> Q14` is current. B6R6/R16 are
-> non-subject; S14 alone modifies `tests/test_observer_dispatcher_governance_contract.py`, preserves direct imports,
-> and asserts full explicit `ODG_S14_SHA`/`ODG_T14_SHA`/`ODG_V14_SHA` actual graph semantics. T14/V14 are the only
-> exact `S14..V14` evidence descendants. Q14 is post-V14 read-only full-triple gate. B6R5 and all earlier routes are
-> frozen nonrouting provenance; `step-creator` stays deferred.
+## Current correction contract
 
-> **B6R5 current-contract override:** 下列 B6R–B6R4、R14、S12 與所有較早 contract 文字均屬 frozen
-> nonrouting provenance。唯一 current contract 是 `B6R5 -> R15 -> S13 -> T13 -> V13 -> Q13`。B6R5 admission
-> 只含 shared workflow/contract、parent plan/spec/step 與 B6R5 plan/step 七 paths，且 pre-commit 不含
-> B6R5 SHA/blob SHA/`HEAD`/review outcome。R15 寫 B6R5 review-log；B6R5/R15 都非 subject。S13 only 改 test
-> path 並保留 direct imports。T13 記錄 passing full suite 與 one no-environment `skip`/`unverified`，不宣稱
-> complete triple。V13 只證明 structural `S13 -> T13 -> V13` 與 `S13..T13`。只有 committed V13 後的 Q13
-> 能用 complete explicit full SHA triple 與 real subprocess Git 執行 non-skipped actual gate；所有缺失或
-> 無效輸入 fail closed，Q13 才是 classification/resolution boundary。
+`B6R7 -> R17 -> S14 -> T14 -> V14 -> Q14` 是唯一 current contract；current state 是
+`B6R7_REVIEW_PENDING`。B6R7/R17 are non-subject；S14 alone modifies
+`tests/test_observer_dispatcher_governance_contract.py` and retains direct imports。T14/V14 是唯一
+`S14..V14` evidence descendants；Q14 是 committed V14 後的 read-only actual full-triple gate。
 
-## Purpose
+## Authority and required plan structure
 
-定義 repo-visible topic plan 的 authority、required structure、planning evidence 與 preflight contract。
+Authority ordering 是 `AGENTS.md`、`plan/agent-handoff-workflow.md`、本文件、parent plan、parent step、current
+exact review record、local planning skill。 `GOAL.md` 是 project mission，不是 topic/phase authority；chat、branch、
+summary 與 `.github/agents/**` 不可補推 planning evidence，`.github/agents/**` 只作 frozen provenance。
 
-## Authority ordering
+每個 topic plan 必須依 canonical order 包含：`Goal / Outcome`、`Scope`、`Locked Decisions`、
+`Boundaries / Exclusions`、`Status / Allowed Transitions`、`Artifact Paths`、`Implementation Steps`、
+`Validation / Acceptance Checks`、`Reviewer Handoff`、`Post-merge / release actions`、
+`Open Questions / Unresolved Items`。Artifact Paths 是 executable contract：每個 path 都要有 exact path、write
+owner、decision authority 與 role；unlisted path 必須停止並返回 Planner。
 
-1. `AGENTS.md`
-2. `plan/agent-handoff-workflow.md`
-3. 本文件
-4. `plan/<topic>/<topic>.plan.md`
-5. `plan/<topic>/<topic>.step.md`
-6. current correction route 明定的 exact review path
-7. local planning skill guidance
+## B6R7 review record contract
 
-`GOAL.md` 是 project mission，非 topic / phase authority。chat、branch、summary 與
-`.github/agents/**` 不可補推 planning evidence；`.github/agents/**` 僅為 frozen provenance。
+B6R7 admission 是 non-merge first-parent exact-seven baseline，seven paths 是 shared workflow/shared contract、
+parent plan/spec/step、B6R7 plan/step。pre-admission planning artifacts 不得嵌入 B6R7 SHA、blob SHA、`HEAD` 或
+review outcome。Independent Plan-Reviewer 只可在 B6R7 committed clean checkout 寫 R17；R17 的 exact schema
+如下，所有 seven `reviewed_artifacts` entries 必須存在且各自對應 admission blob：
 
-## Required topic-plan sections
+```json
+{"schema_version":"observer-dispatcher-governance.correction-b6r7-plan-review.v1","correction_id":"observer-dispatcher-governance/high/b6r7","review_kind":"correction-b6r7-plan","reviewed_commit_sha":"<full B6R7 SHA>","reviewed_tree_sha":"<full B6R7 tree SHA>","reviewed_artifacts":[{"path":"<one exact B6R7 planning path>","blob_sha":"<that path blob SHA>"}],"first_parent_admission":{"commit_sha":"<full B6R7 SHA>","parent_sha":"<full first-parent SHA>","non_merge":true,"exact_declared_paths":true,"name_status":["<one exact status-and-path entry per declared path>"]},"review_basis":"independent clean-checkout tree, seven-blob, and first-parent admission review","copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"verdict":"approved|needs-rework","blocking_issues":[],"timestamp":"<RFC 3339 timestamp>"}
+```
 
-每個 topic plan 依 canonical order 包含：`Goal / Outcome`、`Scope`、`Locked Decisions`、
-`Boundaries / Exclusions`、`Status / Allowed Transitions`、`Artifact Paths`、
-`Implementation Steps`、`Validation / Acceptance Checks`、`Reviewer Handoff`、
-`Post-merge / release actions`、`Open Questions / Unresolved Items`。非 stable-library topic 必須明示
-non-stable intent。
+The `reviewed_commit_sha`/`reviewed_tree_sha`/seven blobs/admission fields are post-admission facts only; no
+pre-admission artifact may supply them. An approved R17 is separately committed unchanged. B6R7/R17 never set
+`implementation_subject_sha`.
+
+Only approved R17 permits S14. S14 has one allowed implementation path and must reject import substitution.
+T14 and V14 have the exact B6R7 evidence paths declared by the parent plan. V14 must identify the same S14 and
+passing T14, prove non-merge `S14 -> T14 -> V14`, and prove the named `S14..V14` range has exactly those two
+evidence paths. Q14 uses full explicit SHA input and real subprocess Git only; no environment is skip/unverified,
+but partial/invalid/symbolic/nonexistent/merge/wrong-graph/range input fails closed.
+
+## Planner preflight and boundaries
+
+Planner reads only parent plan, parent step and approved R17. It selects candidate, phase, gate and next role;
+missing evidence is `blocked`, candidate conflict is `human-check`, and only Planner routes bounded rework. Planning
+approval never establishes execution approval. This contract grants no thread resolution, merge, release,
+post-merge, tag or summary action.
 
 ## Frozen provenance
 
-`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S12、T1–T12、V1–V12、Q7–Q12，及所有較早
-correction artifacts（包含 B6R4/R14/S12）是 immutable historical provenance；只作追溯，排除於 B6R5 route。`step-creator`
-work 維持 deferred。
-
-## Frozen B6R correction contract
-
-B6R 是唯一 non-subject、non-merge seven-path planning baseline。其 named first-parent diff 必須恰好含：
-
-1. `plan/agent-handoff-workflow.md`
-2. `plan/topic-plan-contract.md`
-3. `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md`
-4. `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md`
-5. `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md`
-6. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-plan.md`
-7. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-step.md`
-
-Before admission, B6R planning artifacts contain no B6R SHA/blob SHA/`HEAD`/review outcome. Independent
-Plan-Reviewer clean-checkout-reviews every B6R blob and writes only R11 at
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-review-log.md`.
-Independent Implementer separately commits unchanged approved R11. B6R/R11 never create
-`implementation_subject_sha`. R11 records each reviewed artifact/blob and actual first-parent exact-seven
-admission result.
-
-```json
-{"schema_version":"observer-dispatcher-governance.correction-b6r-plan-review.v1","correction_id":"observer-dispatcher-governance/high/b6r","reviewed_commit_sha":"<B6R SHA>","reviewed_artifacts":[{"path":"<one exact B6R planning path>","blob_sha":"<B6R blob SHA>"}],"first_parent_admission":{"non_merge":true,"exact_declared_paths":true,"name_status":"<exact seven path entries>"},"review_basis":"independent clean-checkout fields and first-parent seven-blob review","verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"timestamp":"<RFC 3339 timestamp>"}
-```
-
-Only approved R11 permits S9, the only non-merge implementation subject. S9 changes only
-`tests/test_observer_dispatcher_governance_contract.py`, retains direct imports, and rejects `importlib`,
-`__import__`, and `sys.modules` substitution. Its actual graph assertion uses only complete explicit
-`ODG_S9_SHA`/`ODG_T9_SHA`/`ODG_V9_SHA` plus real subprocess `git rev-parse`, `git rev-list`, and
-`git diff --name-status`. All absent values are an explicit `skip`/`unverified`; partial/invalid/`HEAD`/
-nonexistent/merge/wrong-parent-or-graph/multi-path input fails closed.
-
-T9 then V9 are S9's only linear non-merge evidence-only descendants. Named `git diff --name-status S9..V9`
-contains exactly:
-
-1. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-tester-evidence.md`
-2. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-implementation-review-log.md`
-
-```json
-{"schema_version":"observer-dispatcher-governance.correction-b6r-tester-evidence.v1","correction_id":"observer-dispatcher-governance/high/b6r","actor":"Tester","implementation_subject_sha":"<S9 SHA>","subject_verification":{"expected_sha":"<S9 SHA>","observed_sha":"<S9 SHA>","command":"<exact command>","result":"passing|failing"},"actual_graph_assertion":{"environment":"complete-real-triple","result":"passing|failing","skipped":false},"commands":[{"command":"<exact command>","exit_code":0,"result":"passing|failing"}],"verdict":"passing|failing","timestamp":"<RFC 3339 timestamp>"}
-```
-
-```json
-{"schema_version":"observer-dispatcher-governance.correction-b6r-implementation-review.v1","correction_id":"observer-dispatcher-governance/high/b6r","review_kind":"correction-b6r-implementation","implementation_subject_sha":"<S9 SHA>","review_target_commit_sha":"<pre-existing T9 SHA>","tester_evidence":{"path":"plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-tester-evidence.md","revision":"<T9 SHA>","implementation_subject_sha":"<S9 SHA>","verdict":"passing"},"reviewed_artifacts":[{"path":"tests/test_observer_dispatcher_governance_contract.py","revision":"<S9 SHA>"}],"review_basis":"independent implementation review with named actual-SHA graph queries","verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"timestamp":"<RFC 3339 timestamp>"}
-```
-
-V9 is authored before its own commit; post-commit validation independently identifies V9 and verifies named
-actual-SHA non-merge `S9 -> T9 -> V9` with the exact range. Q9 uses committed full V9 SHA only; it is
-read-only, writes no artifact and has no lifecycle or thread authority.
-
-## Planner preflight
-
-**B6R6 schema/matrix:** R16 must record schema/correction id, committed tree and per-path blob facts, first-parent
-exact-seven admission, verdict, blockers, triage, timestamp. T14 records same-subject/full-suite/no-env-or-complete
-actual-graph commands and verdict. V14 records same subject, T14 result/revision, reviewed test artifact, non-merge
-topology/exact range, verdict, blockers, triage, timestamp. Actual revisions are written only in post-admission evidence.
-
-Planner reads only current parent plan, parent step and exact current approved review record. It selects
-candidate, phase, gate and next role. Missing evidence is `blocked`; multiple candidates or conflict is
-`human-check`; only Planner routes bounded rework. Planning approval never sets execution status to `approved`.
-
-## Artifact path rules and boundaries
-
-`Artifact Paths` are executable contracts: every artifact has exact repo-visible path, write owner, decision
-authority and role. Unlisted paths stop and return to Planner. This document grants no PR thread action,
-merge, post-merge, release, tag or summary.
+normal/recovery records and all B0–B6R6 / R1–R16 / S1–S13 / T1–T13 / V1–V13 / Q1–Q13 artifacts are frozen
+nonrouting provenance. `step-creator` remains deferred.

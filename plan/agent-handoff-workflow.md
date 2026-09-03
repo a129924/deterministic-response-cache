@@ -1,97 +1,65 @@
 # Agent handoff workflow
 
-> **B6R6 current-route override:** `B6R6 -> R16 -> S14 -> T14 -> V14 -> Q14 -> comment-classification/human-check`
-> 是唯一 current route。B6R6/R16 non-subject；only S14 establishes the subject and only changes
-> `tests/test_observer_dispatcher_governance_contract.py` while retaining direct imports. T14 truthfully records
-> same-S14 passing full suite plus no-environment actual graph skip/unverified; V14 proves structural non-merge
-> `S14 -> T14 -> V14` and exact `S14..V14` two-evidence range. Q14 is post-committed-V14, read-only, and runs the
-> sole non-skipped actual full explicit `ODG_S14_SHA`/`ODG_T14_SHA`/`ODG_V14_SHA` subprocess Git gate. All earlier
-> normal/recovery, B0–B6, B6R–B6R5, R1–R15, S1–S13, T1–T13, V1–V13, Q1–Q13 text is concise frozen nonrouting
-> provenance only; `step-creator` remains deferred. Partial/invalid/symbolic/nonexistent/merge/wrong graph/range
-> actual input fails closed; only a passed Q14 permits independent per-thread `addressed-and-resolvable` classification.
+## Current route
 
-> **B6R5 current-route override:** 本文件其餘 normal/recovery、B0–B6、B6R–B6R4、R14、S12 與所有較早
-> route 文字均為 frozen nonrouting provenance，不得作 current authority。唯一 current route 是
-> `B6R5 -> R15 -> S13 -> T13 -> V13 -> Q13 -> comment-classification/human-check`。B6R5/R15 均為
-> non-subject；S13 是唯一 subject，且只可改 `tests/test_observer_dispatcher_governance_contract.py` 並保留
-> direct imports。T13 truthful 記錄 passing full suite 與 one no-environment actual-graph
-> `skip`/`unverified`，不得宣稱 complete triple。V13 只驗證 exact structural non-merge
-> `S13 -> T13 -> V13` 及 `S13..T13` evidence range。Q13 僅在 V13 committed 後以 complete explicit full
-> `ODG_S13_SHA`/`ODG_T13_SHA`/`ODG_V13_SHA` 和 real subprocess Git 做唯一 non-skipped actual gate；
-> absent/partial/invalid/`HEAD`/merge/wrong graph/range 均 fail closed。Q13 後獨立 Reviewer 逐 thread
-> `addressed-and-resolvable` classification 才可允許 resolution。
+唯一 current route 是 `B6R7 -> R17 -> S14 -> T14 -> V14 -> Q14 -> comment-classification/human-check`。
+current correction 是 `observer-dispatcher-governance/high/b6r7`，state 是
+`B6R7_REVIEW_PENDING`。B6R7 與 R17 都是 non-subject；只有 S14 建立 implementation subject，且完整
+diff 只可修改 `tests/test_observer_dispatcher_governance_contract.py`。
 
-## Purpose
+## Authority and roles
 
-定義 repo-visible topic workflow、角色權責、status transition 與 human boundary。本文件不取代
-`AGENTS.md`、`plan/topic-plan-contract.md` 或個別 topic plan。
+Authority ordering 是 `AGENTS.md`、本文件、`plan/topic-plan-contract.md`、parent plan、parent step、current
+exact review record。 `GOAL.md` 只描述 repository mission；chat、branch、summary 與 `.github/agents/**` 都不是
+routing authority，後者僅為 frozen provenance。
 
-## Authority and role separation
+Observer 只讀盤點、派遣 Planner-selected role 與彙整 verdict。Planner 是 route/phase/gate 唯一 authority，
+不寫 artifact。Plan-Creator 只寫 declared planning artifact；Plan-Reviewer 只審 committed baseline；
+Implementer 只做 approved bounded work；Tester 只寫 factual evidence；Reviewer 只做 independent
+implementation review 與 thread classification。Human-only actions 是 review、merge、release、post-merge、tag
+與 final summary。
 
-Authority ordering 是 `AGENTS.md`、本文件、`plan/topic-plan-contract.md`、parent plan、parent step、
-current exact review record。`GOAL.md` 僅描述 repository mission；chat、branch、summary 與
-`.github/agents/**` 不可作 routing authority；`.github/agents/**` 是 frozen provenance。
+## B6R7 admission and gates
 
-Observer 只讀盤點、派遣 Planner-selected role 與彙整 verdict；不得改檔、commit、push、gate 計算、
-thread triage、PR 或 merge。Planner 決定 candidate/phase/gate/next role，但不寫 artifact。Plan-Creator
-只依 locked direction 寫 planning artifact；Plan-Reviewer 獨立審 committed baseline；Implementer 只作
-approved bounded work；Tester 只寫 factual evidence；Reviewer 獨立 review/classify comments。Human-only
-actions 為 human review、merge、release、post-merge、tagging 與 final summary。
-
-## Frozen provenance
-
-`b900366`、normal/recovery records、B0–B6（含 R8/R9/R10）、S1–S12、T1–T12、V1–V12、Q7–Q12，及所有較早
-correction artifacts（包含 B6R4/R14/S12）均為 immutable historical provenance；僅保留追溯用途，排除於 B6R5 route。
-`step-creator` work 維持 deferred。
-
-## Frozen B6R historical route
-
-`B6R -> R11 -> S9 -> T9 -> V9 -> Q9 -> comment-classification/human-check` is frozen historical provenance.
-
-B6R 是 non-subject、non-merge 的七-path planning baseline。其 first-parent named diff 必須只含以下
-paths，各一次：
+B6R7 是 non-merge、first-parent 的 exact-seven planning baseline。admission 的 named diff 必須恰好各一次
+包含以下七個 paths：
 
 1. `plan/agent-handoff-workflow.md`
 2. `plan/topic-plan-contract.md`
 3. `plan/observer-dispatcher-governance/observer-dispatcher-governance.plan.md`
 4. `plan/observer-dispatcher-governance/observer-dispatcher-governance.spec.md`
 5. `plan/observer-dispatcher-governance/observer-dispatcher-governance.step.md`
-6. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-plan.md`
-7. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-step.md`
+6. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r7-plan.md`
+7. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r7-step.md`
 
-Pre-commit B6R planning artifacts 不得嵌入 B6R SHA、blob SHA、`HEAD` 或 review outcome。Independent
-Plan-Reviewer 只在 committed B6R clean checkout 審全部七 blobs，並寫唯一 R11：
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-review-log.md`。
-R11 必須記錄 reviewed commit、每一 reviewed artifact 的 blob revision，以及 first-parent exact-seven
-path result。Independent Implementer 必須另以 evidence-only commit 提交 unchanged approved R11。B6R/R11 都不得建立
+R17 只在 committed B6R7 clean checkout 審上述七個 blob、reviewed tree 與 first-parent admission，並只寫
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r7-review-log.md`。approved R17
+必須由 Independent Implementer 以單獨 evidence-only commit 原樣提交；B6R7/R17 均不得建立
 `implementation_subject_sha`。
 
-只有 approved R11 可以開始 one non-merge S9；S9 complete diff 只可修改
-`tests/test_observer_dispatcher_governance_contract.py`。Direct imports 維持 mandatory，禁止 `importlib`、
-`__import__` 與 `sys.modules` substitution。S9 的 actual Git assertion 只可使用完整 explicit
-`ODG_S9_SHA`/`ODG_T9_SHA`/`ODG_V9_SHA` triple 和真實 subprocess `git rev-parse`、`git rev-list`、
-`git diff --name-status`。三值全 absent 時必須明確 `skip`/`unverified`；部分值、`HEAD`、不存在 revision、
-merge、wrong parent/graph 或 multi-path range 都必須 fail closed。
+S14 是唯一 non-merge subject，保留測試的 direct imports；不得以 `importlib`、`__import__` 或 `sys.modules`
+substitution 取代既有測試行為。T14、V14 是唯一 linear non-merge S14 descendants，且 named
+`git diff --name-status S14..V14` 只能列：
 
-T9、V9 是唯一 linear、non-merge 的 S9 descendants。Tester 只寫
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-tester-evidence.md`；
-Reviewer 只寫
-`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r-implementation-review-log.md`。
-Named `git diff --name-status S9..V9` 必須只列這兩個 paths。T9 必須用 complete real triple 執行
-actual assertion 並記錄 non-skipped passing result；V9 在自身 commit 前撰寫且僅在 same-S9 passing T9 後
-撰寫。
+1. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r7-tester-evidence.md`
+2. `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r7-implementation-review-log.md`
 
-Q9 只可在 V9 commit 後，以 committed full V9 SHA 執行 read-only actual query。Q9 不得建立 artifact、
-不得使用或推論 `HEAD`、不得 routing lifecycle、不得 resolve PR threads。
+T14 必須如實記錄同一 S14 的完整 suite 結果。V14 只有在 passing T14 後才能審核 S14 與 topology。
+Q14 只能在 V14 committed 後執行，為 read-only、no-artifact、no-lifecycle/no-thread-authority 的 actual
+Git gate：只接受完整 explicit `ODG_S14_SHA`、`ODG_T14_SHA`、`ODG_V14_SHA`，並以 real subprocess
+`git rev-parse`、`git rev-list` 與 `git diff --name-status` 驗證。三者皆 absent 是 explicit
+no-environment `skip`/`unverified`；partial、symbolic/`HEAD`、nonexistent、merge、wrong graph 或 widened range
+一律 fail closed。通過 Q14 後，才可由獨立 Reviewer 對每一 PR thread 做
+`addressed-and-resolvable` classification；未明確標記者不得 resolve。
 
-## Gates and human boundary
+## Frozen provenance
 
-**B6R6 admission:** non-merge first-parent exact-seven paths are this workflow, shared contract, parent plan/spec/step,
-and B6R6 plan/step. Creator and admission are complete; current state is `B6R6_REVIEW_PENDING`; R16 onward is pending.
-R16 clean-checkout reviews committed tree/blob/path facts and writes only B6R6 review log. B6R6/R16 never create subject.
-S14 is test-only; T14 and V14 write only their declared evidence paths. Q14 has no written artifact/thread authority.
+normal/recovery records、B0–B6、B6R–B6R6、R1–R16、S1–S13、T1–T13、V1–V13、Q1–Q13 與所有較早 correction
+artifacts 都是 immutable frozen nonrouting provenance；不得作 B6R7 routing、subject 或 gate authority。
+`step-creator` 仍 deferred。
 
-缺少 required evidence 為 `blocked`；candidate conflict 為 `human-check`；contract drift 保守回到
-Planner。Ready for review 不是 merge approval。comment classification 僅能由獨立 Reviewer 在 Q13 後執行；
-thread resolution 需要該 Reviewer 對每一 thread 明確標記 `addressed-and-resolvable`。merge、release、
-post-merge 與 final summary 均為 Human boundary。
+## Human boundary
+
+缺 required evidence 是 `blocked`；candidate conflict 是 `human-check`；contract drift 保守回 Planner。
+Ready for review 不等於 merge approval。merge、release、post-merge、tag 與 final summary 一律停在 Human
+boundary。
