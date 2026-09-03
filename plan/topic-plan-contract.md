@@ -2,10 +2,10 @@
 
 ## Current correction contract
 
-B6R9 -> R19 -> S15 -> T15 -> V15 -> Q15 是唯一 current contract；current state 是 R19_REVIEW_PENDING。
-B6R9/R19 are non-subject；S15 alone modifies tests/test_observer_dispatcher_governance_contract.py and retains
-direct imports。T15/V15 是唯一 S15..V15 evidence descendants；Q15 是 committed V15 後的 read-only actual
-full-triple gate。
+B6R10 -> R20 -> S16 -> T16 -> V16 -> Q16 是唯一 current contract；current state 是 R20_REVIEW_PENDING。
+B6R10/R20 are non-subject；S16 alone modifies tests/test_observer_dispatcher_governance_contract.py and retains
+direct imports。T16/V16 是唯一 S16..V16 evidence descendants；Q16 是 committed V16 後的 evidence-only actual
+full-triple gate。B6R9/Q15 是 frozen predecessor provenance。
 
 ## Authority and required plan structure
 
@@ -18,38 +18,52 @@ Status / Allowed Transitions、Artifact Paths、Implementation Steps、Validatio
 Post-merge / release actions、Open Questions / Unresolved Items。Artifact Paths 是 executable contract：每個 path
 都要有 exact path、write owner、decision authority 與 role；unlisted path 必須停止並返回 Planner。
 
-## B6R9 review record contract
-
-B6R9 admission 是 non-merge first-parent exact-seven baseline，seven paths 是 shared workflow/shared contract、
-parent plan/spec/step、B6R9 plan/step。pre-admission planning artifacts 不得嵌入 B6R9/R19 SHA、tree SHA、blob SHA、
-HEAD 或 review outcome。Independent Plan-Reviewer 只可在 B6R9 committed clean checkout 寫 R19；R19 的 exact
-schema 如下，所有 seven reviewed_artifacts entries 必須存在且各自對應 admission blob：
-
-~~~json
-{"schema_version":"observer-dispatcher-governance.correction-b6r9-plan-review.v1","correction_id":"observer-dispatcher-governance/high/b6r9","review_kind":"correction-b6r9-plan","reviewed_commit_sha":"<full B6R9 SHA>","reviewed_tree_sha":"<full B6R9 tree SHA>","reviewed_artifacts":[{"path":"<one exact B6R9 planning path>","blob_sha":"<that path blob SHA>"}],"first_parent_admission":{"commit_sha":"<full B6R9 SHA>","parent_sha":"<full first-parent SHA>","non_merge":true,"exact_declared_paths":true,"name_status":["<one exact status-and-path entry per declared path>"]},"next_phase":"S15","effective_committed_state":"R19_COMPLETE_S15_NEXT","review_basis":"independent clean-checkout tree, seven-blob, and first-parent admission review","copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]},"verdict":"approved|needs-rework","blocking_issues":[],"timestamp":"<RFC 3339 timestamp>"}
-~~~
-
-These SHA/tree/blob/admission fields are post-admission facts only. An approved R19 is separately committed unchanged.
-B6R9/R19 never set implementation_subject_sha; approved R19 records R19_COMPLETE_S15_NEXT and permits only S15.
-
-Only approved R19 permits S15. S15 has one allowed implementation path; direct imports remain required and
-importlib/__import__/sys.modules substitution is forbidden. S15 corrects only the expected structured tuples for raw
-name-status lexical ordering: B6R9 implementation review-log precedes B6R9 tester-evidence. It retains actual-Git
-full-triple and fail-closed requirements.
-
-T15/V15 have the exact B6R9 evidence paths declared by the parent plan. V15 must identify the same S15 and passing
-T15, prove non-merge S15 -> T15 -> V15, and prove named S15..V15 has exactly those two evidence paths in raw Git
-lexical tuple order: review-log before tester-evidence. Q15 uses full explicit SHA input and real subprocess Git only;
-no environment is skip/unverified, but partial/invalid/symbolic/nonexistent/merge/wrong-graph/range input fails closed.
-
 ## Planner preflight and boundaries
 
-Planner reads only parent plan, parent step and approved R19. It selects candidate, phase, gate and next role; missing
-evidence is blocked, candidate conflict is human-check, and only Planner routes bounded rework. Planning approval never
-establishes execution approval. This contract grants no thread resolution, merge, release, post-merge, tag or summary.
+Planner reads only parent plan, parent step and committed approved R20. It selects candidate, phase, gate and next role;
+missing evidence is blocked, candidate conflict is human-check, and only Planner routes bounded rework. Planning approval
+never establishes execution approval. This contract grants no thread resolution, merge, release, post-merge, tag or summary.
+
+## B6R10 current-candidate contract
+
+B6R10 admission is a non-merge, first-parent exact-eleven baseline: `AGENTS.md`, the three declared plan-reviewer
+skill files, shared workflow/contract, parent plan/spec/step, and B6R10 plan/step. Pre-admission artifacts contain no
+B6R10/R20 SHA, tree, blob, HEAD, or review outcome. R20 is the declared extended JSON correction record, not the
+generic three-field verdict. It records candidate id, committed revision/tree, all eleven path/blob entries,
+first-parent admission, review basis, verdict, blockers and Copilot triage. `needs-rework` has no active candidate,
+next phase, subject or close authorization. Only a separately committed approved R20 has exactly one active candidate,
+`R20_COMPLETE_S16_NEXT`, and next phase S16. Planner selects only that record and never asks Plan-Creator to refine,
+select, or self-close.
+
+S16 is the sole non-merge test subject and preserves direct imports; `importlib`, `__import__`, and `sys.modules`
+substitution is forbidden. It verifies committed T16/V16 blob semantics: topology/path, one identical full S16 SHA,
+T16 `passing`, and V16 `APPROVED`. Q16 is a post-V16, actual full-triple, read-only Git gate which may write only
+`plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r10-actual-gate-evidence.md` as an
+evidence-only active-candidate close record. That record authorizes classification only, never PR approval or merge.
+Reviewer is an implementation verifier; Human alone performs PR review and merge.
+
+## B6R10 deterministic evidence contract
+
+T16/V16/Q16 must each be a single JSON object. Exact key sets, nested key sets, exact paths, 40-character lowercase
+hexadecimal SHA values, enum case, parent relationships, and cross-evidence subject identity are mandatory; an omitted,
+extra, malformed, abbreviated, non-hex, or inconsistent value fails closed. T16 has exactly
+`schema_version`, `correction_id`, `phase`, `subject`, `test_run`, `timestamp`; subject has exactly
+`phase:S16`, `commit_sha`, `test_path`, while test_run has exactly `command`, `status:passing`, `exit_code:0`.
+
+V16 has exactly `schema_version`, `correction_id`, `phase`, `subject`, `tester_evidence`, `verdict`,
+`blocking_issues`, `timestamp`. It binds S16 plus committed T16 `commit_sha`, `path`, `blob_sha`, subject and
+`status:passing`; it requires `verdict:APPROVED` and `blocking_issues:[]`. Q16 has exactly `schema_version`,
+`correction_id`, `phase`, `artifacts`, `parsed_claims`, `actual_git`, `close_authorization`, `timestamp`. Its S16/T16/V16
+artifact entries bind committed commit/parent/path/blob facts; its parsed claims bind the same S16, `passing`, and
+`APPROVED`; its actual Git record binds the full explicit triple, linear status, `S16..V16`, and name-status. Q16 has
+no self commit/tree/blob field, may be written only after V16 is committed, and becomes active only after an independent
+Implementer commits the unchanged record as the sole evidence-only path. Its authorization is only
+`ACTIVE_CANDIDATE_CLOSED` with classification permitted; thread resolve, Human review, merge, release, and post-merge
+are forbidden.
 
 ## Frozen provenance
 
-normal/recovery records and all B0–B6R8 / R1–R18 / S1–S14 / T1–T14 / V1–V14 / Q1–Q14 artifacts are frozen
-nonrouting provenance. Q14's sole failure is raw git diff --name-status lexical ordering, to be addressed only by S15.
-step-creator remains deferred.
+normal/recovery records and all B0–B6R9 / R1–R19 / S1–S15 / T1–T15 / V1–V15 / Q1–Q15 artifacts are frozen
+nonrouting predecessor provenance. They have no current routing, gate, next-phase, subject, candidate-selection or
+Planner authority. Q14's sole failure is raw `git diff --name-status` lexical ordering; it is frozen provenance, not
+an instruction for S16. step-creator remains deferred.

@@ -22,6 +22,7 @@ inputs:
   - "only the declared review-input allowlist and any Copilot feedback explicitly recorded in it"
 outputs:
   - "exactly one machine-consumable JSON object with no trailing prose"
+  - "a normal-plan fixed verdict object, or the route-declared extended correction record"
   - "verdict set to approved or needs-rework"
   - "blocking_issues list with issue, file, and fix for each contract-breaking problem"
   - "copilot_feedback_triage with ADDRESS, DISCUSS, and SKIP arrays"
@@ -61,19 +62,21 @@ Do not use this skill when:
 4. Treat placeholders such as `TBD`, `later`, or `follow normal process` as contract failures when the workflow requires explicit decisions.
 5. Treat missing sections, invalid transitions, vague artifact paths, undeclared stable intent, wrong timing, non-JSON reviewer handoff, and role-boundary confusion as blocking issues.
 6. Keep the review focused on contract-breaking issues rather than wording polish or stylistic preferences that do not change workflow meaning.
-7. Return exactly one JSON object with this fixed schema:
+7. For a normal topic plan, return exactly one JSON object with this fixed schema:
    - `verdict`: `approved` or `needs-rework`
    - `blocking_issues[]`: objects with `issue`, `file`, and `fix`
    - `copilot_feedback_triage.ADDRESS[]`: objects with `comment`, `location`, and `why`
    - `copilot_feedback_triage.DISCUSS[]`: objects with `comment`, `optional`, and `why`
    - `copilot_feedback_triage.SKIP[]`: objects with `comment` and `why`
+8. For a declared correction route, return exactly one JSON object using that route's declared extended correction-record schema instead. It must retain `verdict`, `blocking_issues`, and `copilot_feedback_triage`, record only post-commit facts, and identify the candidate commit/tree/artifact blobs and first-parent admission. A `needs-rework` record must set no active candidate, no next phase, and no close authorization. Only a separately committed `approved` record may name the single active candidate and next phase.
+9. For B6R10 specifically, reject a plan unless it declares deterministic, exact-key JSON schemas for later evidence: T16 binds only S16's 40-character lowercase hexadecimal commit SHA and its one test path with a passing zero-exit test run; V16 binds S16 and committed T16 commit/path/blob/subject/status with `APPROVED` and empty blockers; Q16 binds committed S16/T16/V16 commit/parent/path/blob facts, parsed same-subject claims, actual Git triple/linear/range/name-status, and a classification-only close authorization. Reject any route that permits Q16 before committed V16, gives Q16 self commit/tree/blob facts, allows evidence mutation after review, or grants thread resolution, Human review, merge, release, or post-merge authority.
 
 # Examples
 - **Positive**: Review `plan/python-docstrings/python-docstrings.plan.md` after the plan exists, reject no contract-breaking issues, and return one JSON object that confirms non-stable intent, exact artifact paths, canonical transitions, and machine-consumable reviewer handoff.
 - **Negative**: Use this skill to draft the topic plan, approve a plan that says `README/VERSION maybe later`, or return Markdown prose instead of the required JSON verdict.
 
 # Outputs
-- exactly one machine-consumable JSON object and no trailing prose
+- exactly one machine-consumable JSON object and no trailing prose; use the declared extended correction-record schema when the reviewed route declares one
 - `verdict`: `approved` or `needs-rework`
 - `blocking_issues`: only true contract-breaking problems; each item contains `issue`, `file`, and `fix`
 - `copilot_feedback_triage.ADDRESS`: direct required feedback items; each item contains `comment`, `location`, and `why`
@@ -98,6 +101,9 @@ Do not use this skill when:
 - planning actor, creator, reviewer, and Main Agent responsibilities are blended together
 - correction review accepts undeclared inputs or derives authority from chat, branch, summary,
   `GOAL.md`, or `.github/agents/**`
+- a B6R10 evidence schema permits omitted or extra keys, abbreviated/non-hex SHA values, non-passing
+  T16 evidence, a non-`APPROVED` V16 verdict, non-empty V16 blockers, Q16 self-reference, or a close
+  authorization broader than per-thread classification
 
 # Common Rationalizations
 - "The reviewer can infer the missing contract later."
@@ -110,7 +116,7 @@ Do not use this skill when:
 - Do not invent a second topic-plan schema that conflicts with `plan-creator` or the canonical workflow.
 - Do not approve a plan that still has contract-breaking ambiguity.
 - Do not turn this skill into implementation review, branch preparation, or publish execution.
-- Do not emit anything except the single JSON verdict object.
+- Do not emit anything except the single JSON verdict object. For a declared correction route, do not substitute the normal fixed generic schema for that route's declared extended record.
 
 # Validation
 
@@ -124,7 +130,7 @@ Do not use this skill when:
 - canonical status model and transitions are used without invention
 - artifact paths are exact, bounded, and repo-visible
 - stable-library intent is explicitly declared or explicitly absent
-- reviewer handoff is exactly one JSON object with no trailing prose
+- reviewer handoff is exactly one JSON object with no trailing prose, using the declared correction schema where applicable
 - post-merge timing is coherent with the topic scope
 
 ## On Soft Fail

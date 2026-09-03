@@ -82,3 +82,48 @@ Return exactly one JSON object with:
   - `SKIP`
 
 Keep all reasoning inside structured fields. Do not append prose before or after the JSON object.
+
+## Committed candidate and correction-record rule
+
+A correction route may use an extended correction-review JSON record instead of the normal generic
+plan-review verdict. Its route declaration is the schema authority. The record retains verdict,
+blockers, and Copilot triage, and records only post-commit candidate identity: candidate id,
+committed revision/tree, every declared planning path/blob, first-parent/non-merge admission, and
+review basis.
+
+`approved` may name exactly one active candidate and a next phase, but takes routing effect only
+after the unchanged record itself is committed. `needs-rework` is a blocker: it must name no active
+candidate, next phase, implementation subject, close authorization, or self-closing transition.
+Planner may select only a committed explicit approved candidate record; it must not infer from an
+author worktree or direct Plan-Creator to refine, select, or close a candidate.
+
+An actual-Q gate may write a separately declared evidence-only active-candidate close record only
+after it verifies committed T/V evidence blobs semantically refer to the same immutable subject,
+Tester says that subject passed, and Reviewer says that subject is approved. The record authorizes
+only post-Q thread classification; it never authorizes Human PR approval, merge, release, or
+post-merge work. `Reviewer` here is the independent implementation verifier, not a Human reviewer.
+
+## B6R10 deterministic evidence invariants
+
+B6R10 remains a single current route with B6R9/Q15 frozen. Review its R20 baseline without
+precommitting B6R10/R20 commit, tree, blob, or outcome facts. The route must declare these exact,
+fail-closed later evidence objects (and no alternative Markdown/front-matter representation):
+
+- T16 top-level keys are exactly `schema_version`, `correction_id`, `phase`, `subject`, `test_run`,
+  and `timestamp`. `subject` has exactly `phase`, `commit_sha`, `test_path`, where phase is `S16`
+  and SHA is 40 lowercase hexadecimal characters. `test_run` has exactly `command`, `status`,
+  `exit_code`, with `passing` and `0` required.
+- V16 top-level keys are exactly `schema_version`, `correction_id`, `phase`, `subject`,
+  `tester_evidence`, `verdict`, `blocking_issues`, and `timestamp`. It must bind the same S16
+  subject and committed T16 commit/path/blob/subject/status; all commit/blob values are 40 lowercase
+  hexadecimal characters, verdict is `APPROVED`, and blockers is `[]`.
+- Q16 top-level keys are exactly `schema_version`, `correction_id`, `phase`, `artifacts`,
+  `parsed_claims`, `actual_git`, `close_authorization`, and `timestamp`. Its artifacts bind each
+  committed S16/T16/V16 commit/parent/path/blob; claims bind the same S16 and T16 `passing`/V16
+  `APPROVED`; actual Git binds the explicit triple, linear result, `S16..V16` range and name-status.
+  `close_authorization` is exactly classification-only `ACTIVE_CANDIDATE_CLOSED`; it forbids thread
+  resolution, Human review, merge, release, and post-merge. Q16 contains no self commit/tree/blob.
+
+Any missing, extra, malformed, abbreviated, non-hex, or semantically inconsistent field is a
+blocking fail-closed result. Reviewer may write Q16 only after V16 is committed; its record becomes
+active only when an independent Implementer commits it unchanged as the sole evidence-only path.

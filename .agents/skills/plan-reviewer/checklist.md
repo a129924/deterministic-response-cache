@@ -43,6 +43,23 @@ Use this checklist when reviewing a repo-visible topic plan before later executi
   - [ ] clearly absent for non-stable topics, or
   - [ ] declared with `Stable library metadata` when stable surfaces are involved.
 - [ ] `Reviewer Handoff` is one machine-consumable JSON object.
+- [ ] A declared correction route names one extended correction-review JSON schema; the reviewer does not reduce it to the normal generic three-field verdict.
+- [ ] The correction record contains only post-commit candidate facts (commit, tree, declared blobs and first-parent admission).
+- [ ] `needs-rework` names no active candidate, next phase, implementation subject, close record, or self-closing action.
+- [ ] Only a separately committed approved correction record can establish the one active candidate and its next phase.
+- [ ] Planner routing selects only that committed explicit candidate evidence and never directs Plan-Creator to refine, select, or close a candidate.
+- [ ] For B6R10, T16's declared JSON object has exactly `schema_version`, `correction_id`, `phase`,
+  `subject`, `test_run`, and `timestamp`; its S16 SHA is exactly 40 lowercase hexadecimal characters and
+  its test run is `passing` with exit code `0`.
+- [ ] For B6R10, V16's declared JSON object has exactly `schema_version`, `correction_id`, `phase`,
+  `subject`, `tester_evidence`, `verdict`, `blocking_issues`, and `timestamp`; it binds S16 and committed
+  T16 commit/path/blob/subject/status, has verdict `APPROVED`, and has `blocking_issues: []`.
+- [ ] For B6R10, Q16 is declared only after committed V16. Its exact schema binds committed S16/T16/V16
+  commit/parent/path/blob facts, parsed same-S16/passing/APPROVED claims, actual Git triple/linear/range/name-status,
+  and only `ACTIVE_CANDIDATE_CLOSED` classification permission. It has no Q16 self commit/tree/blob field.
+- [ ] For B6R10, missing, extra, malformed, abbreviated, non-hex, or inconsistent schema data fails closed;
+  an independent Implementer commits the Reviewer-authored Q16 record unchanged before it becomes active.
+- [ ] `Reviewer` is checked as independent implementation verification, not as a Human PR reviewer; Human-only PR review and merge authority remain distinct.
 - [ ] `Post-merge / release actions` match the actual scope and timing.
 - [ ] Planning actor, creator, reviewer, and Main Agent responsibilities are not mixed.
 - [ ] No unsafe placeholders such as `TBD`, `later`, or `follow normal process` remain where the workflow needs an explicit contract.
