@@ -4,9 +4,7 @@ correction: high-b6r9
 state: R19_REVIEW_PENDING
 ---
 
-# Observer / Dispatcher Governance Steps
-
-## B6R9 Current Steps
+# B6R9 Correction Steps
 
 - [ ] Plan-Creator: synchronize exactly seven B6R9 planning paths and create B6R9 plan/step.
 - [ ] Independent Implementer: commit B6R9 non-merge first-parent exact-seven admission.
@@ -16,14 +14,13 @@ state: R19_REVIEW_PENDING
 - [ ] Implementer: create S15 with only raw name-status tuple lexical-order correction, direct imports and fail-closed
   actual input retained.
 - [ ] Tester: write truthful same-S15 T15 at the B6R9 evidence path after the full suite.
-- [ ] Reviewer: write B6R9-path V15 after passing T15 and prove non-merge S15 -> T15 -> V15 plus exact S15..V15
+- [ ] Reviewer: write B6R9-path V15 after passing T15 and prove non-merge S15 -> T15 -> V15 and exact S15..V15
   raw lexical tuple order (review-log before tester-evidence).
 - [ ] Reviewer: after committed V15 execute read-only actual full-triple Q15.
-- [ ] Independent Reviewer: only after passed Q15 classify threads; only explicit addressed-and-resolvable permits
-  resolve.
+- [ ] Independent Reviewer: after passed Q15 classify threads; only explicit addressed-and-resolvable permits resolve.
 - [ ] Stop at Human boundary.
 
 ## Frozen Provenance
 
-All normal/recovery and B0–B6R8 tracker rows are frozen nonrouting provenance; none is an active current step. Q14
-is frozen with one failure, raw git diff --name-status lexical ordering only; S15 is the sole repair.
+All normal/recovery and B0–B6R8 tracker rows are frozen nonrouting provenance. Q14 is frozen with only the raw
+name-status lexical-order failure; it does not route, authorize thread action, or permit B6R8 edits.
