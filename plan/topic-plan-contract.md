@@ -1,12 +1,48 @@
 # Topic Plan Contract
 
-## Current correction contract
+## Topic-local correction contract
 
-`B6R13 -> R23 -> S17 -> T17 -> V17 -> Q17 -> thread-classification -> comment-resolve -> human-check` 是唯一 current
-contract；current state 是 `R23_REVIEW_PENDING`。B6R13/R23 are non-subject；S17 alone modifies the declared
-exact-fourteen runtime/template/test allowlist and retains direct imports。T17/V17 是唯一 S17 evidence descendants；Q17
-是 committed V17 後的 evidence-only actual full-triple gate。B6R12/R22/S16-Q16、B6R10/R20 and earlier are frozen
-predecessor provenance.
+每個 topic 的 committed plan、required step、approved Plan-Reviewer receipt、immutable subject SHA、Tester evidence
+與 independent Reviewer evidence 構成該 topic 唯一的 routing contract，且不得跨 topic 重用。互不衝突的 topic 可在
+隔離 branch/worktree 並行至 independent Reviewer；declared path 重疊、candidate/evidence/subject 衝突，或 branch/
+worktree 不隔離時，一律 `human-check`。
+
+`observer-dispatcher-governance/high/b6r13` 的 subject-local route 仍是
+`B6R13 -> R23 -> S17 -> T17 -> V17 -> Q17 -> thread-classification -> comment-resolve -> human-check`，current state
+是 `R23_REVIEW_PENDING`。B6R13/R23 are non-subject；S17 alone modifies the declared exact-fourteen runtime/template/
+test allowlist and retains direct imports。T17/V17 是唯一 S17 evidence descendants；Q17 是 committed V17 後的
+evidence-only actual full-triple gate。它不得補建、取消或以聊天結果視作完成，且不構成任何其他 topic 的前置條件。
+B6R12/R22/S16-Q16、B6R10/R20 and earlier are frozen predecessor provenance.
+
+## Workflow concurrency supersession validation-evidence contract
+
+`workflow-concurrency-supersession` 的 Tester 唯一 writer path 是
+`plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json`。它必須是一個 JSON
+object，top-level keys 恰為 `schema_version`、`topic`、`implementation_subject_commit`、`status`、`commands`、`recorded_by`：
+`schema_version` 是 integer `1`，`topic` 是 `workflow-concurrency-supersession`，
+`implementation_subject_commit` 是三份 governance contract 文本 implementation commit 的完整 40-hex SHA，`status` 是
+`passing|failing`，`commands` 是至少一項 object 的 non-empty array，每項只含 non-empty string `command` 與 integer
+`exit_code`，而 `recorded_by` 是 `Tester`。只有所有 commands 的 `exit_code` 都是 `0` 時才可寫 `status: "passing"`；
+`failing` 必須至少有一個 non-zero exit code。Tester 完成後，僅 Implementer 可先以 sole evidence-only commit 提交原樣
+Tester evidence。
+
+Independent Reviewer 唯一 writer path 是
+`plan/workflow-concurrency-supersession/workflow-concurrency-supersession.implementation-review-log.json`。它必須是一個
+JSON object，top-level keys 恰為 `schema_version`、`topic`、`implementation_subject_commit`、`tester_evidence_commit`、
+`verdict`、`blocking_issues`、`recorded_by`：`schema_version` 是 integer `1`，`topic` 是
+`workflow-concurrency-supersession`，`implementation_subject_commit` 是同一完整 40-hex SHA，
+`tester_evidence_commit` 是單獨提交且只含 passing Tester evidence 的完整 40-hex SHA，`verdict` 是
+`approved|needs-rework`，`blocking_issues` 是 string array，且 `approved` 時為空、`needs-rework` 時至少一項，
+`recorded_by` 是 `Independent Reviewer`。Reviewer 必須驗證 `tester_evidence_commit` 的內容符合前述 Tester schema、
+已提交、同 topic、同 subject 且 `status: "passing"`，否則 fail closed 且不得產生 review evidence；之後僅 Implementer
+可再以 sole evidence-only commit 提交原樣 Reviewer evidence。
+
+固定順序為：(1) Implementer 對且只對 `AGENTS.md`、`plan/agent-handoff-workflow.md`、
+`plan/topic-plan-contract.md` 建立 immutable implementation subject commit；(2) Tester 寫 Tester evidence，但不 commit；
+(3) 獨立 Implementer 原樣以 sole evidence-only commit 提交 Tester evidence；(4) Independent Reviewer 消費該 committed
+passing evidence 後寫 Reviewer evidence，但不 commit；(5) 獨立 Implementer 原樣以 sole evidence-only commit 提交 Reviewer
+evidence。兩份 evidence 都不得與 implementation、planning artifact 或另一份 evidence 共用 commit；僅 `approved` 可進入
+Planner Phase 4.5，`needs-rework` 只可回到 Implementer，並以新的 implementation subject 重複完整 sequence。
 
 ## Authority and required plan structure
 
@@ -21,10 +57,17 @@ Post-merge / release actions、Open Questions / Unresolved Items。Artifact Path
 
 ## Planner preflight and boundaries
 
-Planner bootstraps once, then reads only parent plan, parent step and committed approved R23. It selects candidate, phase,
-gate and one non-Planner next role; missing evidence is blocked, candidate conflict is human-check, and only Planner routes
-bounded rework. Planning approval never establishes execution approval. This contract grants no direct thread resolution,
-merge, release, post-merge, tag or summary.
+Planner 每個 topic 只 bootstrap 一次，然後只讀該 topic 的 parent plan、parent step 與其 route 所要求的 committed
+approved Plan-Reviewer receipt。它選擇該 topic candidate、phase、gate 與一個 non-Planner next role；缺 required
+evidence 或同 topic state/scope 矛盾是 `blocked`，candidate conflict、plan/step topic 不一致、跨 topic declared path
+重疊、candidate/evidence/subject conflict、或 branch/worktree 不隔離是 `human-check`，且只有 Planner routes bounded
+rework。Planning approval never establishes execution approval. This contract grants no direct thread resolution, merge,
+release, post-merge, tag or summary.
+
+每個 topic 必須完成 Tester、independent Reviewer、Planner Phase 4.5 alignment 與既有 human authorization，才可由
+Implementer 對 declared scope 進行 bounded publish、push 與 draft PR。多個 draft PR 可以同時存在；每個
+publish-in-progress 只能轉為自己的 `pr-open`，而 merge、release、post-merge、tag 與 final summary 一律是
+Human-only。
 
 ## Frozen B6R10 current-candidate contract
 
@@ -63,14 +106,15 @@ Implementer commits the unchanged record as the sole evidence-only path. Its aut
 `ACTIVE_CANDIDATE_CLOSED` with classification permitted; thread resolve, Human review, merge, release, and post-merge
 are forbidden.
 
-## B6R13 current-candidate contract
+## B6R13 subject-local candidate contract
 
 B6R13 admission is non-merge, first-parent, exact-eight: `AGENTS.md`, shared workflow/contract, parent plan/spec/step,
 and B6R13 plan/step. Pre-admission B6R13/R23 commit, tree, blob, HEAD and outcome facts are prohibited. R23 is the
 declared extended correction receipt, recording one candidate's committed revision/tree, all eight path/blob facts,
 first-parent admission, predecessor receipt, review basis, Copilot triage, verdict and blockers. `needs-rework` has no
 active candidate, next phase, subject or close authorization. Only separately committed unchanged approved R23 establishes
-the one active candidate, `R23_COMPLETE_S17_NEXT`, and next phase S17.
+the one active candidate, `R23_COMPLETE_S17_NEXT`, and next phase S17 for `observer-dispatcher-governance`; it does not
+route or block another topic.
 
 S17 is the sole non-merge subject and only changes its exact fourteen allowlisted wrapper, skill/template and governance
 test paths named in the shared workflow. It retains direct imports and forbids `importlib`, `__import__`, and `sys.modules`
