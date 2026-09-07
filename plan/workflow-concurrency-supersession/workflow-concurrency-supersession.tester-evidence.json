@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "topic": "workflow-concurrency-supersession",
+  "implementation_subject_commit": "6f74152eba891c7a417b4cc281f9bbc629edb740",
+  "status": "failing",
+  "commands": [
+    {
+      "command": "git diff --check 6f74152eba891c7a417b4cc281f9bbc629edb740^ 6f74152eba891c7a417b4cc281f9bbc629edb740",
+      "exit_code": 0
+    },
+    {
+      "command": "test \"$(git diff-tree --no-commit-id --name-status -r 6f74152eba891c7a417b4cc281f9bbc629edb740)\" = $'M\\tAGENTS.md\\nM\\tplan/agent-handoff-workflow.md\\nM\\tplan/topic-plan-contract.md'",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest",
+      "exit_code": 1
+    },
+    {
+      "command": "git show 6f74152eba891c7a417b4cc281f9bbc629edb740:AGENTS.md 6f74152eba891c7a417b4cc281f9bbc629edb740:plan/agent-handoff-workflow.md 6f74152eba891c7a417b4cc281f9bbc629edb740:plan/topic-plan-contract.md; verify each required literal with rg --quiet --fixed-strings: topic-local evidence, B6R13/R23 subject-local route, conflict-to-human-check, isolated branch/worktree, exact Tester/Reviewer paths and writers, same full SHA, Tester-before-Reviewer sole evidence commits, and Human-only merge/release boundary",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
