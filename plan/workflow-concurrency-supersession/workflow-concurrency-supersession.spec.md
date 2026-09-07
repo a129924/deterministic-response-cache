@@ -10,8 +10,10 @@
    factual same-subject Tester evidence and independent same-subject Reviewer evidence. For this topic, the
    receipt path is `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`;
    Independent Plan-Reviewer is its only writer and records a machine-consumable `approved|needs-rework`
-   verdict for the committed planning candidate. No cross-topic reuse or chat/branch/summary/frozen-provenance
-   substitution is allowed.
+   verdict for the committed planning candidate, but never commits it. An independent Implementer is the sole
+   commit owner: it commits the original Plan-Creator planning candidate, then commits an unchanged `approved`
+   receipt evidence-only before Planner re-preflight routes bounded contract implementation. No cross-topic reuse
+   or chat/branch/summary/frozen-provenance substitution is allowed.
 4. Parallel active topics use isolated branch/worktree. Any declared path, candidate, evidence or subject
    conflict returns `human-check` without a writer dispatch.
 5. Publish still requires same-subject passing Tester evidence, independent Reviewer approval, Planner
@@ -44,10 +46,15 @@
 ## Error / Edge Cases
 
 - An uncommitted Plan-Reviewer chat response is not a receipt and cannot route any topic.
-- The only route from committed planning candidate to contract implementation is an `approved` receipt at
-  `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`, committed
-  unchanged by Independent Plan-Reviewer as a standalone evidence-only commit. A `needs-rework` receipt,
-  a receipt for a different commit, or a receipt written by another role fails closed.
+- The only route from committed planning candidate to contract implementation is: Plan-Creator authoring or
+  repair, independent Implementer planning-candidate commit, independent Plan-Reviewer receipt write only,
+  independent Implementer standalone evidence-only commit of an unchanged `approved` receipt, then Planner
+  re-preflight. Plan-Reviewer never commits. A `needs-rework` receipt is never committed and creates no
+  candidate, route or authorization; Plan-Creator must repair only declared planning artifacts, an independent
+  Implementer must commit the repaired candidate, and a new independent review is required. A receipt for a
+  different commit, or a receipt written by another role, fails closed.
+- This current bounded planning repair changes only this topic's plan, specification and step tracker; it does
+  not amend analysis artifacts or the uncommitted `needs-rework` receipt.
 - Evidence that names a different topic or immutable subject fails closed for the current topic.
 - A shared worktree, non-isolated branch, or undeclared path is a conflict requiring `human-check`.
 - `src-implementation` has no implied tree, naming, API or implementation decision from this governance topic.

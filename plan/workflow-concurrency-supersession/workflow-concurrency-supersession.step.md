@@ -21,12 +21,18 @@ state: planned
 ## Actionable Steps
 
 - [X] **Actor:** Plan-Creator — **Action:** Create only the five declared analysis/planning artifacts.
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review the committed planning candidate and, as the
+- [ ] **Actor:** Independent Implementer — **Action:** Commit the Plan-Creator's unchanged planning candidate
+      as the sole planning-candidate commit; Planner then routes independent Plan-Reviewer. Plan-Creator does not
+      commit.
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review that committed planning candidate and, as the
       only writer, write the required machine-consumable `approved|needs-rework` receipt at
-      `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`.
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** If and only if the receipt is `approved`, commit that
-      receipt unchanged as a standalone evidence-only commit; no contract implementation occurs before Planner
-      re-preflight. A `needs-rework` receipt returns only the declared planning artifacts to bounded repair.
+      `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`; never
+      commit the receipt.
+- [ ] **Actor:** Independent Implementer — **Action:** If and only if the receipt is `approved`, commit it
+      unchanged as a standalone evidence-only commit; Planner must then re-preflight before bounded contract
+      implementation. A `needs-rework` receipt is not committed and creates no candidate, route or authorization;
+      Plan-Creator repairs only declared planning artifacts (for this repair: plan, spec and step only), Independent
+      Implementer commits the new candidate, and Independent Plan-Reviewer reviews that new candidate again.
 
 ## Implementation Steps
 
@@ -43,11 +49,13 @@ state: planned
 
 ## Handoff / Gate Notes
 
-- Bootstrap exception is exhausted once the five Plan-Creator analysis/planning artifacts are committed. The next
-  role is independent Plan-Reviewer, whose sole receipt path is
-  `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`; only an
-  `approved` machine-consumable receipt for that committed candidate, committed unchanged as independent
-  evidence-only evidence, permits Planner re-preflight. No role may infer `src-implementation` work.
+- Bootstrap exception is exhausted once an Independent Implementer has committed the five Plan-Creator
+  analysis/planning artifacts unchanged as the planning candidate. The next role is independent Plan-Reviewer,
+  whose sole receipt path is `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`;
+  Plan-Reviewer writes but never commits its machine-consumable receipt. Only an `approved` receipt for that
+  committed candidate, committed unchanged by an Independent Implementer as standalone evidence-only evidence,
+  permits Planner re-preflight. A `needs-rework` receipt is never committed or routing authority; its repair
+  needs a newly committed candidate and a new independent review. No role may infer `src-implementation` work.
 - B6R13/R23 remains subject-local. Its R23 chat response is non-evidence and is neither cancelled nor backfilled here.
 - Concurrent topics require isolated branch/worktree and non-conflicting declared paths/evidence/subjects; any conflict
   is `human-check`.
