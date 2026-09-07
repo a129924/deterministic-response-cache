@@ -41,9 +41,13 @@ governance-topic evidence 都必須停止並返回 Planner。
 
 **Current**：`planned`。
 
-**Bootstrap transition**：Human 明確授權本 topic 在 B6R13/R23 未完成時建立並提交本五份 planning
-artifacts。其提交後，唯一 next role 是 independent Plan-Reviewer；approved receipt 必須 committed，
-Planner 才可 re-preflight 並決定後續 role。此 exception 不啟動 `src-implementation`。
+**Bootstrap transition**：Human 明確授權本 topic 在 B6R13/R23 未完成時建立並提交 Plan-Creator 所有的
+五份 analysis/planning artifacts。其 committed candidate 的唯一 next role 是 independent Plan-Reviewer。
+Plan-Reviewer 必須只寫入
+`plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`，以 machine-consumable
+`approved|needs-rework` record 對該 committed candidate 作出 verdict；只有原樣的 `approved` receipt 由
+Plan-Reviewer 以獨立 evidence-only commit 提交後，Planner 才可 re-preflight 並 route 至 contract
+implementation phase。`needs-rework` receipt 不得前進。此 exception 不啟動 `src-implementation`。
 
 **Execution model**：`planned` -> `creator-in-progress` -> `tester-in-progress` -> `review-ready` ->
 `reviewer-in-progress` -> `approved` -> `publish-in-progress` -> `pr-open` -> Human `merged` -> terminal。
@@ -66,12 +70,15 @@ Only Human may move `pr-open` to `merged`; no release transition exists.
 | Topic plan | `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan.md` | Plan-Creator | topic execution contract |
 | Topic specification | `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.spec.md` | Plan-Creator | acceptance contract |
 | Step tracker | `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.step.md` | Plan-Creator | committed topic progression evidence |
+| Plan-Reviewer receipt | `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md` | Independent Plan-Reviewer | only writer; machine-consumable verdict for the committed planning candidate |
 | Governance guardrails | `AGENTS.md` | Implementer | approved topic-local routing contract |
 | Workflow handoff contract | `plan/agent-handoff-workflow.md` | Implementer | approved lifecycle/routing contract |
 | Topic-plan contract | `plan/topic-plan-contract.md` | Implementer | approved candidate/evidence conflict contract |
 
 `README.md`、`VERSION` 與 `.github/copilot-instructions.md` 不得修改。Artifact Paths 是 executable
-allowlist；任何新增 receipt/evidence location、產品 path 或其他文件都必須停止並由 Planner 重新路由。
+allowlist；Plan-Creator 僅可寫入前五份 analysis/planning artifacts，Plan-Reviewer 僅可寫入上述 exact
+receipt path，Implementer 僅可在核准後寫入三份 governance contract。任何新增 receipt/evidence location、
+產品 path 或其他文件都必須停止並由 Planner 重新路由。
 
 ## Implementation Steps
 
@@ -93,22 +100,20 @@ allowlist；任何新增 receipt/evidence location、產品 path 或其他文件
   且 committed；cross-topic reuse、path/candidate/evidence/subject conflict 導向 `human-check`。
 - 任何 topic 未具 same-subject passing Tester、independent Reviewer、Planner Phase 4.5 或 human authorization
   時不可 publish；多 draft PR 可同時存在，Human-only merge/release/tag/post-merge 不變。
-- independent Plan-Reviewer 能以 reviewer handoff JSON 給出本 plan 的 `approved` 或 `needs-rework` verdict；
-  approved 後由 Planner re-preflight，而非由 Plan-Creator 或 Observer 自行前進。
+- independent Plan-Reviewer 僅能在 exact receipt path 以 machine-consumable record 寫入本 committed
+  candidate 的 `approved` 或 `needs-rework` verdict；record 必須包含 `topic`、`candidate_commit`（完整 SHA）、
+  `verdict` 與 `blocking_issues`。只有 `approved` receipt 的獨立 evidence-only commit 允許 Planner
+  re-preflight；Plan-Creator 或 Observer 均不可自行前進。
 
 ## Reviewer Handoff
 
-```json
-{
-  "verdict": "approved|needs-rework",
-  "blocking_issues": [],
-  "copilot_feedback_triage": {
-    "ADDRESS": [],
-    "DISCUSS": [],
-    "SKIP": []
-  }
-}
-```
+The exact Plan-Reviewer receipt path is
+`plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`. Its only
+writer is Independent Plan-Reviewer. The file contains one machine-consumable JSON object for the committed
+planning candidate; its required fields are `topic`, `candidate_commit` (full SHA), `verdict`
+(`approved|needs-rework`) and `blocking_issues`. The receipt is not created or prefilled by Plan-Creator.
+Only an `approved` receipt committed unchanged as a standalone evidence-only commit may authorize Planner
+re-preflight; a `needs-rework` receipt returns this topic to bounded planning repair.
 
 ## Post-merge / release actions
 

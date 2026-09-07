@@ -6,9 +6,12 @@
    phase evidence controls its candidate, phase, gate and next role.
 2. A missing, stale, uncommitted or `needs-rework` B6R13/R23 record blocks B6R13 only. It cannot block an
    independent topic with complete, non-conflicting topic-local evidence.
-3. Every topic requires committed plan, step, Plan-Reviewer receipt, immutable implementation subject,
-   factual same-subject Tester evidence and independent same-subject Reviewer evidence. No cross-topic
-   reuse or chat/branch/summary/frozen-provenance substitution is allowed.
+3. Every topic requires committed plan, step, exact Plan-Reviewer receipt, immutable implementation subject,
+   factual same-subject Tester evidence and independent same-subject Reviewer evidence. For this topic, the
+   receipt path is `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`;
+   Independent Plan-Reviewer is its only writer and records a machine-consumable `approved|needs-rework`
+   verdict for the committed planning candidate. No cross-topic reuse or chat/branch/summary/frozen-provenance
+   substitution is allowed.
 4. Parallel active topics use isolated branch/worktree. Any declared path, candidate, evidence or subject
    conflict returns `human-check` without a writer dispatch.
 5. Publish still requires same-subject passing Tester evidence, independent Reviewer approval, Planner
@@ -41,6 +44,10 @@
 ## Error / Edge Cases
 
 - An uncommitted Plan-Reviewer chat response is not a receipt and cannot route any topic.
+- The only route from committed planning candidate to contract implementation is an `approved` receipt at
+  `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`, committed
+  unchanged by Independent Plan-Reviewer as a standalone evidence-only commit. A `needs-rework` receipt,
+  a receipt for a different commit, or a receipt written by another role fails closed.
 - Evidence that names a different topic or immutable subject fails closed for the current topic.
 - A shared worktree, non-isolated branch, or undeclared path is a conflict requiring `human-check`.
 - `src-implementation` has no implied tree, naming, API or implementation decision from this governance topic.

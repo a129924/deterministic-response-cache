@@ -21,8 +21,12 @@ state: planned
 ## Actionable Steps
 
 - [X] **Actor:** Plan-Creator — **Action:** Create only the five declared analysis/planning artifacts.
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review the committed planning artifacts and return the
-      required `approved|needs-rework` handoff; no contract implementation occurs before Planner re-preflight.
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review the committed planning candidate and, as the
+      only writer, write the required machine-consumable `approved|needs-rework` receipt at
+      `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`.
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** If and only if the receipt is `approved`, commit that
+      receipt unchanged as a standalone evidence-only commit; no contract implementation occurs before Planner
+      re-preflight. A `needs-rework` receipt returns only the declared planning artifacts to bounded repair.
 
 ## Implementation Steps
 
@@ -39,8 +43,11 @@ state: planned
 
 ## Handoff / Gate Notes
 
-- Bootstrap exception is exhausted once these planning artifacts are committed. The next role is independent
-  Plan-Reviewer, followed by Planner re-preflight; no role may infer `src-implementation` work.
+- Bootstrap exception is exhausted once the five Plan-Creator analysis/planning artifacts are committed. The next
+  role is independent Plan-Reviewer, whose sole receipt path is
+  `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.plan-review-log.md`; only an
+  `approved` machine-consumable receipt for that committed candidate, committed unchanged as independent
+  evidence-only evidence, permits Planner re-preflight. No role may infer `src-implementation` work.
 - B6R13/R23 remains subject-local. Its R23 chat response is non-evidence and is neither cancelled nor backfilled here.
 - Concurrent topics require isolated branch/worktree and non-conflicting declared paths/evidence/subjects; any conflict
   is `human-check`.
