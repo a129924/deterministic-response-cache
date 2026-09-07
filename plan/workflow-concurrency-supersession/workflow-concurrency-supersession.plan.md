@@ -61,8 +61,13 @@ receipt 不得提交，且不產生 candidate、route 或 authorization；只可
 `plan-review-receipt-pending` -> `approved-receipt-commit-pending` -> `planner-repreflight-pending` ->
 `implementer-in-progress` -> `tester-in-progress` -> `review-ready` -> `reviewer-in-progress` -> `approved` ->
 `publish-in-progress` -> `pr-open` -> Human `merged` -> terminal。Plan-Creator 不實作 contract；bounded contract
-Implementer 必須先經 independent Tester。Tester passing evidence 與 independent Reviewer approval 必須綁定同一
-immutable subject。標準 Phase 4.5 Planner alignment 適用於 publish。
+Implementer 必須先建立並提交 immutable implementation subject；其 commit full SHA 是唯一 subject binding。
+Tester 只能在 `workflow-concurrency-supersession.tester-evidence.json` 寫入該 SHA 的 factual evidence，獨立
+Implementer 必須先原樣以 sole evidence-only commit 提交該 passing evidence。Independent Reviewer 只能消費這份
+已提交、同 topic、同 full SHA、`status: "passing"` 的 Tester evidence，然後在
+`workflow-concurrency-supersession.implementation-review-log.json` 寫入其 verdict；獨立 Implementer 必須再原樣
+以 sole evidence-only commit 提交該 Reviewer evidence，才可到 `approved` 或 `needs-rework`。兩份 evidence 皆不
+屬於 implementation subject，且不得和任何其他 artifact 同 commit。標準 Phase 4.5 Planner alignment 適用於 publish。
 
 **Allowed transitions**：`planned` -> `plan-creator-authoring-or-repair`; `plan-creator-authoring-or-repair` ->
 `planning-candidate-commit-pending`; `planning-candidate-commit-pending` -> `planning-review-pending`（僅於獨立
@@ -89,12 +94,42 @@ no release transition exists.
 | Governance guardrails | `AGENTS.md` | Implementer | approved topic-local routing contract |
 | Workflow handoff contract | `plan/agent-handoff-workflow.md` | Implementer | approved lifecycle/routing contract |
 | Topic-plan contract | `plan/topic-plan-contract.md` | Implementer | approved candidate/evidence conflict contract |
+| Tester evidence | `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json` | Tester | only writer; factual machine-consumable validation for one committed immutable implementation subject; never commits it |
+| Implementation review evidence | `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.implementation-review-log.json` | Independent Reviewer | only writer; machine-consumable implementation verdict for the same subject after consuming committed passing Tester evidence; never commits it |
 
 `README.md`、`VERSION` 與 `.github/copilot-instructions.md` 不得修改。Artifact Paths 是 executable
 allowlist；Plan-Creator 僅可寫入前五份 analysis/planning artifacts，Plan-Reviewer 僅可寫入上述 exact
-receipt path 且絕不可 commit，獨立 Implementer 是唯一 commit owner：先提交原樣 planning candidate、再在
-approved verdict 後提交原樣 receipt evidence-only，並只在 Planner re-preflight routing 後寫入三份 governance
-contract。任何新增 receipt/evidence location、產品 path 或其他文件都必須停止並由 Planner 重新路由。
+receipt path 且絕不可 commit，Tester 與 Independent Reviewer 各只能寫入自己的 exact evidence path 且絕不可
+commit。獨立 Implementer 是唯一 commit owner：先提交原樣 planning candidate、再在 approved verdict 後提交原樣
+receipt evidence-only，並只在 Planner re-preflight routing 後寫入三份 governance contract 並建立唯一 immutable
+implementation subject。其後必須依序提交 Tester evidence-only、Reviewer evidence-only；任何新增
+receipt/evidence location、產品 path 或其他文件都必須停止並由 Planner 重新路由。
+
+### Implementation evidence schemas and commit order
+
+`workflow-concurrency-supersession.tester-evidence.json` 必須是單一 JSON object，且只含以下 top-level
+keys：`schema_version`、`topic`、`implementation_subject_commit`、`status`、`commands`、`recorded_by`。
+`schema_version` 必須為 integer `1`；`topic` 必須為 `workflow-concurrency-supersession`；
+`implementation_subject_commit` 必須是三份 governance contract 文本 implementation commit 的完整 40-hex SHA；
+`status` 必須為 `passing|failing`；`commands` 必須是至少一項 object 的 non-empty array，每項只含 `command`
+（non-empty string）與 `exit_code`（integer）；`recorded_by` 必須為 `Tester`。只有所有 commands 的 `exit_code`
+都是 `0` 時才可寫 `status: "passing"`；`failing` 必須至少有一個 non-zero exit code。
+
+`workflow-concurrency-supersession.implementation-review-log.json` 必須是單一 JSON object，且只含以下
+top-level keys：`schema_version`、`topic`、`implementation_subject_commit`、`tester_evidence_commit`、
+`verdict`、`blocking_issues`、`recorded_by`。`schema_version` 必須為 integer `1`；`topic` 必須為
+`workflow-concurrency-supersession`；`implementation_subject_commit` 必須是同一完整 40-hex SHA；
+`tester_evidence_commit` 必須是單獨提交、只含 passing Tester evidence 的完整 40-hex SHA；`verdict` 必須為
+`approved|needs-rework`；`blocking_issues` 必須是 string array，且 `approved` 時為空、`needs-rework` 時至少一項；
+`recorded_by` 必須為 `Independent Reviewer`。Reviewer 必須驗證 `tester_evidence_commit` 的內容符合前述 Tester
+schema、已提交、同 topic、同 subject 且 `status: "passing"`，否則 fail closed 且不得產生 review evidence。
+
+完整 ordering 固定為：(1) Implementer 對且只對 `AGENTS.md`、`plan/agent-handoff-workflow.md`、
+`plan/topic-plan-contract.md` 建立 implementation subject commit；(2) Tester 寫 Tester evidence；(3) 獨立
+Implementer 原樣以 sole evidence-only commit 提交 Tester evidence；(4) Independent Reviewer 消費該 committed
+passing evidence 並寫 review evidence；(5) 獨立 Implementer 原樣以 sole evidence-only commit 提交 review
+evidence。`approved` 才可進入 Planner Phase 4.5；`needs-rework` 只可回到 Implementer，且新 implementation
+subject 必須重複完整 sequence。
 
 ## Implementation Steps
 
@@ -105,7 +140,10 @@ contract。任何新增 receipt/evidence location、產品 path 或其他文件�
    `human-check` behavior，以及不得用 chat、branch、summary 或 frozen provenance 作 routing evidence。
 3. 在三份 contract 中保留 Tester -> independent Reviewer -> Planner Phase 4.5 -> human-authorized
    bounded publish -> `pr-open` -> Human-only merge/release/tag/post-merge sequence，並允許多個 draft PR。
-4. 驗證完整 diff 只包含本 Artifact Paths；不建立 `src-implementation` folder tree，亦不變更
+4. 在三份 contract 中驗證並明定本 topic 的 exact Tester evidence 與 implementation Reviewer evidence
+   paths、唯一 writers、上述 JSON schemas、full-SHA same-subject binding，以及 Tester evidence-only commit
+   必須先於 Reviewer evidence-only commit 的順序。
+5. 驗證完整 diff 只包含本 Artifact Paths；不建立 `src-implementation` folder tree，亦不變更
    B6R13/R23 artifacts。
 
 ## Validation / Acceptance Checks
@@ -116,6 +154,12 @@ contract。任何新增 receipt/evidence location、產品 path 或其他文件�
   且 committed；cross-topic reuse、path/candidate/evidence/subject conflict 導向 `human-check`。
 - 任何 topic 未具 same-subject passing Tester、independent Reviewer、Planner Phase 4.5 或 human authorization
   時不可 publish；多 draft PR 可同時存在，Human-only merge/release/tag/post-merge 不變。
+- 三份 governance contract 文本明定並接受本 topic 的 executable Artifact Paths：Tester only-writer path
+  `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json` 與 Independent
+  Reviewer only-writer path `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.implementation-review-log.json`。
+  它們使用本 plan 所定 JSON top-level keys、同一 immutable implementation subject 的完整 SHA、Tester-before-
+  Reviewer 與兩次 sole evidence-only commit ordering；Reviewer 只消費 committed passing Tester evidence，且
+  Tester command/exit-code facts 可被機器檢查。
 - Independent Plan-Reviewer 僅能在 exact receipt path 以 machine-consumable record 寫入本 committed
   candidate 的 `approved` 或 `needs-rework` verdict；record 必須包含 `topic`、`candidate_commit`（完整 SHA）、
   `verdict` 與 `blocking_issues`，且 Plan-Reviewer 不得 commit。只有獨立 Implementer 原樣提交的 `approved`
@@ -134,6 +178,19 @@ Plan-Reviewer never commits. Only an independent Implementer may commit an `appr
 standalone evidence-only commit, which may authorize Planner re-preflight; a `needs-rework` receipt is never
 committed and returns this topic to bounded planning repair. The repaired planning artifacts must be committed
 as a new candidate by an independent Implementer and independently reviewed again.
+
+## Tester / Implementation Reviewer Handoff
+
+The exact Tester-only evidence path is
+`plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json`; the exact
+Independent-Reviewer-only evidence path is
+`plan/workflow-concurrency-supersession/workflow-concurrency-supersession.implementation-review-log.json`.
+Their required JSON schemas and fixed commit ordering are defined in `Implementation evidence schemas and commit
+order` above. Tester records actual commands and integer exit codes for the full-SHA implementation subject; only
+all-zero commands permit `passing`. Independent Reviewer reads only the committed, same-topic, same-subject
+passing Tester evidence and records its own `approved|needs-rework` verdict. An independent Implementer commits
+each unchanged evidence artifact in its own sole evidence-only commit, Tester first. Neither evidence can share a
+commit with implementation, planning artifacts, or another evidence artifact.
 
 ## Post-merge / release actions
 

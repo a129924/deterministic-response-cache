@@ -20,6 +20,23 @@
    Phase 4.5 alignment and existing human authorization. It produces only `pr-open`; multiple draft PRs are
    allowed; only Human may merge, release, tag or perform post-merge work.
 6. This topic changes neither `src-implementation` nor stable-library/release surfaces.
+7. The three implementation contract texts (`AGENTS.md`, `plan/agent-handoff-workflow.md`, and
+   `plan/topic-plan-contract.md`) accept this topic's executable evidence contract: Tester is the sole writer of
+   `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json`; Independent
+   Reviewer is the sole writer of
+   `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.implementation-review-log.json`.
+   Both are machine-consumable JSON records bound to the same full 40-hex immutable implementation-subject SHA.
+8. Tester evidence has only `schema_version` (integer `1`), `topic`, `implementation_subject_commit`, `status`,
+   `commands`, and `recorded_by`; every command records a non-empty `command` and integer `exit_code`, `passing`
+   requires all exit codes to be `0`, and `failing` requires at least one non-zero exit code. Reviewer evidence has
+   only `schema_version` (integer `1`), `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+   `verdict`, `blocking_issues`, and `recorded_by`; `blocking_issues` is a string array that is empty only for
+   `approved` and non-empty for `needs-rework`. It may exist only after the committed same-subject passing Tester
+   evidence it names. Tester and Reviewer never commit their own evidence.
+9. The fixed order is implementation-subject commit, Tester write, independent-Implementer sole Tester-evidence-only
+   commit, Independent-Reviewer write, then independent-Implementer sole Reviewer-evidence-only commit. Reviewer
+   only consumes the committed same-topic, same-full-SHA passing Tester evidence; `approved` alone advances to
+   Planner Phase 4.5, while `needs-rework` returns to Implementer with a new subject and a new full sequence.
 
 ## Behavioral Scenarios
 
@@ -43,6 +60,23 @@
 - **Then** that topic cannot publish, while the other may open its separately authorized draft PR; neither can
   merge, release, tag or post-merge automatically.
 
+### Scenario 4: Tester evidence precedes implementation review
+
+- **Given** the three governance contract texts have been committed as one immutable implementation subject with
+  full SHA `S`.
+- **When** Tester writes the required JSON evidence for `S`, including the actual validation commands and their
+  zero exit codes, and an independent Implementer commits that file unchanged by itself.
+- **Then** Independent Reviewer may consume only that committed passing evidence, write its JSON verdict for `S`,
+  and an independent Implementer commits that review file unchanged by itself; neither evidence shares a commit
+  with implementation or another evidence artifact.
+
+### Scenario 5: Contract validation is incomplete
+
+- **Given** any one of the three governance contract texts omits either exact evidence path, the unique writer,
+  required JSON fields, full-SHA binding, or Tester-before-Reviewer commit order.
+- **When** this topic's implementation is validated.
+- **Then** validation fails and the topic cannot proceed to Tester or publish.
+
 ## Error / Edge Cases
 
 - An uncommitted Plan-Reviewer chat response is not a receipt and cannot route any topic.
@@ -56,5 +90,11 @@
 - This current bounded planning repair changes only this topic's plan, specification and step tracker; it does
   not amend analysis artifacts or the uncommitted `needs-rework` receipt.
 - Evidence that names a different topic or immutable subject fails closed for the current topic.
+- A missing command, non-integer exit code, non-zero command exit code paired with `passing`, missing required JSON
+  key, extra top-level key, abbreviated SHA, uncommitted Tester evidence, or a Reviewer record that names a different
+  subject fails closed.
+- Reviewer cannot write review evidence from a failing Tester record or from a Tester record not committed as its own
+  sole evidence-only commit. A Reviewer `needs-rework` record is committed only as its own evidence-only commit and
+  returns the topic to Implementer; it cannot authorize Phase 4.5 or publish.
 - A shared worktree, non-isolated branch, or undeclared path is a conflict requiring `human-check`.
 - `src-implementation` has no implied tree, naming, API or implementation decision from this governance topic.
