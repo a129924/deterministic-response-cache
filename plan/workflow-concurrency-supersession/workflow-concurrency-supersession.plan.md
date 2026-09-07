@@ -10,7 +10,10 @@ Reviewer phases；publish 與 Human boundary 維持 subject-local gates。
 
 - **In scope**：建立本 topic analysis/plan/spec/step artifacts；在 independent Plan-Reviewer
   approval、Planner re-preflight 與後續 topic-local gates 後，僅更新 `AGENTS.md`、
-  `plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md` 以記載 supersession contract。
+  `plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md`，以及
+  `tests/test_observer_dispatcher_governance_contract.py` 以記載與驗證 supersession contract。測試檔只可
+  替換兩個要求 B6R12/R22 全域 route 的 assertions，使其驗證 B6R13/R23 為
+  `observer-dispatcher-governance` 的 subject-local frozen-provenance obligation，非其他 topic 的全域前置條件。
 - **Out of scope**：`src-implementation` folders 或任何產品設計；R23/S17 或 B6R13 的執行、
   repair、取消或補建；frozen provenance；README/VERSION；release、tag、merge、post-merge。
 
@@ -20,6 +23,12 @@ Reviewer phases；publish 與 Human boundary 維持 subject-local gates。
   追認或取代未提交 R23。
 - B6R13/R23 保留其 subject-local obligations。其 pending、missing、needs-rework 或同-topic
   divergence 只影響 B6R13，不能阻擋無衝突新 topic。
+- Human 已只針對本次 repair 解決 declared path overlap：`workflow-concurrency-supersession` 擁有
+  `tests/test_observer_dispatcher_governance_contract.py` 的唯一修正權；B6R13/S17 日後不得修改此檔，除非
+  另有新的 human-check resolution。
+- 此測試修正只替換 `assert_s16_route_is_fail_closed` 中兩個舊 B6R12/R22 全域-route assertions：route
+  assertion 改驗證 B6R13/R23 route，global-lock assertion 改驗證其 subject-local、非其他 topic 前置條件。
+  direct imports、fixtures、mocks 與其餘 assertions 必須逐字維持。
 - 每個 topic 必須以自身 committed plan、step、Plan-Reviewer receipt、immutable subject、Tester
   evidence 與 independent Reviewer evidence route；任何 evidence 不得跨 topic 使用。
 - 平行只允許隔離 branch/worktree。declared write path、candidate、evidence 或 subject 的衝突
@@ -35,7 +44,8 @@ Observer 維持唯讀 dispatch/aggregate；Planner 維持 candidate/phase/gate/o
 只寫 declared planning artifacts，Plan-Reviewer 獨立審 planning evidence，Implementer 只執行 approved
 bounded contract update，Tester 只寫 factual evidence，Reviewer 只獨立驗證同-subject Tester evidence。
 Reviewer 不是 Human PR reviewer。未列於 Artifact Paths 的檔案、任何 folder tree、產品程式或既有
-governance-topic evidence 都必須停止並返回 Planner。
+governance-topic evidence 都必須停止並返回 Planner。既有 Tester evidence、Plan-Reviewer receipt 與三份
+contract texts 在本 planning repair 階段均不可修改。
 
 ## Status / Allowed Transitions
 
@@ -94,6 +104,7 @@ no release transition exists.
 | Governance guardrails | `AGENTS.md` | Implementer | approved topic-local routing contract |
 | Workflow handoff contract | `plan/agent-handoff-workflow.md` | Implementer | approved lifecycle/routing contract |
 | Topic-plan contract | `plan/topic-plan-contract.md` | Implementer | approved candidate/evidence conflict contract |
+| Governance regression test | `tests/test_observer_dispatcher_governance_contract.py` | Implementer | only two B6R12/R22 global-route assertions become B6R13/R23 subject-local frozen-provenance assertions |
 | Tester evidence | `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json` | Tester | only writer; factual machine-consumable validation for one committed immutable implementation subject; never commits it |
 | Implementation review evidence | `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.implementation-review-log.json` | Independent Reviewer | only writer; machine-consumable implementation verdict for the same subject after consuming committed passing Tester evidence; never commits it |
 
@@ -101,8 +112,8 @@ no release transition exists.
 allowlist；Plan-Creator 僅可寫入前五份 analysis/planning artifacts，Plan-Reviewer 僅可寫入上述 exact
 receipt path 且絕不可 commit，Tester 與 Independent Reviewer 各只能寫入自己的 exact evidence path 且絕不可
 commit。獨立 Implementer 是唯一 commit owner：先提交原樣 planning candidate、再在 approved verdict 後提交原樣
-receipt evidence-only，並只在 Planner re-preflight routing 後寫入三份 governance contract 並建立唯一 immutable
-implementation subject。其後必須依序提交 Tester evidence-only、Reviewer evidence-only；任何新增
+receipt evidence-only，並只在 Planner re-preflight routing 後寫入三份 governance contract 與上述唯一測試檔，並建立
+唯一 immutable implementation subject。其後必須依序提交 Tester evidence-only、Reviewer evidence-only；任何新增
 receipt/evidence location、產品 path 或其他文件都必須停止並由 Planner 重新路由。
 
 ### Implementation evidence schemas and commit order
@@ -110,7 +121,7 @@ receipt/evidence location、產品 path 或其他文件都必須停止並由 Pla
 `workflow-concurrency-supersession.tester-evidence.json` 必須是單一 JSON object，且只含以下 top-level
 keys：`schema_version`、`topic`、`implementation_subject_commit`、`status`、`commands`、`recorded_by`。
 `schema_version` 必須為 integer `1`；`topic` 必須為 `workflow-concurrency-supersession`；
-`implementation_subject_commit` 必須是三份 governance contract 文本 implementation commit 的完整 40-hex SHA；
+`implementation_subject_commit` 必須是四檔 immutable implementation subject commit 的完整 40-hex SHA；
 `status` 必須為 `passing|failing`；`commands` 必須是至少一項 object 的 non-empty array，每項只含 `command`
 （non-empty string）與 `exit_code`（integer）；`recorded_by` 必須為 `Tester`。只有所有 commands 的 `exit_code`
 都是 `0` 時才可寫 `status: "passing"`；`failing` 必須至少有一個 non-zero exit code。
@@ -125,7 +136,8 @@ top-level keys：`schema_version`、`topic`、`implementation_subject_commit`、
 schema、已提交、同 topic、同 subject 且 `status: "passing"`，否則 fail closed 且不得產生 review evidence。
 
 完整 ordering 固定為：(1) Implementer 對且只對 `AGENTS.md`、`plan/agent-handoff-workflow.md`、
-`plan/topic-plan-contract.md` 建立 implementation subject commit；(2) Tester 寫 Tester evidence；(3) 獨立
+`plan/topic-plan-contract.md`、`tests/test_observer_dispatcher_governance_contract.py` 建立 implementation subject
+commit；(2) Tester 對該 subject 執行完整 `uv run pytest` 並寫 Tester evidence；(3) 獨立
 Implementer 原樣以 sole evidence-only commit 提交 Tester evidence；(4) Independent Reviewer 消費該 committed
 passing evidence 並寫 review evidence；(5) 獨立 Implementer 原樣以 sole evidence-only commit 提交 review
 evidence。`approved` 才可進入 Planner Phase 4.5；`needs-rework` 只可回到 Implementer，且新 implementation
@@ -133,17 +145,21 @@ subject 必須重複完整 sequence。
 
 ## Implementation Steps
 
-1. 以本 technical specification 的五項 contract model 更新三個 declared governance contract files：
-   以 topic-local evidence routing 取代全域唯一 current route，並保留 B6R13/R23 為 subject-local
-   frozen/current obligation。
-2. 在三份 contract 中明定每個 topic 的 committed evidence isolation、隔離 branch/worktree、衝突的
+1. 以本 technical specification 的 contract model 更新三份 declared governance contract files，並在
+   `tests/test_observer_dispatcher_governance_contract.py` 中只替換兩個舊 B6R12/R22 全域-route assertions：
+   以 topic-local evidence routing 取代全域唯一 current route，並驗證 B6R13/R23 是 subject-local
+   frozen-provenance obligation，非其他 topic 的全域前置條件。
+2. 保留測試的 direct imports、fixtures、mocks 與兩個目標以外的 assertions；在三份 contract 中明定每個 topic
+   的 committed evidence isolation、隔離 branch/worktree、衝突的
    `human-check` behavior，以及不得用 chat、branch、summary 或 frozen provenance 作 routing evidence。
 3. 在三份 contract 中保留 Tester -> independent Reviewer -> Planner Phase 4.5 -> human-authorized
    bounded publish -> `pr-open` -> Human-only merge/release/tag/post-merge sequence，並允許多個 draft PR。
 4. 在三份 contract 中驗證並明定本 topic 的 exact Tester evidence 與 implementation Reviewer evidence
    paths、唯一 writers、上述 JSON schemas、full-SHA same-subject binding，以及 Tester evidence-only commit
    必須先於 Reviewer evidence-only commit 的順序。
-5. 驗證完整 diff 只包含本 Artifact Paths；不建立 `src-implementation` folder tree，亦不變更
+5. 將四檔 implementation allowlist 一起建立為新的 immutable subject，然後以完整 `uv run pytest` 驗證；
+   Tester 與 Independent Reviewer 必須為該新 full-SHA subject 建立新的 evidence，舊 failing evidence 不可重用。
+6. 驗證完整 diff 只包含本 Artifact Paths；不建立 `src-implementation` folder tree，亦不變更
    B6R13/R23 artifacts。
 
 ## Validation / Acceptance Checks
@@ -154,12 +170,18 @@ subject 必須重複完整 sequence。
   且 committed；cross-topic reuse、path/candidate/evidence/subject conflict 導向 `human-check`。
 - 任何 topic 未具 same-subject passing Tester、independent Reviewer、Planner Phase 4.5 或 human authorization
   時不可 publish；多 draft PR 可同時存在，Human-only merge/release/tag/post-merge 不變。
-- 三份 governance contract 文本明定並接受本 topic 的 executable Artifact Paths：Tester only-writer path
+- 四檔 immutable implementation subject（含三份 governance contract texts 與唯一允許的 governance regression
+  test repair）明定並接受本 topic 的 executable Artifact Paths：Tester only-writer path
   `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json` 與 Independent
   Reviewer only-writer path `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.implementation-review-log.json`。
   它們使用本 plan 所定 JSON top-level keys、同一 immutable implementation subject 的完整 SHA、Tester-before-
   Reviewer 與兩次 sole evidence-only commit ordering；Reviewer 只消費 committed passing Tester evidence，且
   Tester command/exit-code facts 可被機器檢查。
+- 只有 `assert_s16_route_is_fail_closed` 的兩個 B6R12/R22 global-route assertions 可變更；變更後它們必須分別
+  驗證 B6R13/R23 route 與其 subject-local、non-global-precondition 語義。direct imports、fixtures、mocks 與其餘
+  assertions 不變，且 B6R13/S17 對此測試檔沒有未來 write authority。
+- Tester 對新四檔 subject 執行完整 `uv run pytest` 並以 all-zero command facts 寫入新的 Tester evidence；任何先前
+  failing evidence 或不同 subject evidence 均 fail closed。
 - Independent Plan-Reviewer 僅能在 exact receipt path 以 machine-consumable record 寫入本 committed
   candidate 的 `approved` 或 `needs-rework` verdict；record 必須包含 `topic`、`candidate_commit`（完整 SHA）、
   `verdict` 與 `blocking_issues`，且 Plan-Reviewer 不得 commit。只有獨立 Implementer 原樣提交的 `approved`

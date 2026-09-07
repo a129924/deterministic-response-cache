@@ -9,7 +9,8 @@ state: planned
 ## Workflow Stages
 
 - [X] human-bootstrap-authorized
-- [X] plan-authoring
+- [X] bounded-test-ownership-resolution
+- [X] plan-authoring-or-bounded-repair
 - [ ] independent-plan-review
 - [ ] implementation
 - [ ] tester
@@ -20,7 +21,9 @@ state: planned
 
 ## Actionable Steps
 
-- [X] **Actor:** Plan-Creator — **Action:** Create only the five declared analysis/planning artifacts.
+- [X] **Actor:** Plan-Creator — **Action:** Create only the five declared analysis/planning artifacts, then make
+      this bounded repair only to plan/spec/step. The Human-authorized repair adds no current implementation change:
+      it declares the one-time test ownership resolution and the four-file subject for the next candidate.
 - [ ] **Actor:** Independent Implementer — **Action:** Commit the Plan-Creator's unchanged planning candidate
       as the sole planning-candidate commit; Planner then routes independent Plan-Reviewer. Plan-Creator does not
       commit.
@@ -32,21 +35,28 @@ state: planned
       unchanged as a standalone evidence-only commit; Planner must then re-preflight before bounded contract
       implementation. A `needs-rework` receipt is not committed and creates no candidate, route or authorization;
       Plan-Creator repairs only declared planning artifacts (for this repair: plan, spec and step only), Independent
-      Implementer commits the new candidate, and Independent Plan-Reviewer reviews that new candidate again.
+      Implementer commits the new candidate, and Independent Plan-Reviewer reviews that new candidate again. The
+      existing receipt is not amended or reused; the new receipt must bind the new planning-candidate full SHA.
 
 ## Implementation Steps
 
-- [ ] 1. Implementer updates only `AGENTS.md`, `plan/agent-handoff-workflow.md`, and
-      `plan/topic-plan-contract.md` after independent approval and Planner routing, and commits those three files
-      together as the one immutable implementation subject. Record its full 40-hex SHA as `S`.
+- [ ] 1. Implementer updates only `AGENTS.md`, `plan/agent-handoff-workflow.md`,
+      `plan/topic-plan-contract.md`, and `tests/test_observer_dispatcher_governance_contract.py` after independent
+      approval and Planner routing, and commits those four files together as the one immutable implementation subject.
+      In the test, replace only the two B6R12/R22 global-route assertions in `assert_s16_route_is_fail_closed` so they
+      validate B6R13/R23 as `observer-dispatcher-governance` subject-local frozen provenance rather than a global
+      prerequisite. Preserve direct imports, fixtures, mocks, and every other assertion. Record the subject's full
+      40-hex SHA as `S`.
 - [ ] 2. Tester, as sole writer, writes
       `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json` for `S`.
       The single JSON object has only `schema_version`, `topic`, `implementation_subject_commit`, `status`,
       `commands`, and `recorded_by`; `schema_version` is integer `1`, `topic` is
-      `workflow-concurrency-supersession`, `recorded_by` is `Tester`, `implementation_subject_commit` is `S`,
+      `workflow-concurrency-supersession`, `recorded_by` is `Tester`, `implementation_subject_commit` is the new
+      four-file `S`,
       `status` is `passing|failing`, and every `commands` entry has only a non-empty `command` and integer
       `exit_code`. `passing` requires every exit code to be `0`; `failing` requires at least one non-zero exit code.
-      Tester does not commit.
+      Tester records the full `uv run pytest` command and its actual exit code; Tester does not commit. The existing
+      failing evidence is not reused.
 - [ ] 3. Independent Implementer commits the unchanged passing Tester evidence as its own sole evidence-only
       commit. No planning, implementation, or other evidence path may share that commit.
 - [ ] 4. Independent Reviewer, as sole writer, consumes only that committed same-topic, same-`S`, passing Tester
@@ -60,9 +70,11 @@ state: planned
 - [ ] 5. Independent Implementer commits the unchanged Reviewer evidence as its own sole evidence-only commit.
       `approved` permits Planner Phase 4.5 alignment; `needs-rework` returns to Implementer and requires a new
       subject `S` plus steps 2–5 again.
-- [ ] 6. Validate that all three governance contract texts contain and accept the exact two evidence paths, unique
-      writers, required schemas, same full-SHA binding, Tester-before-Reviewer ordering, actual command/exit-code
-      rule, and evidence-only commits; otherwise stop as `needs-rework`.
+- [ ] 6. Validate the four-file subject: all three governance contract texts contain and accept the exact two evidence
+      paths, unique writers, required schemas, same full-SHA binding, Tester-before-Reviewer ordering, actual
+      command/exit-code rule, and evidence-only commits; the test changes only the declared two assertions and retains
+      direct imports, fixtures, mocks, and all other assertions. Full `uv run pytest` must pass; otherwise stop as
+      `needs-rework`.
 - [ ] 7. Planner performs Phase 4.5 alignment; only then may human-authorized bounded publish open a draft PR.
 
 ## Main Agent Actionable Steps — Fixed Tail
@@ -83,5 +95,6 @@ state: planned
 - Concurrent topics require isolated branch/worktree and non-conflicting declared paths/evidence/subjects; any conflict
   is `human-check`.
 - The exact Tester and Independent Reviewer evidence paths, schemas, full-SHA binding, and evidence-only commit
-  order are fixed in steps 2–5. The three contract texts are an acceptance target of step 6; these planning artifacts
-  do not themselves validate or create either evidence file.
+  order are fixed in steps 2–5. The four-file subject is an acceptance target of step 6; these planning artifacts do
+  not themselves validate or create either evidence file. B6R13/S17 may not modify the test path after this one-time
+  repair without a new human-check resolution.
