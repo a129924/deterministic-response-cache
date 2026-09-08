@@ -23,7 +23,8 @@ state: planned
 
 - [X] **Actor:** Plan-Creator — **Action:** Create only the five declared analysis/planning artifacts, then make
       this bounded repair only to plan/spec/step. The Human-authorized repair adds no current implementation change:
-      it declares the one-time test ownership resolution and the four-file subject for the next candidate.
+      it declares the one-time test ownership resolution, the four-file subject, and the locked final test-change set
+      for the next candidate.
 - [ ] **Actor:** Independent Implementer — **Action:** Commit the Plan-Creator's unchanged planning candidate
       as the sole planning-candidate commit; Planner then routes independent Plan-Reviewer. Plan-Creator does not
       commit.
@@ -46,10 +47,12 @@ state: planned
       In that same commit, all three governance contract texts must state that this transition-only exception is only
       for `workflow-concurrency-supersession` and this one test repair; it must not authorize any other topic or future
       subject path expansion.
-      In the test, replace only the two B6R12/R22 global-route assertions in `assert_s16_route_is_fail_closed` so they
-      validate B6R13/R23 as `observer-dispatcher-governance` subject-local frozen provenance rather than a global
-      prerequisite. Preserve direct imports, fixtures, mocks, and every other assertion. Record the subject's full
-      40-hex SHA as `S`.
+      In the test, apply only the locked final test-change set: two B6R12/R22 global-route assertions in
+      `assert_s16_route_is_fail_closed` validate B6R13/R23 as `observer-dispatcher-governance` subject-local frozen
+      provenance; the first stale-topology parameter case validates that topology; the literal `thread resolve`
+      assertion accepts `thread resolution` or `comment-resolve`; and only directly related stale docstrings change.
+      Preserve direct imports, fixtures, mocks, function/parameter names, and every other assertion. Record the
+      subject's full 40-hex SHA as `S`.
 - [ ] 2. Tester, as sole writer, writes
       `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json` for `S`.
       The single JSON object has only `schema_version`, `topic`, `implementation_subject_commit`, `status`,
@@ -75,9 +78,10 @@ state: planned
       subject `S` plus steps 2–5 again.
 - [ ] 6. Validate the four-file subject: all three governance contract texts contain and accept the exact two evidence
       paths, unique writers, required schemas, same full-SHA binding, Tester-before-Reviewer ordering, actual
-      command/exit-code rule, and evidence-only commits; the test changes only the declared two assertions and retains
-      direct imports, fixtures, mocks, and all other assertions. Full `uv run pytest` must pass; otherwise stop as
-      `needs-rework`.
+      command/exit-code rule, and evidence-only commits; the test changes only the locked final test-change set (two
+      global-route assertions, first stale-topology parameter case, literal `thread resolve` assertion, directly related
+      stale docstrings) and retains direct imports, fixtures, mocks, function/parameter names, and all other assertions.
+      Full `uv run pytest` must pass; otherwise stop as `needs-rework`.
 - [ ] 7. Planner performs Phase 4.5 alignment; only then may human-authorized bounded publish open a draft PR.
 
 ## Main Agent Actionable Steps — Fixed Tail
@@ -101,3 +105,6 @@ state: planned
   order are fixed in steps 2–5. The four-file subject is an acceptance target of step 6; these planning artifacts do
   not themselves validate or create either evidence file. B6R13/S17 may not modify the test path after this one-time
   repair without a new human-check resolution.
+- The final test-change set is exhaustive. It permits no test-path modification beyond the two B6R12/R22 global-route
+  assertions, the first stale-topology parameter case, the literal `thread resolve` assertion, and directly related
+  B6R12/R22 current/sole-predecessor docstrings.

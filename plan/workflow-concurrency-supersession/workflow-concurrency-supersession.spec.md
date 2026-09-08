@@ -26,16 +26,18 @@
 7. The four-file immutable implementation subject contains `AGENTS.md`, `plan/agent-handoff-workflow.md`,
    `plan/topic-plan-contract.md`, and `tests/test_observer_dispatcher_governance_contract.py`. The first three
    in the same commit explicitly limit this transition-only exception to `workflow-concurrency-supersession` and this
-   one test repair; they grant neither another topic nor a future implementation subject any path expansion. The test
-   changes only the two B6R12/R22 global-route assertions
-   in `assert_s16_route_is_fail_closed`, making them verify B6R13/R23 as an
-   `observer-dispatcher-governance` subject-local frozen-provenance obligation rather than another topic's global
-   prerequisite. Tester is the sole writer of
+   one test repair; they grant neither another topic nor a future implementation subject any path expansion. The locked
+   final test-change set is limited to the two B6R12/R22 global-route assertions in
+   `assert_s16_route_is_fail_closed`, the **first** stale-topology parameter case in
+   `test_s16_route_rejects_stale_topology_and_gate_mutations`, that helper's literal `thread resolve` assertion, and
+   directly related stale docstrings that call B6R12/R22 current or sole predecessor. The assertions verify B6R13/R23
+   as an `observer-dispatcher-governance` subject-local frozen-provenance obligation rather than another topic's global
+   prerequisite; the literal assertion accepts current `thread resolution` or `comment-resolve` wording. Tester is the sole writer of
    `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json`; Independent
    Reviewer is the sole writer of
    `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.implementation-review-log.json`.
    Both are machine-consumable JSON records bound to the same full 40-hex immutable four-file implementation-subject
-   SHA. Direct imports, fixtures, mocks, and every other test assertion remain unchanged.
+   SHA. Direct imports, fixtures, mocks, function and parameter names, and every assertion outside that locked set remain unchanged.
 8. Tester evidence has only `schema_version` (integer `1`), `topic`, `implementation_subject_commit`, `status`,
    `commands`, and `recorded_by`; every command records a non-empty `command` and integer `exit_code`, `passing`
    requires all exit codes to be `0`, and `failing` requires at least one non-zero exit code. Reviewer evidence has
@@ -71,15 +73,17 @@
 - **Then** that topic cannot publish, while the other may open its separately authorized draft PR; neither can
   merge, release, tag or post-merge automatically.
 
-### Scenario 4: Only two global-route assertions change
+### Scenario 4: Final bounded regression-test repair
 
 - **Given** the Human-authorized one-time ownership resolution for
   `tests/test_observer_dispatcher_governance_contract.py`.
 - **When** Implementer prepares the four-file subject.
-- **Then** it replaces only the two B6R12/R22 global-route assertions in
+- **Then** it replaces the two B6R12/R22 global-route assertions in
   `assert_s16_route_is_fail_closed`: one verifies the B6R13/R23 route and one verifies that this obligation is
-  subject-local and not another topic's global prerequisite. Direct imports, fixtures, mocks, and every other
-  assertion are unchanged. The three contract texts in that same commit declare this as the single
+  subject-local and not another topic's global prerequisite. It updates only the first stale-topology parameter case
+  to reject a stale B6R13/R23 subject-local topology mutation, makes the literal `thread resolve` assertion accept
+  `thread resolution` or `comment-resolve`, and corrects only directly related stale docstrings. Direct imports,
+  fixtures, mocks, function/parameter names, and every other assertion are unchanged. The three contract texts in that same commit declare this as the single
   `workflow-concurrency-supersession` transition-only test repair, not a reusable subject-expansion mechanism.
 
 ### Scenario 5: Tester evidence precedes implementation review
@@ -119,6 +123,10 @@
   four-file subject commit must update all three governance contract texts to bind this topic's one test repair. A
   contract that leaves the prior three-file binding in force, fails to name the topic and repair, or permits a later
   path expansion fails closed.
+- The exact test scope is final: only the two global-route assertions, the first stale-topology parameter case, the
+  literal `thread resolve` assertion, and directly related stale docstrings may change. A second parameter case,
+  another assertion, a function/parameter rename, or a docstring unrelated to B6R12/R22 current/sole-predecessor
+  wording is outside this exception and fails closed.
 - Evidence that names a different topic or immutable subject fails closed for the current topic.
 - A missing command, non-integer exit code, non-zero command exit code paired with `passing`, missing required JSON
   key, extra top-level key, abbreviated SHA, uncommitted Tester evidence, or a Reviewer record that names a different

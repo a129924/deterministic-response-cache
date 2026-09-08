@@ -12,8 +12,10 @@ Reviewer phases；publish 與 Human boundary 維持 subject-local gates。
   approval、Planner re-preflight 與後續 topic-local gates 後，僅更新 `AGENTS.md`、
   `plan/agent-handoff-workflow.md`、`plan/topic-plan-contract.md`，以及
   `tests/test_observer_dispatcher_governance_contract.py` 以記載與驗證 supersession contract。測試檔只可
-  替換兩個要求 B6R12/R22 全域 route 的 assertions，使其驗證 B6R13/R23 為
-  `observer-dispatcher-governance` 的 subject-local frozen-provenance obligation，非其他 topic 的全域前置條件。
+  替換既定的兩個要求 B6R12/R22 全域 route 的 assertions，使其驗證 B6R13/R23 為
+  `observer-dispatcher-governance` 的 subject-local frozen-provenance obligation，非其他 topic 的全域前置條件；
+  並只額外更新首個 stale-topology parameter case、literal `thread resolve` assertion，以及直接把 B6R12/R22
+  描述為 current／sole predecessor 的 stale docstrings。
 - **Out of scope**：`src-implementation` folders 或任何產品設計；R23/S17 或 B6R13 的執行、
   repair、取消或補建；frozen provenance；README/VERSION；release、tag、merge、post-merge。
 
@@ -30,9 +32,13 @@ Reviewer phases；publish 與 Human boundary 維持 subject-local gates。
   immutable implementation subject commit 內同時修改三份 governance contract texts 與該唯一測試檔。三份
   contract texts 必須明定此 exception 僅限 `workflow-concurrency-supersession`、僅限本次 test repair，且不授權
   其他 topic 或未來 implementation subject 擴張；該四檔 commit 的完整 40-hex SHA 是新的唯一 evidence binding。
-- 此測試修正只替換 `assert_s16_route_is_fail_closed` 中兩個舊 B6R12/R22 全域-route assertions：route
-  assertion 改驗證 B6R13/R23 route，global-lock assertion 改驗證其 subject-local、非其他 topic 前置條件。
-  direct imports、fixtures、mocks 與其餘 assertions 必須逐字維持。
+- 此測試修正的精確集合為：(a) `assert_s16_route_is_fail_closed` 中兩個舊 B6R12/R22 全域-route
+  assertions，分別改驗證 B6R13/R23 route 與其 subject-local、非其他 topic 前置條件；(b)
+  `test_s16_route_rejects_stale_topology_and_gate_mutations` 的**第一個** parameterized topology case，改為
+  拒絕 B6R13/R23 subject-local contract 的 stale topology mutation；(c) 該 helper 中 literal `thread resolve`
+  assertion，改接受目前契約的 `thread resolution` 或 `comment-resolve` wording；(d) 僅直接把 B6R12/R22
+  稱為 current／sole predecessor 的 stale docstrings。function name、parameter names、direct imports、fixtures、
+  mocks 與除此集合外的 assertions 必須維持。
 - 每個 topic 必須以自身 committed plan、step、Plan-Reviewer receipt、immutable subject、Tester
   evidence 與 independent Reviewer evidence route；任何 evidence 不得跨 topic 使用。
 - 平行只允許隔離 branch/worktree。declared write path、candidate、evidence 或 subject 的衝突
@@ -108,7 +114,7 @@ no release transition exists.
 | Governance guardrails | `AGENTS.md` | Implementer | approved topic-local routing contract |
 | Workflow handoff contract | `plan/agent-handoff-workflow.md` | Implementer | approved lifecycle/routing contract |
 | Topic-plan contract | `plan/topic-plan-contract.md` | Implementer | approved candidate/evidence conflict contract |
-| Governance regression test | `tests/test_observer_dispatcher_governance_contract.py` | Implementer | only two B6R12/R22 global-route assertions become B6R13/R23 subject-local frozen-provenance assertions |
+| Governance regression test | `tests/test_observer_dispatcher_governance_contract.py` | Implementer | only the locked final test-change set: two B6R12/R22 global-route assertions, first stale-topology parameter case, literal `thread resolve` assertion, and directly related stale docstrings |
 | Tester evidence | `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json` | Tester | only writer; factual machine-consumable validation for one committed immutable implementation subject; never commits it |
 | Implementation review evidence | `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.implementation-review-log.json` | Independent Reviewer | only writer; machine-consumable implementation verdict for the same subject after consuming committed passing Tester evidence; never commits it |
 
@@ -154,10 +160,11 @@ subject 必須重複完整 sequence。
 1. 以本 technical specification 的 contract model 更新三份 declared governance contract files；三份檔案都必須
    在同一四檔 subject commit 中明確將這個 transition-only exception 限定為
    `workflow-concurrency-supersession` 的本次 test repair，並排除其他 topic 或未來 subject 擴張。並在
-   `tests/test_observer_dispatcher_governance_contract.py` 中只替換兩個舊 B6R12/R22 全域-route assertions：
-   以 topic-local evidence routing 取代全域唯一 current route，並驗證 B6R13/R23 是 subject-local
-   frozen-provenance obligation，非其他 topic 的全域前置條件。
-2. 保留測試的 direct imports、fixtures、mocks 與兩個目標以外的 assertions；在三份 contract 中明定每個 topic
+   `tests/test_observer_dispatcher_governance_contract.py` 中套用 locked final test-change set：兩個舊 B6R12/R22
+   全域-route assertions 改以 topic-local evidence routing 驗證 B6R13/R23；只更新第一個 stale-topology
+   parameter case、literal `thread resolve` assertion 與直接相關 stale docstrings。不得改變 function name 或
+   parameter names。
+2. 保留測試的 direct imports、fixtures、mocks 與 locked final test-change set 外的 assertions；在三份 contract 中明定每個 topic
    的 committed evidence isolation、隔離 branch/worktree、衝突的
    `human-check` behavior，以及不得用 chat、branch、summary 或 frozen provenance 作 routing evidence。
 3. 在三份 contract 中保留 Tester -> independent Reviewer -> Planner Phase 4.5 -> human-authorized
@@ -188,9 +195,11 @@ subject 必須重複完整 sequence。
 - 三份 governance contract texts 在同一 four-file subject commit 中把四檔 binding 明確限縮為
   `workflow-concurrency-supersession` 的此次 transition-only test repair；它不授權其他 topic 或未來 subject
   加入任何 path。
-- 只有 `assert_s16_route_is_fail_closed` 的兩個 B6R12/R22 global-route assertions 可變更；變更後它們必須分別
-  驗證 B6R13/R23 route 與其 subject-local、non-global-precondition 語義。direct imports、fixtures、mocks 與其餘
-  assertions 不變，且 B6R13/S17 對此測試檔沒有未來 write authority。
+- 測試只可變更 locked final test-change set：`assert_s16_route_is_fail_closed` 的兩個 B6R12/R22 global-route
+  assertions 必須分別驗證 B6R13/R23 route 與其 subject-local、non-global-precondition 語義；首個 stale-topology
+  parameter case 必須驗證該 subject-local topology；literal `thread resolve` assertion 必須接受 `thread resolution`
+  或 `comment-resolve`；只有直接相關 stale docstrings 可同步。direct imports、fixtures、mocks、function/parameter
+  names 與其餘 assertions 不變，且 B6R13/S17 對此測試檔沒有未來 write authority。
 - Tester 對新四檔 subject 執行完整 `uv run pytest` 並以 all-zero command facts 寫入新的 Tester evidence；任何先前
   failing evidence 或不同 subject evidence 均 fail closed。
 - Independent Plan-Reviewer 僅能在 exact receipt path 以 machine-consumable record 寫入本 committed
