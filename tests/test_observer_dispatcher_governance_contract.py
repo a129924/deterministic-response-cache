@@ -233,8 +233,12 @@ def assert_s16_route_is_fail_closed(route: Mapping[str, str]) -> None:
     """Require B6R12/R22 as the sole frozen predecessor to S16."""
     assert tuple(route) == tuple(CURRENT_ROUTE_PATHS)
     authority = "".join(route.values())
-    assert "B6R12 -> R22 -> S16 -> T16 -> V16 -> Q16" in authority
-    assert "B6R12 -> R22 -> S16 -> T16 -> V16 -> Q16" in route["parent_plan"]
+    assert "B6R13 -> R23 -> S17 -> T17 -> V17 -> Q17" in authority
+    assert all(
+        "B6R13/R23 是 `observer-dispatcher-governance` 的 subject-local obligation" in read(path)
+        and "全域前置條件。" in read(path)
+        for path in ("AGENTS.md", *RETAINED_DESCENDANT_PATHS.values())
+    )
     assert "sole current route" in authority or "only current route" in authority
     assert "R22_REVIEW_PENDING" in authority
     assert "R22_COMPLETE_S16_NEXT" in authority

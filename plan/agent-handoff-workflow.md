@@ -19,7 +19,7 @@ Plan-Reviewer receipt、immutable subject SHA、Tester evidence 與 independent 
 `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json`。它必須是一個 JSON
 object，top-level keys 恰為 `schema_version`、`topic`、`implementation_subject_commit`、`status`、`commands`、`recorded_by`：
 `schema_version` 是 integer `1`，`topic` 是 `workflow-concurrency-supersession`，
-`implementation_subject_commit` 是三份 governance contract 文本 implementation commit 的完整 40-hex SHA，`status` 是
+`implementation_subject_commit` 是四檔 immutable implementation subject commit 的完整 40-hex SHA，`status` 是
 `passing|failing`，`commands` 是至少一項 object 的 non-empty array，每項只含 non-empty string `command` 與 integer
 `exit_code`，而 `recorded_by` 是 `Tester`。只有所有 commands 的 `exit_code` 都是 `0` 時才可寫 `status: "passing"`；
 `failing` 必須至少有一個 non-zero exit code。Tester 完成後，僅 Implementer 可先以 sole evidence-only commit 提交原樣
@@ -37,11 +37,14 @@ JSON object，top-level keys 恰為 `schema_version`、`topic`、`implementation
 可再以 sole evidence-only commit 提交原樣 Reviewer evidence。
 
 固定順序為：(1) Implementer 對且只對 `AGENTS.md`、`plan/agent-handoff-workflow.md`、
-`plan/topic-plan-contract.md` 建立 immutable implementation subject commit；(2) Tester 寫 Tester evidence，但不 commit；
+`plan/topic-plan-contract.md`、`tests/test_observer_dispatcher_governance_contract.py` 建立 immutable implementation subject commit；(2) Tester 寫 Tester evidence，但不 commit；
 (3) 獨立 Implementer 原樣以 sole evidence-only commit 提交 Tester evidence；(4) Independent Reviewer 消費該 committed
 passing evidence 後寫 Reviewer evidence，但不 commit；(5) 獨立 Implementer 原樣以 sole evidence-only commit 提交 Reviewer
 evidence。兩份 evidence 都不得與 implementation、planning artifact 或另一份 evidence 共用 commit；僅 `approved` 可進入
-Planner Phase 4.5，`needs-rework` 只可回到 Implementer，並以新的 implementation subject 重複完整 sequence。
+Planner Phase 4.5，`needs-rework` 只可回到 Implementer，並以新的 implementation subject 重複完整 sequence。本次四檔
+binding 是唯一一次 `workflow-concurrency-supersession` transition-only test repair；它只授權此測試檔，絕不授權其他
+topic 或未來 subject 擴張。B6R13/R23 是 `observer-dispatcher-governance` 的 subject-local obligation，不是其他 topic
+的全域前置條件。
 
 ## Authority and roles
 
