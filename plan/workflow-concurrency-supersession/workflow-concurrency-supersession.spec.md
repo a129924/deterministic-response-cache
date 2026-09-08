@@ -48,8 +48,19 @@
 9. The fixed order is four-file implementation-subject commit, Tester full `uv run pytest` plus evidence write,
    independent-Implementer sole Tester-evidence-only commit, Independent-Reviewer write, then independent-Implementer
    sole Reviewer-evidence-only commit. Reviewer
-   only consumes the committed same-topic, same-full-SHA passing Tester evidence; `approved` alone advances to
-   Planner Phase 4.5, while `needs-rework` returns to Implementer with a new subject and a new full sequence.
+  only consumes the committed same-topic, same-full-SHA passing Tester evidence; `approved` alone advances to
+  Planner Phase 4.5, while `needs-rework` returns to Implementer with a new subject and a new full sequence.
+10. The three contract texts define a universal admission for a topic with no existing artifacts. Human supplies
+    exactly one slug matching `^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$` and a non-empty intent. Planner read-only verifies a
+    full 40-hex `dev` base SHA, absence of the five initial artifact paths both at that base and in the worktree,
+    absence of `topic/<slug>` and `<repo-parent>/worktrees/<slug>`, and no active declared-path (equal/ancestor/
+    descendant) or topic-identity conflict. Only then does it route an admission-only Implementer to create
+    `topic/<slug>` at that exact SHA in `<repo-parent>/worktrees/<slug>`, with no tracked write or commit. Planner
+    verifies branch, HEAD SHA and clean tracked status, then routes Plan-Creator to author exactly
+    `analysis/<slug>/requirements.md`, `analysis/<slug>/technical-spec.md`, `plan/<slug>/<slug>.plan.md`,
+    `plan/<slug>/<slug>.spec.md` and `plan/<slug>/<slug>.step.md`; the normal committed Plan-Reviewer sequence
+    follows. Any failed input, check or setup is `human-check`; `dev` is an integration baseline, never a shared
+    active-topic writer worktree.
 
 ## Behavioral Scenarios
 
@@ -103,6 +114,17 @@
 - **When** this topic's implementation is validated.
 - **Then** validation fails and the topic cannot proceed to Tester or publish.
 
+### Scenario 7: New topic admission is isolated and repeatable
+
+- **Given** Human supplies `src-implementation` and a non-empty intent, no initial artifact exists, no active
+  topic declares an overlapping path or identity, and `dev` resolves to full SHA `D`.
+- **When** Planner completes the read-only admission preflight, admission-only Implementer creates
+  `topic/src-implementation` in `<repo-parent>/worktrees/src-implementation` at `D` without a tracked write or
+  commit, and Planner validates that setup.
+- **Then** only Plan-Creator writes the five initial artifacts in that isolated worktree; their independent
+  commit/review route starts normally. No `src/` tree, test change, implementation subject or shared-`dev` work
+  is authorized by admission alone.
+
 ## Error / Edge Cases
 
 - An uncommitted Plan-Reviewer chat response is not a receipt and cannot route any topic.
@@ -135,4 +157,8 @@
   sole evidence-only commit. A Reviewer `needs-rework` record is committed only as its own evidence-only commit and
   returns the topic to Implementer; it cannot authorize Phase 4.5 or publish.
 - A shared worktree, non-isolated branch, or undeclared path is a conflict requiring `human-check`.
+- A missing/invalid Human slug or intent, unresolved `dev`, pre-existing initial artifact/branch/worktree, active
+  path/identity overlap, or a created worktree whose branch, full base SHA or tracked status differs from admission
+  preflight is `human-check`. It must not be repaired by choosing another slug/base/path, writing partial artifacts,
+  or using `dev` as the topic worktree.
 - `src-implementation` has no implied tree, naming, API or implementation decision from this governance topic.

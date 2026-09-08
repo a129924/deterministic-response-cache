@@ -23,8 +23,8 @@ state: planned
 
 - [X] **Actor:** Plan-Creator — **Action:** Create only the five declared analysis/planning artifacts, then make
       this bounded repair only to plan/spec/step. The Human-authorized repair adds no current implementation change:
-      it declares the one-time test ownership resolution, the four-file subject, and the locked final test-change set
-      for the next candidate.
+      it declares the one-time test ownership resolution, the four-file subject, the locked final test-change set,
+      and the future universal admission contract for a no-artifact topic.
 - [ ] **Actor:** Independent Implementer — **Action:** Commit the Plan-Creator's unchanged planning candidate
       as the sole planning-candidate commit; Planner then routes independent Plan-Reviewer. Plan-Creator does not
       commit.
@@ -52,7 +52,12 @@ state: planned
       provenance; the first stale-topology parameter case validates that topology; the literal `thread resolve`
       assertion accepts `thread resolution` or `comment-resolve`; and only directly related stale docstrings change.
       Preserve direct imports, fixtures, mocks, function/parameter names, and every other assertion. Record the
-      subject's full 40-hex SHA as `S`.
+      subject's full 40-hex SHA as `S`. The same three contract files add only the locked universal new-topic
+      admission: Human regex-slug plus non-empty intent; Planner's `dev` full-SHA, initial-artifact absence and
+      active-conflict checks; admission-only creation of `topic/<slug>` in
+      `<repo-parent>/worktrees/<slug>` with no tracked write/commit; Planner's branch/base/clean-status validation;
+      and Plan-Creator's exact five initial artifacts before normal independent planning review. This adds no test
+      assertion, test path or implementation path beyond the declared four-file subject.
 - [ ] 2. Tester, as sole writer, writes
       `plan/workflow-concurrency-supersession/workflow-concurrency-supersession.tester-evidence.json` for `S`.
       The single JSON object has only `schema_version`, `topic`, `implementation_subject_commit`, `status`,
@@ -81,7 +86,9 @@ state: planned
       command/exit-code rule, and evidence-only commits; the test changes only the locked final test-change set (two
       global-route assertions, first stale-topology parameter case, literal `thread resolve` assertion, directly related
       stale docstrings) and retains direct imports, fixtures, mocks, function/parameter names, and all other assertions.
-      Full `uv run pytest` must pass; otherwise stop as `needs-rework`.
+      Validate the generic admission precisely rejects invalid slug/intent, unresolved `dev`, existing artifact/
+      branch/worktree, path or identity conflict, and setup mismatch as `human-check`; it allows only the fixed
+      isolated setup and five-artifact route, with `dev` reserved as integration baseline. Full `uv run pytest` must pass; otherwise stop as `needs-rework`.
 - [ ] 7. Planner performs Phase 4.5 alignment; only then may human-authorized bounded publish open a draft PR.
 
 ## Main Agent Actionable Steps — Fixed Tail
@@ -101,6 +108,12 @@ state: planned
 - B6R13/R23 remains subject-local. Its R23 chat response is non-evidence and is neither cancelled nor backfilled here.
 - Concurrent topics require isolated branch/worktree and non-conflicting declared paths/evidence/subjects; any conflict
   is `human-check`.
+- For a future topic with no artifacts, Human provides only a slug matching
+  `^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$` and non-empty intent. Planner completes the read-only admission checks against
+  a full `dev` SHA, then routes an admission-only Implementer to create `topic/<slug>` at
+  `<repo-parent>/worktrees/<slug>` without a tracked write or commit. After Planner validates branch, base SHA and
+  clean status, Plan-Creator alone authors requirements, technical spec, plan, spec and step. The normal committed
+  Plan-Reviewer route follows; any check failure is `human-check`, not a fallback to `dev` or a partial write.
 - The exact Tester and Independent Reviewer evidence paths, schemas, full-SHA binding, and evidence-only commit
   order are fixed in steps 2–5. The four-file subject is an acceptance target of step 6; these planning artifacts do
   not themselves validate or create either evidence file. B6R13/S17 may not modify the test path after this one-time

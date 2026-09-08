@@ -2,9 +2,10 @@
 
 ## Goal / Outcome
 
-以 topic-local committed evidence 取代 B6R13/R23 的全域 routing lock。完成後，互不衝突的
-topics 可在隔離 branch/worktree 內並行完成各自 planning、implementation、Tester 與 independent
-Reviewer phases；publish 與 Human boundary 維持 subject-local gates。
+以 topic-local committed evidence 取代 B6R13/R23 的全域 routing lock，並提供無既有 artifacts 的新 topic
+可重複使用、可驗證的 admission 路徑。完成後，互不衝突的 topics 可在隔離 branch/worktree 內並行完成各自
+planning、implementation、Tester 與 independent Reviewer phases；publish 與 Human boundary 維持
+subject-local gates。
 
 ## Scope
 
@@ -16,6 +17,9 @@ Reviewer phases；publish 與 Human boundary 維持 subject-local gates。
   `observer-dispatcher-governance` 的 subject-local frozen-provenance obligation，非其他 topic 的全域前置條件；
   並只額外更新首個 stale-topology parameter case、literal `thread resolve` assertion，以及直接把 B6R12/R22
   描述為 current／sole predecessor 的 stale docstrings。
+- **In scope**：在同一三份 governance contract 中建立通用新 topic admission：Human 以合法 slug 與 non-empty
+  intent 提出請求；Planner 在 `dev` full SHA 上完成 absence/conflict preflight，先派 admission-only Implementer
+  建立隔離 branch/worktree，再派 Plan-Creator 建立該新 topic 的五份 initial analysis/planning artifacts。
 - **Out of scope**：`src-implementation` folders 或任何產品設計；R23/S17 或 B6R13 的執行、
   repair、取消或補建；frozen provenance；README/VERSION；release、tag、merge、post-merge。
 
@@ -43,6 +47,25 @@ Reviewer phases；publish 與 Human boundary 維持 subject-local gates。
   evidence 與 independent Reviewer evidence route；任何 evidence 不得跨 topic 使用。
 - 平行只允許隔離 branch/worktree。declared write path、candidate、evidence 或 subject 的衝突
   一律 `human-check`；不自動 rebase、合併、選擇 candidate 或擴大 allowlist。
+- 通用 admission 的 Human input 恰為一個符合 `^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$` 的 topic slug 與一段
+  non-empty intent。slug 是唯一 topic identity，並決定 `topic/<slug>` branch、
+  `<repo-parent>/worktrees/<slug>` worktree，以及下列五個 initial artifact paths：
+  `analysis/<slug>/requirements.md`、`analysis/<slug>/technical-spec.md`、
+  `plan/<slug>/<slug>.plan.md`、`plan/<slug>/<slug>.spec.md`、`plan/<slug>/<slug>.step.md`。
+- Planner admission preflight 必須 read-only 地確認：local `dev` ref 可解析為完整 40-hex base SHA；該五個
+  paths 在該 base 與目前工作樹皆不存在；`topic/<slug>` 與目標 worktree 不存在；且沒有其他 active topic 的
+  declared path 與這五個 paths 以相同、祖先或子孫關係重疊，也沒有同 slug 的 candidate/evidence/subject。
+  任一 input 不合法、absence/conflict check 失敗、`dev` 無法解析，或後續 worktree 的 branch/base/status 不符，
+  一律 `human-check`，不選擇替代 slug、base、path 或 owner。
+- admission-only Implementer 只能執行 `git worktree add -b topic/<slug> <repo-parent>/worktrees/<slug> <dev-base-SHA>`
+  的等價隔離 setup；不得寫入 tracked files、不得 commit、不得建立 planning/evidence/implementation subject。
+  同一 bootstrap Planner 驗證新 worktree 的 branch、HEAD full SHA 與 clean tracked status 後，才可派唯一
+  Plan-Creator author 上述五份 initial artifacts。這是單一 bootstrap 內的 setup/validation，不是第二次
+  bootstrap 或 Planner self-dispatch。
+- Plan-Creator 完成初始五檔後，回到既有正常 sequence：Independent Implementer 以該五檔為 sole
+  planning-candidate commit，Independent Plan-Reviewer 寫 receipt，Independent Implementer 原樣以 sole
+  evidence-only commit 提交 approved receipt，Planner re-preflight 後才可 route implementation。admission
+  既不直接授權 `src/`、測試、contract 或任何 implementation path，也不繞過後續 gates。
 - publish 仍要求同-subject passing Tester evidence、independent Reviewer approval、Planner Phase
   4.5 alignment 及既有 human authorization；允許多個 draft PR。只有 Human 可 merge、release、
   tag 與 post-merge。
@@ -100,6 +123,16 @@ receipt 不得 commit，且只允許回到 bounded planning repair。其後為 `
 `needs-rework` -> `implementer-in-progress`; `approved` -> `publish-in-progress`; `publish-in-progress` ->
 `pr-open`; `pr-open` -> `needs-rework|merged`; `merged` -> terminal。Only Human may move `pr-open` to `merged`;
 no release transition exists.
+
+### Universal new-topic admission transition
+
+對沒有任何既有 topic artifacts 的未來 topic，完整 transition 固定為：`human-admission-request` ->
+`planner-admission-preflight` -> `admission-worktree-setup-pending` -> `admission-worktree-validation` ->
+`initial-artifact-authoring` -> `planning-candidate-commit-pending`，之後接續上述正常 planning-review
+transition。Human 只提供 locked-decision 所述 slug 與 intent；Planner 保存並回報 `dev` base full SHA，卻不寫
+artifact。admission-only Implementer 只建立固定 branch/worktree；Plan-Creator 是五份 initial artifacts 的唯一
+writer。`dev` 是 integration baseline，不能承載並行 active topic 的 planning、implementation 或 evidence
+writer。任何 admission `human-check` 都停在請求前，不得建立 partial artifact 或改用共享 `dev` worktree。
 
 ## Artifact Paths
 
@@ -166,7 +199,10 @@ subject 必須重複完整 sequence。
    parameter names。
 2. 保留測試的 direct imports、fixtures、mocks 與 locked final test-change set 外的 assertions；在三份 contract 中明定每個 topic
    的 committed evidence isolation、隔離 branch/worktree、衝突的
-   `human-check` behavior，以及不得用 chat、branch、summary 或 frozen provenance 作 routing evidence。
+   `human-check` behavior，以及不得用 chat、branch、summary 或 frozen provenance 作 routing evidence。同時實作
+   locked universal admission transition：合法 Human slug/intent、`dev` full-SHA and absence/conflict preflight、
+   `topic/<slug>` / `<repo-parent>/worktrees/<slug>` admission-only setup、Planner validation、五份 initial
+   artifacts，再接既有 committed review sequence。不得擴大測試的 locked final change set。
 3. 在三份 contract 中保留 Tester -> independent Reviewer -> Planner Phase 4.5 -> human-authorized
    bounded publish -> `pr-open` -> Human-only merge/release/tag/post-merge sequence，並允許多個 draft PR。
 4. 在三份 contract 中驗證並明定本 topic 的 exact Tester evidence 與 implementation Reviewer evidence
@@ -183,6 +219,10 @@ subject 必須重複完整 sequence。
 - B6R13/R23 未提交聊天結果明確為 non-evidence，且 B6R13 僅 subject-local blocked，不可封鎖無衝突 topic。
 - 契約要求每一 topic 的 plan、step、Plan-Reviewer receipt、subject、Tester 與 Reviewer evidence 同 topic
   且 committed；cross-topic reuse、path/candidate/evidence/subject conflict 導向 `human-check`。
+- 通用 admission 僅接受 locked regex slug 與 non-empty intent；它必須從可解析的 `dev` 完整 SHA 建立
+  `topic/<slug>` 和 `<repo-parent>/worktrees/<slug>`，並在 branch/base/clean-status verification 後才 author
+  五份 initial artifacts。任何 artifact 已存在、active path/identity overlap、預先存在 branch/worktree 或 setup
+  mismatch 都是 `human-check`；`dev` 不得承載 active topic writer。
 - 任何 topic 未具 same-subject passing Tester、independent Reviewer、Planner Phase 4.5 或 human authorization
   時不可 publish；多 draft PR 可同時存在，Human-only merge/release/tag/post-merge 不變。
 - 四檔 immutable implementation subject（含三份 governance contract texts 與唯一允許的 governance regression
@@ -242,4 +282,4 @@ merge; no release, tag or post-merge work belongs to this topic.
 ## Open Questions / Unresolved Items
 
 None. `src-implementation` remains a later, separate topic whose folders and implementation requirements are
-intentionally undecided.
+intentionally undecided；它可在通用 admission 生效後，以 Human slug/intent 走自己的 initial planning route。
