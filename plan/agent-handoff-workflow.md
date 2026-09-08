@@ -13,6 +13,23 @@ Plan-Reviewer receipt、immutable subject SHA、Tester evidence 與 independent 
 只可修改 declared exact-fourteen allowlist。這項未解決義務不得補建、取消或以聊天結果視作完成，但不構成其他 topic
 的前置條件。B6R12/R22/S16-Q16、B6R10/R20 及更早 records 是 frozen predecessor provenance。
 
+## Universal new-topic admission
+
+對尚無任何 topic artifacts 的新 topic，Human 只提供符合 `^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$` 的 slug 與 non-empty
+intent。Planner 必須 read-only 確認 local `dev` 可解析為完整 40-hex base SHA、五個 initial artifact paths 在該 base
+與目前工作樹均不存在、`topic/<slug>` 與 `<repo-parent>/worktrees/<slug>` 均不存在，且沒有 active topic 的 declared
+path 以相同、祖先或子孫關係重疊，也沒有同 slug 的 candidate、evidence 或 subject。任何 input 或 check 失敗均為
+`human-check`，不得選擇替代 slug、base、path 或 owner。
+
+只有通過 preflight，Planner 才可派 admission-only Implementer 執行等價於
+`git worktree add -b topic/<slug> <repo-parent>/worktrees/<slug> <dev-base-SHA>` 的隔離 setup；該角色不得寫 tracked
+files、commit 或建立 artifacts。Planner 驗證新 worktree 的 branch、HEAD full SHA 與 clean tracked status 後，才可派
+Plan-Creator 在該 worktree 且只在該 worktree 寫入
+`analysis/<slug>/requirements.md`、`analysis/<slug>/technical-spec.md`、`plan/<slug>/<slug>.plan.md`、
+`plan/<slug>/<slug>.spec.md`、`plan/<slug>/<slug>.step.md`；其後回到正常 committed planning-candidate 與 independent
+Plan-Reviewer sequence。`dev` 僅是 integration baseline，不承載並行 active-topic writer。此 admission 不擴張
+`workflow-concurrency-supersession` 的唯一 transition-only test repair，也不授權 implementation path。
+
 ## Workflow concurrency supersession validation-evidence contract
 
 `workflow-concurrency-supersession` 的 Tester 唯一 writer path 是
@@ -92,7 +109,7 @@ blockers 與 Copilot triage。`needs-rework` 沒有 active candidate、next phas
 Independent Implementer 以單獨 evidence-only commit 原樣提交的 approved R20 可建立唯一 active candidate，effective
 state 為 `R20_COMPLETE_S16_NEXT`，next phase 是 S16。B6R10/R20 均不得建立 implementation subject。
 
-S16 是唯一 non-merge subject，保留測試的 direct imports；不得以 `importlib`、`__import__` 或 `sys.modules`
+S16 is the sole non-merge test subject，保留測試的 direct imports；不得以 `importlib`、`__import__` 或 `sys.modules`
 substitution 取代既有測試行為。S16 驗證 committed T16/V16 blob semantics：topology/path、同一完整 S16 SHA、T16
 `passing` 與 V16 `APPROVED`。T16、V16 是唯一 linear non-merge S16 descendants，且 named Git diff 的 exact
 evidence paths 與 lexical tuple order 必須以 B6R10 parent contract 為準。T16 必須如實記錄同一 S16 的完整 suite

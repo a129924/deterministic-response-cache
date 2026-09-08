@@ -14,6 +14,23 @@ test allowlist and retains direct imports。T17/V17 是唯一 S17 evidence desce
 evidence-only actual full-triple gate。它不得補建、取消或以聊天結果視作完成，且不構成任何其他 topic 的前置條件。
 B6R12/R22/S16-Q16、B6R10/R20 and earlier are frozen predecessor provenance.
 
+## Universal new-topic admission
+
+尚無任何 topic artifacts 的 topic 僅可由 Human 提供一個符合 `^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$` 的 slug 與 non-empty
+intent 啟動。Planner 的唯一 admission preflight 必須 read-only 驗證：local `dev` 是完整 40-hex base SHA；
+`analysis/<slug>/requirements.md`、`analysis/<slug>/technical-spec.md`、`plan/<slug>/<slug>.plan.md`、
+`plan/<slug>/<slug>.spec.md`、`plan/<slug>/<slug>.step.md` 在該 base 與目前工作樹都不存在；`topic/<slug>` 與
+`<repo-parent>/worktrees/<slug>` 不存在；且沒有 active topic 的 declared path 與這五個 paths 相同、互為祖先/子孫，
+也沒有同 slug 的 candidate、evidence 或 subject。任何 failure 都是 `human-check`，不得自行改用其他 slug、base、path
+或 shared worktree。
+
+通過後，admission-only Implementer 只可建立 `topic/<slug>` branch 與 `<repo-parent>/worktrees/<slug>` worktree，
+其 base 必須是該 `dev` full SHA；不得寫 tracked files、commit 或建立 planning/evidence/implementation subject。Planner
+驗證 branch、HEAD full SHA 與 clean tracked status 後，Plan-Creator 才可在該 isolated worktree 建立且只建立上述五份
+initial artifacts，然後依一般 planning-candidate commit、independent Plan-Reviewer receipt 與 receipt commit route
+前進。`dev` 是 integration baseline，不能成為並行 active-topic writer；這條 admission 不改變或擴張
+`workflow-concurrency-supersession` 唯一一次 transition-only test repair。
+
 ## Workflow concurrency supersession validation-evidence contract
 
 `workflow-concurrency-supersession` 的 Tester 唯一 writer path 是
@@ -83,7 +100,7 @@ next phase, subject or close authorization. Only a separately committed approved
 `R20_COMPLETE_S16_NEXT`, and next phase S16. Planner selects only that record and never asks Plan-Creator to refine,
 select, or self-close.
 
-Frozen B6R10 S16 was the sole non-merge test subject and preserved direct imports; `importlib`, `__import__`, and `sys.modules`
+Frozen B6R10 S16 is the sole non-merge test subject and preserves direct imports; `importlib`, `__import__`, and `sys.modules`
 substitution is forbidden. It verifies committed T16/V16 blob semantics: topology/path, one identical full S16 SHA,
 T16 `passing`, and V16 `APPROVED`. Q16 is a post-V16, actual full-triple, read-only Git gate which may write only
 `plan/observer-dispatcher-governance/observer-dispatcher-governance.correction-b6r10-actual-gate-evidence.md` as an

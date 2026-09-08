@@ -101,7 +101,7 @@ def run_git(*args: str) -> str:
 
 
 def read_current_route() -> dict[str, str]:
-    """Read only the B6R12/R22 current routing surfaces."""
+    """Read the retained routing surfaces for subject-local regression checks."""
     return {name: read(path) for name, path in CURRENT_ROUTE_PATHS.items()}
 
 
@@ -230,10 +230,10 @@ def assert_b6r12_admission_and_r22() -> None:
 
 
 def assert_s16_route_is_fail_closed(route: Mapping[str, str]) -> None:
-    """Require B6R12/R22 as the sole frozen predecessor to S16."""
+    """Require B6R13/R23 to remain a subject-local, non-global obligation."""
     assert tuple(route) == tuple(CURRENT_ROUTE_PATHS)
     authority = "".join(route.values())
-    assert "B6R13 -> R23 -> S17 -> T17 -> V17 -> Q17" in authority
+    assert "B6R13 -> R23 -> S17 -> T17 -> V17 -> Q17" in route["parent_plan"]
     assert all(
         "B6R13/R23 是 `observer-dispatcher-governance` 的 subject-local obligation" in read(path)
         and "全域前置條件。" in read(path)
@@ -251,7 +251,7 @@ def assert_s16_route_is_fail_closed(route: Mapping[str, str]) -> None:
     assert "FROZEN_INVALID_NOT_ROUTING" in authority
     assert "step-creator" in authority
     assert "deferred" in authority
-    assert "thread resolve" in authority
+    assert "thread resolution" in authority or "comment-resolve" in authority
     assert "merge" in authority
     assert all(path in authority for path in (T16_EVIDENCE_PATH, V16_EVIDENCE_PATH))
     retained = "".join(read(path) for path in RETAINED_DESCENDANT_PATHS.values())
@@ -419,7 +419,7 @@ def replace_verdict(record: JsonObject) -> None:
 
 
 def test_b6r12_r22_route_is_the_sole_s16_predecessor() -> None:
-    """Require the committed approved R22 gate before the S16 implementation subject."""
+    """Keep the retained route checks fail closed without a global B6R12/R22 lock."""
     assert_s16_route_is_fail_closed(read_current_route())
 
 
@@ -431,7 +431,7 @@ def test_actual_b6r12_admission_and_r22_match_committed_git_objects() -> None:
 @pytest.mark.parametrize(
     ("source", "required_text", "replacement"),
     [
-        ("parent_plan", "B6R12 -> R22 -> S16 -> T16 -> V16 -> Q16", "B6R11 -> R21 -> S16"),
+        ("parent_plan", "B6R13 -> R23 -> S17 -> T17 -> V17 -> Q17", "B6R12 -> R22 -> S16"),
         ("b6r12_plan", "S16 retains direct imports", "S16 permits replacement imports"),
         ("b6r12_plan", "Q16 actual full-triple", "Q16 inferred triple"),
         ("b6r12_step", "R22_REVIEW_PENDING", "R22_COMPLETE_S16_NEXT"),
