@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "topic": "workflow-concurrency-supersession",
+  "implementation_subject_commit": "ba9a145448c28eee6327515047460ca1b3436359",
+  "tester_evidence_commit": "55254ea7beda498804211824e9246b265c66f0bf",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "recorded_by": "Independent Reviewer"
+}
