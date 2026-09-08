@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "topic": "workflow-concurrency-supersession",
-  "implementation_subject_commit": "34f43c6f4157773cf325e3ff91b0f0a7b5d17e58",
-  "status": "failing",
+  "implementation_subject_commit": "ba9a145448c28eee6327515047460ca1b3436359",
+  "status": "passing",
   "commands": [
     {
       "command": "uv run pytest",
-      "exit_code": 1
+      "exit_code": 0
     }
   ],
   "recorded_by": "Tester"
