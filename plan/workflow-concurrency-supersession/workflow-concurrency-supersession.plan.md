@@ -26,6 +26,10 @@ Reviewer phases；publish 與 Human boundary 維持 subject-local gates。
 - Human 已只針對本次 repair 解決 declared path overlap：`workflow-concurrency-supersession` 擁有
   `tests/test_observer_dispatcher_governance_contract.py` 的唯一修正權；B6R13/S17 日後不得修改此檔，除非
   另有新的 human-check resolution。
+- Human 已針對本次 post-`needs-rework` retry 授權 transition-only exception：Implementer 必須在**同一個**
+  immutable implementation subject commit 內同時修改三份 governance contract texts 與該唯一測試檔。三份
+  contract texts 必須明定此 exception 僅限 `workflow-concurrency-supersession`、僅限本次 test repair，且不授權
+  其他 topic 或未來 implementation subject 擴張；該四檔 commit 的完整 40-hex SHA 是新的唯一 evidence binding。
 - 此測試修正只替換 `assert_s16_route_is_fail_closed` 中兩個舊 B6R12/R22 全域-route assertions：route
   assertion 改驗證 B6R13/R23 route，global-lock assertion 改驗證其 subject-local、非其他 topic 前置條件。
   direct imports、fixtures、mocks 與其餘 assertions 必須逐字維持。
@@ -113,8 +117,10 @@ allowlist；Plan-Creator 僅可寫入前五份 analysis/planning artifacts，Pla
 receipt path 且絕不可 commit，Tester 與 Independent Reviewer 各只能寫入自己的 exact evidence path 且絕不可
 commit。獨立 Implementer 是唯一 commit owner：先提交原樣 planning candidate、再在 approved verdict 後提交原樣
 receipt evidence-only，並只在 Planner re-preflight routing 後寫入三份 governance contract 與上述唯一測試檔，並建立
-唯一 immutable implementation subject。其後必須依序提交 Tester evidence-only、Reviewer evidence-only；任何新增
-receipt/evidence location、產品 path 或其他文件都必須停止並由 Planner 重新路由。
+唯一 immutable implementation subject。該同一 commit 的三份 contract 必須將四檔 subject 限定為本 topic 的
+本次 test repair transition-only exception，不得形成其他 topic 或未來 subject 的擴張先例。其後必須依序提交
+Tester evidence-only、Reviewer evidence-only；任何新增 receipt/evidence location、產品 path 或其他文件都必須停止
+並由 Planner 重新路由。
 
 ### Implementation evidence schemas and commit order
 
@@ -145,7 +151,9 @@ subject 必須重複完整 sequence。
 
 ## Implementation Steps
 
-1. 以本 technical specification 的 contract model 更新三份 declared governance contract files，並在
+1. 以本 technical specification 的 contract model 更新三份 declared governance contract files；三份檔案都必須
+   在同一四檔 subject commit 中明確將這個 transition-only exception 限定為
+   `workflow-concurrency-supersession` 的本次 test repair，並排除其他 topic 或未來 subject 擴張。並在
    `tests/test_observer_dispatcher_governance_contract.py` 中只替換兩個舊 B6R12/R22 全域-route assertions：
    以 topic-local evidence routing 取代全域唯一 current route，並驗證 B6R13/R23 是 subject-local
    frozen-provenance obligation，非其他 topic 的全域前置條件。
@@ -177,6 +185,9 @@ subject 必須重複完整 sequence。
   它們使用本 plan 所定 JSON top-level keys、同一 immutable implementation subject 的完整 SHA、Tester-before-
   Reviewer 與兩次 sole evidence-only commit ordering；Reviewer 只消費 committed passing Tester evidence，且
   Tester command/exit-code facts 可被機器檢查。
+- 三份 governance contract texts 在同一 four-file subject commit 中把四檔 binding 明確限縮為
+  `workflow-concurrency-supersession` 的此次 transition-only test repair；它不授權其他 topic 或未來 subject
+  加入任何 path。
 - 只有 `assert_s16_route_is_fail_closed` 的兩個 B6R12/R22 global-route assertions 可變更；變更後它們必須分別
   驗證 B6R13/R23 route 與其 subject-local、non-global-precondition 語義。direct imports、fixtures、mocks 與其餘
   assertions 不變，且 B6R13/S17 對此測試檔沒有未來 write authority。

@@ -25,7 +25,9 @@
    without a new human-check resolution.
 7. The four-file immutable implementation subject contains `AGENTS.md`, `plan/agent-handoff-workflow.md`,
    `plan/topic-plan-contract.md`, and `tests/test_observer_dispatcher_governance_contract.py`. The first three
-   accept this topic's executable evidence contract; the test changes only the two B6R12/R22 global-route assertions
+   in the same commit explicitly limit this transition-only exception to `workflow-concurrency-supersession` and this
+   one test repair; they grant neither another topic nor a future implementation subject any path expansion. The test
+   changes only the two B6R12/R22 global-route assertions
    in `assert_s16_route_is_fail_closed`, making them verify B6R13/R23 as an
    `observer-dispatcher-governance` subject-local frozen-provenance obligation rather than another topic's global
    prerequisite. Tester is the sole writer of
@@ -77,7 +79,8 @@
 - **Then** it replaces only the two B6R12/R22 global-route assertions in
   `assert_s16_route_is_fail_closed`: one verifies the B6R13/R23 route and one verifies that this obligation is
   subject-local and not another topic's global prerequisite. Direct imports, fixtures, mocks, and every other
-  assertion are unchanged.
+  assertion are unchanged. The three contract texts in that same commit declare this as the single
+  `workflow-concurrency-supersession` transition-only test repair, not a reusable subject-expansion mechanism.
 
 ### Scenario 5: Tester evidence precedes implementation review
 
@@ -112,6 +115,10 @@
 - The prior approved Plan-Reviewer receipt and failing Tester evidence bind prior candidates/subjects. They are not
   routing authority for the repaired candidate and must remain untouched; the repaired candidate requires a new
   independent Plan-Reviewer `approved` receipt, a new four-file subject, and new Tester/Reviewer evidence.
+- The current three-file binding may be revised only by this Human-authorized transition-only exception: the same
+  four-file subject commit must update all three governance contract texts to bind this topic's one test repair. A
+  contract that leaves the prior three-file binding in force, fails to name the topic and repair, or permits a later
+  path expansion fails closed.
 - Evidence that names a different topic or immutable subject fails closed for the current topic.
 - A missing command, non-integer exit code, non-zero command exit code paired with `passing`, missing required JSON
   key, extra top-level key, abbreviated SHA, uncommitted Tester evidence, or a Reviewer record that names a different

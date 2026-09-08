@@ -43,6 +43,9 @@ state: planned
 - [ ] 1. Implementer updates only `AGENTS.md`, `plan/agent-handoff-workflow.md`,
       `plan/topic-plan-contract.md`, and `tests/test_observer_dispatcher_governance_contract.py` after independent
       approval and Planner routing, and commits those four files together as the one immutable implementation subject.
+      In that same commit, all three governance contract texts must state that this transition-only exception is only
+      for `workflow-concurrency-supersession` and this one test repair; it must not authorize any other topic or future
+      subject path expansion.
       In the test, replace only the two B6R12/R22 global-route assertions in `assert_s16_route_is_fail_closed` so they
       validate B6R13/R23 as `observer-dispatcher-governance` subject-local frozen provenance rather than a global
       prerequisite. Preserve direct imports, fixtures, mocks, and every other assertion. Record the subject's full
