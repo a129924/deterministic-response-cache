@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "candidate_commit": "0e72d1cf208bfb82e126ad63afd0e41c60dbdb6a",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  }
+}
