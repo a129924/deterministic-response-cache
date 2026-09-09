@@ -35,6 +35,6 @@ created: 2026-09-09
 ## Handoff / Gate Notes
 
 - Only the six pending entries in `## Implementation Steps` are the implementation-completion gate.
-- An independent Plan-Reviewer must approve the committed planning candidate; its receipt must then be committed unchanged as the sole receipt path before Planner selects an Implementer.
+- An independent Plan-Reviewer must write one receipt with exactly `schema_version`, `candidate_commit`, `verdict`, `blocking_issues`, and `copilot_feedback_triage`; `schema_version` is `1`, `candidate_commit` is the committed candidate's full SHA, and the receipt must then be committed unchanged as the sole receipt path with that candidate as its direct parent before Planner selects an Implementer.
 - Tester evidence must attest the same immutable implementation subject and be committed unchanged as its sole evidence path before Independent Reviewer work.
 - Independent Reviewer evidence must bind that committed passing Tester evidence and be committed unchanged as its sole evidence path before Planner Phase 4.5 alignment.

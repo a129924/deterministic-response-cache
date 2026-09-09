@@ -93,7 +93,7 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 
 All SHA values below are lowercase 40-character hexadecimal Git commit IDs. Any missing, extra, malformed, or cross-topic/cross-subject value fails closed.
 
-- Plan-review receipt is one JSON object with exactly `schema_version`, `topic`, `candidate_commit`, `verdict`, `blocking_issues`, `triage`, and `recorded_by`. `schema_version` is integer `1`; `topic` is `package-topology-skeleton-replay`; `candidate_commit` is the full candidate SHA; `verdict` is `approved|needs-rework`; `blocking_issues` is a string array and must be empty for `approved`; `triage` is an object with exactly `ADDRESS`, `DISCUSS`, and `SKIP` string arrays; `recorded_by` is `Independent Plan-Reviewer`. Receipt review inputs are only the five committed candidate artifacts, this topic's declared contract sources, and this topic's recorded feedback. The receipt-only commit changes only this path and has the candidate commit as direct parent.
+- Plan-review receipt is one JSON object with exactly `schema_version`, `candidate_commit`, `verdict`, `blocking_issues`, and `copilot_feedback_triage`. `schema_version` is integer `1`; `candidate_commit` is the full candidate SHA; `verdict` is `approved|needs-rework`; `blocking_issues` is a string array and must be empty for `approved`; `copilot_feedback_triage` is an object with exactly `ADDRESS`, `DISCUSS`, and `SKIP` string arrays. Receipt review inputs are only the five committed candidate artifacts, this topic's declared contract sources, and this topic's recorded feedback. The receipt-only commit changes only this path and has the candidate commit as direct parent.
 - Tester evidence is one JSON object with exactly `schema_version`, `topic`, `implementation_subject_commit`, `status`, `commands`, and `recorded_by`. `schema_version` is integer `1`; `topic` is `package-topology-skeleton-replay`; `implementation_subject_commit` is the full immutable subject SHA; `status` is `passing|failing`; `commands` is a non-empty array whose entries have exactly non-empty string `command` and integer `exit_code`; `recorded_by` is `Tester`. `passing` requires every exit code to be `0`; `failing` requires at least one non-zero exit code.
 - Independent implementation review log is one JSON object with exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`, `verdict`, `blocking_issues`, and `recorded_by`. `schema_version` is integer `1`; `topic` is `package-topology-skeleton-replay`; both commit fields are full SHA values and bind the same subject; `tester_evidence_commit` names the sole committed passing Tester-evidence commit; `verdict` is `approved|needs-rework`; `blocking_issues` is a string array, empty only for `approved`; `recorded_by` is `Independent Reviewer`.
 
@@ -192,8 +192,12 @@ Revert the immutable implementation subject commit, which removes the five `.git
 
 ## Reviewer Handoff
 
+The following is a shape-only template, not a receipt: the Plan-Reviewer replaces the candidate placeholder with the exact committed candidate SHA before writing the receipt.
+
 ```json
 {
+  "schema_version": 1,
+  "candidate_commit": "<full-40-hex-candidate-sha>",
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
   "copilot_feedback_triage": {
