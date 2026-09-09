@@ -1,6 +1,6 @@
 ---
 topic: package-topology-skeleton-replay
-phase: plan-authoring
+phase: plan-review-in-progress
 created: 2026-09-09
 ---
 
@@ -9,7 +9,7 @@ created: 2026-09-09
 ## Workflow Stages
 
 - [X] plan-authoring
-- [ ] plan-review
+- [ ] plan-review-in-progress
 - [ ] tdd-test-authoring
 - [ ] implementation
 - [ ] implementation-review
@@ -34,6 +34,7 @@ created: 2026-09-09
 
 ## Handoff / Gate Notes
 
+- Current candidate state is `planning-candidate-committed`; the active gate is `plan-review-in-progress`.
 - Only the six pending entries in `## Implementation Steps` are the implementation-completion gate.
 - An independent Plan-Reviewer must write one receipt with exactly `schema_version`, `candidate_commit`, `verdict`, `blocking_issues`, and `copilot_feedback_triage`; `schema_version` is `1`, `candidate_commit` is the committed candidate's full SHA, and the receipt must then be committed unchanged as the sole receipt path with that candidate as its direct parent before Planner selects an Implementer.
 - Tester evidence must attest the same immutable implementation subject and be committed unchanged as its sole evidence path before Independent Reviewer work.

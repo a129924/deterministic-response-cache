@@ -34,21 +34,22 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 
 ## Status / Allowed Transitions
 
-- **Current**: `planned`.
+- **Current candidate**: `planning-candidate-committed`.
+- **Current gate**: `plan-review-in-progress`.
 - **Execution model**: committed planning candidate → independent Plan-Reviewer receipt → immutable implementation subject → independent Tester evidence → independent implementation review evidence → Planner Phase 4.5 alignment → bounded publish → draft PR → Human review and merge. This topic stops before release.
 - **Allowed transitions**:
   - `planned` -> `planning-candidate-committed`
   - `planning-candidate-committed` -> `plan-review-in-progress`
   - `plan-review-in-progress` -> `plan-review-receipt-committed`
-  - `plan-review-receipt-committed` -> `creator-in-progress`
-  - `creator-in-progress` -> `tester-in-progress`
+  - `plan-review-receipt-committed` -> `implementation-in-progress`
+  - `implementation-in-progress` -> `tester-in-progress`
   - `tester-in-progress` -> `tester-evidence-committed`
   - `tester-evidence-committed` -> `reviewer-in-progress`
   - `reviewer-in-progress` -> `reviewer-evidence-committed`
   - `reviewer-evidence-committed` -> `approved`
-  - `creator-in-progress` -> `needs-rework`
+  - `implementation-in-progress` -> `needs-rework`
   - `reviewer-in-progress` -> `needs-rework`
-  - `needs-rework` -> `creator-in-progress` only with a new immutable implementation subject and a complete new Tester/Reviewer evidence chain
+  - `needs-rework` -> `implementation-in-progress` only with a new immutable implementation subject and a complete new Tester/Reviewer evidence chain
   - `approved` -> `publish-in-progress`
   - `publish-in-progress` -> `pr-open`
   - `pr-open` -> `needs-rework`
