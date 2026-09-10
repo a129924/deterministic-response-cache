@@ -9,10 +9,10 @@ created: 2026-09-09
 ## Workflow Stages
 
 - [X] plan-authoring
-- [ ] plan-review-in-progress
+- [X] plan-review-in-progress
 - [ ] tdd-test-authoring
-- [ ] implementation
-- [ ] implementation-review
+- [X] implementation
+- [X] implementation-review
 - [ ] code-review
 
 ## Actionable Steps
