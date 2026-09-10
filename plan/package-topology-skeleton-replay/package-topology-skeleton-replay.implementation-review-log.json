@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "topic": "package-topology-skeleton-replay",
+  "implementation_subject_commit": "8ed22c1a434fc108934159a1d8deaba53e7696d0",
+  "tester_evidence_commit": "6c9c5da9227f28bda3993f0bda03891d8b0120d2",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    "The immutable subject states that topology-only child directories are not importable. Directories beneath the root package may resolve as namespace subpackages without child __init__.py; replace the claim in every architecture surface with the factual boundary that the reservations add no executable Python module, public symbol, or re-export."
+  ],
+  "recorded_by": "Independent Reviewer"
+}
