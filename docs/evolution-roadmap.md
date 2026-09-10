@@ -28,7 +28,7 @@
 
 ## Package topology reservation
 
-本 topic 只預先建立下列 directory topology；它們不是已實作、可使用或可 import 的 child packages，且不建立 Python source、public API 或 `cache_store/` 頂層目錄。
+本 topic 只預先建立下列 directory topology；它們不代表 BC 已實作或可使用，且不建立 executable Python module、public symbol、re-export 或 `cache_store/` 頂層目錄。
 
 | Implementation order | BC | Reserved directory |
 | --- | --- | --- |
