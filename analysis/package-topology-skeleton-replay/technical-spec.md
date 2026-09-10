@@ -10,7 +10,7 @@
 | Model Execution | `src/deterministic_response_cache/model_execution/` | topology only |
 | Provider Adapter | `src/deterministic_response_cache/provider_adapter/` | topology only |
 
-Each fixed directory contains exactly one `.gitkeep` created by this topic. No child package marker or Python source is created.
+Each fixed directory contains exactly one `.gitkeep` created by this topic. No child package marker, executable Python source, public symbol, or re-export is created.
 
 ## Documentation alignment
 
@@ -27,4 +27,4 @@ The implementation subject updates these authoritative and synchronized architec
 - Response Reuse consumes confirmed identity; CacheStore remains its future internal component.
 - Loaded Runtime Cache owns neither response storage nor identity policy.
 - Model Execution owns neither identity nor reuse policy.
-- Provider Adapter remains a replaceable external boundary.
+- `provider_adapter/` reserves the BC's topology and contract location only; concrete local or remote provider integrations remain outside the core library and replaceable.

@@ -2,7 +2,7 @@
 
 ## Goal / Outcome
 
-Create a topology-only Business Capability skeleton under `src/deterministic_response_cache/` and align all declared architecture documentation to its fixed BC names, boundaries, and Identity-first evolution order. The result contains no executable BC implementation or new public import surface.
+Create a topology-only Business Capability skeleton under `src/deterministic_response_cache/` and align all declared architecture documentation to its fixed BC names, boundaries, and Identity-first evolution order. The result contains no executable BC implementation, public symbol, or re-export.
 
 ## Scope
 
@@ -22,7 +22,7 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 - The source-of-truth text mapping is `docs/business-capability-architecture.md`. `docs/evolution-roadmap.md` owns the ordered implementation sequence. The architecture brief and interactive scene are synchronized presentations, not alternate authority.
 - The order is immutable for this topic: Identity → Response Reuse → Loaded Runtime Cache → Model Execution → Provider Adapter. Existing Response-Reuse-first wording is corrected.
 - Identity alone owns model identity and complete request identity. Response Reuse only consumes confirmed identity. CacheStore stays an internal Response Reuse concept and does not receive a top-level directory.
-- Loaded Runtime Cache, Model Execution, and Provider Adapter remain separate future BCs; a reserved folder does not authorize their implementation.
+- Loaded Runtime Cache, Model Execution, and Provider Adapter remain separate future BCs; a reserved folder does not authorize their implementation. `provider_adapter/` is only a BC topology reservation: concrete provider integrations stay outside the core library and replaceable.
 - Every reserved directory contains only `.gitkeep`; none contains `__init__.py` or Python code. Existing `src/deterministic_response_cache/__init__.py` remains the sole package initializer and direct-import behavior is preserved.
 - The topic is not a correction route and declares no correction artifacts. Earlier topic artifacts and evidence are frozen nonrouting provenance and are not review inputs or routing authority.
 
@@ -30,12 +30,12 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 
 - Plan-Creator writes only the five initial planning artifacts. Implementer may write only the ten implementation paths after Planner selects a committed approved candidate receipt. Tester and Independent Reviewer write only their declared evidence paths. An unlisted path is a plan-alignment stop and returns to Planner.
 - This topic may not change `AGENTS.md`, workflow contracts, project configuration, root package initializer, test sources, README, or any old gateway design/API/workflow.
-- No role may treat the pre-created folders as importable child packages, infer identity outside Identity, make CacheStore a BC, or combine the three future BCs.
+- No role may treat the pre-created folders as implemented or usable BCs, infer identity outside Identity, make CacheStore a BC, or combine the three future BCs. The reservations add no executable Python module, public symbol, or re-export.
 
 ## Status / Allowed Transitions
 
-- **Current candidate**: `planning-candidate-committed`.
-- **Current gate**: `plan-review-in-progress`.
+- **Current candidate**: `pr-open`.
+- **Current gate**: Human PR review.
 - **Execution model**: committed planning candidate → independent Plan-Reviewer receipt → immutable implementation subject → independent Tester evidence → independent implementation review evidence → Planner Phase 4.5 alignment → bounded publish → draft PR → Human review and merge. This topic stops before release.
 - **Allowed transitions**:
   - `planned` -> `planning-candidate-committed`
@@ -130,7 +130,7 @@ All SHA values below are lowercase 40-character hexadecimal Git commit IDs. Any 
 
 ### Public Contract / API Changes
 
-None. The reserved child directories are not packages and create no public import surface.
+None. The reserved child directories add no executable Python module, public symbol, or re-export.
 
 ### Affected Files / Modules
 
@@ -161,7 +161,7 @@ None. The reserved child directories are not packages and create no public impor
 - **TestCase 2 — invalid topology:** assert no `cache_store/`, child `__init__.py`, or `.py` file exists in the five reserved directories.
 - **TestCase 3 — architecture edge case:** inspect all five architecture surfaces; none calls Response Reuse the first implementation topic, and all state topology-only status without claiming BC availability.
 - **TestCase 4 — regression:** run `uv run pytest tests/test_package_import.py`; the unchanged direct root import succeeds.
-- **TestCase 5 — backward compatibility:** compare the immutable subject against its parent; `src/deterministic_response_cache/__init__.py` and `tests/test_package_import.py` are absent from the diff and no public import surface is added.
+- **TestCase 5 — backward compatibility:** compare the immutable subject against its parent; `src/deterministic_response_cache/__init__.py` and `tests/test_package_import.py` are absent from the diff and no executable Python module, public symbol, or re-export is added.
 
 ### Risks
 
@@ -174,7 +174,7 @@ Revert the immutable implementation subject commit, which removes the five `.git
 
 ## Implementation Steps
 
-1. Update `docs/business-capability-architecture.md` to add the fixed five-BC-to-directory mapping, state that each reservation is topology only and non-importable, retain Identity as sole authority, retain CacheStore as Response Reuse internal-only, and retain the future BC separations.
+1. Update `docs/business-capability-architecture.md` to add the fixed five-BC-to-directory mapping, state that each reservation is topology only and adds no executable Python module, public symbol, or re-export, retain Identity as sole authority, retain CacheStore as Response Reuse internal-only, and retain the future BC separations.
 2. Update `docs/evolution-roadmap.md` to make Identity → Response Reuse → Loaded Runtime Cache → Model Execution → Provider Adapter the only stated implementation sequence; replace the conflicting Response-Reuse-first future-topic statement and declare that this topic only reserves folders.
 3. Update `docs/architecture/business-capability/architecture-brief.md` to synchronize the fixed mapping, topology-only meaning, Identity-first phase sequence, CacheStore boundary, and separation of the three future BCs.
 4. Update `docs/architecture/business-capability/scene.js` so the visible labels mark Identity as the first implementation topic, Response Reuse as second, and describe the folder reservations as non-implemented topology without altering runtime behavior.
