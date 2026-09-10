@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "topic": "package-topology-skeleton-replay",
+  "implementation_subject_commit": "8ed22c1a434fc108934159a1d8deaba53e7696d0",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "git diff-tree --no-commit-id --name-only -r 8ed22c1a434fc108934159a1d8deaba53e7696d0 | sort | diff -u <(printf '%s\\n' 'docs/architecture/business-capability/architecture-brief.md' 'docs/architecture/business-capability/index.html' 'docs/architecture/business-capability/scene.js' 'docs/business-capability-architecture.md' 'docs/evolution-roadmap.md' 'src/deterministic_response_cache/identity/.gitkeep' 'src/deterministic_response_cache/loaded_runtime_cache/.gitkeep' 'src/deterministic_response_cache/model_execution/.gitkeep' 'src/deterministic_response_cache/provider_adapter/.gitkeep' 'src/deterministic_response_cache/response_reuse/.gitkeep') - && test \"$(git diff-tree --no-commit-id --name-only --diff-filter=A -r 8ed22c1a434fc108934159a1d8deaba53e7696d0 | wc -l | tr -d ' ')\" = 5 && test \"$(git diff-tree --no-commit-id --name-only --diff-filter=M -r 8ed22c1a434fc108934159a1d8deaba53e7696d0 | wc -l | tr -d ' ')\" = 5 && git ls-tree -r --name-only 8ed22c1a434fc108934159a1d8deaba53e7696d0 -- src/deterministic_response_cache | sort | diff -u <(printf '%s\\n' 'src/deterministic_response_cache/__init__.py' 'src/deterministic_response_cache/identity/.gitkeep' 'src/deterministic_response_cache/loaded_runtime_cache/.gitkeep' 'src/deterministic_response_cache/model_execution/.gitkeep' 'src/deterministic_response_cache/provider_adapter/.gitkeep' 'src/deterministic_response_cache/response_reuse/.gitkeep') - && test -z \"$(git ls-tree -r --name-only 8ed22c1a434fc108934159a1d8deaba53e7696d0 -- src/deterministic_response_cache | rg '/cache_store/|/(identity|response_reuse|loaded_runtime_cache|model_execution|provider_adapter)/.+\\.py$|/(identity|response_reuse|loaded_runtime_cache|model_execution|provider_adapter)/__init__\\.py$')\" && git diff --check 8ed22c1a434fc108934159a1d8deaba53e7696d0^ 8ed22c1a434fc108934159a1d8deaba53e7696d0",
+      "exit_code": 0
+    },
+    {
+      "command": "git show 8ed22c1a434fc108934159a1d8deaba53e7696d0:docs/business-capability-architecture.md | rg -q 'Identity BC 是模型身分與完整請求身分的唯一 authority' && git show 8ed22c1a434fc108934159a1d8deaba53e7696d0:docs/business-capability-architecture.md | rg -q 'CacheStore 是 Response Reuse BC 的內部保存元件' && git show 8ed22c1a434fc108934159a1d8deaba53e7696d0:docs/evolution-roadmap.md | rg -q '1\\. \\*\\*Identity foundation\\*\\*' && git show 8ed22c1a434fc108934159a1d8deaba53e7696d0:docs/evolution-roadmap.md | rg -q '5\\. \\*\\*Provider Adapter\\*\\*' && git show 8ed22c1a434fc108934159a1d8deaba53e7696d0:docs/architecture/business-capability/architecture-brief.md | rg -q 'Identity → Response Reuse → Loaded Runtime Cache → Model Execution → Provider Adapter' && git show 8ed22c1a434fc108934159a1d8deaba53e7696d0:docs/architecture/business-capability/scene.js | rg -q \"t: 'Identity'\" && git show 8ed22c1a434fc108934159a1d8deaba53e7696d0:docs/architecture/business-capability/scene.js | rg -q \"t: 'Provider Adapter'\" && git show 8ed22c1a434fc108934159a1d8deaba53e7696d0:docs/architecture/business-capability/index.html | rg -q \"t: 'Identity'\" && git show 8ed22c1a434fc108934159a1d8deaba53e7696d0:docs/architecture/business-capability/index.html | rg -q \"t: 'Provider Adapter'\"",
+      "exit_code": 0
+    },
+    {
+      "command": "uv lock --check && uv run ruff format --check . && uv run ruff check . && uv run pyright && uv run tach check && uv run pytest && uv run pytest tests/test_package_import.py && uv run pre-commit run --all-files",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
