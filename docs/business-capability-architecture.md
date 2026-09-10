@@ -40,7 +40,7 @@ Provider Adapter 只對接具體的 local 或 remote provider，位於核心 lib
 | Model Execution | `src/deterministic_response_cache/model_execution/` | 獨立的未來 BC，不擁有 identity 或 response reuse。 |
 | Provider Adapter | `src/deterministic_response_cache/provider_adapter/` | 獨立、可替換的未來 BC，不擁有核心政策。 |
 
-本 topology 不建立 child package initializer、Python module、public import surface 或 `cache_store/` 頂層目錄。`src/deterministic_response_cache/__init__.py` 仍是唯一既有 package initializer。
+本 topology 不建立 child package initializer、executable Python module、public symbol、re-export 或 `cache_store/` 頂層目錄。`src/deterministic_response_cache/__init__.py` 仍是唯一既有 package initializer。
 
 ## Boundary violations
 
