@@ -15,11 +15,11 @@
 | Plane | Role | Phase |
 | --- | --- | --- |
 | Consumer integration | 外部 Python consumer 提交模型與請求脈絡、接收結果；不屬於 library 核心。 | External |
-| Identity authority | 唯一確認模型身分與完整請求身分。 | Foundation |
-| Response reuse | 根據已確認 identity 決定是否安全重用，並擁有內部 CacheStore。 | Now |
-| Runtime retention | 重用已初始化 runtime，並擁有獨立 Runtime Store／Runtime Registry。 | Future |
-| Model execution | 在 reuse miss 後協調 runtime 與模型執行。 | Future |
-| Provider boundary | 以可替換 local／remote adapter 對接實際 provider。 | Future / External |
+| Identity authority | 唯一確認模型身分與完整請求身分。 | Implementation order 1 |
+| Response reuse | 根據已確認 identity 決定是否安全重用，並擁有內部 CacheStore。 | Implementation order 2 |
+| Runtime retention | 重用已初始化 runtime，並擁有獨立 Runtime Store／Runtime Registry。 | Implementation order 3 |
+| Model execution | 在 reuse miss 後協調 runtime 與模型執行。 | Implementation order 4 |
+| Provider boundary | 以可替換 local／remote adapter 對接實際 provider。 | Implementation order 5 / External |
 
 ## Components
 
@@ -62,9 +62,11 @@
 
 ## Phase split
 
-**現在承諾**：Identity authority 與 Response Reuse 的方向和責任邊界；本 repository 尚未實作它們。
+**固定演進順序**：Identity → Response Reuse → Loaded Runtime Cache → Model Execution → Provider Adapter。每個 BC 都需要獨立 topic；本 repository 尚未實作其中任何一個。
 
-**未來演進**：Loaded Runtime Cache、Runtime Store／Runtime Registry、Model Execution、Provider adapter boundary，以及任何 local／remote adapter。
+**預留 topology**：`identity/`、`response_reuse/`、`loaded_runtime_cache/`、`model_execution/`、`provider_adapter/` 位於 `src/deterministic_response_cache/` 下。每個目錄僅以 `.gitkeep` 預留，不是可 import 或可使用的 child package，也不新增 Python source 或 public API。
+
+**邊界維持**：Identity 是模型與完整 request identity 的唯一 authority；CacheStore 僅在 Response Reuse 內部。Loaded Runtime Cache、Model Execution 與 Provider Adapter 保持三個彼此獨立、尚未實作的 BC。
 
 ## Diagram acceptance checks
 

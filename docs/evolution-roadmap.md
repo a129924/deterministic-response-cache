@@ -26,6 +26,16 @@
 
 每個階段都需要獨立 topic plan。前一階段不得偷帶下一階段的責任。
 
-## 現在與未來
+## Package topology reservation
 
-本 baseline 只定義方向與責任。第一個後續實作 topic 將聚焦 Response Reuse，並保持 provider-agnostic。Loaded Runtime Cache、Model Execution 與 Provider Adapter 都是未來能力，不是現在的實作承諾。
+本 topic 只預先建立下列 directory topology；它們不是已實作、可使用或可 import 的 child packages，且不建立 Python source、public API 或 `cache_store/` 頂層目錄。
+
+| Implementation order | BC | Reserved directory |
+| --- | --- | --- |
+| 1 | Identity | `src/deterministic_response_cache/identity/` |
+| 2 | Response Reuse | `src/deterministic_response_cache/response_reuse/` |
+| 3 | Loaded Runtime Cache | `src/deterministic_response_cache/loaded_runtime_cache/` |
+| 4 | Model Execution | `src/deterministic_response_cache/model_execution/` |
+| 5 | Provider Adapter | `src/deterministic_response_cache/provider_adapter/` |
+
+Identity 是第一個後續 implementation topic；Response Reuse 只能在 Identity 已獨立規劃與實作後進行。Loaded Runtime Cache、Model Execution 與 Provider Adapter 各自保留為後續獨立 BC。本 baseline 只定義方向、責任與 topology，不是任何 BC 的實作承諾。
