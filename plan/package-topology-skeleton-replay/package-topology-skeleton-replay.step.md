@@ -21,12 +21,12 @@ created: 2026-09-09
 
 ## Implementation Steps
 
-- [ ] 1. Update `docs/business-capability-architecture.md` with the fixed mapping and topology-only boundary.
-- [ ] 2. Update `docs/evolution-roadmap.md` with the fixed Identity-first five-BC evolution sequence.
-- [ ] 3. Update `docs/architecture/business-capability/architecture-brief.md` to synchronize topology and BC boundaries.
-- [ ] 4. Update `docs/architecture/business-capability/scene.js` to synchronize the visual implementation-order labels.
-- [ ] 5. Update `docs/architecture/business-capability/index.html` to mirror the synchronized visual labels.
-- [ ] 6. Create the five declared BC `.gitkeep` files under `src/deterministic_response_cache/` and no other package paths.
+- [X] 1. Update `docs/business-capability-architecture.md` with the fixed mapping and topology-only boundary.
+- [X] 2. Update `docs/evolution-roadmap.md` with the fixed Identity-first five-BC evolution sequence.
+- [X] 3. Update `docs/architecture/business-capability/architecture-brief.md` to synchronize topology and BC boundaries.
+- [X] 4. Update `docs/architecture/business-capability/scene.js` to synchronize the visual implementation-order labels.
+- [X] 5. Update `docs/architecture/business-capability/index.html` to mirror the synchronized visual labels.
+- [X] 6. Create the five declared BC `.gitkeep` files under `src/deterministic_response_cache/` and no other package paths.
 
 ## Main Agent Actionable Steps — Fixed Tail
 
