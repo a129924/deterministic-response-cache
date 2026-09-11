@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-protocol",
+  "planning_candidate_commit": "c3a45d28b29ed3089e8d13b7deb339bbf19325f5",
+  "planning_candidate_tree": "a8467214a49b5ce7d2a8a784f2b64b61e9fe8694",
+  "planning_candidate_artifact_facts": [
+    {
+      "path": "analysis/response-reuse-protocol/vo-channel-correction.requirements.md",
+      "blob_sha": "366aca2fc86f11b1ed5526cc76d55fe285a3ac37"
+    },
+    {
+      "path": "analysis/response-reuse-protocol/vo-channel-correction.technical-spec.md",
+      "blob_sha": "4c02c3d63c1c1245a9e4d1bc9b59b1b461efad6f"
+    },
+    {
+      "path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.plan.md",
+      "blob_sha": "9528c3bb63b6f3ac34b7a667c88d3e70bd921bb9"
+    },
+    {
+      "path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.spec.md",
+      "blob_sha": "23f8d532e31f21225db59eb4d35cdd5865839acf"
+    },
+    {
+      "path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.step.md",
+      "blob_sha": "e03fb284cb69be592ec6b579c609c0b0fcbc4c8a"
+    }
+  ],
+  "first_parent_admission": {
+    "commit": "48bf0eb2e1b0be7d2088acaae6f5b59df27fed7f",
+    "tree": "75b5ce0b27208c35dda0591e551b6435a710b590",
+    "parent": "ac2edec48f8d609923837a2dc97d3dd6d8a67916",
+    "non_merge": true,
+    "exact_declared_paths": true,
+    "name_status": [
+      {
+        "status": "A",
+        "path": "analysis/response-reuse-protocol/vo-channel-correction.requirements.md"
+      },
+      {
+        "status": "A",
+        "path": "analysis/response-reuse-protocol/vo-channel-correction.technical-spec.md"
+      },
+      {
+        "status": "A",
+        "path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.plan.md"
+      },
+      {
+        "status": "A",
+        "path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.spec.md"
+      },
+      {
+        "status": "A",
+        "path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.step.md"
+      }
+    ]
+  },
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}
