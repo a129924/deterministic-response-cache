@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "topic": "model-feature-identity",
+  "implementation_subject_commit": "3c06690c72dffb6b122c0f64c080b958d0f24a21",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "uv lock --check",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run ruff format --check .",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run ruff check .",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pyright",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run tach check",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pre-commit run --all-files",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff-tree --no-commit-id --name-status -r 3c06690c72dffb6b122c0f64c080b958d0f24a21 && git status --short",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
