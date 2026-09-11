@@ -2,8 +2,8 @@ const W = 1480, H = 1910;
 
 const PLANES = {
   consumer: { c: '#94A3B8', label: 'Consumer integration' },
-  identity: { c: '#7DD3FC', label: 'Identity authority — first topic' },
-  reuse: { c: '#4ADE80', label: 'Response reuse — second topic' },
+  identity: { c: '#7DD3FC', label: 'Identity authority — opaque handoff' },
+  reuse: { c: '#4ADE80', label: 'Response reuse — independent protocol' },
   runtime: { c: '#A78BFA', label: 'Runtime retention — future' },
   execution: { c: '#F6821F', label: 'Model execution — future' },
   provider: { c: '#FB7185', label: 'Provider boundary — future' }
@@ -14,11 +14,11 @@ const BANDS = [
     hdr: { x: 184, y: 230, t: 'CONSUMER INTEGRATION — EXTERNAL PYTHON APPLICATIONS' },
     tagr: { x: 1396, y: 230, t: 'SWAPPABLE APP SURFACES', alpha: 0.65 } },
   { id: 'band-identity', plane: 'identity', x: 160, y: 450, w: 1260, h: 220, alpha: 0.55, dash: true,
-    hdr: { x: 184, y: 480, t: 'IDENTITY BC — FOUNDATION · ONLY IDENTITY AUTHORITY' },
-    tagr: { x: 1396, y: 480, t: 'FIRST IMPLEMENTATION TOPIC', alpha: 0.65 } },
+    hdr: { x: 184, y: 480, t: 'IDENTITY BC — ONLY IDENTITY AUTHORITY' },
+    tagr: { x: 1396, y: 480, t: 'OPAQUE IDENTITY HANDOFF', alpha: 0.65 } },
   { id: 'band-reuse', plane: 'reuse', x: 160, y: 760, w: 1260, h: 300, alpha: 0.62, dash: true,
-    hdr: { x: 184, y: 790, t: 'RESPONSE REUSE BC — SECOND · CACHESTORE IS INTERNAL' },
-    tagr: { x: 1396, y: 790, t: 'SECOND IMPLEMENTATION TOPIC', alpha: 0.7 } },
+    hdr: { x: 184, y: 790, t: 'RESPONSE REUSE PROTOCOL — CACHESTORE IS INTERNAL' },
+    tagr: { x: 1396, y: 790, t: 'INDEPENDENT TOPIC', alpha: 0.7 } },
   { id: 'band-future-core', plane: null, x: 160, y: 1150, w: 1260, h: 330, stroke: '#3A4250', alpha: 1,
     hdr: { x: 184, y: 1180, t: 'FUTURE CORE CAPABILITIES — NOT BASELINE IMPLEMENTATION', fill: C.slate },
     tagr: { x: 1396, y: 1180, t: 'OWNED ABSTRACTIONS', fill: C.slate, alpha: 0.7 } },
@@ -46,20 +46,26 @@ const BOXES = [
     texts: [ ['bl', 594, 558, 'Complete request identity'], ['bs', 594, 580, '確認完整請求脈絡'], ['bs', 594, 596, '其他地方不得推測欄位'], ['bn', 594, 618, '僅屬於 identity authority'] ] },
   { id: 'confirmation', plane: 'identity', band: 'band-identity', x: 980, y: 530, w: 380, h: 104, r: 10, dash: true,
     name: 'Identity confirmation', about: '將已確認的模型與請求身分，唯一交接給 Response Reuse。',
-    texts: [ ['bl', 1004, 558, 'Identity confirmation'], ['bs', 1004, 580, '唯一的已確認身分交接'], ['bs', 1004, 596, '只提供給 Response Reuse'], ['bn', 1004, 618, '不處理 cache 或 execution'] ] },
+    texts: [ ['bl', 1004, 558, 'Identity confirmation'], ['bs', 1004, 580, '唯一的 opaque identity 交接'], ['bs', 1004, 596, '只提供給 Response Reuse'], ['bn', 1004, 618, '不處理 cache 或 execution'] ] },
 
   { id: 'reuse-bc', plane: 'reuse', band: 'band-reuse', x: 200, y: 840, w: 500, h: 120, r: 10, dash: true,
     name: 'Response Reuse BC', about: '只消費已確認 identity，並擁有安全重用既有 response 的決策責任。',
-    texts: [ ['bl', 224, 868, 'Response Reuse BC'], ['bs', 224, 890, '只消費已確認的 identity'], ['bs', 224, 906, '安全重用決策，不執行模型'], ['bn', 224, 934, '第二個 implementation topic'] ] },
+    texts: [ ['bl', 224, 868, 'Response Reuse Protocol'], ['bs', 224, 890, '只消費 opaque confirmed identity'], ['bs', 224, 906, '安全重用決策，不執行模型'], ['bn', 224, 934, 'independent protocol topic'] ] },
   { id: 'reuse-decision', plane: 'reuse', band: 'band-reuse', x: 750, y: 840, w: 270, h: 104, r: 10, dash: true,
-    name: 'Safe reuse decision', about: '只有已確認 identity 允許時，才選擇直接回傳 response 的路徑。',
-    texts: [ ['bl', 774, 868, 'Safe reuse decision'], ['bs', 774, 890, 'hit → 直接回傳 response'], ['bs', 774, 906, 'miss → 未來 runtime path'], ['bn', 774, 928, '不自行推導 identity'] ] },
+    name: 'Lookup outcomes', about: '只以 confirmed identity 查詢，顯式產生 Hit、Miss 或 Unavailable。',
+    texts: [ ['bl', 774, 868, 'Lookup outcomes'], ['bs', 774, 890, 'Hit → 直接回傳 response'], ['bs', 774, 906, 'Miss → future handoff'], ['bn', 774, 928, 'Unavailable → boundary stop'] ] },
   { id: 'cache-store', plane: 'reuse', band: 'band-reuse', x: 1070, y: 840, w: 290, h: 104, r: 10, dash: true,
     name: 'CacheStore — internal', about: 'Response Reuse 內部元件，只保存與取回 response。',
     texts: [ ['bl', 1094, 868, 'CacheStore — internal'], ['bs', 1094, 890, '保存與取回 response'], ['bs', 1094, 906, '不擁有 identity 或 runtime'], ['bn', 1094, 928, '不是頂層 BC'] ] },
   { id: 'reuse-return', plane: 'reuse', band: 'band-reuse', x: 540, y: 980, w: 310, h: 52, r: 10, dash: true,
     name: 'Reused response return', about: '安全重用決策完成後，直接將 response 回傳給 consumer。',
-    texts: [ ['bl', 564, 1008, 'Reused response return'], ['bs', 564, 1024, '直接 hit path'] ] },
+    texts: [ ['bl', 564, 1008, 'Reused response return'], ['bs', 564, 1024, 'Hit direct-return path'] ] },
+  { id: 'unavailable-stop', plane: 'reuse', band: 'band-reuse', x: 880, y: 980, w: 230, h: 52, r: 10, dash: true,
+    name: 'Unavailable boundary stop', about: 'CacheStore read failure 停在 Response Reuse boundary，不能轉為 Miss。',
+    texts: [ ['bl', 904, 1008, 'Unavailable stop'], ['bs', 904, 1024, 'no downstream handoff'] ] },
+  { id: 'retention-result', plane: 'reuse', band: 'band-reuse', x: 1140, y: 980, w: 220, h: 52, r: 10, dash: true,
+    name: 'Retention result', about: 'record 回傳 Cached 或保留 response 的 NotCached outcome。',
+    texts: [ ['bl', 1164, 1008, 'Retention result'], ['bs', 1164, 1024, 'Cached / NotCached'] ] },
 
   { id: 'runtime-cache', plane: 'runtime', band: 'band-future-core', x: 200, y: 1240, w: 270, h: 104, r: 10, dash: true,
     name: 'Loaded Runtime Cache', about: '未來能力：重用已初始化且可執行的模型 runtime。',
@@ -99,6 +105,7 @@ const EDGES = [
   { from: 'reuse-decision', to: 'cache-store', pts: [[1022,892],[1064,892]], label: { s: 'al', x: 1043, y: 880, t: '查詢', anchor: 'center' } },
   { from: 'reuse-decision', to: 'reuse-return', pts: [[885,946],[885,970],[695,970],[695,974]], label: { s: 'al', x: 800, y: 962, t: '安全 hit', anchor: 'center' } },
   { from: 'reuse-return', to: 'receiver', pts: [[856,1006],[1436,1006],[1436,300],[1386,300]], label: { s: 'al', x: 1452, y: 660, t: '回傳重用 response', rot: -90, anchor: 'center' } },
+  { from: 'cache-store', to: 'unavailable-stop', pts: [[1215,946],[1215,962],[995,962],[995,974]], label: { s: 'al', x: 1105, y: 960, t: 'read failure', anchor: 'center' } },
   { from: 'reuse-decision', to: 'runtime-cache', pts: [[885,946],[885,1100],[335,1100],[335,1234]], label: { s: 'al', x: 610, y: 1088, t: 'miss — 未來路徑', anchor: 'center' } },
   { from: 'runtime-cache', to: 'runtime-registry', pts: [[472,1292],[494,1292]], label: { s: 'al', x: 483, y: 1280, t: '保存', anchor: 'center' } },
   { from: 'runtime-registry', to: 'runtime-preparation', pts: [[635,1346],[635,1358],[485,1358],[485,1364]], label: { s: 'al', x: 560, y: 1350, t: '取得', anchor: 'center' } },
@@ -108,7 +115,8 @@ const EDGES = [
   { from: 'adapter-boundary', to: 'remote-adapter', pts: [[562,1708],[780,1708],[780,1750],[1190,1750],[1190,1734]], label: { s: 'al', x: 985, y: 1738, t: 'remote', anchor: 'center' } },
   { from: 'execution', to: 'result-handoff', pts: [[1115,1346],[1115,1364]], label: { s: 'al', x: 1129, y: 1358, t: '新 response' } },
   { from: 'result-handoff', to: 'reuse-bc', pts: [[958,1410],[116,1410],[116,900],[194,900]], label: { s: 'al', x: 100, y: 1156, t: '保存新 response', rot: -90, anchor: 'center' } },
-  { from: 'reuse-bc', to: 'receiver', pts: [[450,834],[450,730],[1398,730],[1398,344]], label: { s: 'al', x: 924, y: 718, t: '未來 execution 後的新 response', anchor: 'center' } }
+  { from: 'reuse-bc', to: 'retention-result', pts: [[702,900],[1248,900],[1248,974]], label: { s: 'al', x: 975, y: 888, t: 'record 新 response', anchor: 'center' } },
+  { from: 'retention-result', to: 'receiver', pts: [[1362,1006],[1436,1006],[1436,344],[1386,344]], label: { s: 'al', x: 1452, y: 680, t: '保留 response 的結果', rot: -90, anchor: 'center' } }
 ];
 
 const TEXTS = [
@@ -125,7 +133,7 @@ const TEXTS = [
   { s: 'legend', x: 1143, y: 134, t: '顏色 — 所屬 capability plane' },
   { s: 'plane', x: 485, y: 1214, t: 'RUNTIME RETENTION — FUTURE', anchor: 'center', fill: planeColor('runtime') },
   { s: 'plane', x: 1115, y: 1214, t: 'MODEL EXECUTION — FUTURE', anchor: 'center', fill: planeColor('execution') },
-  { s: 'bn', x: 160, y: 1844, t: 'invariant：只有 Identity BC 確認模型與完整請求身分；名稱與路徑不足以判定' },
+  { s: 'bn', x: 160, y: 1844, t: 'invariant：只有 Identity BC 確認模型與完整請求身分；Response Reuse 只消費 opaque handoff' },
   { s: 'bn', x: 160, y: 1864, t: 'boundary：CacheStore 位於 Response Reuse 內部；Runtime Store / Registry 獨立且屬於未來能力' },
   { s: 'bn', x: 160, y: 1884, t: 'topology：五個目錄的純文字 marker 僅預留；可為 implicit namespace，但不提供 executable module、public symbol 或 re-export' }
 ];
