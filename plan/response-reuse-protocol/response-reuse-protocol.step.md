@@ -20,8 +20,10 @@ created: 2026-09-11
 - [X] **Actor:** Implementer — **Action:** Commit exactly the five initial planning artifacts as the original planning candidate; do not add implementation or evidence paths to that commit.
 - [X] **Actor:** Independent Plan-Reviewer — **Action:** Review the original committed planning candidate and write the declared `needs-rework` receipt.
 - [X] **Actor:** Implementer — **Action:** Commit the original `needs-rework` receipt unchanged as its own evidence-only provenance commit.
-- [X] **Actor:** Independent Implementer — **Action:** Commit only the bounded planning-state repair as the new planning candidate; do not modify the prior receipt or add implementation paths.
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review only the new committed planning candidate and write a new declared plan-review receipt.
+- [X] **Actor:** Independent Implementer — **Action:** Commit only the earlier bounded planning-state repair as historical candidate `a2941d99201cf0aee95b71008c3f1d4e690a8770`; it is not replacement-route evidence.
+- [X] **Actor:** Independent Implementer — **Action:** Commit exactly `response-reuse-protocol.plan.md` and `response-reuse-protocol.step.md` as this one-time repair planning candidate; retain the old receipt and prior candidate as immutable provenance and do not add implementation paths.
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review only this committed repair planning candidate and, after review, write `plan/response-reuse-protocol/response-reuse-protocol.repair-plan-review-receipt.json`; its `planning_candidate_commit` must be the reviewed candidate's full 40-hex SHA and is never prefilled by a planning artifact.
+- [ ] **Actor:** Implementer — **Action:** Commit the replacement receipt unchanged as a sole, single-file evidence-only commit; no other path may share that commit.
 
 ## Implementation Steps
 
@@ -39,8 +41,16 @@ created: 2026-09-11
 
 ## Handoff / Gate Notes
 
-- The original candidate's committed `needs-rework` receipt is immutable provenance, not routing authority. The
-  current repair candidate awaits a new independent Plan-Reviewer receipt.
-- An independent Plan-Reviewer must approve the current committed planning candidate before implementation.
+- The original candidate's committed `needs-rework` receipt at
+  `plan/response-reuse-protocol/response-reuse-protocol.plan-review-receipt.json` and provenance commit
+  `b6258d9247d6525ed7c2ba279dbb44ca711440d8` are immutable and are not routing authority. The prior state candidate
+  `a2941d99201cf0aee95b71008c3f1d4e690a8770` is likewise not replacement-route evidence.
+- The current repair candidate awaits an independent replacement Plan-Reviewer receipt at
+  `plan/response-reuse-protocol/response-reuse-protocol.repair-plan-review-receipt.json`. That receipt must be
+  written only by Independent Plan-Reviewer. Only after review does that reviewer fill its
+  `planning_candidate_commit` with the reviewed candidate's full 40-hex SHA; planning artifacts do not prefill any
+  candidate SHA. Implementer alone commits the unchanged receipt as a sole evidence-only commit.
+- Only a committed, same-SHA-bound replacement receipt with verdict `approved` may enter implementation; a
+  replacement `needs-rework` returns to Implementer for a new candidate.
 - Only the seven `## Implementation Steps` entries are the implementation-completion gate.
 - Tester evidence must bind the exact immutable implementation subject. Independent Reviewer may consume only committed passing same-subject Tester evidence. Human alone reviews and merges a draft PR.

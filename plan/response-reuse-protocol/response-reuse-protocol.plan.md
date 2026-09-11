@@ -52,14 +52,25 @@
   retain the original response object. It does not invoke execution or provider behavior.
 - The topic is non-stable-library-affecting: README row, VERSION bump, release notes, and release timing are absent.
   `README.md` and version metadata are no-change paths.
-- No correction route is declared. Planning, Tester, and independent implementation-review evidence use the normal
-  topic evidence chain only.
+- The original `needs-rework` receipt at
+  `plan/response-reuse-protocol/response-reuse-protocol.plan-review-receipt.json`, committed in
+  `b6258d9247d6525ed7c2ba279dbb44ca711440d8`, is immutable historical provenance. It must remain present and
+  unmodified, cannot be overwritten, and is not routing authority for this repair route.
+- This one-time correction route replaces the normal receipt path only for the new repair candidate. Its sole
+  replacement receipt path is
+  `plan/response-reuse-protocol/response-reuse-protocol.repair-plan-review-receipt.json`. The receipt must bind
+  `planning_candidate_commit` to this repair candidate's final full 40-hex SHA. Only Independent Plan-Reviewer may
+  write it; only Implementer may commit it unchanged as a sole, single-file evidence-only commit. This exception
+  authorizes one independent Implementer to correct only this plan and step tracker once; it does not expand any
+  other path or role ownership.
 
 ## Boundaries / Exclusions
 
-- Plan-Creator writes only the five initial planning artifacts. Plan-Reviewer writes only the normal plan-review
-  receipt. Implementer performs only approved bounded planning-candidate, implementation-subject, and evidence-only
-  commits; Tester writes factual evidence; Independent Reviewer writes implementation-review evidence.
+- Plan-Creator writes only the five initial planning artifacts. The original plan-review receipt remains frozen
+  provenance. Independent Plan-Reviewer alone writes the declared replacement receipt for this repair candidate;
+  Implementer alone commits that unchanged replacement receipt as a sole evidence-only commit. Implementer otherwise
+  performs only approved bounded planning-candidate, implementation-subject, and evidence-only commits; Tester
+  writes factual evidence; Independent Reviewer writes implementation-review evidence.
 - CacheStore must remain inside Response Reuse. It cannot become a top-level BC, own identity rules, execute models,
   or manage runtime. A miss is a boundary outcome, not authority to perform future downstream work.
 - Documentation may depict future downstream handoff only as external/future behavior; it must not claim this topic
@@ -69,21 +80,27 @@
 
 ## Status / Allowed Transitions
 
-- **Current**: `planning-candidate-committed`; the five initial planning artifacts were committed as the original
-  planning candidate, and its independent `needs-rework` plan-review receipt has been recorded separately. This
-  bounded planning-state repair is the current planning candidate and awaits a new independent Plan-Reviewer.
-- **Execution model**: planning candidate → independent Plan-Reviewer receipt → immutable implementation subject →
-  independent Tester evidence → independent Reviewer evidence → Planner Phase 4.5 alignment → bounded publish →
-  draft PR → Human review and merge. This topic stops before release.
+- **Current**: `repair-planning-candidate-committed`; this commit is the one bounded repair candidate and awaits a
+  new Independent Plan-Reviewer. The original receipt and `a2941d99201cf0aee95b71008c3f1d4e690a8770` are historical
+  provenance only, not replacement-route evidence or routing authority.
+- **Execution model**: original candidate provenance → repair planning candidate → independent replacement
+  Plan-Reviewer receipt → immutable implementation subject → independent Tester evidence → independent Reviewer
+  evidence → Planner Phase 4.5 alignment → bounded publish → draft PR → Human review and merge. This topic stops
+  before release.
 - **Allowed transitions**:
   - `planned` -> `planning-candidate-committed` by an Implementer committing exactly the five initial planning artifacts.
-  - `planning-candidate-committed` -> `plan-review-in-progress`.
-  - `plan-review-in-progress` -> `plan-review-receipt-committed` only after Independent Plan-Reviewer writes the receipt and an Implementer commits it unchanged as its own evidence-only commit.
-  - `plan-review-receipt-committed` -> `needs-rework` when the committed receipt verdict is `needs-rework`; that
-    receipt remains immutable provenance and cannot authorize routing.
-  - `needs-rework` -> `planning-candidate-committed` by an independent Implementer committing only the bounded
-    planning-state repair. The repair is a new candidate and requires a new independent Plan-Reviewer receipt.
-  - `plan-review-receipt-committed` -> `implementation-in-progress` only when the committed receipt verdict is `approved` and Planner selects it.
+  - `planning-candidate-committed` -> `plan-review-in-progress` -> `plan-review-receipt-committed` is the completed
+    original route. Its committed `needs-rework` receipt is immutable provenance and cannot authorize routing.
+  - `needs-rework` -> `repair-planning-candidate-committed` only once, by this independent Implementer committing
+    exactly `response-reuse-protocol.plan.md` and `response-reuse-protocol.step.md`. This repair is a new candidate.
+  - `repair-planning-candidate-committed` -> `repair-plan-review-in-progress`.
+  - `repair-plan-review-in-progress` -> `repair-plan-review-receipt-committed` only after Independent Plan-Reviewer
+    writes the replacement receipt and Implementer commits it unchanged as a sole, single-file evidence-only commit.
+  - `repair-plan-review-receipt-committed` -> `needs-rework` when that committed replacement receipt verdict is
+    `needs-rework`; rework must return to Implementer for a new candidate and independent re-review.
+  - `repair-plan-review-receipt-committed` -> `implementation-in-progress` only when the committed replacement
+    receipt verdict is `approved`, its `planning_candidate_commit` exactly equals this repair candidate's full
+    40-hex SHA, and Planner selects it.
   - `implementation-in-progress` -> `tester-in-progress` after one non-merge immutable subject changes exactly the ten declared implementation paths.
   - `tester-in-progress` -> `tester-evidence-committed` only after Tester writes factual same-subject evidence and an independent Implementer commits it unchanged as the sole evidence-only commit.
   - `tester-evidence-committed` -> `reviewer-in-progress` only with committed same-subject `passing` Tester evidence.
@@ -102,7 +119,8 @@
 | Topic plan | `plan/response-reuse-protocol/response-reuse-protocol.plan.md` | Plan-Creator | Canonical execution contract and path allowlist. |
 | Topic specification | `plan/response-reuse-protocol/response-reuse-protocol.spec.md` | Plan-Creator | Acceptance, behavioral, and edge-case contract. |
 | Step tracker | `plan/response-reuse-protocol/response-reuse-protocol.step.md` | Plan-Creator; later Implementer only for `## Implementation Steps` markers | Progression truth; only seven implementation checkboxes form the completion gate. |
-| Plan-review receipt | `plan/response-reuse-protocol/response-reuse-protocol.plan-review-receipt.json` | Independent Plan-Reviewer | Committed `approved` normal-plan receipt is the only planning approval Planner may route from. |
+| Original plan-review receipt | `plan/response-reuse-protocol/response-reuse-protocol.plan-review-receipt.json` | Independent Plan-Reviewer (historical writer) | Immutable `needs-rework` provenance committed in `b6258d9247d6525ed7c2ba279dbb44ca711440d8`; never overwrite or route from it. |
+| Replacement plan-review receipt | `plan/response-reuse-protocol/response-reuse-protocol.repair-plan-review-receipt.json` | Independent Plan-Reviewer | Sole receipt for this repair candidate. Implementer alone commits it unchanged in a sole, single-file evidence-only commit; only its committed, SHA-bound `approved` verdict may be routed by Planner. |
 | Response Reuse outcomes | `src/deterministic_response_cache/response_reuse/outcomes.py` **Add** | Implementer | `Hit`, `Miss`, `Unavailable`, `Cached`, `NotCached`, and typed outcome unions. |
 | Internal CacheStore port | `src/deterministic_response_cache/response_reuse/_cache_store.py` **Add** | Implementer | Internal `CacheStore` protocol and `CacheStoreFailure` boundary; no backend implementation. |
 | Response Reuse protocol | `src/deterministic_response_cache/response_reuse/protocol.py` **Add** | Implementer | Concrete lookup/record orchestration within the locked BC boundary. |
@@ -122,11 +140,19 @@ and every unlisted path are read-only. No path may be deleted. Any required path
 
 ### Review and evidence schemas
 
-- Plan-review receipt is exactly one JSON object with only `verdict`, `blocking_issues`, and
-  `copilot_feedback_triage`. `verdict` is `approved|needs-rework`; `blocking_issues` is an array of objects with
-  exactly `issue`, `file`, and `fix`; `copilot_feedback_triage` has exactly `ADDRESS`, `DISCUSS`, and `SKIP` arrays.
-  `ADDRESS` entries have `comment`, `location`, `why`; `DISCUSS` entries have `comment`, `optional`, `why`; `SKIP`
-  entries have `comment`, `why`.
+- The original plan-review receipt is immutable historical provenance and retains its recorded three-key shape;
+  it is never replacement-route evidence or routing authority.
+- The replacement plan-review receipt is exactly one JSON object whose top-level keys are, in full and with no
+  additions, `schema_version`, `topic`, `planning_candidate_commit`, `verdict`, `blocking_issues`,
+  `copilot_feedback_triage`, and `recorded_by`. `schema_version` is integer `1`; `topic` is
+  `response-reuse-protocol`; when Independent Plan-Reviewer writes the replacement receipt after reviewing a
+  candidate, `planning_candidate_commit` must equal that reviewed candidate's final full 40-hex SHA. Planning
+  artifacts never prefill a candidate SHA;
+  `verdict` is `approved|needs-rework`; `recorded_by` is `Independent Plan-Reviewer`. `blocking_issues` is an array
+  of objects with exactly `issue`, `file`, and `fix`; `copilot_feedback_triage` has exactly `ADDRESS`, `DISCUSS`,
+  and `SKIP` arrays. `ADDRESS` entries have `comment`, `location`, `why`; `DISCUSS` entries have `comment`,
+  `optional`, `why`; `SKIP` entries have `comment`, `why`. Independent Plan-Reviewer is its sole writer, and
+  Implementer is its sole evidence-only committer.
 - Tester evidence is exactly one JSON object with `schema_version`, `topic`, `implementation_subject_commit`,
   `status`, `commands`, `recorded_by`. `schema_version` is integer `1`; `topic` is `response-reuse-protocol`;
   `implementation_subject_commit` is the full 40-hex immutable subject SHA; `status` is `passing|failing`;
@@ -301,13 +327,17 @@ README, version metadata, and existing import test need no rollback.
 
 ```json
 {
+  "schema_version": 1,
+  "topic": "response-reuse-protocol",
+  "planning_candidate_commit": "<reviewed candidate final full 40-hex SHA written by Independent Plan-Reviewer after review>",
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
   "copilot_feedback_triage": {
     "ADDRESS": [],
     "DISCUSS": [],
     "SKIP": []
-  }
+  },
+  "recorded_by": "Independent Plan-Reviewer"
 }
 ```
 
