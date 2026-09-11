@@ -42,25 +42,30 @@ created: 2026-09-11
 
 - [ ] Complete only source-authorised lifecycle actions.
 
+## One-time Reconciliation Route
+
+The original, alternate, and recovery routes are immutable historical nonrouting provenance. The active route starts
+with the exact two-file reconciliation planning candidate containing this tracker and the topic plan. Its only
+Plan-Reviewer receipt is `plan/response-reuse-protocol/response-reuse-protocol.reconciliation-plan-review-receipt.json`,
+which must bind that candidate's final full 40-hex SHA. After its committed `approved` receipt, the sole
+reconciliation implementation subject may change only this file and exactly the seven `## Implementation Steps`
+checkbox tokens from `[ ]` to `[X]`. Its only Tester and Reviewer paths are
+`plan/response-reuse-protocol/response-reuse-protocol.tester-evidence-reconciliation.json` and
+`plan/response-reuse-protocol/response-reuse-protocol.implementation-review-log-reconciliation.json`. Any
+reconciliation Plan-Reviewer, Tester, or Independent Reviewer failure is terminal `human-check`; no retry,
+replacement, or later receipt/evidence path is allowed.
+
 ## Handoff / Gate Notes
 
 - `b6258d9247d6525ed7c2ba279dbb44ca711440d8`, `a2941d99201cf0aee95b71008c3f1d4e690a8770`,
   `9c65df1e57938aafada691932d8a815854a1db9b`, `86f84c834739e4114039a8c836d256b2216954ce`,
   `e6e6747f21fa02fe653894c6e99273f1f6f91a4a`, `4b233722d86db8d3bfdca4850d6ce41578ff4cb4`,
   `b653460b737930ff0bcfdc4c910288cdc51e1c4d`, `c6e9a13f3af4174963d2a175b40d6643ca9de5a7`,
-  `0bb39160bbe2027cf9e07c5e8868c8bac8dfbf38`, and `3183e94022c18c8fc62acf0943b8947057875bf8` are immutable
+  `0bb39160bbe2027cf9e07c5e8868c8bac8dfbf38`, `3183e94022c18c8fc62acf0943b8947057875bf8`,
+  `ac2edec48f8d609923837a2dc97d3dd6d8a67916`, `fc285139eb64c4f114a9dc24de3f12232b7ae780`, and
+  `6c36a79b15d6b3d10e4c3fda5d255ce2ef63255f` are immutable
   frozen nonrouting provenance, including all old receipt, Tester, Reviewer, implementation, and step-state
-  artifacts. They never select a recovery candidate or satisfy a recovery gate.
-- The sole recovery candidate awaits an independent Plan-Reviewer receipt at
-  `plan/response-reuse-protocol/response-reuse-protocol.recovery-plan-review-receipt.json`. That reviewer alone
-  writes it after review and binds its `planning_candidate_commit` to the candidate's full 40-hex SHA; planning
-  artifacts never prefill a candidate SHA. Implementer alone commits the unchanged receipt as a sole evidence-only
-  commit.
-- Only a committed, same-SHA-bound recovery receipt with verdict `approved` may enter implementation. Every recovery
-  Plan-Reviewer, Tester, or Independent Reviewer failure is terminal `human-check`; no retry, replacement, or later
-  receipt/evidence path may be created.
-- The replacement subject must be a direct, non-merge child of the approved recovery-receipt commit, change exactly
-  the ten declared implementation paths, and preserve the `NotCached(response)` public contract.
+  artifacts. They never select a reconciliation candidate or satisfy a reconciliation gate.
 - Only the seven `## Implementation Steps` entries are the implementation-completion gate.
-- Recovery Tester evidence must bind the exact immutable implementation subject. Independent Reviewer may consume only
-  committed passing same-subject recovery Tester evidence. Human alone reviews and merges a draft PR.
+- Reconciliation Tester evidence must bind the exact immutable one-file subject. Independent Reviewer may consume
+  only committed passing same-subject reconciliation Tester evidence. Human alone reviews and merges a draft PR.

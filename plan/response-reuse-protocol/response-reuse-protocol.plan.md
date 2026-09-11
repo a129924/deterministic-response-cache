@@ -70,62 +70,76 @@
   `plan/response-reuse-protocol/response-reuse-protocol.implementation-review-log-recovery.json`. This route has no
   retry, replacement, or additional receipt/evidence path: any recovery Plan-Reviewer, Tester, or Independent
   Reviewer failure is terminal `human-check`.
+- `ac2edec48f8d609923837a2dc97d3dd6d8a67916` and the complete alternate `topic/response-reuse-protocol`
+  chain are immutable historical nonrouting provenance. The recovery implementation subject
+  `fc285139eb64c4f114a9dc24de3f12232b7ae780` and its Tester-evidence commit
+  `6c36a79b15d6b3d10e4c3fda5d255ce2ef63255f` are likewise immutable historical nonrouting provenance. None may
+  select a reconciliation candidate, satisfy a reconciliation gate, or be overwritten.
+- Human authorizes one, and only one, reconciliation exception for the proven omission of the seven completed
+  `## Implementation Steps` markers. Its only planning receipt is
+  `plan/response-reuse-protocol/response-reuse-protocol.reconciliation-plan-review-receipt.json`; its only execution
+  evidence paths are `plan/response-reuse-protocol/response-reuse-protocol.tester-evidence-reconciliation.json` and
+  `plan/response-reuse-protocol/response-reuse-protocol.implementation-review-log-reconciliation.json`. These three
+  paths are distinct from, and do not replace, recovery evidence. Any reconciliation Plan-Reviewer, Tester, or
+  Independent Reviewer failure is terminal `human-check`, with no retry, replacement subject, or later receipt or
+  evidence path.
 
 ## Boundaries / Exclusions
 
-- Plan-Creator writes only the five initial planning artifacts. All named predecessor records remain frozen
-  provenance. Independent Plan-Reviewer alone writes the recovery receipt; Implementer alone commits that unchanged
-  receipt as a sole evidence-only commit. After a committed same-SHA-bound `approved` receipt, Implementer may create
-  exactly one direct-child, non-merge replacement implementation subject containing exactly the ten implementation
-  paths in `Artifact Paths`; it must preserve `NotCached(response)` exactly. Tester and Independent Reviewer write
-  only their respective recovery evidence files; Implementer commits each unchanged in its own sole evidence-only
-  commit.
+- Plan-Creator wrote only the five initial planning artifacts; all preceding routes and records remain frozen
+  provenance. For the sole active reconciliation exception, Independent Plan-Reviewer alone writes the
+  reconciliation receipt; Implementer alone commits it unchanged as a sole evidence-only commit. After a committed
+  same-SHA-bound `approved` receipt, Implementer may create exactly one direct-child, non-merge reconciliation
+  subject with the one-file, exact-seven-marker diff defined below. Tester and Independent Reviewer write only their
+  respective reconciliation evidence files; Implementer commits each unchanged in its own sole evidence-only commit.
 - CacheStore must remain inside Response Reuse. It cannot become a top-level BC, own identity rules, execute models,
   or manage runtime. A miss is a boundary outcome, not authority to perform future downstream work.
 - Documentation may depict future downstream handoff only as external/future behavior; it must not claim this topic
   implements Runtime Cache, Execution, or Provider Adapter.
 - Any undeclared path, altered public export, new dependency, async behavior, identity interpretation, or doc/code
   contract drift stops work and returns to Planner.
+- The reconciliation exception is not a Python rework: after its approved, SHA-bound plan-review receipt, its single
+  direct-child, non-merge implementation subject changes only
+  `plan/response-reuse-protocol/response-reuse-protocol.step.md`, and its diff is exactly the seven
+  `## Implementation Steps` checkbox tokens from `[ ]` to `[X]`. It must not change wording, ordering, workflow
+  stages, actionable steps, evidence, implementation, tests, `.gitkeep`, or any other path.
 
 ## Status / Allowed Transitions
 
-- **Current**: `recovery-planning-candidate-committed` once this exact two-file correction is committed. It awaits the
-  unique recovery Plan-Reviewer receipt; all named predecessor commits are frozen nonrouting provenance only.
-- **Execution model**: frozen predecessor provenance → recovery planning candidate → independent recovery
-  Plan-Reviewer receipt → direct-child non-merge replacement subject → independent recovery Tester evidence →
-  independent recovery Reviewer evidence → Planner Phase 4.5 alignment → bounded publish → draft PR → Human review
-  and merge. This topic stops before release.
+- **Current**: `reconciliation-planning-candidate-committed` once this exact two-file correction is committed. All
+  original, alternate, and recovery records are frozen nonrouting provenance; this one-time exception is the sole
+  active route.
+- **Execution model**: frozen provenance → reconciliation planning candidate → independent reconciliation
+  Plan-Reviewer receipt → one-file seven-marker reconciliation subject → independent reconciliation Tester evidence
+  → independent reconciliation Reviewer evidence → Planner Phase 4.5 alignment → bounded publish → draft PR →
+  Human review and merge. This topic stops before release.
 - **Allowed transitions**:
-  - `planned` -> `planning-candidate-committed` by an Implementer committing exactly the five initial planning artifacts.
-  - `planning-candidate-committed` -> `plan-review-in-progress` -> `plan-review-receipt-committed` is the completed
-    original route. Its committed `needs-rework` receipt is immutable provenance and cannot authorize routing.
-  - `needs-rework` -> `recovery-planning-candidate-committed` only once, by an independent Implementer committing
-    exactly `response-reuse-protocol.plan.md` and `response-reuse-protocol.step.md`. This is the sole recovery
-    planning candidate.
-  - `recovery-planning-candidate-committed` -> `recovery-plan-review-in-progress`.
-  - `recovery-plan-review-in-progress` -> `recovery-plan-review-receipt-committed` only after Independent
-    Plan-Reviewer writes the recovery receipt and Implementer commits it unchanged as a sole, single-file
-    evidence-only commit.
-  - A recovery plan-review verdict of `needs-rework` is terminal `human-check`; it cannot create another candidate,
-    receipt, or retry path.
-  - `recovery-plan-review-receipt-committed` -> `implementation-in-progress` only when the committed recovery receipt
-    verdict is `approved`, its `planning_candidate_commit` exactly equals this recovery candidate's full 40-hex SHA,
-    and Planner selects it.
-  - `implementation-in-progress` -> `tester-in-progress` only after one direct-child, non-merge immutable
-    replacement subject changes exactly the ten declared implementation paths and implements `NotCached(response)`.
-  - `tester-in-progress` -> `tester-evidence-committed` only after Tester writes factual same-subject recovery
-    evidence and an independent Implementer commits it unchanged as the sole evidence-only commit.
-  - A recovery Tester failure is terminal `human-check`; it cannot create another subject, receipt, or evidence path.
-  - `tester-evidence-committed` -> `reviewer-in-progress` only with committed same-subject `passing` recovery Tester
-    evidence.
-  - `reviewer-in-progress` -> `reviewer-evidence-committed` only after Independent Reviewer writes recovery evidence
-    and an independent Implementer commits it unchanged as the sole evidence-only commit.
-  - A recovery Independent Reviewer verdict of `needs-rework` is terminal `human-check`; it cannot create another
-    subject, receipt, or evidence path.
-  - `reviewer-evidence-committed` -> `approved` only after Planner Phase 4.5 aligns the committed same-subject
-    `approved` recovery review evidence.
+  - The original, alternate, and recovery routes are historical only. Their receipts, evidence, subject commits, and
+    terminal clauses remain immutable provenance and provide no current routing authority.
+  - `reconciliation-planning-candidate-committed` -> `reconciliation-plan-review-in-progress`.
+  - `reconciliation-plan-review-in-progress` -> `reconciliation-plan-review-receipt-committed` only after an
+    Independent Plan-Reviewer writes the unique reconciliation receipt bound to this candidate's final full 40-hex
+    SHA and an Implementer commits it unchanged as a sole, single-file evidence-only commit.
+  - `needs-rework` from reconciliation plan review is terminal `human-check`; no later candidate, receipt, or retry
+    path may be created.
+  - `reconciliation-plan-review-receipt-committed` -> `reconciliation-implementation-in-progress` only when the
+    committed receipt verdict is `approved`, its `planning_candidate_commit` exactly equals this candidate's full
+    40-hex SHA, and Planner selects it.
+  - `reconciliation-implementation-in-progress` -> `reconciliation-tester-in-progress` only after the single
+    direct-child, non-merge subject changes only the step tracker and exactly its seven implementation markers.
+  - `reconciliation-tester-in-progress` -> `reconciliation-tester-evidence-committed` only after Tester writes
+    factual same-subject reconciliation evidence and an independent Implementer commits it unchanged as a sole,
+    single-file evidence-only commit. A failing result is terminal `human-check`.
+  - `reconciliation-tester-evidence-committed` -> `reconciliation-reviewer-in-progress` only with committed,
+    same-subject passing reconciliation Tester evidence.
+  - `reconciliation-reviewer-in-progress` -> `reconciliation-reviewer-evidence-committed` only after Independent
+    Reviewer writes reconciliation evidence and an independent Implementer commits it unchanged as a sole,
+    single-file evidence-only commit. A `needs-rework` verdict is terminal `human-check`.
+  - `reconciliation-reviewer-evidence-committed` -> `approved` only after Planner Phase 4.5 aligns committed,
+    same-subject `approved` reconciliation review evidence.
   - `approved` -> `publish-in-progress` only with existing Human authorization.
-  - `publish-in-progress` -> `pr-open` by bounded push and draft PR; `pr-open` -> `needs-rework` or `merged` by Human only; `merged` -> terminal.
+  - `publish-in-progress` -> `pr-open` by bounded push and draft PR; `pr-open` -> `needs-rework` or `merged` by
+    Human only; `merged` -> terminal.
 
 ## Artifact Paths
 
@@ -140,7 +154,7 @@
 | Repair plan-review receipt | `plan/response-reuse-protocol/response-reuse-protocol.repair-plan-review-receipt.json` | No writer (frozen) | Frozen nonrouting provenance; never overwrite, route from, or treat as recovery evidence. |
 | Historical Tester evidence | `plan/response-reuse-protocol/response-reuse-protocol.tester-evidence.json` | No writer (frozen) | Frozen nonrouting provenance; never overwrite, route from, or treat as recovery evidence. |
 | Historical review evidence | `plan/response-reuse-protocol/response-reuse-protocol.implementation-review-log.json` | No writer (frozen) | Frozen nonrouting provenance; never overwrite, route from, or treat as recovery evidence. |
-| Recovery plan-review receipt | `plan/response-reuse-protocol/response-reuse-protocol.recovery-plan-review-receipt.json` | Independent Plan-Reviewer | Sole recovery receipt. It binds the recovery planning candidate's full SHA; Implementer alone commits it unchanged in a sole, single-file evidence-only commit. |
+| Recovery plan-review receipt | `plan/response-reuse-protocol/response-reuse-protocol.recovery-plan-review-receipt.json` | No writer (frozen) | Immutable historical nonrouting provenance; never overwrite or route from it. |
 | Response Reuse outcomes | `src/deterministic_response_cache/response_reuse/outcomes.py` **Add** | Implementer | `Hit`, `Miss`, `Unavailable`, `Cached`, `NotCached`, and typed outcome unions. |
 | Internal CacheStore port | `src/deterministic_response_cache/response_reuse/_cache_store.py` **Add** | Implementer | Internal `CacheStore` protocol and `CacheStoreFailure` boundary; no backend implementation. |
 | Response Reuse protocol | `src/deterministic_response_cache/response_reuse/protocol.py` **Add** | Implementer | Concrete lookup/record orchestration within the locked BC boundary. |
@@ -151,8 +165,11 @@
 | Architecture brief | `docs/architecture/business-capability/architecture-brief.md` **Modify** | Implementer | Flow prose and diagram acceptance contract for all locked outcomes. |
 | Interactive scene source | `docs/architecture/business-capability/scene.js` **Modify** | Implementer | Authoritative interactive scene labels, nodes, and flow edges. |
 | Interactive scene mirror | `docs/architecture/business-capability/index.html` **Modify** | Implementer | Exact embedded mirror of `scene.js` response-reuse visual content. |
-| Recovery Tester evidence | `plan/response-reuse-protocol/response-reuse-protocol.tester-evidence-recovery.json` | Tester | Same-subject factual validation; independent Implementer commits it unchanged as a sole evidence-only commit. |
-| Recovery review evidence | `plan/response-reuse-protocol/response-reuse-protocol.implementation-review-log-recovery.json` | Independent Reviewer | Consumes only committed same-subject passing recovery Tester evidence; independent Implementer commits it unchanged as a sole evidence-only commit. |
+| Recovery Tester evidence | `plan/response-reuse-protocol/response-reuse-protocol.tester-evidence-recovery.json` | No writer (frozen) | Immutable historical nonrouting provenance; never overwrite or route from it. |
+| Recovery review evidence | `plan/response-reuse-protocol/response-reuse-protocol.implementation-review-log-recovery.json` | No writer (frozen) | Immutable historical nonrouting provenance; never overwrite or route from it. |
+| Reconciliation plan-review receipt | `plan/response-reuse-protocol/response-reuse-protocol.reconciliation-plan-review-receipt.json` | Independent Plan-Reviewer | Unique reconciliation receipt, bound to the final full SHA of this two-file planning candidate; Implementer commits it unchanged as a sole, single-file evidence-only commit. |
+| Reconciliation Tester evidence | `plan/response-reuse-protocol/response-reuse-protocol.tester-evidence-reconciliation.json` | Tester | Factual evidence for only the one-file seven-marker reconciliation subject; independent Implementer commits it unchanged as a sole evidence-only commit. |
+| Reconciliation review evidence | `plan/response-reuse-protocol/response-reuse-protocol.implementation-review-log-reconciliation.json` | Independent Reviewer | Consumes only committed passing same-subject reconciliation Tester evidence; independent Implementer commits it unchanged as a sole evidence-only commit. |
 
 `README.md`, version metadata, `.github/copilot-instructions.md`, `src/deterministic_response_cache/__init__.py`,
 `src/deterministic_response_cache/response_reuse/.gitkeep`, `tests/test_package_import.py`, `pyproject.toml`,
@@ -183,6 +200,17 @@ and every unlisted path are read-only. No path may be deleted. Any required path
   Both commit fields are full 40-hex SHAs bound to the same subject; `tester_evidence_commit` names the committed,
   sole, passing Tester-evidence commit; `verdict` is `approved|needs-rework`; `blocking_issues` is a string array,
   empty only for `approved`; `recorded_by` is `Independent Reviewer`.
+- Reconciliation plan-review receipt has exactly the same top-level keys and value constraints as the recovery
+  plan-review receipt, except it is written only at
+  `response-reuse-protocol.reconciliation-plan-review-receipt.json` and its `planning_candidate_commit` must bind
+  this two-file reconciliation planning candidate's final full 40-hex SHA.
+- Reconciliation Tester evidence has exactly the same top-level keys and value constraints as recovery Tester
+  evidence, except it is written only at `response-reuse-protocol.tester-evidence-reconciliation.json` and its
+  `implementation_subject_commit` must bind the one-file, exact-seven-marker reconciliation subject.
+- Reconciliation review evidence has exactly the same top-level keys and value constraints as recovery review
+  evidence, except it is written only at
+  `response-reuse-protocol.implementation-review-log-reconciliation.json` and both commit fields must bind the
+  same reconciliation subject and its committed sole passing reconciliation Tester-evidence commit.
 
 ## Python implementation metadata
 
