@@ -1,6 +1,6 @@
 ---
 topic: package-topology-skeleton-replay
-phase: plan-review-in-progress
+phase: pr-open
 created: 2026-09-09
 ---
 
@@ -10,14 +10,14 @@ created: 2026-09-09
 
 - [X] plan-authoring
 - [X] plan-review-in-progress
-- [ ] tdd-test-authoring
+- [X] tdd-test-authoring (not applicable: topology-only work adds no executable Python behavior)
 - [X] implementation
 - [X] implementation-review
-- [ ] code-review
+- [X] code-review
 
 ## Actionable Steps
 
-- [ ] **Actor:** Implementer — **Action:** After a committed approved candidate receipt, complete only the six source implementation steps in order.
+- [X] **Actor:** Implementer — **Action:** Completed the six declared source implementation steps, independent implementation review, code-review/fix work, and authorized publication. No further automatic lifecycle action is authorized.
 
 ## Implementation Steps
 
@@ -30,12 +30,12 @@ created: 2026-09-09
 
 ## Main Agent Actionable Steps — Fixed Tail
 
-- [ ] Complete only source-authorised lifecycle actions.
+- [X] Complete only source-authorised lifecycle actions; the remaining delivery boundary is Human PR review.
 
 ## Handoff / Gate Notes
 
-- Current candidate state is `planning-candidate-committed`; the active gate is `plan-review-in-progress`.
-- Only the six pending entries in `## Implementation Steps` are the implementation-completion gate.
-- An independent Plan-Reviewer must write one receipt with exactly `schema_version`, `candidate_commit`, `verdict`, `blocking_issues`, and `copilot_feedback_triage`; `schema_version` is `1`, `candidate_commit` is the committed candidate's full SHA, and the receipt must then be committed unchanged as the sole receipt path with that candidate as its direct parent before Planner selects an Implementer.
-- Tester evidence must attest the same immutable implementation subject and be committed unchanged as its sole evidence path before Independent Reviewer work.
-- Independent Reviewer evidence must bind that committed passing Tester evidence and be committed unchanged as its sole evidence path before Planner Phase 4.5 alignment.
+- Delivery state is `pr-open`; the active delivery gate is Human PR review. Human alone may merge, release, tag, or perform post-merge work.
+- All six entries in `## Implementation Steps` are complete; the implementation, independent implementation review, and code-review/fix lifecycle is complete.
+- The current revised planning candidate is `planning-candidate-committed` and requires a new independent Plan-Reviewer verdict before it may be described as approved. No re-approval is asserted here.
+- That Plan-Reviewer verdict uses the normal fixed JSON schema: `verdict`, structured `blocking_issues` objects (`issue`, `file`, `fix`), and `copilot_feedback_triage` with `ADDRESS`, `DISCUSS`, and `SKIP` arrays. A committed `approved` verdict is required before Planner may route a future implementation from this revised planning candidate.
+- Historical Tester and Independent Reviewer evidence remains unchanged; this tracker update neither rewrites that evidence nor asserts a new evidence approval.

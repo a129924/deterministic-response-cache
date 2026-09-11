@@ -34,8 +34,9 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 
 ## Status / Allowed Transitions
 
-- **Current candidate**: `pr-open`.
-- **Current gate**: Human PR review.
+- **Delivery state**: `pr-open`.
+- **Delivery gate**: Human PR review. The completed implementation, independent implementation review, and code-review/fix lifecycle do not authorize merge or any further automatic action.
+- **Current planning candidate**: `planning-candidate-committed`. Its revised planning artifacts require a new independent Plan-Reviewer review before they may be described as approved. No such re-approval is asserted by this plan.
 - **Execution model**: committed planning candidate → independent Plan-Reviewer receipt → immutable implementation subject → independent Tester evidence → independent implementation review evidence → Planner Phase 4.5 alignment → bounded publish → draft PR → Human review and merge. This topic stops before release.
 - **Allowed transitions**:
   - `planned` -> `planning-candidate-committed`
@@ -58,9 +59,9 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 
 - **Candidate and evidence chain**:
   1. An Implementer commits the five initial planning artifacts as the non-merge candidate commit.
-  2. An independent Plan-Reviewer writes the declared receipt against that exact full candidate SHA; an independent Implementer commits that unchanged receipt as the sole changed path, with the candidate as its direct parent.
-  3. Only a committed receipt with `verdict: "approved"` permits Planner to select the candidate and dispatch an Implementer. A `needs-rework` receipt establishes no implementation subject or next role.
-  4. The Implementer creates a non-merge immutable implementation subject commit that changes exactly the ten implementation paths. The six `## Implementation Steps` entries remain the sole declared completion gate; this replay candidate leaves all six initially pending and does not add the step tracker to the subject diff.
+  2. An independent Plan-Reviewer writes the declared normal-plan verdict as exactly one JSON object with the fixed `verdict`, structured `blocking_issues`, and `copilot_feedback_triage` arrays. An Implementer may commit that unchanged result as the declared review artifact.
+  3. Only a committed normal-plan verdict with `verdict: "approved"` permits Planner to select that planning candidate and dispatch an Implementer. A `needs-rework` verdict establishes no implementation subject or next role. The current revised planning candidate has not yet received that independent re-approval.
+  4. The Implementer creates a non-merge immutable implementation subject commit that changes exactly the ten implementation paths. The six `## Implementation Steps` entries are the sole declared completion gate; the tracker now records all six as complete and remains outside the immutable source-subject diff.
   5. An independent Tester writes factual evidence for that exact full subject SHA without committing it. An independent Implementer commits it unchanged as a sole evidence-only commit whose direct parent is the subject.
   6. An Independent Reviewer consumes only the committed passing Tester evidence for that same subject, writes the review log without committing it, and an independent Implementer commits it unchanged as a sole evidence-only commit whose direct parent is the Tester-evidence commit.
   7. Planner Phase 4.5 may align only the committed approved review log with the same subject. Existing Human authorization is required before bounded push and the topic's draft PR. Human alone reviews and merges the PR.
@@ -74,7 +75,7 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 | Topic plan | `plan/package-topology-skeleton-replay/package-topology-skeleton-replay.plan.md` | Plan-Creator | Canonical executable topic contract; planning candidate only. |
 | Topic specification | `plan/package-topology-skeleton-replay/package-topology-skeleton-replay.spec.md` | Plan-Creator | Acceptance and edge-case contract; planning candidate only. |
 | Step tracker | `plan/package-topology-skeleton-replay/package-topology-skeleton-replay.step.md` | Plan-Creator; later Implementer only for its six implementation-step markers | Progression truth; only `## Implementation Steps` is the implementation-completion gate. |
-| Plan-review receipt | `plan/package-topology-skeleton-replay/package-topology-skeleton-replay.plan-review-receipt.json` | Independent Plan-Reviewer | Candidate-bound plan approval; must be committed unchanged by an independent Implementer as a receipt-only commit. |
+| Plan-review receipt | `plan/package-topology-skeleton-replay/package-topology-skeleton-replay.plan-review-receipt.json` | Independent Plan-Reviewer | Normal-plan fixed-schema verdict; an Implementer may commit the unchanged result before Planner uses an `approved` verdict for routing. |
 | Architecture source of truth | `docs/business-capability-architecture.md` | Implementer | Defines fixed BC-to-directory mapping and topology-only semantics. |
 | Evolution roadmap | `docs/evolution-roadmap.md` | Implementer | Defines fixed Identity-first implementation order. |
 | Architecture brief | `docs/architecture/business-capability/architecture-brief.md` | Implementer | Synchronizes BC boundaries, mapping, and phase/order. |
@@ -90,11 +91,11 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 
 `README.md`, project version metadata, `.github/copilot-instructions.md`, root `src/deterministic_response_cache/__init__.py`, `tests/test_package_import.py`, `pyproject.toml`, and `.gitignore` are explicitly read-only. No artifact is deleted. Any path not listed in this table is out of contract and must return to Planner before modification.
 
-### Candidate-bound evidence schemas
+### Review and evidence schemas
 
 All SHA values below are lowercase 40-character hexadecimal Git commit IDs. Any missing, extra, malformed, or cross-topic/cross-subject value fails closed.
 
-- Plan-review receipt is one JSON object with exactly `schema_version`, `candidate_commit`, `verdict`, `blocking_issues`, and `copilot_feedback_triage`. `schema_version` is integer `1`; `candidate_commit` is the full candidate SHA; `verdict` is `approved|needs-rework`; `blocking_issues` is a string array and must be empty for `approved`; `copilot_feedback_triage` is an object with exactly `ADDRESS`, `DISCUSS`, and `SKIP` string arrays. Receipt review inputs are only the five committed candidate artifacts, this topic's declared contract sources, and this topic's recorded feedback. The receipt-only commit changes only this path and has the candidate commit as direct parent.
+- Plan-review receipt is exactly one normal-plan JSON verdict with only `verdict`, `blocking_issues`, and `copilot_feedback_triage`. `verdict` is `approved|needs-rework`; `blocking_issues` is an array of objects, each with `issue`, `file`, and `fix`; `copilot_feedback_triage` has exactly the `ADDRESS`, `DISCUSS`, and `SKIP` arrays. `ADDRESS` entries each contain `comment`, `location`, and `why`; `DISCUSS` entries each contain `comment`, `optional`, and `why`; `SKIP` entries each contain `comment` and `why`. The independent Plan-Reviewer evaluates only the declared planning inputs. This revised planning candidate remains pending independent review and must not be presented as approved until an `approved` verdict is committed.
 - Tester evidence is one JSON object with exactly `schema_version`, `topic`, `implementation_subject_commit`, `status`, `commands`, and `recorded_by`. `schema_version` is integer `1`; `topic` is `package-topology-skeleton-replay`; `implementation_subject_commit` is the full immutable subject SHA; `status` is `passing|failing`; `commands` is a non-empty array whose entries have exactly non-empty string `command` and integer `exit_code`; `recorded_by` is `Tester`. `passing` requires every exit code to be `0`; `failing` requires at least one non-zero exit code.
 - Independent implementation review log is one JSON object with exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`, `verdict`, `blocking_issues`, and `recorded_by`. `schema_version` is integer `1`; `topic` is `package-topology-skeleton-replay`; both commit fields are full SHA values and bind the same subject; `tester_evidence_commit` names the sole committed passing Tester-evidence commit; `verdict` is `approved|needs-rework`; `blocking_issues` is a string array, empty only for `approved`; `recorded_by` is `Independent Reviewer`.
 
@@ -108,7 +109,7 @@ All SHA values below are lowercase 40-character hexadecimal Git commit IDs. Any 
 
 ### Current Context
 
-`src/deterministic_response_cache/__init__.py` is the existing empty public package surface and `tests/test_package_import.py` is its direct-import smoke test. Architecture documents already define the five BC concepts and boundaries, but `docs/evolution-roadmap.md`, `scene.js`, and `index.html` still describe Response Reuse as the first implementation topic. The package has no BC child folders.
+`src/deterministic_response_cache/__init__.py` is the existing empty public package surface and `tests/test_package_import.py` is its direct-import smoke test. The five BC reservation folders now exist only with their declared `.gitkeep` files; they add no executable Python module, public symbol, or re-export. Architecture documents now align to the Identity-first sequence.
 
 ### Requirements
 
@@ -193,12 +194,10 @@ Revert the immutable implementation subject commit, which removes the five `.git
 
 ## Reviewer Handoff
 
-The following is a shape-only template, not a receipt: the Plan-Reviewer replaces the candidate placeholder with the exact committed candidate SHA before writing the receipt.
+The following is the normal-plan fixed-schema template, not a receipt. The independent Plan-Reviewer must provide exactly this JSON shape with no trailing prose. It does not itself assert approval of the current planning candidate; only an independently produced and committed `approved` verdict can do so.
 
 ```json
 {
-  "schema_version": 1,
-  "candidate_commit": "<full-40-hex-candidate-sha>",
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
   "copilot_feedback_triage": {
@@ -215,4 +214,4 @@ No release, tag, version bump, README update, post-merge action, or final summar
 
 ## Open Questions / Unresolved Items
 
-None. The Human-approved replay route and the fixed topology, boundaries, implementation order, read-only paths, evidence sequence, and validation commands resolve the planning decisions for this topic.
+The revised planning candidate requires an independent Plan-Reviewer verdict before it can be treated as re-approved. This does not alter the current delivery state of `pr-open` or the Human PR-review boundary.
