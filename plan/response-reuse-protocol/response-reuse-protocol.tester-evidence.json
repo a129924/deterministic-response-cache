@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-protocol",
+  "implementation_subject_commit": "2bde5cb49887d9afabd475e4cf0b16dbc1b41d1f",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "test \"$(git diff --name-only 86f84c834739e4114039a8c836d256b2216954ce 2bde5cb49887d9afabd475e4cf0b16dbc1b41d1f | sort)\" = \"$(printf '%s\\n' 'docs/architecture/business-capability/architecture-brief.md' 'docs/architecture/business-capability/index.html' 'docs/architecture/business-capability/scene.js' 'docs/business-capability-architecture.md' 'docs/evolution-roadmap.md' 'src/deterministic_response_cache/response_reuse/_cache_store.py' 'src/deterministic_response_cache/response_reuse/outcomes.py' 'src/deterministic_response_cache/response_reuse/protocol.py' 'tests/test_response_reuse_outcomes.py' 'tests/test_response_reuse_protocol.py' | sort)\"",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --quiet 2bde5cb49887d9afabd475e4cf0b16dbc1b41d1f",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run ruff check src/deterministic_response_cache/response_reuse tests/test_response_reuse_outcomes.py tests/test_response_reuse_protocol.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pyright src/deterministic_response_cache/response_reuse tests/test_response_reuse_outcomes.py tests/test_response_reuse_protocol.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_response_reuse_outcomes.py tests/test_response_reuse_protocol.py -v",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_package_import.py -v",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest -v",
+      "exit_code": 0
+    },
+    {
+      "command": "cmp -s docs/architecture/business-capability/scene.js /private/tmp/response-reuse-index-scene.js && git ls-files --error-unmatch src/deterministic_response_cache/response_reuse/.gitkeep >/dev/null && git diff --quiet 86f84c834739e4114039a8c836d256b2216954ce 2bde5cb49887d9afabd475e4cf0b16dbc1b41d1f -- src/deterministic_response_cache/response_reuse/.gitkeep && ! rg -n -e 'importlib' -e '__import__' -e 'sys\\.modules' tests/test_response_reuse_outcomes.py tests/test_response_reuse_protocol.py && rg -q '不是 Response Reuse Protocol 等待 Identity implementation completion 的 gate' docs/evolution-roadmap.md && rg -q 'independent Protocol topic' docs/architecture/business-capability/architecture-brief.md && for marker in 'Hit' 'Miss' 'Unavailable' 'Cached' 'NotCached'; do rg -q \"$marker\" docs/architecture/business-capability/scene.js && rg -q \"$marker\" docs/architecture/business-capability/index.html || exit 1; done",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
