@@ -77,8 +77,12 @@ flowchart TB
 - Planning artifacts are authored only by Plan-Creator. Plan-Reviewer, Tester, and Independent
   Reviewer each produce only their own declared evidence; Implementer alone performs approved,
   bounded source work and may never merge. Any unlisted path or contract drift returns to Planner.
-- No correction route is declared. Frozen governance provenance is nonrouting and cannot supply this
-  topic's candidate, approval, subject, or evidence.
+- This one-time, Human-authorized correction route repairs only the proven mismatch between the
+  implementation allowlist and the Reviewer gate requiring completed implementation-step tracking.
+  It neither changes the Python implementation contract nor authorizes any new implementation,
+  test, `.gitkeep`, planning, or evidence path beyond the exact R4/S2 paths declared below.
+  R1, R2, R3, T1, and V1 remain immutable committed provenance: their paths and blobs must not be
+  modified, deleted, replaced, or reinterpreted as R4/S2 evidence.
 - The committed R1 and R2 receipts at
   `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` and
   `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json` are immutable
@@ -90,37 +94,40 @@ flowchart TB
 
 ## Status / Allowed Transitions
 
-- **Historical immutable state**: `R2_NEEDS_REWORK_COMMITTED`.
-- **Current**: `R3_PLAN_REVIEW_PENDING`.
-- **Execution model**: planning candidate commit → independent Plan-Reviewer receipt → immutable
-  implementation subject → independent Tester evidence → independent Reviewer evidence → Planner
-  Phase 4.5 alignment → bounded publish → draft PR → Human review and merge. This topic stops before
-  release.
+- **Historical immutable state**: R1/R2 `needs-rework`, R3 `approved`, S1 implementation subject,
+  T1 passing Tester evidence, and V1 `needs-rework` evidence are committed provenance only.
+- **Current**: `R4_PLAN_REVIEW_PENDING`.
+- **Execution model**: committed R4 planning-correction candidate → independent Plan-Reviewer R4
+  receipt → immutable S2 step-tracker reconciliation subject → independent S2 Tester evidence →
+  independent S2 Reviewer evidence → Planner Phase 4.5 alignment → bounded publish → draft PR →
+  Human review and merge. This topic stops before release.
 - **Allowed transitions**:
-  - `R2_NEEDS_REWORK_COMMITTED` → `R3_PLANNING_CANDIDATE_COMMITTED` →
-    `R3_PLAN_REVIEW_PENDING` → `R3_APPROVED_RECEIPT_COMMITTED` |
-    `R3_NEEDS_REWORK_RECEIPT_COMMITTED`
-  - `R3_APPROVED_RECEIPT_COMMITTED` → `implementation-in-progress`
-  - `implementation-in-progress` → `tester-in-progress`
-  - `tester-in-progress` → `tester-evidence-committed`
-  - `tester-evidence-committed` → `reviewer-in-progress`
-  - `reviewer-in-progress` → `reviewer-evidence-committed` or `needs-rework`
-  - `reviewer-evidence-committed` → `approved`
-  - `R3_NEEDS_REWORK_RECEIPT_COMMITTED` is immutable nonrouting provenance. It cannot authorize
-    implementation; Planner must first declare a new receipt path before any further planning retry.
-  - `needs-rework` → `implementation-in-progress` only with a new immutable subject and a complete
-    new Tester/Reviewer evidence chain
+  - `R4_PLANNING_CORRECTION_CANDIDATE_COMMITTED` → `R4_PLAN_REVIEW_PENDING` →
+    `R4_APPROVED_RECEIPT_COMMITTED` | `R4_NEEDS_REWORK_RECEIPT_COMMITTED`
+  - Only `R4_APPROVED_RECEIPT_COMMITTED` permits S2; it must be an independently produced,
+    committed `approved` R4 receipt at the declared path.
+  - `R4_APPROVED_RECEIPT_COMMITTED` → `S2_STEP_TRACKER_RECONCILIATION_IN_PROGRESS` →
+    `S2_SUBJECT_COMMITTED` → `S2_TESTER_IN_PROGRESS` → `S2_TESTER_EVIDENCE_COMMITTED`
+  - Committed passing S2 Tester evidence → `S2_REVIEWER_IN_PROGRESS` →
+    `S2_REVIEW_EVIDENCE_COMMITTED` | `S2_NEEDS_REWORK_COMMITTED`; committed failing S2 Tester
+    evidence stops at the Human boundary.
+  - `S2_REVIEW_EVIDENCE_COMMITTED` → `approved` only after Planner Phase 4.5 alignment; it is the
+    only path from this correction route to bounded publish.
+  - `R4_NEEDS_REWORK_RECEIPT_COMMITTED` or `S2_NEEDS_REWORK_COMMITTED` stops this topic at the Human
+    boundary. No R5, retry receipt, alternate reconciliation subject, or workflow extension is
+    authorized.
   - `approved` → `publish-in-progress`
   - `publish-in-progress` → `pr-open`
   - `pr-open` → `needs-rework` or `merged` by Human only
   - `merged` → terminal
 
-R1 and R2 are immutable committed `needs-rework` provenance and have no routing effect. Only the
-future committed R3 normal-plan receipt at the declared R3 path, with `verdict: "approved"`, permits
-Planner to route implementation. A committed R3 `needs-rework` receipt remains preserved and requires
-Planner to declare a new receipt path before another planning retry. Tester evidence and independent
-review must bind the same full implementation subject; only then may Planner Phase 4.5 align the
-topic. Publish requires that alignment and existing human authorization. No transition authorizes
+R1/R2/R3/T1/V1 remain immutable committed provenance and have no routing effect for R4/S2. Only a
+future committed `approved` R4 receipt at its declared path permits Planner to route S2. S2 may
+change only the six unchecked entries under this plan's `## Implementation Steps` in the step tracker,
+turning precisely those entries from `[ ]` to `[X]`; it may not modify workflow stages, actionable
+steps, fixed-tail text, handoff notes, Python, tests, `.gitkeep`, or any other planning/evidence path.
+S2 Tester and independent Reviewer evidence must bind the same full S2 subject SHA. Publish still
+requires Planner Phase 4.5 alignment and existing Human authorization. No transition authorizes
 automatic merge, release, tag, post-merge, or final summary.
 
 ## Artifact Paths
@@ -134,14 +141,17 @@ automatic merge, release, tag, post-merge, or final summary.
 | Step tracker | `plan/model-feature-identity/model-feature-identity.step.md` | Plan-Creator | Progression truth |
 | Plan-review receipt R1 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
 | Plan-review receipt R2 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
-| Plan-review receipt R3 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r3.json` | Independent Plan-Reviewer | Sole retry receipt; only a future committed `approved` R3 is planning approval; an Implementer commits it unchanged |
+| Plan-review receipt R3 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r3.json` | Independent Plan-Reviewer | Immutable committed `approved` provenance; its path/blob remain unchanged and it is not R4/S2 routing authority |
+| Plan-review receipt R4 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r4.json` | Independent Plan-Reviewer | Sole planning-correction receipt; only a committed `approved` R4 permits S2; an independent Implementer commits it unchanged as the sole R4 evidence commit |
 | Contracts module | `src/deterministic_response_cache/identity/contracts.py` | Implementer | Identity types, ABC, Outcome, and stage Protocol contracts |
 | Builders module | `src/deterministic_response_cache/identity/builders.py` | Implementer | Bounded pipeline orchestration |
 | Identity package exports | `src/deterministic_response_cache/identity/__init__.py` | Implementer | Explicit identity public surface only |
 | Contract tests | `tests/test_model_feature_identity_contracts.py` | Implementer | ABC, VO, Outcome, and Protocol contract verification |
 | Builder tests | `tests/test_model_feature_identity_builders.py` | Implementer | Pipeline order, failure, and composition verification |
-| Tester evidence | `plan/model-feature-identity/model-feature-identity.tester-evidence.json` | Tester | Factual same-subject validation; an independent Implementer commits it unchanged as the sole evidence-only commit |
-| Implementation review log | `plan/model-feature-identity/model-feature-identity.implementation-review-log.json` | Independent Reviewer | Same-subject review after committed passing Tester evidence; an independent Implementer commits it unchanged as the sole evidence-only commit |
+| Tester evidence T1 | `plan/model-feature-identity/model-feature-identity.tester-evidence.json` | Tester | Immutable committed passing S1 provenance; path/blob unchanged and not S2 evidence |
+| Implementation review log V1 | `plan/model-feature-identity/model-feature-identity.implementation-review-log.json` | Independent Reviewer | Immutable committed S1 `needs-rework` provenance; path/blob unchanged and not S2 evidence |
+| Tester evidence S2 | `plan/model-feature-identity/model-feature-identity.tester-evidence-s2.json` | Tester | Factual same-S2-subject validation; an independent Implementer commits it unchanged as the sole S2 Tester-evidence commit |
+| Implementation review log S2 | `plan/model-feature-identity/model-feature-identity.implementation-review-log-s2.json` | Independent Reviewer | Same-S2-subject review after committed passing S2 Tester evidence; an independent Implementer commits it unchanged as the sole S2 Reviewer-evidence commit |
 
 `README.md`, project version metadata, `pyproject.toml`, root
 `src/deterministic_response_cache/__init__.py`, existing tests, and
@@ -154,23 +164,27 @@ deleted. Any path outside this table is a plan-alignment stop and must return to
   provenance only and must not be changed, replaced, or used as routing authority.
 - R2 is the already committed receipt at its declared path. It has fixed-schema `needs-rework`
   provenance only and must not be changed, replaced, or used as routing authority.
-- R3 is the only retry receipt and is exactly one JSON object with only `verdict`,
-  `blocking_issues`, and `copilot_feedback_triage`, using the fixed reviewer-handoff schema below.
-  Only its future committed `approved` verdict has planning-approval effect. A committed
-  `needs-rework` R3 receipt is preserved as nonrouting provenance; Planner must declare a new receipt
-  path before another planning retry.
-- Tester evidence is one JSON object with exactly `schema_version`, `topic`,
+- R3 is immutable committed `approved` provenance only. Its path/blob must remain unchanged and it
+  cannot authorize the R4/S2 correction route.
+- R4 is exactly one JSON object with only `verdict`, `blocking_issues`, and
+  `copilot_feedback_triage`, using the fixed reviewer-handoff schema below. Only its future committed
+  `approved` verdict has planning-correction approval effect. A committed R4 `needs-rework` receipt
+  stops at the Human boundary and forbids R5 or any alternate retry path.
+- T1 and V1 are immutable committed S1 provenance only. Their paths/blobs must remain unchanged and
+  cannot be supplied as S2 Tester or Reviewer evidence.
+- S2 Tester evidence is one JSON object with exactly `schema_version`, `topic`,
   `implementation_subject_commit`, `status`, `commands`, and `recorded_by`. `schema_version` is
   integer `1`; `topic` is `model-feature-identity`; `implementation_subject_commit` is the full
   immutable subject SHA; `status` is `passing|failing`; `commands` is a non-empty array of objects
   with only non-empty string `command` and integer `exit_code`; `recorded_by` is `Tester`. Passing
   requires every exit code to be `0`; failing requires at least one non-zero exit code.
-- The Independent Reviewer log is one JSON object with exactly `schema_version`, `topic`,
+- The S2 Independent Reviewer log is one JSON object with exactly `schema_version`, `topic`,
   `implementation_subject_commit`, `tester_evidence_commit`, `verdict`, `blocking_issues`, and
   `recorded_by`. Both commit values are full SHA values and bind the same subject; the Tester
   evidence commit is the sole committed passing-evidence commit. `verdict` is
   `approved|needs-rework`; `blocking_issues` is a string array, empty only for `approved`; and
-  `recorded_by` is `Independent Reviewer`.
+  `recorded_by` is `Independent Reviewer`. An S2 `needs-rework` verdict stops at the Human boundary
+  and forbids a replacement S2 subject or further evidence route.
 
 ## Python implementation metadata
 
@@ -341,10 +355,31 @@ architecture files, and other topic artifacts unchanged.
 6. Add `tests/test_model_feature_identity_builders.py` with injected fake stages for fixed call order,
    failure short-circuit, separate leaf results, and the combine second-pass aggregate/hash behavior.
 
+## S2 Step-tracker reconciliation
+
+- **Precondition:** an independent Plan-Reviewer has written, and an independent Implementer has
+  committed unchanged, an `approved` R4 receipt at
+  `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r4.json`.
+- **S2 subject allowlist:** only
+  `plan/model-feature-identity/model-feature-identity.step.md`. Its complete subject diff must change
+  exactly the six entries under `## Implementation Steps` from `[ ]` to `[X]`; it must make no other
+  textual change, including no workflow-stage, actionable-step, fixed-tail, or handoff-note change.
+- **S2 evidence order:** Tester writes only `tester-evidence-s2.json` for that immutable subject;
+  an independent Implementer commits it unchanged as the sole evidence-only commit. Independent
+  Reviewer then consumes that committed passing evidence and writes only
+  `implementation-review-log-s2.json`; an independent Implementer commits it unchanged as the sole
+  evidence-only commit. Neither S2 evidence file may share a commit with the S2 subject, a planning
+  artifact, or the other evidence file.
+- **Failure boundary:** R4 `needs-rework`, failing S2 Tester evidence, or S2 Reviewer
+  `needs-rework` ends the route at Human. It does not authorize R5, a second S2 subject, a retry, or
+  any expansion of this topic.
+
 ## Validation / Acceptance Checks
 
-- Verify the implementation diff contains only the five `Written` source/test paths; it must not
-  modify or delete `identity/.gitkeep` or any ReadOnly path.
+- For S1 provenance, verify the implementation diff contains only the five `Written` source/test
+  paths; it must not modify or delete `identity/.gitkeep` or any ReadOnly path.
+- For S2, verify the subject diff contains only the step tracker and exactly the six checkbox changes
+  declared above; no Python, test, `.gitkeep`, evidence, or other planning path may be changed.
 - Confirm each Builder's successful path uses Validator → Sorter → Encoder → Serializer → Hasher;
   each Validator Failure returns all recorded issues and has no downstream calls.
 - Confirm `combine()` accepts one ModelIdentity and one FeatureIdentity, executes a fresh full pipeline,
@@ -357,10 +392,10 @@ architecture files, and other topic artifacts unchanged.
 
 ## Reviewer Handoff
 
-The following is the R3 normal-plan fixed-schema template, not a receipt. The independent
-Plan-Reviewer must provide exactly this JSON shape with no trailing prose at the declared R3 path.
-Only an independently produced and committed R3 `approved` verdict has planning-approval effect;
-this plan does not select, declare, or deny an active candidate.
+The following is the R4 planning-correction fixed-schema template, not a receipt. The independent
+Plan-Reviewer must provide exactly this JSON shape with no trailing prose at the declared R4 path.
+Only an independently produced and committed R4 `approved` verdict permits S2; this plan does not
+select, declare, or deny an active candidate.
 
 ```json
 {
@@ -382,6 +417,6 @@ action.
 
 ## Open Questions / Unresolved Items
 
-None. R1 and R2 remain immutable committed `needs-rework` provenance and nonrouting. Planning
-authority can arise only from the independently produced, committed approved R3 receipt; this plan
-and its step tracker neither select, declare, nor close a candidate.
+None. R1/R2/R3/T1/V1 remain immutable committed provenance and nonrouting for this correction route.
+Only the independently produced, committed approved R4 receipt can permit S2; this plan and its step
+tracker neither select, declare, nor close a candidate.

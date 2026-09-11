@@ -17,8 +17,12 @@ created: 2026-09-11
 
 ## Actionable Steps
 
-- [ ] **Actor:** Implementer — **Action:** Complete source `## Implementation Steps` only after a
-  committed independent Plan-Reviewer receipt approves this planning candidate.
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review the committed R4 planning-correction
+  candidate and write only the declared R4 receipt. Only a committed `approved` R4 receipt permits
+  the bounded S2 step-tracker reconciliation subject.
+- [ ] **Actor:** Implementer — **Action:** After committed R4 approval only, create S2 with a subject
+  diff limited to this tracker and limited within it to marking the six `## Implementation Steps` as
+  complete; then follow the declared S2 Tester → Reviewer evidence chain.
 
 ## Implementation Steps
 
@@ -37,15 +41,18 @@ created: 2026-09-11
 
 ## Main Agent Actionable Steps — Fixed Tail
 
-- [ ] Complete only source-authorised lifecycle actions after the required same-topic evidence and
-  Planner alignment gates.
+- [ ] Complete only source-authorised lifecycle actions after committed R4 approval, the required
+  same-S2-subject evidence, and Planner alignment gates.
 
 ## Handoff / Gate Notes
 
-- Plan-Creator has authored only the five initial artifacts. An independent Plan-Reviewer must inspect
-  the committed planning candidate before any implementation route exists.
-- Only a committed `approved` plan-review receipt permits Planner to select the candidate and dispatch
-  an Implementer. Tester evidence and Independent Reviewer evidence must bind the same immutable
-  implementation subject; then Planner Phase 4.5 decides whether bounded publish is eligible.
+- R1/R2/R3/T1/V1 are immutable committed provenance. The only current route is R4, whose independent
+  Plan-Reviewer receipt must be committed with `verdict: "approved"` before S2 exists.
+- S2 may change only this file and only the six unchecked entries under `## Implementation Steps` to
+  `[X]`; no other tracker text, Python, tests, `.gitkeep`, planning artifact, or evidence path is
+  authorized in its subject. Tester evidence and Independent Reviewer evidence must bind the same S2
+  subject; then Planner Phase 4.5 decides whether bounded publish is eligible.
+- R4 `needs-rework`, failing S2 Tester evidence, or S2 Reviewer `needs-rework` stops at Human. R5,
+  an alternate S2 subject, and any route extension are forbidden.
 - `identity/.gitkeep` is ReadOnly because `package-topology-skeleton-replay` owns it. Any modification,
   deletion, or unlisted path is a plan-alignment stop returning to Planner.
