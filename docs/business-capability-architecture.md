@@ -30,7 +30,7 @@ Provider Adapter 只對接具體的 local 或 remote provider，位於核心 lib
 
 ## Package topology
 
-本 repository 預先保留下列 Business Capability（BC）目錄。此表是 BC 名稱與 package path 的文字 source of truth：目錄中的 `.gitkeep` 僅代表已宣告的 topology，**不**代表該 BC 已實作、可使用或可 import；每個 BC 的功能仍須依 roadmap 以獨立 topic 實作。
+本 repository 預先保留下列 Business Capability（BC）目錄。此表是 BC 名稱與 package path 的文字 source of truth：目錄中的 `.gitkeep` 僅代表已宣告的 topology，**不**代表該 BC 已實作或可使用。這些 child directory 可被 Python 解析為 implicit namespace subpackage，但不因此提供 executable implementation、public symbol 或 re-export；每個 BC 的功能仍須依 roadmap 以獨立 topic 實作。
 
 | BC | 預留 directory | Topology boundary |
 | --- | --- | --- |
