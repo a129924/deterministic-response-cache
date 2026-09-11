@@ -28,7 +28,7 @@
 
 ## Package topology reservation
 
-本 topic 只預先建立下列 directory topology；它們不代表 BC 已實作或可使用，且不建立 executable Python module、public symbol、re-export 或 `cache_store/` 頂層目錄。
+本 topic 只預先建立下列 directory topology；每個 `.gitkeep` 是純文字 topology-reservation marker。directory 可被 Python 解析為 implicit namespace subpackage，但 marker 不提供 executable module、public symbol 或 re-export，也不代表 BC 已實作或可使用；不建立 `cache_store/` 頂層目錄。
 
 | Implementation order | BC | Reserved directory |
 | --- | --- | --- |

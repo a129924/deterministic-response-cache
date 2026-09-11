@@ -64,7 +64,7 @@
 
 **固定演進順序**：Identity → Response Reuse → Loaded Runtime Cache → Model Execution → Provider Adapter。每個 BC 都需要獨立 topic；本 repository 尚未實作其中任何一個。
 
-**預留 topology**：`identity/`、`response_reuse/`、`loaded_runtime_cache/`、`model_execution/`、`provider_adapter/` 位於 `src/deterministic_response_cache/` 下。每個目錄僅以 `.gitkeep` 預留，不代表 BC 已實作或可使用，也不新增 executable Python module、public symbol 或 re-export。
+**預留 topology**：`identity/`、`response_reuse/`、`loaded_runtime_cache/`、`model_execution/`、`provider_adapter/` 位於 `src/deterministic_response_cache/` 下。每個 `.gitkeep` 是純文字 topology-reservation marker；目錄可被 Python 解析為 implicit namespace subpackage，但 marker 不提供 executable module、public symbol 或 re-export，也不代表 BC 已實作或可使用。
 
 **邊界維持**：Identity 是模型與完整 request identity 的唯一 authority；CacheStore 僅在 Response Reuse 內部。Loaded Runtime Cache、Model Execution 與 Provider Adapter 保持三個彼此獨立、尚未實作的 BC；`provider_adapter/` 只預留其 topology，具體 provider integration 仍在核心外部且可替換。
 

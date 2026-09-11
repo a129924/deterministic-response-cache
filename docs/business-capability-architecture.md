@@ -30,7 +30,7 @@ Provider Adapter 只對接具體的 local 或 remote provider，位於核心 lib
 
 ## Package topology
 
-本 repository 預先保留下列 Business Capability（BC）目錄。此表是 BC 名稱與 package path 的文字 source of truth：目錄中的 `.gitkeep` 僅代表已宣告的 topology，**不**代表該 BC 已實作或可使用。這些 child directory 可被 Python 解析為 implicit namespace subpackage，但不因此提供 executable implementation、public symbol 或 re-export；每個 BC 的功能仍須依 roadmap 以獨立 topic 實作。
+本 repository 預先保留下列 Business Capability（BC）目錄。此表是 BC 名稱與 package path 的文字 source of truth：目錄中的 `.gitkeep` 是純文字 topology-reservation marker，**不**代表該 BC 已實作或可使用。這些 child directory 可被 Python 解析為 implicit namespace subpackage，但 marker 不提供 executable module、public symbol 或 re-export；每個 BC 的功能仍須依 roadmap 以獨立 topic 實作。
 
 | BC | 預留 directory | Topology boundary |
 | --- | --- | --- |
@@ -38,7 +38,7 @@ Provider Adapter 只對接具體的 local 或 remote provider，位於核心 lib
 | Response Reuse | `src/deterministic_response_cache/response_reuse/` | 只消費已確認 identity；CacheStore 是其內部元件。 |
 | Loaded Runtime Cache | `src/deterministic_response_cache/loaded_runtime_cache/` | 獨立的未來 BC，不與 response reuse 或 CacheStore 合併。 |
 | Model Execution | `src/deterministic_response_cache/model_execution/` | 獨立的未來 BC，不擁有 identity 或 response reuse。 |
-| Provider Adapter | `src/deterministic_response_cache/provider_adapter/` | 獨立、可替換的未來 BC，不擁有核心政策。 |
+| Provider Adapter | `src/deterministic_response_cache/provider_adapter/` | 獨立、可替換的未來 BC；此處只預留 boundary topology，具體 provider integration 維持核心外部。 |
 
 本 topology 不建立 child package initializer、executable Python module、public symbol、re-export 或 `cache_store/` 頂層目錄。`src/deterministic_response_cache/__init__.py` 仍是唯一既有 package initializer。
 
