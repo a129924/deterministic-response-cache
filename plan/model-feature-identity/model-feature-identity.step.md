@@ -26,17 +26,17 @@ created: 2026-09-11
 
 ## Implementation Steps
 
-- [ ] 1. Add `src/deterministic_response_cache/identity/contracts.py` with the declared contracts and
+- [X] 1. Add `src/deterministic_response_cache/identity/contracts.py` with the declared contracts and
   retain `identity/.gitkeep` unchanged.
-- [ ] 2. Add `src/deterministic_response_cache/identity/builders.py` with both leaf Builder flows and
+- [X] 2. Add `src/deterministic_response_cache/identity/builders.py` with both leaf Builder flows and
   Validator short-circuit.
-- [ ] 3. Add `FeatureIdentityBuilder.combine()` with fixed aggregate construction and its second full
+- [X] 3. Add `FeatureIdentityBuilder.combine()` with fixed aggregate construction and its second full
   pipeline traversal.
-- [ ] 4. Add `src/deterministic_response_cache/identity/__init__.py` with the declared identity-only
+- [X] 4. Add `src/deterministic_response_cache/identity/__init__.py` with the declared identity-only
   exports.
-- [ ] 5. Add `tests/test_model_feature_identity_contracts.py` for ABC, VO, Outcome, and Protocol
+- [X] 5. Add `tests/test_model_feature_identity_contracts.py` for ABC, VO, Outcome, and Protocol
   contracts.
-- [ ] 6. Add `tests/test_model_feature_identity_builders.py` for stage order, failure, leaf identity,
+- [X] 6. Add `tests/test_model_feature_identity_builders.py` for stage order, failure, leaf identity,
   and composition behavior.
 
 ## Main Agent Actionable Steps — Fixed Tail
