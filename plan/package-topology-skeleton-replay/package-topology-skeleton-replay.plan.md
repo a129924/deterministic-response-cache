@@ -24,7 +24,7 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 - Identity alone owns model identity and complete request identity. Response Reuse only consumes confirmed identity. CacheStore stays an internal Response Reuse concept and does not receive a top-level directory.
 - Loaded Runtime Cache, Model Execution, and Provider Adapter remain separate future BCs; a reserved folder does not authorize their implementation. `provider_adapter/` is only a BC topology reservation: concrete provider integrations stay outside the core library and replaceable.
 - Every reserved directory contains only `.gitkeep`; none contains `__init__.py` or Python code. Existing `src/deterministic_response_cache/__init__.py` remains the sole package initializer and direct-import behavior is preserved.
-- The historical correction evidence context records prior subject scope only. It is frozen, nonrouting provenance; it neither creates a correction route nor an artifact, and it does not approve the current revised planning candidate.
+- The historical correction evidence context records prior subject scope only. It is frozen, nonrouting provenance; it neither creates a correction route nor an artifact and has no planning-approval effect.
 
 ## Boundaries / Exclusions
 
@@ -36,7 +36,7 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 
 - **Delivery state**: `pr-open`.
 - **Delivery gate**: Human PR review. The completed implementation, independent implementation review, and code-review/fix lifecycle do not authorize merge or any further automatic action.
-- **Current planning candidate**: `planning-candidate-committed`. Its revised planning artifacts require a new independent Plan-Reviewer review before they may be described as approved. No such re-approval is asserted by this plan.
+- **Planning authority**: the independent Plan-Reviewer receipt is a separate artifact. Only a committed normal-plan receipt with `verdict: "approved"` has planning-approval effect; this plan neither selects, declares, nor denies an active candidate.
 - **Execution model**: committed planning candidate → independent Plan-Reviewer receipt → immutable implementation subject → independent Tester evidence → independent implementation review evidence → Planner Phase 4.5 alignment → bounded publish → draft PR → Human review and merge. This topic stops before release.
 - **Allowed transitions**:
   - `planned` -> `planning-candidate-committed`
@@ -60,7 +60,7 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 - **Candidate and evidence chain**:
   1. An Implementer commits the five initial planning artifacts as the non-merge candidate commit.
   2. An independent Plan-Reviewer writes the declared normal-plan verdict as exactly one JSON object with the fixed `verdict`, structured `blocking_issues`, and `copilot_feedback_triage` arrays. An Implementer may commit that unchanged result as the declared review artifact.
-  3. Only a committed normal-plan verdict with `verdict: "approved"` permits Planner to select that planning candidate and dispatch an Implementer. A `needs-rework` verdict establishes no implementation subject or next role. The current revised planning candidate has not yet received that independent re-approval.
+  3. Only a committed normal-plan verdict with `verdict: "approved"` permits Planner to select a planning candidate and dispatch an Implementer. A `needs-rework` verdict establishes no implementation subject or next role. The plan and step tracker do not select, declare, or deny an active candidate.
   4. The original Implementer creates a non-merge immutable topology subject commit that changes exactly the ten original implementation paths. The six `## Implementation Steps` entries are the sole original-topology completion gate; the tracker now records all six as complete and remains outside the immutable source-subject diff. Historical semantic-correction evidence is documented separately as nonrouting context and must never be described as a ten-path subject.
   5. An independent Tester writes factual evidence for that exact full subject SHA without committing it. An independent Implementer commits it unchanged as a sole evidence-only commit whose direct parent is the subject.
   6. An Independent Reviewer consumes only the committed passing Tester evidence for that same subject, writes the review log without committing it, and an independent Implementer commits it unchanged as a sole evidence-only commit whose direct parent is the Tester-evidence commit.
@@ -71,7 +71,7 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 - **Original topology subject**: `8ed22c1a434fc108934159a1d8deaba53e7696d0` changes exactly these ten paths: `docs/business-capability-architecture.md`, `docs/evolution-roadmap.md`, `docs/architecture/business-capability/architecture-brief.md`, `docs/architecture/business-capability/scene.js`, `docs/architecture/business-capability/index.html`, and the five `.gitkeep` reservations under `identity/`, `response_reuse/`, `loaded_runtime_cache/`, `model_execution/`, and `provider_adapter/`. Its reviewer outcome is `needs-rework`.
 - **Final semantic-correction subject**: `c847d76db47f59fe9a797d5024e98f60c7f0bab2` changes exactly `docs/evolution-roadmap.md`, `docs/architecture/business-capability/scene.js`, and `docs/architecture/business-capability/index.html`. It is historical three-architecture-path scope context, never a ten-path subject.
 - **Bound historical evidence**: Tester evidence commit `73d437c467e58d2213a2bcde723bee92e3fa9457` and independent Reviewer evidence commit `93ac9e6be4b59a595a85820f41ae22ca700736b1` both bind `c847d76db47f59fe9a797d5024e98f60c7f0bab2`; the Reviewer outcome for that historical subject is `approved`.
-- **Nonrouting boundary**: these records explain historical scope only. They do not create a correction artifact, select a candidate, authorize routing, or re-approve the current revised planning candidate, which remains pending a new independent Plan-Reviewer verdict.
+- **Nonrouting boundary**: these records explain historical scope only. They do not create a correction artifact, select a candidate, authorize routing, or have planning-approval effect.
 
 ## Artifact Paths
 
@@ -102,7 +102,7 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 
 All SHA values below are lowercase 40-character hexadecimal Git commit IDs. Any missing, extra, malformed, or cross-topic/cross-subject value fails closed.
 
-- Plan-review receipt is exactly one normal-plan JSON verdict with only `verdict`, `blocking_issues`, and `copilot_feedback_triage`. `verdict` is `approved|needs-rework`; `blocking_issues` is an array of objects, each with `issue`, `file`, and `fix`; `copilot_feedback_triage` has exactly the `ADDRESS`, `DISCUSS`, and `SKIP` arrays. `ADDRESS` entries each contain `comment`, `location`, and `why`; `DISCUSS` entries each contain `comment`, `optional`, and `why`; `SKIP` entries each contain `comment` and `why`. The independent Plan-Reviewer evaluates only the declared planning inputs. This revised planning candidate remains pending independent review and must not be presented as approved until an `approved` verdict is committed.
+- Plan-review receipt is exactly one normal-plan JSON verdict with only `verdict`, `blocking_issues`, and `copilot_feedback_triage`. `verdict` is `approved|needs-rework`; `blocking_issues` is an array of objects, each with `issue`, `file`, and `fix`; `copilot_feedback_triage` has exactly the `ADDRESS`, `DISCUSS`, and `SKIP` arrays. `ADDRESS` entries each contain `comment`, `location`, and `why`; `DISCUSS` entries each contain `comment`, `optional`, and `why`; `SKIP` entries each contain `comment` and `why`. The independent Plan-Reviewer evaluates only the declared planning inputs. Only a committed `approved` receipt has planning-approval effect; this plan does not select, declare, or deny an active candidate.
 - Tester evidence is one JSON object with exactly `schema_version`, `topic`, `implementation_subject_commit`, `status`, `commands`, and `recorded_by`. `schema_version` is integer `1`; `topic` is `package-topology-skeleton-replay`; `implementation_subject_commit` is the full immutable subject SHA; `status` is `passing|failing`; `commands` is a non-empty array whose entries have exactly non-empty string `command` and integer `exit_code`; `recorded_by` is `Tester`. `passing` requires every exit code to be `0`; `failing` requires at least one non-zero exit code.
 - Independent implementation review log is one JSON object with exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`, `verdict`, `blocking_issues`, and `recorded_by`. `schema_version` is integer `1`; `topic` is `package-topology-skeleton-replay`; both commit fields are full SHA values and bind the same subject; `tester_evidence_commit` names the sole committed passing Tester-evidence commit; `verdict` is `approved|needs-rework`; `blocking_issues` is a string array, empty only for `approved`; `recorded_by` is `Independent Reviewer`.
 
@@ -201,7 +201,7 @@ For historical reference, reverting the final semantic-correction subject restor
 
 ## Reviewer Handoff
 
-The following is the normal-plan fixed-schema template, not a receipt. The independent Plan-Reviewer must provide exactly this JSON shape with no trailing prose. It does not itself assert approval of the current planning candidate; only an independently produced and committed `approved` verdict can do so.
+The following is the normal-plan fixed-schema template, not a receipt. The independent Plan-Reviewer must provide exactly this JSON shape with no trailing prose. Only an independently produced and committed `approved` verdict has planning-approval effect; this plan does not select, declare, or deny an active candidate.
 
 ```json
 {
@@ -221,4 +221,4 @@ No release, tag, version bump, README update, post-merge action, or final summar
 
 ## Open Questions / Unresolved Items
 
-The revised planning candidate requires an independent Plan-Reviewer verdict before it can be treated as re-approved. This does not alter the current delivery state of `pr-open` or the Human PR-review boundary.
+None. Planning authority remains exclusively with the independently produced, committed normal-plan receipt; the plan and step tracker do not select, declare, or deny an active candidate. This does not alter the delivery state of `pr-open` or the Human PR-review boundary.

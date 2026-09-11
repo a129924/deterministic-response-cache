@@ -36,6 +36,5 @@ created: 2026-09-09
 
 - Delivery state is `pr-open`; the active delivery gate is Human PR review. Human alone may merge, release, tag, or perform post-merge work.
 - All six entries in `## Implementation Steps` are complete; the implementation, independent implementation review, and code-review/fix lifecycle is complete.
-- The current revised planning candidate is `planning-candidate-committed` and requires a new independent Plan-Reviewer verdict before it may be described as approved. No re-approval is asserted here.
-- That Plan-Reviewer verdict uses the normal fixed JSON schema: `verdict`, structured `blocking_issues` objects (`issue`, `file`, `fix`), and `copilot_feedback_triage` with `ADDRESS`, `DISCUSS`, and `SKIP` arrays. A committed `approved` verdict is required before Planner may route a future implementation from this revised planning candidate.
-- Historical Tester and Independent Reviewer evidence remains unchanged; this tracker update neither rewrites that evidence nor asserts a new evidence approval.
+- The independent Plan-Reviewer receipt is a separate artifact and uses the normal fixed JSON schema: `verdict`, structured `blocking_issues` objects (`issue`, `file`, `fix`), and `copilot_feedback_triage` with `ADDRESS`, `DISCUSS`, and `SKIP` arrays. Only a committed `approved` receipt has planning-approval effect.
+- This plan and tracker do not select, declare, or deny an active planning candidate. Historical Tester and Independent Reviewer evidence remains unchanged and has no planning-approval effect.
