@@ -285,8 +285,8 @@ const W = 1480, H = 1910;
 
 const PLANES = {
   consumer: { c: '#94A3B8', label: 'Consumer integration' },
-  identity: { c: '#7DD3FC', label: 'Identity authority' },
-  reuse: { c: '#4ADE80', label: 'Response reuse — now' },
+  identity: { c: '#7DD3FC', label: 'Identity authority — first topic' },
+  reuse: { c: '#4ADE80', label: 'Response reuse — second topic' },
   runtime: { c: '#A78BFA', label: 'Runtime retention — future' },
   execution: { c: '#F6821F', label: 'Model execution — future' },
   provider: { c: '#FB7185', label: 'Provider boundary — future' }
@@ -298,10 +298,10 @@ const BANDS = [
     tagr: { x: 1396, y: 230, t: 'SWAPPABLE APP SURFACES', alpha: 0.65 } },
   { id: 'band-identity', plane: 'identity', x: 160, y: 450, w: 1260, h: 220, alpha: 0.55, dash: true,
     hdr: { x: 184, y: 480, t: 'IDENTITY BC — FOUNDATION · ONLY IDENTITY AUTHORITY' },
-    tagr: { x: 1396, y: 480, t: 'OWNED CORE ABSTRACTIONS', alpha: 0.65 } },
+    tagr: { x: 1396, y: 480, t: 'FIRST IMPLEMENTATION TOPIC', alpha: 0.65 } },
   { id: 'band-reuse', plane: 'reuse', x: 160, y: 760, w: 1260, h: 300, alpha: 0.62, dash: true,
-    hdr: { x: 184, y: 790, t: 'RESPONSE REUSE BC — NOW · CACHESTORE IS INTERNAL' },
-    tagr: { x: 1396, y: 790, t: 'FIRST IMPLEMENTATION TOPIC', alpha: 0.7 } },
+    hdr: { x: 184, y: 790, t: 'RESPONSE REUSE BC — SECOND · CACHESTORE IS INTERNAL' },
+    tagr: { x: 1396, y: 790, t: 'SECOND IMPLEMENTATION TOPIC', alpha: 0.7 } },
   { id: 'band-future-core', plane: null, x: 160, y: 1150, w: 1260, h: 330, stroke: '#3A4250', alpha: 1,
     hdr: { x: 184, y: 1180, t: 'FUTURE CORE CAPABILITIES — NOT BASELINE IMPLEMENTATION', fill: C.slate },
     tagr: { x: 1396, y: 1180, t: 'OWNED ABSTRACTIONS', fill: C.slate, alpha: 0.7 } },
@@ -333,7 +333,7 @@ const BOXES = [
 
   { id: 'reuse-bc', plane: 'reuse', band: 'band-reuse', x: 200, y: 840, w: 500, h: 120, r: 10, dash: true,
     name: 'Response Reuse BC', about: '只消費已確認 identity，並擁有安全重用既有 response 的決策責任。',
-    texts: [ ['bl', 224, 868, 'Response Reuse BC'], ['bs', 224, 890, '只消費已確認的 identity'], ['bs', 224, 906, '安全重用決策，不執行模型'], ['bn', 224, 934, '第一個 implementation topic'] ] },
+    texts: [ ['bl', 224, 868, 'Response Reuse BC'], ['bs', 224, 890, '只消費已確認的 identity'], ['bs', 224, 906, '安全重用決策，不執行模型'], ['bn', 224, 934, '第二個 implementation topic'] ] },
   { id: 'reuse-decision', plane: 'reuse', band: 'band-reuse', x: 750, y: 840, w: 270, h: 104, r: 10, dash: true,
     name: 'Safe reuse decision', about: '只有已確認 identity 允許時，才選擇直接回傳 response 的路徑。',
     texts: [ ['bl', 774, 868, 'Safe reuse decision'], ['bs', 774, 890, 'hit → 直接回傳 response'], ['bs', 774, 906, 'miss → 未來 runtime path'], ['bn', 774, 928, '不自行推導 identity'] ] },
@@ -400,8 +400,9 @@ const TEXTS = [
   { s: 'tag', x: 160, y: 146, runs: [
     { t: 'Identity', fill: C.sky }, { t: ' → ', fill: '#4A5462' },
     { t: 'Response Reuse', fill: C.green }, { t: ' → ', fill: '#4A5462' },
-    { t: 'Runtime', fill: C.violet }, { t: ' → ', fill: '#4A5462' },
-    { t: 'Execution', fill: C.orange } ] },
+    { t: 'Loaded Runtime Cache', fill: C.violet }, { t: ' → ', fill: '#4A5462' },
+    { t: 'Model Execution', fill: C.orange }, { t: ' → ', fill: '#4A5462' },
+    { t: 'Provider Adapter', fill: C.rose } ] },
   { s: 'legend', x: 1082, y: 86, t: '虛線 — 自有的核心 abstraction' },
   { s: 'legend', x: 1082, y: 110, t: '實線 — 可替換的 app 或 provider surface' },
   { s: 'legend', x: 1143, y: 134, t: '顏色 — 所屬 capability plane' },
@@ -409,7 +410,7 @@ const TEXTS = [
   { s: 'plane', x: 1115, y: 1214, t: 'MODEL EXECUTION — FUTURE', anchor: 'center', fill: planeColor('execution') },
   { s: 'bn', x: 160, y: 1844, t: 'invariant：只有 Identity BC 確認模型與完整請求身分；名稱與路徑不足以判定' },
   { s: 'bn', x: 160, y: 1864, t: 'boundary：CacheStore 位於 Response Reuse 內部；Runtime Store / Registry 獨立且屬於未來能力' },
-  { s: 'bn', x: 160, y: 1884, t: 'scope：baseline 只記錄 capability boundary；不實作 cache、runtime、execution 或 provider adapter' }
+  { s: 'bn', x: 160, y: 1884, t: 'topology：五個目錄的純文字 marker 僅預留；可為 implicit namespace，但不提供 executable module、public symbol 或 re-export' }
 ];
 
 const SWATCHES = [

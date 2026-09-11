@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "topic": "package-topology-skeleton-replay",
+  "implementation_subject_commit": "884bd8d789d7eb55c2ad759ecee72ab783a50211",
+  "tester_evidence_commit": "68e34171d9f19fafae478d086df3f182357efd74",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "recorded_by": "Independent Reviewer"
+}
