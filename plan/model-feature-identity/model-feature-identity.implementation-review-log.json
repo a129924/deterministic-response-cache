@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "topic": "model-feature-identity",
+  "implementation_subject_commit": "3c06690c72dffb6b122c0f64c080b958d0f24a21",
+  "tester_evidence_commit": "7306e38746d543adc08a78047d5c4d37b7e9f4ea",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    "Pre-review step gate failed: every entry in `plan/model-feature-identity/model-feature-identity.step.md` under `## Implementation Steps` remains marked `- [ ]`. The applicable python-implementation-review contract requires all implementation steps to be marked `[X]` before independent implementation approval."
+  ],
+  "recorded_by": "Independent Reviewer"
+}
