@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-protocol",
+  "planning_candidate_commit": "93c486a9a06e854b8a14d576ea756b18cbf47e01",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}
