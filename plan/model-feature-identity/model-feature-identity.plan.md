@@ -79,31 +79,35 @@ flowchart TB
   bounded source work and may never merge. Any unlisted path or contract drift returns to Planner.
 - No correction route is declared. Frozen governance provenance is nonrouting and cannot supply this
   topic's candidate, approval, subject, or evidence.
-- The committed R1 receipt at
-  `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` is immutable
-  committed `needs-rework` provenance only. Its path and blob must remain unchanged; it is not
-  routing authority and cannot select a candidate, grant planning approval, or authorize a phase
-  transition. The sole normal-plan retry receipt path is
-  `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json`; only a future
-  committed R2 receipt with `verdict: "approved"` can provide planning approval.
+- The committed R1 and R2 receipts at
+  `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` and
+  `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json` are immutable
+  committed `needs-rework` provenance only. Their paths and blobs must remain unchanged; neither is
+  routing authority and neither can select a candidate, grant planning approval, or authorize a
+  phase transition. The sole normal-plan retry receipt path is
+  `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r3.json`; only a future
+  committed R3 receipt with `verdict: "approved"` can provide planning approval.
 
 ## Status / Allowed Transitions
 
-- **Current**: `planned`.
+- **Historical immutable state**: `R2_NEEDS_REWORK_COMMITTED`.
+- **Current**: `R3_PLAN_REVIEW_PENDING`.
 - **Execution model**: planning candidate commit → independent Plan-Reviewer receipt → immutable
   implementation subject → independent Tester evidence → independent Reviewer evidence → Planner
   Phase 4.5 alignment → bounded publish → draft PR → Human review and merge. This topic stops before
   release.
 - **Allowed transitions**:
-  - `planned` → `planning-candidate-committed`
-  - `planning-candidate-committed` → `plan-review-in-progress`
-  - `plan-review-in-progress` → `plan-review-receipt-committed`
-  - `plan-review-receipt-committed` → `implementation-in-progress`
+  - `R2_NEEDS_REWORK_COMMITTED` → `R3_PLANNING_CANDIDATE_COMMITTED` →
+    `R3_PLAN_REVIEW_PENDING` → `R3_APPROVED_RECEIPT_COMMITTED` |
+    `R3_NEEDS_REWORK_RECEIPT_COMMITTED`
+  - `R3_APPROVED_RECEIPT_COMMITTED` → `implementation-in-progress`
   - `implementation-in-progress` → `tester-in-progress`
   - `tester-in-progress` → `tester-evidence-committed`
   - `tester-evidence-committed` → `reviewer-in-progress`
   - `reviewer-in-progress` → `reviewer-evidence-committed` or `needs-rework`
   - `reviewer-evidence-committed` → `approved`
+  - `R3_NEEDS_REWORK_RECEIPT_COMMITTED` is immutable nonrouting provenance. It cannot authorize
+    implementation; Planner must first declare a new receipt path before any further planning retry.
   - `needs-rework` → `implementation-in-progress` only with a new immutable subject and a complete
     new Tester/Reviewer evidence chain
   - `approved` → `publish-in-progress`
@@ -111,9 +115,10 @@ flowchart TB
   - `pr-open` → `needs-rework` or `merged` by Human only
   - `merged` → terminal
 
-R1 is immutable committed `needs-rework` provenance and has no routing effect. Only the future
-committed R2 normal-plan receipt at the declared R2 path, with `verdict: "approved"`, permits
-Planner to select the planning candidate and route implementation. Tester evidence and independent
+R1 and R2 are immutable committed `needs-rework` provenance and have no routing effect. Only the
+future committed R3 normal-plan receipt at the declared R3 path, with `verdict: "approved"`, permits
+Planner to route implementation. A committed R3 `needs-rework` receipt remains preserved and requires
+Planner to declare a new receipt path before another planning retry. Tester evidence and independent
 review must bind the same full implementation subject; only then may Planner Phase 4.5 align the
 topic. Publish requires that alignment and existing human authorization. No transition authorizes
 automatic merge, release, tag, post-merge, or final summary.
@@ -128,7 +133,8 @@ automatic merge, release, tag, post-merge, or final summary.
 | Topic specification | `plan/model-feature-identity/model-feature-identity.spec.md` | Plan-Creator | Behavioral contract |
 | Step tracker | `plan/model-feature-identity/model-feature-identity.step.md` | Plan-Creator | Progression truth |
 | Plan-review receipt R1 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
-| Plan-review receipt R2 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json` | Independent Plan-Reviewer | Sole retry receipt; only a future committed `approved` R2 is planning approval; an Implementer commits it unchanged |
+| Plan-review receipt R2 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
+| Plan-review receipt R3 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r3.json` | Independent Plan-Reviewer | Sole retry receipt; only a future committed `approved` R3 is planning approval; an Implementer commits it unchanged |
 | Contracts module | `src/deterministic_response_cache/identity/contracts.py` | Implementer | Identity types, ABC, Outcome, and stage Protocol contracts |
 | Builders module | `src/deterministic_response_cache/identity/builders.py` | Implementer | Bounded pipeline orchestration |
 | Identity package exports | `src/deterministic_response_cache/identity/__init__.py` | Implementer | Explicit identity public surface only |
@@ -146,9 +152,13 @@ deleted. Any path outside this table is a plan-alignment stop and must return to
 
 - R1 is the already committed receipt at its declared path. It has fixed-schema `needs-rework`
   provenance only and must not be changed, replaced, or used as routing authority.
-- R2 is the only retry receipt and is exactly one JSON object with only `verdict`,
+- R2 is the already committed receipt at its declared path. It has fixed-schema `needs-rework`
+  provenance only and must not be changed, replaced, or used as routing authority.
+- R3 is the only retry receipt and is exactly one JSON object with only `verdict`,
   `blocking_issues`, and `copilot_feedback_triage`, using the fixed reviewer-handoff schema below.
-  Only its future committed `approved` verdict has planning-approval effect.
+  Only its future committed `approved` verdict has planning-approval effect. A committed
+  `needs-rework` R3 receipt is preserved as nonrouting provenance; Planner must declare a new receipt
+  path before another planning retry.
 - Tester evidence is one JSON object with exactly `schema_version`, `topic`,
   `implementation_subject_commit`, `status`, `commands`, and `recorded_by`. `schema_version` is
   integer `1`; `topic` is `model-feature-identity`; `implementation_subject_commit` is the full
@@ -347,9 +357,9 @@ architecture files, and other topic artifacts unchanged.
 
 ## Reviewer Handoff
 
-The following is the R2 normal-plan fixed-schema template, not a receipt. The independent
-Plan-Reviewer must provide exactly this JSON shape with no trailing prose at the declared R2 path.
-Only an independently produced and committed R2 `approved` verdict has planning-approval effect;
+The following is the R3 normal-plan fixed-schema template, not a receipt. The independent
+Plan-Reviewer must provide exactly this JSON shape with no trailing prose at the declared R3 path.
+Only an independently produced and committed R3 `approved` verdict has planning-approval effect;
 this plan does not select, declare, or deny an active candidate.
 
 ```json
@@ -372,6 +382,6 @@ action.
 
 ## Open Questions / Unresolved Items
 
-None. R1 remains immutable committed `needs-rework` provenance and nonrouting. Planning authority
-can arise only from the independently produced, committed approved R2 receipt; this plan and its step
-tracker neither select, declare, nor close a candidate.
+None. R1 and R2 remain immutable committed `needs-rework` provenance and nonrouting. Planning
+authority can arise only from the independently produced, committed approved R3 receipt; this plan
+and its step tracker neither select, declare, nor close a candidate.
