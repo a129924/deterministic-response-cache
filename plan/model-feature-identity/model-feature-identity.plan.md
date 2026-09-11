@@ -80,49 +80,46 @@ flowchart TB
 - This one-time, Human-authorized correction route repairs only the proven mismatch between the
   implementation allowlist and the Reviewer gate requiring completed implementation-step tracking.
   It neither changes the Python implementation contract nor authorizes any new implementation,
-  test, `.gitkeep`, planning, or evidence path beyond the exact R4/S2 paths declared below.
-  R1, R2, R3, T1, and V1 remain immutable committed provenance: their paths and blobs must not be
-  modified, deleted, replaced, or reinterpreted as R4/S2 evidence.
-- The committed R1 and R2 receipts at
-  `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` and
-  `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json` are immutable
-  committed `needs-rework` provenance only. Their paths and blobs must remain unchanged; neither is
-  routing authority and neither can select a candidate, grant planning approval, or authorize a
-  phase transition. The sole normal-plan retry receipt path is
-  `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r3.json`; only a future
-  committed R3 receipt with `verdict: "approved"` can provide planning approval.
+  test, `.gitkeep`, planning, or evidence path beyond the exact R5/S2 paths declared below.
+  R1, R2, R3, R4, T1, and V1 remain immutable committed provenance: their paths and blobs must not
+  be modified, deleted, replaced, or reinterpreted as R5/S2 evidence.
+- The committed R1–R4 receipts are immutable committed provenance only. Their paths and blobs must
+  remain unchanged; none is routing authority and none can select a candidate, grant planning
+  approval, or authorize a phase transition. R5 is the sole, terminal-convergence planning-review
+  receipt path for this correction route.
 
 ## Status / Allowed Transitions
 
-- **Historical immutable state**: R1/R2 `needs-rework`, R3 `approved`, S1 implementation subject,
-  T1 passing Tester evidence, and V1 `needs-rework` evidence are committed provenance only.
-- **Current**: `R4_PLAN_REVIEW_PENDING`.
-- **Execution model**: committed R4 planning-correction candidate → independent Plan-Reviewer R4
+- **Historical immutable state**: R1/R2 `needs-rework`, R3 `approved`, R4 `needs-rework`, S1
+  implementation subject, T1 passing Tester evidence, and V1 `needs-rework` evidence are committed
+  provenance only.
+- **Current**: `R5_PLAN_REVIEW_PENDING`.
+- **Execution model**: committed R5 terminal-convergence planning-correction candidate → independent Plan-Reviewer R5
   receipt → immutable S2 step-tracker reconciliation subject → independent S2 Tester evidence →
   independent S2 Reviewer evidence → Planner Phase 4.5 alignment → bounded publish → draft PR →
   Human review and merge. This topic stops before release.
 - **Allowed transitions**:
-  - `R4_PLANNING_CORRECTION_CANDIDATE_COMMITTED` → `R4_PLAN_REVIEW_PENDING` →
-    `R4_APPROVED_RECEIPT_COMMITTED` | `R4_NEEDS_REWORK_RECEIPT_COMMITTED`
-  - Only `R4_APPROVED_RECEIPT_COMMITTED` permits S2; it must be an independently produced,
-    committed `approved` R4 receipt at the declared path.
-  - `R4_APPROVED_RECEIPT_COMMITTED` → `S2_STEP_TRACKER_RECONCILIATION_IN_PROGRESS` →
+  - `R5_TERMINAL_CONVERGENCE_CANDIDATE_COMMITTED` → `R5_PLAN_REVIEW_PENDING` →
+    `R5_APPROVED_RECEIPT_COMMITTED` | `R5_NEEDS_REWORK_RECEIPT_COMMITTED`
+  - Only `R5_APPROVED_RECEIPT_COMMITTED` permits S2; it must be an independently produced,
+    committed `approved` R5 receipt at the declared path.
+  - `R5_APPROVED_RECEIPT_COMMITTED` → `S2_STEP_TRACKER_RECONCILIATION_IN_PROGRESS` →
     `S2_SUBJECT_COMMITTED` → `S2_TESTER_IN_PROGRESS` → `S2_TESTER_EVIDENCE_COMMITTED`
   - Committed passing S2 Tester evidence → `S2_REVIEWER_IN_PROGRESS` →
     `S2_REVIEW_EVIDENCE_COMMITTED` | `S2_NEEDS_REWORK_COMMITTED`; committed failing S2 Tester
     evidence stops at the Human boundary.
   - `S2_REVIEW_EVIDENCE_COMMITTED` → `approved` only after Planner Phase 4.5 alignment; it is the
     only path from this correction route to bounded publish.
-  - `R4_NEEDS_REWORK_RECEIPT_COMMITTED` or `S2_NEEDS_REWORK_COMMITTED` stops this topic at the Human
-    boundary. No R5, retry receipt, alternate reconciliation subject, or workflow extension is
-    authorized.
+  - `R5_NEEDS_REWORK_RECEIPT_COMMITTED` or `S2_NEEDS_REWORK_COMMITTED` stops this topic at the Human
+    boundary. No R6, retry receipt, alternate reconciliation subject, workflow rewrite, or scope
+    expansion is authorized.
   - `approved` → `publish-in-progress`
   - `publish-in-progress` → `pr-open`
   - `pr-open` → `needs-rework` or `merged` by Human only
   - `merged` → terminal
 
-R1/R2/R3/T1/V1 remain immutable committed provenance and have no routing effect for R4/S2. Only a
-future committed `approved` R4 receipt at its declared path permits Planner to route S2. S2 may
+R1/R2/R3/R4/T1/V1 remain immutable committed provenance and have no routing effect for R5/S2. Only
+a future committed `approved` R5 receipt at its declared path permits Planner to route S2. S2 may
 change only the six unchecked entries under this plan's `## Implementation Steps` in the step tracker,
 turning precisely those entries from `[ ]` to `[X]`; it may not modify workflow stages, actionable
 steps, fixed-tail text, handoff notes, Python, tests, `.gitkeep`, or any other planning/evidence path.
@@ -141,8 +138,9 @@ automatic merge, release, tag, post-merge, or final summary.
 | Step tracker | `plan/model-feature-identity/model-feature-identity.step.md` | Plan-Creator | Progression truth |
 | Plan-review receipt R1 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
 | Plan-review receipt R2 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
-| Plan-review receipt R3 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r3.json` | Independent Plan-Reviewer | Immutable committed `approved` provenance; its path/blob remain unchanged and it is not R4/S2 routing authority |
-| Plan-review receipt R4 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r4.json` | Independent Plan-Reviewer | Sole planning-correction receipt; only a committed `approved` R4 permits S2; an independent Implementer commits it unchanged as the sole R4 evidence commit |
+| Plan-review receipt R3 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r3.json` | Independent Plan-Reviewer | Immutable committed `approved` provenance; its path/blob remain unchanged and it is not R5/S2 routing authority |
+| Plan-review receipt R4 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r4.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
+| Plan-review receipt R5 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r5.json` | Independent Plan-Reviewer | Sole terminal-convergence receipt; only a committed `approved` R5 permits S2; an independent Implementer commits it unchanged as the sole R5 evidence commit |
 | Contracts module | `src/deterministic_response_cache/identity/contracts.py` | Implementer | Identity types, ABC, Outcome, and stage Protocol contracts |
 | Builders module | `src/deterministic_response_cache/identity/builders.py` | Implementer | Bounded pipeline orchestration |
 | Identity package exports | `src/deterministic_response_cache/identity/__init__.py` | Implementer | Explicit identity public surface only |
@@ -164,12 +162,13 @@ deleted. Any path outside this table is a plan-alignment stop and must return to
   provenance only and must not be changed, replaced, or used as routing authority.
 - R2 is the already committed receipt at its declared path. It has fixed-schema `needs-rework`
   provenance only and must not be changed, replaced, or used as routing authority.
-- R3 is immutable committed `approved` provenance only. Its path/blob must remain unchanged and it
-  cannot authorize the R4/S2 correction route.
-- R4 is exactly one JSON object with only `verdict`, `blocking_issues`, and
+- R3 and R4 are immutable committed provenance only. Their paths/blobs must remain unchanged and
+  neither can authorize the R5/S2 correction route.
+- R5 is exactly one JSON object with only `verdict`, `blocking_issues`, and
   `copilot_feedback_triage`, using the fixed reviewer-handoff schema below. Only its future committed
-  `approved` verdict has planning-correction approval effect. A committed R4 `needs-rework` receipt
-  stops at the Human boundary and forbids R5 or any alternate retry path.
+  `approved` verdict has terminal-convergence planning-correction approval effect. A committed R5
+  `needs-rework` receipt stops at the Human boundary and forbids R6, any retry, workflow rewrite, or
+  scope expansion.
 - T1 and V1 are immutable committed S1 provenance only. Their paths/blobs must remain unchanged and
   cannot be supplied as S2 Tester or Reviewer evidence.
 - S2 Tester evidence is one JSON object with exactly `schema_version`, `topic`,
@@ -358,8 +357,8 @@ architecture files, and other topic artifacts unchanged.
 ## S2 Step-tracker reconciliation
 
 - **Precondition:** an independent Plan-Reviewer has written, and an independent Implementer has
-  committed unchanged, an `approved` R4 receipt at
-  `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r4.json`.
+  committed unchanged, an `approved` R5 receipt at
+  `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r5.json`.
 - **S2 subject allowlist:** only
   `plan/model-feature-identity/model-feature-identity.step.md`. Its complete subject diff must change
   exactly the six entries under `## Implementation Steps` from `[ ]` to `[X]`; it must make no other
@@ -370,9 +369,9 @@ architecture files, and other topic artifacts unchanged.
   `implementation-review-log-s2.json`; an independent Implementer commits it unchanged as the sole
   evidence-only commit. Neither S2 evidence file may share a commit with the S2 subject, a planning
   artifact, or the other evidence file.
-- **Failure boundary:** R4 `needs-rework`, failing S2 Tester evidence, or S2 Reviewer
-  `needs-rework` ends the route at Human. It does not authorize R5, a second S2 subject, a retry, or
-  any expansion of this topic.
+- **Failure boundary:** R5 `needs-rework`, failing S2 Tester evidence, or S2 Reviewer
+  `needs-rework` ends the route at Human. It does not authorize R6, a second S2 subject, a retry,
+  workflow rewrite, or any expansion of this topic.
 
 ## Validation / Acceptance Checks
 
@@ -392,9 +391,10 @@ architecture files, and other topic artifacts unchanged.
 
 ## Reviewer Handoff
 
-The following is the R4 planning-correction fixed-schema template, not a receipt. The independent
-Plan-Reviewer must provide exactly this JSON shape with no trailing prose at the declared R4 path.
-Only an independently produced and committed R4 `approved` verdict permits S2; this plan does not
+The following is the R5 terminal-convergence planning-correction fixed-schema template, not a
+receipt. The independent Plan-Reviewer must provide exactly this JSON shape with no trailing prose
+at the declared R5 path. Only an independently produced and committed R5 `approved` verdict permits
+S2; this plan does not
 select, declare, or deny an active candidate.
 
 ```json
@@ -417,6 +417,6 @@ action.
 
 ## Open Questions / Unresolved Items
 
-None. R1/R2/R3/T1/V1 remain immutable committed provenance and nonrouting for this correction route.
-Only the independently produced, committed approved R4 receipt can permit S2; this plan and its step
-tracker neither select, declare, nor close a candidate.
+None. R1/R2/R3/R4/T1/V1 remain immutable committed provenance and nonrouting for this correction
+route. Only the independently produced, committed approved R5 receipt can permit S2; this plan and
+its step tracker neither select, declare, nor close a candidate.
