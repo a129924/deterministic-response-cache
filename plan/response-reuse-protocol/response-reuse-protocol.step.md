@@ -17,8 +17,11 @@ created: 2026-09-11
 
 ## Actionable Steps
 
-- [ ] **Actor:** Implementer — **Action:** Commit exactly the five initial planning artifacts as the planning candidate; do not add implementation or evidence paths to that commit.
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review only the committed planning candidate and write the declared plan-review receipt.
+- [X] **Actor:** Implementer — **Action:** Commit exactly the five initial planning artifacts as the original planning candidate; do not add implementation or evidence paths to that commit.
+- [X] **Actor:** Independent Plan-Reviewer — **Action:** Review the original committed planning candidate and write the declared `needs-rework` receipt.
+- [X] **Actor:** Implementer — **Action:** Commit the original `needs-rework` receipt unchanged as its own evidence-only provenance commit.
+- [X] **Actor:** Independent Implementer — **Action:** Commit only the bounded planning-state repair as the new planning candidate; do not modify the prior receipt or add implementation paths.
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review only the new committed planning candidate and write a new declared plan-review receipt.
 
 ## Implementation Steps
 
@@ -36,6 +39,8 @@ created: 2026-09-11
 
 ## Handoff / Gate Notes
 
-- An independent Plan-Reviewer must approve the committed planning candidate before implementation.
+- The original candidate's committed `needs-rework` receipt is immutable provenance, not routing authority. The
+  current repair candidate awaits a new independent Plan-Reviewer receipt.
+- An independent Plan-Reviewer must approve the current committed planning candidate before implementation.
 - Only the seven `## Implementation Steps` entries are the implementation-completion gate.
 - Tester evidence must bind the exact immutable implementation subject. Independent Reviewer may consume only committed passing same-subject Tester evidence. Human alone reviews and merges a draft PR.

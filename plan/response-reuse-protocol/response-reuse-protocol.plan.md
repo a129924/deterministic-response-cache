@@ -69,7 +69,9 @@
 
 ## Status / Allowed Transitions
 
-- **Current**: `planned`; the five initial planning artifacts are uncommitted and have no routing authority.
+- **Current**: `planning-candidate-committed`; the five initial planning artifacts were committed as the original
+  planning candidate, and its independent `needs-rework` plan-review receipt has been recorded separately. This
+  bounded planning-state repair is the current planning candidate and awaits a new independent Plan-Reviewer.
 - **Execution model**: planning candidate → independent Plan-Reviewer receipt → immutable implementation subject →
   independent Tester evidence → independent Reviewer evidence → Planner Phase 4.5 alignment → bounded publish →
   draft PR → Human review and merge. This topic stops before release.
@@ -77,6 +79,10 @@
   - `planned` -> `planning-candidate-committed` by an Implementer committing exactly the five initial planning artifacts.
   - `planning-candidate-committed` -> `plan-review-in-progress`.
   - `plan-review-in-progress` -> `plan-review-receipt-committed` only after Independent Plan-Reviewer writes the receipt and an Implementer commits it unchanged as its own evidence-only commit.
+  - `plan-review-receipt-committed` -> `needs-rework` when the committed receipt verdict is `needs-rework`; that
+    receipt remains immutable provenance and cannot authorize routing.
+  - `needs-rework` -> `planning-candidate-committed` by an independent Implementer committing only the bounded
+    planning-state repair. The repair is a new candidate and requires a new independent Plan-Reviewer receipt.
   - `plan-review-receipt-committed` -> `implementation-in-progress` only when the committed receipt verdict is `approved` and Planner selects it.
   - `implementation-in-progress` -> `tester-in-progress` after one non-merge immutable subject changes exactly the ten declared implementation paths.
   - `tester-in-progress` -> `tester-evidence-committed` only after Tester writes factual same-subject evidence and an independent Implementer commits it unchanged as the sole evidence-only commit.
