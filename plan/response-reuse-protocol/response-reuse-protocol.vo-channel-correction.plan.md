@@ -48,6 +48,11 @@
 - 本 correction 不影響 stable-library surface：`README.md`、`VERSION`、release notes、release timing 都是 no-change。
 - 原 topic plan、spec、step、planning receipt、implementation subject、Tester evidence、Reviewer evidence、
   push 與 draft PR 都是 immutable provenance。此 correction 是獨立、candidate-bound route，不能覆寫或混入原 chain。
+- 已提交的 `needs-rework` correction receipt
+  `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.plan-review-receipt.json`
+  是本 correction 的 immutable review provenance，不得覆寫。它指出 receipt schema 缺少 candidate tree、五個
+  artifact blob facts 與 initial admission facts；本次 repair candidate 只修正此 plan 與 step tracker，並以新的
+  replacement receipt 重新接受 independent review。
 
 ## Boundaries / Exclusions
 
@@ -60,12 +65,14 @@
 
 ## Status / Allowed Transitions
 
-- **Current**: `correction-plan-authoring`；五份 correction planning artifacts 尚待 Implementer 建立 single planning
-  candidate commit。
+- **Current**: `correction-planning-repair-candidate-committed`。原五檔 candidate `48bf0eb2e1b0be7d2088acaae6f5b59df27fed7f`
+  已由 committed `needs-rework` receipt 留存；本 repair candidate 的 first-parent diff 只能有兩個 `M` paths：此
+  correction plan 與 correction step tracker。它等待 independent replacement Plan-Reviewer。
 - **Execution model**: correction planning candidate → independent Plan-Reviewer receipt → receipt-only commit →
-  correction implementation subject → independent Tester evidence → Tester-evidence-only commit → Independent Reviewer
-  evidence → Reviewer-evidence-only commit → Planner Phase 4.5 alignment → existing Human-authorized bounded publish
-  → draft PR → Human review. 本 route 停在 Human boundary，未授權 merge 或 release。
+  correction planning repair candidate → independent replacement Plan-Reviewer receipt → replacement-receipt-only
+  commit → correction implementation subject → independent Tester evidence → Tester-evidence-only commit → Independent
+  Reviewer evidence → Reviewer-evidence-only commit → Planner Phase 4.5 alignment → existing Human-authorized bounded
+  publish → draft PR → Human review. 本 route 停在 Human boundary，未授權 merge 或 release。
 - **Allowed transitions**:
   - `correction-plan-authoring` -> `correction-planning-candidate-committed`：Implementer 只提交本 plan 列出的五份
     correction planning artifacts，建立 non-merge immutable candidate。
@@ -73,8 +80,15 @@
     Plan-Reviewer 審同一 committed candidate。
   - `correction-plan-review-in-progress` -> `correction-plan-review-receipt-committed`：Plan-Reviewer 寫 receipt，
     Implementer 原樣以 sole single-file evidence-only commit 提交。
-  - committed `approved` receipt，且其 full 40-hex `planning_candidate_commit` 等於 candidate SHA，才可由 Planner
-    route 至 `correction-implementation-in-progress`；`needs-rework` 僅回到 Implementer 建立新 candidate。
+  - committed original `needs-rework` receipt -> `correction-planning-repair-candidate-committed`：Independent
+    Implementer 只修改此 correction plan 與 correction step tracker，建立 non-merge repair candidate；其 first-parent
+    diff 的 name-status 必須恰為這兩個 `M` paths。
+  - `correction-planning-repair-candidate-committed` -> `correction-repair-plan-review-in-progress` ->
+    `correction-repair-plan-review-receipt-committed`：Independent Plan-Reviewer 只寫 replacement receipt，Implementer
+    原樣以 sole single-file evidence-only commit 提交。
+  - committed replacement `approved` receipt，且其 full 40-hex `planning_candidate_commit` 等於 reviewed repair
+    candidate SHA，才可由 Planner route 至 `correction-implementation-in-progress`；`needs-rework` 僅回到 Implementer
+    建立新 candidate。
   - correction implementation subject -> same-subject Tester → sole Tester-evidence commit → Independent Reviewer →
     sole Reviewer-evidence commit → Planner Phase 4.5。任何 `needs-rework` 必須建立新 immutable subject 並重跑完整 chain。
   - Phase 4.5 與既有 Human publish authorization 通過後，Implementer 才可 push correction branch 並開 draft PR；
@@ -90,6 +104,7 @@
 | Correction specification | `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.spec.md` | Plan-Creator | Acceptance and edge-case contract. |
 | Correction step tracker | `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.step.md` | Plan-Creator; later Implementer only for `## Implementation Steps` markers | Correction progression truth. |
 | Correction plan-review receipt | `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.plan-review-receipt.json` | Independent Plan-Reviewer | Sole writer; exact schema below; Implementer alone commits unchanged as sole single-file evidence-only commit. |
+| Correction replacement plan-review receipt | `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.repair-plan-review-receipt.json` | Independent Plan-Reviewer | Sole writer for this repair candidate; it uses the extended provenance schema below, and Implementer alone commits it unchanged as a sole single-file evidence-only commit. |
 | Correction Tester evidence | `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.tester-evidence.json` | Tester | Same-subject factual evidence; independent Implementer commits unchanged as sole single-file evidence-only commit. |
 | Correction implementation review evidence | `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.implementation-review-log.json` | Independent Reviewer | Consumes only committed same-subject passing Tester evidence; independent Implementer commits unchanged as sole single-file evidence-only commit. |
 | Internal CacheStore port | `src/deterministic_response_cache/response_reuse/_cache_store.py` **Modify** | Implementer | VO channel contract only. |
@@ -102,13 +117,38 @@ the original topic artifacts/evidence, and all other files are no-change paths. 
 
 ### Correction evidence schemas
 
-- The correction plan-review receipt is exactly one JSON object with only
+- The original correction plan-review receipt is exactly one JSON object with only
   `schema_version`, `topic`, `planning_candidate_commit`, `verdict`, `blocking_issues`,
   `copilot_feedback_triage`, `recorded_by`. `schema_version` is integer `1`; `topic` is
   `response-reuse-protocol`; `planning_candidate_commit` is written only after review and equals the final full
   40-hex correction planning candidate SHA; `verdict` is `approved|needs-rework`; `blocking_issues` is a string
   array empty only for `approved`; `copilot_feedback_triage` has exactly `ADDRESS`, `DISCUSS`, `SKIP` arrays;
-  `recorded_by` is `Independent Plan-Reviewer`.
+  `recorded_by` is `Independent Plan-Reviewer`. It is immutable provenance and cannot route this repair.
+- The correction replacement plan-review receipt is exactly one JSON object with only
+  `schema_version`, `topic`, `planning_candidate_commit`, `planning_candidate_tree`,
+  `planning_candidate_artifact_facts`, `first_parent_admission`, `verdict`, `blocking_issues`,
+  `copilot_feedback_triage`, `recorded_by`. `schema_version` is integer `1`; `topic` is
+  `response-reuse-protocol`; `planning_candidate_commit` and `planning_candidate_tree` are the reviewed repair
+  candidate's final full 40-hex commit and tree SHAs. `planning_candidate_artifact_facts` is an ordered array of
+  exactly five objects, each with only full `path` and 40-hex `blob_sha` strings, in this order:
+  `analysis/response-reuse-protocol/vo-channel-correction.requirements.md`,
+  `analysis/response-reuse-protocol/vo-channel-correction.technical-spec.md`,
+  `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.plan.md`,
+  `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.spec.md`, and
+  `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.step.md`; every fact must name the
+  reviewed candidate tree's blob at that exact path.
+- `first_parent_admission` is exactly one object with only `commit`, `tree`, `parent`, `non_merge`,
+  `exact_declared_paths`, and `name_status`. It records the immutable original five-artifact admission commit, not
+  the repair candidate's immediate evidence-only parent: `commit`, `tree`, and `parent` are full 40-hex SHAs;
+  `non_merge` and `exact_declared_paths` are `true`; `name_status` is an ordered array of exactly five objects with
+  only `status` and `path`, each status `A` and each path matching the five ordered artifact paths above. The
+  Plan-Reviewer must independently derive these facts from the original admission's first-parent diff. The repair
+  candidate's own first-parent diff must independently be verified as exactly two `M` paths: this correction plan
+  and correction step tracker. Planning artifacts never prefill any candidate, tree, blob, or admission SHA.
+- For the replacement receipt, `verdict` is `approved|needs-rework`; `blocking_issues` is a string array empty only
+  for `approved`; `copilot_feedback_triage` has exactly `ADDRESS`, `DISCUSS`, `SKIP` arrays; `recorded_by` is
+  `Independent Plan-Reviewer`. Independent Plan-Reviewer is its sole writer, and Implementer is its sole
+  evidence-only committer.
 - The correction Tester evidence is exactly one JSON object with only `schema_version`, `topic`,
   `implementation_subject_commit`, `status`, `commands`, `recorded_by`. It uses schema version `1`, this topic,
   a full 40-hex subject SHA, `passing|failing`, a non-empty `commands` array of objects each containing only a
@@ -155,7 +195,29 @@ the original topic artifacts/evidence, and all other files are no-change paths. 
 {
   "schema_version": 1,
   "topic": "response-reuse-protocol",
-  "planning_candidate_commit": "<full 40-hex correction planning candidate SHA written after independent review>",
+  "planning_candidate_commit": "<full 40-hex repair candidate SHA written after independent review>",
+  "planning_candidate_tree": "<full 40-hex repair candidate tree SHA written after independent review>",
+  "planning_candidate_artifact_facts": [
+    {"path": "analysis/response-reuse-protocol/vo-channel-correction.requirements.md", "blob_sha": "<40-hex candidate blob SHA>"},
+    {"path": "analysis/response-reuse-protocol/vo-channel-correction.technical-spec.md", "blob_sha": "<40-hex candidate blob SHA>"},
+    {"path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.plan.md", "blob_sha": "<40-hex candidate blob SHA>"},
+    {"path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.spec.md", "blob_sha": "<40-hex candidate blob SHA>"},
+    {"path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.step.md", "blob_sha": "<40-hex candidate blob SHA>"}
+  ],
+  "first_parent_admission": {
+    "commit": "<40-hex original admission commit SHA>",
+    "tree": "<40-hex original admission tree SHA>",
+    "parent": "<40-hex original admission parent SHA>",
+    "non_merge": true,
+    "exact_declared_paths": true,
+    "name_status": [
+      {"status": "A", "path": "analysis/response-reuse-protocol/vo-channel-correction.requirements.md"},
+      {"status": "A", "path": "analysis/response-reuse-protocol/vo-channel-correction.technical-spec.md"},
+      {"status": "A", "path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.plan.md"},
+      {"status": "A", "path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.spec.md"},
+      {"status": "A", "path": "plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.step.md"}
+    ]
+  },
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
   "copilot_feedback_triage": {

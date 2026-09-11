@@ -18,14 +18,26 @@ created: 2026-09-12
 
 ## Actionable Steps
 
-- [ ] **Actor:** Implementer — **Action:** Commit exactly the five correction planning artifacts declared in the
+- [X] **Actor:** Implementer — **Action:** Commit exactly the five correction planning artifacts declared in the
   correction plan as one non-merge planning candidate; do not include receipt, evidence, implementation, or original
-  provenance paths.
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review only that committed correction candidate and write
+  provenance paths. The immutable candidate is `48bf0eb2e1b0be7d2088acaae6f5b59df27fed7f`.
+- [X] **Actor:** Independent Plan-Reviewer — **Action:** Review only that committed correction candidate and write
   `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.plan-review-receipt.json`, binding
-  `planning_candidate_commit` to its final full 40-hex SHA only after review.
-- [ ] **Actor:** Implementer — **Action:** Commit that unchanged correction plan-review receipt as the sole path in
+  `planning_candidate_commit` to its final full 40-hex SHA only after review; its committed verdict is
+  `needs-rework` because its schema lacked sufficient immutable candidate/admission provenance.
+- [X] **Actor:** Implementer — **Action:** Commit that unchanged correction plan-review receipt as the sole path in
   one evidence-only commit. Do not combine it with a planning repair, implementation, or other evidence.
+- [X] **Actor:** Independent Implementer — **Action:** Create this repair planning candidate by modifying only
+  `response-reuse-protocol.vo-channel-correction.plan.md` and
+  `response-reuse-protocol.vo-channel-correction.step.md`; its first-parent `--name-status` diff is exactly these two
+  `M` paths. Do not modify the three remaining correction planning artifacts, the immutable receipt, evidence, or
+  implementation paths.
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review only this committed repair candidate and write
+  `plan/response-reuse-protocol/response-reuse-protocol.vo-channel-correction.repair-plan-review-receipt.json` using
+  the correction plan's exact extended schema: repair candidate commit/tree, five ordered candidate-tree
+  `{path,blob_sha}` facts, and immutable original-admission commit/tree/parent/non-merge/exact-path/name-status facts.
+- [ ] **Actor:** Implementer — **Action:** Commit that unchanged replacement receipt as the sole path in one
+  evidence-only commit. Only its same-SHA-bound `approved` verdict may route to correction implementation.
 
 ## Implementation Steps
 
@@ -55,8 +67,13 @@ created: 2026-09-12
 
 - The original Response Reuse planning, implementation, Tester/Reviewer evidence, pushed branch, and draft PR are
   immutable provenance. They do not satisfy this correction's candidate or subject gates and must never be modified.
-- Only committed same-SHA-bound `approved` correction Plan-Reviewer receipt authorizes the correction implementation
-  route. A `needs-rework` receipt returns only to Implementer for a new correction planning candidate.
+- The original correction receipt is immutable `needs-rework` provenance. The replacement receipt path is
+  `response-reuse-protocol.vo-channel-correction.repair-plan-review-receipt.json`; only its committed same-SHA-bound
+  `approved` verdict, with the exact candidate/tree/blob/admission provenance schema, authorizes correction
+  implementation. A replacement `needs-rework` returns only to Implementer for a new correction planning candidate.
+- The repair candidate first-parent diff is exactly two `M` paths: the correction plan and correction step tracker.
+  The independent Plan-Reviewer must verify the original five-artifact admission facts and the repair candidate's
+  five candidate-tree blob facts before writing the replacement receipt.
 - Only passing correction Tester evidence committed as its own sole evidence-only commit may be consumed by
   Independent Reviewer. Only committed same-subject `approved` correction Reviewer evidence may enter Planner
   Phase 4.5.
