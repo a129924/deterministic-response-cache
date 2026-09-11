@@ -34,8 +34,10 @@ pipeline 建立各自 leaf identity，並由 `FeatureIdentityBuilder.combine()` 
 - `IdentitySource.identity_fields() -> Mapping[str, PureType]` is the only abstract source method;
   Model and Feature sources use the same ABC.
 - Every stage handoff is a named immutable VO. The pipeline order is Validator → Sorter → Encoder →
-  Serializer → Hasher → Hash. Encoder creates type-tagged canonical representation; Serializer
-  creates deterministic bytes, without specifying either representation's concrete format.
+  Serializer → Hasher → Hash. The exact VO fields, Protocol signatures, Builder injection, and
+  aggregate mapping are fixed in the executable contract below; Encoder creates a type-tagged
+  canonical representation and Serializer creates deterministic bytes without specifying either
+  representation's concrete format.
 - `PureType` supports JSON scalar, recursively string-keyed mappings, and ordered list／tuple.
   Validation rejects set, non-string mapping key, `NaN`, and `±Infinity`.
 - `Hash.value` is opaque `str`; no digest algorithm, encoding, or length is promised.
@@ -77,6 +79,13 @@ flowchart TB
   bounded source work and may never merge. Any unlisted path or contract drift returns to Planner.
 - No correction route is declared. Frozen governance provenance is nonrouting and cannot supply this
   topic's candidate, approval, subject, or evidence.
+- The committed R1 receipt at
+  `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` is immutable
+  committed `needs-rework` provenance only. Its path and blob must remain unchanged; it is not
+  routing authority and cannot select a candidate, grant planning approval, or authorize a phase
+  transition. The sole normal-plan retry receipt path is
+  `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json`; only a future
+  committed R2 receipt with `verdict: "approved"` can provide planning approval.
 
 ## Status / Allowed Transitions
 
@@ -102,11 +111,12 @@ flowchart TB
   - `pr-open` → `needs-rework` or `merged` by Human only
   - `merged` → terminal
 
-Only a committed normal-plan receipt with `verdict: "approved"` permits Planner to select the
-planning candidate and route implementation. Tester evidence and independent review must bind the
-same full implementation subject; only then may Planner Phase 4.5 align the topic. Publish requires
-that alignment and existing human authorization. No transition authorizes automatic merge, release,
-tag, post-merge, or final summary.
+R1 is immutable committed `needs-rework` provenance and has no routing effect. Only the future
+committed R2 normal-plan receipt at the declared R2 path, with `verdict: "approved"`, permits
+Planner to select the planning candidate and route implementation. Tester evidence and independent
+review must bind the same full implementation subject; only then may Planner Phase 4.5 align the
+topic. Publish requires that alignment and existing human authorization. No transition authorizes
+automatic merge, release, tag, post-merge, or final summary.
 
 ## Artifact Paths
 
@@ -117,7 +127,8 @@ tag, post-merge, or final summary.
 | Topic plan | `plan/model-feature-identity/model-feature-identity.plan.md` | Plan-Creator | Repo-visible execution contract |
 | Topic specification | `plan/model-feature-identity/model-feature-identity.spec.md` | Plan-Creator | Behavioral contract |
 | Step tracker | `plan/model-feature-identity/model-feature-identity.step.md` | Plan-Creator | Progression truth |
-| Plan-review receipt | `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` | Independent Plan-Reviewer | Committed `approved` receipt is planning approval; an Implementer commits it unchanged |
+| Plan-review receipt R1 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
+| Plan-review receipt R2 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json` | Independent Plan-Reviewer | Sole retry receipt; only a future committed `approved` R2 is planning approval; an Implementer commits it unchanged |
 | Contracts module | `src/deterministic_response_cache/identity/contracts.py` | Implementer | Identity types, ABC, Outcome, and stage Protocol contracts |
 | Builders module | `src/deterministic_response_cache/identity/builders.py` | Implementer | Bounded pipeline orchestration |
 | Identity package exports | `src/deterministic_response_cache/identity/__init__.py` | Implementer | Explicit identity public surface only |
@@ -133,9 +144,11 @@ deleted. Any path outside this table is a plan-alignment stop and must return to
 
 ### Evidence schemas
 
-- The Plan-Reviewer receipt is exactly one JSON object with only `verdict`, `blocking_issues`, and
-  `copilot_feedback_triage`, using the fixed reviewer-handoff schema below. Only its committed
-  `approved` verdict has planning-approval effect.
+- R1 is the already committed receipt at its declared path. It has fixed-schema `needs-rework`
+  provenance only and must not be changed, replaced, or used as routing authority.
+- R2 is the only retry receipt and is exactly one JSON object with only `verdict`,
+  `blocking_issues`, and `copilot_feedback_triage`, using the fixed reviewer-handoff schema below.
+  Only its future committed `approved` verdict has planning-approval effect.
 - Tester evidence is one JSON object with exactly `schema_version`, `topic`,
   `implementation_subject_commit`, `status`, `commands`, and `recorded_by`. `schema_version` is
   integer `1`; `topic` is `model-feature-identity`; `implementation_subject_commit` is the full
@@ -206,13 +219,39 @@ implementation capability and its sole identity authority.
 
 - `class IdentitySource(ABC)`: `identity_fields(self) -> Mapping[str, PureType]` is its only
   abstract method.
-- `Validator.validate(...) -> Success[ValidatedIdentity] | Failure`; `Sorter.sort(...) ->
-  SortedIdentity`; `Encoder.encode(...) -> EncodedIdentity`; `Serializer.serialize(...) ->
-  SerializedIdentity`; `Hasher.hash(...) -> Hash`.
-- `ModelIdentityBuilder.build(source: IdentitySource) -> Success[ModelIdentity] | Failure` and
-  `FeatureIdentityBuilder.build(source: IdentitySource) -> Success[FeatureIdentity] | Failure`.
-- `FeatureIdentityBuilder.combine(model_identity: ModelIdentity, feature_identity: FeatureIdentity)
-  -> Success[CompleteRequestIdentity] | Failure`.
+- `JSONScalar = None | bool | int | float | str`; `PureType = JSONScalar | list[PureType] |
+  tuple[PureType, ...] | Mapping[str, PureType]`.
+- All of these are `@dataclass(frozen=True, slots=True)` with no additional public fields:
+  `IdentityField(name: str, value: PureType)`,
+  `RawIdentity(fields: tuple[IdentityField, ...])`,
+  `ValidatedIdentity(fields: tuple[IdentityField, ...])`,
+  `SortedIdentity(fields: tuple[IdentityField, ...])`,
+  `EncodedIdentity(value: str)`, `SerializedIdentity(value: bytes)`, `Hash(value: str)`,
+  `ModelIdentity(value: Hash)`, `FeatureIdentity(value: Hash)`,
+  `LeafIdentityAggregate(model_identity: ModelIdentity, feature_identity: FeatureIdentity)`,
+  `CompleteRequestIdentity(value: Hash)`,
+  `ValidationIssue(path: str, code: str, message: str)`, `Success[T](value: T)`, and
+  `Failure(issues: tuple[ValidationIssue, ...])`. `Failure.issues` is non-empty.
+- `Validator.validate(self, identity: RawIdentity) -> Success[ValidatedIdentity] | Failure`;
+  `Sorter.sort(self, identity: ValidatedIdentity) -> SortedIdentity`;
+  `Encoder.encode(self, identity: SortedIdentity) -> EncodedIdentity`;
+  `Serializer.serialize(self, identity: EncodedIdentity) -> SerializedIdentity`; and
+  `Hasher.hash(self, identity: SerializedIdentity) -> Hash`. These five Protocols have no other
+  public callable.
+- Both Builder constructors are exactly
+  `__init__(self, *, validator: Validator, sorter: Sorter, encoder: Encoder, serializer: Serializer,
+  hasher: Hasher) -> None`; both receive independent injected stage instances only through those
+  parameters.
+- `ModelIdentityBuilder.build(self, source: IdentitySource) -> Success[ModelIdentity] | Failure`
+  and `FeatureIdentityBuilder.build(self, source: IdentitySource) -> Success[FeatureIdentity] |
+  Failure`. Each snapshots `source.identity_fields().items()` as
+  `tuple(IdentityField(name, value) for name, value in ...)` before invoking Validator.
+- `FeatureIdentityBuilder.combine(self, model_identity: ModelIdentity, feature_identity:
+  FeatureIdentity) -> Success[CompleteRequestIdentity] | Failure`. It creates
+  `LeafIdentityAggregate(model_identity=model_identity, feature_identity=feature_identity)`, then
+  creates a new `RawIdentity` containing exactly the two fields named `model_identity` and
+  `feature_identity`, whose values are the corresponding aggregate `Hash.value`; it executes the
+  same full pipeline and wraps the resulting Hash only as `CompleteRequestIdentity`.
 - Backward compatibility: no existing API changes; no root-package re-export.
 
 ### Affected Files / Modules
@@ -245,14 +284,17 @@ implementation capability and its sole identity authority.
 
 ### TestCase
 
-- **Happy path:** injected fake stages record the locked order and yield distinct ModelIdentity,
-  FeatureIdentity, and CompleteRequestIdentity values.
+- **Happy path:** injected fake stages with the exact Protocol parameters record the locked order;
+  source mapping is captured as the named immutable `IdentityField` tuple; leaf builds yield distinct
+  ModelIdentity and FeatureIdentity values.
 - **Invalid input:** a fake Validator returns multiple `ValidationIssue` values; each builder returns
   the same Failure and no downstream stage is called.
 - **Edge case:** nested string-keyed mappings and ordered list／tuple travel through immutable named
   handoff VO; failure issues are non-empty and immutable.
-- **Regression:** `combine()` consumes both leaf identity types, creates a fixed aggregate, and walks
-  a second full pipeline rather than concatenating hash strings; direct root import keeps passing.
+- **Regression:** `combine()` consumes both leaf identity types, creates the fixed
+  `LeafIdentityAggregate(model_identity, feature_identity)`, passes a RawIdentity whose exact field
+  names are `model_identity` and `feature_identity` to a second full pipeline, and never concatenates
+  hash strings; direct root import keeps passing.
 - **Backward compatibility:** the root package public surface is unchanged, existing package import
   test passes, and `identity/.gitkeep` remains unchanged.
 
@@ -272,9 +314,9 @@ architecture files, and other topic artifacts unchanged.
 
 ## Implementation Steps
 
-1. Add `src/deterministic_response_cache/identity/contracts.py` with `PureType`, named immutable
-   input/stage/identity VO, `Success`/`Failure`/`ValidationIssue`, `IdentitySource`, and the five
-   stage Protocols; retain `identity/.gitkeep` unchanged.
+1. Add `src/deterministic_response_cache/identity/contracts.py` with the exact `PureType`, frozen
+   VO field table, `Success`/`Failure`/`ValidationIssue`, `IdentitySource`, and five Protocol
+   signatures declared above; retain `identity/.gitkeep` unchanged.
 2. Add `src/deterministic_response_cache/identity/builders.py` with injected-stage
    `ModelIdentityBuilder.build()` and `FeatureIdentityBuilder.build()` orchestration, returning
    Validator Failure unchanged and stopping before Sorter.
@@ -305,10 +347,10 @@ architecture files, and other topic artifacts unchanged.
 
 ## Reviewer Handoff
 
-The following is the normal-plan fixed-schema template, not a receipt. The independent Plan-Reviewer
-must provide exactly this JSON shape with no trailing prose. Only an independently produced and
-committed `approved` verdict has planning-approval effect; this plan does not select, declare, or deny
-an active candidate.
+The following is the R2 normal-plan fixed-schema template, not a receipt. The independent
+Plan-Reviewer must provide exactly this JSON shape with no trailing prose at the declared R2 path.
+Only an independently produced and committed R2 `approved` verdict has planning-approval effect;
+this plan does not select, declare, or deny an active candidate.
 
 ```json
 {
@@ -330,5 +372,6 @@ action.
 
 ## Open Questions / Unresolved Items
 
-None. Planning authority remains exclusively with the independently produced, committed normal-plan
-receipt; this plan and its step tracker neither select, declare, nor close a candidate.
+None. R1 remains immutable committed `needs-rework` provenance and nonrouting. Planning authority
+can arise only from the independently produced, committed approved R2 receipt; this plan and its step
+tracker neither select, declare, nor close a candidate.

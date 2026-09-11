@@ -13,27 +13,89 @@
 
 ## Type and pipeline contract
 
-- `PureType` 是遞迴 type alias：JSON scalar、`list`／`tuple` 與 key 為 `str` 的 mapping。
-  list／tuple 的順序是 input contract；mapping 的 canonical sort 是 Sorter responsibility。
-- 每個 pipeline boundary 都以 named immutable VO handoff；Encoder 的 handoff 是具型別標記的
-  canonical representation，Serializer 的 handoff 是 deterministic bytes。這些 VO 不暗示特定
-  serialized wire format 或 hash algorithm。
-- `Hash(value: str)` 是不透明 immutable value；不承諾 SHA-256、hex encoding 或 digest length。
-- `Validator.validate(...)` 回傳 `Success[ValidatedIdentity] | Failure`。`Failure` 包含一個非空
-  immutable `tuple[ValidationIssue, ...]`；每個 issue 有 `path`、`code`、`message`。
-- Sorter、Encoder、Serializer 與 Hasher 的 Protocol 各自只消費前一 stage 的 immutable handoff；
-  Hasher 回傳 `Hash`。
+- `JSONScalar = None | bool | int | float | str`；`PureType` 是遞迴 type alias：`JSONScalar`、
+  `list[PureType]`、`tuple[PureType, ...]` 與 `Mapping[str, PureType]`。list／tuple 的順序是
+  input contract；mapping 的 canonical sort 是 Sorter responsibility。
+- 下列 VO 一律是 `@dataclass(frozen=True, slots=True)`；每個 field 均依此表固定，並由 Builder
+  以 immutable tuple handoff 傳遞。`IdentityField` 的 `value` 仍是 `PureType`，不在本 topic
+  指定 nested value 的具體 canonical representation。
+
+  | VO | Fixed fields |
+  | --- | --- |
+  | `IdentityField` | `name: str`, `value: PureType` |
+  | `RawIdentity` | `fields: tuple[IdentityField, ...]` |
+  | `ValidatedIdentity` | `fields: tuple[IdentityField, ...]` |
+  | `SortedIdentity` | `fields: tuple[IdentityField, ...]` |
+  | `EncodedIdentity` | `value: str`（opaque、具型別標記的 canonical representation） |
+  | `SerializedIdentity` | `value: bytes`（deterministic bytes） |
+  | `Hash` | `value: str`（opaque digest value） |
+  | `ModelIdentity` | `value: Hash` |
+  | `FeatureIdentity` | `value: Hash` |
+  | `LeafIdentityAggregate` | `model_identity: ModelIdentity`, `feature_identity: FeatureIdentity` |
+  | `CompleteRequestIdentity` | `value: Hash` |
+  | `ValidationIssue` | `path: str`, `code: str`, `message: str` |
+  | `Success[T]` | `value: T` |
+  | `Failure` | `issues: tuple[ValidationIssue, ...]`，必須 non-empty |
+
+- `Hash.value` 不承諾 SHA-256、hex encoding 或 digest length。`Failure` 的 empty `issues` 是
+  contract-construction error；Validator 對 invalid input 必須回傳含完整 issues 的 `Failure`，
+  而非 partial success。
+- 每個 Protocol 的唯一 callable 與精確型別如下；Protocol 不宣告其他 public method：
+
+  ```python
+  class Validator(Protocol):
+      def validate(self, identity: RawIdentity) -> Success[ValidatedIdentity] | Failure: ...
+
+
+  class Sorter(Protocol):
+      def sort(self, identity: ValidatedIdentity) -> SortedIdentity: ...
+
+
+  class Encoder(Protocol):
+      def encode(self, identity: SortedIdentity) -> EncodedIdentity: ...
+
+
+  class Serializer(Protocol):
+      def serialize(self, identity: EncodedIdentity) -> SerializedIdentity: ...
+
+
+  class Hasher(Protocol):
+      def hash(self, identity: SerializedIdentity) -> Hash: ...
+  ```
+
+  `IdentitySource.identity_fields() -> Mapping[str, PureType]` 是唯一 abstract method。Builder
+  以 `tuple(IdentityField(name, value) for name, value in source.identity_fields().items())` 建立
+  `RawIdentity`，所以 pipeline 不持有 caller 的 mutable top-level mapping。
 
 ## Builder behavior
 
-1. `ModelIdentityBuilder.build(source)` 取得 `source.identity_fields()`，依固定五 stage 順序
-   建立 `ModelIdentity`，或原樣回傳 Validator 的 `Failure`。
-2. `FeatureIdentityBuilder.build(source)` 依相同規則建立 `FeatureIdentity`。
-3. `FeatureIdentityBuilder.combine(model_identity, feature_identity)` 將 leaf identities 放入固定
-   具名 aggregate；aggregate 必須再通過 Validator → Sorter → Encoder → Serializer → Hasher，
-   成為 `CompleteRequestIdentity`。不得直接 concatenate hash strings。
-4. 任一 Validator invocation 回傳 `Failure` 時，該 invocation 的後續 Sorter、Encoder、
-   Serializer、Hasher 一律不得呼叫。
+1. `ModelIdentityBuilder` 與 `FeatureIdentityBuilder` 都以相同的 keyword-only constructor
+   注入 stage dependency：
+
+   ```python
+   def __init__(
+       self,
+       *,
+       validator: Validator,
+       sorter: Sorter,
+       encoder: Encoder,
+       serializer: Serializer,
+       hasher: Hasher,
+   ) -> None: ...
+   ```
+
+2. `ModelIdentityBuilder.build(self, source: IdentitySource) -> Success[ModelIdentity] | Failure`
+   及 `FeatureIdentityBuilder.build(self, source: IdentitySource) -> Success[FeatureIdentity] | Failure`
+   都從 source snapshot 得到 `RawIdentity`，依 `validate → sort → encode → serialize → hash` 執行，
+   並分別包裝最終 `Hash` 成 leaf identity。
+3. `FeatureIdentityBuilder.combine(self, model_identity: ModelIdentity, feature_identity:
+   FeatureIdentity) -> Success[CompleteRequestIdentity] | Failure` 必須先建立固定欄位的
+   `LeafIdentityAggregate`。它接著僅以 aggregate 的兩個 hash value 建立新的 `RawIdentity`：
+   `model_identity` 與 `feature_identity`（兩個 `IdentityField.name` 均為此 exact string），再完整
+   執行 `validate → sort → encode → serialize → hash`，並以結果建立 `CompleteRequestIdentity`。不得
+   concatenate hash strings。
+4. 任一 `Validator.validate()` invocation 回傳 `Failure` 時，該 invocation 的後續 Sorter、Encoder、
+   Serializer、Hasher 一律不得呼叫；Builder 原樣回傳該 `Failure`。
 
 ## Boundary decisions
 
