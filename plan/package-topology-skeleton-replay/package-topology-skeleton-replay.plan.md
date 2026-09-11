@@ -7,7 +7,8 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 ## Scope
 
 - **In scope**:
-  - The ten implementation paths listed in `Artifact Paths`: five architecture surfaces and five `.gitkeep` reservations.
+  - The original topology subject's exact ten implementation paths: five architecture surfaces and five `.gitkeep` reservations.
+  - The declared correction route's exact three architecture paths, limited to correcting topology semantics without adding implementation behavior.
   - Architecture alignment that explicitly states the directories are pre-created topology, not implemented or usable capabilities.
   - The fixed mapping: Identity → `identity`, Response Reuse → `response_reuse`, Loaded Runtime Cache → `loaded_runtime_cache`, Model Execution → `model_execution`, Provider Adapter → `provider_adapter`.
 
@@ -24,11 +25,11 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
 - Identity alone owns model identity and complete request identity. Response Reuse only consumes confirmed identity. CacheStore stays an internal Response Reuse concept and does not receive a top-level directory.
 - Loaded Runtime Cache, Model Execution, and Provider Adapter remain separate future BCs; a reserved folder does not authorize their implementation. `provider_adapter/` is only a BC topology reservation: concrete provider integrations stay outside the core library and replaceable.
 - Every reserved directory contains only `.gitkeep`; none contains `__init__.py` or Python code. Existing `src/deterministic_response_cache/__init__.py` remains the sole package initializer and direct-import behavior is preserved.
-- The topic is not a correction route and declares no correction artifacts. Earlier topic artifacts and evidence are frozen nonrouting provenance and are not review inputs or routing authority.
+- This topic declares the correction route in **Declared Correction Route**. Earlier records are frozen, nonrouting provenance except for the specific correction-subject evidence named in that route; they do not approve the current revised planning candidate.
 
 ## Boundaries / Exclusions
 
-- Plan-Creator writes only the five initial planning artifacts. Implementer may write only the ten implementation paths after Planner selects a committed approved candidate receipt. Tester and Independent Reviewer write only their declared evidence paths. An unlisted path is a plan-alignment stop and returns to Planner.
+- Plan-Creator writes only the five initial planning artifacts. The original topology contract permits exactly ten implementation paths; the declared correction contract permits exactly the three named architecture paths. Tester and Independent Reviewer write only their declared evidence paths. An unlisted path is a plan-alignment stop and returns to Planner.
 - This topic may not change `AGENTS.md`, workflow contracts, project configuration, root package initializer, test sources, README, or any old gateway design/API/workflow.
 - No role may treat the pre-created folders as implemented or usable BCs, infer identity outside Identity, make CacheStore a BC, or combine the three future BCs. The reservations add no executable Python module, public symbol, or re-export.
 
@@ -61,10 +62,17 @@ Create a topology-only Business Capability skeleton under `src/deterministic_res
   1. An Implementer commits the five initial planning artifacts as the non-merge candidate commit.
   2. An independent Plan-Reviewer writes the declared normal-plan verdict as exactly one JSON object with the fixed `verdict`, structured `blocking_issues`, and `copilot_feedback_triage` arrays. An Implementer may commit that unchanged result as the declared review artifact.
   3. Only a committed normal-plan verdict with `verdict: "approved"` permits Planner to select that planning candidate and dispatch an Implementer. A `needs-rework` verdict establishes no implementation subject or next role. The current revised planning candidate has not yet received that independent re-approval.
-  4. The Implementer creates a non-merge immutable implementation subject commit that changes exactly the ten implementation paths. The six `## Implementation Steps` entries are the sole declared completion gate; the tracker now records all six as complete and remains outside the immutable source-subject diff.
+  4. The original Implementer creates a non-merge immutable topology subject commit that changes exactly the ten original implementation paths. A declared correction route creates a distinct immutable correction subject with its own exact path contract; it must never be described as a ten-path subject. The six `## Implementation Steps` entries are the sole original-topology completion gate; the tracker now records all six as complete and remains outside the immutable source-subject diff.
   5. An independent Tester writes factual evidence for that exact full subject SHA without committing it. An independent Implementer commits it unchanged as a sole evidence-only commit whose direct parent is the subject.
   6. An Independent Reviewer consumes only the committed passing Tester evidence for that same subject, writes the review log without committing it, and an independent Implementer commits it unchanged as a sole evidence-only commit whose direct parent is the Tester-evidence commit.
   7. Planner Phase 4.5 may align only the committed approved review log with the same subject. Existing Human authorization is required before bounded push and the topic's draft PR. Human alone reviews and merges the PR.
+
+## Declared Correction Route
+
+- **Original topology subject**: `8ed22c1a434fc108934159a1d8deaba53e7696d0` changes exactly these ten paths: `docs/business-capability-architecture.md`, `docs/evolution-roadmap.md`, `docs/architecture/business-capability/architecture-brief.md`, `docs/architecture/business-capability/scene.js`, `docs/architecture/business-capability/index.html`, and the five `.gitkeep` reservations under `identity/`, `response_reuse/`, `loaded_runtime_cache/`, `model_execution/`, and `provider_adapter/`. Its reviewer outcome is `needs-rework`.
+- **Final correction subject**: `c847d76db47f59fe9a797d5024e98f60c7f0bab2` changes exactly `docs/evolution-roadmap.md`, `docs/architecture/business-capability/scene.js`, and `docs/architecture/business-capability/index.html`. It is a three-architecture-path correction subject, not a ten-path implementation subject.
+- **Declared correction evidence**: Tester evidence commit `73d437c467e58d2213a2bcde723bee92e3fa9457` attests the final correction subject; independent Reviewer evidence commit `93ac9e6be4b59a595a85820f41ae22ca700736b1` approves that same subject. These named records are the only frozen records used as correction evidence; all other earlier records remain frozen, nonrouting provenance.
+- **Planning boundary**: this correction evidence does not re-approve the current revised planning candidate. That candidate remains pending a new independent Plan-Reviewer verdict as stated in **Status / Allowed Transitions**.
 
 ## Artifact Paths
 
@@ -116,7 +124,7 @@ All SHA values below are lowercase 40-character hexadecimal Git commit IDs. Any 
 1. Create exactly five specified `.gitkeep` files and no `cache_store/`, child `__init__.py`, or Python source below those directories.
 2. Align all five architecture surfaces to the fixed mapping, topology-only semantics, boundaries, and Identity-first order.
 3. Preserve root package source and direct import behavior unchanged.
-4. Keep the implementation subject diff to exactly the ten declared implementation paths.
+4. Keep the original topology subject diff to exactly the ten declared implementation paths; keep any declared correction subject to its separately stated exact correction-path contract.
 
 ### Decisions
 
@@ -162,7 +170,7 @@ None. The reserved child directories add no executable Python module, public sym
 - **TestCase 2 — invalid topology:** assert no `cache_store/`, child `__init__.py`, or `.py` file exists in the five reserved directories.
 - **TestCase 3 — architecture edge case:** inspect all five architecture surfaces; none calls Response Reuse the first implementation topic, and all state topology-only status without claiming BC availability.
 - **TestCase 4 — regression:** run `uv run pytest tests/test_package_import.py`; the unchanged direct root import succeeds.
-- **TestCase 5 — backward compatibility:** compare the immutable subject against its parent; `src/deterministic_response_cache/__init__.py` and `tests/test_package_import.py` are absent from the diff and no executable Python module, public symbol, or re-export is added.
+- **TestCase 5 — backward compatibility:** compare each immutable subject against its parent using its declared path contract: the original topology subject has exactly ten paths and the final correction subject has exactly three architecture paths. `src/deterministic_response_cache/__init__.py` and `tests/test_package_import.py` are absent from both diffs, and no executable Python module, public symbol, or re-export is added.
 
 ### Risks
 
@@ -171,7 +179,7 @@ None. The reserved child directories add no executable Python module, public sym
 
 ### Rollback Plan
 
-Revert the immutable implementation subject commit, which removes the five `.gitkeep` files and restores the five named architecture paths. No root package, test, configuration, or release artifact requires rollback.
+Revert the final correction subject to restore the prior architecture wording, or revert the original topology subject to remove the five `.gitkeep` files and restore the five named architecture paths. No root package, test, configuration, or release artifact requires rollback.
 
 ## Implementation Steps
 
@@ -184,7 +192,7 @@ Revert the immutable implementation subject commit, which removes the five `.git
 
 ## Validation / Acceptance Checks
 
-- Confirm the implementation-subject diff names exactly the ten implementation paths in `Artifact Paths`; no path is deleted.
+- Confirm the original topology-subject diff names exactly the ten declared paths and the final correction-subject diff names exactly its three declared architecture paths; no path is deleted.
 - Confirm `find src/deterministic_response_cache -mindepth 1 -maxdepth 2 -type f | sort` shows the existing root `__init__.py` and only the five new `.gitkeep` files below the reserved BC folders.
 - Confirm `find src/deterministic_response_cache -type f \( -name '__init__.py' -o -name '*.py' \) | sort` lists only the unchanged root `__init__.py`.
 - Confirm no `src/deterministic_response_cache/cache_store` directory exists.

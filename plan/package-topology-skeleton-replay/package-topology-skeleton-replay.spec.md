@@ -25,7 +25,7 @@
 
 - **Given** the reserved directories exist.
 - **When** `import deterministic_response_cache` runs.
-- **Then** the existing root package import succeeds without a new child import surface.
+- **Then** the existing root package import succeeds unchanged. The child directories remain topology-only reservations: their BCs are neither implemented nor usable, and they add no executable Python module, public symbol, or re-export.
 
 ## Error / Edge Cases
 
