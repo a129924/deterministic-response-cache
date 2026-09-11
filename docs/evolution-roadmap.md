@@ -4,15 +4,15 @@
 
 模型／請求身分確認
 
-→ Response 是否可安全重用？
+→ Response Reuse Protocol lookup：Hit / Miss / Unavailable
 
-→ 可重用時直接回傳 response
+→ Hit 時直接回傳 response；Unavailable 停在 Response Reuse boundary
 
-→ 不可重用時，未來由 Loaded Runtime Cache 取得或準備 runtime
+→ Miss 時，未來由 Loaded Runtime Cache 取得或準備 runtime
 
 → 未來由 Model Execution 執行模型
 
-→ Response Reuse 保存新 response
+→ 未來新 response 以相同 confirmed identity 交回 Response Reuse record，得到 Cached / NotCached
 
 → 回傳結果
 
@@ -24,7 +24,7 @@
 4. **Model Execution**：協調 runtime 與模型執行。
 5. **Provider Adapter**：在可替換邊界對接具體 local／remote provider。
 
-每個階段都需要獨立 topic plan。前一階段不得偷帶下一階段的責任。
+每個階段都需要獨立 topic plan。這是 conceptual sequence，不是 Response Reuse Protocol 等待 Identity implementation completion 的 gate：Response Reuse 只消費 Identity authority 已確認的 opaque identity。前一階段不得偷帶下一階段的責任。
 
 ## Package topology reservation
 
@@ -38,4 +38,4 @@
 | 4 | Model Execution | `src/deterministic_response_cache/model_execution/` |
 | 5 | Provider Adapter | `src/deterministic_response_cache/provider_adapter/`（僅預留 BC topology；具體 provider integration 維持核心外部且可替換） |
 
-Identity 是第一個後續 implementation topic；Response Reuse 只能在 Identity 已獨立規劃與實作後進行。Loaded Runtime Cache、Model Execution 與 Provider Adapter 各自保留為後續獨立 BC。本 baseline 只定義方向、責任與 topology，不是任何 BC 的實作承諾。
+Identity 是第一個 conceptual implementation topic，也是模型與完整 request identity 的唯一 authority。Response Reuse Protocol 可獨立規劃與實作，但只消費由 Identity authority 交接的 opaque confirmed identity；它不實作或重解 identity。Loaded Runtime Cache、Model Execution 與 Provider Adapter 各自保留為後續獨立 BC。本 baseline 只定義方向、責任與 topology，不是這些 future BC 的實作承諾。
