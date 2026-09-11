@@ -3,7 +3,13 @@
 
 """Synchronous orchestration at the Response Reuse boundary."""
 
-from deterministic_response_cache.response_reuse._cache_store import CacheStore, CacheStoreFailure
+from deterministic_response_cache.response_reuse._cache_store import (
+    CacheStore,
+    CacheStoreFailure,
+    CacheStoreWriteFailure,
+    NotFound,
+    TokenWritten,
+)
 from deterministic_response_cache.response_reuse.outcomes import (
     Cached,
     Hit,
@@ -24,14 +30,16 @@ class ResponseReuseProtocol[IdentityT, ResponseT]:
 
     def lookup(self, confirmed_identity: IdentityT) -> LookupOutcome[ResponseT]:
         """Find a reusable response without interpreting the identity."""
-        try:
-            response = self._store.read(confirmed_identity)
-        except CacheStoreFailure:
-            return Unavailable()
-
-        if response is None:
-            return Miss()
-        return Hit(response)
+        match self._store.read(confirmed_identity):
+            case NotFound():
+                return Miss()
+            case CacheStoreFailure():
+                return Unavailable()
+            case None:
+                msg = "CacheStore.read must not return None"
+                raise TypeError(msg)
+            case response:
+                return Hit(response)
 
     def record(
         self,
@@ -39,8 +47,11 @@ class ResponseReuseProtocol[IdentityT, ResponseT]:
         response: ResponseT,
     ) -> RecordOutcome[ResponseT]:
         """Attempt to retain a response while preserving it on write failure."""
-        try:
-            self._store.write(confirmed_identity, response)
-        except CacheStoreFailure:
-            return NotCached(response)
-        return Cached(response)
+        match self._store.write(confirmed_identity, response):
+            case TokenWritten():
+                return Cached(response)
+            case CacheStoreWriteFailure():
+                return NotCached(response)
+            case _:
+                msg = "CacheStore.write must return a write channel value"
+                raise TypeError(msg)

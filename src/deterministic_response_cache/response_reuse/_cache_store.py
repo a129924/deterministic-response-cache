@@ -3,18 +3,41 @@
 
 """Internal CacheStore port for the Response Reuse bounded context."""
 
+from dataclasses import dataclass
 from typing import Protocol
 
 
-class CacheStoreFailure(Exception):  # noqa: N818
-    """An expected operational failure raised by a CacheStore adapter."""
+@dataclass(frozen=True, slots=True)
+class NotFound:
+    """The store has no usable response for the confirmed identity."""
+
+
+@dataclass(frozen=True, slots=True)
+class CacheStoreFailure:
+    """The store could not complete a read operation."""
+
+
+@dataclass(frozen=True, slots=True)
+class TokenWritten:
+    """The store retained the supplied response."""
+
+
+@dataclass(frozen=True, slots=True)
+class CacheStoreWriteFailure:
+    """The store could not complete a write operation."""
 
 
 class CacheStore[IdentityT, ResponseT](Protocol):
     """Synchronously read and retain responses for opaque confirmed identities."""
 
-    def read(self, confirmed_identity: IdentityT) -> ResponseT | None:
-        """Return a usable response, or ``None`` when no usable entry exists."""
+    def read(self, confirmed_identity: IdentityT) -> ResponseT | NotFound | CacheStoreFailure:
+        """Return a response or an explicit lookup channel value."""
+        ...
 
-    def write(self, confirmed_identity: IdentityT, response: ResponseT) -> None:
-        """Retain a response for a confirmed identity."""
+    def write(
+        self,
+        confirmed_identity: IdentityT,
+        response: ResponseT,
+    ) -> TokenWritten | CacheStoreWriteFailure:
+        """Retain a response and return an explicit write channel value."""
+        ...
