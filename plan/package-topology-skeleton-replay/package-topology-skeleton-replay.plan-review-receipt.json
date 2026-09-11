@@ -11,12 +11,12 @@
       {
         "comment": "The plan-review receipt must use the normal fixed schema and must review the current committed planning candidate.",
         "location": "plan/package-topology-skeleton-replay/package-topology-skeleton-replay.plan.md; plan/package-topology-skeleton-replay/package-topology-skeleton-replay.plan-review-receipt.json",
-        "why": "The candidate explicitly declares the normal fixed receipt contract and this receipt is the independent review of that committed candidate."
+        "why": "The current candidate explicitly declares the normal fixed receipt contract, and this receipt is its independent review."
       },
       {
         "comment": "The step tracker must state the current delivery boundary without reusing stale planning or implementation state.",
         "location": "plan/package-topology-skeleton-replay/package-topology-skeleton-replay.step.md",
-        "why": "The tracker records pr-open and Human PR review while separately stating that the revised planning candidate required this independent review."
+        "why": "The tracker records pr-open and Human PR review while leaving planning approval exclusively to the committed independent receipt."
       }
     ],
     "DISCUSS": [],
