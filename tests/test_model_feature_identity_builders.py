@@ -138,12 +138,16 @@ def test_leaf_builders_snapshot_sources_and_run_each_stage_in_locked_order() -> 
         serializer=serializer,
         hasher=hasher,
     )
-    model_fields: dict[str, PureType] = {"name": "model", "nested": {"versions": [1, 2]}}
+    versions: list[PureType] = [1, 2]
+    nested: dict[str, PureType] = {"versions": versions}
+    model_fields: dict[str, PureType] = {"name": "model", "nested": nested}
     feature_fields: dict[str, PureType] = {"flag": True, "ordered": ("first", "second")}
 
     model_outcome = model_builder.build(Source(model_fields))
     feature_outcome = feature_builder.build(Source(feature_fields))
     model_fields["name"] = "changed-after-snapshot"
+    versions.append(3)
+    nested["changed-after-snapshot"] = True
 
     assert model_outcome == Success(ModelIdentity(value=Hash("model-hash")))
     assert feature_outcome == Success(FeatureIdentity(value=Hash("feature-hash")))

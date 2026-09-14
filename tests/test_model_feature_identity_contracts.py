@@ -92,6 +92,23 @@ def test_failure_requires_an_immutable_non_empty_issue_tuple() -> None:
         failure.__setattr__("issues", ())
 
 
+def test_failure_rejects_non_exact_tuple_and_non_issue_members() -> None:
+    """Require the runtime diagnostics container and every member to match the contract."""
+    issue = ValidationIssue(path="features[0]", code="unsupported", message="set is invalid")
+
+    class IssueTuple(tuple[ValidationIssue, ...]):
+        """A tuple subclass that must not satisfy Failure's exact tuple contract."""
+
+        __slots__ = ()
+
+    with pytest.raises(TypeError, match="exact tuple"):
+        Failure(issues=cast("tuple[ValidationIssue, ...]", [issue]))
+    with pytest.raises(TypeError, match="exact tuple"):
+        Failure(issues=cast("tuple[ValidationIssue, ...]", IssueTuple((issue,))))
+    with pytest.raises(TypeError, match="only ValidationIssue"):
+        Failure(issues=cast("tuple[ValidationIssue, ...]", (issue, "not-an-issue")))
+
+
 def test_pure_type_allows_the_declared_recursive_input_shape() -> None:
     """Make the accepted recursive value contract explicit to type checkers and readers."""
     pure_value: PureType = {

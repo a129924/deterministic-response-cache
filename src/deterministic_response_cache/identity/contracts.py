@@ -5,7 +5,7 @@
 from abc import ABC, abstractmethod
 from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Protocol, cast
 
 type JSONScalar = bool | int | float | str | None
 type PureType = JSONScalar | list[PureType] | tuple[PureType, ...] | Mapping[str, PureType]
@@ -113,10 +113,17 @@ class Failure:
     issues: tuple[ValidationIssue, ...]
 
     def __post_init__(self) -> None:
-        """Reject an invalid failure value with no diagnostic information."""
+        """Reject failure diagnostics that cannot satisfy the public contract."""
+        if type(self.issues) is not tuple:
+            message = "Failure.issues must be an exact tuple of ValidationIssue values."
+            raise TypeError(message)
         if not self.issues:
             message = "Failure.issues must contain at least one ValidationIssue."
             raise ValueError(message)
+        issues = cast("tuple[object, ...]", self.issues)
+        if not all(isinstance(issue, ValidationIssue) for issue in issues):
+            message = "Failure.issues must contain only ValidationIssue values."
+            raise TypeError(message)
 
 
 class IdentitySource(ABC):

@@ -2,6 +2,8 @@
 
 """Injected orchestration for model, feature, and complete request identities."""
 
+from copy import deepcopy
+
 from .contracts import (
     CompleteRequestIdentity,
     Encoder,
@@ -56,8 +58,10 @@ def _run_pipeline(identity: RawIdentity, stages: _PipelineStages) -> Success[Has
 
 
 def _source_snapshot(source: IdentitySource) -> RawIdentity:
-    """Copy the source mapping's top-level items into an immutable raw identity."""
-    fields = tuple(IdentityField(name, value) for name, value in source.identity_fields().items())
+    """Recursively copy source values before they cross the validation boundary."""
+    fields = tuple(
+        IdentityField(name, deepcopy(value)) for name, value in source.identity_fields().items()
+    )
     return RawIdentity(fields=fields)
 
 
