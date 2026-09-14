@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "topic": "model-feature-identity",
+  "planning_candidate_commit": "ccc5a8cba8259d990d7c929a534de1f927bbcbfa",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    "The PRC1 route is unsatisfiable: it requires the thread-resolution record to bind the actual PR #5 head to the committed PRF1 Reviewer-evidence revision, while it separately forbids any push until after that record is committed and all four entries are addressed-and-resolvable. The actual PR #5 head is still 7ba05e133e8529ba02f664fb5f23dbf996948d06, so the required Reviewer-evidence revision cannot become the PR head before the classification gate."
+  ],
+  "recorded_by": "Independent Plan-Reviewer"
+}

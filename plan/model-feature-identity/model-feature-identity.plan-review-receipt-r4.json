@@ -1,0 +1,15 @@
+{
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    {
+      "issue": "The Boundaries / Exclusions section still states that R3 is a future sole normal-plan retry receipt whose approved verdict can provide planning approval. That conflicts with this candidate's R3-immutable/nonrouting declaration and its R4-only correction transition, leaving two incompatible routing authorities in the active plan.",
+      "file": "plan/model-feature-identity/model-feature-identity.plan.md",
+      "fix": "Remove or rewrite the stale R3-future routing statement so R3 is consistently historical immutable provenance and only a committed approved R4 receipt can authorize S2."
+    }
+  ],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  }
+}

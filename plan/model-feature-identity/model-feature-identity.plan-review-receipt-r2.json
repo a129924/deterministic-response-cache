@@ -1,0 +1,15 @@
+{
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    {
+      "issue": "`Status / Allowed Transitions` declares `Current: planned`, but this exact commit is a committed correction planning candidate whose direct first parent is the immutable R1 `needs-rework` receipt and is now undergoing the independent R2 plan review. The declared current state therefore does not match the actual topic state, leaving Planner without an unambiguous phase after this receipt is committed.",
+      "file": "plan/model-feature-identity/model-feature-identity.plan.md",
+      "fix": "Set `Current` to the canonical committed-candidate / plan-review state that applies to this R2 review, and state the corresponding post-R2 transition without changing the five implementation paths, the R1 receipt path/blob, or the fixed R2 receipt schema."
+    }
+  ],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  }
+}

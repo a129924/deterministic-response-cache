@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "topic": "model-feature-identity",
+  "planning_candidate_commit": "fd431793d7360bfc3c1087bfd42f1e5cb5e00d79",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "recorded_by": "Independent Plan-Reviewer"
+}

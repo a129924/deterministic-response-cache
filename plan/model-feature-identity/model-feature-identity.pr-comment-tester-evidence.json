@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "topic": "model-feature-identity",
+  "implementation_subject_commit": "32100576337b2b71dcf21fdd076f5f6aebf7d5f9",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "uv run pytest --no-cov tests/test_model_feature_identity_builders.py tests/test_model_feature_identity_contracts.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run ruff check src/deterministic_response_cache/identity/builders.py src/deterministic_response_cache/identity/contracts.py tests/test_model_feature_identity_builders.py tests/test_model_feature_identity_contracts.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pyright",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}

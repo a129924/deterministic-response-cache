@@ -1,0 +1,15 @@
+{
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    {
+      "issue": "The public pipeline contract is not executable without design guesses: `Validator.validate(...)` leaves its input unspecified; the remaining stage Protocols omit their complete callable signatures; the immutable raw-input and fixed leaf-aggregate handoff VOs are required but not named or field-defined; and the Builders' injected-stage constructor signatures are absent. These choices determine the public Protocol compatibility and the fake-stage test contract.",
+      "file": "analysis/model-feature-identity/technical-spec.md; plan/model-feature-identity/model-feature-identity.plan.md; plan/model-feature-identity/model-feature-identity.spec.md",
+      "fix": "Name every handoff and aggregate VO, define its immutable fields and the fixed aggregate field names, and replace each ellipsis with the exact Protocol parameter and return types. Declare the exact injected dependencies and constructor signatures for both Builders, then mirror the same contract in the topic spec and test plan. Keep the existing boundary decisions and five implementation paths unchanged."
+    }
+  ],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "topic": "model-feature-identity",
+  "planning_candidate_commit": "b55af90425e60a8bf358bfc6c15eae3f3e4834fd",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    "The fixed four-thread contract still requires the stale-state thread PRRT_kwDOUJTij86hlk-- to verify a Planner-derived PRC1 route, while this candidate explicitly freezes PRC1 as needs-rework nonrouting provenance and declares PRCR1 as the sole recovery route. This makes the required classification basis internally contradictory."
+  ],
+  "recorded_by": "Independent Plan-Reviewer"
+}
