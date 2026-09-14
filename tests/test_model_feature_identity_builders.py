@@ -3,6 +3,7 @@
 """Behavioral tests for injected model and feature identity pipeline builders."""
 
 from collections.abc import Mapping
+from types import MappingProxyType
 
 from deterministic_response_cache.identity import (
     CompleteRequestIdentity,
@@ -155,7 +156,10 @@ def test_leaf_builders_snapshot_sources_and_run_each_stage_in_locked_order() -> 
     assert validator.inputs[0] == RawIdentity(
         fields=(
             IdentityField("name", "model"),
-            IdentityField("nested", {"versions": [1, 2]}),
+            IdentityField(
+                "nested",
+                MappingProxyType({"versions": (1, 2)}),
+            ),
         ),
     )
     assert validator.inputs[1] == RawIdentity(
@@ -172,6 +176,32 @@ def test_leaf_builders_snapshot_sources_and_run_each_stage_in_locked_order() -> 
     ]
     assert serializer.inputs == [EncodedIdentity(value="encoded"), EncodedIdentity(value="encoded")]
     assert hasher.inputs == [SerializedIdentity(value=b"serialized")] * 2
+
+
+def test_leaf_builder_hands_validator_an_immutable_recursive_source_snapshot() -> None:
+    """Prevent mutation through the RawIdentity handoff after a source is built."""
+    calls: list[str] = []
+    validator = RecordingValidator(calls)
+    builder = ModelIdentityBuilder(
+        validator=validator,
+        sorter=RecordingSorter(calls),
+        encoder=RecordingEncoder(calls),
+        serializer=RecordingSerializer(calls),
+        hasher=RecordingHasher(calls, [Hash("model-hash")]),
+    )
+    source_patch: list[PureType] = [2]
+    source_versions: list[PureType] = [1, {"patch": source_patch}]
+    source_nested: dict[str, PureType] = {"versions": source_versions}
+
+    builder.build(Source({"nested": source_nested}))
+
+    raw_identity = validator.inputs[0]
+    nested_value = raw_identity.fields[0].value
+    assert isinstance(nested_value, MappingProxyType)
+    assert nested_value["versions"] == (1, MappingProxyType({"patch": (2,)}))
+    assert not hasattr(nested_value, "__setitem__")
+    source_patch.append(3)
+    assert nested_value["versions"] == (1, MappingProxyType({"patch": (2,)}))
 
 
 def test_validation_failure_is_returned_unchanged_without_downstream_stage_calls() -> None:

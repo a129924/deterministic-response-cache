@@ -2,7 +2,9 @@
 
 """Injected orchestration for model, feature, and complete request identities."""
 
-from copy import deepcopy
+from collections.abc import Mapping
+from types import MappingProxyType
+from typing import cast
 
 from .contracts import (
     CompleteRequestIdentity,
@@ -15,6 +17,7 @@ from .contracts import (
     IdentitySource,
     LeafIdentityAggregate,
     ModelIdentity,
+    PureType,
     RawIdentity,
     Serializer,
     Sorter,
@@ -57,10 +60,22 @@ def _run_pipeline(identity: RawIdentity, stages: _PipelineStages) -> Success[Has
     return Success(stages.hasher.hash(serialized_identity))
 
 
+def _snapshot_value(value: PureType) -> PureType:
+    """Return the canonical immutable representation for one source value."""
+    if isinstance(value, (list, tuple)):
+        return tuple(_snapshot_value(item) for item in value)
+    if isinstance(value, Mapping):
+        mapping = cast("Mapping[str, PureType]", value)
+        snapshot = {key: _snapshot_value(item) for key, item in mapping.items()}
+        return MappingProxyType(snapshot)
+    return value
+
+
 def _source_snapshot(source: IdentitySource) -> RawIdentity:
-    """Recursively copy source values before they cross the validation boundary."""
+    """Recursively snapshot source values before they cross the validation boundary."""
     fields = tuple(
-        IdentityField(name, deepcopy(value)) for name, value in source.identity_fields().items()
+        IdentityField(name, _snapshot_value(value))
+        for name, value in source.identity_fields().items()
     )
     return RawIdentity(fields=fields)
 
