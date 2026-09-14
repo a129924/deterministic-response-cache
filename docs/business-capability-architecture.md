@@ -10,11 +10,13 @@ Identity BC 不保存 response、不執行模型，也不管理 loaded runtime�
 
 ### Response Reuse BC
 
-Response Reuse BC 只消費 Identity BC 已確認的 identity，並決定既有 response 是否能安全重用。它不自行推導模型或請求身分，不執行模型，也不管理 loaded runtime。
+Response Reuse BC 只消費 Identity BC 已確認、但在此 BC 中保持 opaque 的 `confirmed_identity`，並決定既有 response 是否能安全重用。它是可獨立交付的 Protocol topic，不以 Identity 的 implementation completion 為 gate；這不改變 Identity 作為唯一 authority 的責任。它不自行推導模型或請求身分，不執行模型，也不管理 loaded runtime。
+
+其 synchronous Protocol 的 `lookup` outcome 是 `Hit(response)`、`Miss()` 或 `Unavailable()`：CacheStore 以 immutable slotted value object `NotFound` 表示缺失、失效或過期 entry，並映射為 miss；以 `CacheStoreFailure` 表示 read failure，並維持為 unavailable，不能降級為 miss。read 的其他 non-`None` value 保持為 opaque response；`None` 是 port contract violation。未來下游只可在 miss boundary 之後接手，並不由本 BC 執行。未來下游交回同一 confirmed identity 與新 response 時，`record` 會將 `TokenWritten` 映射為 `Cached(response)`，或將 `CacheStoreWriteFailure` 映射為保留 response 的 `NotCached(response)`；任何其他 write result 都是 port contract violation。
 
 ### CacheStore
 
-CacheStore 是 Response Reuse BC 的內部保存元件，而不是頂層 BC。它只保存與取回 response；不得建立 identity、判定模型版本、推測 request 欄位、執行模型或管理 runtime。baseline 不定義其實作、持久化方式或 lifecycle policy。
+CacheStore 是 Response Reuse BC 的內部保存元件，而不是頂層 BC。它只保存與取回 response；不得建立 identity、判定模型版本、推測 request 欄位、執行模型或管理 runtime。Response Reuse 只透過其 internal synchronous port 讀寫；本 topic 不定義 backend、持久化方式或 lifecycle policy。
 
 ### Loaded Runtime Cache（未來）
 

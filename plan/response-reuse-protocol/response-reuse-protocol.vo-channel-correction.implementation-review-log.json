@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-protocol",
+  "implementation_subject_commit": "611ac16f9297243b0db71295ad90442ec38ef6bd",
+  "tester_evidence_commit": "662d5f71cecb2ddaafeef86374757405481b0d19",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "recorded_by": "Independent Reviewer"
+}

@@ -1,0 +1,15 @@
+{
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    {
+      "issue": "The candidate plan declares its current state as `planned` and says the five initial planning artifacts are uncommitted, but this review is of committed candidate `14799c5b22a4659183af6692222e2e78191f4508`, whose changed paths are exactly those five artifacts. The plan therefore does not report the actual topic state at the Plan-Reviewer gate.",
+      "file": "plan/response-reuse-protocol/response-reuse-protocol.plan.md",
+      "fix": "Update `Status / Allowed Transitions` so its Current state and routing facts match the committed planning candidate and the Plan-Reviewer stage; then create a new planning-candidate commit containing only the five initial planning artifacts for an independent re-review."
+    }
+  ],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-protocol",
+  "planning_candidate_commit": "48bf0eb2e1b0be7d2088acaae6f5b59df27fed7f",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    "The declared correction plan-review receipt schema omits the reviewed candidate tree, the five correction artifact blob facts, and first-parent admission facts required for a correction-route review record; because it declares an exact key set, a compliant record cannot be written without revising the correction plan and step tracker."
+  ],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}
