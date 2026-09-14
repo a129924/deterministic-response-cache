@@ -17,10 +17,10 @@ created: 2026-09-11
 
 ## Actionable Steps
 
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review the committed PRCR1 planning candidate
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review the committed PRCR1C1 planning candidate
   against exactly the four PR #5 thread IDs/URLs and write only
-  `model-feature-identity.pr-comment-recovery-plan-review-receipt.json`, binding the candidate's full SHA.
-- [ ] **Actor:** Implementer — **Action:** Commit an unchanged approved PRCR1 recovery receipt as a sole
+  `model-feature-identity.pr-comment-recovery-reference-plan-review-receipt.json`, binding the candidate's full SHA.
+- [ ] **Actor:** Implementer — **Action:** Commit an unchanged approved PRCR1C1 correction receipt as a sole
   evidence-only commit; then create exactly one PRF1 repair subject limited to the four declared
   source/test paths.
 - [ ] **Actor:** Tester — **Action:** Record actual PRF1 validation commands and exit codes only in
@@ -54,19 +54,22 @@ created: 2026-09-11
 
 ## Main Agent Actionable Steps — Fixed Tail
 
-- [ ] Complete only source-authorised lifecycle actions after committed PRCR1 approval, the required
+- [ ] Complete only source-authorised lifecycle actions after committed PRCR1C1 approval, the required
   same-PRF1-subject evidence, Planner Phase 4.5 alignment, a push making PR #5 equal the committed
   Reviewer-evidence revision, and the subsequently committed-and-pushed four-thread classification.
 
 ## Handoff / Gate Notes
 
-- R1–R5/S1/S2/T1/V1, PRC1 candidate `ccc5a8cba8259d990d7c929a534de1f927bbcbfa`, and its
-  `3cabeb5` `needs-rework` receipt are immutable committed nonrouting provenance. After this PRCR1
-  candidate commits, Planner-derived state is `PRCR1_PLAN_REVIEW_PENDING`; no static R5 or PRC1 status
-  is routing authority.
-- PRCR1 changes only this topic plan and this tracker. Its recovery receipt, PRF1 Tester evidence,
+- R1–R5/S1/S2/T1/V1, PRC1 candidate `ccc5a8cba8259d990d7c929a534de1f927bbcbfa` with its `3cabeb5`
+  receipt, and PRCR1 candidate `b55af90425e60a8bf358bfc6c15eae3f3e4834fd` with its
+  `c10cd66420f0955deffc6690063a21615a32d6b6` receipt are immutable committed nonrouting provenance.
+  After this PRCR1C1 candidate commits, Planner-derived state is `PRCR1C1_PLAN_REVIEW_PENDING`; no
+  static R5, PRC1, or PRCR1 status is routing authority.
+- PRCR1C1 changes only this topic plan and this tracker. Its correction receipt, PRF1 Tester evidence,
   PRF1 review log, and thread-resolution record use only their four declared new paths. PRF1 changes
   only `contracts.py`, `builders.py`, and their two direct-import test files.
+- The PRCR1 terminal boundary is lifted only for this one PRCR1C1 correction candidate. Any PRCR1C1
+  Plan-Review failure is terminal `human-check`; no later retry, receipt, or route is authorized.
 - The resolution record must bind PR #5, the actual PR #5 head that equals the committed PRF1
   Reviewer-evidence revision, that same implementation-review evidence commit, and all four fixed
   thread IDs/URLs. Each entry is either
