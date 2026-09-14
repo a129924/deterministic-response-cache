@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "topic": "model-feature-identity",
+  "implementation_subject_commit": "4aec4c50f433d277ddb2432cdf0884b6aa189224",
+  "tester_evidence_commit": "055acffee7df0c478dda9ed53d103cd753e057af",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "recorded_by": "Independent Reviewer"
+}
