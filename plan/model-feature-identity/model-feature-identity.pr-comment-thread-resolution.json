@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "topic": "model-feature-identity",
+  "pull_request_number": 5,
+  "reviewed_pull_request_head_commit": "4ae4206698a65d17b23e50727b3473848d7233da",
+  "implementation_review_log_commit": "4ae4206698a65d17b23e50727b3473848d7233da",
+  "threads": [
+    {
+      "id": "PRRT_kwDOUJTij86hljUO",
+      "url": "https://github.com/a129924/deterministic-response-cache/pull/5#discussion_r3992115152",
+      "classification": "addressed-and-resolvable",
+      "reply_body": "已驗證分離 evidence 的 ancestry：S2 subject `325d5748e6d75d7790c6ac616b2e51bcd9e1bb82` → S2 Tester evidence `38ce07fc958e4e511e673ad8efd24eacc200251a` → S2 Reviewer evidence `7ba05e133e8529ba02f664fb5f23dbf996948d06`，且此鏈仍是目前 PR #5 head 的 ancestor。各 evidence commits 保持分離，未被 squash。",
+      "verification_basis": "git merge-base --is-ancestor verified each stated S2 edge and the S2 Reviewer evidence remains an ancestor of PR #5 head `4ae4206698a65d17b23e50727b3473848d7233da`; both S2 evidence files retain their original subject and Tester bindings."
+    },
+    {
+      "id": "PRRT_kwDOUJTij86hlk-Z",
+      "url": "https://github.com/a129924/deterministic-response-cache/pull/5#discussion_r3992125326",
+      "classification": "addressed-and-resolvable",
+      "reply_body": "已在 PRF2 將 source snapshot 改為遞迴 canonical immutable representation：list/tuple 轉為 tuple，mapping 以 fresh dictionary 建立後包成 `MappingProxyType`。直接 `RawIdentity` handoff test 亦確認 build 後改動巢狀 source 不會改變 Validator 收到的 snapshot。",
+      "verification_basis": "PRF2 subject `4aec4c50f433d277ddb2432cdf0884b6aa189224` changes only `builders.py` and its declared builder test; `test_leaf_builder_hands_validator_an_immutable_recursive_source_snapshot` covers nested list/mapping mutation after build. The committed passing Tester evidence and approved Reviewer evidence bind that subject."
+    },
+    {
+      "id": "PRRT_kwDOUJTij86hlk--",
+      "url": "https://github.com/a129924/deterministic-response-cache/pull/5#discussion_r3992125394",
+      "classification": "addressed-and-resolvable",
+      "reply_body": "已移除過期的 `R5_PLAN_REVIEW_PENDING` 靜態 state。plan 現將 PRCR1／PRCR1C1 記為 immutable nonrouting provenance，並將目前 routing state 限定由已提交 candidate 與對應 evidence 推導；因此不再由舊 R5 敘述指示後續流程。",
+      "verification_basis": "The current plan's historical-state, current-state, and allowed-transition sections freeze PRCR1 and PRCR1C1 as nonrouting provenance and define the active route through committed PRF2P1/PRF2 evidence rather than the stale R5 state."
+    },
+    {
+      "id": "PRRT_kwDOUJTij86hlk_c",
+      "url": "https://github.com/a129924/deterministic-response-cache/pull/5#discussion_r3992125442",
+      "classification": "addressed-and-resolvable",
+      "reply_body": "`Failure.__post_init__` 現已要求 exact tuple、至少一個元素，且每個元素必須是 `ValidationIssue`。既有 contract test 直接覆蓋 list、tuple subclass、錯誤元素與空 tuple，避免可變或不合法 diagnostics 進入 public outcome。",
+      "verification_basis": "At reviewed PR #5 head, `contracts.py` enforces exact tuple, non-empty, and ValidationIssue-only checks; `test_failure_rejects_non_exact_tuple_and_non_issue_members` plus `test_failure_requires_an_immutable_non_empty_issue_tuple` exercise the required invalid and valid cases."
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}
