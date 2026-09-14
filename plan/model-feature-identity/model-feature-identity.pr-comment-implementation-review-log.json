@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "topic": "model-feature-identity",
+  "implementation_subject_commit": "32100576337b2b71dcf21fdd076f5f6aebf7d5f9",
+  "tester_evidence_commit": "1b135c977e511b38e681d96cd541590984140851",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    "PRF1 does not satisfy the approved immutable snapshot contract: builders.py::_source_snapshot() uses deepcopy(), so nested lists and mappings remain mutable. The plan requires recursively snapshotted list/tuple values as tuples and mappings as MappingProxyType values; the regression test proves later source mutation does not alias the snapshot but does not prove the RawIdentity handoff itself is immutable."
+  ],
+  "recorded_by": "Independent Reviewer"
+}
