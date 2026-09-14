@@ -77,51 +77,59 @@ flowchart TB
 - Planning artifacts are authored only by Plan-Creator. Plan-Reviewer, Tester, and Independent
   Reviewer each produce only their own declared evidence; Implementer alone performs approved,
   bounded source work and may never merge. Any unlisted path or contract drift returns to Planner.
-- All R1–R5, S1/S2, T1/S2 Tester, and V1/S2 Reviewer artifacts are immutable historical provenance.
-  Their paths and blobs remain unchanged; none is PRC1 routing authority. The committed S2 Reviewer
-  evidence is the prior publish gate only and does not authorize comment fixing or thread resolution.
-- This one-time, Human-authorized PRC1 route handles exactly four existing PR #5 threads. It may not
+- All R1–R5, S1/S2, T1/S2 Tester, V1/S2 Reviewer, the PRC1 candidate
+  `ccc5a8cba8259d990d7c929a534de1f927bbcbfa`, and its PRC1 `needs-rework` receipt
+  `3cabeb5` are immutable historical provenance. Their paths and blobs remain unchanged; none is
+  PRCR1 routing authority. The committed S2 Reviewer evidence is the prior publish gate only and
+  does not authorize comment fixing or thread resolution.
+- This one-time, Human-authorized PRCR1 recovery route handles exactly four existing PR #5 threads. It may not
   alter `.gitkeep`, public package topology, any other test, architecture file, prior evidence, or
   response-related path. No unlisted PR thread, review comment, source path, or evidence path is in
   scope.
-- Plan-Creator writes only the four PRC1 planning artifacts declared below. Plan-Reviewer, Tester,
+- Plan-Creator writes only this plan and this step tracker for PRCR1. Plan-Reviewer, Tester,
   Independent Reviewer, and Implementer may each write only their own declared subsequent artifact;
-  Implementer alone performs the bounded source/test repair and commits. Only after all four exact
-  threads are independently classified `addressed-and-resolvable` may Implementer push, post each
-  record's exact reply body, and resolve its matching thread. No role may merge or approve on behalf
-  of Human.
+  Implementer alone performs the bounded source/test repair and commits. After approved PRF1
+  Tester/Reviewer evidence and Planner Phase 4.5 alignment, Implementer first pushes the existing
+  PR #5 lineage through the committed PRF1 Reviewer-evidence revision. Only after PR #5 actually
+  equals that revision may Independent Reviewer classify the four threads. Implementer then commits
+  and pushes the classification record before posting each record's exact reply body and resolving
+  its matching thread. No role may merge or approve on behalf of Human.
 
 ## Status / Allowed Transitions
 
 - **Historical immutable state**: all R1–R5/S1/S2/T1/V1 evidence records and the original PR #5
   publish lineage are committed provenance only.
-- **Current after this candidate is committed**: `PRC1_PLAN_REVIEW_PENDING`. Planner derives the
-  current state from the committed PRC1 candidate, its receipt, same-subject repair evidence, and the
+- **Current after this candidate is committed**: `PRCR1_PLAN_REVIEW_PENDING`. Planner derives the
+  current state from the committed PRCR1 candidate, its receipt, same-subject repair evidence, and the
   PR rather than any static R5 state claim.
-- **Execution model**: committed PRC1 planning candidate → independent Plan-Reviewer receipt →
+- **Execution model**: committed PRCR1 planning candidate → independent Plan-Reviewer recovery
+  receipt →
   immutable PRF1 source/test repair subject → independent Tester evidence → independent Reviewer
-  evidence → Planner Phase 4.5 alignment → independent four-thread classification record → either
-  terminal `human-check` or bounded Implementer reply/resolve → Human review. This topic stops before
-  release.
+  evidence → Planner Phase 4.5 alignment → Implementer push of the existing PR #5 through the
+  Reviewer-evidence revision → independent four-thread classification record → Implementer commits
+  and pushes that record → either terminal `human-check` or bounded Implementer reply/resolve → Human
+  review. This topic stops before release.
 - **Allowed transitions**:
-  - `PRC1_CANDIDATE_COMMITTED` → `PRC1_PLAN_REVIEW_PENDING` →
-    `PRC1_APPROVED_RECEIPT_COMMITTED` | `PRC1_NEEDS_REWORK_RECEIPT_COMMITTED`.
-  - Only a committed `approved` PRC1 receipt permits one PRF1 subject. PRF1 changes exactly
+  - `PRCR1_CANDIDATE_COMMITTED` → `PRCR1_PLAN_REVIEW_PENDING` →
+    `PRCR1_APPROVED_RECEIPT_COMMITTED` | `PRCR1_NEEDS_REWORK_RECEIPT_COMMITTED`.
+  - Only a committed `approved` PRCR1 recovery receipt permits one PRF1 subject. PRF1 changes exactly
     `contracts.py`, `builders.py`, and their two declared direct-import test files.
   - `PRF1_SUBJECT_COMMITTED` → `PRF1_TESTER_IN_PROGRESS` →
     `PRF1_TESTER_EVIDENCE_COMMITTED` → `PRF1_REVIEWER_IN_PROGRESS` →
     `PRF1_REVIEW_EVIDENCE_COMMITTED` | `PRF1_NEEDS_REWORK_COMMITTED`.
   - Only committed passing same-PRF1 Tester evidence and committed `approved` Reviewer evidence permit
-    Planner Phase 4.5 alignment. Only that alignment permits the independent four-thread resolution
-    record. The record may contain both permitted per-thread classifications.
+    Planner Phase 4.5 alignment. That alignment permits Implementer to push the existing PR #5 lineage
+    through the committed PRF1 Reviewer-evidence revision, and no classification may begin until the
+    actual PR #5 head equals that exact revision. Only then may the independent four-thread resolution
+    record be written. The record may contain both permitted per-thread classifications.
   - If any record entry is `not-addressable`, the route is terminal `human-check`; no GitHub action is
-    authorized. Only a committed record whose four entries are all `addressed-and-resolvable` permits
-    Implementer to push the existing repair lineage, post each entry's exact `reply_body` to its
-    matching thread, then resolve that same thread. `pr-open` remains under Human review; only Human
-    may merge.
-  - Any PRC1 plan-review failure, Tester failure, Reviewer `needs-rework`, non-addressable or changed
+    authorized. Only a committed record whose four entries are all `addressed-and-resolvable`, after
+    Implementer has pushed its sole record-evidence commit to the existing PR #5, permits Implementer
+    to post each entry's exact `reply_body` to its matching thread and then resolve that same thread.
+    `pr-open` remains under Human review; only Human may merge.
+  - Any PRCR1 plan-review failure, Tester failure, Reviewer `needs-rework`, non-addressable or changed
     thread, additional unresolved thread, PR/head mismatch, dirty worktree, GitHub failure, or
-    unlisted path is terminal `human-check`. PRC2, R6, retry routes, workflow rewrites, and scope
+    unlisted path is terminal `human-check`. PRC2, PRCR2, R6, retry routes, workflow rewrites, and scope
     expansion are forbidden.
 
 ## Artifact Paths
@@ -133,12 +141,13 @@ flowchart TB
 | Topic plan | `plan/model-feature-identity/model-feature-identity.plan.md` | Plan-Creator | Repo-visible execution contract |
 | Topic specification | `plan/model-feature-identity/model-feature-identity.spec.md` | Plan-Creator | Behavioral contract |
 | Step tracker | `plan/model-feature-identity/model-feature-identity.step.md` | Plan-Creator | Progression truth |
-| PRC1 plan-review receipt | `plan/model-feature-identity/model-feature-identity.pr-comment-plan-review-receipt.json` | Independent Plan-Reviewer | Sole PRC1 planning approval; binds the full committed PRC1 candidate SHA |
+| PRC1 plan-review receipt | `plan/model-feature-identity/model-feature-identity.pr-comment-plan-review-receipt.json` | Independent Plan-Reviewer | Immutable committed PRC1 `needs-rework` provenance; nonrouting, path/blob unchanged |
+| PRCR1 recovery plan-review receipt | `plan/model-feature-identity/model-feature-identity.pr-comment-recovery-plan-review-receipt.json` | Independent Plan-Reviewer | Sole PRCR1 planning approval; binds the full committed PRCR1 candidate SHA |
 | Plan-review receipt R1 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
 | Plan-review receipt R2 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
-| Plan-review receipt R3 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r3.json` | Independent Plan-Reviewer | Immutable committed `approved` provenance; nonrouting for PRC1 |
+| Plan-review receipt R3 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r3.json` | Independent Plan-Reviewer | Immutable committed `approved` provenance; nonrouting for PRCR1 |
 | Plan-review receipt R4 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r4.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
-| Plan-review receipt R5 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r5.json` | Independent Plan-Reviewer | Immutable committed `approved` provenance; nonrouting for PRC1 |
+| Plan-review receipt R5 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r5.json` | Independent Plan-Reviewer | Immutable committed `approved` provenance; nonrouting for PRCR1 |
 | Contracts module | `src/deterministic_response_cache/identity/contracts.py` | Implementer | Identity types, ABC, Outcome, and stage Protocol contracts |
 | Builders module | `src/deterministic_response_cache/identity/builders.py` | Implementer | Bounded pipeline orchestration |
 | Identity package exports | `src/deterministic_response_cache/identity/__init__.py` | Implementer | Explicit identity public surface only |
@@ -150,7 +159,7 @@ flowchart TB
 | Implementation review log S2 | `plan/model-feature-identity/model-feature-identity.implementation-review-log-s2.json` | Independent Reviewer | Same-S2-subject review after committed passing S2 Tester evidence; an independent Implementer commits it unchanged as the sole S2 Reviewer-evidence commit |
 | PRF1 Tester evidence | `plan/model-feature-identity/model-feature-identity.pr-comment-tester-evidence.json` | Tester | Factual same-PRF1 validation; Implementer commits unchanged as sole evidence-only commit |
 | PRF1 implementation review log | `plan/model-feature-identity/model-feature-identity.pr-comment-implementation-review-log.json` | Independent Reviewer | Same-PRF1 independent review after committed passing Tester evidence; Implementer commits unchanged as sole evidence-only commit |
-| PR #5 thread-resolution record | `plan/model-feature-identity/model-feature-identity.pr-comment-thread-resolution.json` | Independent Reviewer | Four-thread per-entry classification after Planner alignment; Implementer commits unchanged as sole evidence-only commit before the all-addressed bounded PR action |
+| PR #5 thread-resolution record | `plan/model-feature-identity/model-feature-identity.pr-comment-thread-resolution.json` | Independent Reviewer | Four-thread per-entry classification only after Phase 4.5 has pushed PR #5 to the PRF1 Reviewer-evidence revision; Implementer commits and pushes it unchanged as sole evidence-only commit before the all-addressed bounded reply/resolve action |
 
 `README.md`, project version metadata, `pyproject.toml`, root
 `src/deterministic_response_cache/__init__.py`, existing tests, and
@@ -159,10 +168,11 @@ deleted. Any path outside this table is a plan-alignment stop and must return to
 
 ### Evidence schemas
 
-- Every R1–R5/S1/S2/T1/V1 record is immutable historical provenance only. It cannot be changed,
-  replaced, or used as PRC1 routing authority.
-- PRC1 receipt has exactly `schema_version`, `topic`, `planning_candidate_commit`, `verdict`,
-  `blocking_issues`, and `recorded_by`. It binds the full 40-hex PRC1 planning candidate SHA,
+- Every R1–R5/S1/S2/T1/V1 record, PRC1 candidate `ccc5a8cba8259d990d7c929a534de1f927bbcbfa`,
+  and its receipt commit `3cabeb5` are immutable historical provenance only. They cannot be changed,
+  replaced, or used as PRCR1 routing authority.
+- PRCR1 recovery receipt has exactly `schema_version`, `topic`, `planning_candidate_commit`, `verdict`,
+  `blocking_issues`, and `recorded_by`. It binds the full 40-hex PRCR1 planning candidate SHA,
   uses `approved|needs-rework`, has empty blockers only for `approved`, and is written by
   `Independent Plan-Reviewer`.
 - PRF1 Tester evidence has exactly `schema_version`, `topic`, `implementation_subject_commit`,
@@ -173,9 +183,9 @@ deleted. Any path outside this table is a plan-alignment stop and must return to
   same PRF1 lineage, `approved` requires empty blockers, and `recorded_by` is `Independent Reviewer`.
 - The thread-resolution record has exactly `schema_version`, `topic`, `pull_request_number`,
   `reviewed_pull_request_head_commit`, `implementation_review_log_commit`, `threads`, and
-  `recorded_by`. It binds PR `5`, the exact current repair head at classification, the committed PRF1
-  Reviewer-evidence commit, and exactly four entries. The top-level record permits both per-thread
-  classifications. Each entry must use exactly one of these shapes:
+  `recorded_by`. It binds PR `5`, the exact committed PRF1 Reviewer-evidence commit that is the
+  actual current PR #5 head at classification, and exactly four entries. The top-level record permits
+  both per-thread classifications. Each entry must use exactly one of these shapes:
   - `addressed-and-resolvable`: exactly `id`, `url`, `classification`, `reply_body`, and
     `verification_basis`; both added fields are non-empty strings and `blocking_issue` is absent.
   - `not-addressable`: exactly `id`, `url`, `classification`, and `blocking_issue`; `blocking_issue`
@@ -195,13 +205,15 @@ The route has exactly these threads and no inferred equivalent:
 | `PRRT_kwDOUJTij86hlk_c` | `https://github.com/a129924/deterministic-response-cache/pull/5#discussion_r3992125442` | Verify Failure tuple and element validation through the declared contract test. |
 
 The classification record is written only after Planner Phase 4.5 verifies the committed PRF1 subject,
-its passing Tester evidence, its approved Reviewer evidence, a clean worktree, and the actual PR #5
-head. At classification time the record's `reviewed_pull_request_head_commit` must equal the current
-PR #5 repair head and be the committed Reviewer-evidence revision. Its subsequent sole evidence-only
-commit must contain no source/test change. Any `not-addressable` entry is terminal `human-check` and
-authorizes no GitHub action. Before the all-addressed reply/resolve action, Implementer verifies that
-the PR head is that resolution-record commit and that its source tree remains the reviewed repair tree;
-Implementer posts each entry's exact `reply_body` to its matching ID and then resolves that same ID.
+its passing Tester evidence, its approved Reviewer evidence, a clean worktree, and that Implementer
+has pushed the existing PR #5 so its actual head equals the committed Reviewer-evidence revision. At
+classification time both `reviewed_pull_request_head_commit` and
+`implementation_review_log_commit` must name that committed Reviewer-evidence revision. Its subsequent
+sole evidence-only commit must contain no source/test change and Implementer must push it to PR #5
+before any reply or resolution. Any `not-addressable` entry is terminal `human-check` and authorizes
+no GitHub action. Before the all-addressed reply/resolve action, Implementer verifies that the PR head
+is that resolution-record commit and that its source tree remains the reviewed repair tree; Implementer
+posts each entry's exact `reply_body` to its matching ID and then resolves that same ID.
 
 ## Python implementation metadata
 
@@ -375,27 +387,32 @@ architecture files, and other topic artifacts unchanged.
 6. Add `tests/test_model_feature_identity_builders.py` with injected fake stages for fixed call order,
    failure short-circuit, separate leaf results, and the combine second-pass aggregate/hash behavior.
 
-## PRC1 comment-fix implementation
+## PRCR1 comment-fix recovery
 
-- **PRC1 planning candidate allowlist:** only `analysis/model-feature-identity/technical-spec.md`,
-  this plan, this topic spec, and this step tracker. It declares the route but writes no receipt,
-  Tester, Reviewer, resolution, source, or test artifact.
+- **PRC1 frozen provenance:** candidate `ccc5a8cba8259d990d7c929a534de1f927bbcbfa` and its
+  `3cabeb5` `needs-rework` receipt remain immutable and nonrouting. They are not amended, replaced,
+  retried, or consumed as approval.
+- **PRCR1 planning candidate allowlist:** only this plan and this step tracker. It declares the
+  recovery route but writes no receipt, Tester, Reviewer, resolution, source, or test artifact.
 - **PRF1 repair-subject allowlist:** only
   `src/deterministic_response_cache/identity/contracts.py`,
   `src/deterministic_response_cache/identity/builders.py`,
   `tests/test_model_feature_identity_contracts.py`, and
   `tests/test_model_feature_identity_builders.py`. It fixes the recursive snapshot and `Failure`
   invariants only; it may not change exports, public signatures, `.gitkeep`, planning, or evidence.
-- **PRF1 evidence order:** Independent Plan-Reviewer first writes the PRC1 receipt; an independent
-  Implementer commits it unchanged as a sole evidence-only commit. After that approval, Implementer
-  creates the one PRF1 subject. Tester writes only `pr-comment-tester-evidence.json`; a distinct
-  Implementer commits it unchanged as sole evidence. Independent Reviewer then writes only
-  `pr-comment-implementation-review-log.json`; a distinct Implementer commits it unchanged as sole
-  evidence. After Planner alignment, Independent Reviewer writes only
-  `pr-comment-thread-resolution.json`; a distinct Implementer commits it unchanged as sole evidence.
-  No evidence file may share a commit with a subject, planning artifact, or another evidence file.
-- **Bounded PR action:** only the Implementer may then push the existing lineage, reply with the
-  resolution record's exact `reply_body`, and resolve its exact four thread IDs, but only when all
+- **PRF1 evidence and publish order:** Independent Plan-Reviewer first writes the PRCR1 recovery
+  receipt; an independent Implementer commits it unchanged as a sole evidence-only commit. After that
+  approval, Implementer creates the one PRF1 subject. Tester writes only
+  `pr-comment-tester-evidence.json`; a distinct Implementer commits it unchanged as sole evidence.
+  Independent Reviewer then writes only `pr-comment-implementation-review-log.json`; a distinct
+  Implementer commits it unchanged as sole evidence. After Planner Phase 4.5 alignment, Implementer
+  pushes the existing PR #5 lineage through that committed PRF1 Reviewer-evidence revision. Only once
+  the actual PR #5 head equals that revision may Independent Reviewer write only
+  `pr-comment-thread-resolution.json`; a distinct Implementer commits and pushes it unchanged as sole
+  evidence. No evidence file may share a commit with a subject, planning artifact, or another evidence
+  file.
+- **Bounded PR action:** only after the resolution-record commit is pushed to PR #5 may Implementer
+  reply with the record's exact `reply_body` and resolve its exact four thread IDs, and only when all
   four record entries are `addressed-and-resolvable`. Any `not-addressable` entry is terminal
   `human-check` and authorizes no GitHub action. This does not authorize a new PR, merge, release,
   tag, or post-merge work.
@@ -404,7 +421,7 @@ architecture files, and other topic artifacts unchanged.
 
 - For S1 provenance, verify the implementation diff contains only the five `Written` source/test
   paths; it must not modify or delete `identity/.gitkeep` or any ReadOnly path.
-- For PRC1, verify the candidate diff contains only its four planning paths; for PRF1, verify the
+- For PRCR1, verify the candidate diff contains only this plan and this tracker; for PRF1, verify the
   subject diff contains only its four source/test paths; for every evidence-only commit, verify the
   diff contains exactly its declared evidence path.
 - Confirm each Builder's successful path uses Validator → Sorter → Encoder → Serializer → Hasher;
@@ -419,21 +436,24 @@ architecture files, and other topic artifacts unchanged.
 - Tester records every executed command and actual exit code in the declared evidence. Independent
   Reviewer verifies the same immutable subject, committed passing Tester evidence, exact scope,
   contract conformance, preserved direct imports, PR #5 ancestry, and all four exact thread IDs/URLs
-  before producing its evidence or resolution record. Verify every resolution entry has exactly its
-  permitted shape and only perform bounded GitHub actions when all four entries are addressed.
+  before producing its implementation-review evidence. Planner then confirms Phase 4.5 before the
+  Implementer push that makes PR #5 equal the Reviewer-evidence revision. Only afterwards may the
+  Independent Reviewer produce the resolution record. Verify every resolution entry has exactly its
+  permitted shape and only perform bounded GitHub actions when all four entries are addressed and the
+  resolution record has been committed and pushed.
 
 ## Reviewer Handoff
 
-The following is the PRC1 plan-review fixed-schema template, not a receipt. Independent
-Plan-Reviewer writes it only at the declared PRC1 receipt path. Only an independently produced and
-committed `approved` receipt that binds the actual full PRC1 candidate SHA permits PRF1; this plan
+The following is the PRCR1 recovery plan-review fixed-schema template, not a receipt. Independent
+Plan-Reviewer writes it only at the declared PRCR1 recovery receipt path. Only an independently
+produced and committed `approved` receipt that binds the actual full PRCR1 candidate SHA permits PRF1; this plan
 does not select, declare, or deny a candidate.
 
 ```json
 {
   "schema_version": 1,
   "topic": "model-feature-identity",
-  "planning_candidate_commit": "<full-40-hex-PRC1-SHA>",
+  "planning_candidate_commit": "<full-40-hex-PRCR1-SHA>",
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
   "recorded_by": "Independent Plan-Reviewer"
@@ -448,6 +468,7 @@ action.
 
 ## Open Questions / Unresolved Items
 
-None. R1–R5/S1/S2/T1/V1 remain immutable nonrouting provenance. PRC1 has exactly one receipt path,
-one repair subject, two implementation-evidence paths, and one thread-resolution path; no PRC2, R6,
-retry, extra thread, or expanded repair is authorized.
+None. R1–R5/S1/S2/T1/V1 plus PRC1 candidate `ccc5a8cba8259d990d7c929a534de1f927bbcbfa` and
+receipt `3cabeb5` remain immutable nonrouting provenance. PRCR1 has exactly one SHA-bound recovery
+receipt path, one repair subject, two implementation-evidence paths, and one thread-resolution path;
+no PRC2, PRCR2, R6, retry, extra thread, or expanded repair is authorized.
