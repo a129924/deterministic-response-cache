@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "topic": "model-feature-identity",
+  "planning_candidate_commit": "654bc0d4a342db44b2cd3bf98dcae423160b297e",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    "The PRF1 evidence-and-publish sequence still requires Independent Plan-Reviewer to write the PRCR1 recovery receipt, but that exact immutable receipt is the committed needs-rework record c10cd66420f0955deffc6690063a21615a32d6b6. The PRCR1C1 route instead permits only the new recovery-reference receipt, so an approved PRCR1C1 receipt cannot satisfy the stated prerequisite to create PRF1. Replace that stale PRCR1 receipt prerequisite with the declared PRCR1C1 correction receipt, then obtain a new independently reviewed correction route."
+  ],
+  "recorded_by": "Independent Plan-Reviewer"
+}
