@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-protocol",
+  "implementation_subject_commit": "8e2593b54b7d827b11622a5c3f8af5d89f6d9baf",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "uv run ruff check src/deterministic_response_cache/response_reuse tests/test_response_reuse_outcomes.py tests/test_response_reuse_protocol.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pyright src/deterministic_response_cache/response_reuse tests/test_response_reuse_outcomes.py tests/test_response_reuse_protocol.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_response_reuse_outcomes.py tests/test_response_reuse_protocol.py -v",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_package_import.py -v",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest -v",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --name-only 8e2593b54b7d827b11622a5c3f8af5d89f6d9baf^ 8e2593b54b7d827b11622a5c3f8af5d89f6d9baf",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
