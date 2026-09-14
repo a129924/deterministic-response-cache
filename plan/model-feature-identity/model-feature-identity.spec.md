@@ -19,7 +19,8 @@
   `CompleteRequestIdentity(value: Hash)`;
   `ValidationIssue(path: str, code: str, message: str)`;
   `Success[T](value: T)`; and `Failure(issues: tuple[ValidationIssue, ...])`. `Failure.issues`
-  must be non-empty.
+  must be a non-empty tuple whose every element is a `ValidationIssue`; a list, an empty tuple, or a
+  tuple containing another type is rejected at construction.
 - The only public stage calls are:
 
   ```python
@@ -51,7 +52,8 @@
 3. Both leaf builders execute Validator → Sorter → Encoder → Serializer → Hasher on success and
    produce their distinct leaf identity VO.
 4. A Validator Failure containing one or more issues is returned unchanged and prevents every
-   downstream stage for that invocation.
+   downstream stage for that invocation; `Failure` rejects every value that is not a non-empty tuple
+   of `ValidationIssue`.
 5. `combine()` represents ModelIdentity and FeatureIdentity in a fixed aggregate, makes a fresh full
    pipeline traversal, and produces CompleteRequestIdentity without concatenating hash strings.
 6. The implementation changes only the five declared source/test paths and leaves
@@ -82,12 +84,25 @@
 - **Then** the Builder returns that exact Failure and does not call Sorter, Encoder, Serializer, or
   Hasher.
 
+### Scenario 4: snapshot nested source values
+
+- **Given** an `IdentitySource` with nested mapping/list PureType values.
+- **When** a Builder starts `build()` and the caller later mutates the original nested value.
+- **Then** the already-recorded `RawIdentity` supplied to Validator remains unchanged, preserves sequence
+  order and mapping contents, and shares no mutable nested container with the source.
+
 ## Error / Edge Cases
 
 - set values, non-string mapping keys, `NaN`, and `±Infinity` are invalid PureType input and must be
   representable as collected ValidationIssue values rather than partial pipeline work.
 - Nested mappings must retain the mapping sort responsibility in Sorter, while list／tuple order is
   retained as the input contract.
+- Recursive snapshotting preserves list／tuple order and mapping content before Validator observes the
+  `RawIdentity`: scalar is retained, list／tuple becomes a recursively snapshotted tuple, and every
+  mapping becomes a fresh-dict-backed `types.MappingProxyType`; no nested mutable source container is
+  shared.
+- `Failure` constructor validation occurs before its non-empty invariant: non-tuple input and tuple
+  elements other than `ValidationIssue` raise `TypeError`; an empty valid tuple raises `ValueError`.
 - Fake-stage tests must assert each exact Protocol input/output handoff, both keyword-only Builder
   constructors, the `IdentityField` source snapshot, and the exact aggregate field names before the
   second Validator invocation.
