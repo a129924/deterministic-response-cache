@@ -41,21 +41,21 @@ created: 2026-09-12
 
 ## Implementation Steps
 
-- [ ] 1. Modify only `_cache_store.py` to define the four immutable slotted non-Exception value-object channels and
+- [X] 1. Modify only `_cache_store.py` to define the four immutable slotted non-Exception value-object channels and
   exact non-`None` read/write unions.
-- [ ] 2. Modify only `protocol.py` to map exact read/write channel values via `match`／`case`, preserving opaque
+- [X] 2. Modify only `protocol.py` to map exact read/write channel values via `match`／`case`, preserving opaque
   objects, treating each non-`None` nonchannel read value as `ResponseT`, and raising `TypeError` only for detectable
   channel-contract violations.
-- [ ] 3. Modify only `tests/test_response_reuse_protocol.py` with direct-import proof of valid mappings, read `None`
+- [X] 3. Modify only `tests/test_response_reuse_protocol.py` with direct-import proof of valid mappings, read `None`
   and foreign-write `TypeError`, opaque non-`None` read passthrough, propagated exceptions, and one-call/
   payload-preservation behavior.
-- [ ] 4. Modify only `docs/business-capability-architecture.md` to describe the value-object port channels without
+- [X] 4. Modify only `docs/business-capability-architecture.md` to describe the value-object port channels without
   changing existing BC boundaries.
-- [ ] 5. Tester runs the correction validation commands against the immutable four-path subject and writes factual
+- [X] 5. Tester runs the correction validation commands against the immutable four-path subject and writes factual
   `response-reuse-protocol.vo-channel-correction.tester-evidence.json` without committing it.
-- [ ] 6. Independent Implementer commits the unchanged correction Tester evidence as the sole path in one
+- [X] 6. Independent Implementer commits the unchanged correction Tester evidence as the sole path in one
   evidence-only commit.
-- [ ] 7. Independent Reviewer consumes only that committed same-subject passing evidence, writes
+- [X] 7. Independent Reviewer consumes only that committed same-subject passing evidence, writes
   `response-reuse-protocol.vo-channel-correction.implementation-review-log.json` without committing it, and an
   Independent Implementer commits it unchanged as the sole path in one evidence-only commit.
 
