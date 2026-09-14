@@ -83,19 +83,24 @@ flowchart TB
   `c10cd66420f0955deffc6690063a21615a32d6b6`; PRCR1C1 candidate
   `654bc0d4a342db44b2cd3bf98dcae423160b297e` with receipt
   `5688fd31e82e8f71f287f80785487ed66b85f50a` are immutable historical nonrouting provenance. Their
-  paths and blobs remain unchanged; none is PRF1P1 routing authority. The committed S2 Reviewer
+  paths and blobs remain unchanged; none is PRF1P1 or PRF2P1 routing authority. The committed S2 Reviewer
   evidence is the prior publish gate only and does not authorize comment fixing or thread resolution.
-- This one-time, Human-authorized PRF1P1 prerequisite correction lifts only the recorded PRCR1C1
-  plan-review terminal boundary and resumes the otherwise unchanged four-thread PRCR1 recovery route.
-  It may not
+- The complete failed PRF1 chain—PRF1P1 candidate `eda6934d90b88c965dfc8d3776a5169d7a6a67fc`, approved
+  prerequisite receipt `2eb875c017838c4c8852f12b1d0a5755215ba86f`, subject
+  `32100576337b2b71dcf21fdd076f5f6aebf7d5f9`, Tester evidence
+  `1b135c977e511b38e681d96cd541590984140851`, and Reviewer `needs-rework` receipt
+  `08f5ec591204442c00a7a0246b92f2072f286c7c`—is immutable historical nonrouting provenance. It is
+  neither amended nor retried and cannot authorize repair, publication, classification, reply, or resolution.
+- This one-time, Human-authorized PRF2P1 prerequisite correction lifts only the recorded PRF1 terminal
+  boundary and resumes the existing four-thread route with a replacement, two-file PRF2 repair. It may not
   alter `.gitkeep`, public package topology, any other test, architecture file, prior evidence, or
   response-related path. No unlisted PR thread, review comment, source path, or evidence path is in
   scope.
-- Plan-Creator writes only this plan and this step tracker for PRF1P1. Plan-Reviewer, Tester,
+- Plan-Creator writes only this plan and this step tracker for PRF2P1. Plan-Reviewer, Tester,
   Independent Reviewer, and Implementer may each write only their own declared subsequent artifact;
-  Implementer alone performs the bounded source/test repair and commits. After approved PRF1
+  Implementer alone performs the bounded source/test repair and commits. After approved PRF2
   Tester/Reviewer evidence and Planner Phase 4.5 alignment, Implementer first pushes the existing
-  PR #5 lineage through the committed PRF1 Reviewer-evidence revision. Only after PR #5 actually
+  PR #5 lineage through the committed PRF2 Reviewer-evidence revision. Only after PR #5 actually
   equals that revision may Independent Reviewer classify the four threads. Implementer then commits
   and pushes the classification record before posting each record's exact reply body and resolving
   its matching thread. No role may merge or approve on behalf of Human.
@@ -104,26 +109,27 @@ flowchart TB
 
 - **Historical immutable state**: all R1–R5/S1/S2/T1/V1 evidence records and the original PR #5
   publish lineage are committed provenance only.
-- **Current after this candidate is committed**: `PRF1P1_PLAN_REVIEW_PENDING`. Planner derives the
-  current state from the committed PRF1P1 candidate, its receipt, same-subject repair evidence, and the
+- **Current after this candidate is committed**: `PRF2P1_PLAN_REVIEW_PENDING`. Planner derives the
+  current state from the committed PRF2P1 candidate, its receipt, same-subject repair evidence, and the
   PR rather than any static R5 state claim.
-- **Execution model**: committed PRF1P1 planning candidate → independent Plan-Reviewer prerequisite
-  receipt → the unchanged immutable PRF1 source/test repair subject → independent Tester evidence → independent Reviewer
+- **Execution model**: committed PRF2P1 planning candidate → independent Plan-Reviewer prerequisite
+  receipt → one replacement PRF2 source/test repair subject → independent Tester evidence → independent Reviewer
   evidence → Planner Phase 4.5 alignment → Implementer push of the existing PR #5 through the
   Reviewer-evidence revision → independent four-thread classification record → Implementer commits
   and pushes that record → either terminal `human-check` or bounded Implementer reply/resolve → Human
   review. This topic stops before release.
 - **Allowed transitions**:
-  - `PRF1P1_CANDIDATE_COMMITTED` → `PRF1P1_PLAN_REVIEW_PENDING` →
-    `PRF1P1_APPROVED_RECEIPT_COMMITTED` | `PRF1P1_NEEDS_REWORK_RECEIPT_COMMITTED`.
-  - Only a committed `approved` PRF1P1 prerequisite receipt resumes the one unchanged PRF1 subject. PRF1 changes exactly
-    `contracts.py`, `builders.py`, and their two declared direct-import test files.
-  - `PRF1_SUBJECT_COMMITTED` → `PRF1_TESTER_IN_PROGRESS` →
-    `PRF1_TESTER_EVIDENCE_COMMITTED` → `PRF1_REVIEWER_IN_PROGRESS` →
-    `PRF1_REVIEW_EVIDENCE_COMMITTED` | `PRF1_NEEDS_REWORK_COMMITTED`.
-  - Only committed passing same-PRF1 Tester evidence and committed `approved` Reviewer evidence permit
+  - `PRF2P1_CANDIDATE_COMMITTED` → `PRF2P1_PLAN_REVIEW_PENDING` →
+    `PRF2P1_APPROVED_RECEIPT_COMMITTED` | `PRF2P1_NEEDS_REWORK_RECEIPT_COMMITTED`.
+  - Only a committed `approved` PRF2P1 prerequisite receipt resumes the one replacement PRF2 subject.
+    PRF2 changes exactly `src/deterministic_response_cache/identity/builders.py` and
+    `tests/test_model_feature_identity_builders.py`.
+  - `PRF2_SUBJECT_COMMITTED` → `PRF2_TESTER_IN_PROGRESS` →
+    `PRF2_TESTER_EVIDENCE_COMMITTED` → `PRF2_REVIEWER_IN_PROGRESS` →
+    `PRF2_REVIEW_EVIDENCE_COMMITTED` | `PRF2_NEEDS_REWORK_COMMITTED`.
+  - Only committed passing same-PRF2 Tester evidence and committed `approved` Reviewer evidence permit
     Planner Phase 4.5 alignment. That alignment permits Implementer to push the existing PR #5 lineage
-    through the committed PRF1 Reviewer-evidence revision, and no classification may begin until the
+    through the committed PRF2 Reviewer-evidence revision, and no classification may begin until the
     actual PR #5 head equals that exact revision. Only then may the independent four-thread resolution
     record be written. The record may contain both permitted per-thread classifications.
   - If any record entry is `not-addressable`, the route is terminal `human-check`; no GitHub action is
@@ -131,9 +137,10 @@ flowchart TB
     Implementer has pushed its sole record-evidence commit to the existing PR #5, permits Implementer
     to post each entry's exact `reply_body` to its matching thread and then resolve that same thread.
     `pr-open` remains under Human review; only Human may merge.
-  - The committed PRCR1C1 `needs-rework` receipt is frozen nonrouting provenance. Its terminal boundary
-    is lifted exactly once for this PRF1P1 candidate; no other PRCR1C1 retry or route is authorized.
-    Any PRF1P1 plan-review failure, Tester failure, Reviewer `needs-rework`, non-addressable or changed
+  - The failed PRF1 subject/Test/Reviewer lineage ending at `08f5ec591204442c00a7a0246b92f2072f286c7c`
+    is frozen nonrouting provenance. Its terminal boundary is lifted exactly once for this PRF2P1 candidate;
+    no other PRF1 retry or route is authorized. Any PRF2P1 plan-review failure, Tester failure, Reviewer
+    `needs-rework`, non-addressable or changed
     thread, additional unresolved thread, PR/head mismatch, dirty worktree, GitHub failure, or unlisted
     path is terminal `human-check`. PRC2, PRCR2, R6, retries, workflow rewrites, and scope expansion are forbidden.
 
@@ -149,7 +156,8 @@ flowchart TB
 | PRC1 plan-review receipt | `plan/model-feature-identity/model-feature-identity.pr-comment-plan-review-receipt.json` | Independent Plan-Reviewer | Immutable committed PRC1 `needs-rework` provenance; nonrouting, path/blob unchanged |
 | PRCR1 recovery plan-review receipt | `plan/model-feature-identity/model-feature-identity.pr-comment-recovery-plan-review-receipt.json` | Independent Plan-Reviewer | Immutable committed PRCR1 `needs-rework` provenance; nonrouting, path/blob unchanged |
 | PRCR1C1 correction plan-review receipt | `plan/model-feature-identity/model-feature-identity.pr-comment-recovery-reference-plan-review-receipt.json` | Independent Plan-Reviewer | Immutable committed PRCR1C1 `needs-rework` provenance; nonrouting, path/blob unchanged |
-| PRF1P1 prerequisite plan-review receipt | `plan/model-feature-identity/model-feature-identity.pr-comment-prf1-prerequisite-plan-review-receipt.json` | Independent Plan-Reviewer | Sole PRF1P1 planning approval; binds the full committed PRF1P1 candidate SHA and, only when approved, resumes the unchanged PRF1 route |
+| PRF1P1 prerequisite plan-review receipt | `plan/model-feature-identity/model-feature-identity.pr-comment-prf1-prerequisite-plan-review-receipt.json` | Independent Plan-Reviewer | Immutable committed PRF1P1 approval provenance; nonrouting after the failed PRF1 subject/test/review route |
+| PRF2P1 prerequisite plan-review receipt | `plan/model-feature-identity/model-feature-identity.pr-comment-prf2-prerequisite-plan-review-receipt.json` | Independent Plan-Reviewer | Sole PRF2P1 planning approval; binds the full committed PRF2P1 candidate SHA and, only when approved, permits the one replacement PRF2 route |
 | Plan-review receipt R1 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
 | Plan-review receipt R2 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r2.json` | Independent Plan-Reviewer | Immutable committed `needs-rework` provenance; nonrouting, path/blob unchanged |
 | Plan-review receipt R3 | `plan/model-feature-identity/model-feature-identity.plan-review-receipt-r3.json` | Independent Plan-Reviewer | Immutable committed `approved` provenance; nonrouting for PRCR1 |
@@ -164,9 +172,11 @@ flowchart TB
 | Implementation review log V1 | `plan/model-feature-identity/model-feature-identity.implementation-review-log.json` | Independent Reviewer | Immutable committed S1 `needs-rework` provenance; path/blob unchanged and not S2 evidence |
 | Tester evidence S2 | `plan/model-feature-identity/model-feature-identity.tester-evidence-s2.json` | Tester | Factual same-S2-subject validation; an independent Implementer commits it unchanged as the sole S2 Tester-evidence commit |
 | Implementation review log S2 | `plan/model-feature-identity/model-feature-identity.implementation-review-log-s2.json` | Independent Reviewer | Same-S2-subject review after committed passing S2 Tester evidence; an independent Implementer commits it unchanged as the sole S2 Reviewer-evidence commit |
-| PRF1 Tester evidence | `plan/model-feature-identity/model-feature-identity.pr-comment-tester-evidence.json` | Tester | Factual same-PRF1 validation; Implementer commits unchanged as sole evidence-only commit |
-| PRF1 implementation review log | `plan/model-feature-identity/model-feature-identity.pr-comment-implementation-review-log.json` | Independent Reviewer | Same-PRF1 independent review after committed passing Tester evidence; Implementer commits unchanged as sole evidence-only commit |
-| PR #5 thread-resolution record | `plan/model-feature-identity/model-feature-identity.pr-comment-thread-resolution.json` | Independent Reviewer | Four-thread per-entry classification only after Phase 4.5 has pushed PR #5 to the PRF1 Reviewer-evidence revision; Implementer commits and pushes it unchanged as sole evidence-only commit before the all-addressed bounded reply/resolve action |
+| PRF1 Tester evidence | `plan/model-feature-identity/model-feature-identity.pr-comment-tester-evidence.json` | Tester | Immutable committed failed-PRF1 provenance; nonrouting and path/blob unchanged |
+| PRF1 implementation review log | `plan/model-feature-identity/model-feature-identity.pr-comment-implementation-review-log.json` | Independent Reviewer | Immutable committed failed-PRF1 provenance; nonrouting and path/blob unchanged |
+| PRF2 Tester evidence | `plan/model-feature-identity/model-feature-identity.pr-comment-prf2-tester-evidence.json` | Tester | Factual same-PRF2 validation; Implementer commits unchanged as sole evidence-only commit |
+| PRF2 implementation review log | `plan/model-feature-identity/model-feature-identity.pr-comment-prf2-implementation-review-log.json` | Independent Reviewer | Same-PRF2 independent review after committed passing Tester evidence; Implementer commits unchanged as sole evidence-only commit |
+| PR #5 thread-resolution record | `plan/model-feature-identity/model-feature-identity.pr-comment-thread-resolution.json` | Independent Reviewer | Four-thread per-entry classification only after Phase 4.5 has pushed PR #5 to the approved PRF2 Reviewer-evidence revision; Implementer commits and pushes it unchanged as sole evidence-only commit before the all-addressed bounded reply/resolve action |
 
 `README.md`, project version metadata, `pyproject.toml`, root
 `src/deterministic_response_cache/__init__.py`, existing tests, and
@@ -179,23 +189,27 @@ deleted. Any path outside this table is a plan-alignment stop and must return to
   receipt `3cabeb5`, PRCR1 candidate `b55af90425e60a8bf358bfc6c15eae3f3e4834fd` with receipt
   `c10cd66420f0955deffc6690063a21615a32d6b6`, and PRCR1C1 candidate
   `654bc0d4a342db44b2cd3bf98dcae423160b297e` with receipt
-  `5688fd31e82e8f71f287f80785487ed66b85f50a` are immutable historical provenance only. They cannot
-  be changed, replaced, retried, or used as PRF1P1 routing authority.
-- PRF1P1 prerequisite receipt is written only at
-  `plan/model-feature-identity/model-feature-identity.pr-comment-prf1-prerequisite-plan-review-receipt.json`
+  `5688fd31e82e8f71f287f80785487ed66b85f50a`, and the complete failed PRF1 chain—PRF1P1 candidate
+  `eda6934d90b88c965dfc8d3776a5169d7a6a67fc`, approved prerequisite receipt
+  `2eb875c017838c4c8852f12b1d0a5755215ba86f`, subject `32100576337b2b71dcf21fdd076f5f6aebf7d5f9`,
+  Tester evidence `1b135c977e511b38e681d96cd541590984140851`, and Reviewer `needs-rework` receipt
+  `08f5ec591204442c00a7a0246b92f2072f286c7c` are immutable historical provenance only. They cannot
+  be changed, replaced, retried, or used as PRF2P1 routing authority.
+- PRF2P1 prerequisite receipt is written only at
+  `plan/model-feature-identity/model-feature-identity.pr-comment-prf2-prerequisite-plan-review-receipt.json`
   and has exactly `schema_version`, `topic`, `planning_candidate_commit`, `verdict`, `blocking_issues`,
-  and `recorded_by`. It binds the full 40-hex PRF1P1 planning candidate SHA, uses
+  and `recorded_by`. It binds the full 40-hex PRF2P1 planning candidate SHA, uses
   `approved|needs-rework`, has empty blockers only for `approved`, and is written by
-  `Independent Plan-Reviewer`. No other PRF1P1 receipt path is authorized.
-- PRF1 Tester evidence has exactly `schema_version`, `topic`, `implementation_subject_commit`,
-  `status`, `commands`, and `recorded_by`; it binds the full PRF1 SHA, records actual commands and
+  `Independent Plan-Reviewer`. No other PRF2P1 receipt path is authorized.
+- PRF2 Tester evidence has exactly `schema_version`, `topic`, `implementation_subject_commit`,
+  `status`, `commands`, and `recorded_by`; it binds the full PRF2 SHA, records actual commands and
   integer exit codes, uses `passing|failing`, and is written by `Tester`.
-- PRF1 Reviewer evidence has exactly `schema_version`, `topic`, `implementation_subject_commit`,
+- PRF2 Reviewer evidence has exactly `schema_version`, `topic`, `implementation_subject_commit`,
   `tester_evidence_commit`, `verdict`, `blocking_issues`, and `recorded_by`; both full SHAs bind the
-  same PRF1 lineage, `approved` requires empty blockers, and `recorded_by` is `Independent Reviewer`.
+  same PRF2 lineage, `approved` requires empty blockers, and `recorded_by` is `Independent Reviewer`.
 - The thread-resolution record has exactly `schema_version`, `topic`, `pull_request_number`,
   `reviewed_pull_request_head_commit`, `implementation_review_log_commit`, `threads`, and
-  `recorded_by`. It binds PR `5`, the exact committed PRF1 Reviewer-evidence commit that is the
+  `recorded_by`. It binds PR `5`, the exact committed PRF2 Reviewer-evidence commit that is the
   actual current PR #5 head at classification, and exactly four entries. The top-level record permits
   both per-thread classifications. Each entry must use exactly one of these shapes:
   - `addressed-and-resolvable`: exactly `id`, `url`, `classification`, `reply_body`, and
@@ -212,11 +226,11 @@ The route has exactly these threads and no inferred equivalent:
 | Thread ID | URL | Required verification responsibility |
 | --- | --- | --- |
 | `PRRT_kwDOUJTij86hljUO` | `https://github.com/a129924/deterministic-response-cache/pull/5#discussion_r3992115152` | Verify separated evidence ancestry. |
-| `PRRT_kwDOUJTij86hlk-Z` | `https://github.com/a129924/deterministic-response-cache/pull/5#discussion_r3992125326` | Verify recursive source snapshot through the declared builder test. |
+| `PRRT_kwDOUJTij86hlk-Z` | `https://github.com/a129924/deterministic-response-cache/pull/5#discussion_r3992125326` | Verify recursive source snapshot canonical immutability through the declared PRF2 builder test. |
 | `PRRT_kwDOUJTij86hlk--` | `https://github.com/a129924/deterministic-response-cache/pull/5#discussion_r3992125394` | Verify stale static state is replaced by this Planner-derived PRCR1 recovery route. |
 | `PRRT_kwDOUJTij86hlk_c` | `https://github.com/a129924/deterministic-response-cache/pull/5#discussion_r3992125442` | Verify Failure tuple and element validation through the declared contract test. |
 
-The classification record is written only after Planner Phase 4.5 verifies the committed PRF1 subject,
+The classification record is written only after Planner Phase 4.5 verifies the committed PRF2 subject,
 its passing Tester evidence, its approved Reviewer evidence, a clean worktree, and that Implementer
 has pushed the existing PR #5 so its actual head equals the committed Reviewer-evidence revision. At
 classification time both `reviewed_pull_request_head_commit` and
@@ -399,36 +413,40 @@ architecture files, and other topic artifacts unchanged.
 6. Add `tests/test_model_feature_identity_builders.py` with injected fake stages for fixed call order,
    failure short-circuit, separate leaf results, and the combine second-pass aggregate/hash behavior.
 
-## PRF1P1 comment-fix prerequisite correction
+## PRF2P1 comment-fix repair correction
 
 - **Frozen failed provenance:** PRC1 candidate `ccc5a8cba8259d990d7c929a534de1f927bbcbfa` with receipt
   `3cabeb5`, PRCR1 candidate `b55af90425e60a8bf358bfc6c15eae3f3e4834fd` with receipt
-  `c10cd66420f0955deffc6690063a21615a32d6b6`, and PRCR1C1 candidate
+  `c10cd66420f0955deffc6690063a21615a32d6b6`, PRCR1C1 candidate
   `654bc0d4a342db44b2cd3bf98dcae423160b297e` with receipt
-  `5688fd31e82e8f71f287f80785487ed66b85f50a`, remain immutable and nonrouting. They are not amended,
+  `5688fd31e82e8f71f287f80785487ed66b85f50a`, and the complete failed PRF1 chain—PRF1P1 candidate
+  `eda6934d90b88c965dfc8d3776a5169d7a6a67fc`, approved prerequisite receipt
+  `2eb875c017838c4c8852f12b1d0a5755215ba86f`, subject `32100576337b2b71dcf21fdd076f5f6aebf7d5f9`,
+  Tester evidence `1b135c977e511b38e681d96cd541590984140851`, and Reviewer `needs-rework` receipt
+  `08f5ec591204442c00a7a0246b92f2072f286c7c` remain immutable and nonrouting. They are not amended,
   replaced, retried, or consumed as approval.
-- **PRF1P1 planning candidate allowlist:** only this plan and this step tracker. It lifts only the
-  recorded PRCR1C1 terminal boundary and replaces every PRF1 prerequisite that names the failed PRCR1
-  receipt with the sole PRF1P1 prerequisite receipt. It writes no receipt, Tester, Reviewer, resolution,
-  source, or test artifact.
-- **PRF1P1 approval:** Independent Plan-Reviewer writes only
-  `model-feature-identity.pr-comment-prf1-prerequisite-plan-review-receipt.json`; an independent
+- **PRF2P1 planning candidate allowlist:** only this plan and this step tracker. It lifts only the
+  recorded PRF1 terminal boundary, declares one replacement PRF2 repair, and writes no receipt, Tester,
+  Reviewer, resolution, source, or test artifact.
+- **PRF2P1 approval:** Independent Plan-Reviewer writes only
+  `model-feature-identity.pr-comment-prf2-prerequisite-plan-review-receipt.json`; an independent
   Implementer commits an unchanged `approved` receipt as a sole evidence-only commit. Only that approval
-  resumes the unchanged PRF1 route. A `needs-rework` verdict is terminal `human-check`.
-- **PRF1 repair-subject allowlist:** only
-  `src/deterministic_response_cache/identity/contracts.py`,
-  `src/deterministic_response_cache/identity/builders.py`,
-  `tests/test_model_feature_identity_contracts.py`, and
-  `tests/test_model_feature_identity_builders.py`. It fixes the recursive snapshot and `Failure`
-  invariants only; it may not change exports, public signatures, `.gitkeep`, planning, or evidence.
-- **PRF1 evidence and publish order:** Independent Plan-Reviewer first writes the PRF1P1 prerequisite
+  permits PRF2. A `needs-rework` verdict is terminal `human-check`.
+- **PRF2 repair-subject allowlist:** only
+  `src/deterministic_response_cache/identity/builders.py` and
+  `tests/test_model_feature_identity_builders.py`. It only replaces the nested snapshot handoff with a
+  canonical immutable representation: recursively snapshot lists and tuples as tuples, mappings as fresh
+  dictionaries wrapped by `MappingProxyType`, and add a direct `RawIdentity` handoff immutability test.
+  It preserves public contracts, `contracts.py`, exports, `.gitkeep`, all other tests, planning, and
+  evidence.
+- **PRF2 evidence and publish order:** Independent Plan-Reviewer first writes the PRF2P1 prerequisite
   receipt; an independent Implementer commits it unchanged as a sole evidence-only commit. After that
-  approval, Implementer creates the one PRF1 subject. Tester writes only
-  `pr-comment-tester-evidence.json`; a distinct Implementer commits it unchanged as sole evidence.
-  Independent Reviewer then writes only `pr-comment-implementation-review-log.json`; a distinct
+  approval, Implementer creates the one PRF2 subject. Tester writes only
+  `pr-comment-prf2-tester-evidence.json`; a distinct Implementer commits it unchanged as sole evidence.
+  Independent Reviewer then writes only `pr-comment-prf2-implementation-review-log.json`; a distinct
   Implementer commits it unchanged as sole evidence. After Planner Phase 4.5 alignment, Implementer
-  pushes the existing PR #5 lineage through that committed PRF1 Reviewer-evidence revision. Only once
-  the actual PR #5 head equals that revision may Independent Reviewer write only
+  pushes the existing PR #5 lineage through that committed PRF2 Reviewer-evidence revision. Only once
+  the actual PR #5 head equals that revision may Independent Reviewer write the existing
   `pr-comment-thread-resolution.json`; a distinct Implementer commits and pushes it unchanged as sole
   evidence. No evidence file may share a commit with a subject, planning artifact, or another evidence
   file.
@@ -442,19 +460,19 @@ architecture files, and other topic artifacts unchanged.
 
 - For S1 provenance, verify the implementation diff contains only the five `Written` source/test
   paths; it must not modify or delete `identity/.gitkeep` or any ReadOnly path.
-- For PRF1P1, verify the candidate diff contains only this plan and this tracker; for PRF1, verify the
-  subject diff contains only its four source/test paths; for every evidence-only commit, verify the
+- For PRF2P1, verify the candidate diff contains only this plan and this tracker; for PRF2, verify the
+  subject diff contains only `builders.py` and `test_model_feature_identity_builders.py`; for every evidence-only commit, verify the
   diff contains exactly its declared evidence path.
 - Confirm each Builder's successful path uses Validator → Sorter → Encoder → Serializer → Hasher;
   each Validator Failure returns all recorded issues and has no downstream calls.
-- Confirm a nested list/mapping mutation after `build()` cannot alter the Validator-recorded
-  `RawIdentity`, and that Failure rejects list input, an empty tuple, and any non-ValidationIssue tuple
-  element while accepting an immutable non-empty issue tuple.
+- Confirm the replacement snapshot recursively represents lists and tuples as tuples and mappings as
+  `MappingProxyType`, and that a nested source mutation after `build()` cannot alter the Validator-recorded
+  `RawIdentity` handoff.
 - Confirm `combine()` accepts one ModelIdentity and one FeatureIdentity, executes a fresh full pipeline,
   and yields only CompleteRequestIdentity.
 - Run `uv lock --check`, `uv run ruff format --check .`, `uv run ruff check .`, `uv run pyright`,
   `uv run tach check`, `uv run pytest`, and `uv run pre-commit run --all-files`.
-- Tester records every executed command and actual exit code in the declared evidence. Independent
+- Tester records every executed command and actual exit code in the declared PRF2 evidence. Independent
   Reviewer verifies the same immutable subject, committed passing Tester evidence, exact scope,
   contract conformance, preserved direct imports, PR #5 ancestry, and all four exact thread IDs/URLs
   before producing its implementation-review evidence. Planner then confirms Phase 4.5 before the
@@ -465,16 +483,16 @@ architecture files, and other topic artifacts unchanged.
 
 ## Reviewer Handoff
 
-The following is the PRF1P1 prerequisite plan-review fixed-schema template, not a receipt. Independent
-Plan-Reviewer writes it only at the declared PRF1P1 prerequisite receipt path. Only an independently
-produced and committed `approved` receipt that binds the actual full PRF1P1 candidate SHA resumes PRF1; this plan
+The following is the PRF2P1 prerequisite plan-review fixed-schema template, not a receipt. Independent
+Plan-Reviewer writes it only at the declared PRF2P1 prerequisite receipt path. Only an independently
+produced and committed `approved` receipt that binds the actual full PRF2P1 candidate SHA permits PRF2; this plan
 does not select, declare, or deny a candidate.
 
 ```json
 {
   "schema_version": 1,
   "topic": "model-feature-identity",
-  "planning_candidate_commit": "<full-40-hex-PRF1P1-SHA>",
+  "planning_candidate_commit": "<full-40-hex-PRF2P1-SHA>",
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
   "recorded_by": "Independent Plan-Reviewer"
@@ -493,7 +511,11 @@ None. R1–R5/S1/S2/T1/V1 plus PRC1 candidate `ccc5a8cba8259d990d7c929a534de1f92
 `3cabeb5`, PRCR1 candidate `b55af90425e60a8bf358bfc6c15eae3f3e4834fd` with receipt
 `c10cd66420f0955deffc6690063a21615a32d6b6`, and PRCR1C1 candidate
 `654bc0d4a342db44b2cd3bf98dcae423160b297e` with receipt
-`5688fd31e82e8f71f287f80785487ed66b85f50a`, remain immutable nonrouting provenance. PRF1P1 has
-exactly one SHA-bound prerequisite receipt path and otherwise resumes the unchanged one repair subject,
-two implementation-evidence paths, and one thread-resolution path; no PRC2, PRCR2, R6, retry, extra
-thread, or expanded repair is authorized.
+`5688fd31e82e8f71f287f80785487ed66b85f50a`, and the complete failed PRF1 chain—PRF1P1 candidate
+`eda6934d90b88c965dfc8d3776a5169d7a6a67fc`, approved prerequisite receipt
+`2eb875c017838c4c8852f12b1d0a5755215ba86f`, subject `32100576337b2b71dcf21fdd076f5f6aebf7d5f9`,
+Tester evidence `1b135c977e511b38e681d96cd541590984140851`, and Reviewer `needs-rework` receipt
+`08f5ec591204442c00a7a0246b92f2072f286c7c`, remain immutable nonrouting provenance. PRF2P1 has
+exactly one SHA-bound prerequisite receipt path, one two-file replacement repair subject, two new
+implementation-evidence paths, and the existing four-thread resolution path bound only to approved PRF2
+Reviewer evidence; no PRF2P2, PRF3, retry, extra thread, or expanded repair is authorized.
