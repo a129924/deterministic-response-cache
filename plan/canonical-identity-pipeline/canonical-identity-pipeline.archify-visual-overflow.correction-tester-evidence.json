@@ -1,0 +1,73 @@
+{
+  "schema_version": "canonical-identity-pipeline.archify-visual-overflow.correction-tester-evidence.v1",
+  "topic": "canonical-identity-pipeline",
+  "correction_id": "canonical-identity-pipeline/archify-visual-overflow",
+  "implementation_subject_commit": "602d5f06540c243b591145d9c1ecaf9de840a913",
+  "rounds": [
+    {
+      "round": 1,
+      "showcase": {
+        "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs validate dataflow docs/architecture/canonical-identity-pipeline.dataflow.json --quality showcase --json",
+        "exit_code": 0,
+        "checks": 9,
+        "errors": 0,
+        "warnings": 0
+      },
+      "delivery": {
+        "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs deliver dataflow docs/architecture/canonical-identity-pipeline.dataflow.json docs/architecture/canonical-identity-pipeline.html --quality showcase --json",
+        "exit_code": 0,
+        "source_sha256": "c7252abeba815de74eaf6b691b4ff31645a398a7390bf8ff94cf3fe6d5374801",
+        "artifact_sha256": "6d4c12d2723b8da668efeab74e39f20ea6dccc948a5cfb84d4219d6e36df1883"
+      },
+      "visual_check": {
+        "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs visual-check docs/architecture/canonical-identity-pipeline.html --repo-root /Users/andrew/code/python/worktrees/canonical-identity-pipeline --json",
+        "exit_code": 0,
+        "failing_viewports": 0
+      }
+    }
+  ],
+  "status": "passing",
+  "commands": [
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs validate dataflow docs/architecture/canonical-identity-pipeline.dataflow.json --quality showcase --json",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs deliver dataflow docs/architecture/canonical-identity-pipeline.dataflow.json docs/architecture/canonical-identity-pipeline.html --quality showcase --json",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs visual-check docs/architecture/canonical-identity-pipeline.html --repo-root /Users/andrew/code/python/worktrees/canonical-identity-pipeline --json",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_canonical_identity_pipeline.py tests/test_model_feature_identity_contracts.py tests/test_model_feature_identity_builders.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run ruff format --check .",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run ruff check .",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pyright",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run tach check",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pre-commit run --all-files",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
