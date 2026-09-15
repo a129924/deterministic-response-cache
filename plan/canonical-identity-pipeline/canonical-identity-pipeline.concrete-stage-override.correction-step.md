@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/concrete-stage-override
-phase: correction-plan-review
+phase: concrete-stage-override-c3-status-sync-plan-review-pending
 created: 2026-09-15
 ---
 
@@ -17,10 +17,12 @@ version, lockfile, diagram, or CAVO1 history.
 C0 `82bb4413f0f53e912b4cf30abb65b5a13c84a93a`, its approved C1 log, and C2
 `15c23d67856b627fa8f736eb66694cccc9e5ec89` are complete frozen facts. C0S
 `46b707c209839f64935beb08e4db8a1b565c8114` is rejected frozen provenance because its C1S
-schema used double-escaped tab text. C0S-R1 is the only active status-only child candidate: it
-repairs that schema and records C0/C1/C2 completion, C0S rejection, C0S-R1 review pending, and C3
-pending consistently across four planning state surfaces. C0S-R1 has no source/test subject,
-Tester evidence, independent implementation-review log, push, or PR authority.
+schema used double-escaped tab text. C0S-R1's approved C1S receipt was committed unchanged as C2S
+`be0ce355dc777d63b7454488989452183519490a`. C3
+`cbee5f23310b973d9e52e4e1c662ca1d9f9169d8` is the complete frozen two-path implementation
+subject. C3S is the only active status-only child candidate: it records C1S/C2S/C3 complete, C4
+pending, and C5–C8 not started consistently across four planning state surfaces. C3S has no Tester
+evidence, independent implementation-review log, push, or PR authority.
 
 ## Correction workflow
 
@@ -34,18 +36,20 @@ Tester evidence, independent implementation-review log, push, or PR authority.
   evidence-only commit `15c23d67856b627fa8f736eb66694cccc9e5ec89`, a non-merge direct child of
   C0 with an exact one-path diff.
 - [X] C0S — rejected predecessor: `46b707c209839f64935beb08e4db8a1b565c8114` is frozen and
-  non-routing; no C1S log was written.
-- [X] C0S-R1 — Plan-Creator creates this exact six-path, non-merge direct child candidate of
-  rejected C0S: parent plan, parent step, this plan/step, and paired status-sync correction
-  plan/step. It does not create or modify the C1S review log.
-- [ ] C1S — Independent Plan-Reviewer reviews the clean committed C0S-R1 checkout and writes only
-  `canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan-review-log.json`
-  under the fail-closed C0S-R1 v2 schema, including six parsed `M<TAB>path` entries.
-- [ ] C2S — Independent Implementer commits unchanged approved C1S evidence as the sole
-  evidence-only commit. Only then may Planner determine whether to route C3.
-- [ ] C3 — Implementer commits one new immutable subject changing only `canonical.py` and the
-  dedicated pipeline test, with exact named bases, public `@override` markers, and unchanged direct
-  import/pipeline behavior.
+  non-routing.
+- [X] C0S-R1 / C1S / C2S — the repaired status route is complete; `be0ce355dc777d63b7454488989452183519490a`
+  is the sole evidence-only receipt commit and is frozen provenance.
+- [X] C3 — Implementer committed `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`, changing only
+  `canonical.py` and the dedicated pipeline test, with exact named bases, public `@override`
+  markers, and unchanged direct-import/pipeline behavior.
+- [X] C3S — Plan-Creator creates this exact six-path, non-merge direct child candidate of C3:
+  parent plan, parent step, this plan/step, and paired C3S status-sync correction plan/step. It
+  does not create or modify the C3S review log.
+- [ ] C3S review — Independent Plan-Reviewer reviews the clean committed C3S checkout and writes
+  only `canonical-identity-pipeline.concrete-stage-override-c3-status-sync.correction-plan-review-log.json`
+  under the fail-closed C3S v1 schema, including two parsed `A<TAB>path` and four parsed `M<TAB>path` entries.
+- [ ] C3S receipt commit — Independent Implementer commits unchanged approved C3S evidence as the
+  sole evidence-only commit. Only then may Planner determine whether to route C4 Tester.
 - [ ] C4 — Tester writes only factual same-subject results to
   `canonical-identity-pipeline.concrete-stage-override.correction-tester-evidence.json`; it does
   not commit the evidence.
@@ -61,16 +65,15 @@ Tester evidence, independent implementation-review log, push, or PR authority.
 
 ## Stop conditions
 
-- CAVO1 evidence cannot satisfy C1, C1S, C4, or C6. C1/C2 are complete only as frozen CSO1
-  historical facts; they cannot be re-used as C3 execution evidence. A rework needs a fresh C3
-  subject and repeats the complete C3–C7 sequence.
-- C0S-R1 must be a non-merge direct child of rejected C0S with its exact six-path `M<TAB>path`
-  name-status diff. Any incomplete or inconsistent C0/C1/C2 fact, missing C0S rejection or C0S-R1
-  review-pending state, another pending CSO1 execution step, prefilled C0S-R1 review fact,
-  unlisted path, a double-escaped tab source, dirty worktree, or claim of implementation/publish/PR
-  completion fails closed and returns to Planner.
+- CAVO1 evidence cannot satisfy C1, C1S, C4, or C6. C1/C2/C1S/C2S are complete only as frozen
+  CSO1 historical facts; they cannot be re-used as C3 Tester or Reviewer evidence. A rework needs
+  a fresh C3 subject and repeats the C3S/C3–C7 sequence.
+- C3S must be a non-merge direct child of C3 with its exact two-`A<TAB>path` plus four-`M<TAB>path` name-status diff.
+  Any incomplete or inconsistent C1S/C2S/C3 fact, C4 state other than pending, another pending
+  CSO1 execution step, prefilled C3S review fact, unlisted path, malformed tab source, dirty
+  worktree, or claim of Tester/Reviewer/publish/PR completion fails closed and returns to Planner.
 - An unlisted path, changed Protocol/value object/Builder injection, marker on any private helper,
   absent marker on a listed public method, or dynamic import is scope/contract drift and returns to
   Planner.
-- The exact C1/C1S/C4/C6 paths, writers, ordering, and JSON schemas are authoritative in
+- The exact C1/C3S/C4/C6 paths, writers, ordering, and JSON schemas are authoritative in
   `canonical-identity-pipeline.concrete-stage-override.correction-plan.md`.

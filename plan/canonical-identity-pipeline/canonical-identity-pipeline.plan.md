@@ -11,11 +11,11 @@ current injected-Builder contract.
 
 | Field | Contract |
 | --- | --- |
-| In-Scope | Historical delivery: five concrete stages, two default-builder factories, the cycle-safe private snapshot adjustment, exports, dedicated tests, a delivered Archify dataflow diagram, and publish-time README/version promotion. Active CSO1 correction: only nominal Protocol inheritance and `@override` markers in the five concrete stages plus their direct regression assertions. Rejected C0S is frozen provenance; C0S-R1 only repairs its status-sync review contract across four planning state surfaces before C3. |
+| In-Scope | Historical delivery: five concrete stages, two default-builder factories, the cycle-safe private snapshot adjustment, exports, dedicated tests, a delivered Archify dataflow diagram, and publish-time README/version promotion. Completed CSO1 C3 adds only nominal Protocol inheritance and `@override` markers in the five concrete stages plus their direct regression assertions. C3S only synchronizes completed C1S/C2S/C3 facts across four state surfaces and declares its own review receipt before Tester may begin C4. |
 | Out-Of-Scope | Provider extraction, Response Reuse, CacheStore, runtime retention, model execution, provider adapters, persistence, telemetry, configurable/profile-versioned formats, migration, and cache-key policy. |
-| ReadOnly | Existing Protocol signatures, value-object fields, keyword-only Builder injection signatures, existing direct-import tests, root package surface, `identity/.gitkeep`, BC ownership/source-of-truth architecture files, `builders.py`, `identity/__init__.py`, both Archify artifacts, `README.md`, `pyproject.toml`, and `uv.lock` during CSO1. C0, C1, C2, rejected C0S, all historical evidence, and the C1S reviewer-log path are frozen until their declared writers act. |
+| ReadOnly | Existing Protocol signatures, value-object fields, keyword-only Builder injection signatures, existing direct-import tests, root package surface, `identity/.gitkeep`, BC ownership/source-of-truth architecture files, `builders.py`, `identity/__init__.py`, both Archify artifacts, `README.md`, `pyproject.toml`, and `uv.lock` during CSO1. C0–C3, rejected C0S, C0S-R1/C1S/C2S, all historical evidence, and the C3S reviewer-log path are frozen until their declared writers act. |
 | Written | `identity/canonical.py`, dedicated pipeline tests, Archify source/HTML, planning artifacts, and later role-owned CAVO1 evidence files. |
-| Modify | Historical subject: `identity/builders.py` private snapshot traversal and `identity/__init__.py` exports; `README.md` and `pyproject.toml` only at `publish-in-progress`. Active CSO1 subject: only `identity/canonical.py` and `tests/test_canonical_identity_pipeline.py`. |
+| Modify | Historical subject: `identity/builders.py` private snapshot traversal and `identity/__init__.py` exports; `README.md` and `pyproject.toml` only at `publish-in-progress`. Completed CSO1 C3 subject: only `identity/canonical.py` and `tests/test_canonical_identity_pipeline.py`; active C3S changes only its six planning paths. |
 | Deleted | No tracked file. Untracked Archify visual-check sidecars are removed before the subject commit. |
 | TestCase | Valid/invalid PureType; issue aggregation; short-circuit; mapping order; type/list-tuple distinction; exact Encoder strings; Serializer bytes; `-0.0`; independent processes; factories; composition; direct imports; diagram receipts. |
 
@@ -72,30 +72,30 @@ alternative work.
   Its C1 log is an approved record that binds that exact commit, tree, and reviewed blobs. CSO1 C2
   is the immutable sole-evidence commit `15c23d67856b627fa8f736eb66694cccc9e5ec89`: it is a
   non-merge direct child of C0 and adds only the unchanged C1 log. These facts are frozen.
-- C0S `46b707c209839f64935beb08e4db8a1b565c8114` is rejected frozen provenance because its C1S
-  schema double-escaped each tab. C0S-R1 is its status-only direct child candidate. It changes
-  exactly the four CSO1 state surfaces plus its correction plan and correction step. Its independent
-  review must fail closed unless all four surfaces agree that C0/C1/C2 are frozen complete, C0S is
-  rejected, C0S-R1 is review pending, C3 is the only pending CSO1 step, C4–C8 are not started, and
-  all six `name_status` values parse to actual `M<TAB>path` records.
-- CSO1's C3 remains the only pending CSO1 execution step. Its Implementer can modify only `canonical.py` and the
-  dedicated pipeline test; it must preserve every current pipeline behavior, direct import,
-  published public surface, diagram, and bounded PR scope. The CSO1 correction plan and correction
-  step are its detailed evidence-schema authority; these parent artifacts are its current truth.
+- C0S `46b707c209839f64935beb08e4db8a1b565c8114` remains rejected frozen provenance because its
+  C1S schema double-escaped each tab. Its direct child C0S-R1 was independently reviewed, and the
+  unchanged approved C1S receipt was committed as sole evidence C2S
+  `be0ce355dc777d63b7454488989452183519490a`. C1S/C2S are frozen complete facts.
+- CSO1 C3 is the immutable two-path implementation subject
+  `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`. C3S is its direct-child, status-only planning
+  candidate. It changes exactly the parent plan/step, CSO1 plan/step, and its paired C3S plan/step;
+  it must synchronize C1S/C2S complete, C3 complete, C4 pending, and C5–C8 not started without
+  writing a review receipt or claiming any downstream outcome.
 - A path not listed below is a plan-alignment stop and returns to Planner.
 
 ## Status / Allowed Transitions
 
-- **Current**: `concrete-stage-override-status-sync-revision-plan-review-pending`; CSO1 C0/C1/C2
-  are complete historical facts, C0S is rejected frozen provenance, C0S-R1 awaits its own
-  independent Plan-Reviewer log, C3 is the sole pending execution step, and C4–C8 are not started.
-  The existing draft PR #6 remains open; CAVO1 is completed historical provenance.
+- **Current**: `concrete-stage-override-c3-status-sync-plan-review-pending`; CSO1 C0/C1/C2,
+  C1S/C2S `be0ce355dc777d63b7454488989452183519490a`, and C3
+  `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8` are complete historical facts. C3S awaits an
+  independent Plan-Reviewer receipt; C4 is pending and C5–C8 are not started. The existing draft
+  PR #6 remains open; CAVO1 is completed historical provenance.
 - **Execution model**: CSO1 C0 → approved C1 log → sole-evidence C2 commit → rejected C0S →
-  C0S-R1 six-path direct child candidate → independent C1S Plan-Reviewer log → sole-evidence C2S
-  log commit → Planner route to CSO1 C3 → Implementer immutable two-path CSO1 subject → independent
-  CSO1 Tester evidence → evidence-only Tester commit → independent CSO1 Reviewer evidence from a
-  clean committed tree → evidence-only Reviewer commit → Planner Phase 4.5 alignment → bounded push
-  that updates existing draft PR #6 only → Human review and merge.
+  C0S-R1 → approved C1S receipt / sole-evidence C2S commit → immutable C3 subject → C3S six-path
+  direct-child candidate → independent C3S Plan-Reviewer receipt → sole-evidence C3S receipt commit
+  → Planner route to CSO1 C4 Tester → evidence-only Tester commit → independent CSO1 Reviewer
+  evidence from a clean committed tree → evidence-only Reviewer commit → Planner Phase 4.5 alignment
+  → bounded push that updates existing draft PR #6 only → Human review and merge.
 - **Allowed transitions**:
   - `planned` → `creator-in-progress`
   - `creator-in-progress` → `tester-in-progress`
@@ -145,6 +145,9 @@ alternative work.
 | C0S-R1 correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan.md` | Plan-Creator | Status-only C0S-R1 admission, four-surface synchronization, and its v2 actual-tab review-log schema. |
 | C0S-R1 correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-step.md` | Plan-Creator | Rejected C0S, C0S-R1 candidate, review, evidence-only commit, and return-to-C3 tracker. |
 | C0S-R1 correction Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | The sole C0S-R1 review artifact; it is written only from a clean committed C0S-R1 checkout and then separately committed unchanged by an Independent Implementer. |
+| C3S correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c3-status-sync.correction-plan.md` | Plan-Creator | Direct-child C3 status synchronization, six-path admission, and C3S review-receipt schema. |
+| C3S correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c3-status-sync.correction-step.md` | Plan-Creator | C3S candidate, review-receipt commit, and only then return to C4 Tester routing. |
+| C3S correction Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c3-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole C3S review artifact, written from the clean committed six-path candidate and separately committed unchanged by an Independent Implementer. |
 | CSO1 concrete stage subject | `src/deterministic_response_cache/identity/canonical.py` | Implementer | Sole production-code path for named Protocol bases and the five public `@override` markers. |
 | CSO1 concrete stage regression | `tests/test_canonical_identity_pipeline.py` | Implementer | Sole test path; keeps direct-import/pipeline regressions and proves named bases, public markers, and unmarked private helpers. |
 | CSO1 Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-tester-evidence.json` | Tester | Factual same-subject validation only; an independent Implementer commits unchanged passing evidence as its sole evidence-only commit. |
@@ -326,20 +329,23 @@ visual-check sidecars. If promotion is committed but not merged, separately reve
    `docs/architecture/canonical-identity-pipeline.html`, preserve all pipeline semantics/nodes and
    the `Failure` boundary, run showcase validation/delivery/desktop visual-check per round, and
    remove all untracked visual-check sidecars before the immutable subject commit.
-6. Rejected C0S remains frozen provenance. C0S-R1 repairs its double-escaped C1S tab schema,
-   synchronizes the four CSO1 state surfaces to frozen C0/C1/C2, rejected C0S, C0S-R1 review
-   pending, C3 pending, and C4–C8 not started, then receives its own committed approved
-   Plan-Reviewer evidence and returns routing authority to Planner; it creates no implementation
-   subject, Tester evidence, implementation-review evidence, push, or PR authority.
+6. Rejected C0S remains frozen provenance. C0S-R1 repaired its double-escaped C1S tab schema;
+   C1S/C2S are complete in `be0ce355dc777d63b7454488989452183519490a`. These historical records
+   create no C3 Tester, Reviewer, push, or PR authority.
 7. After committed approved CSO1 Plan-Reviewer evidence, committed approved C0S-R1 status-sync
-   review evidence, and a Planner route, modify only
+   review evidence, and a Planner route, C3 modified only
    `src/deterministic_response_cache/identity/canonical.py`: import `override` from `typing`, use
    the five exact named Protocol bases, and decorate only the matching public stage method. Preserve
    all private helpers and existing pipeline behavior.
-8. Modify only `tests/test_canonical_identity_pipeline.py` to preserve direct imports and all
+8. C3 modified only `tests/test_canonical_identity_pipeline.py` to preserve direct imports and all
    pipeline regression coverage while asserting the exact direct base and `__override__` marker for
-   each public stage method and no marker on private helpers. Commit only these two CSO1 paths as a
-   new immutable subject.
+   each public stage method and no marker on private helpers, then committed the immutable two-path
+   subject `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`.
+9. C3S creates only its six declared planning paths as C3's non-merge direct child. It records
+   C1S/C2S and C3 complete, C4 pending, C5–C8 not started, and an exact independent C3S
+   Plan-Reviewer receipt path. Only after that receipt is committed unchanged as sole evidence may
+   Planner route Tester for C4; C3S does not create Tester, Reviewer, Phase 4.5, push, PR, or Human
+   review authority.
 
 ## Validation / Acceptance Checks
 
