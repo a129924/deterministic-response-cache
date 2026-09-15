@@ -1,0 +1,42 @@
+{
+  "schema_version": "canonical-identity-pipeline.concrete-stage-override.correction-plan-review.v1",
+  "topic": "canonical-identity-pipeline",
+  "correction_id": "canonical-identity-pipeline/concrete-stage-override",
+  "candidate_commit": "82bb4413f0f53e912b4cf30abb65b5a13c84a93a",
+  "candidate_tree": "e2e4c638b74205b7cb158e1c8f92e592970a03bb",
+  "reviewed_paths": [
+    {
+      "path": "analysis/canonical-identity-pipeline/technical-spec.md",
+      "blob_sha": "a3e21dd96f96b26334666ac2aee616b6857c348a"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "blob_sha": "908b5be7aa9e9dbc86e6d7e5f40ffa501920aa18"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.spec.md",
+      "blob_sha": "687d38be67ca15b029bdd5445283cef9be769293"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md",
+      "blob_sha": "8e66a5a47ead983130a152c0977fbdb86f7f30f3"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md",
+      "blob_sha": "2b97e58738488626427cb05fcf15f68b96450399"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md",
+      "blob_sha": "acbe9b12a59cdc292e21084e82cf220290c5f38c"
+    }
+  ],
+  "review_basis": "clean committed C0 tree; non-merge first-parent admission from b0704766df2647a344021af3a44bf157ad56dee2; explicit Human override; exact CSO1 two-path subject and fresh evidence route",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}
