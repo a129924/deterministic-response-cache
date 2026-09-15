@@ -18,7 +18,8 @@
    through `combine()`.
 7. An Archify showcase dataflow diagram accurately depicts source snapshot, five stages, string/bytes
    boundaries, leaf identities, `combine()`, complete identity, and Validator short-circuit without
-   depicting another BC.
+   depicting another BC. CAVO1 may change only its two diagram artifacts to repair desktop overflow;
+   it preserves those semantics, nodes/order, and `Failure` boundary.
 
 ## Behavioral Scenarios
 
@@ -53,13 +54,16 @@
 - **Then** it keeps the existing fixed aggregate and full pipeline traversal and produces a stable
   `CompleteRequestIdentity` without hash-string concatenation.
 
-### Scenario 5: deliver the bounded pipeline visualization
+### Scenario 5: repair and deliver the bounded pipeline visualization
 
 - **Given** Python stages and direct tests are ready.
-- **When** the Implementer uses Archify to validate, deliver, and visually check declared dataflow
-  artifacts.
-- **Then** delivered HTML is backed by a frozen showcase-passing JSON source, and its only failure
-  route leaves Validator before Sorter.
+- **When** the CAVO1 Plan-Reviewer gate is committed and the Implementer uses Archify for one or,
+  only when diagnostics require it, two focused geometry/content rounds.
+- **Then** each round validates at showcase 9/9 with zero errors/warnings, delivers successfully,
+  and visual-checks all four desktop viewports without overflow; delivered HTML is backed by a
+  frozen showcase-passing JSON source, and its only failure route leaves Validator before Sorter.
+- **And** if the second round remains non-contained, a required command is non-zero, or two rounds
+  do not reduce the failing viewport count, the route stops as `human-check` without a third round.
 
 ## Error / Edge Cases
 
@@ -73,6 +77,7 @@
 - An externally constructed non-ASCII `EncodedIdentity.value` is outside canonical Encoder output;
   `CanonicalSerializer` uses strict ASCII and may raise `UnicodeEncodeError` rather than changing
   the existing Protocol to add a failure outcome.
-- A proposed path outside Artifact Paths, non-showcase Archify deliver, failed visual containment,
-  dynamic import, or change to `contracts.py`/existing direct-import tests is plan drift and returns
-  to Planner.
+- A proposed path outside Artifact Paths, dynamic import, or change to `contracts.py`/existing
+  direct-import tests is plan drift and returns to Planner. Within CAVO1 only, failed visual
+  containment is handled by its declared maximum two-round route; it becomes `human-check` after
+  the second failure or two non-improving rounds.

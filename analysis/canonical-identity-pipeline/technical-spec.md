@@ -6,6 +6,16 @@ This is an Identity BC-only, non-async Python capability. It implements the five
 Protocols without changing their signatures, handoff value objects, or either existing Builder's
 keyword-only injection contract. No other BC may derive or reinterpret identity.
 
+### Current Archify correction authority
+
+The original delivered dataflow viewer passed showcase validation but failed desktop visual
+containment. `canonical-identity-pipeline/archify-visual-overflow` (CAVO1) is therefore the active,
+bounded correction route. This technical specification and the parent plan/specification/step
+tracker are current truth; the paired CAVO1 correction plan and step retain historical trigger and
+evidence details. CAVO1 may change only the two Archify artifacts. It must not change the pipeline
+semantics, main-rail nodes/order, `Failure` boundary, Python implementation/tests, public API, or
+BC scope.
+
 ## Public concrete API
 
 `src/deterministic_response_cache/identity/canonical.py` defines and
@@ -137,10 +147,19 @@ no Traditional-Chinese locale; the renderer-owned UI is therefore truthfully Eng
 Its main rail is `IdentitySource snapshot → Validator → Sorter → Encoder (str) → Serializer
 (bytes) → SHA-256 → leaf identity → combine() → CompleteRequestIdentity`; a `Failure` side branch
 leaves Validator and terminates downstream work. It must not depict CacheStore, reuse, runtime,
-execution, or provider behavior. Validate every candidate and make no edit after a 9/9-check,
-zero-error, zero-warning showcase pass. Deliver the HTML, then run `visual-check` with repository
-root. Visual-check screenshots and JSON sidecars are temporary untracked evidence, must be inspected
-truthfully, and must be removed before committing the immutable subject.
+execution, or provider behavior.
+
+CAVO1 permits at most two focused geometry/content rounds on only
+`docs/architecture/canonical-identity-pipeline.dataflow.json` and the HTML freshly delivered from
+that source. Content compaction may improve fitting but may not alter any required semantics, node,
+relationship, handoff, or failure boundary. Each round must showcase-validate (9/9 checks, zero
+errors/warnings), deliver (exit 0), and visual-check (exit 0) 1440×900, 1600×1000, 1920×1080, and
+2048×1320 with no horizontal or vertical overflow. A second round may only respond to first-round
+diagnostics. If two rounds do not strictly reduce the failing-viewport count, or the second still
+overflows or has a non-zero required command, stop at `human-check`. Visual-check screenshots and
+JSON sidecars are temporary untracked evidence, must be inspected truthfully, and must be removed
+before committing the immutable subject. The correction plan is the authority for CAVO1 evidence
+schemas and role order.
 
 ## Validation commands
 
@@ -156,4 +175,6 @@ uv run pre-commit run --all-files
 
 The diagram command sequence is the Archify skill's `validate dataflow ... --quality showcase
 --json`, `deliver dataflow ... --quality showcase --json`, and `visual-check ... --repo-root ...
---json`; a non-zero result is never accepted as success.
+--json`; a non-zero result is never accepted as success. CAVO1 records every actual command,
+exit code, delivery hashes, showcase counts, and failing-viewport count in its correction Tester
+evidence.
