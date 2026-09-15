@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Canonical Identity Pipeline v1",
+    "output": "docs/architecture/canonical-identity-pipeline.html",
+    "viewBox": [1068, 620],
+    "animation": "none",
+    "quality_profile": "showcase"
+  },
+  "stages": [
+    { "label": "輸入快照" },
+    { "label": "驗證" },
+    { "label": "Canonicalization" },
+    { "label": "雜湊" },
+    { "label": "Identity 組合" }
+  ],
+  "nodes": [
+    { "id": "source", "type": "external", "label": "Source", "sublabel": "identity snapshot", "stage": 0, "row": 0, "tag": "IdentitySource" },
+    { "id": "validator", "type": "security", "label": "PureTypeValidator", "sublabel": "收集所有 issues", "stage": 1, "row": 0, "tag": "Failure gate" },
+    { "id": "failure", "type": "security", "label": "Failure", "sublabel": "停止後續 stages", "stage": 1, "row": 2, "tag": "short-circuit" },
+    { "id": "sorter", "type": "backend", "label": "CanonicalSorter", "sublabel": "Unicode key order", "stage": 2, "row": 0, "tag": "code-point · SortedIdentity" },
+    { "id": "encoder", "type": "backend", "label": "CanonicalEncoder", "sublabel": "type-tagged canonical JSON-like str", "stage": 2, "row": 1, "width": 170, "tag": "EncodedIdentity.value: str" },
+    { "id": "serializer", "type": "backend", "label": "CanonicalSerializer", "sublabel": "strict ASCII bytes", "stage": 2, "row": 2, "width": 160, "tag": "SerializedIdentity.value: bytes" },
+    { "id": "hasher", "type": "backend", "label": "SHA256Hasher", "sublabel": "lowercase hexadecimal", "stage": 3, "row": 1, "tag": "Hash" },
+    { "id": "leaf", "type": "database", "label": "Leaf identity", "sublabel": "ModelIdentity 或 FeatureIdentity", "stage": 3, "row": 2, "width": 160, "tag": "confirmed identity" },
+    { "id": "combine", "type": "backend", "label": "combine()", "sublabel": "同一 pipeline 重新處理 leaf hashes", "stage": 4, "row": 1, "width": 160, "tag": "FeatureIdentityBuilder" },
+    { "id": "complete", "type": "database", "label": "CompleteRequestIdentity", "sublabel": "confirmed complete request hash", "stage": 4, "row": 2, "width": 160, "tag": "Identity BC output" }
+  ],
+  "flows": [
+    { "from": "source", "to": "validator", "label": "RawIdentity", "classification": "snapshot", "variant": "emphasis" },
+    { "from": "validator", "to": "sorter", "label": "ValidatedIdentity", "classification": "valid input", "variant": "emphasis" },
+    { "from": "validator", "to": "failure", "label": "Failure", "classification": "all issues; no downstream work", "variant": "security" },
+    { "from": "sorter", "to": "encoder", "label": "SortedIdentity", "classification": "sorted fields and maps", "variant": "default" },
+    { "from": "encoder", "to": "serializer", "label": "str", "classification": "Encoded", "variant": "emphasis" },
+    { "from": "serializer", "to": "hasher", "label": "bytes", "classification": "Serialized", "variant": "emphasis" },
+    { "from": "hasher", "to": "leaf", "label": "hash", "classification": "SHA-256", "variant": "emphasis" },
+    { "from": "leaf", "to": "combine", "label": "hashes", "classification": "confirmed", "variant": "default" },
+    { "from": "combine", "to": "complete", "label": "pipeline", "classification": "complete identity", "variant": "emphasis" }
+  ]
+}

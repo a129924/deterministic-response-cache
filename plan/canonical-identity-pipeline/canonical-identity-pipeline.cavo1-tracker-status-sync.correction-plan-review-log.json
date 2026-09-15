@@ -1,0 +1,43 @@
+{
+  "schema_version": "canonical-identity-pipeline.cavo1-tracker-status-sync.correction-plan-review.v2",
+  "topic": "canonical-identity-pipeline",
+  "correction_id": "canonical-identity-pipeline/cavo1-tracker-status-sync",
+  "candidate_commit": "a559d933c69db6c716d8b14e7cc91f48bd0b31f8",
+  "candidate_tree": "9236527ff10a3bc584808a773d992a8ad719745c",
+  "reviewed_paths": [
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.cavo1-tracker-status-sync.correction-plan.md",
+      "blob_sha": "d2f9b2fbf1f272d1c515fc5f63858a50e498906d"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.cavo1-tracker-status-sync.correction-step.md",
+      "blob_sha": "b7bb567c5025d48799166802affd546200d1517c"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md",
+      "blob_sha": "4b27b0f67c6826b1a704a932d30fa988d672f015"
+    }
+  ],
+  "first_parent_admission": {
+    "candidate_commit": "a559d933c69db6c716d8b14e7cc91f48bd0b31f8",
+    "candidate_tree": "9236527ff10a3bc584808a773d992a8ad719745c",
+    "parent_commit": "05f5ded7e81317c69422aaabe9d6e90a5da1fe6d",
+    "non_merge": true,
+    "first_parent": true,
+    "exact_declared_paths": true,
+    "name_status": [
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.cavo1-tracker-status-sync.correction-plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.cavo1-tracker-status-sync.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.step.md"
+    ]
+  },
+  "review_basis": "clean committed C0R candidate checkout; direct non-merge first-parent admission from rejected C0 05f5ded7e81317c69422aaabe9d6e90a5da1fe6d; locked C1-C7 facts retained; C8 remains Planner Phase 4.5 pending; Human PR review, merge, release, tag, post-merge, and final summary remain pending",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}
