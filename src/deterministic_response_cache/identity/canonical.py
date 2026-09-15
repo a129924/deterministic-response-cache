@@ -7,21 +7,26 @@ import json
 import math
 from collections.abc import Mapping
 from types import MappingProxyType
-from typing import cast
+from typing import cast, override
 
 from .builders import FeatureIdentityBuilder, ModelIdentityBuilder
 from .contracts import (
     EncodedIdentity,
+    Encoder,
     Failure,
     Hash,
+    Hasher,
     IdentityField,
     PureType,
     RawIdentity,
     SerializedIdentity,
+    Serializer,
     SortedIdentity,
+    Sorter,
     Success,
     ValidatedIdentity,
     ValidationIssue,
+    Validator,
 )
 
 
@@ -42,9 +47,10 @@ def _is_snapshot_list(value: object) -> bool:
     )
 
 
-class PureTypeValidator:
+class PureTypeValidator(Validator):
     """Validate all reachable v1 identity values before canonicalization."""
 
+    @override
     def validate(self, identity: RawIdentity) -> Success[ValidatedIdentity] | Failure:
         """Return every discoverable validation issue or the accepted identity."""
         issues: list[ValidationIssue] = []
@@ -197,9 +203,10 @@ class PureTypeValidator:
             active_ids.remove(value_id)
 
 
-class CanonicalSorter:
+class CanonicalSorter(Sorter):
     """Sort v1 identity fields and mapping keys without changing sequence order."""
 
+    @override
     def sort(self, identity: ValidatedIdentity) -> SortedIdentity:
         """Return fields and mappings in Unicode code-point order."""
         return SortedIdentity(
@@ -223,9 +230,10 @@ class CanonicalSorter:
         return value
 
 
-class CanonicalEncoder:
+class CanonicalEncoder(Encoder):
     """Encode sorted v1 values as a compact canonical JSON-like string."""
 
+    @override
     def encode(self, identity: SortedIdentity) -> EncodedIdentity:
         """Return only the public ``EncodedIdentity.value: str`` handoff."""
         grammar = [
@@ -274,17 +282,19 @@ class CanonicalEncoder:
         raise TypeError(message)
 
 
-class CanonicalSerializer:
+class CanonicalSerializer(Serializer):
     """Serialize a canonical Encoder string without reparsing it."""
 
+    @override
     def serialize(self, identity: EncodedIdentity) -> SerializedIdentity:
         """Return the exact strict-ASCII bytes of the Encoder handoff."""
         return SerializedIdentity(value=identity.value.encode("ascii", "strict"))
 
 
-class SHA256Hasher:
+class SHA256Hasher(Hasher):
     """Hash serialized canonical bytes as a lowercase SHA-256 hexadecimal digest."""
 
+    @override
     def hash(self, identity: SerializedIdentity) -> Hash:
         """Return the exact SHA-256 digest for one serialized identity."""
         return Hash(value=hashlib.sha256(identity.value).hexdigest())

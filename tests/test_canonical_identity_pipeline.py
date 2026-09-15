@@ -17,8 +17,10 @@ from deterministic_response_cache.identity import (
     CanonicalSerializer,
     CanonicalSorter,
     EncodedIdentity,
+    Encoder,
     Failure,
     Hash,
+    Hasher,
     IdentityField,
     IdentitySource,
     ModelIdentity,
@@ -27,10 +29,13 @@ from deterministic_response_cache.identity import (
     PureTypeValidator,
     RawIdentity,
     SerializedIdentity,
+    Serializer,
     SHA256Hasher,
     SortedIdentity,
+    Sorter,
     Success,
     ValidatedIdentity,
+    Validator,
     default_feature_identity_builder,
     default_model_identity_builder,
 )
@@ -94,6 +99,31 @@ def _model_hash(fields: Mapping[str, PureType]) -> str:
     outcome = default_model_identity_builder().build(Source(fields))
     assert isinstance(outcome, Success)
     return _successful_value(outcome)
+
+
+def test_concrete_stages_directly_inherit_protocols_and_mark_only_public_overrides() -> None:
+    """Keep nominal stage relationships and public override markers explicit."""
+    assert PureTypeValidator.__bases__ == (Validator,)
+    assert CanonicalSorter.__bases__ == (Sorter,)
+    assert CanonicalEncoder.__bases__ == (Encoder,)
+    assert CanonicalSerializer.__bases__ == (Serializer,)
+    assert SHA256Hasher.__bases__ == (Hasher,)
+
+    assert vars(PureTypeValidator)["validate"].__override__ is True
+    assert vars(CanonicalSorter)["sort"].__override__ is True
+    assert vars(CanonicalEncoder)["encode"].__override__ is True
+    assert vars(CanonicalSerializer)["serialize"].__override__ is True
+    assert vars(SHA256Hasher)["hash"].__override__ is True
+
+    private_helpers = (
+        vars(PureTypeValidator)["_validate_value"],
+        vars(PureTypeValidator)["_validate_sequence"],
+        vars(PureTypeValidator)["_validate_mapping"],
+        vars(CanonicalSorter)["_sort_value"],
+        vars(CanonicalEncoder)["_encode_value"],
+        vars(CanonicalEncoder)["_encode_scalar"],
+    )
+    assert all("__override__" not in vars(helper) for helper in private_helpers)
 
 
 def test_encoder_returns_exact_public_string_grammar_and_serializer_returns_its_bytes() -> None:
