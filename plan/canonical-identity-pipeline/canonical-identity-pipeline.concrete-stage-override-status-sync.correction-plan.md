@@ -5,14 +5,15 @@ kind: status-synchronization
 created: 2026-09-15
 ---
 
-# C0S — CSO1 committed-status synchronization correction plan
+# C0S-R1 — CSO1 committed-status synchronization review-contract repair plan
 
 ## Purpose
 
-Human explicitly authorized this status-only correction to make the four CSO1 state surfaces agree
-with already-committed facts. It records C1 and C2 as complete and leaves C3 pending. It neither
-changes the canonical identity pipeline nor reopens, reinterprets, or substitutes any historical
-evidence.
+Human explicitly authorized this status-only revision after C0S was rejected: its C1S JSON source
+encoded each `name_status` separator as `\\t`, so parsing produced a literal backslash-plus-`t`
+rather than Git's actual tab separator. C0S-R1 repairs that review contract and retains the already
+committed CSO1 facts. It neither changes the canonical identity pipeline nor reopens,
+reinterprets, or substitutes historical evidence.
 
 ## Frozen source facts
 
@@ -23,45 +24,50 @@ evidence.
 | C2 | Immutable sole-evidence commit `15c23d67856b627fa8f736eb66694cccc9e5ec89`, a non-merge direct child of C0 whose exact one-path diff adds the unchanged C1 log. |
 | C3 | Pending only; no C3 implementation subject, Tester evidence, Reviewer evidence, Phase 4.5 alignment, push, or PR completion exists. |
 
-C0/C1/C2 and their underlying evidence are immutable. C0S may describe these facts but may not
-modify their paths or claim a new outcome for them.
+C0/C1/C2 and their underlying evidence are immutable. C0S is rejected frozen provenance: no C1S
+log was written for it. C0S-R1 may describe these facts and the rejection cause, but may not modify
+their paths or claim a new outcome for them.
 
 ## Exact candidate scope and lineage
 
-C0S is one non-merge direct child of C2
-`15c23d67856b627fa8f736eb66694cccc9e5ec89`. Its sole first parent is C2 and its complete
-first-parent name-status diff contains exactly the following six entries in lexical path order:
+`46b707c209839f64935beb08e4db8a1b565c8114` is C0S, the rejected six-path predecessor. Its C1S
+schema used double-escaped tab text and therefore cannot be reviewed or routed. It is frozen,
+non-routing provenance; no C1S log was written for it.
+
+C0S-R1 is one non-merge direct child of C0S. Its sole first parent is
+`46b707c209839f64935beb08e4db8a1b565c8114` and its complete first-parent name-status diff
+contains exactly the following six entries in lexical path order:
 
 ```text
-A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan.md
-A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-step.md
+M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan.md
+M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-step.md
 M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md
 M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md
 M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md
 M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.step.md
 ```
 
-The six paths are the candidate's complete scope. Their only allowed change is to synchronize C0,
-C1, C2, C3, and C4–C8 state wording; parent plan/step and CSO1 plan/step must all say that C1/C2
-are complete, C3 is the sole pending execution step, and C4–C8 are not started. C0S must not write
-its review log, alter the C1 log, or change analysis, technical spec, parent spec, code, tests,
-diagrams, exports, README, `pyproject.toml`, `uv.lock`, publish state, or draft PR #6.
+The six paths are C0S-R1's complete scope. Their only allowed change is to synchronize C0/C1/C2 as
+frozen complete, C0S as rejected, C0S-R1 as review pending, C3 as the sole pending execution step,
+and C4–C8 as not started. C0S-R1 must not write its review log, alter the C1 log, or change
+analysis, technical spec, parent spec, code, tests, diagrams, exports, README, `pyproject.toml`,
+`uv.lock`, publish state, or draft PR #6.
 
-Before C0S is committed, no artifact may contain its commit/tree/blob SHA or a C1S verdict. C0S is
-the sole candidate C1S may review. It has no Tester or independent implementation-Reviewer phase
-because it creates no implementation subject.
+Before C0S-R1 is committed, no artifact may contain its commit/tree/blob SHA or a C1S verdict.
+C0S-R1 is the sole candidate C1S may review. It has no Tester or independent implementation-Reviewer
+phase because it creates no implementation subject.
 
 ## Evidence route
 
 | Order | Artifact / action | Exact path | Sole writer or actor | Condition |
 | --- | --- | --- | --- | --- |
-| C0S | Status-sync candidate | the six paths above | Plan-Creator | Commit only the exact six paths as the non-merge direct child of C2; do not write C1S or select C3. |
-| C1S | Correction Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | From a clean committed C0S checkout, write only the exact JSON object defined below. |
+| C0S-R1 | Revised status-sync candidate | the six paths above | Plan-Creator | Commit only the exact six paths as the non-merge direct child of rejected C0S; do not write C1S or select C3. |
+| C1S | Correction Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | From a clean committed C0S-R1 checkout, write only the exact JSON object defined below. |
 | C2S | Committed C1S evidence | same C1S path | Independent Implementer | Commit unchanged approved C1S evidence as the sole evidence-only commit. |
-| C3 | Existing CSO1 execution route | `src/deterministic_response_cache/identity/canonical.py`, `tests/test_canonical_identity_pipeline.py` | Planner, then Implementer if routed | Planner independently routes the still-pending C3 only after C2S; C0S gives no implementation, publish, push, or PR authority. |
+| C3 | Existing CSO1 execution route | `src/deterministic_response_cache/identity/canonical.py`, `tests/test_canonical_identity_pipeline.py` | Planner, then Implementer if routed | Planner independently routes the still-pending C3 only after C2S; C0S-R1 gives no implementation, publish, push, or PR authority. |
 
-`needs-rework` at C1S returns to Planner. C0S cannot self-close, cannot provide C3 Tester or
-Reviewer evidence, and cannot satisfy Phase 4.5. C0S artifacts remain historical status-sync
+`needs-rework` at C1S returns to Planner. C0S-R1 cannot self-close, cannot provide C3 Tester or
+Reviewer evidence, and cannot satisfy Phase 4.5. C0S-R1 artifacts remain historical status-sync
 provenance after C2S; the four parent/CSO1 state surfaces become current truth only after that
 approved evidence-only commit.
 
@@ -84,36 +90,36 @@ non-empty issue.
 
 ```json
 {
-  "schema_version": "canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan-review.v1",
+  "schema_version": "canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan-review.v2",
   "topic": "canonical-identity-pipeline",
   "correction_id": "canonical-identity-pipeline/concrete-stage-override-status-sync",
-  "candidate_commit": "<40-hex C0S commit>",
-  "candidate_tree": "<40-hex C0S tree>",
+  "candidate_commit": "<40-hex C0S-R1 commit>",
+  "candidate_tree": "<40-hex C0S-R1 tree>",
   "reviewed_paths": [
-    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan.md", "blob_sha": "<40-hex C0S blob>"},
-    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-step.md", "blob_sha": "<40-hex C0S blob>"},
-    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md", "blob_sha": "<40-hex C0S blob>"},
-    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md", "blob_sha": "<40-hex C0S blob>"},
-    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md", "blob_sha": "<40-hex C0S blob>"},
-    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md", "blob_sha": "<40-hex C0S blob>"}
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan.md", "blob_sha": "<40-hex C0S-R1 blob>"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-step.md", "blob_sha": "<40-hex C0S-R1 blob>"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md", "blob_sha": "<40-hex C0S-R1 blob>"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md", "blob_sha": "<40-hex C0S-R1 blob>"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md", "blob_sha": "<40-hex C0S-R1 blob>"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md", "blob_sha": "<40-hex C0S-R1 blob>"}
   ],
   "first_parent_admission": {
-    "candidate_commit": "<same 40-hex C0S commit>",
-    "candidate_tree": "<same 40-hex C0S tree>",
-    "parent_commit": "15c23d67856b627fa8f736eb66694cccc9e5ec89",
+    "candidate_commit": "<same 40-hex C0S-R1 commit>",
+    "candidate_tree": "<same 40-hex C0S-R1 tree>",
+    "parent_commit": "46b707c209839f64935beb08e4db8a1b565c8114",
     "non_merge": true,
     "first_parent": true,
     "exact_declared_paths": true,
     "name_status": [
-      "A\\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan.md",
-      "A\\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-step.md",
-      "M\\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md",
-      "M\\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md",
-      "M\\tplan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
-      "M\\tplan/canonical-identity-pipeline/canonical-identity-pipeline.step.md"
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.step.md"
     ]
   },
-  "review_basis": "clean committed C0S candidate checkout; direct non-merge first-parent admission from CSO1 C2 15c23d67856b627fa8f736eb66694cccc9e5ec89; four state surfaces agree on frozen C0/C1/C2 facts, C1/C2 complete, C3 pending, and C4-C8 not started; no implementation, Tester, Reviewer, publish, push, PR, or Human review claim",
+  "review_basis": "clean committed C0S-R1 candidate checkout; direct non-merge first-parent admission from rejected C0S 46b707c209839f64935beb08e4db8a1b565c8114; C0S-R1 name_status parses to six actual M-tab-path entries; four state surfaces agree on frozen C0/C1/C2 facts, rejected C0S, C0S-R1 review pending, C3 pending, and C4-C8 not started; no implementation, Tester, Reviewer, publish, push, PR, or Human review claim",
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
   "copilot_feedback_triage": {"ADDRESS": [], "DISCUSS": [], "SKIP": []},
@@ -122,16 +128,18 @@ non-empty issue.
 ```
 
 The reviewer must fail closed and must not produce C1S if the candidate is uncommitted or dirty,
-does not have C2 as its direct non-merge first parent, has any path outside the declared six,
-contains a malformed schema, disagrees about frozen C1/C2 facts or C3 pending state, preclaims a
-C0S post-commit fact, or asserts implementation, Tester, Reviewer, Phase 4.5, push, PR, or Human
-review completion. Only an Independent Implementer may commit an unchanged approved C1S log.
+does not have rejected C0S as its direct non-merge first parent, has any path outside the declared
+six, does not parse every `name_status` string to one `M`, one actual tab, and its exact path,
+contains a malformed schema, disagrees about frozen C1/C2 facts, C0S rejection, C0S-R1 review
+pending, or C3 pending state, preclaims a C0S-R1 post-commit fact, or asserts implementation,
+Tester, Reviewer, Phase 4.5, push, PR, or Human review completion. Only an Independent Implementer
+may commit an unchanged approved C1S log.
 
 ## Acceptance and closure
 
-- C0S's exact six-path direct-child admission is independently verifiable from committed Git facts.
-- All four state surfaces consistently expose the frozen C1/C2 facts, C3 pending, and C4–C8 not
-  started; none claims a C3 subject or later evidence exists.
-- `uv.lock` has no diff and no non-C0S path is staged or committed.
-- C0S stops after committed approved C1S evidence and an independent Planner route decision. It
+- C0S-R1's exact six-path direct-child admission is independently verifiable from committed Git facts.
+- All four state surfaces consistently expose frozen C0/C1/C2, rejected C0S, C0S-R1 review pending,
+  C3 pending, and C4–C8 not started; none claims a C3 subject or later evidence exists.
+- `uv.lock` has no diff and no non-C0S-R1 path is staged or committed.
+- C0S-R1 stops after committed approved C1S evidence and an independent Planner route decision. It
   never replaces CSO1's later Tester, Reviewer, Phase 4.5, push, or Human-review gates.
