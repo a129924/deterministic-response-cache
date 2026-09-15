@@ -1,6 +1,6 @@
 ---
 topic: canonical-identity-pipeline
-phase: concrete-stage-override-c5-status-sync-plan-review-pending
+phase: concrete-stage-override-c7-status-sync-plan-review-pending
 created: 2026-09-14
 updated: 2026-09-15
 ---
@@ -13,10 +13,13 @@ The original six-path pipeline subject, completed CAVO1 sequence, and existing d
 committed historical facts. They remain reviewable provenance but cannot be reused as CSO1 Tester
 or Reviewer evidence. C1S/C2S `be0ce355dc777d63b7454488989452183519490a`, C3
 `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`, committed C3S receipt
-`2428e27ecb402efa90fd43e8ba979d615e151cd2`, and C5
-`cbc53e953a257766f918a9c1f54db66c97ab5eba` are complete. C5S is the sole current planning
-candidate before C6 Reviewer. CSO1 exists only to add named Protocol inheritance and public-method
-`@override` declarations without altering runtime pipeline behavior.
+`2428e27ecb402efa90fd43e8ba979d615e151cd2`, C5
+`cbc53e953a257766f918a9c1f54db66c97ab5eba`, C5S receipt
+`92f7db262bec8d774f1c6f8b1b2b16aaa82b624e`, and C7
+`e4a2e67f29a4562f6244c5031498426b610d0a91` are complete. C7S is the sole current planning
+candidate. It declares only a future C7S receipt; C8 Phase 4.5 is pending and Planner-only. CSO1
+exists only to add named Protocol inheritance and public-method `@override` declarations without
+altering runtime pipeline behavior.
 
 | Step | Status | Committed fact / next condition |
 | --- | --- | --- |
@@ -26,8 +29,10 @@ candidate before C6 Reviewer. CSO1 exists only to add named Protocol inheritance
 | C3 | complete | `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8` is the non-merge two-path CSO1 implementation subject for `src/deterministic_response_cache/identity/canonical.py` and `tests/test_canonical_identity_pipeline.py`. |
 | C4 | complete | Tester recorded passing factual same-subject evidence for C3 at the declared C4 path; C5 committed it unchanged. |
 | C5 | complete | `cbc53e953a257766f918a9c1f54db66c97ab5eba` is the non-merge sole evidence-only commit that adds only the passing C4 Tester evidence. |
-| C6 | pending | After the committed approved C5S review receipt and a Planner route, Independent Reviewer consumes committed C5 evidence and the same C3 subject. |
-| C7–C8 | not-started | They remain unavailable until C6 writes approved same-subject review evidence, then C7 commits it unchanged and Planner performs Phase 4.5 alignment. |
+| C5S | complete | Candidate `2d042543d60a40519e174326462a6739f9b19f6c` and committed approved receipt `92f7db262bec8d774f1c6f8b1b2b16aaa82b624e` are frozen status facts. |
+| C6 | complete | Independent Reviewer wrote the approved same-subject review log; C7 committed that unchanged evidence at `e4a2e67f29a4562f6244c5031498426b610d0a91`. |
+| C7 | complete | `e4a2e67f29a4562f6244c5031498426b610d0a91` is the non-merge sole evidence-only commit adding only the approved C6 review log. |
+| C8 | pending | C7S receipt must first be independently reviewed and committed unchanged; only Planner may then perform Phase 4.5 alignment. |
 
 ## C0S-R1 status synchronization repair child
 
@@ -60,10 +65,25 @@ candidate before C6 Reviewer. CSO1 exists only to add named Protocol inheritance
 - [X] **C5S candidate:** Plan-Creator creates exactly the parent plan, parent step, CSO1 plan,
   CSO1 step, and paired C5S plan/step as C5's non-merge direct child. It synchronizes committed
   C3S/C4/C5, C6 pending, C7–C8 not started, and creates no review receipt or downstream claim.
-- [ ] **C5S review:** Independent Plan-Reviewer verifies the clean six-path direct-child admission
-  and writes only `canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-plan-review-log.json`.
-- [ ] **C5S receipt commit:** Independent Implementer commits unchanged approved C5S evidence as
-  the sole evidence-only commit. Only then may Planner route C6 Reviewer.
+- [X] **C5S review/receipt:** the approved C5S receipt was committed at
+  `92f7db262bec8d774f1c6f8b1b2b16aaa82b624e`; it is frozen status provenance and restored the
+  route to C6 only.
+
+## C7S status synchronization repair child
+
+- [X] **C5S:** candidate `2d042543d60a40519e174326462a6739f9b19f6c` and committed approved
+  receipt `92f7db262bec8d774f1c6f8b1b2b16aaa82b624e` are frozen complete facts.
+- [X] **C6/C7:** Independent Reviewer wrote approved same-subject review evidence, and Independent
+  Implementer committed it unchanged as sole evidence-only C7 commit
+  `e4a2e67f29a4562f6244c5031498426b610d0a91`.
+- [X] **C7S candidate:** Plan-Creator changes exactly the parent plan, parent step, CSO1 plan,
+  CSO1 step, completed C5S plan/step, and paired C7S plan/step as C7's non-merge direct child. It
+  synchronizes C5S/C6/C7 complete, declares only the future C7S receipt, and leaves C8 Phase 4.5
+  pending; it does not create a receipt or assert a C8 outcome.
+- [ ] **C7S review:** Independent Plan-Reviewer verifies the clean eight-path direct-child
+  admission and writes only `canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan-review-log.json`.
+- [ ] **C7S receipt commit:** Independent Implementer commits unchanged approved C7S evidence as
+  the sole evidence-only commit. Only then may Planner select C8.
 
 ## CSO1 actionable steps
 
@@ -78,9 +98,9 @@ candidate before C6 Reviewer. CSO1 exists only to add named Protocol inheritance
 - [X] **C4/C5:** Tester wrote factual passing CSO1 Tester evidence binding C3's full SHA and exact
   two-path diff, and Independent Implementer committed it unchanged at C5
   `cbc53e953a257766f918a9c1f54db66c97ab5eba`.
-- [ ] **C6/C7:** After committed approved C5S receipt and a Planner route, Independent Reviewer
-  consumes committed same-subject passing C5 evidence, writes an approved CSO1 review log, then an
-  independent Implementer commits it unchanged.
+- [X] **C6/C7:** Independent Reviewer consumed committed same-subject passing C5 evidence, wrote
+  the approved CSO1 review log, and Independent Implementer committed it unchanged at C7
+  `e4a2e67f29a4562f6244c5031498426b610d0a91`.
 - [ ] **C8:** Planner verifies all CSO1 evidence and existing human authorization before routing a
   bounded update to draft PR #6. This does not authorize a new PR, PR approval, merge, release,
   tag, post-merge, or final summary.
@@ -91,9 +111,9 @@ candidate before C6 Reviewer. CSO1 exists only to add named Protocol inheritance
   it cannot satisfy C1, C4, or C6. CSO1 must complete a fresh same-subject sequence.
 - `contracts.py`, builders, public exports, both Archify artifacts, README, `pyproject.toml`,
   `uv.lock`, existing regression modules, and all historic evidence are read-only for C3.
-- A missing, mismatched, cross-subject, non-passing, or uncommitted C3S/C4/C5/C5S/C6 record; an
-  unlisted path; a C5S `name_status` string that fails to parse as its declared `A<TAB>path` or
-  `M<TAB>path`; a dirty evidence commit; or a request to change public contract behavior is
+- A missing, mismatched, cross-subject, non-passing, or uncommitted C3S/C4/C5/C5S/C6/C7 record; an
+  unlisted path; a C7S `name_status` string that fails to parse as its declared `A<TAB>path` or
+  `M<TAB>path`; a dirty candidate or evidence commit; or a request to change public contract behavior is
   `blocked` and returns to Planner.
   Candidate/evidence/subject conflict is `human-check`.
 - Human alone owns PR review, merge, release, tag, post-merge, and final summary. CSO1 success can

@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/concrete-stage-override-c5-status-sync
-phase: correction-plan-review
+phase: completed-frozen-status-provenance
 created: 2026-09-15
 ---
 
@@ -22,9 +22,11 @@ passing same-subject C4 evidence at the declared CSO1 Tester-evidence path. C5 c
 unchanged evidence as the sole evidence-only commit
 `cbc53e953a257766f918a9c1f54db66c97ab5eba`.
 
-C5S is the sole active candidate. It records only completed C3S/C4/C5 facts, C6 pending and
-consuming C5, and C7–C8 not started. It may not create a C5S review receipt, Tester evidence,
-Reviewer evidence, Phase 4.5 result, push, PR, or Human-review outcome.
+C5S candidate `2d042543d60a40519e174326462a6739f9b19f6c` and committed approved receipt
+`92f7db262bec8d774f1c6f8b1b2b16aaa82b624e` are complete frozen status provenance. C6 wrote the
+approved same-subject review log and C7 committed it unchanged at
+`e4a2e67f29a4562f6244c5031498426b610d0a91`. C7S is now the sole active candidate; it declares
+only a future C7S receipt, while C8 Phase 4.5 remains pending and Planner-only.
 
 ## Locked scope and admission
 
@@ -45,26 +47,21 @@ Reviewer evidence, Phase 4.5 result, push, PR, or Human-review outcome.
   planning paths are read-only. C5S does not alter the canonical grammar, Protocol inheritance,
   `@override` markers, direct imports, tests, version, or public API.
 
-## Exact follow-up route
+## Completed route and successor boundary
 
-1. Plan-Creator commits this clean six-path C5S candidate.
-2. Independent Plan-Reviewer consumes the committed candidate from a clean checkout and may write
-   only `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-plan-review-log.json`.
-3. The C5S receipt is one JSON object with exactly these top-level keys:
-   `schema_version`, `topic`, `correction_id`, `candidate_commit`, `candidate_tree`,
-   `reviewed_paths`, `first_parent_admission`, `review_basis`, `verdict`, `blocking_issues`,
-   `copilot_feedback_triage`, and `recorded_by`. Its complete v1 schema and exact path ordering are
-   authoritative in the CSO1 correction plan.
-4. Only an Independent Implementer may commit an unchanged approved C5S receipt as the sole
-   evidence-only commit. Only then may Planner route C6.
-5. C6 is pending. Independent Reviewer consumes committed passing C5 evidence bound to C3 and
-   writes only the declared CSO1 implementation-review log. C7 then commits unchanged approved C6
-   evidence; C8 remains unavailable until its established gate.
+1. Plan-Creator committed the clean six-path C5S candidate
+   `2d042543d60a40519e174326462a6739f9b19f6c`.
+2. Independent Plan-Reviewer wrote the approved C5S receipt, committed unchanged at
+   `92f7db262bec8d774f1c6f8b1b2b16aaa82b624e`.
+3. Planner routed C6; Independent Reviewer consumed committed passing C5 evidence for C3 and wrote
+   the declared CSO1 implementation-review log.
+4. Independent Implementer committed unchanged approved C6 evidence as sole C7 evidence-only
+   commit `e4a2e67f29a4562f6244c5031498426b610d0a91`.
+5. C7S now declares its own future receipt; C8 Phase 4.5 remains pending and is Planner-only.
 
 ## Stop conditions
 
-Fail closed and return to Planner for a dirty or uncommitted candidate, non-C5 or merge parent,
-any path beyond the declared six, malformed `A<TAB>path` or `M<TAB>path` admission record,
-inconsistent C3S/C4/C5/C6–C8 state, a prefilled C5S review fact, or a claim beyond status-only
-synchronization. Candidate/evidence/subject conflict is `human-check`. `needs-rework` returns to
-Planner; it does not authorize C6 or change C3.
+C5S is frozen history. C7S must fail closed and return to Planner for a dirty or uncommitted
+candidate, a non-C7 or merge parent, any path beyond its declared eight, malformed `A<TAB>path` or
+`M<TAB>path` admission record, inconsistent C5S/C6/C7/C8 state, a prefilled C7S review fact, or a
+claim beyond status-only synchronization. Candidate/evidence/subject conflict is `human-check`.
