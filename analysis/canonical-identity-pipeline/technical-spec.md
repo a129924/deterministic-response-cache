@@ -6,15 +6,16 @@ This is an Identity BC-only, non-async Python capability. It implements the five
 Protocols without changing their signatures, handoff value objects, or either existing Builder's
 keyword-only injection contract. No other BC may derive or reinterpret identity.
 
-### Current Archify correction authority
+### Current correction authority
 
-The original delivered dataflow viewer passed showcase validation but failed desktop visual
-containment. `canonical-identity-pipeline/archify-visual-overflow` (CAVO1) is therefore the active,
-bounded correction route. This technical specification and the parent plan/specification/step
-tracker are current truth; the paired CAVO1 correction plan and step retain historical trigger and
-evidence details. CAVO1 may change only the two Archify artifacts. It must not change the pipeline
-semantics, main-rail nodes/order, `Failure` boundary, Python implementation/tests, public API, or
-BC scope.
+`canonical-identity-pipeline/archify-visual-overflow` (CAVO1) 已完成，並保留為不可重用的
+historical evidence；它不再是 active route，也不授權重新修改 Archify artifacts。
+
+Human 的 explicit correction 要求目前只啟用
+`canonical-identity-pipeline/concrete-stage-override` (CSO1)。本 technical specification、
+parent plan/specification/step tracker 與 paired CSO1 correction plan/step 是 CSO1 的 current
+truth；CSO1 只能修改 `canonical.py` 與 dedicated test，不能改變 pipeline 語意、公開 API
+shape、Builder injection、diagram、README、version 或 BC scope。
 
 ## Public concrete API
 
@@ -40,6 +41,36 @@ class SHA256Hasher:
 def default_model_identity_builder() -> ModelIdentityBuilder: ...
 def default_feature_identity_builder() -> FeatureIdentityBuilder: ...
 ```
+
+CSO1 鎖定 concrete classes 的 nominal typing contract。使用 Python 3.12 的
+`from typing import override`，並將每個 class 明確具名繼承其唯一對應的既有 Protocol：
+
+```text
+class PureTypeValidator(Validator):
+    @override
+    def validate(self, identity: RawIdentity) -> Success[ValidatedIdentity] | Failure: ...
+
+class CanonicalSorter(Sorter):
+    @override
+    def sort(self, identity: ValidatedIdentity) -> SortedIdentity: ...
+
+class CanonicalEncoder(Encoder):
+    @override
+    def encode(self, identity: SortedIdentity) -> EncodedIdentity: ...
+
+class CanonicalSerializer(Serializer):
+    @override
+    def serialize(self, identity: EncodedIdentity) -> SerializedIdentity: ...
+
+class SHA256Hasher(Hasher):
+    @override
+    def hash(self, identity: SerializedIdentity) -> Hash: ...
+```
+
+Only the five respective public Protocol methods carry `@override`. Private helpers, factory
+functions, and all other callables do not carry it. This is additive nominal declaration only:
+`contracts.py`, every Protocol signature, every value object, and Builder injection remain
+byte-for-byte unchanged.
 
 Each default factory creates a new existing Builder wired to one fresh instance of every concrete
 stage. The factories do not add a pipeline value object, retain mutable state, or alter callers that
@@ -136,6 +167,23 @@ the second `RawIdentity`, and runs the same pipeline. It must not concatenate ha
 All other repository paths, including `contracts.py`, both existing test modules, the root package
 initializer, `identity/.gitkeep`, and architecture source-of-truth documents, are read-only.
 
+### CSO1 exact correction subject
+
+The prior six-path original implementation subject and CAVO1 evidence are historical provenance;
+they are not CSO1 inputs and must not be reused as CSO1 Tester or Reviewer evidence. After the
+committed approved CSO1 correction Plan-Reviewer log, the new immutable CSO1 implementation subject
+contains exactly these two paths:
+
+| Classification | Path | Intended change |
+| --- | --- | --- |
+| Modify | `src/deterministic_response_cache/identity/canonical.py` | Import `typing.override`; make each of the five concrete stages explicitly inherit its matching Protocol; mark only its matching public stage method with `@override`. |
+| Modify | `tests/test_canonical_identity_pipeline.py` | Retain all direct-import/pipeline regressions and add assertions for the named base and `__override__` marker on each public stage method, plus absence of the marker on each private helper. |
+
+`src/deterministic_response_cache/identity/contracts.py`, `builders.py`, `identity/__init__.py`, both
+Archify artifacts, `README.md`, `pyproject.toml`, `uv.lock`, all existing regression modules, and
+every evidence/provenance path are read-only for the CSO1 subject. An unlisted path is plan drift
+and returns to Planner.
+
 ## Diagram contract
 
 After Python code and tests exist, the Implementer uses the `archify` skill to create a static
@@ -149,7 +197,7 @@ Its main rail is `IdentitySource snapshot → Validator → Sorter → Encoder (
 leaves Validator and terminates downstream work. It must not depict CacheStore, reuse, runtime,
 execution, or provider behavior.
 
-CAVO1 permits at most two focused geometry/content rounds on only
+CAVO1 historical route permitted at most two focused geometry/content rounds on only
 `docs/architecture/canonical-identity-pipeline.dataflow.json` and the HTML freshly delivered from
 that source. Content compaction may improve fitting but may not alter any required semantics, node,
 relationship, handoff, or failure boundary. Each round must showcase-validate (9/9 checks, zero
@@ -173,8 +221,6 @@ uv run pytest
 uv run pre-commit run --all-files
 ```
 
-The diagram command sequence is the Archify skill's `validate dataflow ... --quality showcase
---json`, `deliver dataflow ... --quality showcase --json`, and `visual-check ... --repo-root ...
---json`; a non-zero result is never accepted as success. CAVO1 records every actual command,
-exit code, delivery hashes, showcase counts, and failing-viewport count in its correction Tester
-evidence.
+The diagram command sequence and its completed CAVO1 evidence are historical only. CSO1 runs the
+Python validation commands above, including the dedicated direct-import regression suite; it neither
+regenerates the diagram nor writes Archify evidence.

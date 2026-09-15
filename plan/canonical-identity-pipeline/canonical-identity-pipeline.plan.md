@@ -11,11 +11,11 @@ current injected-Builder contract.
 
 | Field | Contract |
 | --- | --- |
-| In-Scope | Five concrete stages, two default-builder factories, the cycle-safe private snapshot adjustment, exports, dedicated tests, a delivered Archify dataflow diagram, and publish-time README/version promotion. |
+| In-Scope | Historical delivery: five concrete stages, two default-builder factories, the cycle-safe private snapshot adjustment, exports, dedicated tests, a delivered Archify dataflow diagram, and publish-time README/version promotion. Active CSO1 correction: only nominal Protocol inheritance and `@override` markers in the five concrete stages plus their direct regression assertions. |
 | Out-Of-Scope | Provider extraction, Response Reuse, CacheStore, runtime retention, model execution, provider adapters, persistence, telemetry, configurable/profile-versioned formats, migration, and cache-key policy. |
-| ReadOnly | Existing Protocol signatures, value-object fields, keyword-only Builder injection signatures, existing direct-import tests, root package surface, `identity/.gitkeep`, and BC ownership/source-of-truth architecture files. |
+| ReadOnly | Existing Protocol signatures, value-object fields, keyword-only Builder injection signatures, existing direct-import tests, root package surface, `identity/.gitkeep`, BC ownership/source-of-truth architecture files, `builders.py`, `identity/__init__.py`, both Archify artifacts, `README.md`, `pyproject.toml`, and `uv.lock` during CSO1. |
 | Written | `identity/canonical.py`, dedicated pipeline tests, Archify source/HTML, planning artifacts, and later role-owned CAVO1 evidence files. |
-| Modify | `identity/builders.py` private snapshot traversal only; `identity/__init__.py` exports only; `README.md` and `pyproject.toml` only at `publish-in-progress`. |
+| Modify | Historical subject: `identity/builders.py` private snapshot traversal and `identity/__init__.py` exports; `README.md` and `pyproject.toml` only at `publish-in-progress`. Active CSO1 subject: only `identity/canonical.py` and `tests/test_canonical_identity_pipeline.py`. |
 | Deleted | No tracked file. Untracked Archify visual-check sidecars are removed before the subject commit. |
 | TestCase | Valid/invalid PureType; issue aggregation; short-circuit; mapping order; type/list-tuple distinction; exact Encoder strings; Serializer bytes; `-0.0`; independent processes; factories; composition; direct imports; diagram receipts. |
 
@@ -43,6 +43,12 @@ alternative work.
 - Public additions are `PureTypeValidator`, `CanonicalSorter`, `CanonicalEncoder`,
   `CanonicalSerializer`, `SHA256Hasher`, `default_model_identity_builder()`, and
   `default_feature_identity_builder()`.
+- CSO1 uses Python 3.12 `from typing import override`. `PureTypeValidator`,
+  `CanonicalSorter`, `CanonicalEncoder`, `CanonicalSerializer`, and `SHA256Hasher` explicitly
+  inherit `Validator`, `Sorter`, `Encoder`, `Serializer`, and `Hasher`, respectively. Only
+  `validate`, `sort`, `encode`, `serialize`, and `hash`, respectively, receive `@override`.
+  Private helpers, factories, Protocols, value objects, and Builder injection are not changed or
+  decorated.
 - The concrete profile is v1 only: no negotiation, configurable policy, migration, or silent future
   change is authorized.
 - The implementation includes a static Archify dataflow diagram after Python code/test work; it
@@ -60,23 +66,24 @@ alternative work.
 - Diagram files are a topic-local flow visualization, not a revision to the repository's BC
   architecture authority. CacheStore, response reuse, runtime, execution, and provider paths are
   excluded from both code and diagram.
-- CAVO1 is the one declared correction route. Its later Implementer may modify only the two
-  Archify artifacts to repair desktop overflow; it must preserve pipeline semantics/nodes/order,
-  string/bytes handoffs, `Failure` boundary, Python code/tests, and BC scope. The correction plan
-  and correction step retain historical CAVO1 details; these parent artifacts are current truth.
+- CAVO1 is completed historical provenance. Its diagrams and all CAVO1 Plan-Reviewer, Tester, and
+  Reviewer evidence are not CSO1 routing authority and cannot be reused.
+- CSO1 is the sole active correction route. Its Implementer can modify only `canonical.py` and the
+  dedicated pipeline test; it must preserve every current pipeline behavior, direct import,
+  published public surface, diagram, and bounded PR scope. The CSO1 correction plan and correction
+  step are its detailed evidence-schema authority; these parent artifacts are its current truth.
 - A path not listed below is a plan-alignment stop and returns to Planner.
 
 ## Status / Allowed Transitions
 
-- **Current**: `correction-plan-review-pending`; the initial planning candidate and its approved
-  receipt are committed, while CAVO1's six-path correction planning candidate now awaits an
-  independent correction Plan-Reviewer log.
-- **Execution model**: CAVO1 committed candidate → independent CAVO1 Plan-Reviewer log →
-  evidence-only CAVO1 review-log commit → Implementer immutable original-six-path subject with only
-  two Archify paths changed by CAVO1 → independent CAVO1 Tester evidence → evidence-only Tester
-  commit → independent CAVO1 Reviewer evidence from a clean committed tree → evidence-only Reviewer
-  commit → Planner Phase 4.5 alignment → existing Human authorization → Implementer bounded
-  publish/push/draft PR → Human review and merge.
+- **Current**: `concrete-stage-override-correction-plan-review-pending`; the existing draft PR #6
+  remains open, while this six-path CSO1 correction planning candidate awaits an independent
+  correction Plan-Reviewer log. CAVO1 is completed historical provenance.
+- **Execution model**: CSO1 committed candidate → independent CSO1 Plan-Reviewer log →
+  evidence-only CSO1 review-log commit → Implementer immutable two-path CSO1 subject → independent
+  CSO1 Tester evidence → evidence-only Tester commit → independent CSO1 Reviewer evidence from a
+  clean committed tree → evidence-only Reviewer commit → Planner Phase 4.5 alignment → bounded push
+  that updates existing draft PR #6 only → Human review and merge.
 - **Allowed transitions**:
   - `planned` → `creator-in-progress`
   - `creator-in-progress` → `tester-in-progress`
@@ -91,12 +98,9 @@ alternative work.
   - `pr-open` → `needs-rework`
   - `pr-open` → `merged`
   - `merged` → terminal
-- CAVO1 permits no more than two focused geometry/content rounds. Every round must showcase-validate,
-  deliver, and visual-check; two rounds without a strict failing-viewport-count improvement, any
-  second-round overflow, or a non-zero required command is `human-check`.
-- CAVO1 Tester evidence must bind the same full immutable implementation subject consumed by
-  CAVO1 Reviewer. The correction Plan defines the extended correction evidence schemas and generic
-  parent Tester/Reviewer evidence paths are inactive for this route.
+- CSO1 Tester evidence must bind the same full immutable two-path implementation subject consumed by
+  CSO1 Reviewer. The CSO1 correction Plan defines the extended correction evidence schemas; CAVO1
+  and generic parent Tester/Reviewer evidence paths are inactive for this route.
   `publish-in-progress` can only become `pr-open`; only Human can merge from `pr-open`. Human
   also exclusively owns release, tag, post-merge, and final summary.
 
@@ -123,6 +127,13 @@ alternative work.
 | Version promotion | `pyproject.toml` | Implementer, only at `publish-in-progress` | `[project].version` minor bump from `0.0.0` to `0.1.0`. |
 | CAVO1 Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.archify-visual-overflow.correction-tester-evidence.json` | Tester | Factual same-subject CAVO1 validation; an independent Implementer commits unchanged passing evidence as the sole evidence-only commit. |
 | CAVO1 implementation review log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.archify-visual-overflow.correction-implementation-review-log.json` | Independent Reviewer | Same-subject CAVO1 review after committed passing Tester evidence, from a clean committed tree; an independent Implementer commits unchanged approved evidence as the sole evidence-only commit. |
+| CSO1 correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md` | Plan-Creator | Active correction trigger, exact two-path subject, and CSO1 extended evidence-schema authority. |
+| CSO1 correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md` | Plan-Creator | Active CSO1 execution and evidence sequence. |
+| CSO1 correction Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan-review-log.json` | Independent Plan-Reviewer | Clean-tree review of this committed six-path candidate; an independent Implementer commits unchanged approved evidence as its sole evidence-only commit. |
+| CSO1 concrete stage subject | `src/deterministic_response_cache/identity/canonical.py` | Implementer | Sole production-code path for named Protocol bases and the five public `@override` markers. |
+| CSO1 concrete stage regression | `tests/test_canonical_identity_pipeline.py` | Implementer | Sole test path; keeps direct-import/pipeline regressions and proves named bases, public markers, and unmarked private helpers. |
+| CSO1 Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-tester-evidence.json` | Tester | Factual same-subject validation only; an independent Implementer commits unchanged passing evidence as its sole evidence-only commit. |
+| CSO1 implementation review log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-implementation-review-log.json` | Independent Reviewer | Same-subject CSO1 review after committed passing Tester evidence, from a clean committed tree; an independent Implementer commits unchanged approved evidence as its sole evidence-only commit. |
 
 `README.md` and `pyproject.toml` are not part of the immutable implementation subject; they are
 the stable-library promotion after Phase 4.5 and Human authorization. Archify visual-check contact
@@ -192,7 +203,8 @@ currently declares `0.0.0`.
   `ValidationIssue` values; only invalid raw input yields `Failure`; no stage raises a new public
   domain exception.
 - Typing strategy: Python 3.12 strict types using existing `PureType`, handoff values, and
-  structural Protocol conformance; no `Any`, runtime type mutation, or public generic.
+  structural Protocol conformance; CSO1 adds direct nominal Protocol bases and `typing.override`
+  only on their public contract methods; no `Any`, runtime type mutation, or public generic.
 
 ### Public Contract / API Changes
 
@@ -232,6 +244,14 @@ compatible.
 - `docs/architecture/business-capability/architecture-brief.md`
 - `docs/architecture/business-capability/index.html`
 
+**Active CSO1 correction subject:**
+
+- `src/deterministic_response_cache/identity/canonical.py`
+- `tests/test_canonical_identity_pipeline.py`
+
+CSO1 must not modify any historical implementation/publish/diagram path, including `contracts.py`,
+`builders.py`, `identity/__init__.py`, `README.md`, `pyproject.toml`, or `uv.lock`.
+
 ### Test Plan
 
 - **Happy path:** assert each stage and both default factories yield the documented model, feature,
@@ -248,6 +268,10 @@ compatible.
 - **Backward compatibility:** assert existing Protocol/VO/Builder signatures and every old export
   remain unchanged, while seven additions are direct imports; subprocess Python invocations prove
   the same hash in independent processes.
+- **CSO1 nominal override regression:** assert each concrete class has its one exact named Protocol
+  base; assert `validate`, `sort`, `encode`, `serialize`, and `hash` have the runtime
+  `__override__` marker; assert every private helper in these classes lacks that marker; retain every
+  direct-import and pipeline regression assertion.
 - **Diagram TestCase:** require Archify source to describe every stage handoff and only the permitted
   failure branch, a showcase `validate`/successful `deliver`/visual-check receipt, and truthful
   manual contact-sheet review before cleanup.
@@ -281,12 +305,20 @@ visual-check sidecars. If promotion is committed but not merged, separately reve
 4. Create `tests/test_canonical_identity_pipeline.py` using direct imports to test exact stage
    handoffs, valid/invalid behavior, short-circuit, ordering/type boundaries, signed zero,
    subprocess determinism, default factories, composition, and existing API compatibility.
-5. After committed approved CAVO1 Plan-Reviewer evidence and Planner route, use the Archify skill
+5. Historical CAVO1 implementation step (complete): after committed approved CAVO1 Plan-Reviewer evidence and Planner route, use the Archify skill
    for at most two focused geometry/content rounds. Modify only
    `docs/architecture/canonical-identity-pipeline.dataflow.json`, re-deliver only
    `docs/architecture/canonical-identity-pipeline.html`, preserve all pipeline semantics/nodes and
    the `Failure` boundary, run showcase validation/delivery/desktop visual-check per round, and
    remove all untracked visual-check sidecars before the immutable subject commit.
+6. After committed approved CSO1 Plan-Reviewer evidence and Planner route, modify only
+   `src/deterministic_response_cache/identity/canonical.py`: import `override` from `typing`, use
+   the five exact named Protocol bases, and decorate only the matching public stage method. Preserve
+   all private helpers and existing pipeline behavior.
+7. Modify only `tests/test_canonical_identity_pipeline.py` to preserve direct imports and all
+   pipeline regression coverage while asserting the exact direct base and `__override__` marker for
+   each public stage method and no marker on private helpers. Commit only these two CSO1 paths as a
+   new immutable subject.
 
 ## Validation / Acceptance Checks
 
@@ -299,8 +331,9 @@ visual-check sidecars. If promotion is committed but not merged, separately reve
   `SerializedIdentity.value` handoffs. It never asserts or implies list/dict Encoder output.
 - A clean-process subprocess test proves a fixed valid source produces the same lowercase
   64-character SHA-256 hex output in at least two independent Python processes.
-- The implementation-subject diff is exactly the six non-publish paths: `canonical.py`,
-  `builders.py`, `__init__.py`, dedicated test, Archify JSON, and Archify HTML.
+- The historical original implementation subject is six non-publish paths. The new CSO1 immutable
+  subject diff is exactly two paths: `canonical.py` and `tests/test_canonical_identity_pipeline.py`.
+  No CAVO1 evidence, historical subject, or publish file is reused or amended.
 - CAVO1 accepts only Archify validation with all 9 showcase checks and zero errors/warnings,
   delivery exit 0, and visual-check exit 0 with containment at all four desktop viewports. At most
   two focused rounds are allowed; no improvement across both or remaining second-round overflow is
@@ -309,6 +342,12 @@ visual-check sidecars. If promotion is committed but not merged, separately reve
   counts, and failing viewport count in declared JSON evidence. CAVO1 Reviewer consumes only
   committed same-subject passing evidence and a clean committed tree, then verifies the exact
   two-path correction scope, direct imports, canonical boundaries, and diagram scope.
+- CSO1 tests prove direct named bases (`Validator`, `Sorter`, `Encoder`, `Serializer`, `Hasher`),
+  `__override__ is True` for exactly `validate`, `sort`, `encode`, `serialize`, and `hash`, and no
+  private helper marker. `uv run pytest tests/test_canonical_identity_pipeline.py
+  tests/test_model_feature_identity_contracts.py tests/test_model_feature_identity_builders.py`,
+  `uv run ruff format --check .`, `uv run ruff check .`, `uv run pyright`, `uv run tach check`,
+  `uv run pytest`, and `uv run pre-commit run --all-files` must pass.
 - At `publish-in-progress` only, verify the README API row and `pyproject.toml` `0.1.0` change;
   bounded push/draft PR still require existing Human authorization. No auto-merge/release/tag.
 
@@ -334,6 +373,10 @@ CAVO1's correction Plan-Reviewer, Tester, and Reviewer evidence use the exact ex
 schemas in `canonical-identity-pipeline.archify-visual-overflow.correction-plan.md`. Their writers,
 same-subject binding, clean-tree review condition, and separate evidence-only commit order are
 mandatory. This correction candidate itself neither selects nor closes an active candidate.
+
+CSO1's correction Plan-Reviewer, Tester, and Reviewer evidence use the exact extended JSON schemas
+in `canonical-identity-pipeline.concrete-stage-override.correction-plan.md`. CAVO1 evidence cannot
+substitute for any CSO1 gate. This candidate itself neither selects nor closes an active candidate.
 
 ## Post-merge / release actions
 

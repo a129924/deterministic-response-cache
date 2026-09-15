@@ -18,8 +18,14 @@
    through `combine()`.
 7. An Archify showcase dataflow diagram accurately depicts source snapshot, five stages, string/bytes
    boundaries, leaf identities, `combine()`, complete identity, and Validator short-circuit without
-   depicting another BC. CAVO1 may change only its two diagram artifacts to repair desktop overflow;
-   it preserves those semantics, nodes/order, and `Failure` boundary.
+   depicting another BC. Completed CAVO1 evidence is historical and does not authorize a further
+   diagram change.
+8. CSO1 makes `PureTypeValidator`, `CanonicalSorter`, `CanonicalEncoder`,
+   `CanonicalSerializer`, and `SHA256Hasher` explicitly inherit `Validator`, `Sorter`, `Encoder`,
+   `Serializer`, and `Hasher`, respectively, using Python 3.12 `from typing import override`.
+   Only `validate`, `sort`, `encode`, `serialize`, and `hash`, respectively, bear `@override` and
+   expose `__override__ is True`; all private helpers remain unmarked. No Protocol, value object, or
+   Builder injection signature changes.
 
 ## Behavioral Scenarios
 
@@ -54,7 +60,7 @@
 - **Then** it keeps the existing fixed aggregate and full pipeline traversal and produces a stable
   `CompleteRequestIdentity` without hash-string concatenation.
 
-### Scenario 5: repair and deliver the bounded pipeline visualization
+### Scenario 5: completed CAVO1 visualization delivery
 
 - **Given** Python stages and direct tests are ready.
 - **When** the CAVO1 Plan-Reviewer gate is committed and the Implementer uses Archify for one or,
@@ -64,6 +70,15 @@
   frozen showcase-passing JSON source, and its only failure route leaves Validator before Sorter.
 - **And** if the second round remains non-contained, a required command is non-zero, or two rounds
   do not reduce the failing viewport count, the route stops as `human-check` without a third round.
+
+### Scenario 6: declare concrete stages as nominal Protocol implementations
+
+- **Given** the delivered v1 concrete stages in `identity/canonical.py`.
+- **When** a caller or regression test inspects their class declarations and public stage methods.
+- **Then** each stage has its exact corresponding named Protocol base, its one public Protocol method
+  has `__override__ is True`, and its private helpers do not have an override marker.
+- **And** every existing direct import, canonical string/bytes handoff, pipeline short-circuit, and
+  builder-composition regression remains unchanged.
 
 ## Error / Edge Cases
 
@@ -78,6 +93,6 @@
   `CanonicalSerializer` uses strict ASCII and may raise `UnicodeEncodeError` rather than changing
   the existing Protocol to add a failure outcome.
 - A proposed path outside Artifact Paths, dynamic import, or change to `contracts.py`/existing
-  direct-import tests is plan drift and returns to Planner. Within CAVO1 only, failed visual
-  containment is handled by its declared maximum two-round route; it becomes `human-check` after
-  the second failure or two non-improving rounds.
+  direct-import tests is plan drift and returns to Planner. CSO1 may modify only
+  `canonical.py` and its dedicated test; CAVO1 evidence cannot substitute for CSO1 Plan-Reviewer,
+  Tester, or independent Reviewer evidence.

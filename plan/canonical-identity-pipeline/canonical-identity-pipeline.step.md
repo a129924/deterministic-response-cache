@@ -1,78 +1,57 @@
 ---
 topic: canonical-identity-pipeline
-phase: cavo1-tracker-status-revision-pending-independent-plan-review
+phase: concrete-stage-override-correction-plan-review-pending
 created: 2026-09-14
 updated: 2026-09-15
 ---
 
 # canonical-identity-pipeline — Step Tracking
 
-## Current CAVO1 State
+## Current state
 
-The CAVO1 evidence sequence is complete through C7. This tracker records only committed facts;
-it does not claim that Phase 4.5, a publish commit, push, draft PR, Human PR review, merge,
-release, tag, or post-merge work has occurred.
+The original six-path pipeline subject, completed CAVO1 sequence, and existing draft PR #6 are
+committed historical facts. They remain reviewable provenance but cannot be reused as routing,
+Tester, or Reviewer evidence for `canonical-identity-pipeline/concrete-stage-override` (CSO1).
+CSO1 is the sole active correction route and exists only to add named Protocol inheritance and
+public-method `@override` declarations without altering runtime pipeline behavior.
 
 | Step | Status | Committed fact |
 | --- | --- | --- |
-| C1 | complete | Independent CAVO1 Plan-Reviewer record: `d34d6311d30b4d18ed0e9c34d226cdb1800fca2a`. |
-| C2 | complete | C1 evidence-only commit: `d34d6311d30b4d18ed0e9c34d226cdb1800fca2a`. |
-| C3 | complete | Immutable six-path implementation subject: `602d5f06540c243b591145d9c1ecaf9de840a913`. |
-| C4 | complete | CAVO1 passing Tester evidence recorded for C3 in `b2a132ef1637ffbdb494c125bf91926fc2e9eb1e`. |
-| C5 | complete | C4 evidence-only commit: `b2a132ef1637ffbdb494c125bf91926fc2e9eb1e`. |
-| C6 | complete | Independent CAVO1 approved Reviewer record: `d7f8a5ee18106fc2fa0b2b0dbfd088468ad6ee6c`. |
-| C7 | complete | C6 evidence-only commit: `d7f8a5ee18106fc2fa0b2b0dbfd088468ad6ee6c`. |
-| C8 | pending | Planner Phase 4.5 alignment only. |
+| C0 | complete | Plan-Creator authored this exact six-path CSO1 planning candidate. Its commit/tree/blob facts may be recorded only by C1. |
+| C1 | pending | Independent Plan-Reviewer, from a clean committed C0 checkout, writes only `canonical-identity-pipeline.concrete-stage-override.correction-plan-review-log.json`. |
+| C2 | pending | Independent Implementer commits unchanged approved C1 evidence as its sole evidence-only commit; only then may Planner route C3. |
+| C3 | pending | Implementer creates one new immutable subject that changes exactly `src/deterministic_response_cache/identity/canonical.py` and `tests/test_canonical_identity_pipeline.py`. |
+| C4 | pending | Tester writes only factual same-subject results to `canonical-identity-pipeline.concrete-stage-override.correction-tester-evidence.json`; it does not commit the evidence. |
+| C5 | pending | Independent Implementer commits unchanged passing C4 evidence as its sole evidence-only commit. |
+| C6 | pending | Independent Reviewer consumes committed passing C4 evidence from a clean C5 tree and writes only `canonical-identity-pipeline.concrete-stage-override.correction-implementation-review-log.json`. |
+| C7 | pending | Independent Implementer commits unchanged approved C6 evidence as its sole evidence-only commit. |
+| C8 | pending | Planner performs Phase 4.5 alignment; only then may a bounded Implementer push the correction commits to update existing draft PR #6. |
 
-## Workflow Stages
+## CSO1 actionable steps
 
-- [X] initial plan authoring and independent plan review
-- [X] CAVO1 correction-plan authoring, review evidence, implementation, Tester evidence, and independent Reviewer evidence (C1–C7)
-- [ ] Planner Phase 4.5 alignment (C8)
-- [ ] existing Human-authorized bounded publish route, if Planner confirms all prerequisites
-- [ ] Human PR review
-- [ ] Human merge, release, tag, post-merge, and final summary
+- [X] **C0:** Plan-Creator wrote the two active correction artifacts and synchronized the parent
+  technical specification, plan, specification, and tracker as one six-path candidate commit.
+- [ ] **C1/C2:** Independent Plan-Reviewer writes, then an independent Implementer commits, the
+  approved CSO1 correction-plan review log under its exact schema.
+- [ ] **C3:** Implementer changes only `canonical.py` and the dedicated direct-import regression
+  module. Each concrete stage has exactly its matching named Protocol base; only `validate`,
+  `sort`, `encode`, `serialize`, or `hash` is marked `@override`; private helpers remain unmarked.
+- [ ] **C4/C5:** Tester writes, then an independent Implementer commits, factual passing CSO1
+  Tester evidence that binds C3's full SHA and exact two-path diff.
+- [ ] **C6/C7:** Independent Reviewer consumes committed same-subject passing C4 evidence, writes
+  an approved CSO1 review log, then an independent Implementer commits it unchanged.
+- [ ] **C8:** Planner verifies all CSO1 evidence and existing human authorization before routing a
+  bounded update to draft PR #6. This does not authorize a new PR, PR approval, merge, release,
+  tag, post-merge, or final summary.
 
-## CAVO1 Actionable Steps
+## Historical provenance and stop conditions
 
-- [X] **C1/C2:** Independent Plan-Reviewer wrote and an Independent Implementer committed the
-  approved CAVO1 correction review evidence at
-  `d34d6311d30b4d18ed0e9c34d226cdb1800fca2a`.
-- [X] **C3:** Implementer committed the immutable original six non-publish paths at
-  `602d5f06540c243b591145d9c1ecaf9de840a913`.
-- [X] **C4/C5:** Tester wrote and an Independent Implementer committed same-subject passing
-  CAVO1 Tester evidence at `b2a132ef1637ffbdb494c125bf91926fc2e9eb1e`.
-- [X] **C6/C7:** Independent Reviewer wrote and an Independent Implementer committed approved
-  same-subject CAVO1 Reviewer evidence at `d7f8a5ee18106fc2fa0b2b0dbfd088468ad6ee6c`.
-- [ ] **C8:** Planner verifies Phase 4.5 alignment against the committed C1–C7 facts and existing
-  Human authorization. Only that decision may route an Implementer to the parent plan's unchanged
-  bounded publish scope; it never authorizes merge.
-
-## Tracker-status Synchronization Correction
-
-- [X] **C0 — rejected predecessor:** `05f5ded7e81317c69422aaabe9d6e90a5da1fe6d` is frozen and
-  non-routing. Its S1 review-log contract omitted the exact candidate-admission and feedback-triage
-  shape required for independent review; no S1 review log was written for C0.
-- [X] **C0R — revised child candidate:** this exact three-path child of C0 records the complete S1
-  contract and is awaiting independent Plan-Reviewer review. Its commit, tree, and candidate blob
-  facts are post-commit review facts: only S1 may record them.
-- [ ] **S1 — Independent Plan-Reviewer:** From a clean committed C0R checkout, verify the direct
-  non-merge first-parent admission from C0 and write only
-  `canonical-identity-pipeline.cavo1-tracker-status-sync.correction-plan-review-log.json`.
-- [ ] Independent Implementer commits unchanged approved tracker-status review evidence as its
-  sole evidence-only commit; Planner then re-evaluates C8. No implementation, Tester, Reviewer,
-  publish, push, or PR action is authorized by this synchronization correction itself.
-
-## Boundaries / Stop Conditions
-
-- This synchronization preserves the parent topic plan, pipeline implementation, tests, CAVO1
-  evidence, and publish scope. It adds no implementation or publish path and does not modify
-  `README.md`, `pyproject.toml`, or `uv.lock`.
-- C0 is rejected provenance only. C0R is the sole revised candidate, but it is not routing authority
-  until an independent Plan-Reviewer writes and an Independent Implementer commits an approved S1
-  log under the corrected exact schema.
-- The pre-existing `README.md` and `pyproject.toml` publish diff is outside this candidate and must
-  remain unstaged and byte-identical. `uv.lock` has no diff and remains outside scope.
-- Missing, mismatched, or non-passing committed C1–C7 evidence; an unlisted path; a dirty candidate
-  path; or absent existing Human authorization blocks C8. Human alone owns PR review, merge,
-  release, tag, post-merge, and final summary.
+- CAVO1's committed Plan-Reviewer, Tester, and Reviewer evidence remains frozen provenance only;
+  it cannot satisfy C1, C4, or C6. CSO1 must complete a fresh same-subject sequence.
+- `contracts.py`, builders, public exports, both Archify artifacts, README, `pyproject.toml`,
+  `uv.lock`, existing regression modules, and all historic evidence are read-only for C3.
+- A missing, mismatched, cross-subject, non-passing, or uncommitted C1/C4/C6 record; an unlisted
+  path; a dirty evidence commit; or a request to change public contract behavior is `blocked` and
+  returns to Planner. Candidate/evidence/subject conflict is `human-check`.
+- Human alone owns PR review, merge, release, tag, post-merge, and final summary. CSO1 success can
+  update existing draft PR #6 only after Planner Phase 4.5; it never creates or merges a PR.
