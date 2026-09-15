@@ -1,85 +1,71 @@
 ---
 topic: canonical-identity-pipeline
-phase: correction-plan-review
+phase: planner-phase-4.5-pending
 created: 2026-09-14
+updated: 2026-09-15
 ---
 
 # canonical-identity-pipeline — Step Tracking
 
+## Current CAVO1 State
+
+The CAVO1 evidence sequence is complete through C7. This tracker records only committed facts;
+it does not claim that Phase 4.5, a publish commit, push, draft PR, Human PR review, merge,
+release, tag, or post-merge work has occurred.
+
+| Step | Status | Committed fact |
+| --- | --- | --- |
+| C1 | complete | Independent CAVO1 Plan-Reviewer record: `d34d6311d30b4d18ed0e9c34d226cdb1800fca2a`. |
+| C2 | complete | C1 evidence-only commit: `d34d6311d30b4d18ed0e9c34d226cdb1800fca2a`. |
+| C3 | complete | Immutable six-path implementation subject: `602d5f06540c243b591145d9c1ecaf9de840a913`. |
+| C4 | complete | CAVO1 passing Tester evidence recorded for C3 in `b2a132ef1637ffbdb494c125bf91926fc2e9eb1e`. |
+| C5 | complete | C4 evidence-only commit: `b2a132ef1637ffbdb494c125bf91926fc2e9eb1e`. |
+| C6 | complete | Independent CAVO1 approved Reviewer record: `d7f8a5ee18106fc2fa0b2b0dbfd088468ad6ee6c`. |
+| C7 | complete | C6 evidence-only commit: `d7f8a5ee18106fc2fa0b2b0dbfd088468ad6ee6c`. |
+| C8 | pending | Planner Phase 4.5 alignment only. |
+
 ## Workflow Stages
 
-- [X] plan-authoring
-- [X] plan-review (initial candidate)
-- [X] CAVO1 correction-plan-authoring
-- [ ] CAVO1 correction-plan-review
-- [ ] tdd-test-authoring
-- [ ] implementation
-- [ ] implementation-review
-- [ ] code-review
+- [X] initial plan authoring and independent plan review
+- [X] CAVO1 correction-plan authoring, review evidence, implementation, Tester evidence, and independent Reviewer evidence (C1–C7)
+- [ ] Planner Phase 4.5 alignment (C8)
+- [ ] existing Human-authorized bounded publish route, if Planner confirms all prerequisites
+- [ ] Human PR review
+- [ ] Human merge, release, tag, post-merge, and final summary
 
 ## CAVO1 Actionable Steps
 
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review the committed six-path CAVO1
-  correction planning candidate from a clean checkout and write only
-  `canonical-identity-pipeline.archify-visual-overflow.correction-plan-review-log.json` using the
-  extended correction schema.
-- [ ] **Actor:** Independent Implementer — **Action:** Commit unchanged approved CAVO1
-  Plan-Reviewer evidence as the sole evidence-only commit. No source path is modified in this step.
-- [ ] **Actor:** Implementer — **Action:** After Planner route, run at most two focused Archify
-  geometry/content rounds. Modify only the declared JSON/HTML diagram paths, preserve all pipeline
-  semantics/nodes/handoffs/`Failure` boundary, and remove sidecars before committing the original
-  six-path immutable implementation subject.
-- [ ] **Actor:** Tester — **Action:** Write factual same-subject CAVO1 command/exit-code, delivery,
-  showcase, and viewport evidence only to
-  `canonical-identity-pipeline.archify-visual-overflow.correction-tester-evidence.json`; do not
-  commit it.
-- [ ] **Actor:** Independent Implementer — **Action:** Commit unchanged passing CAVO1 Tester
-  evidence as the sole evidence-only commit.
-- [ ] **Actor:** Independent Reviewer — **Action:** Consume only committed same-subject passing
-  CAVO1 Tester evidence from a clean committed tree and write only
-  `canonical-identity-pipeline.archify-visual-overflow.correction-implementation-review-log.json`.
-- [ ] **Actor:** Independent Implementer — **Action:** Commit unchanged approved CAVO1 Reviewer
-  evidence as the sole evidence-only commit; wait for Planner Phase 4.5 alignment and existing
-  Human authorization before declared publish-time README/version work, push, and draft PR.
+- [X] **C1/C2:** Independent Plan-Reviewer wrote and an Independent Implementer committed the
+  approved CAVO1 correction review evidence at
+  `d34d6311d30b4d18ed0e9c34d226cdb1800fca2a`.
+- [X] **C3:** Implementer committed the immutable original six non-publish paths at
+  `602d5f06540c243b591145d9c1ecaf9de840a913`.
+- [X] **C4/C5:** Tester wrote and an Independent Implementer committed same-subject passing
+  CAVO1 Tester evidence at `b2a132ef1637ffbdb494c125bf91926fc2e9eb1e`.
+- [X] **C6/C7:** Independent Reviewer wrote and an Independent Implementer committed approved
+  same-subject CAVO1 Reviewer evidence at `d7f8a5ee18106fc2fa0b2b0dbfd088468ad6ee6c`.
+- [ ] **C8:** Planner verifies Phase 4.5 alignment against the committed C1–C7 facts and existing
+  Human authorization. Only that decision may route an Implementer to the parent plan's unchanged
+  bounded publish scope; it never authorizes merge.
 
-## Baseline Actionable Steps
+## Tracker-status Synchronization Correction
 
-- [ ] **Actor:** Implementer — **Action:** Preserve the original six non-publish implementation
-  subject. During CAVO1, only its two Archify paths may change; the CAVO1 evidence sequence above
-  replaces the inactive generic Tester/Reviewer route.
+- [X] Plan-Creator authored the three-path tracker-status synchronization candidate described by
+  `canonical-identity-pipeline.cavo1-tracker-status-sync.correction-plan.md`.
+- [ ] Independent Plan-Reviewer reviews the committed three-path candidate from a clean checkout
+  and writes only
+  `canonical-identity-pipeline.cavo1-tracker-status-sync.correction-plan-review-log.json`.
+- [ ] Independent Implementer commits unchanged approved tracker-status review evidence as its
+  sole evidence-only commit; Planner then re-evaluates C8. No implementation, Tester, Reviewer,
+  publish, push, or PR action is authorized by this synchronization correction itself.
 
-## Implementation Steps
+## Boundaries / Stop Conditions
 
-- [ ] 1. Modify `src/deterministic_response_cache/identity/builders.py` only in private snapshot
-  helper to pass active cycles to Validator while retaining immutable valid snapshots and unchanged
-  public Builder behavior.
-- [ ] 2. Create `src/deterministic_response_cache/identity/canonical.py` with five concrete v1
-  stages and two default existing-Builder factories.
-- [ ] 3. Modify `src/deterministic_response_cache/identity/__init__.py` to add only seven declared
-  public exports.
-- [ ] 4. Create `tests/test_canonical_identity_pipeline.py` with direct-import coverage for exact
-  handoffs, determinism, invalid input, short-circuit, factories, composition, and compatibility.
-- [ ] 5. CAVO1 only: after its committed Plan-Reviewer evidence and Planner route, use Archify for
-  at most two focused geometry/content rounds on the JSON source and delivered HTML, run showcase
-  validation/delivery/visual-check in every round, and remove untracked sidecars before immutable
-  subject commit.
-
-## Main Agent Actionable Steps — Fixed Tail
-
-- [ ] Complete only source-authorized lifecycle actions after independently committed planning,
-  Tester, and Reviewer evidence, Planner Phase 4.5 alignment, and existing Human authorization.
-
-## Handoff / Gate Notes
-
-- Plan-Creator's candidate commit contains only five initial planning artifacts. Planning approval
-  does not establish implementation approval.
-- CAVO1's committed six-path planning candidate makes the parent technical specification, plan,
-  specification, and this step tracker current truth; its correction plan/step retain history.
-- CAVO1 evidence schemas, exact writers, order, two-round cap, and `human-check` stop are in
-  `canonical-identity-pipeline.archify-visual-overflow.correction-plan.md`. Generic parent
-  Tester/Reviewer evidence paths are inactive for CAVO1.
-- The implementation subject excludes `README.md` and `pyproject.toml`; they are bounded stable
-  library promotion paths only at `publish-in-progress` after all prerequisite gates.
-- Missing evidence, dirty worktree, subject mismatch, non-passing Tester evidence, unlisted path,
-  contract drift, or bypassing Human merge is blocked and returns to Planner or Human boundary as
-  workflow requires.
+- This synchronization preserves the parent topic plan, pipeline implementation, tests, CAVO1
+  evidence, and publish scope. It adds no implementation or publish path and does not modify
+  `README.md`, `pyproject.toml`, or `uv.lock`.
+- The pre-existing `README.md` and `pyproject.toml` publish diff is outside this candidate and must
+  remain unstaged and byte-identical. `uv.lock` has no diff and remains outside scope.
+- Missing, mismatched, or non-passing committed C1–C7 evidence; an unlisted path; a dirty candidate
+  path; or absent existing Human authorization blocks C8. Human alone owns PR review, merge,
+  release, tag, post-merge, and final summary.
