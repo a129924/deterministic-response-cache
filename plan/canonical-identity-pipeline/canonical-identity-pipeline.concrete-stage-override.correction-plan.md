@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/concrete-stage-override
-phase: correction-plan-review
+phase: c5-status-sync-plan-review
 created: 2026-09-15
 ---
 
@@ -27,12 +27,15 @@ schema used double-escaped tab text, preventing parsed `name_status` values from
 C0S-R1 repaired that contract, and the unchanged approved C1S receipt was committed as sole C2S
 evidence `be0ce355dc777d63b7454488989452183519490a`. C1S/C2S are frozen complete facts.
 
-C3 is the immutable two-path subject `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`, a non-merge
-direct child of C2S. C3S is the active Human-authorized status-only direct child candidate of C3.
-It synchronizes C1S/C2S/C3 completion, C4 pending, and C5–C8 not started across the four CSO1
-state surfaces, while adding its own plan and step. The prior original six-path subject and all
-CAVO1 records remain frozen provenance: they cannot be reused as a CSO1 candidate, Tester record,
-or Reviewer record.
+ C3 is the immutable two-path subject `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`, a non-merge
+ direct child of C2S. C3S candidate `0d6f46aca2acefccd64f56c3c537f50fae00bab9` and its committed
+ approved receipt `2428e27ecb402efa90fd43e8ba979d615e151cd2` are complete frozen status facts.
+ Tester wrote passing same-subject C4 evidence, which C5 committed unchanged as sole evidence-only
+ commit `cbc53e953a257766f918a9c1f54db66c97ab5eba`. C5S is the active Human-authorized status-only
+ direct child candidate of C5. It synchronizes committed C3S/C4/C5, C6 pending and consuming C5,
+ and C7–C8 not started across the four CSO1 state surfaces, while adding its own plan and step. The prior original
+ six-path subject and all CAVO1 records remain frozen provenance: they cannot be reused as a CSO1
+ candidate, Tester record, or Reviewer record.
 
 ## Locked scope
 
@@ -56,35 +59,35 @@ or Reviewer record.
   planning/evidence files are read-only for C3. No new API, export, dependency, diagram, version,
   publish file, or new PR is authorized.
 
-## C3S status-synchronization boundary
+## C5S status-synchronization boundary
 
-- C3S changes exactly six planning paths: the parent plan, parent step tracker, this CSO1
-  correction plan, this CSO1 correction step, and the paired C3S correction plan/step. It records
-  only frozen-complete C1S/C2S `be0ce355dc777d63b7454488989452183519490a` and C3
-  `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`, C4 pending, and C5–C8 not started. It creates no
-  implementation subject or execution evidence.
-- C3S must be a non-merge direct child whose sole first parent is C3
-  `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`. Its first-parent name-status diff must contain
+- C5S changes exactly six planning paths: the parent plan, parent step tracker, this CSO1
+  correction plan, this CSO1 correction step, and the paired C5S correction plan/step. It records
+  only completed C3S candidate/receipt, passing C4 evidence, and committed C5
+  `cbc53e953a257766f918a9c1f54db66c97ab5eba`, C6 pending and consuming C5, and C7–C8 not
+  started. It creates no implementation subject or execution evidence.
+- C5S must be a non-merge direct child whose sole first parent is C5
+  `cbc53e953a257766f918a9c1f54db66c97ab5eba`. Its first-parent name-status diff must contain
   exactly once, in lexical path order, the following entries:
 
   ```text
-  A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c3-status-sync.correction-plan.md
-  A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c3-status-sync.correction-step.md
+  A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-plan.md
+  A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-step.md
   M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md
   M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md
   M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md
   M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.step.md
   ```
 
-- No C3S commit SHA, tree SHA, candidate blob SHA, review outcome, or C3S receipt may be filled in
-  before C3S is committed. `README.md`, `pyproject.toml`, and `uv.lock` remain unstaged and
-  unchanged. C3S never modifies analysis, the parent specification, code, tests, diagrams,
+- No C5S commit SHA, tree SHA, candidate blob SHA, review outcome, or C5S receipt may be filled in
+  before C5S is committed. `README.md`, `pyproject.toml`, and `uv.lock` remain unstaged and
+  unchanged. C5S never modifies analysis, the parent specification, code, tests, diagrams,
   existing evidence, the draft PR, or the published stable-library surface.
-- The independent C3S reviewer must fail closed unless all four state surfaces agree on completed
-  C1S/C2S and C3, C4 pending, C5–C8 not started, and no Tester, Reviewer, Phase 4.5, push, PR, or
-  Human-review claim; it must also parse the exact two `A<TAB>path` and four `M<TAB>path` entries.
-  An approved C3S receipt is separately committed unchanged by an Independent
-  Implementer as the sole evidence receipt commit; only then may Planner route Tester for C4.
+- The independent C5S reviewer must fail closed unless all four state surfaces agree on committed
+  C3S/C4/C5, C6 pending, C7–C8 not started, and no Reviewer, Phase 4.5, push, PR, or Human-review
+  claim; it must also parse the exact two `A<TAB>path` and four `M<TAB>path` entries. An approved
+  C5S receipt is separately committed unchanged by an Independent Implementer as the sole evidence
+  receipt commit; only then may Planner route Reviewer for C6.
 
 ## Acceptance delta
 
@@ -107,24 +110,25 @@ CSO1 passes only when all of the following are true:
 | C0 | Parent technical specification | `analysis/canonical-identity-pipeline/technical-spec.md` | Plan-Creator | Completed immutable six-path CSO1 candidate surface. |
 | C0 | Parent topic plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md` | Plan-Creator | Completed candidate's current route and path contract. |
 | C0 | Parent topic specification | `plan/canonical-identity-pipeline/canonical-identity-pipeline.spec.md` | Plan-Creator | Completed testable nominal-inheritance and marker contract. |
-| C0 | Parent step tracker | `plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md` | Plan-Creator | CSO1 progression truth, synchronized by C3S only. |
-| C0 | Correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md` | Plan-Creator | This CSO1 trigger, scope, ordering, and schema authority; synchronized by C3S only. |
-| C0 | Correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md` | Plan-Creator | CSO1 execution/evidence tracking; synchronized by C3S only. |
+| C0 | Parent step tracker | `plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md` | Plan-Creator | CSO1 progression truth, synchronized by C5S only. |
+| C0 | Correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md` | Plan-Creator | This CSO1 trigger, scope, ordering, and schema authority; synchronized by C5S only. |
+| C0 | Correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md` | Plan-Creator | CSO1 execution/evidence tracking; synchronized by C5S only. |
 | C1 | Correction Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan-review-log.json` | Independent Plan-Reviewer | Completed approved record, committed unchanged by C2; frozen provenance for all later steps. |
 | C2 | Committed C1 evidence | same C1 path | Independent Implementer | Completed sole-evidence commit `15c23d67856b627fa8f736eb66694cccc9e5ec89`; frozen provenance. |
 | C0S-R1/C1S/C2S | Completed status-sync route | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer; Independent Implementer | Approved receipt and sole evidence-only commit `be0ce355dc777d63b7454488989452183519490a`; frozen provenance. |
 | C3 | Immutable implementation subject | `src/deterministic_response_cache/identity/canonical.py`, `tests/test_canonical_identity_pipeline.py` | Implementer | Complete two-path subject `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`; no evidence is in this commit. |
-| C3S | Status-sync candidate | parent plan, parent step, this CSO1 plan/step, and paired C3S plan/step | Plan-Creator | Exact six-path non-merge direct child of C3; records state only and awaits C3S review. |
-| C3S review | Status-sync Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c3-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole C3S review artifact, written only from a clean committed C3S checkout under the v1 schema below. |
-| C3S receipt commit | Committed C3S evidence | same C3S review path | Independent Implementer | Commits unchanged approved C3S receipt as the sole evidence-only commit; only then may Planner route C4 Tester. |
-| C4 | Correction Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-tester-evidence.json` | Tester | Factual same-subject validation only; not self-committed. |
-| C5 | Committed C4 evidence | same C4 path | Independent Implementer | Commits unchanged passing C4 evidence as its sole evidence-only commit. |
-| C6 | Correction implementation-review log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-implementation-review-log.json` | Independent Reviewer | Only after committed passing C4; reviews a clean committed C5 tree and the same C3 subject. |
+| C3S | Completed status-sync route | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c3-status-sync.correction-plan-review-log.json` | Plan-Creator; Independent Plan-Reviewer; Independent Implementer | Completed candidate `0d6f46aca2acefccd64f56c3c537f50fae00bab9` and committed approved receipt `2428e27ecb402efa90fd43e8ba979d615e151cd2`; frozen status provenance. |
+| C4 | Correction Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-tester-evidence.json` | Tester | Completed passing same-subject factual evidence for C3; frozen as committed by C5. |
+| C5 | Committed C4 evidence | same C4 path | Independent Implementer | Completed sole evidence-only commit `cbc53e953a257766f918a9c1f54db66c97ab5eba`. |
+| C5S | Status-sync candidate | parent plan, parent step, this CSO1 plan/step, and paired C5S plan/step | Plan-Creator | Exact six-path non-merge direct child of C5; records state only and awaits C5S review. |
+| C5S review | Status-sync Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole C5S review artifact, written only from a clean committed C5S checkout under the v1 schema below. |
+| C5S receipt commit | Committed C5S evidence | same C5S review path | Independent Implementer | Commits unchanged approved C5S receipt as the sole evidence-only commit; only then may Planner route C6 Reviewer. |
+| C6 | Correction implementation-review log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-implementation-review-log.json` | Independent Reviewer | Only after committed approved C5S receipt and a Planner route; consumes committed passing C5 evidence and reviews the same C3 subject. |
 | C7 | Committed C6 evidence | same C6 path | Independent Implementer | Commits unchanged approved C6 evidence as its sole evidence-only commit. |
 | C8 | Phase 4.5 / bounded PR update | no new CSO1 artifact | Planner, then Implementer if authorized | Requires C7, parent alignment, and existing human authorization; pushes only to update draft PR #6 and never authorizes merge or a new PR. |
 
-`needs-rework` in C3S review or C6 returns to Planner. An approved C3S receipt does not test or
-approve C3; it only restores Planner authority to route the pending C4 Tester. A rework starts a
+`needs-rework` in C5S review or C6 returns to Planner. An approved C5S receipt does not review or
+approve C3; it only restores Planner authority to route the pending C6 Reviewer. A rework starts a
 fresh C3 subject and repeats C3S/C4–C7; no prior C4/C5/C6/C7 can be reused. Missing evidence is
 `blocked`; competing candidate, evidence, subject, or worktree facts are `human-check`.
 
@@ -174,11 +178,11 @@ Tester, Reviewer, publish, PR, or Human-review authority.
 The C1S file is committed frozen provenance. Its schema remains documented only to explain the
 completed C1S/C2S binding and must not be reused as C3 Tester or Reviewer evidence.
 
-### C3S status-sync correction Plan-Reviewer log
+### C3S status-sync correction Plan-Reviewer log — frozen provenance
 
-Only the independent C3S Plan-Reviewer may create
+The independent C3S Plan-Reviewer created
 `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c3-status-sync.correction-plan-review-log.json`,
-only after the C3S candidate is committed and from its clean checkout. It is one JSON object with
+after the C3S candidate was committed and from its clean checkout. It is one JSON object with
 exactly twelve top-level keys: `schema_version`, `topic`, `correction_id`, `candidate_commit`,
 `candidate_tree`, `reviewed_paths`, `first_parent_admission`, `review_basis`, `verdict`,
 `blocking_issues`, `copilot_feedback_triage`, and `recorded_by`. The six `reviewed_paths` entries
@@ -227,11 +231,68 @@ least one non-empty issue.
 }
 ```
 
-The C3S reviewer must fail closed for an uncommitted/dirty candidate, a parent other than C3, a
-merge, unlisted path, malformed or non-tab `name_status`, inconsistent C1S/C2S/C3/C4–C8 state,
-or any downstream completion claim. The review log is neither prewritten nor part of C3S. Only an
+The C3S record is frozen provenance: it is neither C4 Tester evidence nor C6 Reviewer evidence.
+It documented the clean C3 direct-child admission that preceded C4 and C5; it cannot be rewritten,
+re-reviewed, or used to decide C6.
+
+### C5S status-sync correction Plan-Reviewer log
+
+Only the independent C5S Plan-Reviewer may create
+`plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-plan-review-log.json`,
+only after the C5S candidate is committed and from its clean checkout. It is one JSON object with
+exactly twelve top-level keys: `schema_version`, `topic`, `correction_id`, `candidate_commit`,
+`candidate_tree`, `reviewed_paths`, `first_parent_admission`, `review_basis`, `verdict`,
+`blocking_issues`, `copilot_feedback_triage`, and `recorded_by`. The six `reviewed_paths` entries
+are ordered exactly as the C5S name-status list and contain only `path` and `blob_sha`.
+`first_parent_admission` contains only `candidate_commit`, `candidate_tree`, `parent_commit`,
+`non_merge`, `first_parent`, `exact_declared_paths`, and `name_status`. All Git identifiers are
+lowercase 40-hex values. `approved` requires empty `blocking_issues`; `needs-rework` requires at
+least one non-empty issue.
+
+```json
+{
+  "schema_version": "canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-plan-review.v1",
+  "topic": "canonical-identity-pipeline",
+  "correction_id": "canonical-identity-pipeline/concrete-stage-override-c5-status-sync",
+  "candidate_commit": "<40-hex C5S commit>",
+  "candidate_tree": "<40-hex C5S tree>",
+  "reviewed_paths": [
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-plan.md", "blob_sha": "<40-hex C5S blob>"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-step.md", "blob_sha": "<40-hex C5S blob>"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md", "blob_sha": "<40-hex C5S blob>"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md", "blob_sha": "<40-hex C5S blob>"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md", "blob_sha": "<40-hex C5S blob>"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md", "blob_sha": "<40-hex C5S blob>"}
+  ],
+  "first_parent_admission": {
+    "candidate_commit": "<same 40-hex C5S commit>",
+    "candidate_tree": "<same 40-hex C5S tree>",
+    "parent_commit": "cbc53e953a257766f918a9c1f54db66c97ab5eba",
+    "non_merge": true,
+    "first_parent": true,
+    "exact_declared_paths": true,
+    "name_status": [
+      "A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-plan.md",
+      "A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.step.md"
+    ]
+  },
+  "review_basis": "clean committed C5S candidate checkout; direct non-merge first-parent admission from C5 cbc53e953a257766f918a9c1f54db66c97ab5eba; C5S name_status parses to the exact two A-tab-path and four M-tab-path entries; state surfaces agree on committed C3S candidate/receipt, passing C4 evidence for C3 cbee5f23310b973d9e52e4e1c662ca1d9f9169d8, C5 cbc53e953a257766f918a9c1f54db66c97ab5eba, C6 pending, C7-C8 not started; no Reviewer, Phase 4.5, push, PR, or Human review claim",
+  "verdict": "approved|needs-rework",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {"ADDRESS": [], "DISCUSS": [], "SKIP": []},
+  "recorded_by": "Independent Plan-Reviewer"
+}
+```
+
+The C5S reviewer must fail closed for an uncommitted/dirty candidate, a parent other than C5, a
+merge, unlisted path, malformed or non-tab `name_status`, inconsistent C3S/C4/C5/C6–C8 state, or
+any downstream completion claim. The review log is neither prewritten nor part of C5S. Only an
 Independent Implementer may commit an unchanged approved receipt as the sole evidence receipt
-commit; only then may Planner route Tester for C4.
+commit; only then may Planner route Reviewer for C6.
 
 ### C4 correction Tester evidence
 
