@@ -1,0 +1,42 @@
+{
+  "schema_version": "canonical-identity-pipeline.archify-visual-overflow.correction-plan-review.v1",
+  "topic": "canonical-identity-pipeline",
+  "correction_id": "canonical-identity-pipeline/archify-visual-overflow",
+  "candidate_commit": "5a64c637ddb2452fb7227abcc2cb54a8051900e3",
+  "candidate_tree": "1a561fda1d098d9f2f2f197469183dffc93ac701",
+  "reviewed_paths": [
+    {
+      "path": "analysis/canonical-identity-pipeline/technical-spec.md",
+      "blob_sha": "53c0374865479abf7564a33b54f547c0e6359669"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "blob_sha": "5249e008c17aad48ac5d311dedc5b05b20ea653f"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.spec.md",
+      "blob_sha": "42a47b8838546cbc47ff386eeaa261ef9f9b1e34"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md",
+      "blob_sha": "acb9a626dc9fc1a0768bd63ce264168436fc7abc"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.archify-visual-overflow.correction-plan.md",
+      "blob_sha": "c6b320a55a559a62ce1e988793a666204a9bd372"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.archify-visual-overflow.correction-step.md",
+      "blob_sha": "62c381d7415763f3386ce5fd3e2f659dfe4f8d3b"
+    }
+  ],
+  "review_basis": "clean committed C0 tree; non-merge first-parent admission from a1847ee39ca877816496d341c243f7d6a168d9f8; parent current-truth sync; exact CAVO1 scope and evidence route",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}
