@@ -1,6 +1,6 @@
 ---
 topic: canonical-identity-pipeline
-phase: planner-phase-4.5-pending
+phase: cavo1-tracker-status-revision-pending-independent-plan-review
 created: 2026-09-14
 updated: 2026-09-15
 ---
@@ -50,10 +50,14 @@ release, tag, or post-merge work has occurred.
 
 ## Tracker-status Synchronization Correction
 
-- [X] Plan-Creator authored the three-path tracker-status synchronization candidate described by
-  `canonical-identity-pipeline.cavo1-tracker-status-sync.correction-plan.md`.
-- [ ] Independent Plan-Reviewer reviews the committed three-path candidate from a clean checkout
-  and writes only
+- [X] **C0 — rejected predecessor:** `05f5ded7e81317c69422aaabe9d6e90a5da1fe6d` is frozen and
+  non-routing. Its S1 review-log contract omitted the exact candidate-admission and feedback-triage
+  shape required for independent review; no S1 review log was written for C0.
+- [X] **C0R — revised child candidate:** this exact three-path child of C0 records the complete S1
+  contract and is awaiting independent Plan-Reviewer review. Its commit, tree, and candidate blob
+  facts are post-commit review facts: only S1 may record them.
+- [ ] **S1 — Independent Plan-Reviewer:** From a clean committed C0R checkout, verify the direct
+  non-merge first-parent admission from C0 and write only
   `canonical-identity-pipeline.cavo1-tracker-status-sync.correction-plan-review-log.json`.
 - [ ] Independent Implementer commits unchanged approved tracker-status review evidence as its
   sole evidence-only commit; Planner then re-evaluates C8. No implementation, Tester, Reviewer,
@@ -64,6 +68,9 @@ release, tag, or post-merge work has occurred.
 - This synchronization preserves the parent topic plan, pipeline implementation, tests, CAVO1
   evidence, and publish scope. It adds no implementation or publish path and does not modify
   `README.md`, `pyproject.toml`, or `uv.lock`.
+- C0 is rejected provenance only. C0R is the sole revised candidate, but it is not routing authority
+  until an independent Plan-Reviewer writes and an Independent Implementer commits an approved S1
+  log under the corrected exact schema.
 - The pre-existing `README.md` and `pyproject.toml` publish diff is outside this candidate and must
   remain unstaged and byte-identical. `uv.lock` has no diff and remains outside scope.
 - Missing, mismatched, or non-passing committed C1–C7 evidence; an unlisted path; a dirty candidate
