@@ -1,0 +1,58 @@
+{
+  "schema_version": "canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan-review.v2",
+  "topic": "canonical-identity-pipeline",
+  "correction_id": "canonical-identity-pipeline/concrete-stage-override-status-sync",
+  "candidate_commit": "10f655e455ac383f76fe48fbc6744a3c727850a5",
+  "candidate_tree": "b8b10a85c2d4868d694e1e40ca433273fe70db1e",
+  "reviewed_paths": [
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan.md",
+      "blob_sha": "1c4e1a0da24044262b63d6c526f93a7450bed3b6"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-step.md",
+      "blob_sha": "3ed1b20787026d4b4eee8f3b79569a28deedadac"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md",
+      "blob_sha": "adb39beb98d876db18fbb03c2af9aad93c1647e8"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md",
+      "blob_sha": "c320f4f38a00b23ca9580580c4f0dfa3c2cbee50"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "blob_sha": "fa66443dd79a0b9cb2a02caf4e2947ea8916bb55"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md",
+      "blob_sha": "657e600d194dcee5457047e7c92f77e8b0ff7923"
+    }
+  ],
+  "first_parent_admission": {
+    "candidate_commit": "10f655e455ac383f76fe48fbc6744a3c727850a5",
+    "candidate_tree": "b8b10a85c2d4868d694e1e40ca433273fe70db1e",
+    "parent_commit": "46b707c209839f64935beb08e4db8a1b565c8114",
+    "non_merge": true,
+    "first_parent": true,
+    "exact_declared_paths": true,
+    "name_status": [
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.step.md"
+    ]
+  },
+  "review_basis": "clean committed C0S-R1 candidate checkout; direct non-merge first-parent admission from rejected C0S 46b707c209839f64935beb08e4db8a1b565c8114; C0S-R1 name_status parses to six actual M-tab-path entries; four state surfaces agree on frozen C0/C1/C2 facts, rejected C0S, C0S-R1 review pending, C3 pending, and C4-C8 not started; no implementation, Tester, Reviewer, publish, push, PR, or Human review claim",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}
