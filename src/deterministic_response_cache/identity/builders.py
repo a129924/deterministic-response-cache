@@ -60,21 +60,71 @@ def _run_pipeline(identity: RawIdentity, stages: _PipelineStages) -> Success[Has
     return Success(stages.hasher.hash(serialized_identity))
 
 
-def _snapshot_value(value: PureType) -> PureType:
-    """Return the canonical immutable representation for one source value."""
-    if isinstance(value, (list, tuple)):
-        return tuple(_snapshot_value(item) for item in value)
+class _SnapshotList(tuple[PureType, ...]):
+    """Preserve a source list's type boundary in an immutable private snapshot."""
+
+    __slots__ = ()
+
+    _canonical_identity_list = True
+
+
+def _snapshot_value(value: object, active_ids: set[int]) -> object:
+    """Return an immutable valid snapshot while preserving an active cyclic leaf."""
+    if isinstance(value, list):
+        return _snapshot_list(cast("list[object]", value), active_ids)
+    if isinstance(value, tuple):
+        return _snapshot_tuple(cast("tuple[object, ...]", value), active_ids)
     if isinstance(value, Mapping):
-        mapping = cast("Mapping[str, PureType]", value)
-        snapshot = {key: _snapshot_value(item) for key, item in mapping.items()}
-        return MappingProxyType(snapshot)
+        return _snapshot_mapping(cast("Mapping[object, object]", value), active_ids)
     return value
+
+
+def _snapshot_list(value: list[object], active_ids: set[int]) -> object:
+    """Snapshot a source list without erasing its list-versus-tuple boundary."""
+    value_id = id(value)
+    if value_id in active_ids:
+        return value
+    active_ids.add(value_id)
+    try:
+        return _SnapshotList(cast("PureType", _snapshot_value(item, active_ids)) for item in value)
+    finally:
+        active_ids.remove(value_id)
+
+
+def _snapshot_tuple(value: tuple[object, ...], active_ids: set[int]) -> object:
+    """Snapshot a source tuple while retaining its immutable tuple boundary."""
+    value_id = id(value)
+    if value_id in active_ids:
+        return value
+    active_ids.add(value_id)
+    try:
+        return tuple(cast("PureType", _snapshot_value(item, active_ids)) for item in value)
+    finally:
+        active_ids.remove(value_id)
+
+
+def _snapshot_mapping(value: Mapping[object, object], active_ids: set[int]) -> object:
+    """Snapshot a mapping recursively while retaining the original invalid key values."""
+    value_id = id(value)
+    if value_id in active_ids:
+        return value
+    active_ids.add(value_id)
+    try:
+        snapshot: dict[object, object] = {
+            key: _snapshot_value(item, active_ids) for key, item in value.items()
+        }
+        return MappingProxyType(snapshot)
+    finally:
+        active_ids.remove(value_id)
 
 
 def _source_snapshot(source: IdentitySource) -> RawIdentity:
     """Recursively snapshot source values before they cross the validation boundary."""
     fields = tuple(
-        IdentityField(name, _snapshot_value(value))
+        IdentityField(
+            name,
+            cast("PureType", _snapshot_value(value, set())),
+        )
         for name, value in source.identity_fields().items()
     )
     return RawIdentity(fields=fields)

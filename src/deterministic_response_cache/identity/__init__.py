@@ -3,6 +3,15 @@
 """Public contracts for deterministic model and feature identity construction."""
 
 from .builders import FeatureIdentityBuilder, ModelIdentityBuilder
+from .canonical import (
+    CanonicalEncoder,
+    CanonicalSerializer,
+    CanonicalSorter,
+    PureTypeValidator,
+    SHA256Hasher,
+    default_feature_identity_builder,
+    default_model_identity_builder,
+)
 from .contracts import (
     CompleteRequestIdentity,
     EncodedIdentity,
@@ -29,6 +38,9 @@ from .contracts import (
 )
 
 __all__ = [
+    "CanonicalEncoder",
+    "CanonicalSerializer",
+    "CanonicalSorter",
     "CompleteRequestIdentity",
     "EncodedIdentity",
     "Encoder",
@@ -44,7 +56,9 @@ __all__ = [
     "ModelIdentity",
     "ModelIdentityBuilder",
     "PureType",
+    "PureTypeValidator",
     "RawIdentity",
+    "SHA256Hasher",
     "SerializedIdentity",
     "Serializer",
     "SortedIdentity",
@@ -53,4 +67,6 @@ __all__ = [
     "ValidatedIdentity",
     "ValidationIssue",
     "Validator",
+    "default_feature_identity_builder",
+    "default_model_identity_builder",
 ]
