@@ -1,6 +1,6 @@
 ---
 topic: canonical-identity-pipeline
-phase: concrete-stage-override-correction-plan-review-pending
+phase: concrete-stage-override-status-sync-plan-review-pending
 created: 2026-09-14
 updated: 2026-09-15
 ---
@@ -10,22 +10,28 @@ updated: 2026-09-15
 ## Current state
 
 The original six-path pipeline subject, completed CAVO1 sequence, and existing draft PR #6 are
-committed historical facts. They remain reviewable provenance but cannot be reused as routing,
-Tester, or Reviewer evidence for `canonical-identity-pipeline/concrete-stage-override` (CSO1).
-CSO1 is the sole active correction route and exists only to add named Protocol inheritance and
-public-method `@override` declarations without altering runtime pipeline behavior.
+committed historical facts. They remain reviewable provenance but cannot be reused as CSO1 routing,
+Tester, or Reviewer evidence. CSO1 exists only to add named Protocol inheritance and public-method
+`@override` declarations without altering runtime pipeline behavior.
 
-| Step | Status | Committed fact |
+| Step | Status | Committed fact / next condition |
 | --- | --- | --- |
-| C0 | complete | Plan-Creator authored this exact six-path CSO1 planning candidate. Its commit/tree/blob facts may be recorded only by C1. |
-| C1 | pending | Independent Plan-Reviewer, from a clean committed C0 checkout, writes only `canonical-identity-pipeline.concrete-stage-override.correction-plan-review-log.json`. |
-| C2 | pending | Independent Implementer commits unchanged approved C1 evidence as its sole evidence-only commit; only then may Planner route C3. |
-| C3 | pending | Implementer creates one new immutable subject that changes exactly `src/deterministic_response_cache/identity/canonical.py` and `tests/test_canonical_identity_pipeline.py`. |
-| C4 | pending | Tester writes only factual same-subject results to `canonical-identity-pipeline.concrete-stage-override.correction-tester-evidence.json`; it does not commit the evidence. |
-| C5 | pending | Independent Implementer commits unchanged passing C4 evidence as its sole evidence-only commit. |
-| C6 | pending | Independent Reviewer consumes committed passing C4 evidence from a clean C5 tree and writes only `canonical-identity-pipeline.concrete-stage-override.correction-implementation-review-log.json`. |
-| C7 | pending | Independent Implementer commits unchanged approved C6 evidence as its sole evidence-only commit. |
-| C8 | pending | Planner performs Phase 4.5 alignment; only then may a bounded Implementer push the correction commits to update existing draft PR #6. |
+| C0 | complete | The immutable six-path CSO1 candidate is `82bb4413f0f53e912b4cf30abb65b5a13c84a93a`. |
+| C1 | complete | The approved independent log at `canonical-identity-pipeline.concrete-stage-override.correction-plan-review-log.json` binds C0 `82bb4413f0f53e912b4cf30abb65b5a13c84a93a`, tree `e2e4c638b74205b7cb158e1c8f92e592970a03bb`, its six reviewed paths/blobs, empty blockers, and empty triage. |
+| C2 | complete | `15c23d67856b627fa8f736eb66694cccc9e5ec89` is the non-merge direct child of C0 and the sole evidence-only commit; its exact one-path diff adds the unchanged approved C1 log. |
+| C3 | pending | After C0S receives committed approved review evidence and Planner routes it, Implementer creates one immutable subject changing exactly `src/deterministic_response_cache/identity/canonical.py` and `tests/test_canonical_identity_pipeline.py`. |
+| C4–C8 | not-started | These later CSO1 steps are unavailable until the same C3 subject exists; they are not pending routing authority. |
+
+## C0S status synchronization child
+
+- [X] **C0S — Plan-Creator candidate:** this exact six-path direct child of C2 synchronizes only
+  the parent plan, parent step tracker, CSO1 correction plan, and CSO1 correction step, and adds
+  its paired status-sync artifacts. It does not rewrite C0/C1/C2 evidence or create a reviewer log.
+- [ ] **C1S — Independent Plan-Reviewer:** from a clean committed C0S checkout, writes only
+  `canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan-review-log.json`
+  under the status-sync correction-plan schema.
+- [ ] **C2S — Independent Implementer:** commits unchanged approved C1S evidence as the sole
+  evidence-only commit. Only then may Planner return to CSO1 C3.
 
 ## CSO1 actionable steps
 

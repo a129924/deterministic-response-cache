@@ -11,9 +11,9 @@ current injected-Builder contract.
 
 | Field | Contract |
 | --- | --- |
-| In-Scope | Historical delivery: five concrete stages, two default-builder factories, the cycle-safe private snapshot adjustment, exports, dedicated tests, a delivered Archify dataflow diagram, and publish-time README/version promotion. Active CSO1 correction: only nominal Protocol inheritance and `@override` markers in the five concrete stages plus their direct regression assertions. |
+| In-Scope | Historical delivery: five concrete stages, two default-builder factories, the cycle-safe private snapshot adjustment, exports, dedicated tests, a delivered Archify dataflow diagram, and publish-time README/version promotion. Active CSO1 correction: only nominal Protocol inheritance and `@override` markers in the five concrete stages plus their direct regression assertions. C0S only synchronizes the already-committed CSO1 C1/C2 facts across four planning state surfaces before C3. |
 | Out-Of-Scope | Provider extraction, Response Reuse, CacheStore, runtime retention, model execution, provider adapters, persistence, telemetry, configurable/profile-versioned formats, migration, and cache-key policy. |
-| ReadOnly | Existing Protocol signatures, value-object fields, keyword-only Builder injection signatures, existing direct-import tests, root package surface, `identity/.gitkeep`, BC ownership/source-of-truth architecture files, `builders.py`, `identity/__init__.py`, both Archify artifacts, `README.md`, `pyproject.toml`, and `uv.lock` during CSO1. |
+| ReadOnly | Existing Protocol signatures, value-object fields, keyword-only Builder injection signatures, existing direct-import tests, root package surface, `identity/.gitkeep`, BC ownership/source-of-truth architecture files, `builders.py`, `identity/__init__.py`, both Archify artifacts, `README.md`, `pyproject.toml`, and `uv.lock` during CSO1. C0, C1, C2, all historical evidence, and the C0S reviewer-log path are frozen until their declared writers act. |
 | Written | `identity/canonical.py`, dedicated pipeline tests, Archify source/HTML, planning artifacts, and later role-owned CAVO1 evidence files. |
 | Modify | Historical subject: `identity/builders.py` private snapshot traversal and `identity/__init__.py` exports; `README.md` and `pyproject.toml` only at `publish-in-progress`. Active CSO1 subject: only `identity/canonical.py` and `tests/test_canonical_identity_pipeline.py`. |
 | Deleted | No tracked file. Untracked Archify visual-check sidecars are removed before the subject commit. |
@@ -68,7 +68,14 @@ alternative work.
   excluded from both code and diagram.
 - CAVO1 is completed historical provenance. Its diagrams and all CAVO1 Plan-Reviewer, Tester, and
   Reviewer evidence are not CSO1 routing authority and cannot be reused.
-- CSO1 is the sole active correction route. Its Implementer can modify only `canonical.py` and the
+- CSO1 C0 is the immutable six-path candidate `82bb4413f0f53e912b4cf30abb65b5a13c84a93a`.
+  Its C1 log is an approved record that binds that exact commit, tree, and reviewed blobs. CSO1 C2
+  is the immutable sole-evidence commit `15c23d67856b627fa8f736eb66694cccc9e5ec89`: it is a
+  non-merge direct child of C0 and adds only the unchanged C1 log. These facts are frozen.
+- C0S is a status-only direct child candidate of CSO1 C2. It changes exactly the four CSO1 state
+  surfaces plus its correction plan and correction step. Its independent review must fail closed
+  unless all four surfaces agree that C1 and C2 are complete and C3 is the only pending CSO1 step.
+- CSO1's C3 remains the only pending CSO1 execution step. Its Implementer can modify only `canonical.py` and the
   dedicated pipeline test; it must preserve every current pipeline behavior, direct import,
   published public surface, diagram, and bounded PR scope. The CSO1 correction plan and correction
   step are its detailed evidence-schema authority; these parent artifacts are its current truth.
@@ -76,11 +83,13 @@ alternative work.
 
 ## Status / Allowed Transitions
 
-- **Current**: `concrete-stage-override-correction-plan-review-pending`; the existing draft PR #6
-  remains open, while this six-path CSO1 correction planning candidate awaits an independent
-  correction Plan-Reviewer log. CAVO1 is completed historical provenance.
-- **Execution model**: CSO1 committed candidate → independent CSO1 Plan-Reviewer log →
-  evidence-only CSO1 review-log commit → Implementer immutable two-path CSO1 subject → independent
+- **Current**: `concrete-stage-override-status-sync-plan-review-pending`; CSO1 C1 and C2 are
+  complete historical facts, C3 is the sole pending execution step, C4–C8 are not started, and
+  C0S awaits its own independent Plan-Reviewer log. The existing draft PR #6 remains open; CAVO1
+  is completed historical provenance.
+- **Execution model**: CSO1 C0 → approved C1 log → sole-evidence C2 commit → C0S six-path direct
+  child candidate → independent C0S Plan-Reviewer log → sole-evidence C0S log commit → Planner
+  route to CSO1 C3 → Implementer immutable two-path CSO1 subject → independent
   CSO1 Tester evidence → evidence-only Tester commit → independent CSO1 Reviewer evidence from a
   clean committed tree → evidence-only Reviewer commit → Planner Phase 4.5 alignment → bounded push
   that updates existing draft PR #6 only → Human review and merge.
@@ -130,6 +139,9 @@ alternative work.
 | CSO1 correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md` | Plan-Creator | Active correction trigger, exact two-path subject, and CSO1 extended evidence-schema authority. |
 | CSO1 correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md` | Plan-Creator | Active CSO1 execution and evidence sequence. |
 | CSO1 correction Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan-review-log.json` | Independent Plan-Reviewer | Clean-tree review of this committed six-path candidate; an independent Implementer commits unchanged approved evidence as its sole evidence-only commit. |
+| C0S correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan.md` | Plan-Creator | Status-only C0S admission, four-surface synchronization, and its exact review-log schema. |
+| C0S correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-step.md` | Plan-Creator | C0S candidate, review, evidence-only commit, and return-to-C3 tracker. |
+| C0S correction Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | The sole C0S review artifact; it is written only from a clean committed C0S checkout and then separately committed unchanged by an Independent Implementer. |
 | CSO1 concrete stage subject | `src/deterministic_response_cache/identity/canonical.py` | Implementer | Sole production-code path for named Protocol bases and the five public `@override` markers. |
 | CSO1 concrete stage regression | `tests/test_canonical_identity_pipeline.py` | Implementer | Sole test path; keeps direct-import/pipeline regressions and proves named bases, public markers, and unmarked private helpers. |
 | CSO1 Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-tester-evidence.json` | Tester | Factual same-subject validation only; an independent Implementer commits unchanged passing evidence as its sole evidence-only commit. |
@@ -311,11 +323,16 @@ visual-check sidecars. If promotion is committed but not merged, separately reve
    `docs/architecture/canonical-identity-pipeline.html`, preserve all pipeline semantics/nodes and
    the `Failure` boundary, run showcase validation/delivery/desktop visual-check per round, and
    remove all untracked visual-check sidecars before the immutable subject commit.
-6. After committed approved CSO1 Plan-Reviewer evidence and Planner route, modify only
+6. C0S first synchronizes the four CSO1 state surfaces to the committed C0/C1/C2 facts, receives
+   its own committed approved Plan-Reviewer evidence, and returns routing authority to Planner;
+   it creates no implementation subject, Tester evidence, implementation-review evidence, push, or
+   PR authority.
+7. After committed approved CSO1 Plan-Reviewer evidence, committed approved C0S status-sync
+   review evidence, and a Planner route, modify only
    `src/deterministic_response_cache/identity/canonical.py`: import `override` from `typing`, use
    the five exact named Protocol bases, and decorate only the matching public stage method. Preserve
    all private helpers and existing pipeline behavior.
-7. Modify only `tests/test_canonical_identity_pipeline.py` to preserve direct imports and all
+8. Modify only `tests/test_canonical_identity_pipeline.py` to preserve direct imports and all
    pipeline regression coverage while asserting the exact direct base and `__override__` marker for
    each public stage method and no marker on private helpers. Commit only these two CSO1 paths as a
    new immutable subject.
