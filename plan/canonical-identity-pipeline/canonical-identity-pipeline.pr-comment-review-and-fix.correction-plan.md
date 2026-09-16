@@ -26,9 +26,11 @@ receipt as sole P2 evidence at `618be901c8313447b88e9fec513dea6beb59e534`, a non
 child of P0. The P2 status-sync candidate `fbdbe901a84630089e07792f15b79fb0e67b0861` and its
 committed approved one-path receipt `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a` are complete
 frozen facts. P3 is the completed exact two-path subject
-`b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. The P3 status-sync route is a fresh planning-only
-review gate: it records these completed facts and P4 pending, but does not establish Tester,
-Reviewer, classification, reply, resolution, publish, or merge authority.
+`b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. The committed P3 status-sync candidate
+`2e8fc3230805bf6a09239f8225585cb59d1d22a3` and its discarded untracked receipt are superseded
+nonrouting provenance. The P3 status-alignment route is the fresh planning-only review gate: it
+records these completed facts, supersedes P3 status sync, and keeps P4 pending; it does not
+establish Tester, Reviewer, classification, reply, resolution, publish, or merge authority.
 
 ## Locked implementation scope
 
@@ -95,10 +97,12 @@ or merge parent, dirty candidate, altered `uv.lock`, or prefilled outcome fails 
 | P4/P5 | Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-tester-evidence.json` | Tester | Written only for P3; Independent Implementer commits unchanged passing evidence as a sole one-path commit. |
 | P6/P7 | Implementation-review log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-implementation-review-log.json` | Independent Reviewer | Written only after committed passing P5 evidence; Independent Implementer commits unchanged approved evidence as a sole one-path commit. |
 
-P3 is completed at `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. P4 remains pending until the
-committed approved P3 status-sync receipt restores Planner routing. P8 is Planner-only Phase 4.5
-alignment after P7, using the PRCF1 same-subject full SHA chain and existing Human authorization.
-It permits classification only; it never authorizes approval, merge, release, tag, or post-merge.
+P3 is completed at `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. P3 status sync is superseded
+nonrouting provenance: its receipt was untracked and discarded before review, commit, or reuse.
+P4 remains pending until the committed approved P3 status-alignment receipt restores Planner
+routing. P8 is Planner-only Phase 4.5 alignment after P7, using the PRCF1 same-subject full SHA
+chain and existing Human authorization. It permits classification only; it never authorizes
+approval, merge, release, tag, or post-merge.
 
 ## Evidence schemas
 
