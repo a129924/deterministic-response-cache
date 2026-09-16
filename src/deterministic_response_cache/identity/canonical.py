@@ -9,7 +9,11 @@ from collections.abc import Mapping
 from types import MappingProxyType
 from typing import cast, override
 
-from .builders import FeatureIdentityBuilder, ModelIdentityBuilder
+from .builders import (
+    FeatureIdentityBuilder,
+    ModelIdentityBuilder,
+    _SnapshotList,  # pyright: ignore[reportPrivateUsage]
+)
 from .contracts import (
     EncodedIdentity,
     Encoder,
@@ -40,11 +44,25 @@ def _non_string_path(path: str, kind: str, index: int) -> str:
     return f"{path}[<{kind}:{index}>]"
 
 
+def _contains_surrogate_code_point(value: str) -> bool:
+    """Return whether an exact built-in string contains an invalid surrogate code point."""
+    return any("\ud800" <= character <= "\udfff" for character in value)
+
+
+def _append_surrogate_issue(path: str, issues: list[ValidationIssue]) -> None:
+    """Record the fixed validation finding for one invalid canonical string."""
+    issues.append(
+        ValidationIssue(
+            path=path,
+            code="surrogate-code-point",
+            message="Canonical strings must not contain Unicode surrogate code points.",
+        ),
+    )
+
+
 def _is_snapshot_list(value: object) -> bool:
     """Identify the Builder's private immutable representation of a source list."""
-    return isinstance(value, tuple) and bool(
-        getattr(cast("object", value), "_canonical_identity_list", False),
-    )
+    return type(value) is _SnapshotList
 
 
 class PureTypeValidator(Validator):
@@ -59,15 +77,18 @@ class PureTypeValidator(Validator):
 
         for index, field in enumerate(identity.fields):
             name = cast("object", field.name)
-            if isinstance(name, str):
+            if type(name) is str:
                 valid_fields.append(field)
             else:
                 invalid_fields.append((index, field))
 
         for field in sorted(valid_fields, key=lambda candidate: candidate.name):
+            path = _path_for_string("$", field.name)
+            if _contains_surrogate_code_point(field.name):
+                _append_surrogate_issue(path, issues)
             self._validate_value(
                 field.value,
-                _path_for_string("$", field.name),
+                path,
                 set(),
                 issues,
             )
@@ -95,7 +116,11 @@ class PureTypeValidator(Validator):
         issues: list[ValidationIssue],
     ) -> None:
         """Traverse one value safely and append every reachable validation issue."""
-        if value is None or type(value) in {bool, int, str}:
+        if value is None or type(value) in {bool, int}:
+            return
+        if type(value) is str:
+            if _contains_surrogate_code_point(value):
+                _append_surrogate_issue(path, issues)
             return
         if type(value) is float:
             if not math.isfinite(value):
@@ -181,13 +206,16 @@ class PureTypeValidator(Validator):
             valid_items: list[tuple[str, object]] = []
             invalid_items: list[tuple[int, object]] = []
             for index, (key, item) in enumerate(value.items()):
-                if isinstance(key, str):
+                if type(key) is str:
                     valid_items.append((key, item))
                 else:
                     invalid_items.append((index, item))
 
             for key, item in sorted(valid_items, key=lambda candidate: candidate[0]):
-                self._validate_value(item, _path_for_string(path, key), active_ids, issues)
+                item_path = _path_for_string(path, key)
+                if _contains_surrogate_code_point(key):
+                    _append_surrogate_issue(item_path, issues)
+                self._validate_value(item, item_path, active_ids, issues)
 
             for index, item in invalid_items:
                 item_path = _non_string_path(path, "non-string-key", index)
