@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix
-phase: p7-status-alignment-phase-repair-review-pending
+phase: p7-status-alignment-receipt-status-sync-review-pending
 created: 2026-09-16
 ---
 
@@ -30,8 +30,11 @@ evidence and P5's sole one-path evidence-only commit are both
 is committed unchanged by P7 at `24ef18b835b7646e05bf0fc3f5828349eea52b1d`. P7 status-sync
 candidate `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected immutable nonrouting
 provenance: its uncommitted review outcome is not a receipt and is neither committed, consumed,
-nor reusable. The active P7 status-alignment phase-repair candidate awaits independent
-Plan-Reviewer review. P8 Phase 4.5 is pending and Planner-only; P9–P11 have not started.
+  nor reusable. P7 status-alignment phase-repair candidate
+  `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its unchanged approved sole receipt commit
+  `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts. The active P7
+  status-alignment receipt status-sync candidate awaits a fresh independent Plan-Reviewer receipt.
+  P8 Phase 4.5 is pending and Planner-only; P9–P11 have not started.
 
 ## Fixed route
 
@@ -70,9 +73,12 @@ Plan-Reviewer review. P8 Phase 4.5 is pending and Planner-only; P9–P11 have no
 - [X] **P7 status sync:** Candidate `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected
   immutable nonrouting provenance. Its uncommitted review outcome is not a receipt and is neither
   committed, consumed, nor reusable; it cannot restore routing to P8.
-- [ ] **P7 status-alignment phase repair:** Independent Plan-Reviewer reviews the fresh eight-path
-  planning-only candidate; Independent Implementer may commit its unchanged approved receipt as a
-  sole one-path evidence-only commit. It restores routing to P8 only.
+- [X] **P7 status-alignment phase repair:** Candidate
+  `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its unchanged approved sole receipt commit
+  `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts.
+- [ ] **P7 status-alignment receipt status sync:** Independent Plan-Reviewer reviews the fresh
+  eight-path planning-only candidate; Independent Implementer may commit its unchanged approved
+  receipt as a sole one-path evidence-only commit. It restores routing to P8 only.
 - [ ] **P8:** Planner-only Phase 4.5 alignment may authorize classification only.
 - [ ] **P9:** Independent Reviewer writes only the declared nine-thread classification record.
 - [ ] **P10:** Independent Implementer commits unchanged P9 classification as a sole one-path
@@ -92,7 +98,7 @@ Human decision not to update or commit `uv.lock`.
 
 ## Stop conditions
 
-Any dirty candidate/evidence tree, parent other than declared P7 status-alignment phase-repair
-parent `850c1e66f2d2dc339620ca86e03660f1faef9331`, merge commit, unlisted path, `uv.lock` change,
+Any dirty candidate/evidence tree, parent other than declared P7 status-alignment receipt status-sync
+parent `40824056def6c9d3402e95039af6a931b67ee547`, merge commit, unlisted path, `uv.lock` change,
 missing fresh same-subject evidence, cross-thread identity, or attempted skip resolution fails
 closed. Human alone owns PR approval, merge, release, tag, post-merge, and final summary.

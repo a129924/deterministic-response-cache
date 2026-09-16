@@ -98,7 +98,7 @@ alternative work.
 
 ## Status / Allowed Transitions
 
-- **Current**: `pr-comment-review-and-fix-p7-status-alignment-phase-repair-review-pending`; CSO1 C0/C1/C2,
+- **Current**: `pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync-review-pending`; CSO1 C0/C1/C2,
   C1S/C2S `be0ce355dc777d63b7454488989452183519490a`, C3
   `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`, committed C3S receipt
   `2428e27ecb402efa90fd43e8ba979d615e151cd2`, C5
@@ -127,9 +127,12 @@ alternative work.
   `24ef18b835b7646e05bf0fc3f5828349eea52b1d`. P7 status-sync candidate
   `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected immutable nonrouting provenance: its
   uncommitted review outcome is not a receipt and is neither committed, consumed, nor reusable.
-  The active P7 status-alignment phase-repair candidate corrects only that route's state. P8 Phase
-  4.5 remains pending and Planner-only; P9–P11 have not started. Draft PR #6 remains open and
-  CAVO1 is completed historical provenance.
+  P7 status-alignment phase-repair candidate `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its
+  unchanged approved sole receipt commit `40824056def6c9d3402e95039af6a931b67ee547` are complete
+  frozen facts. The active P7 status-alignment receipt status-sync route records those committed
+  facts only and awaits a fresh independent Plan-Reviewer receipt. P8 Phase 4.5 remains pending
+  and Planner-only; P9–P11 have not started. Draft PR #6 remains open and CAVO1 is completed
+  historical provenance.
 - **Execution model**: CSO1 C0 → approved C1 log → sole-evidence C2 commit → rejected C0S →
   C0S-R1 → approved C1S receipt / sole-evidence C2S commit → immutable C3 subject → C3S six-path
   direct-child candidate → committed approved C3S receipt → C4 Tester evidence → sole-evidence C5
@@ -147,9 +150,11 @@ alternative work.
   `ff19d0aeda3305e6bc743930827408122d18a55a` → approved P6 / sole P7 receipt commit
   `24ef18b835b7646e05bf0fc3f5828349eea52b1d` → rejected P7 status-sync candidate
   `850c1e66f2d2dc339620ca86e03660f1faef9331` / uncommitted nonreceipt review outcome → P7
-  status-alignment phase-repair candidate → independent repair receipt / sole receipt commit →
-  P8–P11 route. Only a later authorized Implementer may update existing draft PR #6; Human
-  reviews and merges.
+  status-alignment phase-repair candidate `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` / sole
+  approved repair receipt commit `40824056def6c9d3402e95039af6a931b67ee547` → P7
+  status-alignment receipt status-sync candidate → fresh independent status-sync receipt / sole
+  receipt commit → P8–P11 route. Only a later authorized Implementer may update existing draft
+  PR #6; Human reviews and merges.
 - **Allowed transitions**:
   - `planned` → `creator-in-progress`
   - `creator-in-progress` → `tester-in-progress`
@@ -235,9 +240,12 @@ alternative work.
 | PRCF1 P7 status-sync correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-sync.correction-plan.md` | Plan-Creator | Rejected immutable nonrouting provenance at `850c1e66f2d2dc339620ca86e03660f1faef9331`; its uncommitted review outcome is not reusable evidence. |
 | PRCF1 P7 status-sync correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-sync.correction-step.md` | Plan-Creator | Rejected P7 status-sync tracking provenance; it cannot route P8. |
 | PRCF1 P7 status-sync Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-sync.correction-plan-review-log.json` | None | No committed receipt exists or is usable from rejected P7 status-sync provenance. |
-| PRCF1 P7 status-alignment phase-repair correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-phase-repair.correction-plan.md` | Plan-Creator | Active eight-path direct-child repair for rejected P7 status-sync state; it creates no P8 alignment result. |
-| PRCF1 P7 status-alignment phase-repair correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-phase-repair.correction-step.md` | Plan-Creator | Active repair tracking; independent approved receipt and sole one-path receipt commit are required before Planner may route P8. |
-| PRCF1 P7 status-alignment phase-repair Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-phase-repair.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole declared repair review artifact, written only after independent review of the committed clean eight-path repair candidate. |
+| PRCF1 P7 status-alignment phase-repair correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-phase-repair.correction-plan.md` | Plan-Creator | Completed frozen eight-path phase repair at `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59`. |
+| PRCF1 P7 status-alignment phase-repair correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-phase-repair.correction-step.md` | Plan-Creator | Completed frozen repair tracking; its receipt commit is `40824056def6c9d3402e95039af6a931b67ee547`. |
+| PRCF1 P7 status-alignment phase-repair Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-phase-repair.correction-plan-review-log.json` | Independent Plan-Reviewer | Completed approved repair receipt, committed unchanged at `40824056def6c9d3402e95039af6a931b67ee547`. |
+| PRCF1 P7 status-alignment receipt status-sync correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync.correction-plan.md` | Plan-Creator | Active eight-path direct-child status synchronization for committed P7 repair facts; it creates no P8 result. |
+| PRCF1 P7 status-alignment receipt status-sync correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync.correction-step.md` | Plan-Creator | Active tracking; a fresh approved receipt and sole one-path receipt commit are required before Planner may route P8. |
+| PRCF1 P7 status-alignment receipt status-sync Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole declared fresh status-sync receipt, written only after independent review of the committed clean eight-path candidate. |
 | PRCF1 thread classification | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.thread-classification.json` | Independent Reviewer | Written only after Planner P8; Independent Implementer commits unchanged classification before bounded replies/resolutions. |
 
 `README.md` and `pyproject.toml` are not part of the immutable implementation subject; they are

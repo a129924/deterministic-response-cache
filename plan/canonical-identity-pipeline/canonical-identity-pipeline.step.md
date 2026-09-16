@@ -1,6 +1,6 @@
 ---
 topic: canonical-identity-pipeline
-phase: pr-comment-review-and-fix-p7-status-alignment-phase-repair-review-pending
+phase: pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync-review-pending
 created: 2026-09-14
 updated: 2026-09-16
 ---
@@ -37,9 +37,12 @@ evidence and P5's sole one-path evidence-only commit are both
 is committed unchanged by P7 at `24ef18b835b7646e05bf0fc3f5828349eea52b1d`. P7 status-sync
 candidate `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected immutable nonrouting
 provenance: its uncommitted review outcome is not a receipt and is neither committed, consumed,
-nor reusable. The active P7 status-alignment phase-repair candidate awaits independent
-Plan-Reviewer review. P8 Phase 4.5 is pending and Planner-only; P9–P11 have not started. None of
-these records can claim C8, publish, merge, thread classification, reply, or resolution authority.
+  nor reusable. P7 status-alignment phase-repair candidate
+  `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its unchanged approved sole receipt commit
+  `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts. The active P7
+  status-alignment receipt status-sync route awaits a fresh independent Plan-Reviewer receipt. P8
+  Phase 4.5 is pending and Planner-only; P9–P11 have not started. None of these records can claim
+  C8, publish, merge, thread classification, reply, or resolution authority.
 
 | Step | Status | Committed fact / next condition |
 | --- | --- | --- |
@@ -67,8 +70,9 @@ these records can claim C8, publish, merge, thread classification, reply, or res
 | PRCF1 P6 | complete | Independent Reviewer wrote approved same-subject evidence; P7 committed it unchanged at `24ef18b835b7646e05bf0fc3f5828349eea52b1d`. |
 | PRCF1 P7 | complete | `24ef18b835b7646e05bf0fc3f5828349eea52b1d` is the non-merge sole one-path evidence-only commit adding the approved P6 review log. |
 | PRCF1 P7 status sync | rejected provenance | `850c1e66f2d2dc339620ca86e03660f1faef9331` and its uncommitted review outcome are immutable nonrouting provenance; no receipt is reusable. |
-| PRCF1 P7 status-alignment phase repair | review pending | Its clean eight-path direct child repairs the active state only; an approved independent receipt and sole one-path receipt commit are required before Planner may route P8. |
-| PRCF1 P8 | pending | Planner-only Phase 4.5 may consume only committed P7 evidence after the committed approved phase-repair receipt restores routing. |
+| PRCF1 P7 status-alignment phase repair | complete | Candidate `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and committed approved sole receipt `40824056def6c9d3402e95039af6a931b67ee547` are frozen facts. |
+| PRCF1 P7 status-alignment receipt status sync | review pending | Its clean eight-path direct child records the completed repair/receipt facts; a fresh approved receipt and sole one-path receipt commit are required before Planner may route P8. |
+| PRCF1 P8 | pending | Planner-only Phase 4.5 may consume only committed P7 evidence after the committed approved status-sync receipt restores routing. |
 | PRCF1 P9–P11 | not started | No classification, reply, resolution, push, or PR outcome is asserted. |
 
 ## C0S-R1 status synchronization repair child
@@ -182,10 +186,13 @@ these records can claim C8, publish, merge, thread classification, reply, or res
 - [X] **P7 status sync:** Candidate `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected
   immutable nonrouting provenance. Its uncommitted review outcome is not a receipt and is neither
   committed, consumed, nor reusable; it does not restore routing to P8.
-- [ ] **P7 status-alignment phase repair:** Independent Plan-Reviewer may write only the declared
-  receipt after reviewing the clean eight-path candidate; Independent Implementer may commit only
-  its unchanged approved receipt as a sole one-path evidence-only commit. It restores routing to
-  P8 only.
+- [X] **P7 status-alignment phase repair:** Candidate
+  `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its unchanged approved sole receipt commit
+  `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts.
+- [ ] **P7 status-alignment receipt status sync:** Independent Plan-Reviewer may write only the
+  fresh declared receipt after reviewing the clean eight-path candidate; Independent Implementer
+  may commit only its unchanged approved receipt as a sole one-path evidence-only commit. It
+  restores routing to P8 only.
 - [ ] **P8:** Planner-only Phase 4.5 alignment verifies PRCF1's same-subject evidence and existing
   Human authorization. It authorizes classification only, never PR approval, merge, release, tag,
   or post-merge.

@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix
-phase: p7-status-alignment-review-pending
+phase: p7-status-alignment-receipt-status-sync-review-pending
 created: 2026-09-16
 ---
 
@@ -41,9 +41,12 @@ evidence and P5's sole evidence-only commit are both
 is committed unchanged by P7 at `24ef18b835b7646e05bf0fc3f5828349eea52b1d`. P7 status-sync
 candidate `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected immutable nonrouting
 provenance: its uncommitted review outcome is not a receipt and is neither committed, consumed,
-nor reusable. The active P7 status-alignment phase-repair route corrects only that state; P8 Phase
-4.5 is pending and Planner-only. P9–P11 have not started. This route establishes no alignment
-result, classification, reply, resolution, publish, or merge authority.
+  nor reusable. P7 status-alignment phase-repair candidate
+  `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its unchanged approved sole receipt commit
+  `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts. The active P7
+  status-alignment receipt status-sync route records those committed facts only and awaits a fresh
+  independent receipt. P8 Phase 4.5 is pending and Planner-only. P9–P11 have not started. This
+  route establishes no alignment result, classification, reply, resolution, publish, or merge authority.
 
 ## Locked implementation scope
 
@@ -121,10 +124,12 @@ phase-repair route. Its candidate `90fc41117b6ff9969c2ea9161d0952b2814b597d` and
 `ff19d0aeda3305e6bc743930827408122d18a55a`, and P7 receipt commit
 `24ef18b835b7646e05bf0fc3f5828349eea52b1d` are completed frozen facts. P7 status-sync candidate
 `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected immutable nonrouting provenance; its
-uncommitted review outcome cannot be reused. P8 is Planner-only Phase 4.5 after the committed
-approved P7 status-alignment phase-repair receipt restores routing, using the PRCF1 same-subject
-full SHA chain and existing Human authorization. It permits classification only; it never
-authorizes approval, merge, release, tag, or post-merge.
+uncommitted review outcome cannot be reused. P7 status-alignment phase-repair candidate
+`87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and committed approved receipt
+`40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts. P8 is Planner-only
+Phase 4.5 only after a fresh approved P7 status-alignment receipt status-sync receipt is committed,
+using the PRCF1 same-subject full SHA chain and existing Human authorization. It permits
+classification only; it never authorizes approval, merge, release, tag, or post-merge.
 
 ## Evidence schemas
 

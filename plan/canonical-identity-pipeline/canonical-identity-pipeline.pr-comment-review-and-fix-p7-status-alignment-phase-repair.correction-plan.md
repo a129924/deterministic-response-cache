@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix-p7-status-alignment-phase-repair
-phase: correction-plan-review-pending
+phase: complete-frozen-provenance
 created: 2026-09-16
 ---
 
@@ -19,10 +19,12 @@ implementation-review log is committed unchanged by P7 at
 
 P7 status-sync candidate `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected immutable
 nonrouting provenance. Its uncommitted Plan-Reviewer outcome is not a receipt and is neither
-committed, consumed, nor reusable. This Human-authorized phase-repair candidate corrects only the
-active state and declares a new independent receipt route. P8 Phase 4.5 remains pending and
-Planner-only; P9–P11 have not started. It creates no alignment result, classification, reply,
-resolution, push, PR, approval, merge, release, tag, or post-merge outcome.
+committed, consumed, nor reusable. This completed Human-authorized phase-repair candidate is
+`87eb3de65d6b5a4efaef745d23e5d6cc34c70c59`; its unchanged approved sole receipt commit is
+`40824056def6c9d3402e95039af6a931b67ee547`. Both are frozen facts. A separate active receipt
+status-sync route owns the remaining state synchronization. P8 Phase 4.5 remains pending and
+Planner-only; P9–P11 have not started. This completed record creates no alignment result,
+classification, reply, resolution, push, PR, approval, merge, release, tag, or post-merge outcome.
 
 ## Locked scope and admission
 
@@ -48,7 +50,7 @@ fails closed.
 
 ## P7 status-alignment phase-repair receipt contract
 
-After this candidate is committed, Independent Plan-Reviewer may write only:
+The completed Independent Plan-Reviewer receipt is:
 
 `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-phase-repair.correction-plan-review-log.json`
 
@@ -125,10 +127,11 @@ eight paths in the displayed order; reviewed-path pairs contain only `path` and 
 blocker. The receipt preserves the seven ADDRESS and two SKIP identifiers without classifying,
 replying to, or resolving a thread.
 
-Only Independent Implementer may commit an unchanged approved receipt as a clean non-merge direct
-child and exact one-path evidence-only commit. That commit restores Planner routing to P8 only; it
-does not authorize P8 itself, classification, replies, resolution, PR approval, merge, release,
-tag, or post-merge work.
+Independent Implementer committed the unchanged approved receipt as the clean non-merge direct
+child and exact one-path evidence-only commit `40824056def6c9d3402e95039af6a931b67ee547`.
+It is frozen provenance. A separate receipt status-sync route must independently record this fact
+before Planner may route P8; this completed record does not authorize P8 itself, classification,
+replies, resolution, PR approval, merge, release, tag, or post-merge work.
 
 ## Stop conditions
 
