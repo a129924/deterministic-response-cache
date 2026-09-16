@@ -1,6 +1,6 @@
 ---
 topic: canonical-identity-pipeline
-phase: pr-comment-review-and-fix-p2-status-sync-review-pending
+phase: pr-comment-review-and-fix-p3-status-sync-review-pending
 created: 2026-09-14
 updated: 2026-09-16
 ---
@@ -21,9 +21,12 @@ is committed at `1123deae24fc37f6755e3eae810d453c40552f9d`; it is completed hist
 C8 remains Planner-only Phase 4.5. PRCF1 P0 candidate
 `bbf3bde597b1adbf074ef832802a6151c330752a`, its approved P1 receipt, and P2's sole one-path
 receipt-evidence commit `618be901c8313447b88e9fec513dea6beb59e534` are complete facts. The
-Human-authorized P2 status-sync candidate awaits its own independent Plan-Reviewer receipt; P3 is
-pending and has no implementation outcome. Neither record can claim C8, publish, merge, thread
-classification, reply, or resolution authority.
+P2 status-sync candidate `fbdbe901a84630089e07792f15b79fb0e67b0861` and committed approved
+one-path receipt `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a` are complete. P3 is the completed
+two-path subject `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. The Human-authorized P3
+status-sync candidate awaits its own independent Plan-Reviewer receipt; P4 is pending and has no
+Tester outcome. None of these records can claim C8, publish, merge, thread classification, reply,
+or resolution authority.
 
 | Step | Status | Committed fact / next condition |
 | --- | --- | --- |
@@ -41,8 +44,10 @@ classification, reply, or resolution authority.
 | PRCF1 P0 | complete | `bbf3bde597b1adbf074ef832802a6151c330752a` is the clean ten-path candidate. |
 | PRCF1 P1 | complete | Independent Plan-Reviewer wrote the approved receipt for P0; its contents are committed unchanged by P2. |
 | PRCF1 P2 | complete | `618be901c8313447b88e9fec513dea6beb59e534` is the non-merge direct child of P0 and sole evidence-only commit adding the approved P1 receipt. |
-| PRCF1 P2 status sync | review pending | Its clean six-path direct child candidate records only P0/P1/P2 completion and P3 pending; its fresh receipt cannot be reused as P3 evidence. |
-| PRCF1 P3 | pending | Implementer may create the exact two-path subject only after the committed approved P2 status-sync receipt restores routing. |
+| PRCF1 P2 status sync | complete | `fbdbe901a84630089e07792f15b79fb0e67b0861` is the clean six-path candidate and `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a` its committed approved sole receipt; both are frozen facts. |
+| PRCF1 P3 | complete | `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5` is the non-merge exact two-path canonicalization subject, direct child of the committed P2 status-sync receipt. |
+| PRCF1 P3 status sync | review pending | Its clean eight-path direct child candidate records only P2 status-sync/P3 completion and P4 pending; its fresh receipt cannot be reused as P4 evidence. |
+| PRCF1 P4 | pending | Tester may write factual P3 evidence only after the committed approved P3 status-sync receipt restores routing. |
 
 ## C0S-R1 status synchronization repair child
 
@@ -127,12 +132,16 @@ classification, reply, or resolution authority.
 - [X] **P2:** Independent Implementer committed the unchanged approved P1 receipt alone at
   `618be901c8313447b88e9fec513dea6beb59e534`, the non-merge direct child of P0 and sole one-path
   evidence-only commit.
-- [ ] **P2 status sync:** Independent Plan-Reviewer must review the fresh clean six-path status
-  candidate; Independent Implementer may commit only its unchanged approved receipt as a sole
-  one-path evidence-only commit. This route records P0/P1/P2 facts only.
-- [ ] **P3:** Implementer creates a fresh two-path subject: only `identity/canonical.py` and
+- [X] **P2 status sync:** Independent Plan-Reviewer approved the clean six-path candidate
+  `fbdbe901a84630089e07792f15b79fb0e67b0861`; Independent Implementer committed its unchanged
+  approved receipt alone at `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a`.
+- [X] **P3:** Implementer committed the exact two-path subject
+  `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`: only `identity/canonical.py` and
   `tests/test_canonical_identity_pipeline.py` implement exact-string rejection, surrogate rejection,
   non-BMP literal handoff/hash proof, and exact `_SnapshotList` type identity.
+- [ ] **P3 status sync:** Independent Plan-Reviewer must review the fresh clean eight-path status
+  candidate; Independent Implementer may commit only its unchanged approved receipt as a sole
+  one-path evidence-only commit. This route records P2 status-sync/P3 facts only.
 - [ ] **P4/P5:** Tester writes factual passing same-subject evidence; Independent Implementer
   commits it unchanged as the sole evidence-only commit.
 - [ ] **P6/P7:** Independent Reviewer consumes P5's committed passing evidence and writes only

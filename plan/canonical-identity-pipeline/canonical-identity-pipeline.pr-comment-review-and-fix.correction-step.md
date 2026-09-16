@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix
-phase: p2-status-sync-review-pending
+phase: p3-status-sync-review-pending
 created: 2026-09-16
 ---
 
@@ -13,10 +13,12 @@ created: 2026-09-16
 unchanged, and read-only. C7S's one-path independent approval receipt is committed at that same
 SHA and is frozen provenance; C8 remains Planner-only. PRCF1 P0 candidate
 `bbf3bde597b1adbf074ef832802a6151c330752a`, its approved P1 receipt, and P2's sole one-path
-receipt-evidence commit `618be901c8313447b88e9fec513dea6beb59e534` are complete facts. The
-fresh P2 status-sync candidate awaits independent Plan-Reviewer review. P3 is pending and has no
-implementation subject, Tester evidence, independent review, classification, reply, resolution,
-push, or merge result.
+receipt-evidence commit `618be901c8313447b88e9fec513dea6beb59e534` are complete facts. The P2
+status-sync candidate `fbdbe901a84630089e07792f15b79fb0e67b0861` and its committed approved
+one-path receipt `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a` are complete. P3 is the completed
+exact two-path implementation subject `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. The fresh P3
+status-sync candidate awaits independent Plan-Reviewer review. P4 is pending and has no Tester,
+independent review, classification, reply, resolution, push, or merge result.
 
 ## Fixed route
 
@@ -26,10 +28,15 @@ push, or merge result.
 - [X] **P1:** Independent Plan-Reviewer wrote the declared approved receipt from clean P0.
 - [X] **P2:** Independent Implementer committed the unchanged approved P1 evidence as the sole
   one-path evidence-only commit `618be901c8313447b88e9fec513dea6beb59e534`.
-- [ ] **P2 status sync:** Independent Plan-Reviewer reviews the fresh six-path planning-only
+- [X] **P2 status sync:** Independent Plan-Reviewer approved the clean six-path planning-only
+  candidate `fbdbe901a84630089e07792f15b79fb0e67b0861`; Independent Implementer committed its
+  unchanged approved receipt as sole one-path evidence-only commit
+  `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a`.
+- [X] **P3:** Implementer committed the exact two-path canonicalization subject
+  `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`.
+- [ ] **P3 status sync:** Independent Plan-Reviewer reviews the fresh eight-path planning-only
   candidate; Independent Implementer may commit its unchanged approved receipt as a sole one-path
-  evidence-only commit. It does not create or approve P3.
-- [ ] **P3:** Implementer commits the fresh exact two-path canonicalization subject.
+  evidence-only commit. It does not create or approve P4.
 - [ ] **P4:** Tester writes factual P3 evidence only.
 - [ ] **P5:** Independent Implementer commits unchanged passing P4 evidence as a sole one-path
   evidence-only commit.

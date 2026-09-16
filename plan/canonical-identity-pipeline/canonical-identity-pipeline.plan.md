@@ -98,7 +98,7 @@ alternative work.
 
 ## Status / Allowed Transitions
 
-- **Current**: `pr-comment-review-and-fix-p2-status-sync-review-pending`; CSO1 C0/C1/C2,
+- **Current**: `pr-comment-review-and-fix-p3-status-sync-review-pending`; CSO1 C0/C1/C2,
   C1S/C2S `be0ce355dc777d63b7454488989452183519490a`, C3
   `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`, committed C3S receipt
   `2428e27ecb402efa90fd43e8ba979d615e151cd2`, C5
@@ -108,10 +108,13 @@ alternative work.
   `1123deae24fc37f6755e3eae810d453c40552f9d` are complete historical facts. C8 Phase 4.5 is
   pending and Planner-only. PRCF1 P0 candidate `bbf3bde597b1adbf074ef832802a6151c330752a`,
   its approved P1 receipt, and its sole P2 receipt-evidence commit
-  `618be901c8313447b88e9fec513dea6beb59e534` are complete facts. The fresh P2 status-sync
-  candidate awaits independent Plan-Reviewer review; P3 remains pending with no implementation,
-  Tester, Reviewer, classification, reply, resolution, publish, or merge outcome. Draft PR #6
-  remains open and CAVO1 is completed historical provenance.
+  `618be901c8313447b88e9fec513dea6beb59e534` are complete facts. The P2 status-sync candidate
+  `fbdbe901a84630089e07792f15b79fb0e67b0861` and its committed approved sole receipt
+  `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a` are complete facts. P3 is the committed exact
+  two-path implementation subject `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. The fresh P3
+  status-sync candidate awaits independent Plan-Reviewer review; P4 is pending with no Tester,
+  Reviewer, classification, reply, resolution, publish, or merge outcome. Draft PR #6 remains
+  open and CAVO1 is completed historical provenance.
 - **Execution model**: CSO1 C0 → approved C1 log → sole-evidence C2 commit → rejected C0S →
   C0S-R1 → approved C1S receipt / sole-evidence C2S commit → immutable C3 subject → C3S six-path
   direct-child candidate → committed approved C3S receipt → C4 Tester evidence → sole-evidence C5
@@ -120,8 +123,9 @@ alternative work.
   commit → C7S eight-path direct-child candidate → independent C7S Plan-Reviewer receipt →
   committed C7S receipt `1123deae24fc37f6755e3eae810d453c40552f9d` → Planner C8 Phase 4.5
   alignment → PRCF1 P0 → approved P1 receipt → sole P2 receipt-evidence commit → independent
-  review and sole evidence-only commit of the P2 status-sync route → fresh P3–P11 route. Only a
-  later authorized Implementer may update existing draft PR #6; Human reviews and merges.
+  review and sole evidence-only P2 status-sync receipt commit → immutable P3 subject →
+  independent review and sole evidence-only P3 status-sync receipt commit → fresh P4–P11 route.
+  Only a later authorized Implementer may update existing draft PR #6; Human reviews and merges.
 - **Allowed transitions**:
   - `planned` → `creator-in-progress`
   - `creator-in-progress` → `tester-in-progress`
@@ -187,9 +191,12 @@ alternative work.
 | PRCF1 correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md` | Plan-Creator | Exact ten-path candidate authority, PRCF1 scope, evidence schemas, and nine-thread route. |
 | PRCF1 correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md` | Plan-Creator | P0–P11 state tracking; no route may skip a fresh same-subject gate. |
 | PRCF1 Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan-review-log.json` | Independent Plan-Reviewer | Written only from clean committed P0; Independent Implementer separately commits unchanged approved evidence. |
-| PRCF1 P2 status-sync correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-plan.md` | Plan-Creator | Six-path direct-child status synchronization for committed P0/P1/P2 facts; it introduces no implementation work. |
-| PRCF1 P2 status-sync correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-step.md` | Plan-Creator | Tracks P2 status synchronization review/receipt while P3 remains pending. |
-| PRCF1 P2 status-sync Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole P2 status-sync review artifact, written from the clean committed six-path candidate and separately committed unchanged by an Independent Implementer. |
+| PRCF1 P2 status-sync correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-plan.md` | Plan-Creator | Completed six-path direct-child status synchronization for committed P0/P1/P2 facts; it introduced no implementation work. |
+| PRCF1 P2 status-sync correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-step.md` | Plan-Creator | Completed P2 status synchronization record; it restored routing to P3 only. |
+| PRCF1 P2 status-sync Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Completed sole P2 status-sync review artifact, committed unchanged by an Independent Implementer at `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a`. |
+| PRCF1 P3 status-sync correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-sync.correction-plan.md` | Plan-Creator | Eight-path direct-child status synchronization for committed P2 status-sync/P3 facts; it introduces no implementation work. |
+| PRCF1 P3 status-sync correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-sync.correction-step.md` | Plan-Creator | Tracks P3 status synchronization review/receipt while P4 remains pending. |
+| PRCF1 P3 status-sync Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole P3 status-sync review artifact, to be written from the clean committed eight-path candidate and separately committed unchanged by an Independent Implementer. |
 | PRCF1 Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-tester-evidence.json` | Tester | Factual P3 evidence only; Independent Implementer separately commits unchanged passing evidence. |
 | PRCF1 implementation-review log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-implementation-review-log.json` | Independent Reviewer | Written only after committed passing P5 evidence; Independent Implementer separately commits unchanged approved evidence. |
 | PRCF1 thread classification | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.thread-classification.json` | Independent Reviewer | Written only after Planner P8; Independent Implementer commits unchanged classification before bounded replies/resolutions. |
