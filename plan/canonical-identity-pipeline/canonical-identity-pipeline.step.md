@@ -1,6 +1,6 @@
 ---
 topic: canonical-identity-pipeline
-phase: pr-comment-review-and-fix-p5-status-sync-review-pending
+phase: pr-comment-review-and-fix-p7-status-sync-review-pending
 created: 2026-09-14
 updated: 2026-09-16
 ---
@@ -31,10 +31,13 @@ its independent review found the stale `p2-status-sync-review-pending` PRCF1 pla
 phase-repair candidate `90fc41117b6ff9969c2ea9161d0952b2814b597d` and its committed approved
 receipt `c1751ac832c6b08f2173e1d51627f70cad0e0ca3` are complete frozen facts. P4 factual passing
 evidence and P5's sole one-path evidence-only commit are both
-`dff14f3fdc0a06bf907ea82074e02862a05a36d1`. The P5 status-sync candidate awaits independent
-Plan-Reviewer review. P6 is pending and may consume only that committed P5 evidence; P7–P11 have
-not started. None of these records can claim C8, publish, merge, thread classification, reply, or
-resolution authority.
+`dff14f3fdc0a06bf907ea82074e02862a05a36d1`. P5 status-sync candidate
+`7a604e27d5fc00089b9c00ebeec3a142bb5ea861` and its unchanged approved sole receipt commit
+`ff19d0aeda3305e6bc743930827408122d18a55a` are complete frozen facts. P6's approved review log
+is committed unchanged by P7 at `24ef18b835b7646e05bf0fc3f5828349eea52b1d`. The fresh P7
+status-sync candidate awaits independent Plan-Reviewer review. P8 Phase 4.5 is pending and
+Planner-only; P9–P11 have not started. None of these records can claim C8, publish, merge, thread
+classification, reply, or resolution authority.
 
 | Step | Status | Committed fact / next condition |
 | --- | --- | --- |
@@ -58,9 +61,12 @@ resolution authority.
 | PRCF1 P3 status alignment | rejected provenance | `d430493b068608171043a7794d86c549bfc8b6fc` is rejected immutable nonrouting provenance; its review found only the stale PRCF1 phase and no receipt is reusable. |
 | PRCF1 P3 status-alignment phase repair | complete | Candidate `90fc41117b6ff9969c2ea9161d0952b2814b597d` and committed approved receipt `c1751ac832c6b08f2173e1d51627f70cad0e0ca3` are frozen facts. |
 | PRCF1 P4/P5 | complete | Passing same-subject Tester evidence and its sole one-path evidence-only commit are `dff14f3fdc0a06bf907ea82074e02862a05a36d1`. |
-| PRCF1 P5 status sync | review pending | Its clean eight-path direct child records completed phase-repair/P4/P5 facts and cannot create P6 evidence. |
-| PRCF1 P6 | pending | Independent Reviewer may consume only committed P5 evidence `dff14f3fdc0a06bf907ea82074e02862a05a36d1` after the committed approved P5 status-sync receipt restores routing. |
-| PRCF1 P7–P11 | not started | No review receipt, classification, reply, resolution, push, or PR outcome is asserted. |
+| PRCF1 P5 status sync | complete | Candidate `7a604e27d5fc00089b9c00ebeec3a142bb5ea861` and committed approved sole receipt `ff19d0aeda3305e6bc743930827408122d18a55a` are frozen facts. |
+| PRCF1 P6 | complete | Independent Reviewer wrote approved same-subject evidence; P7 committed it unchanged at `24ef18b835b7646e05bf0fc3f5828349eea52b1d`. |
+| PRCF1 P7 | complete | `24ef18b835b7646e05bf0fc3f5828349eea52b1d` is the non-merge sole one-path evidence-only commit adding the approved P6 review log. |
+| PRCF1 P7 status sync | review pending | Its clean eight-path direct child records completed P5S/P6/P7 facts and cannot create a P8 alignment result. |
+| PRCF1 P8 | pending | Planner-only Phase 4.5 may consume only committed P7 evidence after the committed approved P7 status-sync receipt restores routing. |
+| PRCF1 P9–P11 | not started | No classification, reply, resolution, push, or PR outcome is asserted. |
 
 ## C0S-R1 status synchronization repair child
 
@@ -165,13 +171,14 @@ resolution authority.
 - [X] **P4/P5:** Tester wrote factual passing same-subject evidence and Independent Implementer
   committed it unchanged as sole one-path evidence-only commit
   `dff14f3fdc0a06bf907ea82074e02862a05a36d1`.
-- [ ] **P5 status sync:** Independent Plan-Reviewer reviews the clean eight-path candidate;
+- [X] **P5 status sync:** Candidate `7a604e27d5fc00089b9c00ebeec3a142bb5ea861` and committed
+  approved sole receipt `ff19d0aeda3305e6bc743930827408122d18a55a` restored routing to P6 only.
+- [X] **P6/P7:** Independent Reviewer wrote approved same-subject review evidence; Independent
+  Implementer committed it unchanged as the sole one-path evidence-only commit
+  `24ef18b835b7646e05bf0fc3f5828349eea52b1d`.
+- [ ] **P7 status sync:** Independent Plan-Reviewer reviews the clean eight-path candidate;
   Independent Implementer may commit only its unchanged approved receipt as a sole one-path
-  evidence-only commit. It restores routing to P6 only.
-- [ ] **P6/P7:** Independent Reviewer may consume only committed P5 evidence
-  `dff14f3fdc0a06bf907ea82074e02862a05a36d1` after the P5 status-sync receipt commit, then writes
-  same-subject review evidence; Independent Implementer commits it unchanged as the sole
-  evidence-only commit.
+  evidence-only commit. It restores routing to P8 only.
 - [ ] **P8:** Planner-only Phase 4.5 alignment verifies PRCF1's same-subject evidence and existing
   Human authorization. It authorizes classification only, never PR approval, merge, release, tag,
   or post-merge.

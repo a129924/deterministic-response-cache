@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix
-phase: p5-status-sync-review-pending
+phase: p7-status-sync-review-pending
 created: 2026-09-16
 ---
 
@@ -24,9 +24,12 @@ its independent review found the stale `p2-status-sync-review-pending` plan phas
 phase-repair candidate `90fc41117b6ff9969c2ea9161d0952b2814b597d` and its committed approved
 receipt `c1751ac832c6b08f2173e1d51627f70cad0e0ca3` are complete frozen facts. P4 factual passing
 evidence and P5's sole one-path evidence-only commit are both
-`dff14f3fdc0a06bf907ea82074e02862a05a36d1`. The P5 status-sync candidate awaits independent
-Plan-Reviewer review. P6 remains pending and may consume only that committed P5 evidence; P7–P11
-have not started.
+`dff14f3fdc0a06bf907ea82074e02862a05a36d1`. P5 status-sync candidate
+`7a604e27d5fc00089b9c00ebeec3a142bb5ea861` and its unchanged approved sole receipt commit
+`ff19d0aeda3305e6bc743930827408122d18a55a` are complete frozen facts. P6's approved review log
+is committed unchanged by P7 at `24ef18b835b7646e05bf0fc3f5828349eea52b1d`. The P7 status-sync
+candidate awaits independent Plan-Reviewer review. P8 Phase 4.5 is pending and Planner-only;
+P9–P11 have not started.
 
 ## Fixed route
 
@@ -56,14 +59,15 @@ have not started.
   `dff14f3fdc0a06bf907ea82074e02862a05a36d1`.
 - [X] **P5:** `dff14f3fdc0a06bf907ea82074e02862a05a36d1` is the sole one-path evidence-only commit
   that adds the unchanged passing P4 evidence.
-- [ ] **P5 status sync:** Independent Plan-Reviewer reviews the fresh eight-path planning-only
+- [X] **P5 status sync:** Candidate `7a604e27d5fc00089b9c00ebeec3a142bb5ea861` and committed
+  approved sole receipt `ff19d0aeda3305e6bc743930827408122d18a55a` restored routing to P6 only.
+- [X] **P6:** Independent Reviewer wrote the approved PRCF1 implementation-review log from the
+  committed same-subject P5 evidence.
+- [X] **P7:** Independent Implementer committed unchanged approved P6 evidence as the sole
+  one-path evidence-only commit `24ef18b835b7646e05bf0fc3f5828349eea52b1d`.
+- [ ] **P7 status sync:** Independent Plan-Reviewer reviews the fresh eight-path planning-only
   candidate; Independent Implementer may commit its unchanged approved receipt as a sole one-path
-  evidence-only commit. It restores routing to P6 only.
-- [ ] **P6:** Independent Reviewer may consume only committed P5 evidence
-  `dff14f3fdc0a06bf907ea82074e02862a05a36d1` after the P5 status-sync receipt commit, then writes
-  only the PRCF1 implementation-review log.
-- [ ] **P7:** Independent Implementer commits unchanged approved P6 evidence as a sole one-path
-  evidence-only commit.
+  evidence-only commit. It restores routing to P8 only.
 - [ ] **P8:** Planner-only Phase 4.5 alignment may authorize classification only.
 - [ ] **P9:** Independent Reviewer writes only the declared nine-thread classification record.
 - [ ] **P10:** Independent Implementer commits unchanged P9 classification as a sole one-path
@@ -83,7 +87,7 @@ Human decision not to update or commit `uv.lock`.
 
 ## Stop conditions
 
-Any dirty candidate/evidence tree, parent other than declared P5 status-sync parent
-`dff14f3fdc0a06bf907ea82074e02862a05a36d1`, merge commit, unlisted path, `uv.lock` change,
+Any dirty candidate/evidence tree, parent other than declared P7 status-sync parent
+`24ef18b835b7646e05bf0fc3f5828349eea52b1d`, merge commit, unlisted path, `uv.lock` change,
 missing fresh same-subject evidence, cross-thread identity, or attempted skip resolution fails
 closed. Human alone owns PR approval, merge, release, tag, post-merge, and final summary.

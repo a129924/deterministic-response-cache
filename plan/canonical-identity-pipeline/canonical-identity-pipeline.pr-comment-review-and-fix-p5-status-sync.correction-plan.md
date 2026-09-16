@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix-p5-status-sync
-phase: correction-plan-review-pending
+phase: complete-frozen-provenance
 created: 2026-09-16
 ---
 
@@ -18,11 +18,13 @@ provenance. The follow-up phase-repair candidate
 
 Tester then wrote factual passing P4 evidence for that same P3 subject, and Independent
 Implementer committed it unchanged as sole one-path P5 evidence-only commit
-`dff14f3fdc0a06bf907ea82074e02862a05a36d1`. This Human-authorized status-sync candidate records
-those committed facts only. P6 is pending and may consume only P5 evidence committed at
-`dff14f3fdc0a06bf907ea82074e02862a05a36d1`; P7–P11 are not started. It creates no P6 review
-log, classification, reply, resolution, push, PR, approval, merge, release, tag, or post-merge
-outcome.
+`dff14f3fdc0a06bf907ea82074e02862a05a36d1`. This status-sync candidate was committed at
+`7a604e27d5fc00089b9c00ebeec3a142bb5ea861`, and its unchanged approved receipt was committed
+as sole one-path evidence at `ff19d0aeda3305e6bc743930827408122d18a55a`; both are complete
+frozen facts. P6's approved review log is committed unchanged by P7 at
+`24ef18b835b7646e05bf0fc3f5828349eea52b1d`. P8 Phase 4.5 remains pending and Planner-only.
+This completed route creates no alignment result, classification, reply, resolution, push, PR,
+approval, merge, release, tag, or post-merge outcome.
 
 ## Locked scope and admission
 
@@ -47,7 +49,7 @@ altered `uv.lock`, missing P3/phase-repair/P4/P5 fact, or P6 completion claim fa
 
 ## P5 status-sync receipt contract
 
-After this candidate is committed, Independent Plan-Reviewer may write only:
+The completed Independent Plan-Reviewer receipt is:
 
 `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p5-status-sync.correction-plan-review-log.json`
 
@@ -123,15 +125,15 @@ entries. Every SHA is lowercase 40-hex. `approved` requires empty `blocking_issu
 `needs-rework` requires at least one non-empty blocker. The receipt preserves the seven ADDRESS
 and two SKIP identifiers without classifying, replying to, or resolving a thread.
 
-Only Independent Implementer may commit an unchanged approved receipt as a clean non-merge direct
-child and exact one-path evidence-only commit. That commit restores Planner routing to P6 only; it
-does not authorize P6 itself, implementation review, classification, replies, resolution, PR
-approval, merge, release, tag, or post-merge work.
+Independent Implementer committed the unchanged approved receipt as the clean non-merge direct-child
+and exact one-path evidence-only commit `ff19d0aeda3305e6bc743930827408122d18a55a`. It restored
+Planner routing to P6 only and did not itself authorize implementation review, classification,
+replies, resolution, PR approval, merge, release, tag, or post-merge work.
 
 ## Stop conditions
 
-Missing committed P3, phase-repair, P4, or P5 facts; a reused or pre-created receipt; a
-non-approved or separately uncommitted P5 status-sync receipt; candidate/evidence/subject conflict;
-or an attempt to expand the eight paths is `blocked` and returns to Planner. Worktree or candidate
-identity conflict is `human-check`. Human alone owns PR review, merge, release, tag, post-merge,
-and final summary.
+This frozen provenance cannot be reopened, used to infer P8 completion, change `uv.lock`, or act
+on PR #6 or its threads. Missing P5S/P6/P7 facts, a candidate/evidence/subject conflict, or an
+attempt to expand a later correction path is `blocked` and returns to Planner. Worktree or
+candidate identity conflict is `human-check`. Human alone owns PR review, merge, release, tag,
+post-merge, and final summary.
