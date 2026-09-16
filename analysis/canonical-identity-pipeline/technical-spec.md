@@ -11,11 +11,17 @@ keyword-only injection contract. No other BC may derive or reinterpret identity.
 `canonical-identity-pipeline/archify-visual-overflow` (CAVO1) 已完成，並保留為不可重用的
 historical evidence；它不再是 active route，也不授權重新修改 Archify artifacts。
 
-Human 的 explicit correction 要求目前只啟用
-`canonical-identity-pipeline/concrete-stage-override` (CSO1)。本 technical specification、
-parent plan/specification/step tracker 與 paired CSO1 correction plan/step 是 CSO1 的 current
-truth；CSO1 只能修改 `canonical.py` 與 dedicated test，不能改變 pipeline 語意、公開 API
-shape、Builder injection、diagram、README、version 或 BC scope。
+CSO1 的 C7S independent Plan-Reviewer receipt 已在
+`1123deae24fc37f6755e3eae810d453c40552f9d` committed；它和 C0–C7 均為 completed
+historical provenance。C8 remains Planner-only Phase 4.5 alignment and does not by itself
+authorize a code change, push, merge, or thread resolution.
+
+Human 已授權 `canonical-identity-pipeline/pr-comment-review-and-fix` (PRCF1) 作為 draft PR #6
+的獨立 correction route。它只處理已分類的 canonicalization 與 status-tracker comments；
+immutable implementation subject 只能修改 `canonical.py` 與 dedicated test，不能改變
+Protocol、handoff value object、Builder injection、exports、diagram、README、version、`uv.lock`
+或 BC scope。`uv.lock` has been restored to `1123deae24fc37f6755e3eae810d453c40552f9d` and is
+read-only for the entire route.
 
 ## Public concrete API
 
@@ -78,14 +84,14 @@ keep explicit injection.
 
 ## v1 validation and sorting
 
-- Valid leaves are exactly `None`, `bool`, `int`, finite `float`, and `str`; valid containers are
+- Valid leaves are exactly `None`, `bool`, `int`, finite `float`, and exact built-in `str`; valid containers are
   recursive `list`, `tuple`, and `Mapping` with only `str` keys.
 - `bool` is distinct from `int`; `NaN`, positive/negative infinity, `set`, an unsupported runtime
   value, a non-string field or mapping key, and an object-reference cycle are invalid.
 - `PureTypeValidator` traverses every reachable child it can safely inspect, collects all
   discoverable `ValidationIssue` values, and returns one `Failure` when any issue exists. Its
   issue codes are `non-string-field-name`, `non-string-mapping-key`, `non-finite-float`,
-  `cyclic-reference`, and `unsupported-type`.
+  `cyclic-reference`, `surrogate-code-point`, and `unsupported-type`.
 - Validation paths use a root `$`, JSON-quoted field/key segments (for example `$["model"]`),
   and zero-based list/tuple indexes. Issue order follows deterministic pre-order traversal; valid
   string mapping keys use Unicode code-point order, while invalid mapping keys retain input order
@@ -95,8 +101,16 @@ keep explicit injection.
   leaf so `PureTypeValidator` reports `cyclic-reference` rather than raising recursion before
   Validator. Since validation fails, no mutable invalid leaf reaches a later stage. No public Builder
   behavior or signature changes.
-- `CanonicalSorter` sorts top-level `IdentityField` values by `name` and every valid mapping by
-  Unicode code-point `str` key. It retains list/tuple order and their distinction.
+- A top-level field name and a mapping key are canonical strings only when `type(value) is str`.
+  A `str` subclass is invalid as `non-string-field-name` or `non-string-mapping-key`; it must never
+  reach a user-defined comparator. This exact-type rule applies before either field or key sorting.
+- Every exact built-in string in a canonical position—top-level field name, mapping key, or scalar
+  string value—must contain no Unicode surrogate code point (`U+D800` through `U+DFFF`). Each
+  occurrence adds `surrogate-code-point` at its deterministic canonical path, while validation
+  continues to collect other safely reachable issues. Non-BMP Unicode scalar values remain valid.
+- `CanonicalSorter` sorts top-level `IdentityField` values by exact built-in `str` name and every
+  valid mapping by exact built-in `str` key in Unicode code-point order. It retains list/tuple order
+  and their distinction.
 
 ## v1 encoding, serialization, and hashing
 
@@ -136,6 +150,23 @@ test may describe `Encoder.encode()` as returning a list, dictionary, or interme
 whitespace insertion, or reparsing. Each canonical Encoder output therefore has a one-to-one
 `SerializedIdentity.value`. `SHA256Hasher` calculates `hashlib.sha256(bytes).hexdigest()` and
 returns its lowercase 64-character result in `Hash`.
+
+### PRCF1 canonicalization repair requirements
+
+- The Builder's private `_SnapshotList` may be imported by `canonical.py` solely to recognize the
+  immutable list snapshot. `_is_snapshot_list(value)` must use exact type identity
+  (`type(value) is _SnapshotList`), not a public/name-based/truthy attribute lookup and not
+  subclass acceptance. A tuple subclass that exposes `_canonical_identity_list = True` is still a
+  tuple for direct-stage canonicalization and must encode with the `"tuple"` tag.
+- Valid non-BMP text must pass through Encoder as ASCII JSON escape text, Serializer as exactly the
+  same ASCII bytes, and SHA-256 as a literal fixed digest. For the model field
+  `{"value": "\U0001f600"}`, the root `EncodedIdentity.value` is exactly
+  `["identity",[[["str","value"],["str","\ud83d\ude00"]]]]`,
+  `SerializedIdentity.value` is its ASCII byte sequence, and `Hash.value` is exactly
+  `02c41d0e0019f532fef8e908145a6fdde13c471e23d3a64c2d70a8ef6b3372a6`.
+- A Python string containing either surrogate half, including a literal paired-surrogate spelling,
+  is invalid rather than an alternative valid encoding of the non-BMP scalar. This prevents the
+  `ensure_ascii=True` representation from collapsing distinct Python inputs.
 
 ## Data flow and failure boundary
 
@@ -183,6 +214,23 @@ contains exactly these two paths:
 Archify artifacts, `README.md`, `pyproject.toml`, `uv.lock`, all existing regression modules, and
 every evidence/provenance path are read-only for the CSO1 subject. An unlisted path is plan drift
 and returns to Planner.
+
+### PRCF1 exact correction subject
+
+After a committed approved PRCF1 Plan-Reviewer receipt, the only immutable PRCF1 implementation
+subject paths are:
+
+| Classification | Path | Intended change |
+| --- | --- | --- |
+| Modify | `src/deterministic_response_cache/identity/canonical.py` | Enforce exact built-in string validity, reject all surrogate code points at canonical-string positions, and use exact `_SnapshotList` type identity. |
+| Modify | `tests/test_canonical_identity_pipeline.py` | Preserve direct imports and add strict-string, surrogate, non-BMP exact handoff/hash, and nonspoofable snapshot-list regressions. |
+
+The tests must prove: a comparison-overriding `str` subclass is rejected at both top-level and
+mapping-key boundaries without invoking its comparator; surrogate field/key/scalar positions yield
+all deterministic `surrogate-code-point` findings and short-circuit downstream stages; a non-BMP
+scalar yields the exact ASCII Encoder string, matching Serializer bytes, and the fixed hash above;
+and an attribute-spoofing tuple subclass remains `tuple`. `contracts.py`, `builders.py`, exports,
+all non-dedicated tests, diagram files, `README.md`, `pyproject.toml`, and `uv.lock` are read-only.
 
 ## Diagram contract
 

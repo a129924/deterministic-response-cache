@@ -11,9 +11,9 @@ current injected-Builder contract.
 
 | Field | Contract |
 | --- | --- |
-| In-Scope | Historical delivery: five concrete stages, two default-builder factories, the cycle-safe private snapshot adjustment, exports, dedicated tests, a delivered Archify dataflow diagram, and publish-time README/version promotion. Completed CSO1 C3 adds only nominal Protocol inheritance and `@override` markers in the five concrete stages plus their direct regression assertions. C7S only synchronizes committed C5S/C6/C7 facts across the declared eight planning paths and declares its future receipt before Planner may consider pending C8 Phase 4.5. |
+| In-Scope | Historical delivery: five concrete stages, two default-builder factories, the cycle-safe private snapshot adjustment, exports, dedicated tests, a delivered Archify dataflow diagram, and publish-time README/version promotion. Completed CSO1 C3 adds only nominal Protocol inheritance and `@override` markers in the five concrete stages plus their direct regression assertions. C7S is completed frozen status provenance; PRCF1 adds exact-string/surrogate/snapshot-type corrections, dedicated regressions, and bounded nine-thread classification/reply routing. |
 | Out-Of-Scope | Provider extraction, Response Reuse, CacheStore, runtime retention, model execution, provider adapters, persistence, telemetry, configurable/profile-versioned formats, migration, and cache-key policy. |
-| ReadOnly | Existing Protocol signatures, value-object fields, keyword-only Builder injection signatures, existing direct-import tests, root package surface, `identity/.gitkeep`, BC ownership/source-of-truth architecture files, `builders.py`, `identity/__init__.py`, both Archify artifacts, `README.md`, `pyproject.toml`, and `uv.lock` during CSO1. C0–C7, rejected C0S, C0S-R1/C1S/C2S, C3S, C5S, and all historical evidence are frozen; the future C7S receipt path is writable only by its Independent Plan-Reviewer. |
+| ReadOnly | Existing Protocol signatures, value-object fields, keyword-only Builder injection signatures, existing direct-import tests, root package surface, `identity/.gitkeep`, BC ownership/source-of-truth architecture files, `builders.py`, `identity/__init__.py`, both Archify artifacts, `README.md`, `pyproject.toml`, and `uv.lock` during CSO1. C0–C7, rejected C0S, C0S-R1/C1S/C2S, C3S, C5S, C7S's committed receipt, and all historical evidence are frozen. |
 | Written | `identity/canonical.py`, dedicated pipeline tests, Archify source/HTML, planning artifacts, and later role-owned CAVO1 evidence files. |
 | Modify | Historical subject: `identity/builders.py` private snapshot traversal and `identity/__init__.py` exports; `README.md` and `pyproject.toml` only at `publish-in-progress`. Completed CSO1 C3 subject: only `identity/canonical.py` and `tests/test_canonical_identity_pipeline.py`; active C7S changes only its declared eight planning paths. |
 | Deleted | No tracked file. Untracked Archify visual-check sidecars are removed before the subject commit. |
@@ -53,6 +53,11 @@ alternative work.
   change is authorized.
 - The implementation includes a static Archify dataflow diagram after Python code/test work; it
   explains only this Identity pipeline and its `Failure` short-circuit.
+- PRCF1 preserves the public API and every Protocol/value-object/Builder signature. It tightens
+  canonical strings to exact built-in `str`, rejects Unicode surrogate code points at field-name,
+  mapping-key, and scalar-string positions with `surrogate-code-point`, preserves valid non-BMP
+  Unicode, and recognizes only the exact private `_SnapshotList` type as a snapshotted source list.
+  `uv.lock` is read-only under an explicit Human decision.
 
 ## Boundaries / Exclusions
 
@@ -85,31 +90,33 @@ alternative work.
   C5S candidate `2d042543d60a40519e174326462a6739f9b19f6c` and its committed approved receipt
   `92f7db262bec8d774f1c6f8b1b2b16aaa82b624e` are complete frozen status facts. C6 wrote the
   approved same-subject review log and C7 committed it unchanged as the sole evidence-only commit
-  `e4a2e67f29a4562f6244c5031498426b610d0a91`. C7S is the direct-child, status-only candidate of
-  C7: it changes only the parent plan/step, CSO1 plan/step, completed C5S plan/step, and paired C7S
-  plan/step; it records C5S/C6/C7 complete, declares only its future receipt, and leaves C8 Phase
-  4.5 pending without claiming its outcome.
+  `e4a2e67f29a4562f6244c5031498426b610d0a91`. C7S's direct-child status candidate was reviewed
+  and its independent approval receipt is committed at
+  `1123deae24fc37f6755e3eae810d453c40552f9d`. C7S is complete frozen provenance; C8 Phase 4.5
+  remains pending and Planner-only without a claimed outcome.
 - A path not listed below is a plan-alignment stop and returns to Planner.
 
 ## Status / Allowed Transitions
 
-- **Current**: `concrete-stage-override-c7-status-sync-plan-review-pending`; CSO1 C0/C1/C2,
+- **Current**: `pr-comment-review-and-fix-plan-review-pending`; CSO1 C0/C1/C2,
   C1S/C2S `be0ce355dc777d63b7454488989452183519490a`, C3
   `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`, committed C3S receipt
   `2428e27ecb402efa90fd43e8ba979d615e151cd2`, C5
   `cbc53e953a257766f918a9c1f54db66c97ab5eba`, C5S receipt
   `92f7db262bec8d774f1c6f8b1b2b16aaa82b624e`, and C7
-  `e4a2e67f29a4562f6244c5031498426b610d0a91` are complete historical facts. C7S awaits an
-  independent Plan-Reviewer receipt and sole receipt commit; C8 Phase 4.5 is pending and remains
-  Planner-only. The existing draft PR #6 remains open; CAVO1 is completed historical provenance.
+  `e4a2e67f29a4562f6244c5031498426b610d0a91`, and C7S receipt
+  `1123deae24fc37f6755e3eae810d453c40552f9d` are complete historical facts. C8 Phase 4.5 is
+  pending and Planner-only. PRCF1 is pending independent Plan-Reviewer review; draft PR #6 remains
+  open and CAVO1 is completed historical provenance.
 - **Execution model**: CSO1 C0 → approved C1 log → sole-evidence C2 commit → rejected C0S →
   C0S-R1 → approved C1S receipt / sole-evidence C2S commit → immutable C3 subject → C3S six-path
   direct-child candidate → committed approved C3S receipt → C4 Tester evidence → sole-evidence C5
   commit → C5S six-path direct-child candidate → independent C5S Plan-Reviewer receipt →
   sole-evidence C5S receipt commit → Planner route to CSO1 C6 Reviewer → sole-evidence C7 review
   commit → C7S eight-path direct-child candidate → independent C7S Plan-Reviewer receipt →
-  sole-evidence C7S receipt commit → Planner C8 Phase 4.5 alignment. Only a later authorized
-  Implementer may perform the bounded push that updates existing draft PR #6; Human reviews and merges.
+  committed C7S receipt `1123deae24fc37f6755e3eae810d453c40552f9d` → Planner C8 Phase 4.5
+  alignment → PRCF1's fresh P0–P11 route. Only a later authorized Implementer may update existing
+  draft PR #6; Human reviews and merges.
 - **Allowed transitions**:
   - `planned` → `creator-in-progress`
   - `creator-in-progress` → `tester-in-progress`
@@ -165,13 +172,19 @@ alternative work.
 | C5S correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-plan.md` | Plan-Creator | Direct-child C5 status synchronization, six-path admission, and C5S review-receipt schema. |
 | C5S correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-step.md` | Plan-Creator | C5S candidate, review-receipt commit, and only then return to C6 Reviewer routing. |
 | C5S correction Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c5-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole C5S review artifact, written from the clean committed six-path candidate and separately committed unchanged by an Independent Implementer. |
-| C7S correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan.md` | Plan-Creator | Direct-child C7 status synchronization, eight-path admission, and future C7S review-receipt schema. |
-| C7S correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-step.md` | Plan-Creator | C7S candidate, future review-receipt commit, then Planner-only C8 Phase 4.5. |
-| C7S correction Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Future sole C7S review artifact; it may be written only from a clean committed eight-path candidate and must be separately committed unchanged by an Independent Implementer. |
+| C7S correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan.md` | Plan-Creator | Completed direct-child C7 status synchronization; frozen historical admission/schema record. |
+| C7S correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-step.md` | Plan-Creator | Completed C7S record; C8 remains Planner-only. |
+| C7S correction Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Completed sole C7S review artifact, committed at `1123deae24fc37f6755e3eae810d453c40552f9d`; frozen provenance. |
 | CSO1 concrete stage subject | `src/deterministic_response_cache/identity/canonical.py` | Implementer | Sole production-code path for named Protocol bases and the five public `@override` markers. |
 | CSO1 concrete stage regression | `tests/test_canonical_identity_pipeline.py` | Implementer | Sole test path; keeps direct-import/pipeline regressions and proves named bases, public markers, and unmarked private helpers. |
 | CSO1 Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-tester-evidence.json` | Tester | Factual same-subject validation only; an independent Implementer commits unchanged passing evidence as its sole evidence-only commit. |
 | CSO1 implementation review log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-implementation-review-log.json` | Independent Reviewer | Same-subject CSO1 review after committed passing Tester evidence, from a clean committed tree; an independent Implementer commits unchanged approved evidence as its sole evidence-only commit. |
+| PRCF1 correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md` | Plan-Creator | Exact ten-path candidate authority, PRCF1 scope, evidence schemas, and nine-thread route. |
+| PRCF1 correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md` | Plan-Creator | P0–P11 state tracking; no route may skip a fresh same-subject gate. |
+| PRCF1 Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan-review-log.json` | Independent Plan-Reviewer | Written only from clean committed P0; Independent Implementer separately commits unchanged approved evidence. |
+| PRCF1 Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-tester-evidence.json` | Tester | Factual P3 evidence only; Independent Implementer separately commits unchanged passing evidence. |
+| PRCF1 implementation-review log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-implementation-review-log.json` | Independent Reviewer | Written only after committed passing P5 evidence; Independent Implementer separately commits unchanged approved evidence. |
+| PRCF1 thread classification | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.thread-classification.json` | Independent Reviewer | Written only after Planner P8; Independent Implementer commits unchanged classification before bounded replies/resolutions. |
 
 `README.md` and `pyproject.toml` are not part of the immutable implementation subject; they are
 the stable-library promotion after Phase 4.5 and Human authorization. Archify visual-check contact
@@ -361,11 +374,10 @@ visual-check sidecars. If promotion is committed but not merged, separately reve
    pipeline regression coverage while asserting the exact direct base and `__override__` marker for
    each public stage method and no marker on private helpers, then committed the immutable two-path
    subject `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`.
-9. C3S/C4/C5, C5S receipt, and C6/C7 are completed frozen facts. C7S creates only its eight
-   declared planning paths as C7's non-merge direct child. It records completed C5S/C6/C7, declares
-   only an exact future independent C7S Plan-Reviewer receipt path, and leaves C8 Phase 4.5 pending.
-   Only after that receipt is committed unchanged as sole evidence may Planner select C8; C7S does
-   not create a receipt, Phase 4.5, push, PR, or Human-review authority.
+9. C3S/C4/C5, C5S receipt, C6/C7, and C7S's committed independent approval receipt
+   `1123deae24fc37f6755e3eae810d453c40552f9d` are completed frozen facts. C8 stays Planner-only
+   Phase 4.5 pending. PRCF1 has a fresh exact two-path subject and evidence sequence; it cannot
+   reuse CSO1 evidence or derive a C8 outcome.
 
 ## Validation / Acceptance Checks
 
@@ -424,6 +436,61 @@ mandatory. This correction candidate itself neither selects nor closes an active
 CSO1's correction Plan-Reviewer, Tester, and Reviewer evidence use the exact extended JSON schemas
 in `canonical-identity-pipeline.concrete-stage-override.correction-plan.md`. CAVO1 evidence cannot
 substitute for any CSO1 gate. This candidate itself neither selects nor closes an active candidate.
+
+PRCF1's correction Plan-Reviewer, Tester, independent Reviewer, and later nine-thread
+classification evidence use the exact schemas in
+`canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md`. The sole PRCF1 subject
+is `canonical.py` plus its dedicated test. Its same-subject evidence is new and cannot reuse CAVO1
+or CSO1 records. `uv.lock` is neither an implementation nor a resolution path.
+
+## PRCF1 correction route
+
+C7S's independent approval receipt was committed at
+`1123deae24fc37f6755e3eae810d453c40552f9d`; it is completed historical provenance. C8 remains a
+Planner-only Phase 4.5 gate. PRCF1 is a separate, Human-authorized candidate that is a clean,
+non-merge direct child of that receipt. It does not declare C8 complete or derive merge, release,
+or thread-resolution authority from it.
+
+### Candidate admission
+
+The Plan-Creator candidate changes exactly these ten paths and creates no receipt or execution
+evidence:
+
+1. `analysis/canonical-identity-pipeline/technical-spec.md`
+2. `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan.md`
+3. `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-step.md`
+4. `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md`
+5. `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md`
+6. `plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md`
+7. `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md`
+8. `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md`
+9. `plan/canonical-identity-pipeline/canonical-identity-pipeline.spec.md`
+10. `plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md`
+
+The first-parent diff must contain only those paths. `uv.lock` was restored to the parent and is not
+a candidate, subject, evidence, or publish path.
+
+### Fixed route
+
+1. Independent Plan-Reviewer writes only PRCF1's declared plan-review log from the clean committed
+   candidate; Independent Implementer separately commits unchanged approved content.
+2. The immutable implementation subject then changes only
+   `src/deterministic_response_cache/identity/canonical.py` and
+   `tests/test_canonical_identity_pipeline.py`: exact built-in string acceptance before sorting,
+   all surrogate rejection, fixed non-BMP ASCII bytes/hash proof, and exact `_SnapshotList` type
+   identity.
+3. Tester writes factual same-subject evidence, then Independent Implementer commits it alone.
+   Independent Reviewer writes same-subject review evidence, then Independent Implementer commits
+   it alone. No evidence shares a commit with code, tests, planning, or the other evidence.
+4. Only after Planner Phase 4.5 alignment may Independent Reviewer classify all nine PR threads.
+   Seven are resolvable only when PRCF1 evidence proves their correction; the two `uv.lock` threads
+   remain `skip-not-resolvable` under the explicit Human decision. Implementer may reply and resolve
+   only exact `addressed-and-resolvable` threads. No skipped thread may be resolved; no role may
+   approve, merge, release, tag, or post-merge.
+
+A dirty worktree, parent mismatch, unlisted path, failed/missing/cross-subject evidence, altered
+`uv.lock`, or attempt to resolve a skip is `blocked`; candidate/evidence/thread conflict is
+`human-check`.
 
 ## Post-merge / release actions
 

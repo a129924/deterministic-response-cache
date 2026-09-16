@@ -1,6 +1,6 @@
 ---
 topic: canonical-identity-pipeline
-phase: concrete-stage-override-c7-status-sync-plan-review-pending
+phase: pr-comment-review-and-fix-plan-review-pending
 created: 2026-09-14
 updated: 2026-09-15
 ---
@@ -16,10 +16,11 @@ or Reviewer evidence. C1S/C2S `be0ce355dc777d63b7454488989452183519490a`, C3
 `2428e27ecb402efa90fd43e8ba979d615e151cd2`, C5
 `cbc53e953a257766f918a9c1f54db66c97ab5eba`, C5S receipt
 `92f7db262bec8d774f1c6f8b1b2b16aaa82b624e`, and C7
-`e4a2e67f29a4562f6244c5031498426b610d0a91` are complete. C7S is the sole current planning
-candidate. It declares only a future C7S receipt; C8 Phase 4.5 is pending and Planner-only. CSO1
-exists only to add named Protocol inheritance and public-method `@override` declarations without
-altering runtime pipeline behavior.
+`e4a2e67f29a4562f6244c5031498426b610d0a91` are complete. The C7S independent approval receipt
+is committed at `1123deae24fc37f6755e3eae810d453c40552f9d`; it is completed historical provenance.
+C8 remains Planner-only Phase 4.5. PRCF1 is the sole new Human-authorized correction candidate;
+it has no receipt or implementation outcome yet and cannot claim C8, publish, merge, or thread
+resolution authority.
 
 | Step | Status | Committed fact / next condition |
 | --- | --- | --- |
@@ -32,7 +33,8 @@ altering runtime pipeline behavior.
 | C5S | complete | Candidate `2d042543d60a40519e174326462a6739f9b19f6c` and committed approved receipt `92f7db262bec8d774f1c6f8b1b2b16aaa82b624e` are frozen status facts. |
 | C6 | complete | Independent Reviewer wrote the approved same-subject review log; C7 committed that unchanged evidence at `e4a2e67f29a4562f6244c5031498426b610d0a91`. |
 | C7 | complete | `e4a2e67f29a4562f6244c5031498426b610d0a91` is the non-merge sole evidence-only commit adding only the approved C6 review log. |
-| C8 | pending | C7S receipt must first be independently reviewed and committed unchanged; only Planner may then perform Phase 4.5 alignment. |
+| C7S review/receipt | complete | Independent Plan-Reviewer receipt is the sole one-path commit `1123deae24fc37f6755e3eae810d453c40552f9d`; it is frozen provenance. |
+| C8 | pending | Planner-only Phase 4.5 alignment remains pending; no C8 result is asserted by this planning candidate. |
 
 ## C0S-R1 status synchronization repair child
 
@@ -78,12 +80,11 @@ altering runtime pipeline behavior.
   `e4a2e67f29a4562f6244c5031498426b610d0a91`.
 - [X] **C7S candidate:** Plan-Creator changes exactly the parent plan, parent step, CSO1 plan,
   CSO1 step, completed C5S plan/step, and paired C7S plan/step as C7's non-merge direct child. It
-  synchronizes C5S/C6/C7 complete, declares only the future C7S receipt, and leaves C8 Phase 4.5
-  pending; it does not create a receipt or assert a C8 outcome.
-- [ ] **C7S review:** Independent Plan-Reviewer verifies the clean eight-path direct-child
-  admission and writes only `canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan-review-log.json`.
-- [ ] **C7S receipt commit:** Independent Implementer commits unchanged approved C7S evidence as
-  the sole evidence-only commit. Only then may Planner select C8.
+  synchronized C5S/C6/C7 complete; its independent approval receipt is committed at
+  `1123deae24fc37f6755e3eae810d453c40552f9d`, and C8 Phase 4.5 remains pending without an
+  asserted outcome.
+- [X] **C7S review/receipt:** Independent Plan-Reviewer approval was committed unchanged at
+  `1123deae24fc37f6755e3eae810d453c40552f9d`; this frozen one-path receipt completes C7S only.
 
 ## CSO1 actionable steps
 
@@ -105,6 +106,32 @@ altering runtime pipeline behavior.
   bounded update to draft PR #6. This does not authorize a new PR, PR approval, merge, release,
   tag, post-merge, or final summary.
 
+## PRCF1 — PR comment review and fix
+
+- [X] **precondition:** feature-worktree `uv.lock` was restored exactly to HEAD
+  `1123deae24fc37f6755e3eae810d453c40552f9d`; it is clean and read-only for this route.
+- [X] **P0 candidate:** Plan-Creator committed exactly the ten declared planning paths as a clean,
+  non-merge direct child of `1123deae24fc37f6755e3eae810d453c40552f9d`; it creates no PRCF1
+  receipt, Tester evidence, Reviewer evidence, classification record, code, test, push, or reply.
+- [ ] **P1/P2:** Independent Plan-Reviewer writes only the declared PRCF1 plan-review receipt from
+  the clean P0 checkout; Independent Implementer commits unchanged approved evidence alone.
+- [ ] **P3:** Implementer creates a fresh two-path subject: only `identity/canonical.py` and
+  `tests/test_canonical_identity_pipeline.py` implement exact-string rejection, surrogate rejection,
+  non-BMP literal handoff/hash proof, and exact `_SnapshotList` type identity.
+- [ ] **P4/P5:** Tester writes factual passing same-subject evidence; Independent Implementer
+  commits it unchanged as the sole evidence-only commit.
+- [ ] **P6/P7:** Independent Reviewer consumes P5's committed passing evidence and writes only
+  same-subject review evidence; Independent Implementer commits it unchanged as the sole
+  evidence-only commit.
+- [ ] **P8:** Planner-only Phase 4.5 alignment verifies PRCF1's same-subject evidence and existing
+  Human authorization. It authorizes classification only, never PR approval, merge, release, tag,
+  or post-merge.
+- [ ] **P9/P10:** Independent Reviewer writes the nine-thread classification record only after P8;
+  Independent Implementer commits it unchanged as its sole classification-evidence commit.
+- [ ] **P11:** Implementer posts the declared reply and resolves exactly the seven threads classified
+  `addressed-and-resolvable`. The two Human-directed `uv.lock` SKIP threads receive the declared
+  decision reply but remain unresolved.
+
 ## Historical provenance and stop conditions
 
 - CAVO1's committed Plan-Reviewer, Tester, and Reviewer evidence remains frozen provenance only;
@@ -118,3 +145,7 @@ altering runtime pipeline behavior.
   Candidate/evidence/subject conflict is `human-check`.
 - Human alone owns PR review, merge, release, tag, post-merge, and final summary. CSO1 success can
   update existing draft PR #6 only after Planner Phase 4.5; it never creates or merges a PR.
+- PRCF1 fails closed for a non-exact string acceptance path, missing surrogate finding, non-BMP hash
+  mismatch, attribute-spoofed list tag, any `uv.lock` modification, unlisted implementation path,
+  reused evidence, or reply/resolve action before committed independent classification. A skip is
+  never `addressed-and-resolvable` and must not be resolved.

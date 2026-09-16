@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/concrete-stage-override-c7-status-sync
-phase: correction-plan-review
+phase: complete-historical-provenance
 created: 2026-09-15
 ---
 
@@ -20,10 +20,10 @@ Reviewer wrote approved C6 evidence for immutable C3 subject
 `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`; Independent Implementer committed that unchanged
 evidence as sole C7 evidence-only commit `e4a2e67f29a4562f6244c5031498426b610d0a91`.
 
-C7S is the sole active candidate. It records only C5S/C6/C7 completion, declares its future
-Plan-Reviewer receipt, and leaves C8 Phase 4.5 pending and Planner-only. It creates no receipt,
-Tester evidence, Reviewer evidence, C8 outcome, push, PR, Human-review, merge, release, tag,
-post-merge, or final-summary claim.
+C7S was the sole candidate. Its independent approval receipt is now committed at
+`1123deae24fc37f6755e3eae810d453c40552f9d`; it is completed historical provenance. C8 Phase 4.5
+remains pending and Planner-only. This record creates no C8 outcome, push, PR, Human-review, merge,
+release, tag, post-merge, or final-summary claim.
 
 ## Locked scope and admission
 
@@ -40,17 +40,18 @@ post-merge, or final-summary claim.
   `e4a2e67f29a4562f6244c5031498426b610d0a91`. Its first-parent name-status is exactly two
   `A<TAB>path` entries (the paired C7S plan/step) and six `M<TAB>path` entries (completed C5S
   plan/step, CSO1 plan/step, and parent plan/step), in the lexical order above.
-- No C7S candidate commit SHA, tree SHA, blob SHA, review outcome, or receipt is prefilled. The
-  declared C7S review-log path is not created by this candidate.
+- Before the C7S candidate commit, no candidate SHA, tree SHA, blob SHA, review outcome, or receipt
+  was prefilled. The declared review-log path was not part of that candidate.
 - All code, tests, analysis, evidence, diagrams, README, `pyproject.toml`, `uv.lock`, publish, PR,
   and historic paths are read-only.
 
-## Future receipt schema and route
+## Completed receipt schema and historical route
 
-1. Plan-Creator commits this clean eight-path C7S candidate.
-2. Independent Plan-Reviewer, from the candidate's clean committed checkout, may write only
-   `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan-review-log.json`.
-3. The future receipt is one JSON object with
+1. Plan-Creator committed the clean eight-path C7S candidate.
+2. Independent Plan-Reviewer wrote only
+   `plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan-review-log.json`
+   from that clean committed checkout.
+3. The completed receipt is one JSON object with
    `schema_version: "canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan-review.v1"`
    and exactly these top-level keys:
    `schema_version`, `topic`, `correction_id`, `candidate_commit`, `candidate_tree`,
@@ -72,13 +73,20 @@ post-merge, or final-summary claim.
    M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md
    M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.step.md
    ```
-4. Only an Independent Implementer may commit an unchanged approved C7S receipt as the sole
-   evidence-only commit. Only then may Planner select C8 Phase 4.5; C8 has no outcome declared by
-   C7S.
+4. The approved receipt is committed as exact one-path historical evidence
+   `1123deae24fc37f6755e3eae810d453c40552f9d`. It restored only Planner authority to select C8;
+   C8 has no outcome declared by C7S.
 
 ## Stop conditions
 
-Fail closed and return to Planner for a dirty or uncommitted candidate, parent other than C7, a
-merge, any path beyond the declared eight, a name-status other than the exact 2A/6M admission,
-inconsistent C5S/C6/C7/C8 facts, a prefilled C7S receipt/outcome, or any C8/publish/PR/Human-review
-claim. Candidate, evidence, subject, or worktree conflict is `human-check`.
+The completed C7S record remains fail-closed historical provenance: any attempt to rewrite its
+candidate/receipt, treat it as a PRCF1 evidence record, infer C8 completion, or claim
+publish/PR/Human-review authority is `blocked`. Candidate, evidence, subject, or worktree conflict
+is `human-check`.
+
+## Completion record
+
+The declared receipt path was written by Independent Plan-Reviewer and committed as the exact
+one-path commit `1123deae24fc37f6755e3eae810d453c40552f9d`. It is immutable C7S provenance.
+Subsequent PRCF1 planning may cite only that C7S is complete and C8 is Planner-only; it may not
+rewrite this candidate, reuse its receipt as PRCF1 evidence, or infer a C8 result.

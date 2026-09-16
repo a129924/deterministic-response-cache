@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/concrete-stage-override-c7-status-sync
-phase: correction-plan-review
+phase: complete-historical-provenance
 created: 2026-09-15
 ---
 
@@ -12,8 +12,9 @@ created: 2026-09-15
 C5S candidate `2d042543d60a40519e174326462a6739f9b19f6c` and committed approved receipt
 `92f7db262bec8d774f1c6f8b1b2b16aaa82b624e` are complete frozen status facts. C6 approved
 same-subject review evidence for C3 is committed unchanged by sole C7 evidence-only commit
-`e4a2e67f29a4562f6244c5031498426b610d0a91`. C7S is the sole active candidate. It declares only
-its future receipt; C8 Phase 4.5 is pending and Planner-only.
+`e4a2e67f29a4562f6244c5031498426b610d0a91`. C7S's independent approval receipt is committed at
+`1123deae24fc37f6755e3eae810d453c40552f9d`; C7S is complete frozen provenance. C8 Phase 4.5
+remains pending and Planner-only.
 
 ## Fixed route
 
@@ -24,18 +25,15 @@ its future receipt; C8 Phase 4.5 is pending and Planner-only.
   `e4a2e67f29a4562f6244c5031498426b610d0a91`.
 - [X] **C7S candidate:** Plan-Creator changes exactly completed C5S plan/step, paired C7S
   plan/step, CSO1 plan/step, and parent plan/step as C7's non-merge direct child. Its exact
-  admission is two `A<TAB>path` and six `M<TAB>path` entries; it records C5S/C6/C7 complete,
-  declares only a future receipt, and leaves C8 pending.
-- [ ] **C7S review:** Independent Plan-Reviewer verifies the clean committed eight-path candidate
-  and writes only `canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan-review-log.json`.
-- [ ] **C7S receipt commit:** Independent Implementer commits unchanged approved C7S evidence as
-  the sole evidence-only commit. Only then may Planner select C8.
-- [ ] **C8:** Planner-only Phase 4.5 alignment remains pending; no push, PR, Human-review, merge,
-  release, tag, post-merge, or final-summary outcome is asserted.
+  admission is two `A<TAB>path` and six `M<TAB>path` entries; its independent approval receipt is
+  now committed at `1123deae24fc37f6755e3eae810d453c40552f9d`, while C8 remains pending.
+- [X] **C7S review/receipt:** Independent Plan-Reviewer approval was committed as exact one-path
+  receipt `1123deae24fc37f6755e3eae810d453c40552f9d`; it is complete frozen provenance.
+- [ ] **C8:** Planner-only Phase 4.5 alignment remains pending; no outcome is asserted by this
+  historical correction record.
 
 ## Stop conditions
 
-Fail closed and return to Planner for a dirty or uncommitted candidate, a non-C7 or merge parent,
-any unlisted path, malformed 2A/6M tab-based name-status, stale C5S/C6/C7/C8 facts, a prefilled
-C7S receipt/outcome, or any C8/publish/PR/Human-review claim. Candidate/evidence/subject conflict
-is `human-check`.
+Fail closed and return to Planner for any attempt to rewrite the completed C7S candidate/receipt,
+infer C8 completion, reuse the receipt as PRCF1 evidence, or claim C8/publish/PR/Human-review
+authority. Candidate/evidence/subject conflict is `human-check`.

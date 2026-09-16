@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/concrete-stage-override
-phase: concrete-stage-override-c7-status-sync-plan-review-pending
+phase: concrete-stage-override-complete-prcf1-successor-pending
 created: 2026-09-15
 ---
 
@@ -26,9 +26,10 @@ evidence and Independent Implementer committed it unchanged as C5
 `cbc53e953a257766f918a9c1f54db66c97ab5eba`. C5S candidate
 `2d042543d60a40519e174326462a6739f9b19f6c` and its committed approved receipt
 `92f7db262bec8d774f1c6f8b1b2b16aaa82b624e` are complete. C6 wrote approved same-subject review
-evidence and C7 committed it unchanged as `e4a2e67f29a4562f6244c5031498426b610d0a91`. C7S is
-the only active status-only child candidate: it records C5S/C6/C7 complete across eight planning
-paths, declares only a future receipt, and leaves C8 Phase 4.5 pending without push or PR authority.
+evidence and C7 committed it unchanged as `e4a2e67f29a4562f6244c5031498426b610d0a91`. The C7S
+independent approval receipt is committed at `1123deae24fc37f6755e3eae810d453c40552f9d`; it is
+completed frozen provenance. C8 remains Planner-only Phase 4.5 without push, PR, or merge
+authority. PRCF1 is a distinct successor route with fresh evidence requirements.
 
 ## Correction workflow
 
@@ -70,10 +71,10 @@ paths, declares only a future receipt, and leaves C8 Phase 4.5 pending without p
   evidence-only commit `e4a2e67f29a4562f6244c5031498426b610d0a91`.
 - [X] C7S — Plan-Creator creates this exact eight-path, non-merge direct child candidate of C7:
   parent plan/step, this CSO1 plan/step, completed C5S plan/step, and paired C7S plan/step. It
-  records C5S/C6/C7 complete, declares only its future receipt, and leaves C8 pending.
-- [ ] C7S review/receipt — Independent Plan-Reviewer writes only the declared C7S receipt from a
-  clean committed C7S checkout; Independent Implementer then commits the unchanged approved receipt
-  as the sole evidence-only commit.
+  records C5S/C6/C7 complete; its independent approval receipt is committed at
+  `1123deae24fc37f6755e3eae810d453c40552f9d`, and C8 remains Planner-only pending.
+- [X] C7S review/receipt — Independent Plan-Reviewer approval is committed as the one-path receipt
+  `1123deae24fc37f6755e3eae810d453c40552f9d`; it is frozen completed provenance.
 - [ ] C8 — Planner performs Phase 4.5 alignment only after the committed approved C7S receipt. With existing human authorization, an Implementer
   may push only to update existing draft PR #6; merge remains Human-only.
 
@@ -82,10 +83,9 @@ paths, declares only a future receipt, and leaves C8 Phase 4.5 pending without p
 - CAVO1 evidence cannot satisfy C1, C1S, C4, or C6. C1/C2/C1S/C2S are complete only as frozen
   CSO1 historical facts; they cannot be re-used as C3 Tester or Reviewer evidence. A rework needs
   a fresh C3 subject and repeats the C3S/C3–C7 sequence.
-- C7S must be a non-merge direct child of C7 with its exact two-`A<TAB>path` plus six-`M<TAB>path` name-status diff.
-  Any incomplete or inconsistent C5S/C6/C7 fact, C8 state other than pending, another pending
-  CSO1 execution step, prefilled C7S review fact, unlisted path, malformed tab source, dirty
-  worktree, or claim of Phase 4.5/publish/PR completion fails closed and returns to Planner.
+- C7S is completed immutable provenance. Any attempt to rewrite its exact two-`A<TAB>path` plus
+  six-`M<TAB>path` history, use its receipt as PRCF1 evidence, or claim Phase 4.5/publish/PR
+  completion fails closed and returns to Planner.
 - An unlisted path, changed Protocol/value object/Builder injection, marker on any private helper,
   absent marker on a listed public method, or dynamic import is scope/contract drift and returns to
   Planner.

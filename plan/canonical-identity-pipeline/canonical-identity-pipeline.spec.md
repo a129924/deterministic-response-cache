@@ -26,6 +26,11 @@
    Only `validate`, `sort`, `encode`, `serialize`, and `hash`, respectively, bear `@override` and
    expose `__override__ is True`; all private helpers remain unmarked. No Protocol, value object, or
    Builder injection signature changes.
+9. PRCF1 accepts field names and mapping keys only when `type(value) is str`, rejects every
+   surrogate code point at field-name, mapping-key, and scalar-string positions with
+   `surrogate-code-point`, preserves valid non-BMP Unicode through exact ASCII Encoder/Serializer
+   handoffs and SHA-256, and identifies a Builder snapshot list only by exact `_SnapshotList` type.
+   It changes only `canonical.py` and the dedicated pipeline test; `uv.lock` remains unchanged.
 
 ## Behavioral Scenarios
 
@@ -80,6 +85,32 @@
 - **And** every existing direct import, canonical string/bytes handoff, pipeline short-circuit, and
   builder-composition regression remains unchanged.
 
+### Scenario 7: PRCF1 rejects noncanonical strings without comparator execution
+
+- **Given** a `str` subclass with a comparison implementation that raises and a mapping that uses
+  it as either a top-level field name or a nested key.
+- **When** `PureTypeValidator` or a default Builder receives the input.
+- **Then** it returns `Failure` with the relevant non-string-name/key issue before sorting and never
+  invokes the subclass comparator.
+
+### Scenario 8: PRCF1 separates non-BMP Unicode from surrogate code points
+
+- **Given** a valid scalar `"\U0001f600"` and separately field-name, mapping-key, and scalar values
+  containing surrogate code points.
+- **When** the canonical pipeline runs.
+- **Then** the valid scalar produces exactly
+  `EncodedIdentity.value == '["identity",[[["str","value"],["str","\\ud83d\\ude00"]]]]'`, the
+  same strict ASCII Serializer bytes, and hash
+  `02c41d0e0019f532fef8e908145a6fdde13c471e23d3a64c2d70a8ef6b3372a6`; every surrogate occurrence
+  is reported as `surrogate-code-point`, and no downstream stage runs.
+
+### Scenario 9: PRCF1 preserves list/tuple identity under attribute spoofing
+
+- **Given** a tuple subclass exposing `_canonical_identity_list = True`.
+- **When** it crosses the direct public sorter/encoder handoff.
+- **Then** it encodes as `"tuple"`, not `"list"`; only the exact private `_SnapshotList` created by
+  the existing Builder can encode as a source-list snapshot.
+
 ## Error / Edge Cases
 
 - `NaN`, `Infinity`, `-Infinity`, `set`, unsupported custom objects, non-string field names,
@@ -96,3 +127,6 @@
   direct-import tests is plan drift and returns to Planner. CSO1 may modify only
   `canonical.py` and its dedicated test; CAVO1 evidence cannot substitute for CSO1 Plan-Reviewer,
   Tester, or independent Reviewer evidence.
+- PRCF1 also may modify only `canonical.py` and its dedicated direct-import test. `uv.lock` was
+  explicitly restored to HEAD and is read-only; its two review comments are classified as skips,
+  not implementation defects or resolvable threads.
