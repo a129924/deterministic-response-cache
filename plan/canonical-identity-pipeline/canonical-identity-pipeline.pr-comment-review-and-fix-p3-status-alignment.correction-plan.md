@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix-p3-status-alignment
-phase: correction-plan-review-pending
+phase: rejected-provenance
 created: 2026-09-16
 ---
 
@@ -14,10 +14,12 @@ receipt `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a` are complete frozen facts. P3
 exact two-path implementation subject `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`.
 
 P3 status-sync candidate `2e8fc3230805bf6a09239f8225585cb59d1d22a3` is superseded nonrouting
-provenance: its untracked receipt was discarded before review, commit, consumption, or reuse. This
-Human-authorized replacement synchronizes those facts, records the supersession, and keeps P4
-pending. It creates only a fresh independent Plan-Reviewer gate; it does not write a receipt,
-Tester evidence, Reviewer evidence, code, tests, `uv.lock`, PR metadata, or thread activity.
+provenance: its untracked receipt was discarded before review, commit, consumption, or reuse.
+This candidate is rejected immutable nonrouting provenance at
+`d430493b068608171043a7794d86c549bfc8b6fc`: independent Plan-Reviewer review found only that
+the PRCF1 correction-plan frontmatter still declared `p2-status-sync-review-pending`. No receipt
+from this rejected candidate is committed, consumed, or reusable. The separate phase-repair route
+corrects that stale phase, records this rejection, and keeps P4 pending.
 
 ## Locked scope and admission
 
@@ -40,13 +42,14 @@ existing evidence, diagrams, `README.md`, `pyproject.toml`, `uv.lock`, PR metada
 No alignment candidate/tree/blob/review outcome or receipt is prefilled. An unlisted path, dirty
 tree, non-direct or merge parent, altered `uv.lock`, or P4 completion claim fails closed.
 
-## Alignment receipt contract
+## Rejected receipt contract
 
-After this candidate is committed, Independent Plan-Reviewer may write only:
+The declared receipt path is historical only and has no usable committed content:
 
 `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-alignment.correction-plan-review-log.json`
 
-The sole receipt is one JSON object with exactly these top-level keys:
+No actor may create, commit, consume, or reuse an alignment receipt from this rejected candidate.
+The following former schema is retained solely to identify the rejected route:
 
 ```json
 {
@@ -118,15 +121,13 @@ Every SHA is lowercase 40-hex. `approved` requires empty `blocking_issues`; `nee
 requires at least one non-empty blocker. The receipt retains the existing seven ADDRESS and two
 SKIP IDs without classifying, replying to, or resolving a thread.
 
-Only Independent Implementer may commit the unchanged approved receipt as a clean non-merge direct
-child and exact one-path evidence-only commit. That commit restores Planner routing to P4 only; it
-does not authorize P4 itself, testing, implementation review, classification, replies, resolution,
-PR approval, merge, release, tag, or post-merge work.
+No receipt from this route can restore Planner routing to P4 or authorize testing, implementation
+review, classification, replies, resolution, PR approval, merge, release, tag, or post-merge work.
 
 ## Stop conditions
 
-Missing committed P2 status-sync/P3 facts, a recreated or reused P3 status-sync receipt, a
-non-approved or separately uncommitted alignment receipt, candidate/evidence/subject conflict, or
-an attempt to expand the eight paths is `blocked` and returns to Planner. Worktree or candidate
-identity conflict is `human-check`. Human alone owns PR review, merge, release, tag, post-merge,
-and final summary.
+This rejected record cannot be revived, corrected in place, or used to recreate its receipt.
+Missing committed P2 status-sync/P3 facts, any reuse of P3 status-sync or alignment receipt,
+candidate/evidence/subject conflict, or an attempt to expand the separate phase-repair route is
+`blocked` and returns to Planner. Worktree or candidate identity conflict is `human-check`. Human
+alone owns PR review, merge, release, tag, post-merge, and final summary.

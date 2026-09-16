@@ -1,6 +1,6 @@
 ---
 topic: canonical-identity-pipeline
-phase: pr-comment-review-and-fix-p3-status-alignment-review-pending
+phase: pr-comment-review-and-fix-p3-status-alignment-phase-repair-review-pending
 created: 2026-09-14
 updated: 2026-09-16
 ---
@@ -25,10 +25,13 @@ P2 status-sync candidate `fbdbe901a84630089e07792f15b79fb0e67b0861` and committe
 one-path receipt `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a` are complete. P3 is the completed
 two-path subject `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. The committed P3 status-sync
 candidate `2e8fc3230805bf6a09239f8225585cb59d1d22a3` is superseded nonrouting provenance: its
-untracked receipt was discarded before review, commit, or reuse. The Human-authorized P3
-status-alignment candidate awaits its own independent Plan-Reviewer receipt; P4 is pending and
-has no Tester outcome. None of these records can claim C8, publish, merge, thread classification,
-reply, or resolution authority.
+untracked receipt was discarded before review, commit, or reuse. The P3 status-alignment candidate
+`d430493b068608171043a7794d86c549bfc8b6fc` is rejected immutable nonrouting provenance because
+its independent review found the stale `p2-status-sync-review-pending` PRCF1 plan phase. The
+Human-authorized phase-repair candidate corrects that phase to
+`p3-status-alignment-review-pending` and awaits its own independent Plan-Reviewer receipt; P4 is
+pending and has no Tester outcome. None of these records can claim C8, publish, merge, thread
+classification, reply, or resolution authority.
 
 | Step | Status | Committed fact / next condition |
 | --- | --- | --- |
@@ -49,8 +52,9 @@ reply, or resolution authority.
 | PRCF1 P2 status sync | complete | `fbdbe901a84630089e07792f15b79fb0e67b0861` is the clean six-path candidate and `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a` its committed approved sole receipt; both are frozen facts. |
 | PRCF1 P3 | complete | `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5` is the non-merge exact two-path canonicalization subject, direct child of the committed P2 status-sync receipt. |
 | PRCF1 P3 status sync | superseded provenance | `2e8fc3230805bf6a09239f8225585cb59d1d22a3` is the committed eight-path candidate; its untracked receipt was discarded before review, commit, or reuse and cannot route P4. |
-| PRCF1 P3 status alignment | review pending | Its fresh clean eight-path direct child records P2 status-sync/P3 completion, supersedes P3 status sync, and keeps P4 pending. |
-| PRCF1 P4 | pending | Tester may write factual P3 evidence only after the committed approved P3 status-alignment receipt restores routing. |
+| PRCF1 P3 status alignment | rejected provenance | `d430493b068608171043a7794d86c549bfc8b6fc` is rejected immutable nonrouting provenance; its review found only the stale PRCF1 phase and no receipt is reusable. |
+| PRCF1 P3 status-alignment phase repair | review pending | Its clean eight-path direct child corrects the PRCF1 phase to `p3-status-alignment-review-pending`, records the rejected provenance, and keeps P4 pending. |
+| PRCF1 P4 | pending | Tester may write factual P3 evidence only after the committed approved phase-repair receipt restores Planner routing. |
 
 ## C0S-R1 status synchronization repair child
 
@@ -145,10 +149,14 @@ reply, or resolution authority.
 - [X] **P3 status sync:** The clean eight-path candidate
   `2e8fc3230805bf6a09239f8225585cb59d1d22a3` is superseded provenance. Its untracked receipt was
   discarded before review, commit, or reuse; it neither restores routing nor establishes P4.
-- [ ] **P3 status alignment:** Independent Plan-Reviewer must review the fresh clean eight-path
-  status-alignment candidate. Independent Implementer may commit only its unchanged approved
-  receipt as a sole one-path evidence-only commit. This route records P2 status-sync/P3 facts,
-  marks P3 status sync superseded, and keeps P4 pending.
+- [X] **P3 status alignment:** Candidate `d430493b068608171043a7794d86c549bfc8b6fc` is rejected
+  immutable nonrouting provenance. Its independent review found only the stale
+  `p2-status-sync-review-pending` PRCF1 correction-plan phase; no receipt is committed, consumed,
+  or reusable.
+- [ ] **P3 status-alignment phase repair:** Independent Plan-Reviewer must review the fresh clean
+  eight-path phase-repair candidate. Independent Implementer may commit only its unchanged
+  approved receipt as a sole one-path evidence-only commit. This route corrects the PRCF1 phase to
+  `p3-status-alignment-review-pending`, records rejected provenance, and keeps P4 pending.
 - [ ] **P4/P5:** Tester writes factual passing same-subject evidence; Independent Implementer
   commits it unchanged as the sole evidence-only commit.
 - [ ] **P6/P7:** Independent Reviewer consumes P5's committed passing evidence and writes only

@@ -98,7 +98,7 @@ alternative work.
 
 ## Status / Allowed Transitions
 
-- **Current**: `pr-comment-review-and-fix-p3-status-alignment-review-pending`; CSO1 C0/C1/C2,
+- **Current**: `pr-comment-review-and-fix-p3-status-alignment-phase-repair-review-pending`; CSO1 C0/C1/C2,
   C1S/C2S `be0ce355dc777d63b7454488989452183519490a`, C3
   `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`, committed C3S receipt
   `2428e27ecb402efa90fd43e8ba979d615e151cd2`, C5
@@ -113,10 +113,14 @@ alternative work.
   `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a` are complete facts. P3 is the committed exact
   two-path implementation subject `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. The original P3
   status-sync candidate `2e8fc3230805bf6a09239f8225585cb59d1d22a3` is superseded nonrouting
-  provenance: its untracked receipt was discarded before review, commit, or reuse. The fresh P3
-  status-alignment candidate awaits independent Plan-Reviewer review; P4 is pending with no
-  Tester, Reviewer, classification, reply, resolution, publish, or merge outcome. Draft PR #6
-  remains open and CAVO1 is completed historical provenance.
+  provenance: its untracked receipt was discarded before review, commit, or reuse. The P3
+  status-alignment candidate `d430493b068608171043a7794d86c549bfc8b6fc` is rejected immutable
+  nonrouting provenance: its independent review found only that the PRCF1 correction-plan
+  frontmatter still declared `p2-status-sync-review-pending`. The fresh phase-repair candidate
+  corrects that stale phase to `p3-status-alignment-review-pending` and awaits an independent
+  Plan-Reviewer receipt; P4 is pending with no Tester, Reviewer, classification, reply,
+  resolution, publish, or merge outcome. Draft PR #6 remains open and CAVO1 is completed
+  historical provenance.
 - **Execution model**: CSO1 C0 → approved C1 log → sole-evidence C2 commit → rejected C0S →
   C0S-R1 → approved C1S receipt / sole-evidence C2S commit → immutable C3 subject → C3S six-path
   direct-child candidate → committed approved C3S receipt → C4 Tester evidence → sole-evidence C5
@@ -126,9 +130,10 @@ alternative work.
   committed C7S receipt `1123deae24fc37f6755e3eae810d453c40552f9d` → Planner C8 Phase 4.5
   alignment → PRCF1 P0 → approved P1 receipt → sole P2 receipt-evidence commit → independent
   review and sole evidence-only P2 status-sync receipt commit → immutable P3 subject →
-  superseded P3 status-sync provenance → independent review and sole evidence-only P3
-  status-alignment receipt commit → fresh P4–P11 route. Only a later authorized Implementer may
-  update existing draft PR #6; Human reviews and merges.
+  superseded P3 status-sync provenance → rejected P3 status-alignment provenance → independent
+  review and sole evidence-only P3 status-alignment phase-repair receipt commit → fresh P4–P11
+  route. Only a later authorized Implementer may update existing draft PR #6; Human reviews and
+  merges.
 - **Allowed transitions**:
   - `planned` → `creator-in-progress`
   - `creator-in-progress` → `tester-in-progress`
@@ -200,9 +205,12 @@ alternative work.
 | PRCF1 P3 status-sync correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-sync.correction-plan.md` | Plan-Creator | Superseded eight-path candidate provenance; it created no committed receipt and cannot route P4. |
 | PRCF1 P3 status-sync correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-sync.correction-step.md` | Plan-Creator | Superseded tracking provenance; its untracked receipt was discarded and is nonrouting. |
 | PRCF1 P3 status-sync Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-sync.correction-plan-review-log.json` | None | Discarded untracked file; it was never committed, consumed, or reusable evidence. |
-| PRCF1 P3 status-alignment correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-alignment.correction-plan.md` | Plan-Creator | Active eight-path direct-child alignment candidate authority for completed P2 status-sync/P3 facts and P4 pending. |
-| PRCF1 P3 status-alignment correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-alignment.correction-step.md` | Plan-Creator | Active alignment tracking; it requires independent Plan-Reviewer approval and a separate one-path receipt commit before P4. |
-| PRCF1 P3 status-alignment Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-alignment.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole active alignment review artifact, written only from the committed clean eight-path candidate and separately committed unchanged by an Independent Implementer. |
+| PRCF1 P3 status-alignment correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-alignment.correction-plan.md` | Plan-Creator | Rejected immutable nonrouting provenance at `d430493b068608171043a7794d86c549bfc8b6fc`; it cannot route P4. |
+| PRCF1 P3 status-alignment correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-alignment.correction-step.md` | Plan-Creator | Rejected alignment tracking provenance; its `needs-rework` result is not routing evidence. |
+| PRCF1 P3 status-alignment Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-alignment.correction-plan-review-log.json` | None | No committed receipt is usable from rejected alignment provenance. |
+| PRCF1 P3 status-alignment phase-repair correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-alignment-phase-repair.correction-plan.md` | Plan-Creator | Active eight-path direct-child phase-repair candidate authority; it corrects only the stale PRCF1 phase and keeps P4 pending. |
+| PRCF1 P3 status-alignment phase-repair correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-alignment-phase-repair.correction-step.md` | Plan-Creator | Active phase-repair tracking; it requires an independent Plan-Reviewer approval and a separate one-path receipt commit before Planner may route P4. |
+| PRCF1 P3 status-alignment phase-repair Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p3-status-alignment-phase-repair.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole active phase-repair review artifact, written only from the committed clean eight-path candidate and separately committed unchanged by an Independent Implementer. |
 | PRCF1 Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-tester-evidence.json` | Tester | Factual P3 evidence only; Independent Implementer separately commits unchanged passing evidence. |
 | PRCF1 implementation-review log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-implementation-review-log.json` | Independent Reviewer | Written only after committed passing P5 evidence; Independent Implementer separately commits unchanged approved evidence. |
 | PRCF1 thread classification | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.thread-classification.json` | Independent Reviewer | Written only after Planner P8; Independent Implementer commits unchanged classification before bounded replies/resolutions. |

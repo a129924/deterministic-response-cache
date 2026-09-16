@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix
-phase: p2-status-sync-review-pending
+phase: p3-status-alignment-review-pending
 created: 2026-09-16
 ---
 
@@ -28,8 +28,11 @@ committed approved one-path receipt `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a` a
 frozen facts. P3 is the completed exact two-path subject
 `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. The committed P3 status-sync candidate
 `2e8fc3230805bf6a09239f8225585cb59d1d22a3` and its discarded untracked receipt are superseded
-nonrouting provenance. The P3 status-alignment route is the fresh planning-only review gate: it
-records these completed facts, supersedes P3 status sync, and keeps P4 pending; it does not
+nonrouting provenance. P3 status-alignment candidate
+`d430493b068608171043a7794d86c549bfc8b6fc` is rejected immutable nonrouting provenance: its
+independent review found only this stale frontmatter phase, formerly
+`p2-status-sync-review-pending`. The Human-authorized phase-repair route corrects it to
+`p3-status-alignment-review-pending`, records that rejection, and keeps P4 pending; it does not
 establish Tester, Reviewer, classification, reply, resolution, publish, or merge authority.
 
 ## Locked implementation scope
@@ -99,10 +102,12 @@ or merge parent, dirty candidate, altered `uv.lock`, or prefilled outcome fails 
 
 P3 is completed at `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. P3 status sync is superseded
 nonrouting provenance: its receipt was untracked and discarded before review, commit, or reuse.
-P4 remains pending until the committed approved P3 status-alignment receipt restores Planner
-routing. P8 is Planner-only Phase 4.5 alignment after P7, using the PRCF1 same-subject full SHA
-chain and existing Human authorization. It permits classification only; it never authorizes
-approval, merge, release, tag, or post-merge.
+P3 status alignment at `d430493b068608171043a7794d86c549bfc8b6fc` is rejected immutable
+nonrouting provenance because its review found the stale phase corrected by the separate
+phase-repair route. P4 remains pending until the committed approved P3 status-alignment
+phase-repair receipt restores Planner routing. P8 is Planner-only Phase 4.5 alignment after P7,
+using the PRCF1 same-subject full SHA chain and existing Human authorization. It permits
+classification only; it never authorizes approval, merge, release, tag, or post-merge.
 
 ## Evidence schemas
 

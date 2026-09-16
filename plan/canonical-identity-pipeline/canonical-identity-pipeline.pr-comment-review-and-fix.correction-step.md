@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix
-phase: p3-status-alignment-review-pending
+phase: p3-status-alignment-phase-repair-review-pending
 created: 2026-09-16
 ---
 
@@ -18,7 +18,10 @@ status-sync candidate `fbdbe901a84630089e07792f15b79fb0e67b0861` and its committ
 one-path receipt `4a4a99165cdc37a3bae6931e0fb2249ad5f0ab3a` are complete. P3 is the completed
 exact two-path implementation subject `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. The committed
 P3 status-sync candidate `2e8fc3230805bf6a09239f8225585cb59d1d22a3` and its discarded untracked
-receipt are superseded nonrouting provenance. The fresh P3 status-alignment candidate awaits
+receipt are superseded nonrouting provenance. P3 status-alignment candidate
+`d430493b068608171043a7794d86c549bfc8b6fc` is rejected immutable nonrouting provenance because
+its independent review found the stale `p2-status-sync-review-pending` plan phase. The fresh
+phase-repair candidate corrects that phase to `p3-status-alignment-review-pending` and awaits
 independent Plan-Reviewer review. P4 is pending and has no Tester, independent review,
 classification, reply, resolution, push, or merge result.
 
@@ -39,9 +42,14 @@ classification, reply, resolution, push, or merge result.
 - [X] **P3 status sync:** Candidate `2e8fc3230805bf6a09239f8225585cb59d1d22a3` is superseded
   nonrouting provenance. Its untracked receipt was discarded before review, commit, or reuse; it
   did not create or approve P4.
-- [ ] **P3 status alignment:** Independent Plan-Reviewer reviews the fresh eight-path
+- [X] **P3 status alignment:** Candidate `d430493b068608171043a7794d86c549bfc8b6fc` is rejected
+  immutable nonrouting provenance. Its independent review found only the stale
+  `p2-status-sync-review-pending` PRCF1 correction-plan phase; no receipt is committed, consumed,
+  or reusable.
+- [ ] **P3 status-alignment phase repair:** Independent Plan-Reviewer reviews the fresh eight-path
   planning-only candidate; Independent Implementer may commit its unchanged approved receipt as a
-  sole one-path evidence-only commit. It does not create or approve P4.
+  sole one-path evidence-only commit. It corrects the phase to
+  `p3-status-alignment-review-pending` and does not create or approve P4.
 - [ ] **P4:** Tester writes factual P3 evidence only.
 - [ ] **P5:** Independent Implementer commits unchanged passing P4 evidence as a sole one-path
   evidence-only commit.
@@ -67,7 +75,7 @@ Human decision not to update or commit `uv.lock`.
 
 ## Stop conditions
 
-Any dirty candidate/evidence tree, parent other than the declared P3 status-sync candidate
-`2e8fc3230805bf6a09239f8225585cb59d1d22a3`, merge commit, unlisted path, `uv.lock` change,
+Any dirty candidate/evidence tree, parent other than declared phase-repair parent
+`d430493b068608171043a7794d86c549bfc8b6fc`, merge commit, unlisted path, `uv.lock` change,
 missing fresh same-subject evidence, cross-thread identity, or attempted skip resolution fails
 closed. Human alone owns PR approval, merge, release, tag, post-merge, and final summary.
