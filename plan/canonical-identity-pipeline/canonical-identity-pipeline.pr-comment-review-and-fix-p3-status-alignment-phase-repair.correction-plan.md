@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix-p3-status-alignment-phase-repair
-phase: correction-plan-review-pending
+phase: complete
 created: 2026-09-16
 ---
 
@@ -19,8 +19,11 @@ P3 status-alignment candidate `d430493b068608171043a7794d86c549bfc8b6fc` is reje
 nonrouting provenance. Its independent Plan-Reviewer found only that the PRCF1 correction-plan
 frontmatter still declared `p2-status-sync-review-pending`, contrary to the P3 status-alignment
 route. No receipt from `d430493b068608171043a7794d86c549bfc8b6fc` is committed, consumed, or
-reusable. This Human-authorized phase-repair candidate corrects only that stale phase to
-`p3-status-alignment-review-pending`, records the rejection, and keeps P4 pending.
+reusable. This phase-repair candidate `90fc41117b6ff9969c2ea9161d0952b2814b597d` corrected only
+that stale phase to `p3-status-alignment-review-pending`; its unchanged approved receipt was
+committed at `c1751ac832c6b08f2173e1d51627f70cad0e0ca3`. P4 factual passing evidence and P5's
+sole one-path evidence-only commit are both `dff14f3fdc0a06bf907ea82074e02862a05a36d1`. This
+phase-repair route is completed frozen provenance and cannot route P6.
 
 ## Locked scope and admission
 
@@ -122,10 +125,11 @@ entries. Every SHA is lowercase 40-hex. `approved` requires empty `blocking_issu
 `needs-rework` requires at least one non-empty blocker. The receipt preserves the seven ADDRESS
 and two SKIP identifiers without classifying, replying to, or resolving a thread.
 
-Only Independent Implementer may commit an unchanged approved receipt as a clean non-merge direct
-child and exact one-path evidence-only commit. That commit restores Planner routing to P4 only; it
-does not authorize P4 itself, testing, implementation review, classification, replies, resolution,
-PR approval, merge, release, tag, or post-merge work.
+Independent Implementer committed the unchanged approved receipt as clean non-merge direct child
+`c1751ac832c6b08f2173e1d51627f70cad0e0ca3`, an exact one-path evidence-only commit. It restored
+Planner routing to P4 only; P4/P5 then completed at
+`dff14f3fdc0a06bf907ea82074e02862a05a36d1`. This completed route does not authorize P6,
+classification, replies, resolution, PR approval, merge, release, tag, or post-merge work.
 
 ## Stop conditions
 

@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix-p3-status-alignment-phase-repair
-phase: correction-plan-review-pending
+phase: complete
 created: 2026-09-16
 ---
 
@@ -18,10 +18,11 @@ untracked receipt was discarded. P3 status-alignment candidate
 its independent review found the stale `p2-status-sync-review-pending` PRCF1 correction-plan
 phase. No receipt from that candidate is committed, consumed, or reusable.
 
-This fresh eight-path planning-only candidate corrects that phase to
-`p3-status-alignment-review-pending`, records rejected provenance, and awaits independent
-Plan-Reviewer review. P4 remains pending with no Tester, Reviewer, classification, reply,
-resolution, push, or merge outcome.
+Candidate `90fc41117b6ff9969c2ea9161d0952b2814b597d` corrected that phase to
+`p3-status-alignment-review-pending`; its unchanged approved receipt was committed at
+`c1751ac832c6b08f2173e1d51627f70cad0e0ca3`. P4 factual passing evidence and P5's sole one-path
+evidence-only commit are both `dff14f3fdc0a06bf907ea82074e02862a05a36d1`. This completed route
+is frozen provenance; P6 is pending under the separate P5 status-sync correction route.
 
 ## Fixed route
 
@@ -33,12 +34,13 @@ resolution, push, or merge outcome.
   discarded untracked receipt are superseded nonrouting provenance.
 - [X] **P3 status alignment:** Candidate `d430493b068608171043a7794d86c549bfc8b6fc` is rejected
   immutable nonrouting provenance; its independent review found only the stale PRCF1 phase.
-- [ ] **P3 status-alignment phase-repair review:** Independent Plan-Reviewer writes only the
-  declared receipt after reviewing this committed clean eight-path candidate.
-- [ ] **P3 status-alignment phase-repair receipt commit:** Independent Implementer commits the
-  unchanged approved receipt as a sole one-path evidence-only commit.
-- [ ] **P4:** Tester may write factual P3 evidence only after that committed approved phase-repair
-  receipt restores Planner routing.
+- [X] **P3 status-alignment phase-repair review:** Independent Plan-Reviewer wrote the declared
+  approved receipt from candidate `90fc41117b6ff9969c2ea9161d0952b2814b597d`.
+- [X] **P3 status-alignment phase-repair receipt commit:** Independent Implementer committed the
+  unchanged approved receipt as sole one-path evidence-only commit
+  `c1751ac832c6b08f2173e1d51627f70cad0e0ca3`.
+- [X] **P4/P5:** Tester wrote factual passing P3 evidence, and Independent Implementer committed it
+  unchanged as sole one-path evidence-only commit `dff14f3fdc0a06bf907ea82074e02862a05a36d1`.
 
 ## Stop conditions
 
