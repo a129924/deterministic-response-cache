@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix
-phase: correction-plan-review
+phase: p2-status-sync-review-pending
 created: 2026-09-16
 ---
 
@@ -19,6 +19,13 @@ C7S's independent approval receipt is committed at
 `1123deae24fc37f6755e3eae810d453c40552f9d`. That receipt and C0–C7 are frozen completed
 provenance; C8 remains Planner-only Phase 4.5. PRCF1 is a new, Human-authorized correction route
 and cannot reuse any CAVO1, CSO1, or C7S Plan-Reviewer, Tester, or independent Reviewer evidence.
+
+PRCF1 P0 is the clean ten-path candidate `bbf3bde597b1adbf074ef832802a6151c330752a`. Independent
+Plan-Reviewer wrote its approved P1 receipt, and Independent Implementer committed that unchanged
+receipt as sole P2 evidence at `618be901c8313447b88e9fec513dea6beb59e534`, a non-merge direct
+child of P0. The P2 status-sync route is a fresh planning-only review gate: it records these
+completed facts and P3 pending, but neither replaces P1/P2 nor establishes P3, Tester, Reviewer,
+classification, reply, resolution, publish, or merge authority.
 
 ## Locked implementation scope
 
@@ -81,13 +88,14 @@ or merge parent, dirty candidate, altered `uv.lock`, or prefilled outcome fails 
 | --- | --- | --- | --- | --- |
 | P0 | Correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md` | Plan-Creator | In the ten-path candidate only. |
 | P0 | Correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md` | Plan-Creator | In the ten-path candidate only. |
-| P1/P2 | Plan-review receipt | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan-review-log.json` | Independent Plan-Reviewer | Written from clean P0; Independent Implementer commits unchanged approved evidence as a sole one-path commit. |
+| P1/P2 | Plan-review receipt | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan-review-log.json` | Independent Plan-Reviewer | Completed: written from clean P0 and committed unchanged as sole one-path P2 evidence at `618be901c8313447b88e9fec513dea6beb59e534`. |
 | P4/P5 | Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-tester-evidence.json` | Tester | Written only for P3; Independent Implementer commits unchanged passing evidence as a sole one-path commit. |
 | P6/P7 | Implementation-review log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-implementation-review-log.json` | Independent Reviewer | Written only after committed passing P5 evidence; Independent Implementer commits unchanged approved evidence as a sole one-path commit. |
 
-P3 is the exact two-path immutable implementation subject. P8 is Planner-only Phase 4.5 alignment
-after P7, using the PRCF1 same-subject full SHA chain and existing Human authorization. It permits
-classification only; it never authorizes approval, merge, release, tag, or post-merge.
+P3 remains pending. It is the exact two-path immutable implementation subject only after the
+committed approved P2 status-sync receipt restores Planner routing. P8 is Planner-only Phase 4.5
+alignment after P7, using the PRCF1 same-subject full SHA chain and existing Human authorization.
+It permits classification only; it never authorizes approval, merge, release, tag, or post-merge.
 
 ## Evidence schemas
 

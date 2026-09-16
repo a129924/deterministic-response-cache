@@ -1,8 +1,8 @@
 ---
 topic: canonical-identity-pipeline
-phase: pr-comment-review-and-fix-plan-review-pending
+phase: pr-comment-review-and-fix-p2-status-sync-review-pending
 created: 2026-09-14
-updated: 2026-09-15
+updated: 2026-09-16
 ---
 
 # canonical-identity-pipeline — Step Tracking
@@ -18,9 +18,12 @@ or Reviewer evidence. C1S/C2S `be0ce355dc777d63b7454488989452183519490a`, C3
 `92f7db262bec8d774f1c6f8b1b2b16aaa82b624e`, and C7
 `e4a2e67f29a4562f6244c5031498426b610d0a91` are complete. The C7S independent approval receipt
 is committed at `1123deae24fc37f6755e3eae810d453c40552f9d`; it is completed historical provenance.
-C8 remains Planner-only Phase 4.5. PRCF1 is the sole new Human-authorized correction candidate;
-it has no receipt or implementation outcome yet and cannot claim C8, publish, merge, or thread
-resolution authority.
+C8 remains Planner-only Phase 4.5. PRCF1 P0 candidate
+`bbf3bde597b1adbf074ef832802a6151c330752a`, its approved P1 receipt, and P2's sole one-path
+receipt-evidence commit `618be901c8313447b88e9fec513dea6beb59e534` are complete facts. The
+Human-authorized P2 status-sync candidate awaits its own independent Plan-Reviewer receipt; P3 is
+pending and has no implementation outcome. Neither record can claim C8, publish, merge, thread
+classification, reply, or resolution authority.
 
 | Step | Status | Committed fact / next condition |
 | --- | --- | --- |
@@ -35,6 +38,11 @@ resolution authority.
 | C7 | complete | `e4a2e67f29a4562f6244c5031498426b610d0a91` is the non-merge sole evidence-only commit adding only the approved C6 review log. |
 | C7S review/receipt | complete | Independent Plan-Reviewer receipt is the sole one-path commit `1123deae24fc37f6755e3eae810d453c40552f9d`; it is frozen provenance. |
 | C8 | pending | Planner-only Phase 4.5 alignment remains pending; no C8 result is asserted by this planning candidate. |
+| PRCF1 P0 | complete | `bbf3bde597b1adbf074ef832802a6151c330752a` is the clean ten-path candidate. |
+| PRCF1 P1 | complete | Independent Plan-Reviewer wrote the approved receipt for P0; its contents are committed unchanged by P2. |
+| PRCF1 P2 | complete | `618be901c8313447b88e9fec513dea6beb59e534` is the non-merge direct child of P0 and sole evidence-only commit adding the approved P1 receipt. |
+| PRCF1 P2 status sync | review pending | Its clean six-path direct child candidate records only P0/P1/P2 completion and P3 pending; its fresh receipt cannot be reused as P3 evidence. |
+| PRCF1 P3 | pending | Implementer may create the exact two-path subject only after the committed approved P2 status-sync receipt restores routing. |
 
 ## C0S-R1 status synchronization repair child
 
@@ -113,8 +121,15 @@ resolution authority.
 - [X] **P0 candidate:** Plan-Creator committed exactly the ten declared planning paths as a clean,
   non-merge direct child of `1123deae24fc37f6755e3eae810d453c40552f9d`; it creates no PRCF1
   receipt, Tester evidence, Reviewer evidence, classification record, code, test, push, or reply.
-- [ ] **P1/P2:** Independent Plan-Reviewer writes only the declared PRCF1 plan-review receipt from
-  the clean P0 checkout; Independent Implementer commits unchanged approved evidence alone.
+- [X] **P1:** Independent Plan-Reviewer wrote only the approved PRCF1 plan-review receipt from the
+  clean P0 checkout. Its receipt binds P0 `bbf3bde597b1adbf074ef832802a6151c330752a` and its
+  exact ten-path admission.
+- [X] **P2:** Independent Implementer committed the unchanged approved P1 receipt alone at
+  `618be901c8313447b88e9fec513dea6beb59e534`, the non-merge direct child of P0 and sole one-path
+  evidence-only commit.
+- [ ] **P2 status sync:** Independent Plan-Reviewer must review the fresh clean six-path status
+  candidate; Independent Implementer may commit only its unchanged approved receipt as a sole
+  one-path evidence-only commit. This route records P0/P1/P2 facts only.
 - [ ] **P3:** Implementer creates a fresh two-path subject: only `identity/canonical.py` and
   `tests/test_canonical_identity_pipeline.py` implement exact-string rejection, surrogate rejection,
   non-BMP literal handoff/hash proof, and exact `_SnapshotList` type identity.
