@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync
-phase: correction-plan-review-pending
+phase: complete-frozen-provenance
 created: 2026-09-16
 ---
 
@@ -19,10 +19,13 @@ reusable.
 
 P7 status-alignment phase-repair candidate `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its
 unchanged approved sole receipt commit `40824056def6c9d3402e95039af6a931b67ee547` are complete
-frozen facts. This fresh eight-path planning-only candidate records those facts and awaits a new
-independent Plan-Reviewer receipt. P8 Phase 4.5 remains pending and Planner-only; P9–P11 have not
-started. No receipt, alignment result, classification, reply, resolution, push, PR, approval,
-merge, release, tag, or post-merge outcome is asserted.
+frozen facts. The eight-path status-sync candidate `8ac6bd76ff85d04c16407518105dc023180871ef` and
+its unchanged approved sole receipt commit `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are
+complete frozen facts. They preserve P3/P5/P7's same-subject chain and made only Planner P8 the
+next action. `18d9b4751df26376c9cf47fe7968130870f07fe7` is a structurally correct but pre-P8
+immutable nonrouting classification record; it is not yet superseded. The P8–P10 route-recovery
+route must first obtain its own committed approved receipt, then Planner redoes P8, before a fresh
+P9 classification and P10 commit exist. No outcome is asserted here.
 
 ## Fixed route
 
@@ -32,18 +35,20 @@ merge, release, tag, or post-merge outcome is asserted.
 - [X] **P7 status-alignment phase repair:** Candidate
   `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and committed approved receipt
   `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts.
-- [ ] **P7 status-alignment receipt status-sync review:** Independent Plan-Reviewer writes only
-  the fresh declared receipt after reviewing this committed clean eight-path candidate.
-- [ ] **P7 status-alignment receipt status-sync receipt commit:** Independent Implementer commits
-  the unchanged approved receipt as a sole one-path evidence-only commit.
-- [ ] **P8:** Planner-only Phase 4.5 may consume only the committed status-sync receipt evidence
-  after that receipt commit restores routing. It authorizes classification only.
-- [ ] **P9–P11:** Not started. Classification, reply, and resolution remain unavailable until
-  their declared same-subject gates complete.
+- [X] **P7 status-alignment receipt status sync:** Candidate
+  `8ac6bd76ff85d04c16407518105dc023180871ef` and its sole one-path approved receipt commit
+  `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are complete frozen facts.
+- [X] **Historical pre-P8 classification:** `18d9b4751df26376c9cf47fe7968130870f07fe7` is
+  structurally correct but immutable nonrouting provenance; it neither completes nor supersedes
+  P8, P9, or P10, and is not yet itself superseded.
+- [ ] **P8–P10 recovery:** The separate recovery candidate requires a new independent
+  Plan-Reviewer receipt and its sole receipt commit; only then may Planner redo P8 and route fresh
+  P9/P10 work.
 
 ## Stop conditions
 
-This record cannot select or self-close its candidate, infer P8 completion, create or reuse a
+This frozen record cannot select or self-close a candidate, infer P8 completion, create or reuse a
 receipt, change `uv.lock`, or act on PR #6 or its threads. Any unlisted path, dirty candidate or
-evidence tree, non-direct or merge parent, missing P7 repair facts, or candidate/evidence conflict
-fails closed and returns to Planner; worktree conflict is `human-check`.
+evidence tree, non-direct or merge parent, missing P7 repair/status-sync facts, or
+candidate/evidence conflict fails closed and returns to Planner; worktree conflict is
+`human-check`.

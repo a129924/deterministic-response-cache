@@ -11,7 +11,7 @@ current injected-Builder contract.
 
 | Field | Contract |
 | --- | --- |
-| In-Scope | Historical delivery: five concrete stages, two default-builder factories, the cycle-safe private snapshot adjustment, exports, dedicated tests, a delivered Archify dataflow diagram, and publish-time README/version promotion. Completed CSO1 C3 adds only nominal Protocol inheritance and `@override` markers in the five concrete stages plus their direct regression assertions. C7S is completed frozen status provenance; PRCF1 adds exact-string/surrogate/snapshot-type corrections, dedicated regressions, and bounded nine-thread classification/reply routing. |
+| In-Scope | Historical delivery: five concrete stages, two default-builder factories, the cycle-safe private snapshot adjustment, exports, dedicated tests, a delivered Archify dataflow diagram, and publish-time README/version promotion. Completed CSO1 C3 adds only nominal Protocol inheritance and `@override` markers in the five concrete stages plus their direct regression assertions. C7S is completed frozen status provenance; PRCF1 adds exact-string/surrogate/snapshot-type corrections, dedicated regressions, and bounded nine-thread classification/reply routing. The P8–P10 recovery is planning-only: it restores a valid route without changing code, tests, `uv.lock`, or PR threads. |
 | Out-Of-Scope | Provider extraction, Response Reuse, CacheStore, runtime retention, model execution, provider adapters, persistence, telemetry, configurable/profile-versioned formats, migration, and cache-key policy. |
 | ReadOnly | Existing Protocol signatures, value-object fields, keyword-only Builder injection signatures, existing direct-import tests, root package surface, `identity/.gitkeep`, BC ownership/source-of-truth architecture files, `builders.py`, `identity/__init__.py`, both Archify artifacts, `README.md`, `pyproject.toml`, and `uv.lock` during CSO1. C0–C7, rejected C0S, C0S-R1/C1S/C2S, C3S, C5S, C7S's committed receipt, and all historical evidence are frozen. |
 | Written | `identity/canonical.py`, dedicated pipeline tests, Archify source/HTML, planning artifacts, and later role-owned CAVO1 evidence files. |
@@ -98,7 +98,7 @@ alternative work.
 
 ## Status / Allowed Transitions
 
-- **Current**: `pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync-review-pending`; CSO1 C0/C1/C2,
+- **Current**: `pr-comment-review-and-fix-p8-p10-route-recovery-review-pending`; CSO1 C0/C1/C2,
   C1S/C2S `be0ce355dc777d63b7454488989452183519490a`, C3
   `cbee5f23310b973d9e52e4e1c662ca1d9f9169d8`, committed C3S receipt
   `2428e27ecb402efa90fd43e8ba979d615e151cd2`, C5
@@ -129,9 +129,16 @@ alternative work.
   uncommitted review outcome is not a receipt and is neither committed, consumed, nor reusable.
   P7 status-alignment phase-repair candidate `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its
   unchanged approved sole receipt commit `40824056def6c9d3402e95039af6a931b67ee547` are complete
-  frozen facts. The active P7 status-alignment receipt status-sync route records those committed
-  facts only and awaits a fresh independent Plan-Reviewer receipt. P8 Phase 4.5 remains pending
-  and Planner-only; P9–P11 have not started. Draft PR #6 remains open and CAVO1 is completed
+  frozen facts. P7 receipt-status-sync candidate `8ac6bd76ff85d04c16407518105dc023180871ef` and
+  its approved sole receipt commit `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are complete
+  frozen facts. They preserve the same P3 `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5` → P5
+  `dff14f3fdc0a06bf907ea82074e02862a05a36d1` → P7
+  `24ef18b835b7646e05bf0fc3f5828349eea52b1` evidence chain and made only Planner P8 the next
+  action. The direct child `18d9b4751df26376c9cf47fe7968130870f07fe7` is structurally correct
+  but pre-P8 immutable nonrouting provenance; it neither completes P8/P10 nor is yet superseded.
+  The active P8–P10 route-recovery candidate awaits its sole independent Plan-Reviewer receipt.
+  After its one-path receipt commit, Planner redoes P8, then fresh P9 writes the declared recovery
+  classification and P10 commits it alone. Draft PR #6 remains open and CAVO1 is completed
   historical provenance.
 - **Execution model**: CSO1 C0 → approved C1 log → sole-evidence C2 commit → rejected C0S →
   C0S-R1 → approved C1S receipt / sole-evidence C2S commit → immutable C3 subject → C3S six-path
@@ -152,9 +159,12 @@ alternative work.
   `850c1e66f2d2dc339620ca86e03660f1faef9331` / uncommitted nonreceipt review outcome → P7
   status-alignment phase-repair candidate `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` / sole
   approved repair receipt commit `40824056def6c9d3402e95039af6a931b67ee547` → P7
-  status-alignment receipt status-sync candidate → fresh independent status-sync receipt / sole
-  receipt commit → P8–P11 route. Only a later authorized Implementer may update existing draft
-  PR #6; Human reviews and merges.
+  status-alignment receipt status-sync candidate `8ac6bd76ff85d04c16407518105dc023180871ef` /
+  approved sole receipt commit `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` → pre-P8 structural
+  but immutable nonrouting `18d9b4751df26376c9cf47fe7968130870f07fe7` → P8–P10 route-recovery
+  ten-path candidate / independent receipt / sole receipt commit → Planner redoes P8 → fresh P9
+  classification → sole P10 commit → P11 route. Only a later authorized Implementer may update
+  existing draft PR #6; Human reviews and merges.
 - **Allowed transitions**:
   - `planned` → `creator-in-progress`
   - `creator-in-progress` → `tester-in-progress`
@@ -243,10 +253,14 @@ alternative work.
 | PRCF1 P7 status-alignment phase-repair correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-phase-repair.correction-plan.md` | Plan-Creator | Completed frozen eight-path phase repair at `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59`. |
 | PRCF1 P7 status-alignment phase-repair correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-phase-repair.correction-step.md` | Plan-Creator | Completed frozen repair tracking; its receipt commit is `40824056def6c9d3402e95039af6a931b67ee547`. |
 | PRCF1 P7 status-alignment phase-repair Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-phase-repair.correction-plan-review-log.json` | Independent Plan-Reviewer | Completed approved repair receipt, committed unchanged at `40824056def6c9d3402e95039af6a931b67ee547`. |
-| PRCF1 P7 status-alignment receipt status-sync correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync.correction-plan.md` | Plan-Creator | Active eight-path direct-child status synchronization for committed P7 repair facts; it creates no P8 result. |
-| PRCF1 P7 status-alignment receipt status-sync correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync.correction-step.md` | Plan-Creator | Active tracking; a fresh approved receipt and sole one-path receipt commit are required before Planner may route P8. |
-| PRCF1 P7 status-alignment receipt status-sync Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole declared fresh status-sync receipt, written only after independent review of the committed clean eight-path candidate. |
-| PRCF1 thread classification | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.thread-classification.json` | Independent Reviewer | Written only after Planner P8; Independent Implementer commits unchanged classification before bounded replies/resolutions. |
+| PRCF1 P7 status-alignment receipt status-sync correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync.correction-plan.md` | Plan-Creator | Completed frozen eight-path status synchronization at `8ac6bd76ff85d04c16407518105dc023180871ef`; it creates no P8 result. |
+| PRCF1 P7 status-alignment receipt status-sync correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync.correction-step.md` | Plan-Creator | Completed tracking; approved sole receipt commit is `49c0bcd197c6b9ac4fb1baba115c903060ff52cf`. |
+| PRCF1 P7 status-alignment receipt status-sync Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync.correction-plan-review-log.json` | Independent Plan-Reviewer | Completed sole status-sync receipt, committed unchanged at `49c0bcd197c6b9ac4fb1baba115c903060ff52cf`. |
+| PRCF1 historical pre-P8 classification | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.thread-classification.json` | Independent Reviewer | Structurally correct immutable nonrouting provenance at `18d9b4751df26376c9cf47fe7968130870f07fe7`; it is not yet superseded and cannot route P10 or replies. |
+| PRCF1 P8–P10 route-recovery correction plan | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.correction-plan.md` | Plan-Creator | Exact ten-path direct-child recovery admission and sole receipt/classification contract. |
+| PRCF1 P8–P10 route-recovery correction step | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.correction-step.md` | Plan-Creator | Recovery state tracking; it cannot self-complete P8, P9, or P10. |
+| PRCF1 P8–P10 route-recovery Plan-Reviewer log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole future receipt, written only from the clean committed ten-path recovery candidate and then separately committed unchanged. |
+| PRCF1 fresh P9 classification | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.thread-classification.json` | Independent Reviewer | Written only after redone Planner P8; Independent Implementer commits it unchanged as P10 before replies/resolutions. |
 
 `README.md` and `pyproject.toml` are not part of the immutable implementation subject; they are
 the stable-library promotion after Phase 4.5 and Human authorization. Archify visual-check contact
@@ -501,9 +515,12 @@ substitute for any CSO1 gate. This candidate itself neither selects nor closes a
 
 PRCF1's correction Plan-Reviewer, Tester, independent Reviewer, and later nine-thread
 classification evidence use the exact schemas in
-`canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md`. The sole PRCF1 subject
-is `canonical.py` plus its dedicated test. Its same-subject evidence is new and cannot reuse CAVO1
-or CSO1 records. `uv.lock` is neither an implementation nor a resolution path.
+`canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md`. The recovery receipt
+and fresh classification use the separate exact schemas in
+`canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.correction-plan.md`.
+The sole PRCF1 subject is `canonical.py` plus its dedicated test. Its P3/P5/P7 same-subject
+evidence is new and cannot reuse CAVO1 or CSO1 records. `uv.lock` is neither an implementation nor
+a resolution path.
 
 ## PRCF1 correction route
 
@@ -544,11 +561,15 @@ a candidate, subject, evidence, or publish path.
 3. Tester writes factual same-subject evidence, then Independent Implementer commits it alone.
    Independent Reviewer writes same-subject review evidence, then Independent Implementer commits
    it alone. No evidence shares a commit with code, tests, planning, or the other evidence.
-4. Only after Planner Phase 4.5 alignment may Independent Reviewer classify all nine PR threads.
-   Seven are resolvable only when PRCF1 evidence proves their correction; the two `uv.lock` threads
-   remain `skip-not-resolvable` under the explicit Human decision. Implementer may reply and resolve
-   only exact `addressed-and-resolvable` threads. No skipped thread may be resolved; no role may
-   approve, merge, release, tag, or post-merge.
+4. P7 receipt-status-sync completed at `49c0bcd197c6b9ac4fb1baba115c903060ff52cf`, but the
+   structurally correct `18d9b4751df26376c9cf47fe7968130870f07fe7` classification is pre-P8
+   immutable nonrouting provenance. Only after the separate recovery receipt is committed may
+   Planner redo Phase 4.5; only then may Independent Reviewer write fresh P9 classification and
+   Independent Implementer commit it as sole P10 evidence. Seven are resolvable only when that
+   fresh P9/P10 evidence proves their correction; the two `uv.lock` threads remain
+   `skip-not-resolvable` under the explicit Human decision. Implementer may reply and resolve only
+   exact `addressed-and-resolvable` threads after P10. No skipped thread may be resolved; no role
+   may approve, merge, release, tag, or post-merge.
 
 A dirty worktree, parent mismatch, unlisted path, failed/missing/cross-subject evidence, altered
 `uv.lock`, or attempt to resolve a skip is `blocked`; candidate/evidence/thread conflict is

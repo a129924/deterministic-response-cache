@@ -21,10 +21,15 @@ P7 status-sync candidate `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected 
 nonrouting provenance. Its uncommitted Plan-Reviewer outcome is not a receipt and is neither
 committed, consumed, nor reusable. This completed Human-authorized phase-repair candidate is
 `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59`; its unchanged approved sole receipt commit is
-`40824056def6c9d3402e95039af6a931b67ee547`. Both are frozen facts. A separate active receipt
-status-sync route owns the remaining state synchronization. P8 Phase 4.5 remains pending and
-Planner-only; P9–P11 have not started. This completed record creates no alignment result,
-classification, reply, resolution, push, PR, approval, merge, release, tag, or post-merge outcome.
+`40824056def6c9d3402e95039af6a931b67ee547`. Both are frozen facts. The separate P7
+receipt-status-sync candidate `8ac6bd76ff85d04c16407518105dc023180871ef` and its approved sole
+receipt commit `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are complete frozen facts, preserving
+the same P3 → P5 → P7 evidence chain. `18d9b4751df26376c9cf47fe7968130870f07fe7` is a
+structurally correct but pre-P8 immutable nonrouting classification record; it is not yet
+superseded. A separate P8–P10 route-recovery candidate owns the required fresh receipt, Planner
+P8 redo, fresh P9 classification, and P10 commit. This completed record creates no alignment
+result, classification, reply, resolution, push, PR, approval, merge, release, tag, or post-merge
+outcome.
 
 ## Locked scope and admission
 
@@ -129,9 +134,12 @@ replying to, or resolving a thread.
 
 Independent Implementer committed the unchanged approved receipt as the clean non-merge direct
 child and exact one-path evidence-only commit `40824056def6c9d3402e95039af6a931b67ee547`.
-It is frozen provenance. A separate receipt status-sync route must independently record this fact
-before Planner may route P8; this completed record does not authorize P8 itself, classification,
-replies, resolution, PR approval, merge, release, tag, or post-merge work.
+It is frozen provenance. The later status-sync route did independently record this fact at
+`8ac6bd76ff85d04c16407518105dc023180871ef`, and its approved receipt was committed at
+`49c0bcd197c6b9ac4fb1baba115c903060ff52cf`. That completion made P8 a Planner-only next action;
+it did not authorize P8 itself, classification, replies, resolution, PR approval, merge, release,
+tag, or post-merge work. The pre-P8 `18d9b4751df26376c9cf47fe7968130870f07fe7` record requires
+the separate route-recovery sequence before fresh P9/P10 work can occur.
 
 ## Stop conditions
 

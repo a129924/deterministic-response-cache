@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix
-phase: p7-status-alignment-receipt-status-sync-review-pending
+phase: p8-p10-route-recovery-review-pending
 created: 2026-09-16
 ---
 
@@ -32,9 +32,13 @@ candidate `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected immutable nonro
 provenance: its uncommitted review outcome is not a receipt and is neither committed, consumed,
   nor reusable. P7 status-alignment phase-repair candidate
   `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its unchanged approved sole receipt commit
-  `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts. The active P7
-  status-alignment receipt status-sync candidate awaits a fresh independent Plan-Reviewer receipt.
-  P8 Phase 4.5 is pending and Planner-only; P9–P11 have not started.
+  `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts. P7 receipt-status-sync
+  candidate `8ac6bd76ff85d04c16407518105dc023180871ef` and its approved sole receipt commit
+  `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are complete frozen facts, preserving the P3/P5/P7
+  same-subject chain. `18d9b4751df26376c9cf47fe7968130870f07fe7` is structurally correct but
+  pre-P8 immutable nonrouting provenance and is not yet superseded. The P8–P10 route-recovery
+  candidate awaits its own independent Plan-Reviewer receipt; P8, fresh P9, and P10 have not
+  started.
 
 ## Fixed route
 
@@ -76,13 +80,21 @@ provenance: its uncommitted review outcome is not a receipt and is neither commi
 - [X] **P7 status-alignment phase repair:** Candidate
   `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its unchanged approved sole receipt commit
   `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts.
-- [ ] **P7 status-alignment receipt status sync:** Independent Plan-Reviewer reviews the fresh
-  eight-path planning-only candidate; Independent Implementer may commit its unchanged approved
-  receipt as a sole one-path evidence-only commit. It restores routing to P8 only.
-- [ ] **P8:** Planner-only Phase 4.5 alignment may authorize classification only.
-- [ ] **P9:** Independent Reviewer writes only the declared nine-thread classification record.
-- [ ] **P10:** Independent Implementer commits unchanged P9 classification as a sole one-path
-  classification-evidence commit.
+- [X] **P7 status-alignment receipt status sync:** Candidate
+  `8ac6bd76ff85d04c16407518105dc023180871ef` and its unchanged approved one-path receipt commit
+  `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are completed frozen facts.
+- [X] **Historical pre-P8 classification:** `18d9b4751df26376c9cf47fe7968130870f07fe7` is
+  structurally correct immutable nonrouting provenance. It is neither a P8 result nor a P10
+  commit, and it is not yet superseded.
+- [ ] **P8–P10 recovery receipt:** Independent Plan-Reviewer writes only the separately declared
+  recovery receipt, and Independent Implementer commits unchanged approved content as its sole
+  one-path evidence-only commit.
+- [ ] **P8:** Only after that recovery receipt commit, Planner redoes Phase 4.5 and may authorize
+  a fresh classification only.
+- [ ] **P9:** After redone P8, Independent Reviewer writes only the fresh recovery classification
+  record at the declared `p8-p10-route-recovery.thread-classification.json` path.
+- [ ] **P10:** Independent Implementer commits unchanged fresh P9 content as a sole one-path
+  classification-evidence commit; only then does 18d become superseded provenance.
 - [ ] **P11:** Implementer replies and resolves exactly independently classified
   `addressed-and-resolvable` threads; the two `uv.lock` SKIP rows receive a reply and remain open.
 
@@ -98,7 +110,7 @@ Human decision not to update or commit `uv.lock`.
 
 ## Stop conditions
 
-Any dirty candidate/evidence tree, parent other than declared P7 status-alignment receipt status-sync
-parent `40824056def6c9d3402e95039af6a931b67ee547`, merge commit, unlisted path, `uv.lock` change,
-missing fresh same-subject evidence, cross-thread identity, or attempted skip resolution fails
-closed. Human alone owns PR approval, merge, release, tag, post-merge, and final summary.
+Any dirty candidate/evidence tree, wrong declared parent, merge commit, unlisted path, `uv.lock`
+change, missing fresh same-subject evidence, cross-thread identity, attempted use of 18d as routing
+evidence, or attempted skip resolution fails closed. Human alone owns PR approval, merge, release,
+tag, post-merge, and final summary.

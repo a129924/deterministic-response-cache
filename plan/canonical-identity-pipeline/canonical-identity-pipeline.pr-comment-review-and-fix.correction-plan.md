@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix
-phase: p7-status-alignment-receipt-status-sync-review-pending
+phase: p8-p10-route-recovery-review-pending
 created: 2026-09-16
 ---
 
@@ -43,10 +43,17 @@ candidate `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected immutable nonro
 provenance: its uncommitted review outcome is not a receipt and is neither committed, consumed,
   nor reusable. P7 status-alignment phase-repair candidate
   `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its unchanged approved sole receipt commit
-  `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts. The active P7
-  status-alignment receipt status-sync route records those committed facts only and awaits a fresh
-  independent receipt. P8 Phase 4.5 is pending and Planner-only. P9–P11 have not started. This
-  route establishes no alignment result, classification, reply, resolution, publish, or merge authority.
+  `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts. The P7
+  status-alignment receipt-status-sync candidate `8ac6bd76ff85d04c16407518105dc023180871ef` and
+  its approved sole receipt commit `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are complete
+  frozen facts. They preserve P3 `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`, P5
+  `dff14f3fdc0a06bf907ea82074e02862a05a36d1`, and P7
+  `24ef18b835b7646e05bf0fc3f5828349eea52b1d` as the only same-subject chain. The direct child
+  `18d9b4751df26376c9cf47fe7968130870f07fe7` is structurally correct but pre-P8 immutable
+  nonrouting provenance: it does not establish P8, fresh P9, or P10, and is not yet superseded.
+  The P8–P10 route-recovery candidate requires an independent receipt before Planner redoes P8,
+  then requires a new classification path and sole P10 commit. This route establishes no
+  alignment result, classification, reply, resolution, publish, or merge authority now.
 
 ## Locked implementation scope
 
@@ -126,10 +133,14 @@ phase-repair route. Its candidate `90fc41117b6ff9969c2ea9161d0952b2814b597d` and
 `850c1e66f2d2dc339620ca86e03660f1faef9331` is rejected immutable nonrouting provenance; its
 uncommitted review outcome cannot be reused. P7 status-alignment phase-repair candidate
 `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and committed approved receipt
-`40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts. P8 is Planner-only
-Phase 4.5 only after a fresh approved P7 status-alignment receipt status-sync receipt is committed,
-using the PRCF1 same-subject full SHA chain and existing Human authorization. It permits
-classification only; it never authorizes approval, merge, release, tag, or post-merge.
+`40824056def6c9d3402e95039af6a931b67ee547`, followed by P7 receipt-status-sync candidate
+`8ac6bd76ff85d04c16407518105dc023180871ef` and approved receipt commit
+`49c0bcd197c6b9ac4fb1baba115c903060ff52cf`, are complete frozen facts. The receipt preserves
+the PRCF1 P3/P5/P7 same-subject full-SHA chain and made P8 Planner-only, but P8 was not performed
+before `18d9b4751df26376c9cf47fe7968130870f07fe7` added its historical classification. Therefore
+the separate P8–P10 route-recovery receipt must be committed before Planner redoes P8 using the
+same chain and existing Human authorization. It permits a fresh classification route only; it
+never authorizes approval, merge, release, tag, or post-merge.
 
 ## Evidence schemas
 
@@ -215,15 +226,20 @@ integer exit codes; it is factual only and cannot classify or resolve comments.
 
 ## Nine-thread classification, reply, and resolution route
 
-Only after P8, Independent Reviewer may write
-`plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.thread-classification.json`.
-It binds P3, P5, P7, PR #6, and every exact node/comment identifier below. Its exact schema is:
+The historical one-path record at
+`plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.thread-classification.json`
+is the pre-P8 `18d9b4751df26376c9cf47fe7968130870f07fe7` provenance. It is structurally correct
+but cannot be consumed, resolved from, or marked superseded before a fresh P9 record is committed
+by P10. Only after the recovery receipt commit and redone P8 may Independent Reviewer write
+`plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.thread-classification.json`.
+That fresh P9 record binds the same P3, P5, P7, PR #6, and every exact node/comment identifier
+below. Its exact schema is:
 
 ```json
 {
-  "schema_version": "canonical-identity-pipeline.pr-comment-review-and-fix.thread-classification.v1",
+  "schema_version": "canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.thread-classification.v1",
   "topic": "canonical-identity-pipeline",
-  "correction_id": "canonical-identity-pipeline/pr-comment-review-and-fix",
+  "correction_id": "canonical-identity-pipeline/pr-comment-review-and-fix-p8-p10-route-recovery",
   "pull_request": 6,
   "implementation_subject_commit": "<40-hex P3>",
   "tester_evidence_commit": "<40-hex P5>",
@@ -236,10 +252,11 @@ It binds P3, P5, P7, PR #6, and every exact node/comment identifier below. Its e
 ```
 
 It contains exactly nine thread entries, in the table order. Independent Implementer commits the
-unchanged record as a sole one-path classification-evidence commit before any reply or resolve API
-action. Then, and only then, Implementer posts the fixed bounded reply appropriate to each exact
-thread and resolves only `addressed-and-resolvable` entries. A `skip-not-resolvable` entry receives
-the Human-decision reply but remains unresolved.
+unchanged fresh P9 record as P10's sole one-path classification-evidence commit before any reply
+or resolve API action. Only once that new P10 commit exists does the old 18d record become
+superseded immutable nonrouting provenance. Then, and only then, Implementer posts the fixed
+bounded reply appropriate to each exact thread and resolves only `addressed-and-resolvable` entries.
+A `skip-not-resolvable` entry receives the Human-decision reply but remains unresolved.
 
 | Node ID | Comment ID | Disposition | Bounded final reply |
 | --- | ---: | --- | --- |
@@ -261,5 +278,6 @@ reply, and resolution do not grant PR approval, merge, release, tag, post-merge,
 
 Return to Planner for an unclear thread mapping, code/test scope beyond P3, changed public contract,
 dynamic import, missing all-position surrogate coverage, wrong non-BMP literal hash, spoofable list
-recognition, or an attempt to change/commit `uv.lock`. Missing or non-passing same-subject evidence
-is `blocked`; conflicting candidate, subject, evidence, or thread identity is `human-check`.
+recognition, an attempt to change/commit `uv.lock`, or an attempt to consume the old 18d record.
+Missing or non-passing same-subject evidence is `blocked`; conflicting candidate, subject, evidence,
+or thread identity is `human-check`.

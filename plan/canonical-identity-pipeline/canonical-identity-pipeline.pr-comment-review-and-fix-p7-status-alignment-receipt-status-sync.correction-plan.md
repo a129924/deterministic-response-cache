@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync
-phase: correction-plan-review-pending
+phase: complete-frozen-provenance
 created: 2026-09-16
 ---
 
@@ -20,10 +20,16 @@ its uncommitted outcome is not a receipt and cannot be reused.
 
 P7 status-alignment phase-repair candidate `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and its
 unchanged approved sole receipt commit `40824056def6c9d3402e95039af6a931b67ee547` are complete
-frozen facts. This Human-authorized status-sync candidate records only those committed facts and
-declares a fresh independent review receipt route. P8 Phase 4.5 remains pending and Planner-only;
-P9–P11 have not started. This candidate creates no P8 result, classification, reply, resolution,
-push, PR, approval, merge, release, tag, or post-merge outcome.
+frozen facts. The clean eight-path status-sync candidate
+`8ac6bd76ff85d04c16407518105dc023180871ef` and its approved sole receipt commit
+`49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are also complete frozen facts. They preserve the
+same P3 → P5 → P7 subject evidence chain and establish only that the next action was Planner P8.
+The direct child `18d9b4751df26376c9cf47fe7968130870f07fe7` is structurally correct as a
+one-path historical classification record but is pre-P8 immutable nonrouting provenance: it
+creates neither a P8 result nor P9/P10 authority and is not yet marked superseded. The separate
+P8–P10 route-recovery candidate owns the fresh receipt, P8, P9, and P10 sequence. No
+classification, reply, resolution, push, PR, approval, merge, release, tag, or post-merge outcome
+is asserted here.
 
 ## Locked scope and admission
 
@@ -43,13 +49,13 @@ A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-revie
 
 Every other tracked path is read-only, including analysis/specification artifacts, code, tests,
 existing evidence, diagrams, `README.md`, `pyproject.toml`, `uv.lock`, PR metadata, and threads.
-This candidate creates no receipt. A dirty tree, merge or non-direct parent, unlisted path,
-altered `uv.lock`, missing committed P7 repair facts, reused receipt, or P8 completion claim fails
-closed.
+This completed candidate created no receipt. A dirty tree, merge or non-direct parent, unlisted
+path, altered `uv.lock`, missing committed P7 repair facts, reused receipt, or P8 completion claim
+fails closed.
 
 ## P7 status-alignment receipt status-sync receipt contract
 
-After this candidate is committed, Independent Plan-Reviewer may write only:
+The completed Independent Plan-Reviewer receipt is:
 
 `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p7-status-alignment-receipt-status-sync.correction-plan-review-log.json`
 
@@ -127,14 +133,17 @@ blocker. The receipt preserves the seven ADDRESS and two SKIP identifiers withou
 replying to, or resolving a thread.
 
 Only Independent Implementer may commit an unchanged approved receipt as a clean non-merge direct
-child and exact one-path evidence-only commit. That commit restores Planner routing to P8 only; it
-does not authorize P8 itself, classification, replies, resolution, PR approval, merge, release,
-tag, or post-merge work.
+child and exact one-path evidence-only commit. That completed commit is
+`49c0bcd197c6b9ac4fb1baba115c903060ff52cf`; it is a non-merge direct child of
+`8ac6bd76ff85d04c16407518105dc023180871ef` and adds only this receipt. It made Planner P8 the
+next action, never P8 itself, classification, replies, resolution, PR approval, merge, release,
+tag, or post-merge work. Because `18d9b4751df26376c9cf47fe7968130870f07fe7` wrote a historical
+classification before P8, the separate P8–P10 route-recovery receipt must be committed before
+Planner redoes P8 and routes a fresh classification.
 
 ## Stop conditions
 
-Missing committed P7 repair candidate or receipt facts; a reused or pre-created receipt; a
-non-approved or separately uncommitted status-sync receipt; candidate/evidence/subject conflict;
-or an attempt to expand the eight paths is `blocked` and returns to Planner. Worktree or candidate
-identity conflict is `human-check`. Human alone owns PR review, merge, release, tag, post-merge,
-and final summary.
+Missing committed P7 repair or status-sync receipt facts; a reused or pre-created receipt;
+candidate/evidence/subject conflict; or an attempt to expand the eight paths is `blocked` and
+returns to Planner. Worktree or candidate identity conflict is `human-check`. Human alone owns PR
+review, merge, release, tag, post-merge, and final summary.
