@@ -1,0 +1,43 @@
+# Copyright (c) 2026 deterministic-response-cache contributors
+# ruff: noqa: INP001
+
+"""Process-local in-memory implementation of the internal CacheStore port."""
+
+from collections.abc import Hashable
+from typing import cast
+
+from deterministic_response_cache.response_reuse._cache_store import (
+    CacheStoreFailure,
+    NotFound,
+    TokenWritten,
+)
+
+
+class _MissingEntry:
+    """Private sentinel used to distinguish a missing mapping entry."""
+
+
+_MISSING = _MissingEntry()
+
+
+class InMemoryCacheStore[IdentityT: Hashable, ResponseT]:
+    """Retain opaque-keyed responses for the lifetime of this store instance."""
+
+    def __init__(self) -> None:
+        """Create an empty process-local response mapping."""
+        self._responses: dict[IdentityT, ResponseT] = {}
+
+    def read(self, confirmed_identity: IdentityT) -> ResponseT | NotFound:
+        """Return the retained response or the explicit missing-entry channel."""
+        response = self._responses.get(confirmed_identity, _MISSING)
+        if response is _MISSING:
+            return NotFound()
+        return cast("ResponseT", response)
+
+    def write(self, confirmed_identity: IdentityT, response: ResponseT) -> TokenWritten:
+        """Retain ``response`` under the opaque key, replacing any earlier value."""
+        if response is None or isinstance(response, (NotFound, CacheStoreFailure)):
+            msg = "InMemoryCacheStore cannot retain reserved read channel values"
+            raise TypeError(msg)
+        self._responses[confirmed_identity] = response
+        return TokenWritten()
