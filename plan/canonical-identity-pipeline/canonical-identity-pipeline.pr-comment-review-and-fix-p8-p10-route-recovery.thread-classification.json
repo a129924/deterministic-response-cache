@@ -1,0 +1,66 @@
+{
+  "schema_version": "canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.thread-classification.v1",
+  "topic": "canonical-identity-pipeline",
+  "correction_id": "canonical-identity-pipeline/pr-comment-review-and-fix-p8-p10-route-recovery",
+  "pull_request": 6,
+  "implementation_subject_commit": "b8c7cc6050b3c5a44333a1fde9d3ee07145966f5",
+  "tester_evidence_commit": "dff14f3fdc0a06bf907ea82074e02862a05a36d1",
+  "implementation_review_commit": "24ef18b835b7646e05bf0fc3f5828349eea52b1",
+  "threads": [
+    {
+      "node_id": "PRRC_kwDOUJTij87vvFvj",
+      "comment_id": 4022098915,
+      "classification": "addressed-and-resolvable",
+      "reason": "P3 validates exact built-in str field names and mapping keys before sorting, with passing and approved direct regression evidence."
+    },
+    {
+      "node_id": "PRRC_kwDOUJTij87vvFvo",
+      "comment_id": 4022098920,
+      "classification": "addressed-and-resolvable",
+      "reason": "P3 rejects surrogate code points in canonical-string positions, with passing and approved coverage for valid non-BMP Unicode."
+    },
+    {
+      "node_id": "PRRC_kwDOUJTij87vvFvu",
+      "comment_id": 4022098926,
+      "classification": "addressed-and-resolvable",
+      "reason": "The committed planning state records the C7S receipt as historical provenance and retains C8 as Planner-only."
+    },
+    {
+      "node_id": "PRRC_kwDOUJTij87vvF0O",
+      "comment_id": 4022099214,
+      "classification": "addressed-and-resolvable",
+      "reason": "P3 recognizes only the exact private _SnapshotList type as a snapshotted list; attribute-spoofing tuple subclasses remain tuples."
+    },
+    {
+      "node_id": "PRRC_kwDOUJTij87vvF0q",
+      "comment_id": 4022099242,
+      "classification": "addressed-and-resolvable",
+      "reason": "The committed planning surfaces consistently record the C7S receipt and PRCF1 uses fresh same-subject evidence."
+    },
+    {
+      "node_id": "PRRC_kwDOUJTij87vvF0_",
+      "comment_id": 4022099263,
+      "classification": "addressed-and-resolvable",
+      "reason": "The parent tracker records the committed C7S receipt and keeps C8 as a Planner-only gate."
+    },
+    {
+      "node_id": "PRRC_kwDOUJTij87vvF1r",
+      "comment_id": 4022099307,
+      "classification": "addressed-and-resolvable",
+      "reason": "The dedicated P3 suite proves valid non-BMP input's exact ASCII encoder string, serializer bytes, and literal SHA-256."
+    },
+    {
+      "node_id": "PRRC_kwDOUJTij87vvFve",
+      "comment_id": 4022098910,
+      "classification": "skip-not-resolvable",
+      "reason": "The explicit Human decision keeps uv.lock restored to HEAD and outside this topic's modification scope."
+    },
+    {
+      "node_id": "PRRC_kwDOUJTij87vvF1V",
+      "comment_id": 4022099285,
+      "classification": "skip-not-resolvable",
+      "reason": "The explicit Human decision keeps uv.lock restored to HEAD and outside this topic's modification scope."
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}
