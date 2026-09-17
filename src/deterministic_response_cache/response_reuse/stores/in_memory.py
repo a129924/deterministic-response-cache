@@ -4,6 +4,7 @@
 """Process-local in-memory implementation of the internal CacheStore port."""
 
 from collections.abc import Hashable
+from typing import cast
 
 from deterministic_response_cache.response_reuse._cache_store import NotFound, TokenWritten
 
@@ -25,9 +26,9 @@ class InMemoryCacheStore[IdentityT: Hashable, ResponseT]:
     def read(self, confirmed_identity: IdentityT) -> ResponseT | NotFound:
         """Return the retained response or the explicit missing-entry channel."""
         response = self._responses.get(confirmed_identity, _MISSING)
-        if isinstance(response, _MissingEntry):
+        if response is _MISSING:
             return NotFound()
-        return response
+        return cast("ResponseT", response)
 
     def write(self, confirmed_identity: IdentityT, response: ResponseT) -> TokenWritten:
         """Retain ``response`` under the opaque key, replacing any earlier value."""

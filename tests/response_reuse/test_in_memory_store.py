@@ -8,7 +8,10 @@ import pytest
 from deterministic_response_cache.response_reuse._cache_store import NotFound, TokenWritten
 from deterministic_response_cache.response_reuse.outcomes import Cached, Hit, Miss
 from deterministic_response_cache.response_reuse.protocol import ResponseReuseProtocol
-from deterministic_response_cache.response_reuse.stores.in_memory import InMemoryCacheStore
+from deterministic_response_cache.response_reuse.stores.in_memory import (  # pyright: ignore[reportPrivateUsage]
+    InMemoryCacheStore,
+    _MissingEntry,  # pyright: ignore[reportPrivateUsage]
+)
 
 
 class KeyWithFailingHash:
@@ -108,6 +111,16 @@ def test_key_operation_errors_propagate_instead_of_becoming_misses() -> None:
 
     with pytest.raises(KeyError, match="key hash failed"):
         store.read(KeyWithFailingHash())
+
+
+def test_response_instances_of_the_sentinel_type_are_not_misses() -> None:
+    """Only the store's unique sentinel instance denotes a missing entry."""
+    store = InMemoryCacheStore[str, _MissingEntry]()
+    response = _MissingEntry()
+
+    store.write("opaque-key", response)
+
+    assert store.read("opaque-key") is response
 
 
 def test_store_is_injectable_into_the_response_reuse_protocol() -> None:
