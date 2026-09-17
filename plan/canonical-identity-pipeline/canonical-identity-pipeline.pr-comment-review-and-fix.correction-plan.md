@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix
-phase: p8-p10-route-recovery-review-pending
+phase: p8-p10-final-state-reconciliation-review-pending
 created: 2026-09-16
 ---
 
@@ -49,11 +49,11 @@ provenance: its uncommitted review outcome is not a receipt and is neither commi
   frozen facts. They preserve P3 `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`, P5
   `dff14f3fdc0a06bf907ea82074e02862a05a36d1`, and P7
   `24ef18b835b7646e05bf0fc3f5828349eea52b1d` as the only same-subject chain. The direct child
-  `18d9b4751df26376c9cf47fe7968130870f07fe7` is structurally correct but pre-P8 immutable
-  nonrouting provenance: it does not establish P8, fresh P9, or P10, and is not yet superseded.
-  The P8–P10 route-recovery candidate requires an independent receipt before Planner redoes P8,
-  then requires a new classification path and sole P10 commit. This route establishes no
-  alignment result, classification, reply, resolution, publish, or merge authority now.
+  `18d9b4751df26376c9cf47fe7968130870f07fe7` is superseded immutable nonrouting provenance.
+  Recovery receipt `b903cb06c2e174501228aab1325179fc1e13bc08`, the subsequent Planner P8, and
+  fresh P9/P10 one-path evidence commit `8a86e88621e00bbc10e773411cb10c6272b6fc45` are completed
+  immutable facts. P11 remains pending. The final-state reconciliation establishes no reply,
+  resolution, publish, or merge authority.
 
 ## Locked implementation scope
 
@@ -119,6 +119,7 @@ or merge parent, dirty candidate, altered `uv.lock`, or prefilled outcome fails 
 | P1/P2 | Plan-review receipt | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan-review-log.json` | Independent Plan-Reviewer | Completed: written from clean P0 and committed unchanged as sole one-path P2 evidence at `618be901c8313447b88e9fec513dea6beb59e534`. |
 | P4/P5 | Tester evidence | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-tester-evidence.json` | Tester | Completed factual P3 evidence, committed unchanged as the sole one-path P5 commit `dff14f3fdc0a06bf907ea82074e02862a05a36d1`. |
 | P6/P7 | Implementation-review log | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-implementation-review-log.json` | Independent Reviewer | Completed approved P6 evidence, committed unchanged as sole one-path P7 evidence at `24ef18b835b7646e05bf0fc3f5828349eea52b1d`. |
+| Final reconciliation review | `plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-final-state-reconciliation.correction-plan-review-log.json` | Independent Plan-Reviewer | Sole conditional receipt for the clean committed eight-path reconciliation candidate. |
 
 P3 is completed at `b8c7cc6050b3c5a44333a1fde9d3ee07145966f5`. P3 status sync is superseded
 nonrouting provenance: its receipt was untracked and discarded before review, commit, or reuse.

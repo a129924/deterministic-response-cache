@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix
-phase: p8-p10-route-recovery-review-pending
+phase: p8-p10-final-state-reconciliation-review-pending
 created: 2026-09-16
 ---
 
@@ -35,10 +35,10 @@ provenance: its uncommitted review outcome is not a receipt and is neither commi
   `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts. P7 receipt-status-sync
   candidate `8ac6bd76ff85d04c16407518105dc023180871ef` and its approved sole receipt commit
   `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are complete frozen facts, preserving the P3/P5/P7
-  same-subject chain. `18d9b4751df26376c9cf47fe7968130870f07fe7` is structurally correct but
-  pre-P8 immutable nonrouting provenance and is not yet superseded. The P8–P10 route-recovery
-  candidate awaits its own independent Plan-Reviewer receipt; P8, fresh P9, and P10 have not
-  started.
+  same-subject chain. Recovery receipt `b903cb06c2e174501228aab1325179fc1e13bc08`, Planner P8,
+  and fresh P9/P10 one-path evidence commit `8a86e88621e00bbc10e773411cb10c6272b6fc45` are
+  completed immutable facts. `18d9b4751df26376c9cf47fe7968130870f07fe7` is superseded immutable
+  nonrouting provenance. P11 remains pending.
 
 ## Fixed route
 
@@ -84,17 +84,12 @@ provenance: its uncommitted review outcome is not a receipt and is neither commi
   `8ac6bd76ff85d04c16407518105dc023180871ef` and its unchanged approved one-path receipt commit
   `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are completed frozen facts.
 - [X] **Historical pre-P8 classification:** `18d9b4751df26376c9cf47fe7968130870f07fe7` is
-  structurally correct immutable nonrouting provenance. It is neither a P8 result nor a P10
-  commit, and it is not yet superseded.
-- [ ] **P8–P10 recovery receipt:** Independent Plan-Reviewer writes only the separately declared
-  recovery receipt, and Independent Implementer commits unchanged approved content as its sole
-  one-path evidence-only commit.
-- [ ] **P8:** Only after that recovery receipt commit, Planner redoes Phase 4.5 and may authorize
-  a fresh classification only.
-- [ ] **P9:** After redone P8, Independent Reviewer writes only the fresh recovery classification
-  record at the declared `p8-p10-route-recovery.thread-classification.json` path.
-- [ ] **P10:** Independent Implementer commits unchanged fresh P9 content as a sole one-path
-  classification-evidence commit; only then does 18d become superseded provenance.
+  superseded immutable nonrouting provenance.
+- [X] **P8–P10 recovery receipt:** The approved recovery receipt was committed at
+  `b903cb06c2e174501228aab1325179fc1e13bc08`.
+- [X] **P8:** Planner completed Phase 4.5 after the recovery receipt.
+- [X] **P9/P10:** Fresh P9 content was committed unchanged as sole P10 evidence at
+  `8a86e88621e00bbc10e773411cb10c6272b6fc45`.
 - [ ] **P11:** Implementer replies and resolves exactly independently classified
   `addressed-and-resolvable` threads; the two `uv.lock` SKIP rows receive a reply and remain open.
 

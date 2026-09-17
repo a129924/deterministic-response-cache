@@ -1,6 +1,6 @@
 ---
 topic: canonical-identity-pipeline
-phase: pr-comment-review-and-fix-p8-p10-route-recovery-review-pending
+phase: pr-comment-review-and-fix-p8-p10-final-state-reconciliation-review-pending
 created: 2026-09-14
 updated: 2026-09-17
 ---
@@ -42,11 +42,11 @@ provenance: its uncommitted review outcome is not a receipt and is neither commi
   `40824056def6c9d3402e95039af6a931b67ee547` are complete frozen facts. P7 receipt-status-sync
   candidate `8ac6bd76ff85d04c16407518105dc023180871ef` and its approved sole receipt commit
   `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are complete frozen facts and preserve the P3/P5/P7
-  same-subject chain. `18d9b4751df26376c9cf47fe7968130870f07fe7` is structurally correct but
-  pre-P8 immutable nonrouting provenance; it is not yet superseded and cannot claim P8/P10,
-  classification, reply, or resolution authority. The P8–P10 route-recovery candidate awaits its
-  sole independent receipt; only after that receipt commit may Planner redo P8 and route a fresh
-  P9/P10 sequence. None of these records can claim C8, publish, or merge authority.
+  same-subject chain. Recovery receipt `b903cb06c2e174501228aab1325179fc1e13bc08`, Planner P8,
+  and fresh P9/P10 sole classification-evidence commit `8a86e88621e00bbc10e773411cb10c6272b6fc45`
+  are completed immutable facts. `18d9b4751df26376c9cf47fe7968130870f07fe7` is superseded
+  immutable nonrouting provenance and cannot claim reply or resolution authority. P11 is pending;
+  none of these records can claim C8, publish, or merge authority.
 
 | Step | Status | Committed fact / next condition |
 | --- | --- | --- |
@@ -76,10 +76,11 @@ provenance: its uncommitted review outcome is not a receipt and is neither commi
 | PRCF1 P7 status sync | rejected provenance | `850c1e66f2d2dc339620ca86e03660f1faef9331` and its uncommitted review outcome are immutable nonrouting provenance; no receipt is reusable. |
 | PRCF1 P7 status-alignment phase repair | complete | Candidate `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` and committed approved sole receipt `40824056def6c9d3402e95039af6a931b67ee547` are frozen facts. |
 | PRCF1 P7 status-alignment receipt status sync | complete | Candidate `8ac6bd76ff85d04c16407518105dc023180871ef` and approved sole receipt commit `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are complete frozen facts. |
-| PRCF1 historical pre-P8 classification | immutable nonrouting provenance | `18d9b4751df26376c9cf47fe7968130870f07fe7` is structurally correct but not P8/P10 authority; it is not yet superseded. |
-| PRCF1 P8–P10 route recovery | review pending | The clean ten-path direct child of 18d awaits its sole independent Plan-Reviewer receipt and one-path receipt commit. |
-| PRCF1 P8 | pending | Only after the recovery receipt commit may Planner redo Phase 4.5 using the same P3/P5/P7 chain. |
-| PRCF1 fresh P9/P10 | not started | A fresh recovery classification and its sole one-path P10 commit are required; only then may 18d become superseded provenance. |
+| PRCF1 historical pre-P8 classification | superseded immutable nonrouting provenance | `18d9b4751df26376c9cf47fe7968130870f07fe7` cannot route P10, replies, or resolution. |
+| PRCF1 P8–P10 route recovery | complete immutable facts | Approved receipt `b903cb06c2e174501228aab1325179fc1e13bc08` is complete. |
+| PRCF1 P8 | complete immutable fact | Planner completed Phase 4.5 after the committed recovery receipt. |
+| PRCF1 fresh P9/P10 | complete immutable facts | Fresh P9 classification was committed unchanged as sole P10 evidence at `8a86e88621e00bbc10e773411cb10c6272b6fc45`. |
+| PRCF1 P11 | pending | No reply or resolution is asserted or performed by this candidate. |
 
 ## C0S-R1 status synchronization repair child
 
@@ -200,16 +201,12 @@ provenance: its uncommitted review outcome is not a receipt and is neither commi
   `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are complete frozen facts. They preserve P3/P5/P7
   and made only Planner P8 the next action.
 - [X] **Historical pre-P8 classification:** `18d9b4751df26376c9cf47fe7968130870f07fe7` is
-  structurally correct immutable nonrouting provenance. It does not complete P8/P10 and is not
-  yet superseded.
-- [ ] **P8–P10 recovery receipt:** Independent Plan-Reviewer may write only the sole declared
-  recovery receipt from the clean ten-path candidate; Independent Implementer may commit unchanged
-  approved content as a sole one-path evidence-only commit.
-- [ ] **P8:** After that recovery receipt commit, Planner redoes Phase 4.5 against PRCF1's same
-  P3/P5/P7 evidence and existing Human authorization. It authorizes fresh classification only.
-- [ ] **P9/P10:** After redone P8, Independent Reviewer writes only the fresh recovery
-  classification; Independent Implementer commits it unchanged as P10's sole one-path evidence
-  commit. Only then does 18d become superseded provenance.
+  superseded immutable nonrouting provenance.
+- [X] **P8–P10 recovery receipt:** The approved recovery receipt was committed at
+  `b903cb06c2e174501228aab1325179fc1e13bc08`.
+- [X] **P8:** Planner completed Phase 4.5 after that receipt and before fresh P9.
+- [X] **P9/P10:** Fresh P9 classification was committed unchanged as P10's sole one-path evidence
+  at `8a86e88621e00bbc10e773411cb10c6272b6fc45`.
 - [ ] **P11:** Implementer posts the declared reply and resolves exactly the seven threads classified
   `addressed-and-resolvable`. The two Human-directed `uv.lock` SKIP threads receive the declared
   decision reply but remain unresolved.

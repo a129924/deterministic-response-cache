@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix-p8-p10-route-recovery
-phase: correction-plan-review-pending
+phase: complete-immutable-provenance
 created: 2026-09-17
 ---
 
@@ -18,9 +18,9 @@ chain. P7 phase-repair candidate `87eb3de65d6b5a4efaef745d23e5d6cc34c70c59` / re
 `49c0bcd197c6b9ac4fb1baba115c903060ff52cf`, are completed frozen facts.
 
 `18d9b4751df26376c9cf47fe7968130870f07fe7` is a structurally correct historical classification
-payload but is pre-P8 immutable nonrouting provenance. It is not P8 or P10 evidence, cannot route
-reply/resolution work, and is not yet superseded. This candidate has no recovery receipt, P8
-alignment, fresh classification, or P10 commit.
+payload and superseded immutable nonrouting provenance. It is not P8 or P10 evidence and cannot
+route reply/resolution work. Recovery receipt `b903cb06c2e174501228aab1325179fc1e13bc08`, P8,
+and fresh P9/P10 commit `8a86e88621e00bbc10e773411cb10c6272b6fc45` are complete immutable facts.
 
 ## Fixed route
 
@@ -28,20 +28,14 @@ alignment, fresh classification, or P10 commit.
 - [X] **P7 receipt status sync:** Candidate `8ac6bd76ff85d04c16407518105dc023180871ef` and the
   approved one-path receipt commit `49c0bcd197c6b9ac4fb1baba115c903060ff52cf` are completed
   frozen facts.
-- [X] **Historical 18d:** `18d9b4751df26376c9cf47fe7968130870f07fe7` is structurally correct
-  but pre-P8 immutable nonrouting provenance; it is not yet superseded.
-- [ ] **Recovery review:** Independent Plan-Reviewer writes only the declared sole recovery
-  receipt after reviewing the clean committed ten-path candidate.
-- [ ] **Recovery receipt commit:** Independent Implementer commits unchanged approved receipt
-  content as a clean non-merge sole one-path evidence-only commit.
-- [ ] **P8:** Only after that receipt commit, Planner redoes Phase 4.5 and may route fresh P9
-  classification only.
-- [ ] **Fresh P9:** Only after redone P8, Independent Reviewer writes the declared fresh
-  `p8-p10-route-recovery.thread-classification.json` record for the same nine threads.
-- [ ] **Fresh P10:** Independent Implementer commits unchanged fresh P9 content as the sole
-  one-path classification-evidence commit. Only then does 18d become superseded provenance.
-- [ ] **P11:** Remains unavailable under this planning-only candidate; no reply or resolution is
-  asserted or performed here.
+- [X] **Historical 18d:** `18d9b4751df26376c9cf47fe7968130870f07fe7` is superseded immutable
+  nonrouting provenance.
+- [X] **Recovery review / receipt:** Approved receipt `b903cb06c2e174501228aab1325179fc1e13bc08`
+  is complete immutable provenance.
+- [X] **P8:** Planner completed Phase 4.5 after that receipt.
+- [X] **Fresh P9/P10:** Fresh classification was committed unchanged as sole P10 evidence at
+  `8a86e88621e00bbc10e773411cb10c6272b6fc45`.
+- [ ] **P11:** Pending; no reply or resolution is asserted or performed here.
 
 ## Stop conditions
 

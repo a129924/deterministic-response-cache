@@ -1,7 +1,7 @@
 ---
 topic: canonical-identity-pipeline
 correction_id: canonical-identity-pipeline/pr-comment-review-and-fix-p8-p10-route-recovery
-phase: correction-plan-review-pending
+phase: complete-immutable-provenance
 created: 2026-09-17
 ---
 
@@ -27,10 +27,11 @@ facts. `49c` records the completed P7 receipt; it made Planner P8 the next actio
 perform P8.
 
 The direct child `18d9b4751df26376c9cf47fe7968130870f07fe7` has a structurally correct one-path
-thread-classification payload, but it was committed before Planner performed P8. It is therefore
-immutable nonrouting provenance. It establishes neither P8 nor P10, cannot be used to reply to or
-resolve a thread, and is **not yet superseded**. It becomes superseded only after the fresh P9
-classification below is committed as the fresh sole P10 evidence commit.
+thread-classification payload, but it was committed before Planner performed P8. It is superseded
+immutable nonrouting provenance: it establishes neither P8 nor P10 and cannot be used to reply to
+or resolve a thread. Recovery receipt `b903cb06c2e174501228aab1325179fc1e13bc08`, Planner P8,
+and fresh P9/P10 evidence commit `8a86e88621e00bbc10e773411cb10c6272b6fc45` are complete
+immutable facts.
 
 This Human-authorized recovery candidate repairs routing only. It creates no receipt, P8 outcome,
 thread classification, P10 commit, reply, resolution, code/test change, `uv.lock` change, push,
@@ -157,9 +158,10 @@ classification result; it permits Planner, and only Planner, to redo P8.
 
 ## P8, fresh P9, and fresh P10 route
 
-After the recovery receipt is committed, Planner redoes P8 Phase 4.5 using the existing Human
-authorization and the unchanged P3/P5/P7 full-SHA chain. P8 authorizes fresh classification only;
-it never authorizes PR approval, merge, release, tag, post-merge, reply, or resolution.
+The approved recovery receipt was committed at `b903cb06c2e174501228aab1325179fc1e13bc08`.
+Planner then completed P8 Phase 4.5 using the existing Human authorization and unchanged P3/P5/P7
+full-SHA chain. P8 authorized fresh classification only; it never authorized PR approval, merge,
+release, tag, post-merge, reply, or resolution.
 
 Only after that redone P8 may Independent Reviewer write the fresh P9 record:
 
@@ -177,11 +179,11 @@ its `correction_id` is
 `skip-not-resolvable`, and `reason` is non-empty factual text. The seven ADDRESS and two SKIP
 identifiers remain unchanged and in their declared order.
 
-Only Independent Implementer may commit that unchanged fresh P9 JSON as the sole one-path P10
-classification-evidence commit. Only after that fresh P10 commit is present does
-`18d9b4751df26376c9cf47fe7968130870f07fe7` become superseded immutable nonrouting provenance.
-Until then, its status remains pre-P8 immutable nonrouting provenance, not superseded. A fresh P10
-commit still grants no PR approval, merge, release, tag, post-merge, reply, or resolution action.
+Independent Implementer committed unchanged fresh P9 JSON as the sole one-path P10
+classification-evidence commit at `8a86e88621e00bbc10e773411cb10c6272b6fc45`. The old
+`18d9b4751df26376c9cf47fe7968130870f07fe7` record is therefore superseded immutable nonrouting
+provenance. P10 grants no PR approval, merge, release, tag, post-merge, reply, or resolution
+action; P11 remains pending.
 
 ## Stop conditions
 
