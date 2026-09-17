@@ -1,0 +1,100 @@
+{
+  "schema_version": "canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan-review.v1",
+  "topic": "canonical-identity-pipeline",
+  "correction_id": "canonical-identity-pipeline/pr-comment-review-and-fix",
+  "candidate_commit": "bbf3bde597b1adbf074ef832802a6151c330752a",
+  "candidate_tree": "dd90b44423a4fdadcafc14ca3933e8d569f231ed",
+  "reviewed_paths": [
+    {
+      "path": "analysis/canonical-identity-pipeline/technical-spec.md",
+      "blob_sha": "f53cb9d85f69ab7e1782ecb153a1cd4ce78bdff7"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan.md",
+      "blob_sha": "743b06c85fb0408b3ee3696502cdf925d9385d8e"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-step.md",
+      "blob_sha": "09c148bd8548664a0a392d2fffcccff165e605ad"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md",
+      "blob_sha": "a5f1effc3ea49d4cc14ab234af70235a1c9c6079"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md",
+      "blob_sha": "29c65b1d9cf54df72857cf043b0448f462aad7af"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "blob_sha": "d953b757450b5d57bac15825c68b67ee3d15e3a3"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md",
+      "blob_sha": "f3dc07ef9dc65848c5121ef73473d02f65d73edd"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md",
+      "blob_sha": "197061c70d9c3571a72141242a1d6b68608d78bf"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.spec.md",
+      "blob_sha": "f692f917ef941bc1a109e9436a8cd65352c5dabc"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md",
+      "blob_sha": "ddd50f3cef67a3ae3bd096ff66736494e77d727e"
+    }
+  ],
+  "first_parent_admission": {
+    "candidate_commit": "bbf3bde597b1adbf074ef832802a6151c330752a",
+    "candidate_tree": "dd90b44423a4fdadcafc14ca3933e8d569f231ed",
+    "parent_commit": "1123deae24fc37f6755e3eae810d453c40552f9d",
+    "non_merge": true,
+    "first_parent": "1123deae24fc37f6755e3eae810d453c40552f9d",
+    "exact_declared_paths": [
+      "analysis/canonical-identity-pipeline/technical-spec.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-step.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.spec.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md"
+    ],
+    "name_status": [
+      "M\tanalysis/canonical-identity-pipeline/technical-spec.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override-c7-status-sync.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.concrete-stage-override.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md",
+      "A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.spec.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.step.md"
+    ]
+  },
+  "review_basis": "clean committed P0 tree; exact ten-path admission; uv.lock restored to the parent blob and read-only; C8 remains Planner-only with no P0 publish, merge, or thread-resolution claim; locked PRCF1 scope, fresh P3-P7 evidence chain, P8 classification-only gate, and nine-thread route reviewed",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [
+      "PRRC_kwDOUJTij87vvFvj",
+      "PRRC_kwDOUJTij87vvFvo",
+      "PRRC_kwDOUJTij87vvFvu",
+      "PRRC_kwDOUJTij87vvF0O",
+      "PRRC_kwDOUJTij87vvF0q",
+      "PRRC_kwDOUJTij87vvF0_",
+      "PRRC_kwDOUJTij87vvF1r"
+    ],
+    "DISCUSS": [],
+    "SKIP": [
+      "PRRC_kwDOUJTij87vvFve",
+      "PRRC_kwDOUJTij87vvF1V"
+    ]
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}

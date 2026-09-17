@@ -1,0 +1,76 @@
+{
+  "schema_version": "canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-plan-review.v1",
+  "topic": "canonical-identity-pipeline",
+  "correction_id": "canonical-identity-pipeline/pr-comment-review-and-fix-p2-status-sync",
+  "candidate_commit": "fbdbe901a84630089e07792f15b79fb0e67b0861",
+  "candidate_tree": "8da2fe478eb8afc70e9db37e20a1213ebd08e528",
+  "reviewed_paths": [
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "blob_sha": "13e126cd1bffceb860a2b2779740228b9a45a083"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-plan.md",
+      "blob_sha": "ddfc9cc01eab6675c76929bcd8bad63130e2a460"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-step.md",
+      "blob_sha": "f7aa3d6838c8a36e812e33057532a0cf645c00b2"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md",
+      "blob_sha": "205fadeb4587ed013b95f6179ff68570ab14a2e6"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md",
+      "blob_sha": "2915fd061cf5c173e2fae5e0eb16735a3649a176"
+    },
+    {
+      "path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md",
+      "blob_sha": "d316797928b91a035d7967bd42b6f8647a1d7cd9"
+    }
+  ],
+  "first_parent_admission": {
+    "candidate_commit": "fbdbe901a84630089e07792f15b79fb0e67b0861",
+    "candidate_tree": "8da2fe478eb8afc70e9db37e20a1213ebd08e528",
+    "parent_commit": "618be901c8313447b88e9fec513dea6beb59e534",
+    "non_merge": true,
+    "first_parent": "618be901c8313447b88e9fec513dea6beb59e534",
+    "exact_declared_paths": [
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-plan.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-step.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md"
+    ],
+    "name_status": [
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-plan.md",
+      "A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p2-status-sync.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.step.md"
+    ]
+  },
+  "review_basis": "clean committed six-path status-sync tree; committed P0/P1/P2 facts; P3 pending; unchanged PRCF1 scope and triage",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [
+      "PRRC_kwDOUJTij87vvFvj",
+      "PRRC_kwDOUJTij87vvFvo",
+      "PRRC_kwDOUJTij87vvFvu",
+      "PRRC_kwDOUJTij87vvF0O",
+      "PRRC_kwDOUJTij87vvF0q",
+      "PRRC_kwDOUJTij87vvF0_",
+      "PRRC_kwDOUJTij87vvF1r"
+    ],
+    "DISCUSS": [],
+    "SKIP": [
+      "PRRC_kwDOUJTij87vvFve",
+      "PRRC_kwDOUJTij87vvF1V"
+    ]
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}

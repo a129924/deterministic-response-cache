@@ -1,8 +1,8 @@
 # deterministic-response-cache
 
-`deterministic-response-cache` 是一個全新的、provider-agnostic、可嵌入的 Python library baseline。
+`deterministic-response-cache` 是一個全新的、provider-agnostic、可嵌入的 Python library。
 
-目前只提供可安裝的空 package 與開發工具鏈；不提供 response cache、model runtime、model execution 或 provider adapter。專案的 baseline 已固定方向、Business Capability（BC）責任、演進流程與互動式架構文件。
+目前提供可安裝的 Python package、開發工具鏈，以及 Identity BC 的 v1 canonical identity pipeline；仍不提供 response cache、model runtime、model execution 或 provider adapter。專案的 baseline 已固定方向、Business Capability（BC）責任、演進流程與互動式架構文件。
 
 ## 兩條不可違反的原則
 
@@ -11,7 +11,13 @@
 
 ## 目前階段
 
-一致性承諾僅限於同一個 cache instance 的生命週期。跨重啟持久化、跨程序一致性與模型本身的 deterministic 推論都不屬於目前 baseline。
+Identity v1 canonical pipeline 對等價 in-memory input 產生可重現的 identity。Response reuse 的一致性承諾仍僅限於同一個 cache instance 的生命週期；跨重啟持久化、跨程序 response reuse 一致性與模型本身的 deterministic 推論都不屬於目前 baseline。
+
+## 公開 API
+
+| BC | API | 提供內容 |
+| --- | --- | --- |
+| Identity | `deterministic_response_cache.identity` | v1 concrete stages：`PureTypeValidator`、`CanonicalSorter`、`CanonicalEncoder`、`CanonicalSerializer`、`SHA256Hasher`；兩個 default builder factories：`default_model_identity_builder()`、`default_feature_identity_builder()`。 |
 
 ## 開發工具
 
@@ -34,4 +40,4 @@ uv run pytest
 uv run pre-commit run --all-files
 ```
 
-pytest-cov 會產生 terminal 與 XML coverage report，但目前不設定 coverage 門檻。這個 package skeleton 僅驗證 tooling，不代表任何 response-cache 實作。
+pytest-cov 會產生 terminal 與 XML coverage report，但目前不設定 coverage 門檻。這個 package 目前的實作涵蓋上述 Identity API；仍不代表任何 response-cache 實作。
