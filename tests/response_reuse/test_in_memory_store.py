@@ -11,6 +11,15 @@ from deterministic_response_cache.response_reuse.protocol import ResponseReusePr
 from deterministic_response_cache.response_reuse.stores.in_memory import InMemoryCacheStore
 
 
+class KeyWithFailingHash:
+    """A hashable-shaped opaque key whose hash operation fails."""
+
+    def __hash__(self) -> int:
+        """Expose a key-operation error that must not become a cache miss."""
+        msg = "key hash failed"
+        raise KeyError(msg)
+
+
 def test_read_returns_not_found_for_an_unknown_opaque_hashable_key() -> None:
     """An unrecorded key produces the existing explicit miss channel."""
     store = InMemoryCacheStore[object, object]()
@@ -91,6 +100,14 @@ def test_write_with_an_unhashable_key_follows_mapping_type_error_semantics() -> 
         store.write(unhashable_key, object())  # pyright: ignore[reportArgumentType]
 
     assert store.read("other-key") == NotFound()
+
+
+def test_key_operation_errors_propagate_instead_of_becoming_misses() -> None:
+    """A valid key's internal failure remains visible to the caller."""
+    store = InMemoryCacheStore[KeyWithFailingHash, object]()
+
+    with pytest.raises(KeyError, match="key hash failed"):
+        store.read(KeyWithFailingHash())
 
 
 def test_store_is_injectable_into_the_response_reuse_protocol() -> None:

@@ -8,6 +8,13 @@ from collections.abc import Hashable
 from deterministic_response_cache.response_reuse._cache_store import NotFound, TokenWritten
 
 
+class _MissingEntry:
+    """Private sentinel used to distinguish a missing mapping entry."""
+
+
+_MISSING = _MissingEntry()
+
+
 class InMemoryCacheStore[IdentityT: Hashable, ResponseT]:
     """Retain opaque-keyed responses for the lifetime of this store instance."""
 
@@ -17,10 +24,10 @@ class InMemoryCacheStore[IdentityT: Hashable, ResponseT]:
 
     def read(self, confirmed_identity: IdentityT) -> ResponseT | NotFound:
         """Return the retained response or the explicit missing-entry channel."""
-        try:
-            return self._responses[confirmed_identity]
-        except KeyError:
+        response = self._responses.get(confirmed_identity, _MISSING)
+        if isinstance(response, _MissingEntry):
             return NotFound()
+        return response
 
     def write(self, confirmed_identity: IdentityT, response: ResponseT) -> TokenWritten:
         """Retain ``response`` under the opaque key, replacing any earlier value."""
