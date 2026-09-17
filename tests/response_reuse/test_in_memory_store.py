@@ -5,7 +5,11 @@
 
 import pytest
 
-from deterministic_response_cache.response_reuse._cache_store import NotFound, TokenWritten
+from deterministic_response_cache.response_reuse._cache_store import (
+    CacheStoreFailure,
+    NotFound,
+    TokenWritten,
+)
 from deterministic_response_cache.response_reuse.outcomes import Cached, Hit, Miss
 from deterministic_response_cache.response_reuse.protocol import ResponseReuseProtocol
 from deterministic_response_cache.response_reuse.stores.in_memory import (  # pyright: ignore[reportPrivateUsage]
@@ -121,6 +125,17 @@ def test_response_instances_of_the_sentinel_type_are_not_misses() -> None:
     store.write("opaque-key", response)
 
     assert store.read("opaque-key") is response
+
+
+@pytest.mark.parametrize("response", [None, NotFound(), CacheStoreFailure()])
+def test_reserved_read_channels_cannot_be_retained(response: object | None) -> None:
+    """Every accepted response can round-trip through the read contract."""
+    store = InMemoryCacheStore[str, object | None]()
+
+    with pytest.raises(TypeError, match="reserved read channel"):
+        store.write("opaque-key", response)
+
+    assert store.read("opaque-key") == NotFound()
 
 
 def test_store_is_injectable_into_the_response_reuse_protocol() -> None:
