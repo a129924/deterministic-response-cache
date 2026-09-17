@@ -1,0 +1,53 @@
+{
+  "schema_version": "canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-final-state-reconciliation.correction-plan-review.v1",
+  "topic": "canonical-identity-pipeline",
+  "correction_id": "canonical-identity-pipeline/pr-comment-review-and-fix-p8-p10-final-state-reconciliation",
+  "candidate_commit": "049e9aa8cb13dcb526ebb8cee6b6721146a743f6",
+  "candidate_tree": "51f9388e5b69f6f5a25076a6d87f294cf68a07e1",
+  "reviewed_paths": [
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md", "blob_sha": "67751eabc0bfbfedf3683f846217a85d8c514643"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md", "blob_sha": "0aa8cbe192dc523461b7ce8ed359ce540113fc98"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md", "blob_sha": "6773486da2feeec2f65802ea482ed3b903807b17"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md", "blob_sha": "81c66a88c5171698951e54cac2ef5af2e8c0fa4b"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.correction-plan.md", "blob_sha": "6c248876762fa768b95580084ea5786cafc751c1"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.correction-step.md", "blob_sha": "9564d23b756eee325c0282ab1fa5ea1f27aecc59"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-final-state-reconciliation.correction-plan.md", "blob_sha": "88969cbb555d0640df1758c6f4d10427b80827e3"},
+    {"path": "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-final-state-reconciliation.correction-step.md", "blob_sha": "9746f0e1223316da9f4e76d037729084100554f9"}
+  ],
+  "first_parent_admission": {
+    "candidate_commit": "049e9aa8cb13dcb526ebb8cee6b6721146a743f6",
+    "candidate_tree": "51f9388e5b69f6f5a25076a6d87f294cf68a07e1",
+    "parent_commit": "8a86e88621e00bbc10e773411cb10c6272b6fc45",
+    "non_merge": true,
+    "first_parent": "8a86e88621e00bbc10e773411cb10c6272b6fc45",
+    "exact_declared_paths": [
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.step.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.correction-plan.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.correction-step.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-final-state-reconciliation.correction-plan.md",
+      "plan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-final-state-reconciliation.correction-step.md"
+    ],
+    "name_status": [
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix.correction-step.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.correction-plan.md",
+      "M\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-route-recovery.correction-step.md",
+      "A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-final-state-reconciliation.correction-plan.md",
+      "A\tplan/canonical-identity-pipeline/canonical-identity-pipeline.pr-comment-review-and-fix-p8-p10-final-state-reconciliation.correction-step.md"
+    ]
+  },
+  "review_basis": "clean committed eight-path final-state reconciliation tree; b903 recovery receipt; completed Planner P8; fresh P9/P10 commit 8a86; 18d superseded nonrouting provenance; P11 pending; unchanged nine-thread triage",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": ["PRRC_kwDOUJTij87vvFvj", "PRRC_kwDOUJTij87vvFvo", "PRRC_kwDOUJTij87vvFvu", "PRRC_kwDOUJTij87vvF0O", "PRRC_kwDOUJTij87vvF0q", "PRRC_kwDOUJTij87vvF0_", "PRRC_kwDOUJTij87vvF1r"],
+    "DISCUSS": [],
+    "SKIP": ["PRRC_kwDOUJTij87vvFve", "PRRC_kwDOUJTij87vvF1V"]
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}
