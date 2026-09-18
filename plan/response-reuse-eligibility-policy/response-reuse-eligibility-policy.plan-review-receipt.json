@@ -1,15 +1,9 @@
 {
   "schema_version": 1,
   "topic": "response-reuse-eligibility-policy",
-  "planning_candidate_commit": "63d9683f94e42bc8b6cf252adde15a014b06911e",
-  "verdict": "needs-rework",
-  "blocking_issues": [
-    {
-      "issue": "The required step tracker still declares the topic state as `planned` and instructs an Implementer to commit the initial five planning artifacts, although this candidate's plan and the inherited committed receipt establish that the initial candidate was already committed and received `needs-rework`. This same-topic state contradiction leaves no truthful progression record for the re-review candidate.",
-      "file": "plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.step.md",
-      "fix": "Update the step tracker to record the committed initial candidate, its committed `needs-rework` receipt, and the new re-review candidate consistently with the topic plan; then commit the corrected planning artifact as a new candidate before another independent review."
-    }
-  ],
+  "planning_candidate_commit": "43a255f03b69be94e56abcc7ca13bf684e3395f3",
+  "verdict": "approved",
+  "blocking_issues": [],
   "copilot_feedback_triage": {
     "ADDRESS": [],
     "DISCUSS": [],
