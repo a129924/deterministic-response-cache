@@ -17,10 +17,14 @@ created: 2026-09-18
 
 ## Actionable Steps
 
-- [ ] **Actor:** Implementer — **Action:** Commit exactly the five initial planning artifacts as the non-merge planning candidate; do not add implementation or evidence paths to that commit.
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review only the committed planning candidate and write `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.json` after review; do not prefill its candidate SHA from planning artifacts.
-- [ ] **Actor:** Implementer — **Action:** Commit the unchanged plan-review receipt as its own sole evidence-only commit; no other path may share that commit.
-- [ ] **Actor:** Planner — **Action:** Route only a committed same-candidate `approved` receipt to bounded implementation; route `needs-rework` conservatively to Plan-Creator.
+- [X] **Actor:** Implementer — **Action:** Committed the initial exact-five planning candidate `cdf4c66ac8534a340118dca50b5e103f22335a25`; it contains only the five initial planning artifacts and no implementation or evidence path.
+- [X] **Actor:** Independent Plan-Reviewer / Implementer — **Action:** The first independent review recorded `needs-rework` and Implementer committed the unchanged receipt as sole evidence commit `42d99f1d4413c95d8e362ff1a10d340f20c44a33`.
+- [X] **Actor:** Plan-Creator / Implementer — **Action:** The scoped plan correction was committed as re-review candidate `63d9683f94e42bc8b6cf252adde15a014b06911e`.
+- [X] **Actor:** Independent Plan-Reviewer / Implementer — **Action:** The re-review again recorded `needs-rework` and Implementer committed the unchanged receipt as sole evidence commit `5a5d7c727caaddfd354eb09569c1c34baf14d8bd`.
+- [ ] **Actor:** Implementer — **Action:** Commit this corrected step tracker as the new non-merge planning candidate; do not share its commit with implementation or evidence paths.
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review only that newly committed planning candidate and write `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.json` after review; do not prefill its candidate SHA from planning artifacts.
+- [ ] **Actor:** Implementer — **Action:** Commit the unchanged new plan-review receipt as its own sole evidence-only commit; no other path may share that commit.
+- [ ] **Actor:** Planner — **Action:** Route only a committed same-candidate fresh `approved` receipt to bounded implementation; route `needs-rework` conservatively to Plan-Creator.
 
 ## Implementation Steps
 
@@ -37,10 +41,12 @@ created: 2026-09-18
 
 ## Handoff / Gate Notes
 
-- Current state is `planned`; `plan-authoring` marks only the creation of these five artifacts, not their commit,
-  approval or implementation authorization.
-- The five initial paths are the sole planning candidate subject. The plan-review receipt, Tester evidence and
-  implementation-review log are later evidence-only paths and must never share a commit with planning or
+- Current state is `needs-rework`: the initial candidate `cdf4c66ac8534a340118dca50b5e103f22335a25` and the
+  re-review candidate `63d9683f94e42bc8b6cf252adde15a014b06911e` each received a committed `needs-rework` receipt.
+  Plan review remains pending until a newly committed corrected planning candidate receives a fresh committed,
+  same-candidate `approved` receipt; no implementation is authorized before then.
+- The initial five paths are the sole initial planning candidate subject. A plan-review receipt, Tester evidence,
+  and implementation-review log are evidence-only paths and must never share a commit with planning or
   implementation subject paths.
 - Tester evidence must bind the exact immutable five-path implementation subject. Independent Reviewer may consume
   only committed same-topic/same-subject `passing` Tester evidence. Planner Phase 4.5 is required before any
