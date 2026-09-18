@@ -1,18 +1,13 @@
 {
   "schema_version": 1,
   "topic": "response-reuse-eligibility-policy",
-  "planning_candidate_commit": "cdf4c66ac8534a340118dca50b5e103f22335a25",
+  "planning_candidate_commit": "63d9683f94e42bc8b6cf252adde15a014b06911e",
   "verdict": "needs-rework",
   "blocking_issues": [
     {
-      "issue": "The committed planning candidate still declares Current as planned and says that the five initial artifacts are not committed, so the plan's current state contradicts the reviewed candidate and cannot serve as truthful routing evidence.",
-      "file": "plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan.md",
-      "fix": "Set Current to planning-candidate-committed, describe this exact five-path non-merge candidate as committed, and retain the transition into independent plan review. Commit the corrected five planning artifacts as a new candidate before re-review."
-    },
-    {
-      "issue": "The allowed transitions admit only passing Tester evidence to reviewer-in-progress. A committed failing Tester evidence record has no declared transition to needs-rework or a new immutable implementation subject, leaving a required independent-Test failure path without a route.",
-      "file": "plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan.md",
-      "fix": "Add an explicit tester-evidence-committed -> needs-rework transition for same-subject failing Tester evidence; require Planner to route bounded rework to Implementer, which creates a new immutable subject and repeats Tester then independent Reviewer evidence without reuse."
+      "issue": "The required step tracker still declares the topic state as `planned` and instructs an Implementer to commit the initial five planning artifacts, although this candidate's plan and the inherited committed receipt establish that the initial candidate was already committed and received `needs-rework`. This same-topic state contradiction leaves no truthful progression record for the re-review candidate.",
+      "file": "plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.step.md",
+      "fix": "Update the step tracker to record the committed initial candidate, its committed `needs-rework` receipt, and the new re-review candidate consistently with the topic plan; then commit the corrected planning artifact as a new candidate before another independent review."
     }
   ],
   "copilot_feedback_triage": {
