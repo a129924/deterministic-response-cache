@@ -19,6 +19,8 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
   呼叫端持有。
 - `RuntimeReuseKey` 是本 BC 的 local semantic type，與 Identity BC 的 `ModelIdentity` 不同；兩個 BC
   不得直接互相 import。
+- `RuntimeReuseKey` 只可由本 BC 外的 integration／ACL 建立並交入；本 BC 不公開 token 語意，不接受
+  `str`／hash 作為 API，不讀取 token，且其 `repr` 不得暴露 token。
 
 ## In-Scope
 
@@ -26,6 +28,8 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
   `RuntimeRetention[RuntimeT]` Protocol，以及 lookup／retention outcomes。
 - direct-module contract tests、BC-independence regression、architecture authority 同步，以及 Archify
   `dataflow` design evidence 和其 locked visual evidence paths。
+- architecture authority 與 dataflow contract 必須先同步、validate／deliver／visual-check 成功，才可進入
+  RED test-only gate；RED evidence 之後才建立新的 immutable green implementation subject。
 - 明確列出 Goal、Non-Goal、In-Scope、Out-Of-Scope、ReadOnly、Written、Deleted、Modify 與 TestCase，
   作為後續 Python implementation 的 bounded contract。
 
@@ -48,6 +52,8 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
   不描繪成既有實作。
 - Architecture Visualization 必須以繁體中文 authored labels 描繪 ACL boundary、lookup／retention outcomes 和
   非責任邊界；它補強設計與 review，不可取代 code contracts 或 tests。
+- dataflow 的 retain input 必須明示 `RuntimeReuseKey`；dashed relationship 僅代表明確 async flow，絕不可
+  用於 synchronous retain failure。圖仍須標示 protocol-only，不暗示 concrete backend、DI 或 lifecycle。
 
 ## Constraints
 
@@ -61,3 +67,5 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
 - 後續 Tester／Independent Reviewer evidence 必須以同一 immutable implementation subject 的完整 40-hex SHA
   fail-closed 綁定；evidence schema、committing order 與 passing／approved invariants 以 topic plan 的
   `Review and evidence schemas` 為唯一 execution contract。
+- 新的 Tester／Independent Reviewer receipts 必須採新的 SHA-bound、不可覆寫路徑；不得寫入或重用舊
+  `6110cb…`／`44e477…` lineage 的 fixed-name evidence。

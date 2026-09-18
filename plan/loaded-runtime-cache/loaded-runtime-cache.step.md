@@ -28,19 +28,23 @@ created: 2026-09-17
 
 ## Implementation Steps
 
-- [ ] 1. Add `RuntimeReuseKey`, Runtime Registry／Retention Protocols and lookup／retention outcome contracts only in
-  the locked three-level taxonomy; preserve `.gitkeep` and avoid concrete classes. The Registry port owns and raises
-  `RuntimeRegistryLookupUnavailable`; lookup outcome module owns `Unavailable()`.
-- [ ] 2. Add direct-module contract tests with typed fakes for key-instance handoff, Registry value／missing channels,
-  retention runtime preservation, failure distinction and BC-independence; no mapper test or internal-key assertion.
-- [ ] 3. Synchronize only the five declared architecture authority files to describe a protocol-only BC, external
-  unimplemented ACL mapping and future lifecycle／execution／provider work.
-- [ ] 4. Author `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json` with the locked
-  contract-only `backend` visual mapping; do not imply a mapper, concrete backend, DI, or runtime lifecycle.
-- [ ] 5. Validate then deliver that dataflow: after every JSON edit run showcase validate; only a final 9/9,
-  zero-error, zero-warning validation may be delivered to the declared standalone HTML.
-- [ ] 6. Run visual-check at all four declared desktop viewports, then run formatting, strict Pyright, targeted/full
-  pytest, and direct-import regression; Tester records actual exit codes only after immutable subject creation.
+- [ ] 1. **Architecture-contract-only:** Synchronize only the five declared architecture authority files to describe
+  protocol-only capability, external unimplemented ACL mapping, and future lifecycle／execution／provider work. Commit
+  this before any new test or production-source path; F ownership remains Human-only.
+- [ ] 2. **Dataflow authoring:** Author `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json`
+  with contract-only `backend` mapping. Show `RuntimeReuseKey` as retain input; dashed relationships are explicit async
+  only and never represent synchronous retain failure.
+- [ ] 3. **Architecture visual gate:** After every JSON revision run showcase validate; only final 9/9, zero-error,
+  zero-warning output may be delivered and visual-checked at all four declared desktop viewports. A nonzero or skipped
+  result blocks RED and source work.
+- [ ] 4. **RED-test-only:** Only after Step 3 passes, add and execute the two declared tests with expected failures;
+  this subject has no production-source module. Record actual nonzero command facts in the versioned RED evidence path.
+- [ ] 5. **Immutable green subject:** Only after committed RED evidence, add `RuntimeReuseKey`, Registry／Retention
+  Protocols and lookup／retention outcomes in locked taxonomy. Preserve `.gitkeep`, opaque non-exposing key behavior,
+  no mapper, no concrete class; Registry owns `RuntimeRegistryLookupUnavailable`, lookup outcome owns `Unavailable()`.
+- [ ] 6. **Green verification and T2／V2:** Run formatting, strict Pyright, targeted/full pytest and direct-import
+  regression. The BC-independence test covers direct import, `importlib`, `__import__`, and `sys.modules` bypass.
+  Tester then writes T2 and Reviewer writes V2 only at new SHA-bound, non-overwritable paths for the green subject.
 
 ## Main Agent Actionable Steps — Fixed Tail
 
@@ -56,7 +60,10 @@ created: 2026-09-17
   Independent Plan-Reviewer is the pending next actor and may review only that committed candidate.
 - The fixed-name legacy plan-review receipt is historical frozen provenance only; it cannot be overwritten, consumed
   or used to route candidate C or any successor. A `needs-rework` receipt creates no implementation subject.
-- Tester writes factual evidence only for immutable implementation subject and does not commit it. Independent
-  Reviewer consumes only committed passing same-subject Tester evidence. Human alone reviews and merges a draft PR.
+- T2／V2 must be new SHA-bound, versioned receipt paths. They cannot overwrite, reuse, or infer from the legacy
+  `6110cb…` Tester／`44e477…` Reviewer evidence. Tester writes factual evidence only for the new immutable green
+  subject and does not commit it; Independent Reviewer consumes only committed passing same-subject T2 evidence.
+- Architecture authority／dataflow completion precedes RED-test-only work; RED evidence precedes the green subject.
+  Human alone reviews and merges a draft PR.
 - Architecture-path overlap is Human review／merge coordination only; it never relaxes declared paths or evidence
   gates.
