@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: planning-candidate-commit
+phase: independent-plan-review
 created: 2026-09-17
 ---
 
@@ -9,7 +9,7 @@ created: 2026-09-17
 ## Workflow Stages
 
 - [X] plan-authoring
-- [ ] planning-candidate-commit
+- [X] planning-candidate-commit
 - [ ] plan-review
 - [ ] tdd-test-authoring
 - [ ] implementation
@@ -18,11 +18,8 @@ created: 2026-09-17
 
 ## Actionable Steps
 
-- [ ] **Actor:** Implementer — **Action:** Commit exactly these five planning artifacts as a non-merge planning
-  candidate: `analysis/loaded-runtime-cache/requirements.md`, `analysis/loaded-runtime-cache/technical-spec.md`,
-  `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`, `.spec.md`, `.step.md`. Do not add source, test,
-  documentation, visualization, review, evidence or governance paths. The candidate SHA is unknown until commit and
-  must not be prefilled.
+- [X] **Actor:** Implementer — **Action:** Commit exactly the five planning artifacts as a non-merge planning
+  candidate. The candidate SHA remains absent from planning text and is routed only by Planner from committed evidence.
 - [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review only the committed candidate and, only after it
   exists, write `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`
   using the locked normal-plan receipt schema. Each candidate gets one immutable non-overwritable SHA-bound receipt.
@@ -38,20 +35,25 @@ created: 2026-09-17
   retention runtime preservation, failure distinction and BC-independence; no mapper test or internal-key assertion.
 - [ ] 3. Synchronize only the five declared architecture authority files to describe a protocol-only BC, external
   unimplemented ACL mapping and future lifecycle／execution／provider work.
-- [ ] 4. Author and deliver the locked Archify dataflow with contract-only `backend` visual mapping, validation and
-  visual-check evidence; do not imply a mapper or runtime lifecycle implementation.
-- [ ] 5. Run formatting, strict type checking, targeted／full tests, direct-import regression and Archify
-  validate／deliver／visual-check; Tester records actual exit codes after immutable subject creation.
+- [ ] 4. Author `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json` with the locked
+  contract-only `backend` visual mapping; do not imply a mapper, concrete backend, DI, or runtime lifecycle.
+- [ ] 5. Validate then deliver that dataflow: after every JSON edit run showcase validate; only a final 9/9,
+  zero-error, zero-warning validation may be delivered to the declared standalone HTML.
+- [ ] 6. Run visual-check at all four declared desktop viewports, then run formatting, strict Pyright, targeted/full
+  pytest, and direct-import regression; Tester records actual exit codes only after immutable subject creation.
 
 ## Main Agent Actionable Steps — Fixed Tail
 
-- [ ] Complete only source-authorized lifecycle actions after committed Plan-Reviewer approval, same-subject passing
-  Tester evidence, independent Reviewer approval, Planner Phase 4.5 alignment and existing Human authorization.
+- [ ] **Actor:** Implementer — **Action:** Complete only source-authorized lifecycle actions after committed
+  Plan-Reviewer approval, same-subject passing Tester evidence, independent Reviewer approval, Planner Phase 4.5
+  alignment and existing Human authorization.
 
 ## Handoff / Gate Notes
 
 - This tracker and plan name one `loaded-runtime-cache` topic. The feature branch is lineage only, not routing
   authority.
+- A committed planning candidate exists. Its SHA is intentionally not repeated or prefilled in planning artifacts;
+  Independent Plan-Reviewer is the pending next actor and may review only that committed candidate.
 - The fixed-name legacy plan-review receipt is historical frozen provenance only; it cannot be overwritten, consumed
   or used to route candidate C or any successor. A `needs-rework` receipt creates no implementation subject.
 - Tester writes factual evidence only for immutable implementation subject and does not commit it. Independent

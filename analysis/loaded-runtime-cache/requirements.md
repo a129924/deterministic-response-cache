@@ -58,3 +58,6 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
   coordination 處理，不能擴張或改寫本 topic scope。
 - 若實作需要未列 artifact path、跨 BC import，或 taxonomy 無法唯一支撐本 plan 的固定路徑，必須停止並返回
   Planner。
+- 後續 Tester／Independent Reviewer evidence 必須以同一 immutable implementation subject 的完整 40-hex SHA
+  fail-closed 綁定；evidence schema、committing order 與 passing／approved invariants 以 topic plan 的
+  `Review and evidence schemas` 為唯一 execution contract。

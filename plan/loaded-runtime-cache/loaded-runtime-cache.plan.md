@@ -44,8 +44,8 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 
 ## Status / Allowed Transitions
 
-- **Current**: `planned`。五份 planning artifacts 已由 Plan-Creator 撰寫但尚未形成 candidate；下一步是
-  Implementer 的 planning-candidate commit。
+- **Current**: `planning-candidate-committed`。已存在 planning candidate；下一步由 Independent Plan-Reviewer
+  對該 committed candidate 進行獨立審查。planning artifacts 不預填或推測任何 candidate SHA。
 - **Execution model**: committed planning candidate → independent Plan-Reviewer receipt → receipt-only commit →
   immutable implementation subject → Tester evidence → Tester evidence-only commit → independent Reviewer evidence
   → Reviewer evidence-only commit → Planner Phase 4.5 alignment → bounded publish／draft PR → Human review／merge。
@@ -100,11 +100,114 @@ authority. Each current or successor candidate uses only the SHA-bound template 
   `copilot_feedback_triage`. `verdict` is `approved|needs-rework`; `blocking_issues` is an array of objects with
   exactly `issue`, `file`, `fix`; triage has exactly `ADDRESS`／`DISCUSS`／`SKIP` arrays. Only a committed approved
   receipt for the committed candidate can authorize implementation routing.
-- Tester evidence has exactly `schema_version`, `topic`, `implementation_subject_commit`, `status`, `commands`,
-  `recorded_by`; it records actual commands and exit codes for the same full-SHA subject.
-- Independent review evidence has exactly `schema_version`, `topic`, `implementation_subject_commit`,
-  `tester_evidence_commit`, `verdict`, `blocking_issues`, `recorded_by`; it consumes committed passing Tester evidence
-  for that same subject.
+- Tester evidence is exactly one JSON object whose top-level keys are `schema_version`, `topic`,
+  `implementation_subject_commit`, `status`, `commands`, `recorded_by` and no others. `schema_version` is integer
+  `1`; `topic` is `loaded-runtime-cache`; `implementation_subject_commit` is the same immutable subject's full
+  40-character lowercase hexadecimal SHA; `status` is `passing|failing`; `commands` is a non-empty array whose every
+  entry has only non-empty string `command` and integer `exit_code`; `recorded_by` is `Tester`. `passing` requires
+  every exit code to be `0`; `failing` requires at least one non-zero exit code. Malformed, uncommitted,
+  cross-topic, cross-subject, abbreviated-SHA, or status/command-inconsistent evidence fails closed.
+- Independent review evidence is exactly one JSON object whose top-level keys are `schema_version`, `topic`,
+  `implementation_subject_commit`, `tester_evidence_commit`, `verdict`, `blocking_issues`, `recorded_by` and no
+  others. `schema_version` is integer `1`; `topic` is `loaded-runtime-cache`; both subject references are full
+  40-character lowercase hexadecimal SHAs; `tester_evidence_commit` is the sole evidence-only commit containing
+  committed same-topic, same-subject passing Tester evidence; `verdict` is `approved|needs-rework`; `blocking_issues`
+  is a string array that is empty exactly for `approved` and non-empty for `needs-rework`; `recorded_by` is
+  `Independent Reviewer`. Reviewer may consume only that committed passing evidence; malformed or unmatched input
+  fails closed and must not produce Reviewer evidence.
+
+## Python implementation metadata
+
+### Non-goals
+
+- 不建立 `ModelIdentity -> RuntimeReuseKey` mapper、ACL implementation，或任何跨 BC import。
+- 不建立 Registry／Retention concrete class、DI composition、backend，或 runtime lifecycle／provider management。
+- 不新增 root re-export、package facade、dynamic import、`sys.modules` substitution、dependency、README、VERSION、
+  release、tag、merge 或 post-merge action。
+
+### Current Context
+
+Identity BC、Response Reuse、Model Execution 與 Provider Adapter 都是相鄰但獨立的 bounded context；本 topic 的
+reserved `loaded_runtime_cache` area 尚未有實作。`pyproject.toml` 已鎖定 Python 3.12、strict Pyright、Ruff 與 pytest。
+已存在的 planning candidate 是唯一可供 Independent Plan-Reviewer 審查的 planning state；architecture-path overlap
+保留給 Human review／merge coordination，不能由本 topic writer 擴張路徑或自行解決。
+
+### Requirements
+
+1. 只在 locked taxonomy 定義 local `RuntimeReuseKey`、同步 generic Protocol 與 immutable outcomes；不建立 consumer
+   或 concrete implementation。
+2. Registry key 與 runtime payload 都必須以同一 instance opaque handoff；沒有 key-field inspection、mapping 或
+   runtime lifecycle side effect。
+3. expected registry lookup failure、`Missing`、`Unavailable`、unexpected exception 與 retention outcomes 必須可區分。
+4. 只寫 declared source、test、architecture 與 Archify evidence paths；維持 BC independence 與 direct-module imports。
+
+### Decisions
+
+- Async-planning status: exempt — cite exemption evidence: this topic defines synchronous pure Protocol and immutable
+  contracts only; it introduces no async boundary, resource lifecycle, concurrency, external I/O, timeout, retry,
+  cancellation, or runtime ownership.
+- Module/package placement: exactly `loaded_runtime_cache/runtime_reuse/{registry,lookup,retention}/` under `src/`,
+  with each responsibility in its locked direct module.
+- New public API: yes, direct-module contract APIs only: `RuntimeReuseKey`, `RuntimeRegistry`, `RuntimeRetention`,
+  `RuntimeRegistryLookupUnavailable`, and the declared outcome types; no root or package facade export.
+- Interface changes: no existing interface changes; add the synchronous `RuntimeRegistry[RuntimeT]` and
+  `RuntimeRetention[RuntimeT]` Protocol contracts exactly as specified.
+- Breaking changes allowed: no; existing package and direct-import behavior remain unchanged.
+- New dependencies: no; use only the existing Python standard library and declared development tooling.
+- Error-handling strategy: Registry raises only its expected `RuntimeRegistryLookupUnavailable` signal for expected
+  lookup operational failure; no mapper is introduced, `Missing` is never used for failure, and unexpected exceptions
+  propagate unchanged.
+- Typing strategy: Python 3.12 strict Pyright, generic `Protocol` and `TypeVar`, immutable typed value/outcome
+  contracts, no `Any`, cast, runtime introspection, dynamic import, or cross-BC type import.
+
+### Public Contract / API Changes
+
+New direct-module APIs are limited to the five declared modules. `RuntimeRegistry[RuntimeT]` exposes
+`lookup(key: RuntimeReuseKey) -> RuntimeT | None` and `retain(key: RuntimeReuseKey, runtime: RuntimeT) -> None`.
+`RuntimeRetention[RuntimeT].retain(key, runtime)` returns `Retained[RuntimeT] | NotRetained[RuntimeT]`. These are new
+protocol contracts, not concrete behavior, dependency composition, or a stable root-package facade.
+
+### Affected Files / Modules
+
+**Written:** the five source modules and two declared contract/regression tests in `Artifact Paths`, plus the ten
+declared Archify source/delivery/visual-evidence artifacts.
+
+**Modified:** only the five architecture authority files enumerated in `Artifact Paths`.
+
+**ReadOnly:** all Identity, Response Reuse, Model Execution, Provider Adapter, root-package, existing source/test,
+configuration, workflow-contract and `.github/agents/**` paths enumerated in `Boundaries / Exclusions`.
+
+### Test Plan
+
+- **Happy path:** typed fakes prove Registry hit and same-instance `RuntimeReuseKey` pass-through; retention outcomes
+  retain the original runtime instance.
+- **Invalid input:** no key validation is in scope; a non-expected fake exception propagates unchanged rather than
+  being classified.
+- **Edge case:** missing (`None`), expected `RuntimeRegistryLookupUnavailable`, `Unavailable`, and retention failure
+  remain distinct without a signal-to-outcome mapper.
+- **Regression:** direct-module imports and BC-independence checks reject cross-BC imports, re-exports and dynamic
+  import substitution while `tests/test_package_import.py` preserves existing import behavior.
+- **Backward compatibility:** the implementation subject contains only declared paths; no root facade, initializer,
+  dependency/configuration, or adjacent-BC change appears.
+
+### TestCase
+
+The executable Given/When/Then scenarios and Error / Edge Cases are maintained in
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`; its scenarios are the acceptance source for the two declared
+test modules and the Archify evidence gate.
+
+### Risks
+
+- A concrete consumer or backend would collapse the protocol-only boundary and expand scope.
+- Treating expected operational failure as `None` would conflate unavailable registry state with a miss.
+- The five architecture authority files overlap another topic's declared paths; only Human coordinates merge-time
+  resolution, and this topic must not rewrite that ownership decision.
+
+### Rollback Plan
+
+Revert the immutable implementation subject containing only the declared five source modules, two tests, architecture
+authority updates and Archify artifacts. Leave read-only `.gitkeep`, root package, configuration, adjacent BCs, and
+planning/evidence history untouched; a future topic handles any subsequently needed concrete implementation.
 
 ## Implementation Steps
 
@@ -123,12 +226,19 @@ authority. Each current or successor candidate uses only the SHA-bound template 
 
 ## Validation / Acceptance Checks
 
-- All changes match Artifact Paths; no deletion or unlisted edit.
-- direct-module imports work without facade／dynamic import; Identity and Loaded Runtime Cache have no direct import.
-- typed fakes prove same-instance `RuntimeReuseKey` handoff; signal, `Missing`, `Unavailable`, and unexpected
-  exception semantics remain distinct; retention outcomes preserve runtime identity.
-- Archify artifacts truthfully show external ACL and contract-only boundaries, and complete required validation,
-  delivery and visual evidence.
+- `uv run ruff format --check src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py`
+- `uv run ruff check src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py`
+- `uv run pyright src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py`
+- `uv run pytest tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py -v`
+- `uv run pytest -v`
+- `uv run pytest tests/test_package_import.py tests/test_loaded_runtime_cache_bc_independence.py -v` validates the
+  direct-import regression without dynamic-import substitution.
+- `node /Users/andrew/.codex/skills/archify/bin/archify.mjs validate dataflow docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json --quality showcase --json` must report 9/9, zero composition errors and zero warnings.
+- Only after that pass, run `node /Users/andrew/.codex/skills/archify/bin/archify.mjs deliver dataflow docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html --quality showcase --json`.
+- Then run `node /Users/andrew/.codex/skills/archify/bin/archify.mjs visual-check docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html --repo-root /Users/andrew/code/python/deterministic-response-cache.worktrees/agent-20260917-loaded-runtime-cache --json`; its 1440×900, 1600×1000, 1920×1080 and 2048×1320 containment must pass. A non-zero or skipped Archify result stops the gate.
+- All changes must match Artifact Paths; no deletion or unlisted edit. Typed fakes must prove same-instance handoff,
+  distinct failure semantics and retention runtime identity; the diagram must remain truthful about external ACL and
+  contract-only boundaries.
 
 ## Reviewer Handoff
 
@@ -151,11 +261,13 @@ release-note, tag or post-merge action.
 
 ## Open Questions / Unresolved Items
 
-None. Concrete `ModelIdentity -> RuntimeReuseKey` conversion and Registry／Retention implementation are deferred to
-future, separately planned integration／DI topics.
+`package-topology-skeleton-replay` 與本 topic 的五份 architecture authority docs 存在 declared-path ownership
+overlap。此為 Human-only unresolved `human-check`：僅能在 Human review／merge coordination 處置；本 topic 不得自行
+解決、變更 locked mission／scope 或改寫既定 architecture path。Concrete `ModelIdentity -> RuntimeReuseKey`
+conversion and Registry／Retention implementation remain deferred to future, separately planned integration／DI topics.
 
 ## Workflow State Contract
 
-- current_step: planning-candidate-commit
-- next_step: independent-plan-review
+- current_step: planning-candidate-committed
+- next_step: independent-plan-review-pending
 - status: PENDING

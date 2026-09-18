@@ -77,3 +77,18 @@ port、outcome、application logic、adapter 平鋪於 topic package root。
 backend 或 lifecycle 已交付。authors labels 使用繁體中文；不設定 `meta.locale`，並如實揭露 viewer UI fallback
 為英文。最終必須是 showcase 9/9、0 composition errors、0 warnings，後續才 deliver，並 visual-check 四個
 desktop viewports。
+
+## Deterministic validation evidence boundary
+
+Tester only records factual evidence for one immutable implementation subject. Its JSON has exactly
+`schema_version`, `topic`, `implementation_subject_commit`, `status`, `commands`, `recorded_by`; it uses
+`schema_version: 1`, topic `loaded-runtime-cache`, a full 40-hex subject SHA, `passing|failing`, a non-empty command /
+integer-exit-code list, and `recorded_by: Tester`. Passing requires every exit code be zero; failing requires at least
+one non-zero exit code.
+
+Independent Reviewer can consume only the separately committed, same-topic, same-subject passing Tester evidence. Its
+JSON has exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`, `verdict`,
+`blocking_issues`, `recorded_by`; it uses `schema_version: 1`, full 40-hex subject and Tester-evidence commit SHAs,
+`approved|needs-rework`, a string blocker list that is empty only for approved, and
+`recorded_by: Independent Reviewer`. Malformed, extra-key, mismatched, uncommitted, failing, or abbreviated evidence
+fails closed; it cannot yield Reviewer evidence or implementation routing.
