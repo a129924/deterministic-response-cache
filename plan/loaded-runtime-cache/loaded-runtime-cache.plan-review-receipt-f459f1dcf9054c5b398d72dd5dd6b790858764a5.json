@@ -1,0 +1,31 @@
+{
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [
+      {
+        "comment": "Architecture/dataflow gate must precede RED tests and the new green implementation subject.",
+        "location": "plan, specification, and step tracker",
+        "why": "C2 makes the ordered architecture-only, RED-test-only, and immutable green-subject gates explicit."
+      },
+      {
+        "comment": "RuntimeReuseKey must remain externally constructed, opaque, and non-leaking.",
+        "location": "requirements, technical specification, and topic plan",
+        "why": "C2 forbids public str/hash token APIs, token inspection, and repr token disclosure."
+      },
+      {
+        "comment": "T2/V2 evidence must be SHA-bound and fail closed.",
+        "location": "topic plan Review and evidence schemas",
+        "why": "C2 defines new versioned paths, exact key sets, same-subject constraints, and passing/approved invariants."
+      }
+    ],
+    "DISCUSS": [
+      {
+        "comment": "The five architecture authority paths overlap package-topology-skeleton-replay.",
+        "optional": false,
+        "why": "C2 retains this as Human-only merge-coordination human-check; it is not resolved or expanded by this topic."
+      }
+    ],
+    "SKIP": []
+  }
+}

@@ -18,9 +18,16 @@ Response Reuse BC 只消費 Identity BC 已確認、但在此 BC 中保持 opaqu
 
 CacheStore 是 Response Reuse BC 的內部保存元件，而不是頂層 BC。它只保存與取回 response；不得建立 identity、判定模型版本、推測 request 欄位、執行模型或管理 runtime。Response Reuse 只透過其 internal synchronous port 讀寫；本 topic 不定義 backend、持久化方式或 lifecycle policy。
 
-### Loaded Runtime Cache（未來）
+### Loaded Runtime Cache
 
-Loaded Runtime Cache 重用已初始化且可執行的模型 runtime，避免重複載入。它必須使用獨立的 Runtime Store／Runtime Registry 概念，不能與 Response CacheStore 混用或共用責任。
+Loaded Runtime Cache 已交付 protocol-only capability：它擁有 local、opaque 的 `RuntimeReuseKey`，並以
+同步 `RuntimeRegistry`／`RuntimeRetention` contracts 描述 reusable runtime 的 lookup 與 retention outcomes。
+它不 import Identity BC，也不建立、讀取或重新解釋 `ModelIdentity`；若未來需要
+`ModelIdentity -> RuntimeReuseKey` mapping，只能在兩個 BC 外的 integration／ACL boundary 處理。
+
+Runtime Registry 是本 BC 的 internal port，與 Response Reuse 的 CacheStore 分離。此 topic 不提供
+Registry backend、DI composition、runtime initialization、download、unload 或 execution；這些仍是後續獨立
+capability 的責任。
 
 ### Model Execution（未來）
 
@@ -38,7 +45,7 @@ Provider Adapter 只對接具體的 local 或 remote provider，位於核心 lib
 | --- | --- | --- |
 | Identity | `src/deterministic_response_cache/identity/` | 模型與完整 request identity 的唯一 authority。 |
 | Response Reuse | `src/deterministic_response_cache/response_reuse/` | 只消費已確認 identity；CacheStore 是其內部元件。 |
-| Loaded Runtime Cache | `src/deterministic_response_cache/loaded_runtime_cache/` | 獨立的未來 BC，不與 response reuse 或 CacheStore 合併。 |
+| Loaded Runtime Cache | `src/deterministic_response_cache/loaded_runtime_cache/` | 獨立的 protocol-only BC；以 local `RuntimeReuseKey` 描述 runtime reuse，沒有 backend 或 lifecycle。 |
 | Model Execution | `src/deterministic_response_cache/model_execution/` | 獨立的未來 BC，不擁有 identity 或 response reuse。 |
 | Provider Adapter | `src/deterministic_response_cache/provider_adapter/` | 獨立、可替換的未來 BC；此處只預留 boundary topology，具體 provider integration 維持核心外部。 |
 
@@ -51,4 +58,5 @@ Provider Adapter 只對接具體的 local 或 remote provider，位於核心 lib
 - 在 Identity BC 以外建立或解讀模型／請求身分規則。
 - 讓 Response Reuse BC、CacheStore 或 Provider Adapter 執行模型。
 - 讓 CacheStore 管理 loaded runtime，或讓 Runtime Store／Registry 保存 response。
+- 讓 Identity BC 與 Loaded Runtime Cache 直接互相 import，或在任一 BC 內實作 `ModelIdentity -> RuntimeReuseKey` mapping。
 - 將 provider 特有規則提升為核心 identity 或 response reuse 政策。

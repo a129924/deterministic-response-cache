@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "a3dba689f98a2ab10b996541b882aac7aced6305",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "uv run ruff format --check src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run ruff check src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pyright src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py -v",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest -v",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_package_import.py tests/test_loaded_runtime_cache_bc_independence.py -v",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs validate dataflow docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json --quality showcase --json",
+      "exit_code": 0
+    },
+    {
+      "command": "shasum -a 256 docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html && jq -e '.ok == true and .command == \"deliver\" and .validation.checksPassed == 9 and .validation.checkCount == 9 and .validation.errors == 0 and .validation.warnings == 0' docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.delivery.json && jq -e '.ok == true and .command == \"visual-check\" and .status == \"pass\" and .containment.status == \"pass\" and ([.containment.viewports[] | select((.width == 1440 and .height == 900) or (.width == 1600 and .height == 1000) or (.width == 1920 and .height == 1080) or (.width == 2048 and .height == 1320)) | .ok] | length == 4 and all)' docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.json",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}

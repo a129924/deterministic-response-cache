@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Loaded Runtime Cache：protocol 資料流",
+    "quality_profile": "showcase",
+    "viewBox": [1068, 610]
+  },
+  "stages": [
+    { "label": "外部整合邊界" },
+    { "label": "本地語意型別" },
+    { "label": "Loaded Runtime Cache" },
+    { "label": "lookup outcome" },
+    { "label": "retention outcome" }
+  ],
+  "nodes": [
+    {
+      "id": "external-acl",
+      "type": "external",
+      "label": "ACL 邊界",
+      "sublabel": "未實作 mapping",
+      "tag": "BC 外",
+      "stage": 0,
+      "row": 1
+    },
+    {
+      "id": "reuse-key",
+      "type": "security",
+      "label": "RuntimeReuseKey",
+      "sublabel": "本地 opaque key",
+      "tag": "原樣傳遞",
+      "stage": 1,
+      "row": 1
+    },
+    {
+      "id": "runtime-registry",
+      "type": "backend",
+      "label": "RuntimeRegistry",
+      "sublabel": "lookup / retain",
+      "tag": "internal port",
+      "stage": 2,
+      "row": 0,
+      "width": 192
+    },
+    {
+      "id": "runtime-retention",
+      "type": "backend",
+      "label": "Loaded Runtime Cache protocol（contract only）",
+      "sublabel": "僅 Protocol；無 concrete backend、DI、runtime lifecycle",
+      "tag": "RuntimeRetention contract",
+      "stage": 2,
+      "row": 3,
+      "width": 320
+    },
+    {
+      "id": "available",
+      "type": "cloud",
+      "label": "Available(runtime)",
+      "sublabel": "lookup hit vocabulary",
+      "stage": 3,
+      "row": 0
+    },
+    {
+      "id": "missing",
+      "type": "cloud",
+      "label": "Missing()",
+      "sublabel": "lookup missing vocabulary",
+      "stage": 3,
+      "row": 1
+    },
+    {
+      "id": "unavailable",
+      "type": "cloud",
+      "label": "Unavailable()",
+      "sublabel": "semantic contract；本 topic 不映射",
+      "stage": 3,
+      "row": 2,
+      "width": 176
+    },
+    {
+      "id": "retained",
+      "type": "cloud",
+      "label": "Retained(runtime)",
+      "sublabel": "保留同一 runtime",
+      "stage": 4,
+      "row": 3
+    },
+    {
+      "id": "not-retained",
+      "type": "cloud",
+      "label": "NotRetained(runtime)",
+      "sublabel": "失敗仍交回同一 runtime",
+      "stage": 4,
+      "row": 2,
+      "width": 164
+    }
+  ],
+  "flows": [
+    {
+      "from": "external-acl",
+      "to": "reuse-key",
+      "label": "提供本地 key",
+      "classification": "未實作 ACL",
+      "variant": "dashed"
+    },
+    {
+      "from": "reuse-key",
+      "to": "runtime-registry",
+      "label": "opaque lookup／retain",
+      "classification": "同一 instance",
+      "variant": "emphasis"
+    },
+    {
+      "from": "runtime-registry",
+      "to": "available",
+      "label": "RuntimeT",
+      "classification": "hit",
+      "variant": "emphasis",
+      "route": "straight",
+      "labelDy": -32
+    },
+    {
+      "from": "runtime-registry",
+      "to": "missing",
+      "label": "None",
+      "classification": "missing",
+      "labelAt": [570, 220]
+    },
+    {
+      "from": "runtime-retention",
+      "to": "retained",
+      "label": "成功 outcome",
+      "classification": "保留 runtime",
+      "variant": "emphasis",
+      "route": "straight",
+      "labelDy": -40,
+      "labelDx": -90
+    },
+    {
+      "from": "runtime-retention",
+      "to": "not-retained",
+      "label": "失敗 outcome",
+      "classification": "runtime 回交",
+      "fromSide": "right",
+      "toSide": "bottom",
+      "via": [[750, 499], [750, 440], [960, 440]],
+      "labelAt": [830, 428]
+    }
+  ],
+  "cards": []
+}
