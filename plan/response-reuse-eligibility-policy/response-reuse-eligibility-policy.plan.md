@@ -117,8 +117,10 @@ none。
 
 ## Status / Allowed Transitions
 
-- **Current**: `planned`。五份 initial artifacts 尚未形成 committed planning candidate；本 status 不等同
-  planning approval 或 implementation authorization。
+- **Current**: `planning-candidate-committed`。initial exact-five non-merge planning candidate
+  `cdf4c66ac8534a340118dca50b5e103f22335a25` 已提交並進入 independent plan review；它不等同 planning
+  approval 或 implementation authorization。既有 committed plan-review receipt 的 `needs-rework` verdict
+  仍是有效、不可歪曲的 review outcome；本修正必須形成新的 planning candidate 並重新獨立審核。
 - **Execution model**: isolated topic worktree → five-path planning candidate → independent Plan-Reviewer
   receipt → Planner route → immutable five-path implementation subject → independent Tester evidence → independent
   Reviewer evidence → Planner Phase 4.5 alignment → existing Human-authorized bounded publish → draft PR → Human
@@ -140,6 +142,11 @@ none。
     Implementer 原樣以 sole evidence-only commit 提交。
   - `tester-evidence-committed` -> `reviewer-in-progress`：僅限同 topic、同 subject、committed `passing`
     Tester evidence。
+  - `tester-evidence-committed` -> `needs-rework`：同 topic、同 subject 的 committed `failing` Tester
+    evidence 必須進入 needs-rework；Planner 只可 route bounded rework 給 Implementer。Implementer 必須建立
+    新的 immutable implementation subject，並從獨立 Tester evidence 重新開始；只有該新 subject 的 committed
+    passing Tester evidence 才可進入 Independent Reviewer evidence。失敗 subject 的 Tester 或 Reviewer evidence
+    一律不得重用。
   - `reviewer-in-progress` -> `reviewer-evidence-committed`：Independent Reviewer 寫 evidence；獨立
     Implementer 原樣以 sole evidence-only commit 提交。
   - `reviewer-evidence-committed` -> `approved`：只有 Planner Phase 4.5 對 committed same-subject
