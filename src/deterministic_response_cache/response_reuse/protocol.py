@@ -10,6 +10,11 @@ from deterministic_response_cache.response_reuse._cache_store import (
     NotFound,
     TokenWritten,
 )
+from deterministic_response_cache.response_reuse.eligibility.policy import (
+    ReuseAllowed,
+    ReuseDenied,
+    ReuseEligibilityPolicy,
+)
 from deterministic_response_cache.response_reuse.outcomes import (
     Cached,
     Hit,
@@ -24,9 +29,15 @@ from deterministic_response_cache.response_reuse.outcomes import (
 class ResponseReuseProtocol[IdentityT, ResponseT]:
     """Map internal CacheStore operations to deterministic reuse outcomes."""
 
-    def __init__(self, store: CacheStore[IdentityT, ResponseT]) -> None:
-        """Create the protocol with its internal CacheStore dependency."""
+    def __init__(
+        self,
+        store: CacheStore[IdentityT, ResponseT],
+        *,
+        eligibility_policy: ReuseEligibilityPolicy[ResponseT],
+    ) -> None:
+        """Create the protocol with its store and reuse eligibility policy."""
         self._store = store
+        self._eligibility_policy = eligibility_policy
 
     def lookup(self, confirmed_identity: IdentityT) -> LookupOutcome[ResponseT]:
         """Find a reusable response without interpreting the identity."""
@@ -39,7 +50,14 @@ class ResponseReuseProtocol[IdentityT, ResponseT]:
                 msg = "CacheStore.read must not return None"
                 raise TypeError(msg)
             case response:
-                return Hit(response)
+                match self._eligibility_policy.evaluate(response):
+                    case ReuseAllowed():
+                        return Hit(response)
+                    case ReuseDenied():
+                        return Miss()
+                    case _:
+                        msg = "ReuseEligibilityPolicy.evaluate must return a decision value"
+                        raise TypeError(msg)
 
     def record(
         self,
