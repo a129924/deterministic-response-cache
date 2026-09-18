@@ -17,7 +17,7 @@
 | Consumer integration | 外部 Python consumer 提交模型與請求脈絡、接收結果；不屬於 library 核心。 | External |
 | Identity authority | 唯一確認模型身分與完整請求身分，並交接 opaque confirmed identity。 | Conceptual order 1 |
 | Response reuse | 根據 opaque confirmed identity 決定是否安全重用，並擁有內部 CacheStore。 | Independent Protocol topic / conceptual order 2 |
-| Runtime retention | 重用已初始化 runtime，並擁有獨立 Runtime Store／Runtime Registry。 | Implementation order 3 |
+| Runtime retention | 以 local `RuntimeReuseKey` 描述 reusable runtime lookup／retention contracts，並擁有獨立 Runtime Registry internal port。 | Protocol capability delivered; backend/lifecycle deferred |
 | Model execution | 在 reuse miss 後協調 runtime 與模型執行。 | Implementation order 4 |
 | Provider boundary | 以可替換 local／remote adapter 對接實際 provider。 | Implementation order 5 / External |
 
@@ -36,8 +36,8 @@
 | CacheStore | Response reuse | Owned abstraction | 保存與取回 response。 | 內部元件，不是頂層 BC。 |
 | Reused response return | Response reuse | Owned abstraction | 將 Hit response 交還 consumer。 | 不呼叫 runtime。 |
 | Retention result | Response reuse | Owned abstraction | 將新 response 的 Cached 或 NotCached 結果交還 consumer。 | NotCached 仍保留 response。 |
-| Loaded Runtime Cache | Runtime retention | Owned abstraction | 重用 initialized runtime。 | 未來能力，非 Response Reuse 一部分。 |
-| Runtime Store / Registry | Runtime retention | Owned abstraction | 保存 runtime retention state。 | 與 CacheStore 分離。 |
+| Loaded Runtime Cache | Runtime retention | Owned abstraction | 定義 local key、lookup／retention protocol 與 outcome contracts。 | 不 import Identity；ACL mapping 在 BC 外，且無 concrete lifecycle。 |
+| Runtime Registry | Runtime retention | Owned abstraction | 描述 runtime lookup／retain internal port。 | 與 CacheStore 分離；不是 backend。 |
 | Runtime preparation | Runtime retention | Owned abstraction | 為 miss path 準備 runtime。 | 不保存 response。 |
 | Model Execution | Model execution | Owned abstraction | 協調模型執行。 | 不擁有 identity 或 reuse 規則。 |
 | Execution result handoff | Model execution | Owned abstraction | 將新結果交回 Response Reuse。 | 不直接保存 response。 |
@@ -52,8 +52,8 @@
 3. Identity confirmation 將已確認 identity 交給 Response Reuse BC。
 4. Response Reuse BC 查詢內部 CacheStore。
 5. Safe reuse decision 在 Hit 時走向 Reused response return，再回到 Result receiver；在 Unavailable 時停在 Response Reuse boundary。
-6. Safe reuse decision 在 Miss 時走向未來的 Loaded Runtime Cache。
-7. Loaded Runtime Cache 使用其獨立 Runtime Store／Registry。
+6. Safe reuse decision 的 Miss 僅可由未來 integration 接手；若需要 runtime reuse，外部 ACL 才可提供 local `RuntimeReuseKey`。
+7. Loaded Runtime Cache 以其獨立 Runtime Registry／Retention protocol 描述 lookup、retention 與 outcomes；它不提供 backend 或 mapper。
 8. Runtime preparation 將可執行 runtime 交給未來的 Model Execution。
 9. Model Execution 透過 Provider adapter boundary 呼叫可替換的 Local 或 Remote provider adapter。
 10. Provider adapter 將執行結果交回 Execution result handoff。
@@ -67,7 +67,7 @@
 
 **預留 topology**：`identity/`、`response_reuse/`、`loaded_runtime_cache/`、`model_execution/`、`provider_adapter/` 位於 `src/deterministic_response_cache/` 下。每個 `.gitkeep` 是純文字 topology-reservation marker；目錄可被 Python 解析為 implicit namespace subpackage，但 marker 不提供 executable module、public symbol 或 re-export，也不代表 BC 已實作或可使用。
 
-**邊界維持**：Identity 是模型與完整 request identity 的唯一 authority；CacheStore 僅在 Response Reuse 內部。Loaded Runtime Cache、Model Execution 與 Provider Adapter 保持三個彼此獨立、尚未實作的 BC；`provider_adapter/` 只預留其 topology，具體 provider integration 仍在核心外部且可替換。
+**邊界維持**：Identity 是模型與完整 request identity 的唯一 authority；CacheStore 僅在 Response Reuse 內部。Loaded Runtime Cache 已交付 protocol-only contracts，但仍不實作 ACL mapping、backend 或 lifecycle，也不與 Identity direct import。Model Execution 與 Provider Adapter 保持獨立、尚未實作的 BC；`provider_adapter/` 只預留其 topology，具體 provider integration 仍在核心外部且可替換。
 
 ## Diagram acceptance checks
 
@@ -75,6 +75,7 @@
 - lookup 必須清楚呈現 Hit direct return、Miss future handoff 與 Unavailable boundary stop；record 必須呈現 Cached/NotCached retention result。
 - Current planes 必須和 future planes 使用明顯不同的視覺層級。
 - CacheStore 必須放在 Response Reuse BC 內部。
-- Runtime Store／Runtime Registry 必須獨立於 CacheStore。
+- Runtime Registry 必須獨立於 CacheStore，並標示為已交付 protocol、非 backend。
+- `ModelIdentity -> RuntimeReuseKey` 只能呈現為外部、未實作 integration／ACL boundary，不能畫成 BC direct import 或本 topic mapper。
 - Provider boundary 必須位於核心外，並呈現為可替換 surface。
 - 所有 identity flow 都必須由 Identity authority 匯出，而不是由其他 component 重新建立。
