@@ -117,11 +117,12 @@ none。
 
 ## Status / Allowed Transitions
 
-- **Current**: `workflow-correction-candidate / awaiting committed-candidate review route`。本 exact-two
-  workflow-artifact set 是對已提交 `fix-2` blockers 的 correction candidate；其 authoritative full SHA 僅由 Git
-  committed candidate 與 `fix-3` receipt binding 識別，plan 不得預填。該 candidate 經 Implementer 原樣 sole
-  two-file commit 後，下一合法 gate 是 Planner 對 committed candidate route fresh Independent Plan-Reviewer；不得
-  仍將 route 限定為 Plan-Creator correction。
+- **Current**: `phase-4.5-alignment / bounded-publish-pending`。fix-3 exact-two workflow-correction candidate
+  `f0047c33a3cb7583c15bd9edd09f95bbaaba6c93` 已由 full-SHA-bound `approved` receipt sole commit
+  `6421be09138b699d8db6773e96d257d5b2e85a5b` 確認；其 fixed implementation subject 的 approved Independent
+  Reviewer evidence 已由 sole commit `be1fba1de2c0c57a45cac704195f138abdfc1d69` 確認。下一合法 gate 是
+  Planner 對已提交同 topic evidence 執行 Phase 4.5 alignment；在 alignment 後才可 route Human 已授權的
+  bounded publish。remote PR head 仍是 `01f80439bd9c57739e588521081406cb343645f8`，尚未推送這個 fix cycle。
 - **Committed routing history**: initial exact-five non-merge planning candidate
   `cdf4c66ac8534a340118dca50b5e103f22335a25` 的 committed Plan-Reviewer `needs-rework` verdict 保留為
   immutable history，且不等同 planning approval 或 implementation authorization。其後 corrected candidate
@@ -137,18 +138,19 @@ none。
   two-file candidate 與 `needs-rework` receipt commit。四者均不得重寫、重提或作為 approval。bounded code
   implementation subject `e6cb65d450e37e052c26e58b6001cd842d859c42` 與 passing Tester evidence commit
   `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2` 同為 immutable history，且仍是後續
-  `implementation-review-log.fix-1.json` 的固定 subject/tester binding。
-- **Current correction route**: 本次只允許 Plan-Creator 修正 topic plan 與 step tracker 這 exact-two
-  workflow-artifact set。其 legal transition 必須依序為：committed fix-2 `needs-rework` history → scoped
-  exact-two correction candidate → Planner route fresh Independent Plan-Reviewer → Independent Plan-Reviewer write
-  `plan-review-receipt.fix-3.json` → Implementer sole receipt-only commit → Planner 依 committed verdict route。
-  這份 plan 不得預填 prospective candidate SHA；只有 Git 已建立的 candidate 與 future receipt 的 full-SHA
-  binding 才是 authoritative。僅當 `fix-3` receipt 是 full-SHA-bound `approved`，Planner 才可 route
-  Independent Reviewer 寫入既有的 `implementation-review-log.fix-1.json`；該 log 固定綁定 subject
-  `e6cb65d450e37e052c26e58b6001cd842d859c42` 與 Tester evidence commit
-  `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`。`needs-rework` 只能回到 scoped Plan-Creator correction。
-  既有 receipt/review-log paths 和內容均不得 overwrite 或 delete；在新的 committed approved review evidence
-  存在前，不得進入 Phase 4.5、push、reply 或 resolve 任何 thread。
+  `implementation-review-log.fix-1.json` 的固定 subject/tester binding。fix-3 candidate
+  `f0047c33a3cb7583c15bd9edd09f95bbaaba6c93` 的 approved receipt sole commit 是
+  `6421be09138b699d8db6773e96d257d5b2e85a5b`；同一 code subject/tester binding 的 approved Independent
+  Reviewer evidence sole commit 是 `be1fba1de2c0c57a45cac704195f138abdfc1d69`。兩者均不得重寫、重提或
+  作為其他 topic 的 evidence。
+- **Current correction handoff**: 已完成的 route 是 committed fix-2 `needs-rework` history → scoped exact-two
+  correction candidate `f0047c33a3cb7583c15bd9edd09f95bbaaba6c93` → Planner route fresh Independent
+  Plan-Reviewer → approved `plan-review-receipt.fix-3.json` sole commit
+  `6421be09138b699d8db6773e96d257d5b2e85a5b` → Planner route Independent Reviewer → approved
+  `implementation-review-log.fix-1.json` sole commit `be1fba1de2c0c57a45cac704195f138abdfc1d69` → Planner
+  Phase 4.5 alignment。既有 receipt/review-log paths 和內容均不得 overwrite 或 delete。alignment 前不得
+  push、reply 或 resolve；alignment 後仍必須先由 independent classification 將每個 exact thread 判為
+  `addressed-and-resolvable`，才可 route Implementer 留下 bounded reply 並 resolve。
 - **Execution model**: isolated topic worktree → five-path planning candidate → independent Plan-Reviewer
   receipt → Planner route → immutable five-path implementation subject → independent Tester evidence → independent
   Reviewer evidence → Planner Phase 4.5 alignment → existing Human-authorized bounded publish → draft PR → Human
@@ -213,7 +215,7 @@ none。
 | Plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.json` | Independent Plan-Reviewer | 僅在 committed planning candidate 後寫入；Implementer 原樣 sole evidence-only commit；同 candidate full SHA-bound `approved` receipt 才可由 Planner route。 |
 | Fix-1 immutable plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-1.json` | Independent Plan-Reviewer | Immutable `needs-rework` receipt，僅綁定 candidate `724ebf129eeb99fc06b1c1cd16b58757b1b0148e`，並已由 `dd29fe45626d5b20ffffde8d988fe4843d0924ef` sole-commit；不得改寫或重提。 |
 | Fix-2 immutable plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-2.json` | Independent Plan-Reviewer | Immutable `needs-rework` receipt，僅綁定 candidate `60836827cb9ab0d42e7217eb6b560bca99108a14`，並已由 `d4b2b3de4e451d6561a94381d0998d97957705f9` sole-commit；不得改寫或重提。 |
-| Fix-3 plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-3.json` | Independent Plan-Reviewer only | 僅在 fresh exact-two workflow-correction candidate 已提交且由 Planner route 後，沿用既有 plan-review receipt schema 寫入並 full-SHA 綁定該 candidate；不得由其他角色寫入，也不得由 planning artifacts 預填 prospective SHA。 |
+| Fix-3 plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-3.json` | Independent Plan-Reviewer only | Immutable `approved` receipt，僅綁定 candidate `f0047c33a3cb7583c15bd9edd09f95bbaaba6c93`，並已由 `6421be09138b699d8db6773e96d257d5b2e85a5b` sole-commit；不得改寫或重提。 |
 | Eligibility policy | `src/deterministic_response_cache/response_reuse/eligibility/policy.py` **Write** | Implementer | 標準庫-only eligibility decisions、union、generic Protocol 與 leaf boundary。 |
 | Response Reuse protocol | `src/deterministic_response_cache/response_reuse/protocol.py` **Modify** | Implementer | Required policy injection 與 lookup decision mapping；record contract preserved。 |
 | Eligibility tests | `tests/test_response_reuse_eligibility.py` **Write** | Implementer | Direct-import eligibility value, typing and module-boundary regression proof。 |
@@ -221,7 +223,7 @@ none。
 | InMemory integration tests | `tests/response_reuse/test_in_memory_store.py` **Modify** | Implementer | 以 deterministic allow policy 保留既有 Response Reuse/InMemory integration assertions。 |
 | Tester evidence | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.tester-evidence.json` | Tester | 只記同一 immutable subject 的 factual command/exit-code evidence；獨立 Implementer 原樣 sole evidence-only commit。 |
 | Independent review evidence | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.implementation-review-log.json` | Independent Reviewer | 只消費 committed passing same-subject Tester evidence；獨立 Implementer 原樣 sole evidence-only commit。 |
-| Review-evidence-capability repair independent review evidence | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.implementation-review-log.fix-1.json` | Independent Reviewer | 沿用既有 independent review schema；只可綁定 subject `e6cb65d450e37e052c26e58b6001cd842d859c42` 與 sole committed passing Tester evidence commit `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`，且不得改寫既有 review log。 |
+| Review-evidence-capability repair independent review evidence | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.implementation-review-log.fix-1.json` | Independent Reviewer | Immutable `approved` independent review evidence，綁定 subject `e6cb65d450e37e052c26e58b6001cd842d859c42` 與 sole committed passing Tester evidence commit `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`，並已由 `be1fba1de2c0c57a45cac704195f138abdfc1d69` sole-commit；不得改寫或重提。 |
 
 `README.md`、VERSION/release metadata、`.github/copilot-instructions.md`（若存在）、all package initializers、
 configuration/dependency declarations、architecture authority、所有 unlisted paths 均不得修改。任何未列 path、
@@ -249,12 +251,15 @@ deletion 或 new module 後綴都必須停止並返回 Planner。
   schema，分別只綁定 `724ebf129eeb99fc06b1c1cd16b58757b1b0148e` 與
   `60836827cb9ab0d42e7217eb6b560bca99108a14`；其 `needs-rework` receipts 分別已由
   `dd29fe45626d5b20ffffde8d988fe4843d0924ef` 與 `d4b2b3de4e451d6561a94381d0998d97957705f9` sole-commit。
-  新的 `plan-review-receipt.fix-3.json` 亦沿用前述 receipt schema，僅 Independent Plan-Reviewer 可在
-  Planner route 後寫入 fresh committed exact-two candidate 的 full SHA；planning artifacts 不得預填它。
+  `plan-review-receipt.fix-3.json` 沿用前述 receipt schema，已以 `approved` verdict 綁定 committed
+  exact-two candidate `f0047c33a3cb7583c15bd9edd09f95bbaaba6c93`，並由
+  `6421be09138b699d8db6773e96d257d5b2e85a5b` sole-commit；不得改寫或重提。
 - `implementation-review-log.fix-1.json` 沿用前述 independent review evidence schema；其
   `implementation_subject_commit` 與 `tester_evidence_commit` 固定為
   `e6cb65d450e37e052c26e58b6001cd842d859c42` 與
-  `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`。它與所有既有 immutable evidence files 均不得改寫或刪除。
+  `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`，其 `approved` evidence 已由
+  `be1fba1de2c0c57a45cac704195f138abdfc1d69` sole-commit。它與所有既有 immutable evidence files 均不得
+  改寫或刪除。
 
 ## Python implementation metadata
 
