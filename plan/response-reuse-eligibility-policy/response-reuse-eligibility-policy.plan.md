@@ -117,10 +117,25 @@ none。
 
 ## Status / Allowed Transitions
 
-- **Current**: `planning-candidate-committed`。initial exact-five non-merge planning candidate
-  `cdf4c66ac8534a340118dca50b5e103f22335a25` 已提交並進入 independent plan review；它不等同 planning
-  approval 或 implementation authorization。既有 committed plan-review receipt 的 `needs-rework` verdict
-  仍是有效、不可歪曲的 review outcome；本修正必須形成新的 planning candidate 並重新獨立審核。
+- **Current**: `pr-comment-review-and-fix / needs-rework`。PR #9 已進入 ready-for-review；其現有 PR head 是
+  `01f80439bd9c57739e588521081406cb343645f8`。Independent Reviewer 已將四個 exact PR threads
+  `PRRT_kwDOUJTij86kOT7L`、`PRRT_kwDOUJTij86kOT7X`、`PRRT_kwDOUJTij86kOT7g`、
+  `PRRT_kwDOUJTij86kOU72` 全部分類為 `needs-fix`；尚未建立新的 code implementation subject 或其後續
+  Tester／Independent Reviewer evidence。
+- **Committed routing history**: initial exact-five non-merge planning candidate
+  `cdf4c66ac8534a340118dca50b5e103f22335a25` 的 committed Plan-Reviewer `needs-rework` verdict 保留為
+  immutable history，且不等同 planning approval 或 implementation authorization。其後 corrected candidate
+  `43a255f03b69be94e56abcc7ca13bf684e3395f3` 的 approved Plan-Reviewer receipt 已以 sole evidence commit
+  `8b6658014674ab3a304115e130e58d295d804c7d` 提交；immutable implementation subject
+  `695888bb72927b301f4f98e38d3587824803f263` 的 passing Tester evidence commit 是
+  `e531a84a6fc48187af3137ada0634e876afc5365`，六個 implementation markers 的 step-progress commit 是
+  `e3009d719caba782901e58ff422ab2b3869be665`，Independent Reviewer evidence／current PR head commit 是
+  `01f80439bd9c57739e588521081406cb343645f8`。
+- **Current classified findings**: `PRRT_kwDOUJTij86kOT7L` 與 `PRRT_kwDOUJTij86kOU72` 是同一個 bounded
+  code fix；`PRRT_kwDOUJTij86kOT7X` 是本 plan stale current-state correction，
+  `PRRT_kwDOUJTij86kOT7g` 是 step handoff stale-state correction。state-only corrections 必須與新的 code
+  implementation subject 分離；完成新的 subject、same-subject Tester／Independent Reviewer chain 與 post-fix
+  independent thread classification 前，不得回覆或 resolve 任何 thread。
 - **Execution model**: isolated topic worktree → five-path planning candidate → independent Plan-Reviewer
   receipt → Planner route → immutable five-path implementation subject → independent Tester evidence → independent
   Reviewer evidence → Planner Phase 4.5 alignment → existing Human-authorized bounded publish → draft PR → Human
