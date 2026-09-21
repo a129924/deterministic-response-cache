@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "red_test_subject_commit": "e2e125d8dfa8bfd704e9ffdad5f2709f4eb993bc",
+  "status": "expected-failing",
+  "commands": [
+    {
+      "command": "uv run pytest tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py -v",
+      "exit_code": 2
+    }
+  ],
+  "recorded_by": "Implementer"
+}
