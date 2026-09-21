@@ -55,10 +55,13 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 
 ## Status / Allowed Transitions
 
-- **Current**: `planning-candidate-committed`。C5 planning candidate action 已完成；下一步由 Independent
-  Plan-Reviewer 對該 committed candidate 進行獨立審查。C5 只能含五份 planning artifacts，後續必須帶到沒有任何
-  Loaded Runtime Cache artifacts 的乾淨 `origin/dev` base；不得攜帶舊 source、tests、architecture、evidence 或
-  receipts。planning artifacts 不預填或推測任何 candidate SHA 或 receipt。
+- **Current**: `reviewer-evidence-committed`。C5 planning candidate `505c30609f5d65030a2eda740d8135b768cc06ca`
+  已經獨立 Plan-Reviewer 核准並由 receipt-only commit `c870dd06ae47c2a8d3832604f349126f026ee1e6` 記錄；後續
+  architecture-only、RED-test-only、RED evidence-only、green implementation、T3 與 V3 都已依序提交。V3 receipt
+  `1c2330c618a8e76aa6512fd100a6ac26f38e1c85` 已獨立核准同一 green subject
+  `1b5e4cfbd740c1e7fa10eef43221d7198f530547`。下一步是 Planner Phase 4.5 alignment；該 gate、PR thread
+  classification／resolution 與 F Human-check 均尚未完成。planning artifacts 不預填或推測任何後續 candidate SHA 或
+  receipt。
 - **Execution model**: committed planning candidate → independent Plan-Reviewer receipt → receipt-only commit →
   architecture-contract-only commit and passing dataflow gate → RED-test-only subject commit → factual locked
   expected-nonzero command → SHA-bound RED evidence-only commit → new immutable green implementation subject →
@@ -321,6 +324,6 @@ conversion and Registry／Retention implementation remain deferred to future, se
 
 ## Workflow State Contract
 
-- current_step: planning-candidate-committed
-- next_step: independent-plan-review-pending
-- status: PENDING
+- current_step: reviewer-evidence-committed
+- next_step: planner-phase-4.5-alignment-pending
+- status: IN_PROGRESS

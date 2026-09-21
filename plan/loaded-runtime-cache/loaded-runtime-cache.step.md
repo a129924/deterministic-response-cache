@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: independent-plan-review
+phase: planner-phase-4.5-alignment
 created: 2026-09-17
 ---
 
@@ -59,9 +59,9 @@ created: 2026-09-17
 
 ## Main Agent Actionable Steps — Fixed Tail
 
-- [X] **Actor:** Implementer — **Action:** Complete only source-authorized lifecycle actions after committed
-  Plan-Reviewer approval, same-subject passing Tester evidence, independent Reviewer approval, Planner Phase 4.5
-  alignment and existing Human authorization.
+- [ ] **Actor:** Planner — **Action:** 對已提交的 C5→V3 evidence chain 執行 Phase 4.5 alignment。只有通過後，才可
+  派遣獨立 Reviewer 分類 current PR threads；本項不代表 PR classification、thread reply／resolution、F ownership
+  human-check、publish 或 Human action 已完成。
 
 ## Handoff / Gate Notes
 
