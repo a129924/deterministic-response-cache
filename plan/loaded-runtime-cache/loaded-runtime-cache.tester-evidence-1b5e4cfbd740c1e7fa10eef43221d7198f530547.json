@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "1b5e4cfbd740c1e7fa10eef43221d7198f530547",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "uv run ruff format --check src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run ruff check src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pyright src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py -v",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest -v",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_package_import.py tests/test_loaded_runtime_cache_bc_independence.py -v",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
