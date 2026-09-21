@@ -87,32 +87,27 @@ backend 或 lifecycle 已交付。authors labels 使用繁體中文；不設定 
 flow，synchronous retain failure 必須使用非-dashed outcome relationship。最終必須是 showcase 9/9、0 composition
 errors、0 warnings，後續才 deliver，並 visual-check 四個 desktop viewports。
 
-## Mandatory execution order
+## C8 execution order
 
-1. 先同步五份 architecture authority，並 author／validate／deliver／visual-check dataflow。任何 architecture 或
-   visual gate 非 passing／skipped 都停止，不得建立測試或 production source。
-2. architecture gate 通過後，僅新增兩個 RED tests 並先將它們提交為 immutable RED-test-only subject；該 commit
-   不得包含 production source 或 RED evidence。subject commit 存在後才執行 locked expected-nonzero command，並以
-   subject 的完整 SHA 寫入 versioned RED evidence JSON；其後以 sole evidence-only commit 提交該 JSON，commit 不得
-   包含 tests 或 production source。
-3. 只有 RED evidence-only commit 已存在後，才建立新的 immutable green implementation subject，納入五個 production
-   modules 與使 RED tests 通過的 bounded changes。兩個 RED tests 必須先失敗並涵蓋五項 regression：opaque token 的
-   identity-only key semantics（包含 unhashable/custom-equality token）、直接 `importlib.import_module`、直接
-   `__import__`、alias/module-alias `importlib` 或 `builtins.__import__`、以及跨 BC duplicate semantic type
-   (`ModelIdentity`／`RuntimeReuseKey`)；green subject 才能以五個 production modules 修正它們。Tester 和 Independent
-   Reviewer evidence 僅能綁定此新 subject。
+1. C5→V3 已提交的 architecture authority、dataflow delivery／visual evidence 與 source contracts 均是 frozen
+   provenance。C8 在既有 source ancestor 上進行；不得重跑為新的 architecture gate、不得改寫五份 authority path，
+   也不得假裝重新經歷 source-absent 的 RED→green 歷程。
+2. C8 approved Plan-Reviewer receipt committed 後，Implementer 只可修改
+   `tests/test_loaded_runtime_cache_contracts.py` 與
+   `tests/test_loaded_runtime_cache_bc_independence.py`，各新增一個 isolated executable RED assertion。它們在現行
+   source ancestor 可執行，並覆蓋 opaque-key identity、direct `importlib.import_module`、direct `__import__`、
+   alias/module-alias bypass 和 duplicate semantic type 的五類 regression。
+3. 該兩-path assertion subject 是新的 immutable implementation subject；它不得包含 production source、architecture
+   或 evidence。其命名中的 RED 只識別 review repair，並不代表 expected-nonzero 或 historical red failure。Tester 對
+   相同 subject 建立 T8，Independent Reviewer 只在 committed passing T8 後建立 V8；V8 approved 後才可進入 Planner
+   Phase 4.5 與 thread classification。
 
 ## Deterministic validation evidence boundary
 
-RED evidence is a separate factual record, not part of the RED-test-only subject. It has exactly
-`schema_version`, `topic`, `red_test_subject_commit`, `status`, `commands`, `recorded_by`; it uses
-`schema_version: 1`, topic `loaded-runtime-cache`, a full 40-hex lowercase SHA that resolves to the already committed
-RED-test-only subject, status `expected-failing`, a non-empty command / integer-exit-code list with at least one
-non-zero exit code, and `recorded_by: Implementer`. Its immutable path is
-`loaded-runtime-cache.red-test-evidence-<red-test-subject-40-hex-sha>.json`; Implementer writes it after the factual
-locked command and commits it unchanged in a sole evidence-only commit containing neither tests nor production source.
-Malformed, extra-key, abbreviated, uncommitted, cross-topic, path/SHA-mismatched, self-referential, or
-status/command-inconsistent RED evidence fails closed and cannot authorize green work.
+There is no C8 RED-evidence artifact. The assertions are factual executable regression checks against the existing
+source ancestor. Their commands and exit codes are recorded only in T8 after the immutable assertion subject exists.
+A failing command is `failing` Tester evidence and returns only to Implementer; it cannot be renamed
+`expected-failing`, converted into green-work authorization, or used to rewrite frozen C5→V3 provenance.
 
 Tester only records factual evidence for one immutable implementation subject. Its JSON has exactly
 `schema_version`, `topic`, `implementation_subject_commit`, `status`, `commands`, `recorded_by`; it uses
@@ -127,15 +122,14 @@ JSON has exactly `schema_version`, `topic`, `implementation_subject_commit`, `te
 `recorded_by: Independent Reviewer`. Malformed, extra-key, mismatched, uncommitted, failing, or abbreviated evidence
 fails closed; it cannot yield Reviewer evidence or implementation routing.
 
-The successor records must be written only to immutable versioned paths
+The C8 successor records must be written only to immutable versioned paths
 `loaded-runtime-cache.tester-evidence-<implementation-subject-40-hex-sha>.json` and
 `loaded-runtime-cache.implementation-review-log-<implementation-subject-40-hex-sha>.json`. They must not overwrite,
-reuse, or be inferred from the legacy `6110cb…` Tester or `44e477…` Reviewer evidence lineage.
+reuse, or be inferred from C5/T3/V3 or legacy `6110cb…` Tester／`44e477…` Reviewer evidence lineage.
 
-## C5 candidate routing constraint
+## C8 candidate routing constraint
 
-C5 只包含 `analysis/loaded-runtime-cache/{requirements,technical-spec}.md` 與
+C8 只包含 `analysis/loaded-runtime-cache/{requirements,technical-spec}.md` 與
 `plan/loaded-runtime-cache/loaded-runtime-cache.{plan,spec,step}.md` 五份 planning artifacts。後續 routing 必須將它
-帶到沒有任何 Loaded Runtime Cache artifacts 的乾淨 `origin/dev` base；C5 不得攜帶舊 source、tests、architecture、
-RED／Tester／Reviewer evidence 或 receipts。candidate commit 已完成後只能由 Independent Plan-Reviewer 建立新的
-SHA-bound receipt；本文件不預填 candidate SHA 或 receipt。
+帶到現行 source ancestor；C8 不得攜帶 source、tests、architecture、Tester／Reviewer evidence 或 receipts。candidate
+commit 已完成後只能由 Independent Plan-Reviewer 建立新的 SHA-bound receipt；本文件不預填 candidate SHA 或 receipt。

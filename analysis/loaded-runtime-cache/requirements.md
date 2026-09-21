@@ -30,17 +30,17 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
   `RuntimeRetention[RuntimeT]` Protocol，以及 lookup／retention outcomes。
 - direct-module contract tests、BC-independence regression、architecture authority 同步，以及 Archify
   `dataflow` design evidence 和其 locked visual evidence paths。
-- architecture authority 與 dataflow contract 必須先同步、validate／deliver／visual-check 成功，才可進入
-  RED test-only gate。RED subject 必須先作為僅含兩個 tests 的 immutable commit；其後才可執行 locked
-  expected-nonzero command、以該已提交 subject 的完整 SHA 寫入獨立 RED evidence，並將 JSON 單獨提交。只有
-  RED evidence-only commit 已存在後才可建立新的 immutable green implementation subject。
+- 已存在 source ancestor 的 architecture authority、dataflow JSON、delivery 與 visual-check 是 C8 的 reusable
+  committed evidence；C8 不重寫或重新交付它們。C8 以兩個 isolated executable RED assertions 補強現行實作的
+  regression coverage；它們在現行 source ancestor 上必須可執行並如實收集結果，不得偽稱 historical red failure、
+  expected-nonzero gate 或新的 green-source 前置條件。
 - 明確列出 Goal、Non-Goal、In-Scope、Out-Of-Scope、ReadOnly、Written、Deleted、Modify 與 TestCase，
   作為後續 Python implementation 的 bounded contract。
-- 兩個已宣告 test modules 必須在同一個 immutable RED-test-only subject 先涵蓋並失敗以下五項 regression：
+- 兩個已宣告 test modules 必須在同一個 immutable C8 isolated-assertion subject 涵蓋以下五項 regression：
   opaque／unhashable／custom-equality token 的 identity-only key semantics；直接 `importlib.import_module` 跨 BC；
   直接 `__import__` 跨 BC；`importlib` 或 `builtins.__import__` alias／module-alias 跨 BC；以及任一 BC 宣告對方
-  semantic type（LRC 的 `ModelIdentity` 或 Identity 的 `RuntimeReuseKey`）。這五項只在 green subject 修正，且
-  BC regression parser 必須解析 aliases。
+  semantic type（LRC 的 `ModelIdentity` 或 Identity 的 `RuntimeReuseKey`）。C8 只驗證已存在的實作，且 BC
+  regression parser 必須解析 aliases。
 
 ## Out-Of-Scope / Non-Goal
 
@@ -76,10 +76,10 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
 - 後續 Tester／Independent Reviewer evidence 必須以同一 immutable implementation subject 的完整 40-hex SHA
   fail-closed 綁定；evidence schema、committing order 與 passing／approved invariants 以 topic plan 的
   `Review and evidence schemas` 為唯一 execution contract。
-- 新的 Tester／Independent Reviewer receipts 必須採新的 SHA-bound、不可覆寫路徑；不得寫入或重用舊
-  `6110cb…`／`44e477…` lineage 的 fixed-name evidence。
-- RED evidence 也必須採新的 SHA-bound、不可覆寫 path，且其 `red_test_subject_commit` 只可指向已提交的
-  RED-test-only subject；不得讓同一 commit 同時含 RED tests 與 evidence，亦不得預填或自我引用其 commit SHA。
-- C5 candidate 只能含這五份 planning artifacts，並會由後續 Implementer 帶到沒有任何 Loaded Runtime Cache
-  artifacts 的乾淨 `origin/dev` base；不得攜帶舊 source、tests、architecture、evidence 或 receipts。candidate
+- C8 的 Tester／Independent Reviewer receipts 必須採新的 SHA-bound、不可覆寫路徑；不得寫入或重用 C5/T3/V3、
+  `6110cb…` 或 `44e477…` lineage 的 evidence。
+- C8 不建立 RED evidence JSON：現行 source ancestor 已含 contract implementation，故不可誠實地宣稱新的
+  expected-nonzero RED failure。isolated assertions 的實際 exit code 改由新的 T8 Tester evidence 收集。
+- C8 candidate 只能含這五份 planning artifacts，且以既有 Loaded Runtime Cache source ancestor 為 parent；不得
+  倒回乾淨 base、刪除既有 source/tests/architecture，或將 frozen C5→V3 evidence 重用為 C8 routing。candidate
   commit action 完成後，下一 gate 恆為 Independent Plan-Reviewer；planning text 不得預填 SHA 或 receipt。

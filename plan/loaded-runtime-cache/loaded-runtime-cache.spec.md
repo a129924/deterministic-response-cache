@@ -19,9 +19,9 @@
    不得宣告 `ModelIdentity`，Identity 不得宣告 `RuntimeReuseKey`。
 7. Architecture authority 和 Archify dataflow 只宣告 protocol capability；ACL mapping、backend、lifecycle,
    Model Execution、Provider Adapter 均為 external／future／out of scope。
-8. 執行順序固定為 architecture authority/dataflow gate → RED test-only gate → immutable green implementation
-   subject；architecture gate 未通過時不得新增 test 或 production source，RED gate 不得含 production source。兩個
-   RED tests 必須先失敗並覆蓋五項 C5 regressions，green subject 才能修正。
+8. C8 重用 C5→V3 已提交的 architecture/dataflow 與 source-contract provenance，不重寫其歷史順序。C8 只在既有
+   source ancestor 建立兩個 isolated executable RED assertions（各一個於既有 test module）；它們不是 expected-failing
+   或 green-source gate。新的同-subject T8/V8 evidence chain 才是 C8 的獨立 verification route。
 
 ## Behavioral Scenarios
 
@@ -62,14 +62,13 @@ Given frozen Archify JSON candidate，When validate、deliver、`visual-check --
 receipt 並停止 gate。圖使用 `backend` visual type 時必須以 contract-only label 和「僅 Protocol；無 concrete backend、
 DI、runtime lifecycle」說明消除實作暗示。
 
-### Scenario 7 — architecture-first then RED-first sequence
+### Scenario 7 — C8 existing-source assertion route
 
-Given 五份 architecture authority 和 dataflow 尚未完成 gate，When implementation workflow 開始，Then 先只同步
-architecture authority 並完成 validate／deliver／visual-check；在此之前不得新增 tests 或 production source。Given
-architecture gate 已通過，When RED gate 開始，Then 先只新增兩個預期失敗 tests 並提交 immutable RED-test-only
-subject，沒有 production source 或 evidence；再以該 committed subject 執行 locked expected-nonzero command，將
-factual evidence 寫入 SHA-bound JSON 並以 sole evidence-only commit 提交，該 commit 沒有 tests 或 production source；
-只有 RED evidence-only commit 已存在後，才建立新的 immutable green implementation subject。
+Given C5→V3 architecture/dataflow 與 source-contract artifacts 已是 committed frozen provenance，When C8 開始，Then
+不修改 architecture、Archify 或 production source。Given C8 Plan-Reviewer receipt 已 committed，When Implementer 建立
+assertion subject，Then subject 只修改兩個 declared tests、各加入一個 isolated executable RED assertion，並在既有
+source ancestor 以 zero-exit validation 執行。T8 記錄相同 subject 的事實結果；V8 只消費 committed passing T8。不得
+聲稱新的 expected-nonzero red failure、RED evidence 或 green-source authorization。
 
 ### Scenario 8 — retention dataflow semantics
 
@@ -77,11 +76,11 @@ Given dataflow 描繪 retain path，When reader 檢視 Runtime Registry relation
 retain input；synchronous `NotRetained(runtime)` failure 使用實線 outcome relationship，dashed relationship 只在
 明確標示的 async flow 出現，且本圖不把 synchronous retain failure 描繪成 async。
 
-### Scenario 9 — C5 cross-BC semantic-type regression
+### Scenario 9 — C8 cross-BC semantic-type regression
 
-Given LRC 或 Identity source 嘗試自行宣告對方的 semantic type，When BC-independence regression 解析 direct 或 alias
+Given LRC 或 Identity source 嘗試自行宣告對方的 semantic type，When C8 BC-independence assertion 解析 direct 或 alias
 imports 和 declarations，Then LRC `ModelIdentity` 或 Identity `RuntimeReuseKey` 的 duplicate semantic type 都使 test
-失敗；green subject 只藉由移除違規宣告／跨 BC access 修正，不能改為 mapper 或 shared type。
+失敗；C8 不改 production source、不能改為 mapper 或 shared type。
 
 ## Error / Edge Cases
 
@@ -100,11 +99,8 @@ imports 和 declarations，Then LRC `ModelIdentity` 或 Identity `RuntimeReuseKe
    and hash would raise／record use, When key identity is exercised, Then neither token equality nor hash is invoked.
 6. **Visual gate failure:** Given Archify validate, deliver, or visual-check is non-zero or visual-check is skipped,
    When evidence is recorded, Then the failure／skipped result is retained truthfully and the delivery gate stops.
-7. **Execution-order breach:** Given a test or production-source path changes before the preceding mandatory gate,
-   When Planner／Reviewer classifies the subject, Then it is out of sequence and must not be used as green implementation
-   evidence.
-8. **Evidence path collision or self-reference:** Given a RED, Tester or Reviewer record would use a fixed-name or
-   legacy path, including the `6110cb…`／`44e477…` lineage, or a RED evidence JSON is placed in the same commit as its
-   subject, When it is written, Then it fails the evidence contract; only new SHA-bound, non-overwritable successor
-   receipt paths are valid, and RED evidence must bind the already committed subject SHA from a separate sole
-   evidence-only commit.
+7. **C8 scope breach:** Given C8 assertion subject changes a source, architecture, Archify or evidence path, When
+   Planner／Reviewer classifies it, Then it is out of scope and cannot be used for T8/V8 routing.
+8. **Evidence path collision or provenance reuse:** Given T8 or V8 uses a fixed-name, C5/T3/V3 or legacy
+   `6110cb…`／`44e477…` path, or references another subject, When it is written, Then it fails closed. T8/V8 must use
+   new SHA-bound non-overwritable paths and bind the C8 assertion subject only.

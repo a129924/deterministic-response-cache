@@ -16,7 +16,7 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 
 | Field | Contract |
 | --- | --- |
-| In-Scope | local immutable opaque `RuntimeReuseKey`（identity-only key semantics）；`RuntimeRegistry[RuntimeT]`、`RuntimeRetention[RuntimeT]` Protocol；`Available`、`Missing`、`Unavailable`、`Retained`、`NotRetained` outcomes；locked module taxonomy、direct-module contract tests、alias-aware BC-independence regression、五份 architecture authority 同步與 Archify dataflow evidence，以及 architecture-first → RED test-only → green-subject 的固定順序。 |
+| In-Scope | local immutable opaque `RuntimeReuseKey`（identity-only key semantics）；`RuntimeRegistry[RuntimeT]`、`RuntimeRetention[RuntimeT]` Protocol；`Available`、`Missing`、`Unavailable`、`Retained`、`NotRetained` outcomes；locked module taxonomy、direct-module contract tests、alias-aware BC-independence regression、已提交 architecture/dataflow evidence 的重用，以及 C8 兩個 isolated executable RED assertions 與 fresh T8/V8 evidence chain。 |
 | Out-Of-Scope | Identity BC direct import、`ModelIdentity -> RuntimeReuseKey` mapping／mapper／ACL implementation、concrete Registry／Retention／lookup class、DI、backend、runtime initialization／download／unload／execution、provider management、Response Reuse、Model Execution、Provider Adapter、TTL、eviction、locking、concurrency、retry、timeout、metrics、tracing。 |
 | Non-Goal | root re-export、package facade、dynamic import、`sys.modules` substitution、`service.py`、`utils.py`、`common.py`、README、version、release、tag、merge、post-merge。 |
 
@@ -34,40 +34,32 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 - module placement 固定為 `<bc>/<topic>/<child-topic>/<module>.py`。這是 non-stable-library topic，沒有 README
   row、VERSION bump、release note 或 release action。
 - architecture-path overlap 僅在 Human review／merge coordination 處理；不授權改另一 topic artifacts。
-- implementation 順序不可重排：先僅同步 architecture authority 與 dataflow 並完成 visual gate，再只新增兩個
-  預期失敗的 RED tests 並先提交 immutable RED-test-only subject；其後才執行 locked expected-nonzero command，將
-  full-SHA-bound RED JSON 以 sole evidence-only commit 提交，最後才建立新的 immutable green implementation subject。
-  RED subject 不得含 production source 或 evidence；RED evidence-only commit 不得含 tests 或 production source，亦不得
-  以之前的 `6110cb…`／`44e477…` evidence routing。
-- C5 的兩個 RED tests 必須先失敗並在同一 immutable subject 覆蓋五項 regression：opaque／unhashable／
+- C5→V3 的 architecture/dataflow gate 與 production source contracts 是 frozen provenance。C8 必須在既有 source
+  ancestor 上重用它們，不能回寫、重建或聲稱 source-absent 的 historical RED→green 順序。
+- C8 的兩個 isolated executable RED assertions 必須在同一 immutable assertion subject 覆蓋五項 regression：opaque／unhashable／
   custom-equality token 不觸發 equality/hash；直接 `importlib.import_module`；直接 `__import__`；`importlib` 或
   `builtins.__import__` alias／module-alias；以及 LRC `ModelIdentity`／Identity `RuntimeReuseKey` duplicate semantic
-  type。BC parser 必須解析 aliases；green subject 才能修正，且不以 mapper、shared type 或跨 BC import 規避。
+  type。BC parser 必須解析 aliases；assertions 在 current source ancestor 執行並以 T8 如實收集，不能假稱
+  expected-nonzero、green-source authorization 或以 mapper、shared type 或跨 BC import 規避。
 
 ## Boundaries / Exclusions
 
 | Category | Exact contract |
 | --- | --- |
-| ReadOnly | `src/deterministic_response_cache/identity/**`、`response_reuse/**`、`model_execution/**`、`provider_adapter/**`、root `__init__.py`、`loaded_runtime_cache/.gitkeep`、existing source/tests、`pyproject.toml`、`README.md`、version metadata、workflow contracts、`.github/agents/**`。 |
-| Written | 五個 new Python modules、`tests/test_loaded_runtime_cache_contracts.py`、`tests/test_loaded_runtime_cache_bc_independence.py`、Archify JSON／HTML／validation／delivery／visual-check receipt、contact sheet 與四張 specified PNG sidecars。 |
-| Modify | `docs/business-capability-architecture.md`、`docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、`scene.js`、`index.html`；只同步 protocol-only capability 與 boundaries。 |
+| ReadOnly | `src/deterministic_response_cache/identity/**`、`response_reuse/**`、`model_execution/**`、`provider_adapter/**`、root `__init__.py`、`loaded_runtime_cache/.gitkeep`、五個 existing source modules、`pyproject.toml`、`README.md`、version metadata、workflow contracts、`.github/agents/**`、五份 architecture authority 與既有 Archify artifacts。 |
+| Written | C8 versioned T8／V8 evidence paths；C8 不新增 source、architecture 或 Archify artifact。 |
+| Modify | 僅 `tests/test_loaded_runtime_cache_contracts.py` 與 `tests/test_loaded_runtime_cache_bc_independence.py`，各加入一個 isolated executable assertion。 |
 | Deleted | 無；不得刪除 `.gitkeep`、existing tests 或既有 artifacts。 |
 
 ## Status / Allowed Transitions
 
-- **Current**: `reviewer-evidence-committed`。C5 planning candidate `505c30609f5d65030a2eda740d8135b768cc06ca`
-  已經獨立 Plan-Reviewer 核准並由 receipt-only commit `c870dd06ae47c2a8d3832604f349126f026ee1e6` 記錄；後續
-  architecture-only、RED-test-only、RED evidence-only、green implementation、T3 與 V3 都已依序提交。V3 receipt
-  `1c2330c618a8e76aa6512fd100a6ac26f38e1c85` 已獨立核准同一 green subject
-  `1b5e4cfbd740c1e7fa10eef43221d7198f530547`。下一步是 Planner Phase 4.5 alignment；該 gate、PR thread
-  classification／resolution 與 F Human-check 均尚未完成。planning artifacts 不預填或推測任何後續 candidate SHA 或
-  receipt。
-- **Execution model**: committed planning candidate → independent Plan-Reviewer receipt → receipt-only commit →
-  architecture-contract-only commit and passing dataflow gate → RED-test-only subject commit → factual locked
-  expected-nonzero command → SHA-bound RED evidence-only commit → new immutable green implementation subject →
-  versioned Tester evidence → Tester evidence-only commit → versioned
-  independent Reviewer evidence → Reviewer evidence-only commit → Planner Phase 4.5 alignment → bounded publish／draft
-  PR → Human review／merge。
+- **Current**: `plan-creator-rework-in-progress`。C8 是以現行 source ancestor 為基礎的五-file planning correction；
+  C5→V3 是 frozen provenance，不能作 C8 routing。C8 candidate 尚未提交，且 planning artifacts 不預填 candidate SHA 或
+  receipt。C8 candidate 被獨立核准並提交 receipt 後，下一步才是兩-path isolated-assertion implementation subject。
+- **Execution model**: C8 committed planning candidate → independent Plan-Reviewer receipt → receipt-only commit →
+  two-path isolated executable assertion subject against existing source ancestor → versioned T8 Tester evidence →
+  T8 evidence-only commit → versioned V8 independent Reviewer evidence → V8 evidence-only commit → Planner Phase 4.5
+  alignment → bounded PR thread classification／reply／resolution → Human review／merge。
 - **Allowed transitions**: `planned` → `planning-candidate-committed` → `plan-review-in-progress` →
   `plan-review-receipt-committed` → `implementation-in-progress` → `tester-in-progress` →
   `tester-evidence-committed` → `reviewer-in-progress` → `reviewer-evidence-committed` → `approved` →
@@ -84,37 +76,18 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 | Topic specification | `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md` | Plan-Creator | Acceptance and TestCase contract. |
 | Step tracker | `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator; later Implementer only for implementation checkmarks | Topic-local progression truth. |
 | Plan-review receipt | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` | Independent Plan-Reviewer writes; Implementer commits unchanged alone | SHA-bound normal-plan verdict. |
-| Runtime key | `src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/registry/runtime_reuse_key.py` **Add** | Implementer | Local opaque semantic type only. |
-| Registry port | `src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/registry/runtime_registry_port.py` **Add** | Implementer | Synchronous `RuntimeRegistry` Protocol and expected lookup signal owner. |
-| Lookup outcomes | `src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/lookup/lookup_outcome.py` **Add** | Implementer | Lookup outcome contract owner; no mapper. |
-| Retention protocol | `src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/retention/runtime_retention.py` **Add** | Implementer | `RuntimeRetention` Protocol. |
-| Retention outcomes | `src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/retention/retain_outcome.py` **Add** | Implementer | Retention outcome contract owner. |
-| Contract tests | `tests/test_loaded_runtime_cache_contracts.py` **Add** | Implementer | RED-test-only then green validation; direct-module type／outcome／opaque-handoff and unhashable/custom-equality-token identity-semantics tests. |
-| BC-independence tests | `tests/test_loaded_runtime_cache_bc_independence.py` **Add** | Implementer | RED-test-only then green validation; alias-aware rejection of direct import, direct `importlib.import_module`, direct `__import__`, `importlib`／`builtins.__import__` alias/module-alias bypasses, and duplicate semantic types. |
-| BC text authority | `docs/business-capability-architecture.md` **Modify** | Implementer | Canonical BC responsibility synchronization. |
-| Evolution roadmap | `docs/evolution-roadmap.md` **Modify** | Implementer | Topic order and future-boundary synchronization. |
-| Architecture brief | `docs/architecture/business-capability/architecture-brief.md` **Modify** | Implementer | Protocol-only and ACL-boundary synchronization. |
-| Interactive scene source | `docs/architecture/business-capability/scene.js` **Modify** | Implementer | Interactive visual authority synchronization. |
-| Interactive scene mirror | `docs/architecture/business-capability/index.html` **Modify** | Implementer | Embedded scene synchronization. |
-| Dataflow source | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json` **Add** | Implementer | Archify showcase source. |
-| Standalone dataflow | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html` **Add** | Implementer | Trusted delivered HTML. |
-| Dataflow validation receipt | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.validation.json` **Add** | Implementer | Final showcase validation receipt. |
-| Dataflow delivery receipt | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.delivery.json` **Add** | Implementer | Final delivery receipt. |
-| Visual-check receipt | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.json` **Add** | Implementer | Desktop containment and capture receipt. |
-| Visual contact sheet | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.html` **Add** | Implementer | Generated visual evidence index. |
-| PNG 1440×900 light | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.light.png` **Add** | Implementer | Visual evidence. |
-| PNG 1440×900 dark | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.dark.png` **Add** | Implementer | Visual evidence. |
-| PNG 2048×1320 light | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.light.png` **Add** | Implementer | Visual evidence. |
-| PNG 2048×1320 dark | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.dark.png` **Add** | Implementer | Visual evidence. |
-| RED test evidence | `plan/loaded-runtime-cache/loaded-runtime-cache.red-test-evidence-<red-test-subject-40-hex-sha>.json` | Implementer writes after the committed RED subject; Implementer commits unchanged alone | SHA-bound expected-failing command facts in a sole evidence-only commit; no tests or production source. |
-| Tester evidence (T3) | `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<implementation-subject-40-hex-sha>.json` | Tester writes; Implementer commits unchanged alone | New SHA-bound same-green-subject factual validation. |
-| Independent review evidence (V3) | `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<implementation-subject-40-hex-sha>.json` | Independent Reviewer writes; Implementer commits unchanged alone | New SHA-bound record consuming committed passing T3 evidence. |
+| Existing source contracts | five locked `src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/**` modules | None — ReadOnly | C5 green subject provenance; C8 must not modify them. |
+| Contract tests | `tests/test_loaded_runtime_cache_contracts.py` **Modify** | Implementer | Add exactly one isolated executable assertion; no existing assertion behavior changes. |
+| BC-independence tests | `tests/test_loaded_runtime_cache_bc_independence.py` **Modify** | Implementer | Add exactly one isolated executable assertion; preserve alias-aware regression behavior. |
+| Existing architecture/dataflow | five listed architecture authority files and `docs/architecture/loaded-runtime-cache/**` | None — ReadOnly | C5 architecture provenance reused without edit or re-delivery. |
+| Tester evidence (T8) | `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<implementation-subject-40-hex-sha>.json` | Tester writes; Implementer commits unchanged alone | New SHA-bound factual validation of the C8 assertion subject. |
+| Independent review evidence (V8) | `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<implementation-subject-40-hex-sha>.json` | Independent Reviewer writes; Implementer commits unchanged alone | New SHA-bound record consuming committed passing T8 evidence. |
 
 Every unlisted path is read-only. The fixed-name legacy plan-review receipt from the abandoned lineage is historical,
-frozen provenance only: it is not an artifact of C5, must not be created or overwritten, and has no routing
+frozen provenance only: it is not an artifact of C8, must not be created or overwritten, and has no routing
 authority. Each current or successor candidate uses only the SHA-bound template above; no candidate SHA is prefilled.
 Legacy fixed-name T1／V1 evidence, including the `6110cb…` Tester and `44e477…` Reviewer lineage, is likewise frozen:
-T3／V3 must use the new versioned paths above and never overwrite, reuse, or infer facts from it.
+T3／V3 and C5 provenance must never be overwritten, reused, or inferred as C8 facts.
 
 ### Review and evidence schemas
 
@@ -122,15 +95,8 @@ T3／V3 must use the new versioned paths above and never overwrite, reuse, or in
   `copilot_feedback_triage`. `verdict` is `approved|needs-rework`; `blocking_issues` is an array of objects with
   exactly `issue`, `file`, `fix`; triage has exactly `ADDRESS`／`DISCUSS`／`SKIP` arrays. Only a committed approved
   receipt for the committed candidate can authorize implementation routing.
-- RED test evidence is one JSON object with exactly `schema_version`, `topic`, `red_test_subject_commit`, `status`,
-  `commands`, `recorded_by`. It uses `schema_version: 1`, topic `loaded-runtime-cache`, a full 40-character lowercase
-  hexadecimal SHA resolving to the already committed RED-test-only subject, status `expected-failing`, a non-empty
-  array of non-empty command strings and integer exit codes containing at least one non-zero exit code, and
-  `recorded_by: Implementer`. The subject contains exactly the two declared RED tests and neither production source
-  nor evidence. Only after that subject exists may Implementer run the factual locked expected-nonzero command and
-  write the filename-bound JSON; Implementer then commits the unchanged JSON in a sole evidence-only commit containing
-  neither tests nor production source. Malformed, path/SHA-mismatched, uncommitted, same-commit/self-referential, or
-  status/command-inconsistent RED evidence fails closed and cannot authorize green work.
+- C8 creates no RED-evidence JSON. Its isolated executable assertions run against the existing source ancestor; their
+  actual command results belong only in T8. A failing result is `failing` T8, never an expected-failing authorization.
 - Tester evidence is exactly one JSON object whose top-level keys are `schema_version`, `topic`,
   `implementation_subject_commit`, `status`, `commands`, `recorded_by` and no others. `schema_version` is integer
   `1`; `topic` is `loaded-runtime-cache`; `implementation_subject_commit` is the same immutable subject's full
@@ -138,15 +104,15 @@ T3／V3 must use the new versioned paths above and never overwrite, reuse, or in
   entry has only non-empty string `command` and integer `exit_code`; `recorded_by` is `Tester`. `passing` requires
   every exit code to be `0`; `failing` requires at least one non-zero exit code. Malformed, uncommitted,
   cross-topic, cross-subject, abbreviated-SHA, legacy fixed-name path, or status/command-inconsistent evidence fails
-  closed. T3 is written only at its versioned SHA-bound artifact path.
+  closed. T8 is written only at its versioned SHA-bound artifact path.
 - Independent review evidence is exactly one JSON object whose top-level keys are `schema_version`, `topic`,
   `implementation_subject_commit`, `tester_evidence_commit`, `verdict`, `blocking_issues`, `recorded_by` and no
   others. `schema_version` is integer `1`; `topic` is `loaded-runtime-cache`; both subject references are full
   40-character lowercase hexadecimal SHAs; `tester_evidence_commit` is the sole evidence-only commit containing
   committed same-topic, same-subject passing Tester evidence; `verdict` is `approved|needs-rework`; `blocking_issues`
   is a string array that is empty exactly for `approved` and non-empty for `needs-rework`; `recorded_by` is
-  `Independent Reviewer`. Reviewer may consume only that committed passing T3 evidence; malformed, legacy fixed-name,
-  or unmatched input fails closed and must not produce V3 Reviewer evidence. V3 is written only at its versioned
+  `Independent Reviewer`. Reviewer may consume only that committed passing T8 evidence; malformed, legacy fixed-name,
+  or unmatched input fails closed and must not produce V8 Reviewer evidence. V8 is written only at its versioned
   SHA-bound artifact path.
 
 ## Python implementation metadata
@@ -161,9 +127,10 @@ T3／V3 must use the new versioned paths above and never overwrite, reuse, or in
 ### Current Context
 
 Identity BC、Response Reuse、Model Execution 與 Provider Adapter 都是相鄰但獨立的 bounded context；本 topic 的
-reserved `loaded_runtime_cache` area 尚未有實作。`pyproject.toml` 已鎖定 Python 3.12、strict Pyright、Ruff 與 pytest。
-已存在的 planning candidate 是唯一可供 Independent Plan-Reviewer 審查的 planning state；architecture-path overlap
-保留給 Human review／merge coordination，不能由本 topic writer 擴張路徑或自行解決。
+five source contracts、architecture authority 與 Archify dataflow 已存在於 current source ancestor。`pyproject.toml`
+已鎖定 Python 3.12、strict Pyright、Ruff 與 pytest。C8 是新的 planning correction candidate，必須由獨立
+Plan-Reviewer 審查；architecture-path overlap 保留給 Human review／merge coordination，不能由本 topic writer 擴張
+路徑或自行解決。
 
 ### Requirements
 
@@ -173,9 +140,9 @@ reserved `loaded_runtime_cache` area 尚未有實作。`pyproject.toml` 已鎖�
    runtime lifecycle side effect；key token 不可成為 `str`／hash API 或由 `repr` 暴露，且 unhashable/custom-equality
    token 不得被 key equality/hash 呼叫。
 3. expected registry lookup failure、`Missing`、`Unavailable`、unexpected exception 與 retention outcomes 必須可區分。
-4. 只寫 declared source、test、architecture 與 Archify evidence paths；維持 BC independence 與 direct-module imports。
-5. 先完成 architecture authority／dataflow gate，再做無 production source 的 RED-test-only gate，最後才建立新的
-   immutable green implementation subject；不可倒置或將任一 gate 壓縮為舊 evidence。
+4. C8 只修改兩個 declared test paths，保留既有 source、architecture／Archify evidence 與 direct-module imports。
+5. C8 不回寫歷史 RED→green 門檻；它在 current source ancestor 建立可執行的 isolated assertions，並以新的 T8/V8
+   same-subject evidence chain 做事實驗證。
 
 ### Decisions
 
@@ -205,14 +172,13 @@ protocol contracts, not concrete behavior, dependency composition, or a stable r
 
 ### Affected Files / Modules
 
-**Written:** the five source modules, two declared contract/regression tests, the separately committed versioned RED
-evidence, and versioned T3／V3 evidence in `Artifact Paths`, plus the ten declared Archify source/delivery/visual-
-evidence artifacts.
+**Written:** only versioned T8／V8 evidence in `Artifact Paths`.
 
-**Modified:** only the five architecture authority files enumerated in `Artifact Paths`.
+**Modified:** only the two declared test modules, each with one isolated executable assertion.
 
-**ReadOnly:** all Identity, Response Reuse, Model Execution, Provider Adapter, root-package, existing source/test,
-configuration, workflow-contract and `.github/agents/**` paths enumerated in `Boundaries / Exclusions`.
+**ReadOnly:** all Identity, Response Reuse, Model Execution, Provider Adapter, root-package, five existing source
+modules, architecture/Archify artifacts, configuration, workflow-contract and `.github/agents/**` paths enumerated
+in `Boundaries / Exclusions`.
 
 ### Test Plan
 
@@ -222,15 +188,14 @@ configuration, workflow-contract and `.github/agents/**` paths enumerated in `Bo
   being classified.
 - **Edge case:** missing (`None`), expected `RuntimeRegistryLookupUnavailable`, `Unavailable`, and retention failure
   remain distinct without a signal-to-outcome mapper.
-- **Regression:** the same two RED tests must first fail on all five C5 regressions: opaque/unhashable/custom-equality
+- **Regression:** the two C8 isolated executable assertions must directly exercise all five regressions: opaque/unhashable/custom-equality
   token identity-only semantics; direct `importlib.import_module`; direct `__import__`; `importlib` or
   `builtins.__import__` alias/module-alias use; and LRC `ModelIdentity`／Identity `RuntimeReuseKey` duplicate semantic
   types. The alias-aware parser rejects those cross-BC paths while `tests/test_package_import.py` preserves existing
   import behavior.
-- **Sequencing:** five architecture authority files and dataflow evidence form the first implementation commit; only
-  after its passing visual gate may the immutable RED-test-only subject containing exactly two tests be committed.
-  The locked expected-nonzero command runs after that commit; its filename- and SHA-bound JSON is then committed alone
-  as RED evidence, and only then may the immutable green source subject be created.
+- **Sequencing:** C5 architecture/dataflow and green-source commits are frozen reusable provenance. After C8's approved
+  receipt, only the two test paths form the C8 assertion subject; fresh T8 then V8 bind that same subject. No new
+  expected-nonzero or green-source gate exists.
 - **Backward compatibility:** the implementation subject contains only declared paths; no root facade, initializer,
   dependency/configuration, or adjacent-BC change appears.
 
@@ -249,52 +214,31 @@ test modules and the Archify evidence gate.
 
 ### Rollback Plan
 
-Revert the ordered architecture-contract, RED-test-only, and green implementation subjects without modifying their
-immutable historical evidence. Leave read-only `.gitkeep`, root package, configuration, adjacent BCs, and planning /
-evidence history untouched; a future topic handles any subsequently needed concrete implementation.
+Revert only the C8 two-test assertion subject and its successor evidence commits without modifying C5→V3 frozen
+provenance. Leave read-only source, architecture, `.gitkeep`, root package, configuration, adjacent BCs and planning /
+evidence history untouched.
 
 ## Implementation Steps
 
-1. First synchronize only the five declared architecture authority files; declare external unimplemented ACL mapping
-   and retain backend, lifecycle, execution and provider work as future. This architecture-contract-only commit must
-   precede every new test and production-source path.
-2. Produce then validate／deliver／visual-check the Archify dataflow with Traditional-Chinese labels, no `meta.locale`,
-   `quality_profile: showcase`, at most 12 primary nodes, and truthful `backend` visual classification for the
-   contract-only Loaded Runtime Cache node. The retain path explicitly receives `RuntimeReuseKey`; dashed routes are
-   explicit async only, never synchronous retain failure.
-3. After every JSON edit run validate; freeze only a 9/9, zero-error, zero-warning result; then deliver and run
-   visual-check at 1440×900, 1600×1000, 1920×1080, 2048×1320. Nonzero or skipped result stops the gate.
-4. Only after Step 3 passes, add exactly the two declared RED tests and commit that immutable RED-test-only subject.
-   It contains no production source or evidence, and fails on all five C5 regressions: opaque token identity-only
-   semantics, direct `importlib.import_module`, direct `__import__`, alias/module-alias `importlib`／`builtins.__import__`,
-   and duplicate semantic types. Only after it is committed, execute the locked expected-failing command and write its
-   factual full-SHA-bound JSON at the versioned RED path.
-5. Commit the unchanged RED JSON as a sole evidence-only commit containing neither tests nor production source. Green
-   work remains forbidden until this separate evidence commit exists.
-6. Only after that evidence commit exists, create the new immutable green implementation subject: add the five locked
-   Python contract modules, preserve BC separation, direct-module surface, `.gitkeep`, opaque non-exposing
-   identity-only key behavior, alias-aware BC independence and no-concrete-implementation boundary.
-7. Run locked format, pyright, targeted／full pytest and direct-import regression against the green subject. Tester
-   records actual results at a new versioned T3 path only after that immutable subject exists; Independent Reviewer
-   then consumes committed passing T3 evidence at a new versioned V3 path.
+1. Preserve C5→V3 source and architecture provenance unchanged; verify it only as read-only context.
+2. After C8's independently approved, committed Plan-Reviewer receipt, add one isolated executable assertion to each
+   declared test module. The single C8 subject contains exactly those two modified paths, no production source,
+   architecture, Archify artifact or evidence.
+3. Run the locked checks against that committed subject. The assertions are executable validation against the current
+   source ancestor, not expected-failing historical RED evidence.
+4. Tester writes factual T8 for that exact subject; an Implementer commits it unchanged alone.
+5. Independent Reviewer consumes only committed passing T8 and writes V8; an Implementer commits it unchanged alone.
+6. Planner then performs Phase 4.5 alignment. Only its pass authorizes independent PR-thread classification; no C8
+   action resolves F Human-check or authorizes merge.
 
 ## Validation / Acceptance Checks
 
-- `node /Users/andrew/.codex/skills/archify/bin/archify.mjs validate dataflow docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json --quality showcase --json` must report 9/9, zero composition errors and zero warnings.
-- Only after that pass, run `node /Users/andrew/.codex/skills/archify/bin/archify.mjs deliver dataflow docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html --quality showcase --json`.
-- Then run `node /Users/andrew/.codex/skills/archify/bin/archify.mjs visual-check docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html --repo-root /Users/andrew/code/python/deterministic-response-cache.worktrees/agent-20260917-loaded-runtime-cache --json`; its 1440×900, 1600×1000, 1920×1080 and 2048×1320 containment must pass. A non-zero or skipped Archify result stops the gate.
-- Only after the three architecture commands pass, commit exactly the two declared tests as the immutable RED-test-only
-  subject, with no production source or evidence. Only after that commit exists, execute `uv run pytest
-  tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py -v`; record its
-  expected non-zero result in `loaded-runtime-cache.red-test-evidence-<red-test-subject-40-hex-sha>.json`, where the
-  filename and `red_test_subject_commit` are the committed subject's full SHA. Commit that JSON unchanged as a sole
-  evidence-only commit with no tests or production source; only then is green work allowed.
-- After the new green source subject exists, run `uv run ruff format --check src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py`.
-- Then run `uv run ruff check src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py` and `uv run pyright src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py`.
-- Then run `uv run pytest tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py -v`, `uv run pytest -v`, and `uv run pytest tests/test_package_import.py tests/test_loaded_runtime_cache_bc_independence.py -v`; the last command verifies direct-import regression including direct `importlib.import_module`, direct `__import__`, alias/module-alias `importlib`／`builtins.__import__`, duplicate semantic types, and `sys.modules` substitution.
-- All changes must match Artifact Paths; no deletion or unlisted edit. Typed fakes must prove same-instance handoff,
-  distinct failure semantics and retention runtime identity; the diagram must remain truthful about external ACL and
-  contract-only boundaries.
+- Run `uv run ruff format --check tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py`.
+- Run `uv run ruff check tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py` and `uv run pyright src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py`.
+- Run `uv run pytest tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py -v`, `uv run pytest -v`, and `uv run pytest tests/test_package_import.py tests/test_loaded_runtime_cache_bc_independence.py -v`.
+- All commands must exit zero for passing T8. All changes must match the two test paths; no deletion, source,
+  architecture or unlisted edit. The assertions prove same-instance opaque handoff and alias-aware BC independence
+  without exposing a token or introducing dynamic-import substitution.
 
 ## Reviewer Handoff
 
@@ -324,6 +268,6 @@ conversion and Registry／Retention implementation remain deferred to future, se
 
 ## Workflow State Contract
 
-- current_step: reviewer-evidence-committed
-- next_step: planner-phase-4.5-alignment-pending
+- current_step: plan-creator-c8-rework
+- next_step: planning-candidate-commit-pending
 - status: IN_PROGRESS
