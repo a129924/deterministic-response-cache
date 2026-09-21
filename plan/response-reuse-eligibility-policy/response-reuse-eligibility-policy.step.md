@@ -1,6 +1,6 @@
 ---
 topic: response-reuse-eligibility-policy
-phase: plan-authoring
+phase: implementation-review
 created: 2026-09-18
 ---
 
@@ -9,31 +9,26 @@ created: 2026-09-18
 ## Workflow Stages
 
 - [X] plan-authoring
-- [ ] plan-review
-- [ ] tdd-test-authoring
-- [ ] implementation
+- [X] plan-review
+- [X] tdd-test-authoring
+- [X] implementation
 - [ ] implementation-review
 - [ ] code-review
 
 ## Actionable Steps
 
-- [X] **Actor:** Implementer — **Action:** Committed the initial exact-five planning candidate `cdf4c66ac8534a340118dca50b5e103f22335a25`; it contains only the five initial planning artifacts and no implementation or evidence path.
-- [X] **Actor:** Independent Plan-Reviewer / Implementer — **Action:** The first independent review recorded `needs-rework` and Implementer committed the unchanged receipt as sole evidence commit `42d99f1d4413c95d8e362ff1a10d340f20c44a33`.
-- [X] **Actor:** Plan-Creator / Implementer — **Action:** The scoped plan correction was committed as re-review candidate `63d9683f94e42bc8b6cf252adde15a014b06911e`.
-- [X] **Actor:** Independent Plan-Reviewer / Implementer — **Action:** The re-review again recorded `needs-rework` and Implementer committed the unchanged receipt as sole evidence commit `5a5d7c727caaddfd354eb09569c1c34baf14d8bd`.
-- [ ] **Actor:** Implementer — **Action:** Commit this corrected step tracker as the new non-merge planning candidate; do not share its commit with implementation or evidence paths.
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review only that newly committed planning candidate and write `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.json` after review; do not prefill its candidate SHA from planning artifacts.
-- [ ] **Actor:** Implementer — **Action:** Commit the unchanged new plan-review receipt as its own sole evidence-only commit; no other path may share that commit.
-- [ ] **Actor:** Planner — **Action:** Route only a committed same-candidate fresh `approved` receipt to bounded implementation; route `needs-rework` conservatively to Plan-Creator.
+- [X] **Actor:** Implementer — **Action:** Committed the exact-five corrected planning candidate `43a255f03b69be94e56abcc7ca13bf684e3395f3`.
+- [X] **Actor:** Independent Plan-Reviewer / Implementer — **Action:** Independently approved candidate `43a255f03b69be94e56abcc7ca13bf684e3395f3`; Implementer committed the unchanged approved receipt as sole evidence commit `8b6658014674ab3a304115e130e58d295d804c7d`.
+- [X] **Actor:** Tester / Implementer — **Action:** Tested immutable exact-five implementation subject `695888bb72927b301f4f98e38d3587824803f263`; Implementer committed the passing Tester evidence as sole evidence commit `e531a84a6fc48187af3137ada0634e876afc5365`.
 
 ## Implementation Steps
 
-- [ ] 1. Create `src/deterministic_response_cache/response_reuse/eligibility/policy.py` as the sole stdlib-only eligibility leaf; add frozen/slotted field-less `ReuseAllowed` and `ReuseDenied`, their explicit union, and generic `ReuseEligibilityPolicy.evaluate(response, /)` without importing protocol, outcomes, CacheStore, Identity, or another BC.
-- [ ] 2. Modify `src/deterministic_response_cache/response_reuse/protocol.py` to import the policy contracts one way, require keyword-only `eligibility_policy`, perform the exact successful-read allow/deny/invalid-decision mapping once, and preserve every non-response lookup channel plus all record behavior.
-- [ ] 3. Create `tests/test_response_reuse_eligibility.py` with defining-module direct imports that verify decision frozen/slotted/distinct value semantics, union and structural Protocol typing, and the leaf module boundary without dynamic imports.
-- [ ] 4. Modify `tests/test_response_reuse_protocol.py` so every constructor injects a typed fake policy while preserving its direct imports, fixtures, mocks, and assertions; add allow, deny, invalid result, policy exception, short-circuit, source-break, response identity, and record zero-call coverage.
-- [ ] 5. Modify `tests/response_reuse/test_in_memory_store.py` only to inject a deterministic allow policy at `ResponseReuseProtocol` construction, retaining every existing store behavior, fixture, direct import, and assertion.
-- [ ] 6. Run the declared lint, strict type, targeted, full-suite, exact-subject, package-layout, direct-import, and diff-whitespace validations; Tester later records actual commands and exit codes only after the immutable implementation subject exists.
+- [X] 1. Create `src/deterministic_response_cache/response_reuse/eligibility/policy.py` as the sole stdlib-only eligibility leaf; add frozen/slotted field-less `ReuseAllowed` and `ReuseDenied`, their explicit union, and generic `ReuseEligibilityPolicy.evaluate(response, /)` without importing protocol, outcomes, CacheStore, Identity, or another BC.
+- [X] 2. Modify `src/deterministic_response_cache/response_reuse/protocol.py` to import the policy contracts one way, require keyword-only `eligibility_policy`, perform the exact successful-read allow/deny/invalid-decision mapping once, and preserve every non-response lookup channel plus all record behavior.
+- [X] 3. Create `tests/test_response_reuse_eligibility.py` with defining-module direct imports that verify decision frozen/slotted/distinct value semantics, union and structural Protocol typing, and the leaf module boundary without dynamic imports.
+- [X] 4. Modify `tests/test_response_reuse_protocol.py` so every constructor injects a typed fake policy while preserving its direct imports, fixtures, mocks, and assertions; add allow, deny, invalid result, policy exception, short-circuit, source-break, response identity, and record zero-call coverage.
+- [X] 5. Modify `tests/response_reuse/test_in_memory_store.py` only to inject a deterministic allow policy at `ResponseReuseProtocol` construction, retaining every existing store behavior, fixture, direct import, and assertion.
+- [X] 6. Run the declared lint, strict type, targeted, full-suite, exact-subject, package-layout, direct-import, and diff-whitespace validations; Tester later records actual commands and exit codes only after the immutable implementation subject exists.
 
 ## Main Agent Actionable Steps — Fixed Tail
 
@@ -41,10 +36,13 @@ created: 2026-09-18
 
 ## Handoff / Gate Notes
 
-- Current state is `needs-rework`: the initial candidate `cdf4c66ac8534a340118dca50b5e103f22335a25` and the
-  re-review candidate `63d9683f94e42bc8b6cf252adde15a014b06911e` each received a committed `needs-rework` receipt.
-  Plan review remains pending until a newly committed corrected planning candidate receives a fresh committed,
-  same-candidate `approved` receipt; no implementation is authorized before then.
+- Current phase is `implementation-review`: candidate `43a255f03b69be94e56abcc7ca13bf684e3395f3` has an approved
+  receipt committed at `8b6658014674ab3a304115e130e58d295d804c7d`; immutable implementation subject
+  `695888bb72927b301f4f98e38d3587824803f263` has passing Tester evidence committed at
+  `e531a84a6fc48187af3137ada0634e876afc5365`.
+- Only a subsequent Implementer may mark the six `## Implementation Steps` markers `[X]`; after that marker-only
+  update is committed, re-dispatch Independent Reviewer to consume the committed passing Tester evidence. The six
+  markers remain pending in this Plan-Creator update.
 - The initial five paths are the sole initial planning candidate subject. A plan-review receipt, Tester evidence,
   and implementation-review log are evidence-only paths and must never share a commit with planning or
   implementation subject paths.
