@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-eligibility-policy",
+  "planning_candidate_commit": "60836827cb9ab0d42e7217eb6b560bca99108a14",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    {
+      "issue": "The reviewed candidate's Current status still declares fix-1 `needs-rework` and permits Planner only to route a Plan-Creator correction, although this same committed candidate is the required two-file correction that must now await independent fix-2 plan review.",
+      "file": "plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan.md",
+      "fix": "Make the Current status describe the committed workflow-correction candidate awaiting the independent fix-2 receipt, without selecting an approved candidate, routing beyond that review, or authorizing Phase 4.5, push, reply, or resolution."
+    },
+    {
+      "issue": "The pending step rows still instruct Plan-Creator to perform, and Implementer to commit, the two-file correction even though this candidate already contains and commits that correction; this reopens/re-submits the existing candidate instead of leaving the next role-separated action as the independent fix-2 receipt.",
+      "file": "plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.step.md",
+      "fix": "Record the completed correction/candidate history truthfully and leave only the next role-separated Independent Plan-Reviewer receipt action pending; preserve fix-1 as immutable history and do not pre-authorize the later Independent Reviewer, Phase 4.5, push, reply, or thread resolution."
+    }
+  ],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}
