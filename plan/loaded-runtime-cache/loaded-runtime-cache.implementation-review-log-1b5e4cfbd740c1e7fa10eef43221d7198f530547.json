@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "1b5e4cfbd740c1e7fa10eef43221d7198f530547",
+  "tester_evidence_commit": "06da9dcae95ef313d91e76ba2d0d00bdb868ce4d",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "recorded_by": "Independent Reviewer"
+}
