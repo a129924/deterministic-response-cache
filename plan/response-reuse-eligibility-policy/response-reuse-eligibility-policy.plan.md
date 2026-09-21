@@ -117,11 +117,11 @@ none。
 
 ## Status / Allowed Transitions
 
-- **Current**: `pr-comment-review-and-fix / needs-rework`。PR #9 已進入 ready-for-review；其現有 PR head 是
-  `01f80439bd9c57739e588521081406cb343645f8`。Independent Reviewer 已將四個 exact PR threads
-  `PRRT_kwDOUJTij86kOT7L`、`PRRT_kwDOUJTij86kOT7X`、`PRRT_kwDOUJTij86kOT7g`、
-  `PRRT_kwDOUJTij86kOU72` 全部分類為 `needs-fix`；尚未建立新的 code implementation subject 或其後續
-  Tester／Independent Reviewer evidence。
+- **Current**: `review-evidence-capability-repair / plan-review-pending`。bounded code implementation subject
+  `e6cb65d450e37e052c26e58b6001cd842d859c42` 與其 passing Tester evidence commit
+  `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2` 已存在。Independent Reviewer 的 substantive review 已完成，
+  但既有 immutable implementation-review-log path 沒有可合法寫入的本 fix-cycle evidence path；該未提交的
+  assessment 不是 routing authority，也不構成 approved evidence。
 - **Committed routing history**: initial exact-five non-merge planning candidate
   `cdf4c66ac8534a340118dca50b5e103f22335a25` 的 committed Plan-Reviewer `needs-rework` verdict 保留為
   immutable history，且不等同 planning approval 或 implementation authorization。其後 corrected candidate
@@ -131,11 +131,16 @@ none。
   `e531a84a6fc48187af3137ada0634e876afc5365`，六個 implementation markers 的 step-progress commit 是
   `e3009d719caba782901e58ff422ab2b3869be665`，Independent Reviewer evidence／current PR head commit 是
   `01f80439bd9c57739e588521081406cb343645f8`。
-- **Current classified findings**: `PRRT_kwDOUJTij86kOT7L` 與 `PRRT_kwDOUJTij86kOU72` 是同一個 bounded
-  code fix；`PRRT_kwDOUJTij86kOT7X` 是本 plan stale current-state correction，
-  `PRRT_kwDOUJTij86kOT7g` 是 step handoff stale-state correction。state-only corrections 必須與新的 code
-  implementation subject 分離；完成新的 subject、same-subject Tester／Independent Reviewer chain 與 post-fix
-  independent thread classification 前，不得回覆或 resolve 任何 thread。
+- **Current correction route**: `review-evidence-capability-repair` 只建立新的 immutable evidence paths；既有
+  `response-reuse-eligibility-policy.plan-review-receipt.json` 與
+  `response-reuse-eligibility-policy.implementation-review-log.json` 的 paths 和內容均不得 overwrite 或 delete。
+  Plan-Creator 的本次兩檔 planning correction 必須先成為後續 workflow-correction planning candidate，並由
+  Independent Plan-Reviewer 以新的 `plan-review-receipt.fix-1.json`（沿用既有 receipt schema）獨立審核及
+  full-SHA 綁定；只有其 approved evidence 已合法提交後，Independent Reviewer 才可寫新的
+  `implementation-review-log.fix-1.json`。該 review log 必須以既有 review schema 綁定 subject
+  `e6cb65d450e37e052c26e58b6001cd842d859c42` 與 Tester evidence commit
+  `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`。在新的 committed approved review evidence 存在前，
+  不得進入 Phase 4.5、push、reply 或 resolve 任何 thread。
 - **Execution model**: isolated topic worktree → five-path planning candidate → independent Plan-Reviewer
   receipt → Planner route → immutable five-path implementation subject → independent Tester evidence → independent
   Reviewer evidence → Planner Phase 4.5 alignment → existing Human-authorized bounded publish → draft PR → Human
@@ -181,6 +186,7 @@ none。
 | Topic specification | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.spec.md` | Plan-Creator | Acceptance、behavioral 與 error/edge contract。 |
 | Step tracker | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.step.md` | Plan-Creator；later Implementer only for `## Implementation Steps` markers | Progression truth；只以 mirrored implementation checkboxes 判定 implementation completion。 |
 | Plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.json` | Independent Plan-Reviewer | 僅在 committed planning candidate 後寫入；Implementer 原樣 sole evidence-only commit；同 candidate full SHA-bound `approved` receipt 才可由 Planner route。 |
+| Review-evidence-capability repair plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-1.json` | Independent Plan-Reviewer | 僅在本次 workflow-correction planning candidate 已提交後，沿用既有 plan-review receipt schema 寫入並 full-SHA 綁定該 candidate；不得改寫既有 receipt。 |
 | Eligibility policy | `src/deterministic_response_cache/response_reuse/eligibility/policy.py` **Write** | Implementer | 標準庫-only eligibility decisions、union、generic Protocol 與 leaf boundary。 |
 | Response Reuse protocol | `src/deterministic_response_cache/response_reuse/protocol.py` **Modify** | Implementer | Required policy injection 與 lookup decision mapping；record contract preserved。 |
 | Eligibility tests | `tests/test_response_reuse_eligibility.py` **Write** | Implementer | Direct-import eligibility value, typing and module-boundary regression proof。 |
@@ -188,6 +194,7 @@ none。
 | InMemory integration tests | `tests/response_reuse/test_in_memory_store.py` **Modify** | Implementer | 以 deterministic allow policy 保留既有 Response Reuse/InMemory integration assertions。 |
 | Tester evidence | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.tester-evidence.json` | Tester | 只記同一 immutable subject 的 factual command/exit-code evidence；獨立 Implementer 原樣 sole evidence-only commit。 |
 | Independent review evidence | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.implementation-review-log.json` | Independent Reviewer | 只消費 committed passing same-subject Tester evidence；獨立 Implementer 原樣 sole evidence-only commit。 |
+| Review-evidence-capability repair independent review evidence | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.implementation-review-log.fix-1.json` | Independent Reviewer | 沿用既有 independent review schema；只可綁定 subject `e6cb65d450e37e052c26e58b6001cd842d859c42` 與 sole committed passing Tester evidence commit `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`，且不得改寫既有 review log。 |
 
 `README.md`、VERSION/release metadata、`.github/copilot-instructions.md`（若存在）、all package initializers、
 configuration/dependency declarations、architecture authority、所有 unlisted paths 均不得修改。任何未列 path、
@@ -211,6 +218,12 @@ deletion 或 new module 後綴都必須停止並返回 Planner。
   兩個 commit fields 都是同一 subject 相關 full 40-hex SHA；`tester_evidence_commit` 必為 sole committed
   passing Tester evidence commit；`verdict` 是 `approved|needs-rework`；approved 時 `blocking_issues` 是空
   string array；`recorded_by` 是 `Independent Reviewer`。
+- 本 fix cycle 的 `plan-review-receipt.fix-1.json` 與 `implementation-review-log.fix-1.json` 分別沿用前述
+  receipt 與 independent review evidence schema；前者只能在 workflow-correction planning candidate 已提交後
+  填入其 full SHA，後者的 `implementation_subject_commit` 與 `tester_evidence_commit` 固定為
+  `e6cb65d450e37e052c26e58b6001cd842d859c42` 與
+  `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`。兩者都是新 immutable evidence files，既有 evidence files
+  均不得改寫或刪除。
 
 ## Python implementation metadata
 

@@ -1,6 +1,6 @@
 ---
 topic: response-reuse-eligibility-policy
-phase: pr-comment-review-and-fix
+phase: review-evidence-capability-repair
 created: 2026-09-18
 ---
 
@@ -22,7 +22,10 @@ created: 2026-09-18
 - [X] **Actor:** Tester / Implementer — **Action:** Tested immutable exact-five implementation subject `695888bb72927b301f4f98e38d3587824803f263`; Implementer committed the passing Tester evidence as sole evidence commit `e531a84a6fc48187af3137ada0634e876afc5365`.
 - [X] **Actor:** Implementer — **Action:** Marked the six `## Implementation Steps` markers complete in the sole step-progress commit `e3009d719caba782901e58ff422ab2b3869be665`.
 - [X] **Actor:** Independent Reviewer / Implementer — **Action:** Consumed the committed passing same-subject Tester evidence, recorded an approved review, and committed that unchanged review evidence as sole evidence commit `01f80439bd9c57739e588521081406cb343645f8`.
-- [ ] **Actor:** Implementer — **Action:** After the state-only correction is separately committed, create the new bounded code implementation subject required by the two shared code `needs-fix` threads; do not prefill its SHA or reuse prior subject evidence.
+- [X] **Actor:** Implementer — **Action:** Created the bounded code implementation subject `e6cb65d450e37e052c26e58b6001cd842d859c42` for the two shared code `needs-fix` threads.
+- [X] **Actor:** Tester / Implementer — **Action:** Tested that subject and committed the passing Tester evidence as sole evidence commit `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`.
+- [ ] **Actor:** Plan-Creator / Implementer / Independent Plan-Reviewer — **Action:** Commit this two-file `review-evidence-capability-repair` planning candidate, then write and sole-commit the new `plan-review-receipt.fix-1.json` under the existing receipt schema; do not modify prior evidence files.
+- [ ] **Actor:** Independent Reviewer / Implementer — **Action:** Only after the committed approved fix-1 Plan-Reviewer receipt, write and sole-commit `implementation-review-log.fix-1.json` using the existing review schema and the fixed subject/Tester evidence bindings.
 
 ## Implementation Steps
 
@@ -39,23 +42,23 @@ created: 2026-09-18
 
 ## Handoff / Gate Notes
 
-- Current phase is `pr-comment-review-and-fix / needs-rework`: PR #9 is ready for review at
-  `01f80439bd9c57739e588521081406cb343645f8`. The historical approved chain is corrected candidate
-  `43a255f03b69be94e56abcc7ca13bf684e3395f3`, approved Plan-Reviewer receipt commit
-  `8b6658014674ab3a304115e130e58d295d804c7d`, immutable implementation subject
-  `695888bb72927b301f4f98e38d3587824803f263`, and passing Tester evidence commit
-  `e531a84a6fc48187af3137ada0634e876afc5365`.
-- The six `## Implementation Steps` markers are already `[X]`; their marker-only step-progress commit is
-  `e3009d719caba782901e58ff422ab2b3869be665`. Independent Reviewer evidence was committed separately at
-  `01f80439bd9c57739e588521081406cb343645f8`; it applies only to the original immutable subject and cannot be
-  reused for the pending code fix.
-- Independent Reviewer classified `PRRT_kwDOUJTij86kOT7L`, `PRRT_kwDOUJTij86kOT7X`,
-  `PRRT_kwDOUJTij86kOT7g`, and `PRRT_kwDOUJTij86kOU72` as `needs-fix`. The first and fourth are one bounded
-  code fix; the second and third are the state corrections in this Plan-Creator handoff. No new code subject,
-  Tester evidence, Independent Reviewer evidence, reply, or thread resolution has occurred.
-- The state-only corrections must not share a commit with the new code implementation subject. That new subject
-  must receive fresh same-subject Tester evidence, a separately committed passing evidence record, fresh Independent
-  Reviewer evidence, and Planner alignment before independent post-fix thread classification. Only a later exact
+- Current phase is `review-evidence-capability-repair / plan-review-pending`: bounded code implementation subject
+  `e6cb65d450e37e052c26e58b6001cd842d859c42` has passing Tester evidence committed at
+  `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`. Independent Reviewer substantive review is complete, but the
+  original immutable implementation-review-log path has no lawful place to record this fix-cycle assessment; that
+  uncommitted assessment is not routing authority and is not approved evidence.
+- The six `## Implementation Steps` markers are already `[X]`; their marker-only step-progress commit remains
+  `e3009d719caba782901e58ff422ab2b3869be665`. Independent Reviewer evidence committed at
+  `01f80439bd9c57739e588521081406cb343645f8` applies only to the original immutable subject and cannot be
+  overwritten or reused for this fix cycle.
+- This repair adds only the dedicated `plan-review-receipt.fix-1.json` and
+  `implementation-review-log.fix-1.json` evidence capabilities. The former must bind the committed
+  workflow-correction planning candidate under the existing receipt schema. The latter must bind
+  `e6cb65d450e37e052c26e58b6001cd842d859c42` and
+  `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2` under the existing review schema. Existing evidence paths and
+  contents remain immutable.
+- Until the new review evidence is legally written and committed with an `approved` verdict, Planner must not enter
+  Phase 4.5, and no actor may push, reply to, or resolve any PR thread. Only a later independent exact
   `addressed-and-resolvable` classification may route an Implementer to leave a bounded reply and resolve that thread.
 - The initial five paths are the sole initial planning candidate subject. A plan-review receipt, Tester evidence,
   and implementation-review log are evidence-only paths and must never share a commit with planning or
