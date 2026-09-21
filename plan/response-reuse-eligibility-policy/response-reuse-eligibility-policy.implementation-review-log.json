@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-eligibility-policy",
+  "implementation_subject_commit": "695888bb72927b301f4f98e38d3587824803f263",
+  "tester_evidence_commit": "e531a84a6fc48187af3137ada0634e876afc5365",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "recorded_by": "Independent Reviewer"
+}
