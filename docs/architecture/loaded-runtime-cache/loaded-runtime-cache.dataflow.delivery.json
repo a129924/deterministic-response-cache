@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "dataflow",
+  "input": "docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json",
+  "output": "docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html",
+  "specification": {
+    "sha256": "f68b05d45e7d4f9064722ed57ca03695b3ad3b3cd30f1d8ccea5c700e9946719",
+    "bytes": 3889
+  },
+  "artifact": {
+    "sha256": "5219fc8ee3bfdf7c73dee2c74fba266fac9850b2c17a864eca6d15a19babf776",
+    "bytes": 708062
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

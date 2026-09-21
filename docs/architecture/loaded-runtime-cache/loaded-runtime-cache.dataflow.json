@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Loaded Runtime Cache：Protocol 資料流",
+    "quality_profile": "showcase",
+    "viewBox": [1068, 610]
+  },
+  "stages": [
+    { "label": "外部整合邊界" },
+    { "label": "本地語意型別" },
+    { "label": "Loaded Runtime Cache" },
+    { "label": "查詢結果" },
+    { "label": "保留結果" }
+  ],
+  "nodes": [
+    { "id": "external-acl", "type": "external", "label": "ACL 邊界", "sublabel": "未實作映射", "tag": "BC 外", "stage": 0, "row": 1 },
+    { "id": "reuse-key", "type": "security", "label": "RuntimeReuseKey", "sublabel": "本地 opaque key", "tag": "原樣傳遞", "stage": 1, "row": 1 },
+    { "id": "runtime-registry", "type": "backend", "label": "RuntimeRegistry", "sublabel": "lookup／retain", "tag": "內部 port；非 backend", "stage": 2, "row": 0, "width": 192 },
+    { "id": "runtime-retention", "type": "backend", "label": "Loaded Runtime Cache protocol（contract only）", "sublabel": "僅 Protocol；無 concrete backend、DI、runtime lifecycle", "tag": "RuntimeRetention contract", "stage": 2, "row": 3, "width": 320 },
+    { "id": "available", "type": "cloud", "label": "Available(runtime)", "sublabel": "查詢命中 contract", "stage": 3, "row": 0 },
+    { "id": "missing", "type": "cloud", "label": "Missing()", "sublabel": "查詢缺失 contract", "stage": 3, "row": 1 },
+    { "id": "unavailable", "type": "cloud", "label": "Unavailable()", "sublabel": "獨立 semantic contract；無 mapper", "tag": "非 Registry 直連", "stage": 3, "row": 2, "width": 176 },
+    { "id": "retained", "type": "cloud", "label": "Retained(runtime)", "sublabel": "保留同一 runtime", "stage": 4, "row": 3 },
+    { "id": "not-retained", "type": "cloud", "label": "NotRetained(runtime)", "sublabel": "失敗仍交回同一 runtime", "tag": "同步 outcome", "stage": 4, "row": 2, "width": 164 }
+  ],
+  "flows": [
+    { "id": "acl-provides-key", "from": "external-acl", "to": "reuse-key", "label": "提供本地 key", "classification": "未實作 ACL", "variant": "default" },
+    { "id": "key-to-registry", "from": "reuse-key", "to": "runtime-registry", "label": "RuntimeReuseKey：lookup input", "classification": "同一 instance", "variant": "emphasis" },
+    { "id": "key-to-retention", "from": "reuse-key", "to": "runtime-retention", "label": "RuntimeReuseKey：retain input", "classification": "同一 instance；opaque pass-through", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "via": [[315, 350], [530, 350]], "labelAt": [430, 338] },
+    { "id": "lookup-hit", "from": "runtime-registry", "to": "available", "label": "RuntimeT", "classification": "hit", "variant": "emphasis", "route": "straight", "labelDy": -32 },
+    { "id": "lookup-miss", "from": "runtime-registry", "to": "missing", "label": "None", "classification": "missing", "labelAt": [570, 220] },
+    { "id": "retain-success", "from": "runtime-retention", "to": "retained", "label": "成功 outcome", "classification": "保留 runtime", "variant": "emphasis", "route": "straight", "labelDy": -40, "labelDx": -90 },
+    { "id": "retain-failure", "from": "runtime-retention", "to": "not-retained", "label": "失敗 outcome", "classification": "RuntimeReuseKey + runtime；同步回交", "variant": "default", "fromSide": "right", "toSide": "bottom", "via": [[750, 499], [750, 440], [960, 440]], "labelAt": [830, 542] }
+  ],
+  "cards": [
+    { "dot": "violet", "title": "僅 Protocol", "items": ["只定義同步 Protocol 與 outcome contracts", "無 concrete backend、DI 或 runtime lifecycle", "Registry 與 Response Reuse CacheStore 分離"] },
+    { "dot": "rose", "title": "邊界", "items": ["RuntimeReuseKey 由外部 integration／ACL 建立", "Unavailable 是獨立 semantic contract，沒有 Registry mapper 或直連流程", "NotRetained 同步回交原 runtime"] }
+  ]
+}
