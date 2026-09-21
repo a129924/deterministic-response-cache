@@ -101,6 +101,14 @@ class InvalidDecisionPolicy:
         return self.result
 
 
+class DerivedReuseAllowed(ReuseAllowed):
+    """A non-contract decision subtype that must be rejected at the boundary."""
+
+
+class DerivedReuseDenied(ReuseDenied):
+    """A non-contract decision subtype that must be rejected at the boundary."""
+
+
 class NoneReadStore:
     """A deliberate CacheStore contract violator for runtime-boundary testing."""
 
@@ -248,6 +256,25 @@ def test_lookup_rejects_invalid_policy_decisions_after_one_evaluation(
             store,
             eligibility_policy=policy,  # pyright: ignore[reportArgumentType]
         ).lookup(object())
+
+    assert store.writes == []
+    assert policy.evaluated_responses == [response]
+
+
+@pytest.mark.parametrize(
+    "derived_decision",
+    [DerivedReuseAllowed(), DerivedReuseDenied()],
+)
+def test_lookup_rejects_derived_policy_decisions_after_one_evaluation(
+    derived_decision: ReuseEligibilityDecision,
+) -> None:
+    """Only the two exact decision value types can produce a lookup outcome."""
+    response = object()
+    store = FakeStore(read_result=response)
+    policy = RecordingEligibilityPolicy[object](derived_decision)
+
+    with pytest.raises(TypeError):
+        ResponseReuseProtocol(store, eligibility_policy=policy).lookup(object())
 
     assert store.writes == []
     assert policy.evaluated_responses == [response]

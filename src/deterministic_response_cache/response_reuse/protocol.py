@@ -50,14 +50,13 @@ class ResponseReuseProtocol[IdentityT, ResponseT]:
                 msg = "CacheStore.read must not return None"
                 raise TypeError(msg)
             case response:
-                match self._eligibility_policy.evaluate(response):
-                    case ReuseAllowed():
-                        return Hit(response)
-                    case ReuseDenied():
-                        return Miss()
-                    case _:
-                        msg = "ReuseEligibilityPolicy.evaluate must return a decision value"
-                        raise TypeError(msg)
+                decision = self._eligibility_policy.evaluate(response)
+                if type(decision) is ReuseAllowed:
+                    return Hit(response)
+                if type(decision) is ReuseDenied:
+                    return Miss()
+                msg = "ReuseEligibilityPolicy.evaluate must return a decision value"
+                raise TypeError(msg)
 
     def record(
         self,
