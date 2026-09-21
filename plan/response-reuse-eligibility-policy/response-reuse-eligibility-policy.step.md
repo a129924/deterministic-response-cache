@@ -26,13 +26,10 @@ created: 2026-09-18
 - [X] **Actor:** Tester / Implementer — **Action:** Tested that subject and committed the passing Tester evidence as sole evidence commit `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`.
 - [X] **Actor:** Implementer — **Action:** Committed the two-file workflow-correction planning candidate `724ebf129eeb99fc06b1c1cd16b58757b1b0148e`.
 - [X] **Actor:** Implementer — **Action:** Sole-committed the unchanged `needs-rework` `plan-review-receipt.fix-1.json` as `dd29fe45626d5b20ffffde8d988fe4843d0924ef`.
-- [ ] **Actor:** Plan-Creator — **Action:** Correct only the two workflow artifacts to address the committed `fix-1` receipt blockers; do not recreate candidate `724ebf129eeb99fc06b1c1cd16b58757b1b0148e` or write any receipt, code, test, or evidence path.
-- [ ] **Actor:** Implementer — **Action:** Commit the corrected plan and step tracker unchanged as the sole two-file workflow-correction planning candidate.
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** After Planner routes the committed corrected candidate, write only `plan-review-receipt.fix-2.json` under the existing receipt schema with that candidate's full SHA.
-- [ ] **Actor:** Implementer — **Action:** Sole-commit the unchanged `plan-review-receipt.fix-2.json` as receipt-only evidence.
-- [ ] **Actor:** Planner — **Action:** After the committed `fix-2` receipt, route `needs-rework` only to Plan-Creator or route `approved` only to Independent Reviewer.
-- [ ] **Actor:** Independent Reviewer — **Action:** Only after Planner routes a committed approved `fix-2` receipt, write `implementation-review-log.fix-1.json` with the fixed subject `e6cb65d450e37e052c26e58b6001cd842d859c42` and Tester evidence commit `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`.
-- [ ] **Actor:** Implementer — **Action:** Sole-commit the unchanged `implementation-review-log.fix-1.json` as review-only evidence.
+- [X] **Actor:** Implementer — **Action:** Committed the exact-two workflow-correction planning candidate `60836827cb9ab0d42e7217eb6b560bca99108a14`.
+- [X] **Actor:** Implementer — **Action:** Sole-committed the unchanged `needs-rework` `plan-review-receipt.fix-2.json` as `d4b2b3de4e451d6561a94381d0998d97957705f9`.
+- [X] **Actor:** Plan-Creator — **Action:** Corrected only the exact-two workflow artifacts for the committed fix-2 blockers; no receipt, code, test, or existing evidence artifact was written.
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** After Planner routes the committed exact-two correction candidate formed by this artifact set and identified by Git, write only `plan-review-receipt.fix-3.json` under the existing receipt schema, whose authoritative full SHA is supplied by that candidate and the receipt binding rather than prefilled here.
 
 ## Implementation Steps
 
@@ -49,16 +46,19 @@ created: 2026-09-18
 
 ## Handoff / Gate Notes
 
-- Current phase is `review-evidence-capability-repair / needs-rework`: the two-file workflow-correction planning
-  candidate `724ebf129eeb99fc06b1c1cd16b58757b1b0148e` and its sole-committed `needs-rework` fix-1 receipt
-  `dd29fe45626d5b20ffffde8d988fe4843d0924ef` are immutable history. They do not create an active candidate,
-  approval, or Independent Reviewer route; Planner may only route the scoped Plan-Creator correction.
+- Current phase is `workflow-correction-candidate / awaiting committed-candidate review route`: this exact-two
+  workflow-artifact set is the correction candidate for committed fix-2 blockers. Its authoritative full SHA is
+  identified only by the Git committed candidate and the `fix-3` receipt binding; it is not prefilled here. After
+  Implementer commits this set unchanged as the sole two-file candidate, the next legal gate is Planner routing that
+  committed candidate to a fresh Independent Plan-Reviewer, not another Plan-Creator correction.
 - The six `## Implementation Steps` markers are already `[X]`; their marker-only step-progress commit remains
   `e3009d719caba782901e58ff422ab2b3869be665`. Independent Reviewer evidence committed at
   `01f80439bd9c57739e588521081406cb343645f8` applies only to the original immutable subject and cannot be
   overwritten or reused for this fix cycle.
-- The next receipt path is `plan-review-receipt.fix-2.json`; only Independent Plan-Reviewer may write it after
-  Planner routes a newly committed two-file correction candidate, and only Implementer may sole-commit it.
+- The next receipt path is `plan-review-receipt.fix-3.json`; only Independent Plan-Reviewer may write it after
+  Planner routes a fresh committed exact-two correction candidate, and only Implementer may sole-commit it. The
+  planning artifacts must not prefill that candidate SHA: Git candidate state and the future receipt binding are the
+  only authority for it.
   `implementation-review-log.fix-1.json` retains its fixed subject `e6cb65d450e37e052c26e58b6001cd842d859c42` and
   Tester evidence commit `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`; all prior evidence remains immutable.
 - Until the new review evidence is legally written and committed with an `approved` verdict, Planner must not enter
