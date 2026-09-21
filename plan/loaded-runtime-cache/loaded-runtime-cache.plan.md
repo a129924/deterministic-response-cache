@@ -53,9 +53,10 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 
 ## Status / Allowed Transitions
 
-- **Current**: `plan-creator-rework-in-progress`。C8 是以現行 source ancestor 為基礎的五-file planning correction；
-  C5→V3 是 frozen provenance，不能作 C8 routing。C8 candidate 尚未提交，且 planning artifacts 不預填 candidate SHA 或
-  receipt。C8 candidate 被獨立核准並提交 receipt 後，下一步才是兩-path isolated-assertion implementation subject。
+- **Current**: `planning-candidate-committed`。C8 是以現行 source ancestor 為基礎的五-file planning correction；
+  C5→V3 是 frozen provenance，不能作 C8 routing。C8 candidate 已提交，且 planning artifacts 不預填 candidate SHA 或
+  receipt。下一 gate 是 independent Plan-Reviewer review pending；只有該 reviewer 的 approved receipt 被獨立提交後，
+  才可建立兩-path isolated-assertion implementation subject。
 - **Execution model**: C8 committed planning candidate → independent Plan-Reviewer receipt → receipt-only commit →
   two-path isolated executable assertion subject against existing source ancestor → versioned T8 Tester evidence →
   T8 evidence-only commit → versioned V8 independent Reviewer evidence → V8 evidence-only commit → Planner Phase 4.5
@@ -268,6 +269,6 @@ conversion and Registry／Retention implementation remain deferred to future, se
 
 ## Workflow State Contract
 
-- current_step: plan-creator-c8-rework
-- next_step: planning-candidate-commit-pending
-- status: IN_PROGRESS
+- current_step: plan-review-pending
+- next_step: independent-plan-review
+- status: REVIEW_PENDING

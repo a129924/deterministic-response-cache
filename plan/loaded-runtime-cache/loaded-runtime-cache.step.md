@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: plan-creator-c8-rework
+phase: plan-review-pending
 created: 2026-09-17
 ---
 
@@ -8,8 +8,8 @@ created: 2026-09-17
 
 ## Workflow Stages
 
-- [ ] plan-authoring
-- [ ] planning-candidate-commit
+- [x] plan-authoring
+- [x] planning-candidate-commit
 - [ ] plan-review
 - [ ] tdd-test-authoring
 - [ ] implementation
@@ -18,8 +18,8 @@ created: 2026-09-17
 
 ## Actionable Steps
 
-- [ ] **Actor:** Implementer — **Action:** Commit C8 as exactly the five planning artifacts on the existing Loaded
-  Runtime Cache source ancestor. C8 must not carry source, tests, architecture, evidence or receipts. The candidate
+- [x] **Actor:** Implementer — **Action:** C8 has been committed as exactly the five planning artifacts on the existing
+  Loaded Runtime Cache source ancestor. It carries no source, tests, architecture, evidence or receipts. The candidate
   SHA remains absent from planning text and is routed only by Planner from committed evidence.
 - [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review only the committed C8 candidate and, only after it
   exists, write `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`
@@ -63,6 +63,6 @@ created: 2026-09-17
   and merges a draft PR.
 - Architecture-path overlap is Human review／merge coordination only; it never relaxes declared paths or evidence
   gates.
-- Next routing action is commit C8 planning candidate, then independent Plan-Reviewer. Only after C8 T8/V8 and Planner
-  Phase 4.5 alignment may an independent Reviewer classify current PR threads; this tracker does not mark code review,
-  publish, comments, F ownership, or Human actions complete.
+- C8 planning candidate is committed. Next routing action is independent Plan-Reviewer review. Only after C8 T8/V8 and
+  Planner Phase 4.5 alignment may an independent Reviewer classify current PR threads; this tracker does not mark code
+  review, publish, comments, F ownership, or Human actions complete.
