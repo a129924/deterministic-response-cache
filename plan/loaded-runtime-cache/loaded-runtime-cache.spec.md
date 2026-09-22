@@ -19,10 +19,10 @@
    不得宣告 `ModelIdentity`，Identity 不得宣告 `RuntimeReuseKey`。
 7. Architecture authority 和 Archify dataflow 只宣告 protocol capability；ACL mapping、backend、lifecycle,
    Model Execution、Provider Adapter 均為 external／future／out of scope。
-8. C8／C9 是 frozen、unapproved predecessor planning provenance，沒有 routing authority。C10 重用 C5→V3 已提交的
-   architecture/dataflow 與 source-contract provenance，不重寫其歷史順序。C10 只在既有
+8. C8／C9／C10 是 frozen、unapproved predecessor planning provenance，沒有 routing authority。C11 重用 C5→V3 已提交的
+   architecture/dataflow 與 source-contract provenance，不重寫其歷史順序。C11 只在既有
    source ancestor 建立兩個 isolated executable RED assertions（各一個於既有 test module）；它們不是 expected-failing
-   或 green-source gate。新的同-subject T10/V10 evidence chain 才是 C10 的獨立 verification route。
+   或 green-source gate。新的同-subject T11/V11 evidence chain 才是 C11 的獨立 verification route。
 
 ## Behavioral Scenarios
 
@@ -63,13 +63,13 @@ Given frozen Archify JSON candidate，When validate、deliver、`visual-check --
 receipt 並停止 gate。圖使用 `backend` visual type 時必須以 contract-only label 和「僅 Protocol；無 concrete backend、
 DI、runtime lifecycle」說明消除實作暗示。
 
-### Scenario 7 — C10 existing-source assertion route
+### Scenario 7 — C11 existing-source assertion route
 
-Given C5→V3 architecture/dataflow 與 source-contract artifacts 已是 committed frozen provenance，且 C8／C9 是 frozen
-unapproved predecessor，When C10 開始，Then 不修改 architecture、Archify 或 production source。Given C10
+Given C5→V3 architecture/dataflow 與 source-contract artifacts 已是 committed frozen provenance，且 C8／C9／C10 是 frozen
+unapproved predecessor，When C11 開始，Then 不修改 architecture、Archify 或 production source。Given C11
 Plan-Reviewer receipt 已 committed，When Implementer 建立
 assertion subject，Then subject 只修改兩個 declared tests、各加入一個 isolated executable RED assertion，並在既有
-source ancestor 以 zero-exit validation 執行。T10 記錄相同 subject 的事實結果；V10 只消費 committed passing T10。不得
+source ancestor 以 zero-exit validation 執行。T11 記錄相同 subject 的事實結果；V11 只消費 committed passing T11。不得
 聲稱新的 expected-nonzero red failure、RED evidence 或 green-source authorization。
 
 ### Scenario 8 — retention dataflow semantics
@@ -78,11 +78,11 @@ Given dataflow 描繪 retain path，When reader 檢視 Runtime Registry relation
 retain input；synchronous `NotRetained(runtime)` failure 使用實線 outcome relationship，dashed relationship 只在
 明確標示的 async flow 出現，且本圖不把 synchronous retain failure 描繪成 async。
 
-### Scenario 9 — C10 cross-BC semantic-type regression
+### Scenario 9 — C11 cross-BC semantic-type regression
 
-Given LRC 或 Identity source 嘗試自行宣告對方的 semantic type，When C10 BC-independence assertion 解析 direct 或 alias
+Given LRC 或 Identity source 嘗試自行宣告對方的 semantic type，When C11 BC-independence assertion 解析 direct 或 alias
 imports 和 declarations，Then LRC `ModelIdentity` 或 Identity `RuntimeReuseKey` 的 duplicate semantic type 都使 test
-失敗；C10 不改 production source、不能改為 mapper 或 shared type。
+失敗；C11 不改 production source、不能改為 mapper 或 shared type。
 
 ## Error / Edge Cases
 
@@ -101,8 +101,8 @@ imports 和 declarations，Then LRC `ModelIdentity` 或 Identity `RuntimeReuseKe
    and hash would raise／record use, When key identity is exercised, Then neither token equality nor hash is invoked.
 6. **Visual gate failure:** Given Archify validate, deliver, or visual-check is non-zero or visual-check is skipped,
    When evidence is recorded, Then the failure／skipped result is retained truthfully and the delivery gate stops.
-7. **C10 scope breach:** Given C10 assertion subject changes a source, architecture, Archify or evidence path, When
-   Planner／Reviewer classifies it, Then it is out of scope and cannot be used for T10/V10 routing.
-8. **Evidence path collision or provenance reuse:** Given T10 or V10 uses a fixed-name, C5/T3/V3, C8/C9, or legacy
-   `6110cb…`／`44e477…` path, or references another subject, When it is written, Then it fails closed. T10/V10 must use
-   new SHA-bound non-overwritable paths and bind the C10 assertion subject only.
+7. **C11 scope breach:** Given C11 assertion subject changes a source, architecture, Archify or evidence path, When
+   Planner／Reviewer classifies it, Then it is out of scope and cannot be used for T11/V11 routing.
+8. **Evidence path collision or provenance reuse:** Given T11 or V11 uses a fixed-name, C5/T3/V3, C8/C9/C10, or legacy
+   `6110cb…`／`44e477…` path, or references another subject, When it is written, Then it fails closed. T11/V11 must use
+   new SHA-bound non-overwritable paths and bind the C11 assertion subject only.

@@ -16,7 +16,7 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 
 | Field | Contract |
 | --- | --- |
-| In-Scope | local immutable opaque `RuntimeReuseKey`（identity-only key semantics）；`RuntimeRegistry[RuntimeT]`、`RuntimeRetention[RuntimeT]` Protocol；`Available`、`Missing`、`Unavailable`、`Retained`、`NotRetained` outcomes；locked module taxonomy、direct-module contract tests、alias-aware BC-independence regression、已提交 architecture/dataflow evidence 的重用，以及 C10 兩個 isolated executable RED assertions 與 fresh T10/V10 evidence chain。 |
+| In-Scope | local immutable opaque `RuntimeReuseKey`（identity-only key semantics）；`RuntimeRegistry[RuntimeT]`、`RuntimeRetention[RuntimeT]` Protocol；`Available`、`Missing`、`Unavailable`、`Retained`、`NotRetained` outcomes；locked module taxonomy、direct-module contract tests、alias-aware BC-independence regression、已提交 architecture/dataflow evidence 的重用，以及 C11 兩個 isolated executable RED assertions 與 fresh T11/V11 evidence chain。 |
 | Out-Of-Scope | Identity BC direct import、`ModelIdentity -> RuntimeReuseKey` mapping／mapper／ACL implementation、concrete Registry／Retention／lookup class、DI、backend、runtime initialization／download／unload／execution、provider management、Response Reuse、Model Execution、Provider Adapter、TTL、eviction、locking、concurrency、retry、timeout、metrics、tracing。 |
 | Non-Goal | root re-export、package facade、dynamic import、`sys.modules` substitution、`service.py`、`utils.py`、`common.py`、README、version、release、tag、merge、post-merge。 |
 
@@ -34,13 +34,13 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 - module placement 固定為 `<bc>/<topic>/<child-topic>/<module>.py`。這是 non-stable-library topic，沒有 README
   row、VERSION bump、release note 或 release action。
 - architecture-path overlap 僅在 Human review／merge coordination 處理；不授權改另一 topic artifacts。
-- C5→V3 的 architecture/dataflow gate 與 production source contracts 是 frozen provenance。C8/C9 是 frozen、unapproved
-  predecessor planning provenance，沒有 routing authority。C10 必須在既有 source ancestor 上重用既有事實，不能回寫、
+- C5→V3 的 architecture/dataflow gate 與 production source contracts 是 frozen provenance。C8/C9/C10 是 frozen、unapproved
+  predecessor planning provenance，沒有 routing authority。C11 必須在既有 source ancestor 上重用既有事實，不能回寫、
   重建或聲稱 source-absent 的 historical RED→green 順序。
-- C10 的兩個 isolated executable RED assertions 必須在同一 immutable assertion subject 覆蓋五項 regression：opaque／unhashable／
+- C11 的兩個 isolated executable RED assertions 必須在同一 immutable assertion subject 覆蓋五項 regression：opaque／unhashable／
   custom-equality token 不觸發 equality/hash；直接 `importlib.import_module`；直接 `__import__`；`importlib` 或
   `builtins.__import__` alias／module-alias；以及 LRC `ModelIdentity`／Identity `RuntimeReuseKey` duplicate semantic
-  type。BC parser 必須解析 aliases；assertions 在 current source ancestor 執行並以 T10 如實收集，不能假稱
+  type。BC parser 必須解析 aliases；assertions 在 current source ancestor 執行並以 T11 如實收集，不能假稱
   expected-nonzero、green-source authorization 或以 mapper、shared type 或跨 BC import 規避。
 
 ## Boundaries / Exclusions
@@ -48,20 +48,20 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 | Category | Exact contract |
 | --- | --- |
 | ReadOnly | `src/deterministic_response_cache/identity/**`、`response_reuse/**`、`model_execution/**`、`provider_adapter/**`、root `__init__.py`、`loaded_runtime_cache/.gitkeep`、五個 existing source modules、`pyproject.toml`、`README.md`、version metadata、workflow contracts、`.github/agents/**`、`docs/business-capability-architecture.md`、`docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、`docs/architecture/business-capability/index.html`、`docs/architecture/business-capability/scene.js`，以及既有 Archify artifacts。五份 authority paths 的 overlap 僅 Human 處理，本 topic 不得改寫。 |
-| Written | C10 versioned T10／V10 evidence paths；C10 不新增 source、architecture 或 Archify artifact。 |
+| Written | C11 versioned T11／V11 evidence paths；C11 不新增 source、architecture 或 Archify artifact。 |
 | Modify | 僅 `tests/test_loaded_runtime_cache_contracts.py` 與 `tests/test_loaded_runtime_cache_bc_independence.py`，各加入一個 isolated executable assertion。 |
 | Deleted | 無；不得刪除 `.gitkeep`、existing tests 或既有 artifacts。 |
 
 ## Status / Allowed Transitions
 
-- **Current**: `planned`。C10 是唯一 active、以現行 source ancestor 為基礎的五-file planning correction candidate；
-  C8/C9 是 frozen、unapproved predecessor，C5→V3 是 frozen provenance，均不能作 C10 routing。下一步只能將這五份
-  planning artifacts 建立為 candidate-only commit；planning text 不預填 candidate SHA 或 receipt。該 commit 完成後，
-  下一 gate 才是 independent Plan-Reviewer review pending；只有 reviewer 的 approved receipt 被獨立提交後，才可建立
-  two-path isolated-assertion implementation subject。
-- **Execution model**: C10 committed planning candidate → independent Plan-Reviewer receipt → receipt-only commit →
-  two-path isolated executable assertion subject against existing source ancestor → versioned T10 Tester evidence →
-  T10 evidence-only commit → versioned V10 independent Reviewer evidence → V10 evidence-only commit → Planner Phase 4.5
+- **Current**: `planning-candidate-committed`。C11 是唯一 active、以現行 source ancestor 為基礎的五-file planning
+  correction candidate，且其 candidate-only commit 已存在；C8/C9/C10 是 frozen、unapproved predecessor，C5→V3 是 frozen
+  provenance，均不能作 C11 routing。planning text 不預填 candidate SHA 或 receipt。下一 gate 是 independent
+  Plan-Reviewer review pending；只有 reviewer 的 approved receipt 被獨立提交後，才可建立 two-path isolated-assertion
+  implementation subject。
+- **Execution model**: C11 committed planning candidate → independent Plan-Reviewer receipt → receipt-only commit →
+  two-path isolated executable assertion subject against existing source ancestor → versioned T11 Tester evidence →
+  T11 evidence-only commit → versioned V11 independent Reviewer evidence → V11 evidence-only commit → Planner Phase 4.5
   alignment → bounded PR thread classification／reply／resolution → Human review／merge。
 - **Allowed transitions**: `planned` → `planning-candidate-committed` → `plan-review-in-progress` →
   `plan-review-receipt-committed` → `implementation-in-progress` → `tester-in-progress` →
@@ -79,23 +79,23 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 | Topic specification | `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md` | Plan-Creator | Acceptance and TestCase contract. |
 | Step tracker | `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator; later Implementer only for implementation checkmarks | Topic-local progression truth. |
 | Plan-review receipt | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` | Independent Plan-Reviewer writes; Implementer commits unchanged alone | SHA-bound normal-plan verdict. |
-| Existing source contracts | five locked `src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/**` modules | None — ReadOnly | C5 green subject provenance; C10 must not modify them. |
+| Existing source contracts | five locked `src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/**` modules | None — ReadOnly | C5 green subject provenance; C11 must not modify them. |
 | Contract tests | `tests/test_loaded_runtime_cache_contracts.py` **Modify** | Implementer | Add exactly one isolated executable assertion; no existing assertion behavior changes. |
 | BC-independence tests | `tests/test_loaded_runtime_cache_bc_independence.py` **Modify** | Implementer | Add exactly one isolated executable assertion; preserve alias-aware regression behavior. |
-| Architecture authority | `docs/business-capability-architecture.md` | None — ReadOnly | Human-only overlap / merge coordination; C10 must not rewrite it. |
-| Architecture authority | `docs/evolution-roadmap.md` | None — ReadOnly | Human-only overlap / merge coordination; C10 must not rewrite it. |
-| Architecture authority | `docs/architecture/business-capability/architecture-brief.md` | None — ReadOnly | Human-only overlap / merge coordination; C10 must not rewrite it. |
-| Architecture authority | `docs/architecture/business-capability/index.html` | None — ReadOnly | Human-only overlap / merge coordination; C10 must not rewrite it. |
-| Architecture authority | `docs/architecture/business-capability/scene.js` | None — ReadOnly | Human-only overlap / merge coordination; C10 must not rewrite it. |
+| Architecture authority | `docs/business-capability-architecture.md` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
+| Architecture authority | `docs/evolution-roadmap.md` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
+| Architecture authority | `docs/architecture/business-capability/architecture-brief.md` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
+| Architecture authority | `docs/architecture/business-capability/index.html` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
+| Architecture authority | `docs/architecture/business-capability/scene.js` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
 | Existing Archify evidence | `docs/architecture/loaded-runtime-cache/**` | None — ReadOnly | C5 architecture provenance reused without edit or re-delivery. |
-| Tester evidence (T10) | `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<implementation-subject-40-hex-sha>.json` | Tester writes; Implementer commits unchanged alone | New SHA-bound factual validation of the C10 assertion subject. |
-| Independent review evidence (V10) | `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<implementation-subject-40-hex-sha>.json` | Independent Reviewer writes; Implementer commits unchanged alone | New SHA-bound record consuming committed passing T10 evidence. |
+| Tester evidence (T11) | `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<implementation-subject-40-hex-sha>.json` | Tester writes; Implementer commits unchanged alone | New SHA-bound factual validation of the C11 assertion subject. |
+| Independent review evidence (V11) | `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<implementation-subject-40-hex-sha>.json` | Independent Reviewer writes; Implementer commits unchanged alone | New SHA-bound record consuming committed passing T11 evidence. |
 
 Every unlisted path is read-only. The fixed-name legacy plan-review receipt from the abandoned lineage is historical,
-frozen provenance only: it is not an artifact of C10, must not be created or overwritten, and has no routing
+frozen provenance only: it is not an artifact of C11, must not be created or overwritten, and has no routing
 authority. Each current or successor candidate uses only the SHA-bound template above; no candidate SHA is prefilled.
 Legacy fixed-name T1／V1 evidence, including the `6110cb…` Tester and `44e477…` Reviewer lineage, is likewise frozen:
-T3／V3 and C5 provenance must never be overwritten, reused, or inferred as C10 facts.
+T3／V3 and C5 provenance must never be overwritten, reused, or inferred as C11 facts.
 
 ### Review and evidence schemas
 
@@ -103,8 +103,8 @@ T3／V3 and C5 provenance must never be overwritten, reused, or inferred as C10 
   `copilot_feedback_triage`. `verdict` is `approved|needs-rework`; `blocking_issues` is an array of objects with
   exactly `issue`, `file`, `fix`; triage has exactly `ADDRESS`／`DISCUSS`／`SKIP` arrays. Only a committed approved
   receipt for the committed candidate can authorize implementation routing.
-- C10 creates no RED-evidence JSON. Its isolated executable assertions run against the existing source ancestor; their
-  actual command results belong only in T10. A failing result is `failing` T10, never an expected-failing authorization.
+- C11 creates no RED-evidence JSON. Its isolated executable assertions run against the existing source ancestor; their
+  actual command results belong only in T11. A failing result is `failing` T11, never an expected-failing authorization.
 - Tester evidence is exactly one JSON object whose top-level keys are `schema_version`, `topic`,
   `implementation_subject_commit`, `status`, `commands`, `recorded_by` and no others. `schema_version` is integer
   `1`; `topic` is `loaded-runtime-cache`; `implementation_subject_commit` is the same immutable subject's full
@@ -112,15 +112,15 @@ T3／V3 and C5 provenance must never be overwritten, reused, or inferred as C10 
   entry has only non-empty string `command` and integer `exit_code`; `recorded_by` is `Tester`. `passing` requires
   every exit code to be `0`; `failing` requires at least one non-zero exit code. Malformed, uncommitted,
   cross-topic, cross-subject, abbreviated-SHA, legacy fixed-name path, or status/command-inconsistent evidence fails
-  closed. T10 is written only at its versioned SHA-bound artifact path.
+  closed. T11 is written only at its versioned SHA-bound artifact path.
 - Independent review evidence is exactly one JSON object whose top-level keys are `schema_version`, `topic`,
   `implementation_subject_commit`, `tester_evidence_commit`, `verdict`, `blocking_issues`, `recorded_by` and no
   others. `schema_version` is integer `1`; `topic` is `loaded-runtime-cache`; both subject references are full
   40-character lowercase hexadecimal SHAs; `tester_evidence_commit` is the sole evidence-only commit containing
   committed same-topic, same-subject passing Tester evidence; `verdict` is `approved|needs-rework`; `blocking_issues`
   is a string array that is empty exactly for `approved` and non-empty for `needs-rework`; `recorded_by` is
-  `Independent Reviewer`. Reviewer may consume only that committed passing T10 evidence; malformed, legacy fixed-name,
-  or unmatched input fails closed and must not produce V10 Reviewer evidence. V10 is written only at its versioned
+  `Independent Reviewer`. Reviewer may consume only that committed passing T11 evidence; malformed, legacy fixed-name,
+  or unmatched input fails closed and must not produce V11 Reviewer evidence. V11 is written only at its versioned
   SHA-bound artifact path.
 
 ## Python implementation metadata
@@ -136,9 +136,8 @@ T3／V3 and C5 provenance must never be overwritten, reused, or inferred as C10 
 
 Identity BC、Response Reuse、Model Execution 與 Provider Adapter 都是相鄰但獨立的 bounded context；本 topic 的
 five source contracts、architecture authority 與 Archify dataflow 已存在於 current source ancestor。`pyproject.toml`
-已鎖定 Python 3.12、strict Pyright、Ruff 與 pytest。C10 是唯一 active planning correction candidate，必須由獨立
-Plan-Reviewer 審查；architecture-path overlap 保留給 Human review／merge coordination，不能由本 topic writer 擴張
-路徑或自行解決。
+已鎖定 Python 3.12、strict Pyright、Ruff 與 pytest。C11 candidate-only commit 已存在，現正等待獨立 Plan-Reviewer
+審查；architecture-path overlap 保留給 Human review／merge coordination，不能由本 topic writer 擴張路徑或自行解決。
 
 ### Requirements
 
@@ -148,8 +147,8 @@ Plan-Reviewer 審查；architecture-path overlap 保留給 Human review／merge 
    runtime lifecycle side effect；key token 不可成為 `str`／hash API 或由 `repr` 暴露，且 unhashable/custom-equality
    token 不得被 key equality/hash 呼叫。
 3. expected registry lookup failure、`Missing`、`Unavailable`、unexpected exception 與 retention outcomes 必須可區分。
-4. C10 只修改兩個 declared test paths，保留既有 source、architecture／Archify evidence 與 direct-module imports。
-5. C10 不回寫歷史 RED→green 門檻；它在 current source ancestor 建立可執行的 isolated assertions，並以新的 T10/V10
+4. C11 只修改兩個 declared test paths，保留既有 source、architecture／Archify evidence 與 direct-module imports。
+5. C11 不回寫歷史 RED→green 門檻；它在 current source ancestor 建立可執行的 isolated assertions，並以新的 T11/V11
    same-subject evidence chain 做事實驗證。
 
 ### Decisions
@@ -180,7 +179,7 @@ protocol contracts, not concrete behavior, dependency composition, or a stable r
 
 ### Affected Files / Modules
 
-**Written:** only versioned T10／V10 evidence in `Artifact Paths`.
+**Written:** only versioned T11／V11 evidence in `Artifact Paths`.
 
 **Modified:** only the two declared test modules, each with one isolated executable assertion.
 
@@ -196,13 +195,13 @@ in `Boundaries / Exclusions`.
   being classified.
 - **Edge case:** missing (`None`), expected `RuntimeRegistryLookupUnavailable`, `Unavailable`, and retention failure
   remain distinct without a signal-to-outcome mapper.
-- **Regression:** the two C10 isolated executable assertions must directly exercise all five regressions: opaque/unhashable/custom-equality
+- **Regression:** the two C11 isolated executable assertions must directly exercise all five regressions: opaque/unhashable/custom-equality
   token identity-only semantics; direct `importlib.import_module`; direct `__import__`; `importlib` or
   `builtins.__import__` alias/module-alias use; and LRC `ModelIdentity`／Identity `RuntimeReuseKey` duplicate semantic
   types. The alias-aware parser rejects those cross-BC paths while `tests/test_package_import.py` preserves existing
   import behavior.
-- **Sequencing:** C5 architecture/dataflow and green-source commits are frozen reusable provenance. After C10's approved
-  receipt, only the two test paths form the C10 assertion subject; fresh T10 then V10 bind that same subject. No new
+- **Sequencing:** C5 architecture/dataflow and green-source commits are frozen reusable provenance. After C11's approved
+  receipt, only the two test paths form the C11 assertion subject; fresh T11 then V11 bind that same subject. No new
   expected-nonzero or green-source gate exists.
 - **Backward compatibility:** the implementation subject contains only declared paths; no root facade, initializer,
   dependency/configuration, or adjacent-BC change appears.
@@ -222,21 +221,21 @@ test modules and the Archify evidence gate.
 
 ### Rollback Plan
 
-Revert only the C10 two-test assertion subject and its successor evidence commits without modifying C5→V3 frozen
+Revert only the C11 two-test assertion subject and its successor evidence commits without modifying C5→V3 frozen
 provenance. Leave read-only source, architecture, `.gitkeep`, root package, configuration, adjacent BCs and planning /
 evidence history untouched.
 
 ## Implementation Steps
 
 1. Preserve C5→V3 source and architecture provenance unchanged; verify it only as read-only context.
-2. After C10's independently approved, committed Plan-Reviewer receipt, add one isolated executable assertion to each
-   declared test module. The single C10 subject contains exactly those two modified paths, no production source,
+2. After C11's independently approved, committed Plan-Reviewer receipt, add one isolated executable assertion to each
+   declared test module. The single C11 subject contains exactly those two modified paths, no production source,
    architecture, Archify artifact or evidence.
 3. Run the locked checks against that committed subject. The assertions are executable validation against the current
    source ancestor, not expected-failing historical RED evidence.
-4. Tester writes factual T10 for that exact subject; an Implementer commits it unchanged alone.
-5. Independent Reviewer consumes only committed passing T10 and writes V10; an Implementer commits it unchanged alone.
-6. Planner then performs Phase 4.5 alignment. Only its pass authorizes independent PR-thread classification; no C10
+4. Tester writes factual T11 for that exact subject; an Implementer commits it unchanged alone.
+5. Independent Reviewer consumes only committed passing T11 and writes V11; an Implementer commits it unchanged alone.
+6. Planner then performs Phase 4.5 alignment. Only its pass authorizes independent PR-thread classification; no C11
    action resolves F Human-check or authorizes merge.
 
 ## Validation / Acceptance Checks
@@ -244,7 +243,7 @@ evidence history untouched.
 - Run `uv run ruff format --check tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py`.
 - Run `uv run ruff check tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py` and `uv run pyright src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py`.
 - Run `uv run pytest tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py -v`, `uv run pytest -v`, and `uv run pytest tests/test_package_import.py tests/test_loaded_runtime_cache_bc_independence.py -v`.
-- All commands must exit zero for passing T10. All changes must match the two test paths; no deletion, source,
+- All commands must exit zero for passing T11. All changes must match the two test paths; no deletion, source,
   architecture or unlisted edit. The assertions prove same-instance opaque handoff and alias-aware BC independence
   without exposing a token or introducing dynamic-import substitution.
 
