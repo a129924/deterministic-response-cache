@@ -23,19 +23,21 @@
 ## Boundaries / Exclusions
 
 - Identity BC 獨占 identity 規則；Response Reuse BC 獨占 lookup、eligibility、record 與其內部 CacheStore；Loaded Runtime Cache 獨占 runtime retention、Runtime Store／Registry 與實際 preparation；Provider Adapter 的具體 integration 仍是獨立可替換邊界。Model Execution 只協調已注入的 runtime 與 invocation ports。
-- Plan-Creator 只寫五份 initial planning artifacts；Independent Plan-Reviewer 獨立寫 planning receipt；Implementer 只提交 bounded candidate、implementation subject 或原樣 evidence；Tester 寫 factual same-subject evidence；Independent Reviewer 消費 committed passing Tester evidence 後寫 review evidence。Observer 不改檔或自行判 gate。
+- Plan-Creator 只寫五份 planning artifacts（初稿及其修訂）；Independent Plan-Reviewer 獨立寫 planning receipt；Implementer 只提交 bounded candidate、implementation subject 或原樣 evidence；Tester 寫 factual same-subject evidence；Independent Reviewer 消費 committed passing Tester evidence 後寫 review evidence。Observer 不改檔或自行判 gate。
 - 既有 direct imports、fixtures、mocks 與 assertions 不得改寫；不使用 `importlib`、`__import__` 或 `sys.modules` 替代 direct-import regression。宣告路徑外的需求回 Planner；架構責任衝突時先確認架構文件。
 
 ## Status / Allowed Transitions
 
-- **Current:** `planned`；五份 initial artifacts 正由 Plan-Creator 建立，尚無 committed planning candidate、approval 或 implementation authorization。
+- **Current at this rework:** 第一個 five-path planning candidate `5f08dbc610a25fc4ae39eaaac20282f9a94e907d` 與 `needs-rework` receipt commit `64ab26c09831b47599543ce74c61733e052bcd44` 已提交；Planner 已派 Plan-Creator 修訂 planning artifacts。後續有效 candidate、phase 與 gate 由 Planner 依最新 committed evidence 判定，不由本段預填。
 - **Execution model:** isolated worktree → five-path planning candidate → independent Plan-Reviewer receipt → Planner route → immutable four-path implementation subject → independent Tester evidence → independent Reviewer evidence → Planner Phase 4.5 alignment → 既有 Human authorization 下的 bounded publish/draft PR → Human review/merge。`pr-open` 之後 Human 才能 merge；本 topic 在 merge 後 terminal，無 release action。
 - **Allowed transitions:**
   - `planned` → `planning-candidate-committed`：Implementer 只提交五份 initial planning artifacts。
   - `planning-candidate-committed` → `plan-review-in-progress`：Planner 派 Independent Plan-Reviewer 審查該 committed candidate。
-  - `plan-review-in-progress` → `plan-review-receipt-committed`：Plan-Reviewer 寫 full-SHA-bound receipt；Implementer 原樣以 sole evidence-only commit 提交。
-  - `plan-review-receipt-committed` → `needs-rework|creator-in-progress`：Planner 依 verdict route；只有 `approved` 且 same-candidate binding 成立可進入 implementation，`needs-rework` 只回 Plan-Creator 建立新 candidate。
-  - `creator-in-progress` → `tester-in-progress`：Implementer 只對四份 implementation paths 建 immutable subject；任何 step progression 另行提交，不混入 subject。
+  - `plan-review-in-progress` → `plan-review-receipt-committed`：Plan-Reviewer 寫對應 committed candidate 的三欄 receipt；Implementer 原樣以 sole evidence-only commit 提交。
+  - `plan-review-receipt-committed` → `needs-rework` → `planning-rework-in-progress`：Planner 依 `needs-rework` verdict 派 Plan-Creator；Plan-Creator 只修訂 planning artifacts，Implementer 再提交新的 planning candidate 供獨立複審。
+  - `planning-rework-in-progress` → `planning-candidate-committed`：Implementer 只提交修訂後的 planning artifacts，不混入 implementation 或 evidence。
+  - `plan-review-receipt-committed` → `implementation-in-progress`：只有 Planner 驗證 committed `approved` receipt 與其 candidate 對應後，才派 Implementer 建 immutable subject。
+  - `implementation-in-progress` → `tester-in-progress`：Implementer 只對四份 implementation paths 建 immutable subject；任何 step progression 另行提交，不混入 subject。
   - `tester-in-progress` → `review-ready`：Tester 只寫同 subject factual evidence；Implementer 以 sole evidence-only commit 原樣提交，且只有 committed `passing` 可供 Reviewer 消費。
   - `review-ready` → `reviewer-in-progress` → `approved|needs-rework`：Independent Reviewer 驗證同 topic、同 subject、passing Tester evidence；其 evidence 由 Implementer 原樣單獨提交。`needs-rework` 返回 Implementer，建立新 subject 並重跑 Tester/Reviewer。
   - `approved` → `publish-in-progress`：Planner Phase 4.5 alignment 與既有 Human authorization 均具備後，Implementer 才可 bounded commit/push/draft PR。
@@ -81,7 +83,7 @@
 
 - Async-planning status: exempt — repo 的 Response Reuse 與本 Mission 均要求同步 protocol；本 topic 不引入 async-capable dependency、I/O、並行、timeout 或 cancellation。
 - Module/package placement: 新增 `model_execution/ports.py`、`outcomes.py`、`protocol.py`；不新增 initializer。
-- New public API: 三個 defining-module generic ports、port outcome VOs/unions、`Executed`/`ExecutionFailed` 與 `ModelExecutionProtocol.execute`；精確形狀見同 topic technical spec。
+- New public API: 兩個 defining-module generic ports、port outcome VOs/unions、`Executed`/`ExecutionFailed` 與 `ModelExecutionProtocol.execute`；精確形狀見同 topic technical spec。
 - Interface changes: 不修改任何既有 public interface；新契約僅供直接 module import。
 - Breaking changes allowed: 無既有 Model Execution API，故無既有 caller migration 或相容層。
 - New dependencies: 無；僅 Python standard library。
@@ -132,17 +134,13 @@ PR #7 runtime 契約未穩定，實際接線可能需要 adapter 或新的 cross
 
 ```json
 {
-  "schema_version": 1,
-  "topic": "model-execution-protocol",
-  "planning_candidate_commit": "<reviewed candidate actual full 40-hex SHA>",
   "verdict": "approved|needs-rework",
   "blocking_issues": [],
-  "copilot_feedback_triage": {"ADDRESS": [], "DISCUSS": [], "SKIP": []},
-  "recorded_by": "Independent Plan-Reviewer"
+  "copilot_feedback_triage": {"ADDRESS": [], "DISCUSS": [], "SKIP": []}
 }
 ```
 
-Independent Plan-Reviewer 審查 committed five-path candidate 後才填 actual SHA 與 verdict；Implementer 原樣以 sole evidence-only commit 提交 receipt。此 handoff 不等於 implementation approval。
+Independent Plan-Reviewer 僅審查已提交的 five-path candidate，依一般 topic 固定三欄契約填寫 verdict、含 `issue`／`file`／`fix` 的 blocking issues 與 Copilot feedback triage；Implementer 原樣以 sole evidence-only commit 提交 receipt。Planner 以 Git 提交歷史和 committed artifacts 驗證 receipt 所對應的 candidate，不以 receipt 額外欄位或聊天推定。此 handoff 不等於 implementation approval。
 
 ## Post-merge / release actions
 

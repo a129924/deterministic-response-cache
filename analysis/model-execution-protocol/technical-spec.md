@@ -6,7 +6,7 @@
 
 ## 公開契約
 
-- `ports.py` 定義三個 generic `Protocol`：`RuntimeAccess[RuntimeRequestT, RuntimeT]` 的 `resolve(request)` 與 `prepare(request)`；`ModelInvoker[RuntimeT, InvocationT, ResponseT]` 的 `invoke(runtime, invocation)`。所有方法同步，資料參數保持 opaque。
+- `ports.py` 定義兩個 generic `Protocol`：`RuntimeAccess[RuntimeRequestT, RuntimeT]` 的 `resolve(request)` 與 `prepare(request)`；`ModelInvoker[RuntimeT, InvocationT, ResponseT]` 的 `invoke(runtime, invocation)`。所有方法同步，資料參數保持 opaque。
 - `outcomes.py` 定義 frozen、slotted value objects：`RuntimeReady(runtime)`、`RuntimeMissing()`、`RuntimeUnavailable()`、`RuntimePreparationFailed()`、`InvocationSucceeded(response)`、`InvocationFailed()`，以及對應的 port return union；Model Execution 的 public outcome 為 `Executed(response)`、`ExecutionFailed(reason)`。`ExecutionFailureReason` 是 `RUNTIME_UNAVAILABLE`、`RUNTIME_PREPARATION_FAILED`、`INVOCATION_FAILED` 三種 enum 值。失敗型別沒有 response 欄位。
 - `RuntimeAccess.resolve` 僅可回傳 `RuntimeReady | RuntimeMissing | RuntimeUnavailable`；`prepare` 僅可回傳 `RuntimeReady | RuntimePreparationFailed`；`ModelInvoker.invoke` 僅可回傳 `InvocationSucceeded | InvocationFailed`。這些是本 BC 自有 port contract，不聲稱與 Loaded Runtime Cache PR #7 的型別或簽名相同。
 - `protocol.py` 定義 `ModelExecutionProtocol(runtime_access, invoker)` 與 `execute(runtime_request, invocation) -> Executed[ResponseT] | ExecutionFailed`。以 generic type parameters 分別表達 runtime request、runtime、invocation、response；只支援 defining-module direct imports，不建立 re-export/facade。
