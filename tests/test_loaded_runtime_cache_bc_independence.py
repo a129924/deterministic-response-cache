@@ -206,18 +206,30 @@ def _is_forbidden_dynamic_import_call(
     """Return whether one call reaches ``importlib`` or ``builtins`` import machinery."""
     if not isinstance(statement, ast.Call):
         return False
-    if isinstance(statement.func, ast.Name):
-        return statement.func.id == "__import__" or (
-            statement.func.id in callables
-            and callables[statement.func.id] in {"builtins.__import__", "importlib.import_module"}
+    return _is_forbidden_import_callable_expression(statement.func, modules, callables)
+
+
+def _is_forbidden_import_callable_expression(
+    expression: ast.expr,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> bool:
+    """Return whether a callable expression can reach forbidden import machinery."""
+    if isinstance(expression, ast.IfExp):
+        return _is_forbidden_import_callable_expression(
+            expression.body,
+            modules,
+            callables,
+        ) or _is_forbidden_import_callable_expression(expression.orelse, modules, callables)
+    if isinstance(expression, ast.Name):
+        return expression.id == "__import__" or (
+            expression.id in callables
+            and callables[expression.id] in {"builtins.__import__", "importlib.import_module"}
         )
-    if not isinstance(statement.func, ast.Attribute) or not isinstance(
-        statement.func.value,
-        ast.Name,
-    ):
+    if not isinstance(expression, ast.Attribute) or not isinstance(expression.value, ast.Name):
         return False
-    module = modules.get(statement.func.value.id)
-    return (module, statement.func.attr) in {
+    module = modules.get(expression.value.id)
+    return (module, expression.attr) in {
         ("builtins", "__import__"),
         ("importlib", "import_module"),
     }
