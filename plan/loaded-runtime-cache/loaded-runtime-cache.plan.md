@@ -16,7 +16,7 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 
 | Field | Contract |
 | --- | --- |
-| In-Scope | local immutable opaque `RuntimeReuseKey`（identity-only key semantics）；`RuntimeRegistry[RuntimeT]`、`RuntimeRetention[RuntimeT]` Protocol；`Available`、`Missing`、`Unavailable`、`Retained`、`NotRetained` outcomes；locked module taxonomy、direct-module contract tests、alias-aware BC-independence regression、已提交 architecture/dataflow evidence 的重用；以及 C12 對已完成 C11/R11/S11/T11/V11 的 frozen-provenance state alignment 與 fixed-snapshot factual PR triage contract。 |
+| In-Scope | local immutable opaque `RuntimeReuseKey`（identity-only key semantics）；`RuntimeRegistry[RuntimeT]`、`RuntimeRetention[RuntimeT]` Protocol；`Available`、`Missing`、`Unavailable`、`Retained`、`NotRetained` outcomes；locked module taxonomy、direct-module contract tests、alias-aware BC-independence regression、已提交 architecture/dataflow evidence 的重用；以及已完成 C12/R12 的 frozen-provenance state alignment 與 fixed-snapshot factual PR triage contract。 |
 | Out-Of-Scope | Identity BC direct import、`ModelIdentity -> RuntimeReuseKey` mapping／mapper／ACL implementation、concrete Registry／Retention／lookup class、DI、backend、runtime initialization／download／unload／execution、provider management、Response Reuse、Model Execution、Provider Adapter、TTL、eviction、locking、concurrency、retry、timeout、metrics、tracing。 |
 | Non-Goal | root re-export、package facade、dynamic import、`sys.modules` substitution、`service.py`、`utils.py`、`common.py`、README、version、release、tag、merge、post-merge。 |
 
@@ -52,22 +52,28 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 | Category | Exact contract |
 | --- | --- |
 | ReadOnly | `src/deterministic_response_cache/identity/**`、`response_reuse/**`、`model_execution/**`、`provider_adapter/**`、root `__init__.py`、`loaded_runtime_cache/.gitkeep`、五個 existing source modules、`pyproject.toml`、`README.md`、version metadata、workflow contracts、`.github/agents/**`、`docs/business-capability-architecture.md`、`docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、`docs/architecture/business-capability/index.html`、`docs/architecture/business-capability/scene.js`，以及既有 Archify artifacts。五份 authority paths 的 overlap 僅 Human 處理，本 topic 不得改寫。 |
-| Written | C12 candidate 不寫 evidence；R12 之後僅可由 Independent Plan-Reviewer 寫入 SHA-bound receipt。 |
-| Modify | C12 僅五份 planning artifacts：`analysis/loaded-runtime-cache/{requirements,technical-spec}.md`、`plan/loaded-runtime-cache/loaded-runtime-cache.{plan,spec,step}.md`。 |
+| Written | C12 candidate 與 R12 receipt 均已提交；本次 post-R12 alignment 不寫任何 evidence。 |
+| Modify | 僅 `plan/loaded-runtime-cache/loaded-runtime-cache.{plan,step}.md` 可記錄已提交的 C12/R12 facts 與 Phase 4.5 alignment；不建立新的 candidate 或 plan-review gate。 |
 | Deleted | 無；不得刪除 `.gitkeep`、existing tests 或既有 artifacts。 |
 
 ## Status / Allowed Transitions
 
-- **Current**: `planning-candidate-in-progress`。C12 是唯一 active successor；它只含五份 planning artifacts，尚未提交，且
-  將 C11 `55ad5d48c8e638bc5a81f3d0fecfc5a5f35e963c`、R11
+- **Current**: `phase-4.5-aligned-classification-pending`。C12 candidate
+  `41d51072901cfd205ebc91644036e6695b1fe81c` 與其 approved R12 receipt-only commit
+  `d738e91eb20869709d605fe7f879b340c9614b6a` 已提交，且 receipt 的 SHA-bound path 是
+  `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-41d51072901cfd205ebc91644036e6695b1fe81c.json`。
+  C11 `55ad5d48c8e638bc5a81f3d0fecfc5a5f35e963c`、R11
   `01da31b11dcc8013f03a773ad9e9042c8bb527bf`、S11
   `e9934dc7bb7b4f81098e635b5f0257c56da659a0`、T11
   `86a5cd54bec9d687d8d7f1738e9376435d3d1abf`、V11
-  `73644c2b88257832e1b4d8bedaf516b803c2ee3a` 固定為 completed provenance。C8/C9/C10 是 frozen、unapproved
-  predecessor；C5→V3 也是 frozen provenance，均不能作 C12 routing。planning text 不預填 C12 SHA 或 R12 receipt。
+  `73644c2b88257832e1b4d8bedaf516b803c2ee3a` 均為 completed frozen provenance。C8/C9/C10 是 frozen、unapproved
+  predecessor；C5→V3 也是 frozen provenance，均不能作 routing authority。
 - **Execution model**: C12 candidate-only commit → independent R12 Plan-Reviewer receipt with nonempty factual triage →
-  receipt-only commit → Planner Phase 4.5 classification of the fixed snapshot → only separately authorized bounded
-  thread reply／resolution → Human review／merge。C12 不建立新 source／test subject、Tester evidence 或 Reviewer evidence。
+  receipt-only commit 已完成。依 Human 授權，已提交 candidate／receipt 的 Git facts 是 routing authority；本次
+  state-alignment commit 不需新的 candidate 或 Plan-Reviewer receipt。Planner Phase 4.5 已 aligned；下一步僅為獨立
+  Reviewer 對 fixed snapshot 進行 thread classification。其後才可能有 separately authorized bounded thread
+  reply／resolution；F 與 architecture/ACL Human-check 不得由此 route 處理。C12 不建立新 source／test subject、Tester
+  evidence 或 Reviewer evidence。
 - **Allowed transitions**: `planned` → `planning-candidate-committed` → `plan-review-in-progress` →
   `plan-review-receipt-committed` → `implementation-in-progress` → `tester-in-progress` →
   `tester-evidence-committed` → `reviewer-in-progress` → `reviewer-evidence-committed` → `approved` →
@@ -78,11 +84,11 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 
 | Artifact | Path | Write owner | Decision authority and role |
 | --- | --- | --- | --- |
-| Requirements | `analysis/loaded-runtime-cache/requirements.md` | Plan-Creator | Business-intent guardrail; planning candidate only. |
-| Technical specification | `analysis/loaded-runtime-cache/technical-spec.md` | Plan-Creator | Execution-facing contract; planning candidate only. |
-| Topic plan | `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md` | Plan-Creator | Canonical executable contract; planning candidate only. |
-| Topic specification | `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md` | Plan-Creator | Acceptance and TestCase contract. |
-| Step tracker | `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator; later Implementer only for implementation checkmarks | Topic-local progression truth. |
+| Requirements | `analysis/loaded-runtime-cache/requirements.md` | None — ReadOnly | Committed C12 candidate fact. |
+| Technical specification | `analysis/loaded-runtime-cache/technical-spec.md` | None — ReadOnly | Committed C12 candidate fact. |
+| Topic plan | `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md` | Plan-Creator | Canonical state-alignment record only; no new candidate/review gate. |
+| Topic specification | `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md` | None — ReadOnly | Committed C12 candidate fact. |
+| Step tracker | `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator | Topic-local post-R12 alignment truth only. |
 | Plan-review receipt | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` | Independent Plan-Reviewer writes; Implementer commits unchanged alone | SHA-bound normal-plan verdict. |
 | Existing C11 source/test subject | five locked source modules plus `tests/test_loaded_runtime_cache_contracts.py` and `tests/test_loaded_runtime_cache_bc_independence.py` | None — ReadOnly | Completed S11 provenance; C12 must not modify it. |
 | Architecture authority | `docs/business-capability-architecture.md` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
@@ -92,7 +98,7 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 | Architecture authority | `docs/architecture/business-capability/scene.js` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
 | Existing Archify evidence | `docs/architecture/loaded-runtime-cache/**` | None — ReadOnly | C5 architecture provenance reused without edit or re-delivery. |
 | Completed C11/R11/S11/T11/V11 records | C11/R11/S11/T11/V11 exact committed paths and SHAs named in Status | None — ReadOnly | Immutable completed provenance; no C12 routing reuse. |
-| Plan-review receipt (R12) | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` | Independent Plan-Reviewer writes; Implementer commits unchanged alone | SHA-bound R12 verdict and nonempty fixed-snapshot triage. |
+| Plan-review receipt (R12) | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-41d51072901cfd205ebc91644036e6695b1fe81c.json` | None — ReadOnly | Approved R12 verdict and nonempty fixed-snapshot triage, committed alone in `d738e91eb20869709d605fe7f879b340c9614b6a`. |
 
 Every unlisted path is read-only. The fixed-name legacy plan-review receipt from the abandoned lineage is historical,
 frozen provenance only: it is not an artifact of C11, must not be created or overwritten, and has no routing
@@ -261,17 +267,17 @@ untouched.
    may appear in its diff.
 3. Independent Plan-Reviewer writes a versioned R12 receipt with the complete nonempty factual triage table above;
    Implementer commits it unchanged alone.
-4. Planner then performs Phase 4.5 alignment. Only its pass authorizes independent PR-thread classification; it does
-   not resolve F／architecture-ACL Human-check or authorize merge.
+4. Planner Phase 4.5 alignment 已完成。其 pass 只授權獨立 Reviewer 進行 PR-thread classification；不授權 reply／resolve，
+   不處理 F／architecture-ACL Human-check，也不授權 merge。
 
 ## Validation / Acceptance Checks
 
-- Verify C12's candidate diff names exactly the five planning artifacts and excludes source, tests, architecture,
+- Verify committed C12 `41d51072901cfd205ebc91644036e6695b1fe81c` names exactly the five planning artifacts and excludes source, tests, architecture,
   Archify artifacts and evidence paths.
 - Verify the fixed C11 chain is linear: S11 `e9934dc7bb7b4f81098e635b5f0257c56da659a0` → T11
   `86a5cd54bec9d687d8d7f1738e9376435d3d1abf` → V11 `73644c2b88257832e1b4d8bedaf516b803c2ee3a`.
-- R12 must provide all ten table entries with six factual fields, two `DISCUSS` Human-check entries and eight `SKIP`
-  entries. It must not claim a PR reply or resolution.
+- Committed R12 `d738e91eb20869709d605fe7f879b340c9614b6a` must provide all ten table entries with six factual fields, two
+  `DISCUSS` Human-check entries and eight `SKIP` entries. It does not claim a PR reply or resolution.
 
 ## Reviewer Handoff
 
@@ -313,6 +319,6 @@ conversion and Registry／Retention implementation remain deferred to future, se
 
 ## Workflow State Contract
 
-- current_step: C12-planning-candidate-authoring
-- next_step: C12-planning-candidate-commit-then-independent-R12-review
-- status: IN_PROGRESS
+- current_step: post-R12-phase-4.5-aligned
+- next_step: independent-fixed-snapshot-thread-classification
+- status: CLASSIFICATION_PENDING
