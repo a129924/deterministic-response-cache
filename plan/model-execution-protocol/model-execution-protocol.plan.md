@@ -16,6 +16,7 @@
 - Model Execution 只接收並傳遞 opaque `runtime_request` 與 `invocation`；Identity BC 保有模型與完整請求身分的唯一 authority。Model Execution 不推得 `RuntimeReuseKey`，也不接收 `Miss` 作其內部判斷。
 - `RuntimeAccess` port 的 resolve/prepare、`ModelInvoker` port 的 invoke 及其結果皆由 Model Execution 定義，作為可注入、provider-neutral 的本地契約。Loaded Runtime Cache PR #7 的具體 API 尚未鎖定；本 topic 不宣稱相容或直接 import 它。
 - 明確 `RuntimeMissing` 才準備；`RuntimeUnavailable`、`RuntimePreparationFailed`、`InvocationFailed` 映射為三種不同 execution failure。port exception 原樣傳播，foreign/`None` result raise `TypeError`。成功 response 以同一 object 交回；失敗沒有 response。
+- `protocol.py` 固定由 `execute`、`_prepare_and_invoke`、`_invoke` 分工，各 method 只用一層 `match/case`，不得巢狀。`execute` 只 match resolve 的 ready/missing/unavailable，分別呼叫 `_invoke`、`_prepare_and_invoke`、回傳 runtime unavailable failure；`_prepare_and_invoke` 只 match prepare 的 ready/preparation failed，分別呼叫 `_invoke`、回傳 preparation failure；`_invoke` 只 match invoke 的 succeeded/failed，分別回傳保留原 response object 的 `Executed`、invocation failure。各 method 的 wildcard case 對 `None` 或契約外結果 raise `TypeError`；port exception 原樣傳播、不 retry，每次 `execute` 對各 port 最多呼叫一次。
 - 不新增 package `__init__.py`、root export、provider-specific branch、實體 adapter 或 dependency。`model_execution/` 現有 `.gitkeep` 只是 topology marker，不當作功能 module。
 - 實際 Loaded Runtime Cache／Provider Adapter 接線需在各自契約穩定後由獨立 topic 規劃；若相依契約與本地 port 語意不符，先回 Planner 確認 scope 與架構，不讓 Implementer 自行調整其他 BC。
 - branch/worktree 固定為 `topic/model-execution-protocol` 與 `<repo-parent>/worktrees/model-execution-protocol`；`dev` 只作已驗證 admission base，不承載本 topic writer。
@@ -28,7 +29,7 @@
 
 ## Status / Allowed Transitions
 
-- **Current at this rework:** 第一個 five-path planning candidate `5f08dbc610a25fc4ae39eaaac20282f9a94e907d` 與 `needs-rework` receipt commit `64ab26c09831b47599543ce74c61733e052bcd44` 已提交；Planner 已派 Plan-Creator 修訂 planning artifacts。後續有效 candidate、phase 與 gate 由 Planner 依最新 committed evidence 判定，不由本段預填。
+- **Planning provenance / current amendment:** 第一個 five-path planning candidate `5f08dbc610a25fc4ae39eaaac20282f9a94e907d` 與 `needs-rework` receipt commit `64ab26c09831b47599543ce74c61733e052bcd44` 已提交；修訂 candidate `07c0a62bdfb640cc02b7370d1af616c970629084` 的 `approved` receipt 另由 commit `aa41081300cbf2191b5d5b51c64cc67ebfb5cf1b` 提交。Human 已指示本次 `protocol.py` 內部結構修訂取代舊 approved candidate，先補 amendment transition 並重新獨立審查。舊 candidate/receipt 保留 immutable provenance，不作新修訂的 approval；在新 candidate 的獨立 approved receipt 提交及 Planner re-route 前，沒有可供實作的 active candidate，也不得同時存在兩個 active candidates。新 candidate SHA 與 verdict 不預填。
 - **Execution model:** isolated worktree → five-path planning candidate → independent Plan-Reviewer receipt → Planner route → immutable four-path implementation subject → independent Tester evidence → independent Reviewer evidence → Planner Phase 4.5 alignment → 既有 Human authorization 下的 bounded publish/draft PR → Human review/merge。`pr-open` 之後 Human 才能 merge；本 topic 在 merge 後 terminal，無 release action。
 - **Allowed transitions:**
   - `planned` → `planning-candidate-committed`：Implementer 只提交五份 initial planning artifacts。
@@ -36,7 +37,10 @@
   - `plan-review-in-progress` → `plan-review-receipt-committed`：Plan-Reviewer 寫對應 committed candidate 的三欄 receipt；Implementer 原樣以 sole evidence-only commit 提交。
   - `plan-review-receipt-committed` → `needs-rework` → `planning-rework-in-progress`：Planner 依 `needs-rework` verdict 派 Plan-Creator；Plan-Creator 只修訂 planning artifacts，Implementer 再提交新的 planning candidate 供獨立複審。
   - `planning-rework-in-progress` → `planning-candidate-committed`：Implementer 只提交修訂後的 planning artifacts，不混入 implementation 或 evidence。
-  - `plan-review-receipt-committed` → `implementation-in-progress`：只有 Planner 驗證 committed `approved` receipt 與其 candidate 對應後，才派 Implementer 建 immutable subject。
+  - `plan-review-receipt-committed`（舊 candidate 的 `approved`）→ `human-directed-amendment-pending` → `planning-amendment-in-progress`：只依 Human 本次明確指示，由 Plan-Creator 在本 topic 已宣告的 planning paths 修訂；舊 candidate/receipt 不得改寫或作新修訂的 routing approval。
+  - `planning-amendment-in-progress` → `planning-candidate-committed`：Implementer 只提交本次修訂的 planning artifacts，形成新的 immutable planning candidate；五份 planning artifacts 以該 commit 的 tree 為審查基準，不混入 implementation、舊 receipt 或新 evidence。
+  - `planning-candidate-committed` → `plan-review-in-progress` → `plan-review-receipt-committed`（amendment）：Independent Plan-Reviewer 只審新 committed candidate，寫本次專用三欄 receipt；Implementer 原樣以 sole evidence-only commit 提交，且該 commit 的第一 parent 必須是新 candidate commit。Planner 以 Git 的 candidate commit/tree、五份 planning paths/blob 及 sole receipt commit 驗證同一 candidate 的 binding，依 verdict re-route；`needs-rework` 回 Plan-Creator，僅新 `approved` 可再派實作。新 receipt 不覆寫舊 receipt，且任一時點最多一個 active candidate。
+  - `plan-review-receipt-committed` → `implementation-in-progress`：只有 Planner 驗證當前 candidate 的 committed `approved` receipt 且沒有待審 amendment，才派 Implementer 建 immutable subject。
   - `implementation-in-progress` → `tester-in-progress`：Implementer 只對四份 implementation paths 建 immutable subject；任何 step progression 另行提交，不混入 subject。
   - `tester-in-progress` → `review-ready`：Tester 只寫同 subject factual evidence；Implementer 以 sole evidence-only commit 原樣提交，且只有 committed `passing` 可供 Reviewer 消費。
   - `review-ready` → `reviewer-in-progress` → `approved|needs-rework`：Independent Reviewer 驗證同 topic、同 subject、passing Tester evidence；其 evidence 由 Implementer 原樣單獨提交。`needs-rework` 返回 Implementer，建立新 subject 並重跑 Tester/Reviewer。
@@ -53,6 +57,7 @@
 | Topic spec | `plan/model-execution-protocol/model-execution-protocol.spec.md` | Plan-Creator | 可驗證行為契約；initial candidate |
 | Step tracker | `plan/model-execution-protocol/model-execution-protocol.step.md` | Plan-Creator 初建；後續各 action owner 更新 | 同 topic step progression；initial candidate |
 | Planning review receipt | `plan/model-execution-protocol/model-execution-protocol.plan-review-receipt.json` | Independent Plan-Reviewer | 綁定 actual committed planning candidate；Implementer sole evidence commit |
+| Amendment planning review receipt | `plan/model-execution-protocol/model-execution-protocol.amendment-plan-review-receipt.json` | Independent Plan-Reviewer | 僅審本次新 committed planning candidate；Implementer sole evidence commit，Planner 以 Git 驗證 binding |
 | Runtime/invocation ports | `src/deterministic_response_cache/model_execution/ports.py` | Implementer | 本 plan/spec；immutable implementation subject |
 | Port與 execution outcomes | `src/deterministic_response_cache/model_execution/outcomes.py` | Implementer | 本 plan/spec；immutable implementation subject |
 | Execution protocol | `src/deterministic_response_cache/model_execution/protocol.py` | Implementer | 本 plan/spec；immutable implementation subject |
@@ -96,7 +101,7 @@
 
 ### Affected Files / Modules
 
-Written：`src/deterministic_response_cache/model_execution/ports.py`、`src/deterministic_response_cache/model_execution/outcomes.py`、`src/deterministic_response_cache/model_execution/protocol.py`、`tests/test_model_execution_protocol.py`。Modified/Deleted：none。五份 planning artifacts 與三份後續 evidence 的權責見 `Artifact Paths`。
+Written：`src/deterministic_response_cache/model_execution/ports.py`、`src/deterministic_response_cache/model_execution/outcomes.py`、`src/deterministic_response_cache/model_execution/protocol.py`、`tests/test_model_execution_protocol.py`。Modified/Deleted：none。五份 planning artifacts 與各份 evidence 的權責見 `Artifact Paths`。
 
 ### Test Plan
 
@@ -118,7 +123,7 @@ PR #7 runtime 契約未穩定，實際接線可能需要 adapter 或新的 cross
 
 1. 新增 `src/deterministic_response_cache/model_execution/outcomes.py`，定義 technical spec 所列 frozen/slotted port 與 execution outcomes、三種 failure reasons，以及精確 union aliases。
 2. 新增 `src/deterministic_response_cache/model_execution/ports.py`，定義同步 generic `RuntimeAccess` 與 `ModelInvoker` Protocol，僅 import 本 BC outcomes，不 import Identity、Response Reuse、Loaded Runtime Cache 或 Provider Adapter。
-3. 新增 `src/deterministic_response_cache/model_execution/protocol.py`，依 technical spec 實作 constructor 與 `execute` 的 resolve → conditional prepare → invoke mapping，保留 opaque object identity、限制呼叫次數並拒絕 foreign/`None` results。
+3. 新增 `src/deterministic_response_cache/model_execution/protocol.py`，依 technical spec 以 `execute`、`_prepare_and_invoke`、`_invoke` 各自單層 `match/case` 實作 resolve → conditional prepare → invoke mapping，保留 opaque object identity、限制呼叫次數並拒絕 foreign/`None` results。
 4. 新增 `tests/test_model_execution_protocol.py`，以 direct imports 與 typed fakes 驗證 ready、missing、unavailable、preparation failure、invocation failure、invalid port results、exception propagation 與不觸碰其他 BC 的界線。
 
 ## Validation / Acceptance Checks
@@ -128,7 +133,7 @@ PR #7 runtime 契約未穩定，實際接線可能需要 adapter 或新的 cross
 - `uv run pyright`
 - `uv run pytest tests/test_model_execution_protocol.py -q`
 - `uv run pytest -q`
-- Tester 在 immutable subject 建立後記錄上述實際 command/exit code；Reviewer 驗證 actual diff 僅含四個 implementation paths，direct imports 與五種情境均成立，沒有讀取 identity 規則、Response Reuse 或 PR #7 未確認 contract。Tester evidence 必須綁定同一 immutable subject；只有 committed passing evidence 可進 Reviewer。
+- Tester 在 immutable subject 建立後記錄上述實際 command/exit code；Reviewer 驗證 actual diff 僅含四個 implementation paths、三個 method 各只用一層 `match/case` 且分工符合 technical spec、direct imports 與五種情境均成立，沒有讀取 identity 規則、Response Reuse 或 PR #7 未確認 contract。Tester evidence 必須綁定同一 immutable subject；只有 committed passing evidence 可進 Reviewer。
 
 ## Reviewer Handoff
 
@@ -140,7 +145,7 @@ PR #7 runtime 契約未穩定，實際接線可能需要 adapter 或新的 cross
 }
 ```
 
-Independent Plan-Reviewer 僅審查已提交的 five-path candidate，依一般 topic 固定三欄契約填寫 verdict、含 `issue`／`file`／`fix` 的 blocking issues 與 Copilot feedback triage；Implementer 原樣以 sole evidence-only commit 提交 receipt。Planner 以 Git 提交歷史和 committed artifacts 驗證 receipt 所對應的 candidate，不以 receipt 額外欄位或聊天推定。此 handoff 不等於 implementation approval。
+Independent Plan-Reviewer 僅審查已提交的 planning candidate，依一般 topic 固定三欄契約填寫 verdict、含 `issue`／`file`／`fix` 的 blocking issues 與 Copilot feedback triage；Implementer 原樣以 sole evidence-only commit 提交 receipt。本次 amendment 使用專用 receipt path，不改舊 receipt；其 sole receipt commit 必須以新 candidate commit 為第一 parent。Planner 以 Git 的 candidate commit/tree、五份 planning artifact blobs 與 sole receipt commit 驗證對應關係，不以 receipt 額外欄位或聊天推定。此 handoff 不等於 implementation approval。
 
 ## Post-merge / release actions
 

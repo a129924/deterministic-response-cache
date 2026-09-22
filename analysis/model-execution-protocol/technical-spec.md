@@ -13,11 +13,12 @@
 
 ## 決定性流程
 
-1. `execute` 呼叫 `resolve` 恰一次。`RuntimeReady` 直接進入 invocation；`RuntimeMissing` 呼叫 `prepare` 恰一次；`RuntimeUnavailable` 直接回傳 `ExecutionFailed(RUNTIME_UNAVAILABLE)`。
-2. `prepare` 回傳 `RuntimeReady` 後進入 invocation；`RuntimePreparationFailed` 回傳 `ExecutionFailed(RUNTIME_PREPARATION_FAILED)`。
-3. `invoke` 呼叫恰一次；`InvocationSucceeded` 回傳 `Executed` 並保留同一 response object；`InvocationFailed` 回傳 `ExecutionFailed(INVOCATION_FAILED)`。
-4. port 回傳 `None` 或非宣告結果是 contract violation，raise `TypeError`；port 自身拋出的 exception 原樣傳播，不推測為某個業務失敗。這些 exception 不產生 `Executed`。
-5. `runtime_request` 與 `invocation` 原樣傳給 port；Model Execution 不 inspect、hash、compare 或轉換兩者。`RuntimeReady.runtime` 原樣交給 invoker，不管理其關閉或保存。
+1. `protocol.py` 以 `execute`、`_prepare_and_invoke`、`_invoke` 三個 method 分工；各 method 只使用一層 `match/case`，不得巢狀 `match`。
+2. `execute` 只處理 `resolve`，並呼叫它恰一次：`RuntimeReady` 呼叫 `_invoke`；`RuntimeMissing` 呼叫 `_prepare_and_invoke`；`RuntimeUnavailable` 回傳 `ExecutionFailed(RUNTIME_UNAVAILABLE)`；其他結果（含 `None`）由 wildcard case raise `TypeError`。
+3. `_prepare_and_invoke` 只處理 `prepare`，並呼叫它恰一次：`RuntimeReady` 呼叫 `_invoke`；`RuntimePreparationFailed` 回傳 `ExecutionFailed(RUNTIME_PREPARATION_FAILED)`；其他結果（含 `None`）由 wildcard case raise `TypeError`。
+4. `_invoke` 只處理 `invoke`，並呼叫它恰一次：`InvocationSucceeded` 回傳 `Executed` 並保留同一 response object；`InvocationFailed` 回傳 `ExecutionFailed(INVOCATION_FAILED)`；其他結果（含 `None`）由 wildcard case raise `TypeError`。
+5. port 自身拋出的 exception 原樣傳播，不推測為某個業務失敗，也不 retry；每次 `execute` 對各 port 最多呼叫一次。這些 exception 不產生 `Executed`。
+6. `runtime_request` 與 `invocation` 原樣傳給 port；Model Execution 不 inspect、hash、compare 或轉換兩者。`RuntimeReady.runtime` 原樣交給 invoker，不管理其關閉或保存。
 
 ## 驗證與相依 gate
 
