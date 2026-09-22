@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-eligibility-policy",
+  "implementation_subject_commit": "e6cb65d450e37e052c26e58b6001cd842d859c42",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "UV_FROZEN=1 UV_NO_SYNC=1 uv run ruff format --check .",
+      "exit_code": 0
+    },
+    {
+      "command": "UV_FROZEN=1 UV_NO_SYNC=1 uv run ruff check src/deterministic_response_cache/response_reuse/protocol.py tests/test_response_reuse_protocol.py",
+      "exit_code": 0
+    },
+    {
+      "command": "UV_FROZEN=1 UV_NO_SYNC=1 uv run pyright",
+      "exit_code": 0
+    },
+    {
+      "command": "UV_FROZEN=1 UV_NO_SYNC=1 uv run pytest tests/test_response_reuse_eligibility.py tests/test_response_reuse_protocol.py tests/response_reuse/test_in_memory_store.py tests/test_response_reuse_outcomes.py tests/test_package_import.py -v",
+      "exit_code": 0
+    },
+    {
+      "command": "UV_FROZEN=1 UV_NO_SYNC=1 uv run pytest -v",
+      "exit_code": 0
+    },
+    {
+      "command": "UV_FROZEN=1 UV_NO_SYNC=1 uv run pytest tests/test_response_reuse_protocol.py::test_lookup_rejects_derived_policy_decisions_after_one_evaluation -v",
+      "exit_code": 0
+    },
+    {
+      "command": "test \"$(git diff-tree --no-commit-id --name-only -r e6cb65d450e37e052c26e58b6001cd842d859c42 | sort)\" = \"$(printf '%s\\n' 'src/deterministic_response_cache/response_reuse/protocol.py' 'tests/test_response_reuse_protocol.py' | sort)\"",
+      "exit_code": 0
+    },
+    {
+      "command": "test ! -e src/deterministic_response_cache/response_reuse/eligibility/__init__.py && test ! -e src/deterministic_response_cache/response_reuse/__init__.py",
+      "exit_code": 0
+    },
+    {
+      "command": "! rg -n -e 'importlib' -e '__import__' -e 'sys\\.modules' tests/test_response_reuse_eligibility.py tests/test_response_reuse_protocol.py tests/response_reuse/test_in_memory_store.py",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check 8dd316677d2fead3f245bba7d1f60ad679eba9b6 e6cb65d450e37e052c26e58b6001cd842d859c42",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
