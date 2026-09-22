@@ -125,15 +125,15 @@ none。
 
 ## Status / Allowed Transitions
 
-- **Current**: `pr-comment-review-and-fix / lock-sync-plan-review-cycle`。Human 的一次性治理例外已建立
-  immutable sole-`uv.lock` lock-sync subject `7a90fffd6622b80eda524d89145cf833bd434d12`，且只記錄 package
-  version `0.0.0` -> `0.1.0`。若 Git 尚無 exact-two `plan.md`／`step.md` candidate，Planner 可 route Implementer
-  建立它；若 Git 已記錄該 candidate，Planner 可 route fresh Independent Plan-Reviewer 寫入其 actual full-SHA-bound
-  `fix-4` receipt。candidate commit 前它不是 routing evidence，也不得預填 candidate SHA、remote／PR head、review
-  verdict 或 thread outcome；candidate commit 後，Git 記錄的 candidate 與其後 unchanged sole-committed `fix-4`
-  receipt 才是 routing authority。先前四則 thread classification 是 historical、nonrouting record，不能作為目前
-  route 的 resolve authority；`PRRT_kwDOUJTij86kRUJ6` 的出現亦要求後續以當時 live PR 的全部 unresolved threads
-  為準重新獨立分類。
+- **Current**: `pr-comment-review-and-fix / fix-5-planning-correction`。Human 的一次性治理例外所建立的 immutable
+  sole-`uv.lock` lock-sync subject `7a90fffd6622b80eda524d89145cf833bd434d12` 只記錄 package version
+  `0.0.0` -> `0.1.0`。其後 exact-two `plan.md`／`step.md` candidate
+  `e6aed777ab7eb729535b8d6c5033e4cc9fb959d5` 的 committed `fix-4` receipt
+  `efe625e680660ac25c00053f4e6117b124d968f6` 是 immutable `needs-rework` history，且只指出 stale present-tense
+  `Current Context`；它不是 approval、implementation 或 thread-resolution authority。Planner 已 route scoped
+  Plan-Creator 更正該 state contradiction。這份 exact-two correction 在 Implementer 提交前不是 routing evidence；提交後，
+  Git 的 actual candidate 與其後 unchanged sole-committed `fix-5` receipt 才是 authority。`fix-5` candidate SHA、
+  verdict、blockers、evidence commit、remote／PR head 與 thread outcome 都只能事後由其 owner、Git 或 live PR 如實記錄。
 - **Committed routing history**: initial exact-five non-merge planning candidate
   `cdf4c66ac8534a340118dca50b5e103f22335a25` 的 committed Plan-Reviewer `needs-rework` verdict 保留為
   immutable history，且不等同 planning approval 或 implementation authorization。其後 corrected candidate
@@ -153,19 +153,21 @@ none。
   `f0047c33a3cb7583c15bd9edd09f95bbaaba6c93` 的 approved receipt sole commit 是
   `6421be09138b699d8db6773e96d257d5b2e85a5b`；同一 code subject/tester binding 的 approved Independent
   Reviewer evidence sole commit 是 `be1fba1de2c0c57a45cac704195f138abdfc1d69`。兩者均不得重寫、重提或
-  作為其他 topic 的 evidence。
-- **Lock-sync correction handoff**: 本 exact-two `plan.md`／`step.md` artifact set 只補足 Human 的 lock-sync
-  exception、state 與 handoff metadata；不改變 product contract、code、tests、`uv.lock`、既有 receipt/evidence 或
-  immutable history。commit 前僅能以本 artifact content 描述下一個 bounded action；commit 後 Git 記錄的 exact-two
-  candidate 與其後 unchanged sole-committed `fix-4` receipt 才是 route authority。固定 durable sequence 是：已提交
-  lock-sync subject `7a90fffd6622b80eda524d89145cf833bd434d12` → Implementer 的 exact-two planning candidate → fresh
-  Independent Plan-Reviewer 的 actual full-SHA-bound `fix-4` receipt → Implementer 不論 actual verdict 均原樣
-  sole evidence-only commit → Planner 依 committed actual verdict route（`approved` → Tester；`needs-rework` →
-  scoped Plan-Creator）→ approved route 的 Tester evidence → Implementer sole Tester-evidence commit → fresh
-  Independent Reviewer → Implementer sole review-evidence commit → Planner Phase 4.5 alignment → Human 已授權的
-  bounded push → fresh classification of **all** live unresolved PR threads → 僅對逐一 `addressed-and-resolvable`
-  的 thread，由 Implementer 留下 bounded reply 並 resolve。每個 future commit SHA、verdict 與 PR state 都只能
-  在事後由其 owner、Git 或 live PR 如實記錄；planning artifacts 不得預填。
+  作為其他 topic 的 evidence。lock-sync exact-two candidate
+  `e6aed777ab7eb729535b8d6c5033e4cc9fb959d5` 的 `fix-4` `needs-rework` receipt sole commit 是
+  `efe625e680660ac25c00053f4e6117b124d968f6`；兩者同為 immutable history，不得改寫、重提或當作 approval。
+- **Fix-5 correction handoff**: 本 exact-two `plan.md`／`step.md` artifact set 只將 `Current Context` 從 historical
+  pre-implementation baseline 更正為 current implemented state，並同步 state／handoff metadata；不改變 locked product
+  contract、Human `7a90fffd6622b80eda524d89145cf833bd434d12` exception、code、tests、`uv.lock`、既有 receipt/evidence、
+  six implementation markers 或 immutable history。固定 durable sequence 是：committed `fix-4` `needs-rework`
+  receipt `efe625e680660ac25c00053f4e6117b124d968f6` → scoped Plan-Creator exact-two correction → Implementer
+  exact-two planning candidate → fresh Independent Plan-Reviewer 的 actual full-SHA-bound `fix-5` receipt → Implementer
+  不論 actual verdict 均原樣 sole evidence-only commit → Planner 依 committed actual verdict route（`approved` →
+  lock-sync Tester；`needs-rework` → scoped Plan-Creator）→ approved route 的 Tester evidence → Implementer sole
+  Tester-evidence commit → fresh Independent Reviewer → Implementer sole review-evidence commit → Planner Phase 4.5
+  alignment → Human 已授權的 bounded push → fresh classification of **all** live unresolved PR threads → 僅對逐一
+  `addressed-and-resolvable` 的 thread，由 Implementer 留下 bounded reply 並 resolve。每個 future commit SHA、verdict
+  與 PR state 都只能事後由其 owner、Git 或 live PR 如實記錄；planning artifacts 不得預填。
 - **Execution model**: isolated topic worktree → five-path planning candidate → independent Plan-Reviewer
   receipt → Planner route → immutable five-path implementation subject → independent Tester evidence → independent
   Reviewer evidence → Planner Phase 4.5 alignment → existing Human-authorized bounded publish → draft PR → Human
@@ -196,19 +198,21 @@ none。
   - `fix-3-plan-review-receipt-committed` -> `needs-rework|reviewer-in-progress`：只有 Planner 依同 topic、
     full-SHA-bound committed verdict route；`needs-rework` 回到 scoped Plan-Creator correction，`approved` 才可
     route Independent Reviewer 寫入 `implementation-review-log.fix-1.json`。
-  - `lock-sync-subject-committed` -> `lock-sync-planning-candidate-next`：Human one-time exception 的 sole
-    `uv.lock` subject 固定為 `7a90fffd6622b80eda524d89145cf833bd434d12`；Plan-Creator 已只寫 exact-two
-    `plan.md`／`step.md` metadata。candidate commit 前不形成 routing authority；只有 Implementer 可將這兩個 paths
-    原樣提交為 candidate，commit 後 Git candidate 才 authoritative。不得混入 code、test、`uv.lock` 或 evidence。
-  - `lock-sync-planning-candidate-committed` -> `fix-4-plan-review-in-progress`：只有 Planner 可 route fresh
-    Independent Plan-Reviewer；receipt 必須在 review 後以 actual candidate full SHA 寫入
-    `plan-review-receipt.fix-4.json`。
-  - `fix-4-plan-review-in-progress` -> `fix-4-plan-review-receipt-committed`：fresh Independent Plan-Reviewer 只可
-    在 review 後以 actual committed candidate full SHA、actual verdict 與 actual blockers 寫 receipt；Implementer
-    必須不論 verdict 將 unchanged receipt 以 sole evidence-only commit 提交。
-  - `fix-4-plan-review-receipt-committed` -> `needs-rework|lock-sync-tester-in-progress`：只有 Planner 可依
-    same-topic committed actual verdict route；`needs-rework` 返回 scoped Plan-Creator，`approved` 才可 route Tester
-    為固定 subject `7a90fffd6622b80eda524d89145cf833bd434d12` 寫 factual `tester-evidence.lock-sync.json`。
+  - `fix-4-plan-review-receipt-committed` -> `needs-rework`：immutable receipt sole commit
+    `efe625e680660ac25c00053f4e6117b124d968f6` 綁定 candidate
+    `e6aed777ab7eb729535b8d6c5033e4cc9fb959d5` 且為 `needs-rework`；Planner 只能 route scoped Plan-Creator
+    exact-two correction，不能 reuse 或重開 fix-4 route。
+  - `fix-5-planning-correction-in-progress` -> `fix-5-planning-candidate-committed`：只有 Implementer 可將 Plan-Creator
+    的 exact-two `plan.md`／`step.md` correction 原樣提交為 candidate；不得混入 code、test、`uv.lock`、receipt 或 evidence，
+    且 planning artifacts 不得預填 prospective SHA。
+  - `fix-5-planning-candidate-committed` -> `fix-5-plan-review-in-progress`：只有 Planner 可 route fresh Independent
+    Plan-Reviewer。
+  - `fix-5-plan-review-in-progress` -> `fix-5-plan-review-receipt-committed`：fresh Independent Plan-Reviewer 只可在
+    review 後以 actual committed candidate full SHA、actual verdict 與 actual blockers 寫
+    `plan-review-receipt.fix-5.json`；Implementer 必須不論 verdict 將 unchanged receipt 以 sole evidence-only commit 提交。
+  - `fix-5-plan-review-receipt-committed` -> `needs-rework|lock-sync-tester-in-progress`：只有 Planner 可依 same-topic
+    committed actual verdict route；`needs-rework` 返回 scoped Plan-Creator，`approved` 才可 route Tester 為固定 subject
+    `7a90fffd6622b80eda524d89145cf833bd434d12` 寫 factual `tester-evidence.lock-sync.json`。
   - `lock-sync-tester-in-progress` -> `lock-sync-tester-evidence-committed`：Tester 只寫同一 subject 的 factual
     evidence；Independent Implementer 原樣以 sole evidence-only commit 提交。只有 committed `passing` evidence
     可進入 fresh Independent Reviewer。
@@ -257,7 +261,8 @@ none。
 | Fix-2 immutable plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-2.json` | Independent Plan-Reviewer | Immutable `needs-rework` receipt，僅綁定 candidate `60836827cb9ab0d42e7217eb6b560bca99108a14`，並已由 `d4b2b3de4e451d6561a94381d0998d97957705f9` sole-commit；不得改寫或重提。 |
 | Fix-3 plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-3.json` | Independent Plan-Reviewer only | Immutable `approved` receipt，僅綁定 candidate `f0047c33a3cb7583c15bd9edd09f95bbaaba6c93`，並已由 `6421be09138b699d8db6773e96d257d5b2e85a5b` sole-commit；不得改寫或重提。 |
 | One-time lock-sync subject | `uv.lock` | Implementer only | Human exception 僅授權 immutable subject `7a90fffd6622b80eda524d89145cf833bd434d12` 的 sole path，將 package version `0.0.0` -> `0.1.0`；不是通用 `uv.lock` write authority。 |
-| Fix-4 plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-4.json` | fresh Independent Plan-Reviewer only | 僅可 review 後以 actual committed exact-two candidate full SHA 寫入；Implementer 必須不論 actual verdict 原樣 sole evidence-only commit。不得預填 candidate SHA、verdict 或 commit。 |
+| Fix-4 immutable plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-4.json` | Independent Plan-Reviewer | Immutable `needs-rework` receipt，僅綁定 candidate `e6aed777ab7eb729535b8d6c5033e4cc9fb959d5`，並已由 `efe625e680660ac25c00053f4e6117b124d968f6` sole-commit；不得改寫、重提或作為 approval。 |
+| Fix-5 plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-5.json` | fresh Independent Plan-Reviewer only | 僅可 review 後以 actual committed exact-two candidate full SHA 寫入；Implementer 必須不論 actual verdict 原樣 sole evidence-only commit。不得預填 candidate SHA、verdict、blockers 或 commit。 |
 | Lock-sync Tester evidence | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.tester-evidence.lock-sync.json` | Tester only | 只記固定 subject `7a90fffd6622b80eda524d89145cf833bd434d12` 的 factual command/exit-code evidence；Implementer 原樣 sole evidence-only commit。 |
 | Lock-sync independent review evidence | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.implementation-review-log.lock-sync.json` | fresh Independent Reviewer only | 只消費同 subject committed passing lock-sync Tester evidence；Tester evidence commit 與 verdict 均由 reviewer 當時如實記錄；Implementer 原樣 sole evidence-only commit。 |
 | Eligibility policy | `src/deterministic_response_cache/response_reuse/eligibility/policy.py` **Write** | Implementer | 標準庫-only eligibility decisions、union、generic Protocol 與 leaf boundary。 |
@@ -304,10 +309,13 @@ deletion 或 new module 後綴都必須停止並返回 Planner。
   `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`，其 `approved` evidence 已由
   `be1fba1de2c0c57a45cac704195f138abdfc1d69` sole-commit。它與所有既有 immutable evidence files 均不得
   改寫或刪除。
-- `plan-review-receipt.fix-4.json` 沿用前述 plan-review receipt 的 exact seven-key schema；fresh Independent
-  Plan-Reviewer 只能在 committed exact-two candidate review 後，以該 candidate 的 actual full SHA、actual verdict
-  與 actual blockers 寫入；Implementer 必須不論 verdict 原樣 sole evidence-only commit，之後僅 Planner 可依
-  committed actual verdict route。planning artifacts 不得預填任何 `fix-4` receipt commit、verdict 或 candidate SHA。
+- `plan-review-receipt.fix-4.json` 沿用前述 exact seven-key receipt schema，immutable `needs-rework` evidence 綁定
+  candidate `e6aed777ab7eb729535b8d6c5033e4cc9fb959d5`，並已由
+  `efe625e680660ac25c00053f4e6117b124d968f6` sole-commit；不得改寫、重提或當作 approval。
+- `plan-review-receipt.fix-5.json` 沿用前述 exact seven-key receipt schema；fresh Independent Plan-Reviewer 只能在
+  committed exact-two candidate review 後，以該 candidate 的 actual full SHA、actual verdict 與 actual blockers 寫入；
+  Implementer 必須不論 verdict 原樣 sole evidence-only commit，之後僅 Planner 可依 committed actual verdict route。
+  planning artifacts 不得預填任何 `fix-5` receipt commit、verdict、blockers 或 candidate SHA。
 - `tester-evidence.lock-sync.json` 沿用前述 Tester evidence 的 exact six-key schema，且
   `implementation_subject_commit` 固定為 `7a90fffd6622b80eda524d89145cf833bd434d12`。Tester 只可記錄實際 commands
   與 exit codes；其 status、evidence commit 與後續 outcome 不得預填。
@@ -329,11 +337,14 @@ deletion 或 new module 後綴都必須停止並返回 Planner。
 
 ### Current Context
 
-`src/deterministic_response_cache/response_reuse/protocol.py` 目前只將 CacheStore `NotFound`、
-`CacheStoreFailure`、`None` 及 response 映射成 lookup outcomes，constructor 只接收 store；它尚未判定已命中
-response 是否可安全回傳。`outcomes.py`、`_cache_store.py` 和 InMemory adapter 已是可用 contract，且所有現有
-tests 都採 direct imports。架構文件已指定 Response Reuse 承擔 safe reuse decision，並維持 Identity opaque
-authority 與 future BC separation。
+Historical pre-implementation baseline：在 topic admission 時，
+`src/deterministic_response_cache/response_reuse/protocol.py` 只將 CacheStore `NotFound`、`CacheStoreFailure`、
+`None` 及 response 映射成 lookup outcomes，constructor 只接收 store，尚未判定已命中 response 是否可安全回傳。
+這不是 current implementation state。Current implementation 的 constructor 要求 keyword-only
+`eligibility_policy`；它只在 successful response read 後呼叫一次 `evaluate`，以 exact `ReuseAllowed`／
+`ReuseDenied` decision 分別映射為 `Hit`／`Miss`，並讓 invalid decision 成為 `TypeError`。`outcomes.py`、
+`_cache_store.py` 與 InMemory adapter 的既有 contract、direct-import tests、Identity opaque authority 及 future BC
+separation 均維持不變。
 
 ### Requirements
 

@@ -1,6 +1,6 @@
 ---
 topic: response-reuse-eligibility-policy
-phase: lock-sync-plan-review-cycle
+phase: fix-5-planning-correction
 created: 2026-09-18
 ---
 
@@ -33,9 +33,10 @@ created: 2026-09-18
 - [X] **Actor:** Independent Reviewer / Implementer — **Action:** Consumed the committed passing Tester evidence for subject `e6cb65d450e37e052c26e58b6001cd842d859c42`, recorded an approved review in `implementation-review-log.fix-1.json`, and committed that unchanged evidence as sole evidence commit `be1fba1de2c0c57a45cac704195f138abdfc1d69`.
 - [X] **Actor:** Plan-Creator — **Action:** Wrote only this exact-two `plan.md`／`step.md` state correction for `PRRT_kwDOUJTij86kOT7X`; no product contract, code, test, evidence, or immutable-history artifact changed, and no prospective commit SHA was recorded.
 - [X] **Actor:** Implementer — **Action:** Under the Human one-time governance exception, created immutable sole-`uv.lock` lock-sync subject `7a90fffd6622b80eda524d89145cf833bd434d12` from parent `be854af82173a6de219e34192056e01b016b018f`, limited to package version `0.0.0` -> `0.1.0`.
-- [X] **Actor:** Plan-Creator — **Action:** Wrote only the exact-two `plan.md`／`step.md` lock-sync metadata correction. Before an Implementer candidate commit it is not routing evidence; after that commit, Git's actual candidate and its later committed `fix-4` receipt are authoritative. No code, test, `uv.lock`, existing receipt, or evidence changed.
-- **Conditional route:** If Git has no exact-two `plan.md`／`step.md` candidate, Planner routes Implementer to create it from these paths only; do not mix code, tests, `uv.lock`, existing receipts, or evidence. If Git has recorded that candidate, Planner routes fresh Independent Plan-Reviewer to write `plan-review-receipt.fix-4.json` with actual full-SHA facts. Implementer must sole-commit the unchanged receipt regardless of actual verdict; Planner then routes `approved` to Tester or `needs-rework` to scoped Plan-Creator.
-- [ ] **Actor:** Tester / Independent Implementer — **Action:** Only after the committed approved `fix-4` receipt and Planner route, record factual same-subject evidence for `7a90fffd6622b80eda524d89145cf833bd434d12` in `tester-evidence.lock-sync.json`; Independent Implementer may sole-commit it unchanged.
+- [X] **Actor:** Plan-Creator / Implementer — **Action:** Plan-Creator wrote only the exact-two `plan.md`／`step.md` lock-sync metadata correction, and Implementer committed that candidate as `e6aed777ab7eb729535b8d6c5033e4cc9fb959d5`; no code, test, `uv.lock`, existing receipt, or evidence was mixed into the candidate.
+- [X] **Actor:** Independent Plan-Reviewer / Implementer — **Action:** Independently reviewed candidate `e6aed777ab7eb729535b8d6c5033e4cc9fb959d5`, recorded its `needs-rework` `plan-review-receipt.fix-4.json`, and sole-committed that unchanged receipt as `efe625e680660ac25c00053f4e6117b124d968f6`.
+- **Current route:** The committed fix-4 blocker is only the stale present-tense `Current Context`. Plan-Creator corrects only the exact-two `plan.md`／`step.md` state; Implementer then creates a new exact-two candidate. Fresh Independent Plan-Reviewer writes `plan-review-receipt.fix-5.json` with actual full-SHA facts and actual verdict; Implementer sole-commits it unchanged regardless of verdict. Planner then routes `approved` to lock-sync Tester or `needs-rework` to scoped Plan-Creator. No prospective candidate SHA, verdict, blocker, evidence commit, remote／PR head, or thread outcome is recorded here.
+- [ ] **Actor:** Tester / Independent Implementer — **Action:** Only after the committed approved `fix-5` receipt and Planner route, record factual same-subject evidence for `7a90fffd6622b80eda524d89145cf833bd434d12` in `tester-evidence.lock-sync.json`; Independent Implementer may sole-commit it unchanged.
 - [ ] **Actor:** fresh Independent Reviewer / Independent Implementer — **Action:** Only after committed passing same-subject Tester evidence, write `implementation-review-log.lock-sync.json` with actual binding; Independent Implementer may sole-commit it unchanged.
 - [ ] **Actor:** Planner / Implementer / Independent Reviewer — **Action:** After committed approved review evidence, Planner performs Phase 4.5 alignment; only then may Implementer make the Human-authorized bounded push. Afterwards freshly classify **all** live unresolved PR threads, and reply to／resolve only an individually `addressed-and-resolvable` thread.
 
@@ -54,16 +55,18 @@ created: 2026-09-18
 
 ## Handoff / Gate Notes
 
-- Current phase is `lock-sync-plan-review-cycle`. Human authorized the one-time governance exception and Implementer
+- Current phase is `fix-5-planning-correction`. Human authorized the one-time governance exception and Implementer
   created immutable sole-`uv.lock` subject `7a90fffd6622b80eda524d89145cf833bd434d12` from parent
-  `be854af82173a6de219e34192056e01b016b018f`, strictly for package version `0.0.0` -> `0.1.0`. If Git has no exact-two
-  candidate, Planner routes Implementer to create it; if Git has that candidate, Planner routes fresh Independent
-  Plan-Reviewer. It does not widen any other ReadOnly, Out-Of-Scope, Written, Modified, or Artifact Paths authority.
-- Before the exact-two candidate commit, this `plan.md`／`step.md` content is not routing evidence and contains no
-  prospective candidate SHA, verdict, evidence commit, remote／PR head, or thread outcome. After it, only Git's actual
-  candidate and the later unchanged sole-committed `fix-4` receipt are routing authority. Independent Plan-Reviewer
-  writes that receipt with actual facts; Implementer commits it unchanged regardless of verdict; Planner then routes
-  `approved` to Tester or `needs-rework` to scoped Plan-Creator.
+  `be854af82173a6de219e34192056e01b016b018f`, strictly for package version `0.0.0` -> `0.1.0`. Its exact-two
+  planning candidate `e6aed777ab7eb729535b8d6c5033e4cc9fb959d5` has immutable `needs-rework` fix-4 receipt sole commit
+  `efe625e680660ac25c00053f4e6117b124d968f6`; the sole blocker is the stale present-tense `Current Context`. This does
+  not widen any other ReadOnly, Out-Of-Scope, Written, Modified, or Artifact Paths authority.
+- This correction changes only `plan.md`／`step.md` to make the current implementation state truthful. Before the new
+  exact-two candidate commit, it is not routing evidence and contains no prospective candidate SHA, verdict, blocker,
+  evidence commit, remote／PR head, or thread outcome. After it, only Git's actual candidate and the later unchanged
+  sole-committed `fix-5` receipt are routing authority. Independent Plan-Reviewer writes that receipt with actual facts;
+  Implementer commits it unchanged regardless of verdict; Planner then routes `approved` to Tester or `needs-rework` to
+  scoped Plan-Creator.
 - The six `## Implementation Steps` markers are already `[X]`; their marker-only step-progress commit remains
   `e3009d719caba782901e58ff422ab2b3869be665`. Independent Reviewer evidence committed at
   `01f80439bd9c57739e588521081406cb343645f8` applies only to the original immutable subject and cannot be
