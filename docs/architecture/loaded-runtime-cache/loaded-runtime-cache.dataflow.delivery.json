@@ -6,12 +6,12 @@
   "input": "docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json",
   "output": "docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html",
   "specification": {
-    "sha256": "f68b05d45e7d4f9064722ed57ca03695b3ad3b3cd30f1d8ccea5c700e9946719",
-    "bytes": 3889
+    "sha256": "0844e8638a72cb5120b33a3af1093eac4eddbfd109e994b6008c5291fe6829e8",
+    "bytes": 3991
   },
   "artifact": {
-    "sha256": "5219fc8ee3bfdf7c73dee2c74fba266fac9850b2c17a864eca6d15a19babf776",
-    "bytes": 708062
+    "sha256": "b5023ec735263dce2299d9b70fd3193e9cbcad0d9813138f9824acd800eacc49",
+    "bytes": 707883
   },
   "validation": {
     "checksPassed": 9,

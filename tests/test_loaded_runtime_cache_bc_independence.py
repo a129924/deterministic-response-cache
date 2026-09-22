@@ -113,29 +113,33 @@ def _add_assignment_aliases(
     for _ in range(len(assignments) + 1):
         changed = False
         for statement in assignments:
-            target = _assignment_target_name(statement)
             value = statement.value
-            if target is None or value is None:
+            targets = _assignment_target_names(statement)
+            if not targets or value is None:
                 continue
             resolved = _resolve_forbidden_alias(value, modules, callables)
             if resolved is None:
                 continue
             kind, imported_name = resolved
             aliases = modules if kind == "module" else callables
-            if aliases.get(target) != imported_name:
-                aliases[target] = imported_name
-                changed = True
+            for target in targets:
+                if aliases.get(target) != imported_name:
+                    aliases[target] = imported_name
+                    changed = True
         if not changed:
             break
 
 
-def _assignment_target_name(statement: ast.Assign | ast.AnnAssign) -> str | None:
-    """Return one simple local assignment target, if this assignment has one."""
+def _assignment_target_names(statement: ast.Assign | ast.AnnAssign) -> tuple[str, ...]:
+    """Return all-simple local targets, rejecting mixed assignment targets atomically."""
     if isinstance(statement, ast.AnnAssign):
-        return statement.target.id if isinstance(statement.target, ast.Name) else None
-    if len(statement.targets) != 1 or not isinstance(statement.targets[0], ast.Name):
-        return None
-    return statement.targets[0].id
+        return (statement.target.id,) if isinstance(statement.target, ast.Name) else ()
+    names: list[str] = []
+    for target in statement.targets:
+        if not isinstance(target, ast.Name):
+            return ()
+        names.append(target.id)
+    return tuple(names)
 
 
 def _resolve_forbidden_alias(
@@ -304,7 +308,10 @@ def test_identity_bc_does_not_directly_import_loaded_runtime_cache() -> None:
         ),
         (
             "chained-assignment-callable-importlib-alias",
-            "import importlib\nfirst = second = importlib.import_module\nsecond('identity')\n",
+            (
+                "import importlib\nfirst = second = importlib.import_module\n"
+                "first('identity')\nsecond('identity')\n"
+            ),
         ),
         (
             "assignment-callable-builtins-alias",
@@ -332,6 +339,25 @@ def test_bc_independence_rejects_each_dynamic_import_bypass(
     (source_directory / "bypass.py").write_text(source, encoding="utf-8")
 
     assert _uses_dynamic_import_substitution(source_directory)
+
+
+def test_bc_independence_resolves_every_simple_target_of_chained_import_alias() -> None:
+    """Every simple target of a chained assignment retains the resolved import alias."""
+    _, callables = _import_aliases(
+        ast.parse("import importlib\nfirst = second = importlib.import_module\n"),
+    )
+
+    assert callables["first"] == "importlib.import_module"
+    assert callables["second"] == "importlib.import_module"
+
+
+def test_bc_independence_rejects_mixed_assignment_targets_atomically() -> None:
+    """A mixed-target assignment never grants an alias to only one target."""
+    _, callables = _import_aliases(
+        ast.parse("import importlib\nfirst = holder.value = importlib.import_module\n"),
+    )
+
+    assert "first" not in callables
 
 
 def test_bc_independence_rejects_duplicate_foreign_semantic_types(tmp_path: Path) -> None:
