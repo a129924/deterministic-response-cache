@@ -1,6 +1,6 @@
 ---
 topic: model-execution-protocol
-phase: plan-authoring
+phase: plan-review
 created: 2026-09-22
 ---
 
@@ -12,7 +12,7 @@ created: 2026-09-22
 ## Workflow Stages
 
 - [X] plan-authoring
-- [ ] plan-review
+- [X] plan-review
 - [ ] tdd-test-authoring
 - [ ] implementation
 - [ ] implementation-review
@@ -21,8 +21,8 @@ created: 2026-09-22
 ## Actionable Steps
 
 - [X] **Actor:** Implementer — **Action:** 將五份 initial planning artifacts 以唯一 planning-candidate commit 提交；不得混入 code 或 evidence。
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** 審查 committed five-path candidate，寫入 full-SHA-bound `plan/model-execution-protocol/model-execution-protocol.plan-review-receipt.json`。
-- [ ] **Actor:** Implementer — **Action:** 原樣以 sole evidence-only commit 提交 Plan-Reviewer receipt，等待 Planner 依 verdict route。
+- [X] **Actor:** Independent Plan-Reviewer — **Action:** 審查 committed five-path candidate，寫入 full-SHA-bound `plan/model-execution-protocol/model-execution-protocol.plan-review-receipt.json`。
+- [X] **Actor:** Implementer — **Action:** 原樣以 sole evidence-only commit 提交 Plan-Reviewer receipt，等待 Planner 依 verdict route。
 - [ ] **Actor:** Implementer — **Action:** 在 approved planning receipt 與 Planner route 後，只以四份 declared implementation paths 建 immutable subject。
 - [ ] **Actor:** Tester — **Action:** 對 immutable subject 執行驗證，寫入 actual command/exit-code evidence；Implementer 原樣單獨提交。
 - [ ] **Actor:** Independent Reviewer — **Action:** 只消費 committed passing same-subject Tester evidence，寫入 review evidence；Implementer 原樣單獨提交。
@@ -43,6 +43,6 @@ created: 2026-09-22
 - Source plan：`plan/model-execution-protocol/model-execution-protocol.plan.md`；本 tracker 不代表 Plan-Reviewer approval。
 - Topic selector：`topic=model-execution-protocol; branch=topic/model-execution-protocol; managed-path-intent=<repo-parent>/worktrees/model-execution-protocol; primary-worktree=false`。
 - Planning receipt、Tester evidence、independent Reviewer evidence 只消費同 topic、同 candidate/subject 的 actual committed evidence，不能跨 topic 重用，也不能由 chat 或 branch 狀態補推。
-- 第一個 five-path candidate `5f08dbc610a25fc4ae39eaaac20282f9a94e907d` 與 `needs-rework` receipt commit `64ab26c09831b47599543ce74c61733e052bcd44` 已提交；Planner 已派 Plan-Creator 修訂。本 tracker 的 `phase: plan-authoring` 指此 planning rework；`plan-review` 尚待修訂 candidate 複審，新 candidate 與後續 phase 須由 committed evidence 和 Planner route 判定。首個 candidate 的提交 checkbox 已由該 action owner 核對 Git 後更新。
+- 第一個 five-path candidate `5f08dbc610a25fc4ae39eaaac20282f9a94e907d` 與 `needs-rework` receipt commit `64ab26c09831b47599543ce74c61733e052bcd44` 已提交；Planner 已派 Plan-Creator 修訂。修訂 candidate `07c0a62bdfb640cc02b7370d1af616c970629084` 的 `approved` Plan-Reviewer receipt 已由 sole evidence-only commit `aa41081300cbf2191b5d5b51c64cc67ebfb5cf1b` 提交；目前等待 Planner route，後續 phase 須由 committed evidence 和 Planner 判定。首個 candidate 的提交 checkbox 已由該 action owner 核對 Git 後更新。
 - PR #7 實際 runtime contract 未鎖定；本 topic 以本地 injected port/test doubles 驗證，未來接線另行規劃。
 - 只有 `## Implementation Steps` 是 implementation-completion gate；Human 獨占 PR review、merge、release、post-merge、tag 與 final summary。
