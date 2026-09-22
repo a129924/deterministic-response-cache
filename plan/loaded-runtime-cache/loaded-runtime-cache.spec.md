@@ -23,6 +23,10 @@
    architecture/dataflow 與 source-contract provenance，不重寫其歷史順序。C11 只在既有
    source ancestor 建立兩個 isolated executable RED assertions（各一個於既有 test module）；它們不是 expected-failing
    或 green-source gate。新的同-subject T11/V11 evidence chain 才是 C11 的獨立 verification route。
+9. C11 `55ad5d48c8e638bc5a81f3d0fecfc5a5f35e963c`、R11、S11、T11 與 V11
+   `73644c2b88257832e1b4d8bedaf516b803c2ee3a` 是 completed frozen provenance。C12 只改五份 planning artifacts，並在
+   fixed PR snapshot 建立 R12 triage contract；它不重寫 evidence、source、tests、architecture／Archify artifacts，也不
+   reply 或 resolve threads。
 
 ## Behavioral Scenarios
 
@@ -84,6 +88,15 @@ Given LRC 或 Identity source 嘗試自行宣告對方的 semantic type，When C
 imports 和 declarations，Then LRC `ModelIdentity` 或 Identity `RuntimeReuseKey` 的 duplicate semantic type 都使 test
 失敗；C11 不改 production source、不能改為 mapper 或 shared type。
 
+### Scenario 10 — C12 factual PR triage
+
+Given C11/R11/S11/T11/V11 已按 commit chain 完成且 snapshot 固定為
+`73644c2b88257832e1b4d8bedaf516b803c2ee3a`，When independent Plan-Reviewer 建立 R12，Then
+`copilot_feedback_triage` 非空並完整列出 snapshot 的 current unresolved threads；每筆都有 `thread`、`comment`、
+`finding`、`commit`、`basis`、`disposition`。F `PRRT_kwDOUJTij86jnBpk`／`4043480108` 及 architecture/ACL
+`PRRT_kwDOUJTij86kQ95O`／`4060023123` 是 `DISCUSS` 且維持 Human-only `human-check`；其他 factual current entries 是
+`SKIP`。C12 不把此 triage 假裝成 code fix、comment reply 或 thread resolution。
+
 ## Error / Edge Cases
 
 1. **Unexpected exception:** Given a Registry fake raises an exception other than
@@ -106,3 +119,6 @@ imports 和 declarations，Then LRC `ModelIdentity` 或 Identity `RuntimeReuseKe
 8. **Evidence path collision or provenance reuse:** Given T11 or V11 uses a fixed-name, C5/T3/V3, C8/C9/C10, or legacy
    `6110cb…`／`44e477…` path, or references another subject, When it is written, Then it fails closed. T11/V11 must use
    new SHA-bound non-overwritable paths and bind the C11 assertion subject only.
+9. **Incomplete C12 triage:** Given R12 omits a current snapshot thread, has an empty triage, lacks any of the six
+   factual fields, uses a future／abbreviated／unverifiable commit, or classifies F／architecture-ACL ownership as resolved,
+   When Planner consumes it, Then it fails closed and cannot authorize comment reply or resolution.

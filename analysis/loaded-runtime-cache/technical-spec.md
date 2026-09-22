@@ -87,7 +87,7 @@ backend 或 lifecycle 已交付。authors labels 使用繁體中文；不設定 
 flow，synchronous retain failure 必須使用非-dashed outcome relationship。最終必須是 showcase 9/9、0 composition
 errors、0 warnings，後續才 deliver，並 visual-check 四個 desktop viewports。
 
-## C11 execution order
+## Completed C11 execution order
 
 1. C5→V3 已提交的 architecture authority、dataflow delivery／visual evidence 與 source contracts 均是 frozen
    provenance。C8、C9 與 C10 是 frozen、unapproved predecessor planning provenance，沒有 routing authority。C11 在既有
@@ -128,10 +128,26 @@ The C11 successor records must be written only to immutable versioned paths
 `loaded-runtime-cache.implementation-review-log-<implementation-subject-40-hex-sha>.json`. They must not overwrite,
 reuse, or be inferred from C5/T3/V3 or legacy `6110cb…` Tester／`44e477…` Reviewer evidence lineage.
 
-## C11 candidate routing constraint
+## Completed C11 candidate routing constraint
 
 C11 只包含 `analysis/loaded-runtime-cache/{requirements,technical-spec}.md` 與
 `plan/loaded-runtime-cache/loaded-runtime-cache.{plan,spec,step}.md` 五份 planning artifacts。後續 routing 必須將它
 帶到現行 source ancestor；C11 不得攜帶 source、tests、architecture、Tester／Reviewer evidence 或 receipts。C11
-candidate-only commit 已存在，接著只能由 Independent Plan-Reviewer 建立新的 SHA-bound receipt；本文件不預填
-candidate SHA 或 receipt。
+candidate-only commit、R11 receipt、S11、T11 和 V11 都已完成；它們現在是 immutable frozen provenance，不再是
+current routing authority。
+
+## C12 review-triage contract
+
+C12 是唯一 active planning successor，且只可修改
+`analysis/loaded-runtime-cache/{requirements,technical-spec}.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.{plan,spec,step}.md`。它不得修改 production source、tests、architecture
+authority、Archify source／receipt、既有 evidence 或 PR thread state。C12 candidate commit 完成後，唯一下一 gate 是
+independent R12 Plan-Reviewer receipt；本文件不預填 candidate SHA 或 receipt path。
+
+R12 必須審核固定 PR snapshot commit
+`73644c2b88257832e1b4d8bedaf516b803c2ee3a`，並在非空 `copilot_feedback_triage` 中以 factual entry 完整覆蓋每個
+current unresolved thread。每個 entry 恰有 `thread`、`comment`、`finding`、`commit`、`basis`、`disposition`；`commit`
+只能是固定 snapshot 或可驗證的 completed C11/R11/S11/T11/V11 provenance commit，不能使用 abbreviated SHA 或
+future commit。F `PRRT_kwDOUJTij86jnBpk`／comment `4043480108` 與 architecture/ACL thread
+`PRRT_kwDOUJTij86kQ95O`／comment `4060023123` 必須列於 `DISCUSS`，disposition 為 Human-only `human-check`；其餘
+snapshot entries 列於 `SKIP`，且不得假裝已由 C12 修改、reply 或 resolve。

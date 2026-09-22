@@ -16,7 +16,7 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 
 | Field | Contract |
 | --- | --- |
-| In-Scope | local immutable opaque `RuntimeReuseKey`（identity-only key semantics）；`RuntimeRegistry[RuntimeT]`、`RuntimeRetention[RuntimeT]` Protocol；`Available`、`Missing`、`Unavailable`、`Retained`、`NotRetained` outcomes；locked module taxonomy、direct-module contract tests、alias-aware BC-independence regression、已提交 architecture/dataflow evidence 的重用，以及 C11 兩個 isolated executable RED assertions 與 fresh T11/V11 evidence chain。 |
+| In-Scope | local immutable opaque `RuntimeReuseKey`（identity-only key semantics）；`RuntimeRegistry[RuntimeT]`、`RuntimeRetention[RuntimeT]` Protocol；`Available`、`Missing`、`Unavailable`、`Retained`、`NotRetained` outcomes；locked module taxonomy、direct-module contract tests、alias-aware BC-independence regression、已提交 architecture/dataflow evidence 的重用；以及 C12 對已完成 C11/R11/S11/T11/V11 的 frozen-provenance state alignment 與 fixed-snapshot factual PR triage contract。 |
 | Out-Of-Scope | Identity BC direct import、`ModelIdentity -> RuntimeReuseKey` mapping／mapper／ACL implementation、concrete Registry／Retention／lookup class、DI、backend、runtime initialization／download／unload／execution、provider management、Response Reuse、Model Execution、Provider Adapter、TTL、eviction、locking、concurrency、retry、timeout、metrics、tracing。 |
 | Non-Goal | root re-export、package facade、dynamic import、`sys.modules` substitution、`service.py`、`utils.py`、`common.py`、README、version、release、tag、merge、post-merge。 |
 
@@ -37,32 +37,37 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 - C5→V3 的 architecture/dataflow gate 與 production source contracts 是 frozen provenance。C8/C9/C10 是 frozen、unapproved
   predecessor planning provenance，沒有 routing authority。C11 必須在既有 source ancestor 上重用既有事實，不能回寫、
   重建或聲稱 source-absent 的 historical RED→green 順序。
-- C11 的兩個 isolated executable RED assertions 必須在同一 immutable assertion subject 覆蓋五項 regression：opaque／unhashable／
+- C11 的兩個 isolated executable RED assertions已經在同一 immutable assertion subject 覆蓋五項 regression：opaque／unhashable／
   custom-equality token 不觸發 equality/hash；直接 `importlib.import_module`；直接 `__import__`；`importlib` 或
   `builtins.__import__` alias／module-alias；以及 LRC `ModelIdentity`／Identity `RuntimeReuseKey` duplicate semantic
   type。BC parser 必須解析 aliases；assertions 在 current source ancestor 執行並以 T11 如實收集，不能假稱
-  expected-nonzero、green-source authorization 或以 mapper、shared type 或跨 BC import 規避。
+  expected-nonzero、green-source authorization 或以 mapper、shared type 或跨 BC import 規避。C11/R11/S11/T11/V11 現為
+  completed frozen provenance，C12 不得重新審核、修改或以其替代自己的 candidate／receipt。
+- C12 只處理 planning state 與 current PR snapshot `73644c2b88257832e1b4d8bedaf516b803c2ee3a` 的 factual triage contract。
+  F `PRRT_kwDOUJTij86jnBpk`／comment `4043480108` 以及 architecture/ACL ownership 只能 `DISCUSS`、Human-only
+  `human-check`；其餘 current factual threads 只能 `SKIP`，不可被 C12 宣稱已修正、回覆或 resolve。
 
 ## Boundaries / Exclusions
 
 | Category | Exact contract |
 | --- | --- |
 | ReadOnly | `src/deterministic_response_cache/identity/**`、`response_reuse/**`、`model_execution/**`、`provider_adapter/**`、root `__init__.py`、`loaded_runtime_cache/.gitkeep`、五個 existing source modules、`pyproject.toml`、`README.md`、version metadata、workflow contracts、`.github/agents/**`、`docs/business-capability-architecture.md`、`docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、`docs/architecture/business-capability/index.html`、`docs/architecture/business-capability/scene.js`，以及既有 Archify artifacts。五份 authority paths 的 overlap 僅 Human 處理，本 topic 不得改寫。 |
-| Written | C11 versioned T11／V11 evidence paths；C11 不新增 source、architecture 或 Archify artifact。 |
-| Modify | 僅 `tests/test_loaded_runtime_cache_contracts.py` 與 `tests/test_loaded_runtime_cache_bc_independence.py`，各加入一個 isolated executable assertion。 |
+| Written | C12 candidate 不寫 evidence；R12 之後僅可由 Independent Plan-Reviewer 寫入 SHA-bound receipt。 |
+| Modify | C12 僅五份 planning artifacts：`analysis/loaded-runtime-cache/{requirements,technical-spec}.md`、`plan/loaded-runtime-cache/loaded-runtime-cache.{plan,spec,step}.md`。 |
 | Deleted | 無；不得刪除 `.gitkeep`、existing tests 或既有 artifacts。 |
 
 ## Status / Allowed Transitions
 
-- **Current**: `planning-candidate-committed`。C11 是唯一 active、以現行 source ancestor 為基礎的五-file planning
-  correction candidate，且其 candidate-only commit 已存在；C8/C9/C10 是 frozen、unapproved predecessor，C5→V3 是 frozen
-  provenance，均不能作 C11 routing。planning text 不預填 candidate SHA 或 receipt。下一 gate 是 independent
-  Plan-Reviewer review pending；只有 reviewer 的 approved receipt 被獨立提交後，才可建立 two-path isolated-assertion
-  implementation subject。
-- **Execution model**: C11 committed planning candidate → independent Plan-Reviewer receipt → receipt-only commit →
-  two-path isolated executable assertion subject against existing source ancestor → versioned T11 Tester evidence →
-  T11 evidence-only commit → versioned V11 independent Reviewer evidence → V11 evidence-only commit → Planner Phase 4.5
-  alignment → bounded PR thread classification／reply／resolution → Human review／merge。
+- **Current**: `planning-candidate-in-progress`。C12 是唯一 active successor；它只含五份 planning artifacts，尚未提交，且
+  將 C11 `55ad5d48c8e638bc5a81f3d0fecfc5a5f35e963c`、R11
+  `01da31b11dcc8013f03a773ad9e9042c8bb527bf`、S11
+  `e9934dc7bb7b4f81098e635b5f0257c56da659a0`、T11
+  `86a5cd54bec9d687d8d7f1738e9376435d3d1abf`、V11
+  `73644c2b88257832e1b4d8bedaf516b803c2ee3a` 固定為 completed provenance。C8/C9/C10 是 frozen、unapproved
+  predecessor；C5→V3 也是 frozen provenance，均不能作 C12 routing。planning text 不預填 C12 SHA 或 R12 receipt。
+- **Execution model**: C12 candidate-only commit → independent R12 Plan-Reviewer receipt with nonempty factual triage →
+  receipt-only commit → Planner Phase 4.5 classification of the fixed snapshot → only separately authorized bounded
+  thread reply／resolution → Human review／merge。C12 不建立新 source／test subject、Tester evidence 或 Reviewer evidence。
 - **Allowed transitions**: `planned` → `planning-candidate-committed` → `plan-review-in-progress` →
   `plan-review-receipt-committed` → `implementation-in-progress` → `tester-in-progress` →
   `tester-evidence-committed` → `reviewer-in-progress` → `reviewer-evidence-committed` → `approved` →
@@ -79,17 +84,15 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 | Topic specification | `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md` | Plan-Creator | Acceptance and TestCase contract. |
 | Step tracker | `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator; later Implementer only for implementation checkmarks | Topic-local progression truth. |
 | Plan-review receipt | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` | Independent Plan-Reviewer writes; Implementer commits unchanged alone | SHA-bound normal-plan verdict. |
-| Existing source contracts | five locked `src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/**` modules | None — ReadOnly | C5 green subject provenance; C11 must not modify them. |
-| Contract tests | `tests/test_loaded_runtime_cache_contracts.py` **Modify** | Implementer | Add exactly one isolated executable assertion; no existing assertion behavior changes. |
-| BC-independence tests | `tests/test_loaded_runtime_cache_bc_independence.py` **Modify** | Implementer | Add exactly one isolated executable assertion; preserve alias-aware regression behavior. |
+| Existing C11 source/test subject | five locked source modules plus `tests/test_loaded_runtime_cache_contracts.py` and `tests/test_loaded_runtime_cache_bc_independence.py` | None — ReadOnly | Completed S11 provenance; C12 must not modify it. |
 | Architecture authority | `docs/business-capability-architecture.md` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
 | Architecture authority | `docs/evolution-roadmap.md` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
 | Architecture authority | `docs/architecture/business-capability/architecture-brief.md` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
 | Architecture authority | `docs/architecture/business-capability/index.html` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
 | Architecture authority | `docs/architecture/business-capability/scene.js` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
 | Existing Archify evidence | `docs/architecture/loaded-runtime-cache/**` | None — ReadOnly | C5 architecture provenance reused without edit or re-delivery. |
-| Tester evidence (T11) | `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<implementation-subject-40-hex-sha>.json` | Tester writes; Implementer commits unchanged alone | New SHA-bound factual validation of the C11 assertion subject. |
-| Independent review evidence (V11) | `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<implementation-subject-40-hex-sha>.json` | Independent Reviewer writes; Implementer commits unchanged alone | New SHA-bound record consuming committed passing T11 evidence. |
+| Completed C11/R11/S11/T11/V11 records | C11/R11/S11/T11/V11 exact committed paths and SHAs named in Status | None — ReadOnly | Immutable completed provenance; no C12 routing reuse. |
+| Plan-review receipt (R12) | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` | Independent Plan-Reviewer writes; Implementer commits unchanged alone | SHA-bound R12 verdict and nonempty fixed-snapshot triage. |
 
 Every unlisted path is read-only. The fixed-name legacy plan-review receipt from the abandoned lineage is historical,
 frozen provenance only: it is not an artifact of C11, must not be created or overwritten, and has no routing
@@ -123,6 +126,31 @@ T3／V3 and C5 provenance must never be overwritten, reused, or inferred as C11 
   or unmatched input fails closed and must not produce V11 Reviewer evidence. V11 is written only at its versioned
   SHA-bound artifact path.
 
+### C12 fixed-snapshot triage schema
+
+R12 的 receipt 仍是 one JSON object，top-level keys 恰為 `verdict`、`blocking_issues`、
+`copilot_feedback_triage`。本 C12 route 中 triage 三個 arrays 的合計不可為空；每個 triage entry 恰有
+`thread`、`comment`、`finding`、`commit`、`basis`、`disposition` 六個 non-empty factual fields。`thread` 是完整 PR
+thread node id，`comment` 是 decimal GitHub comment id，`commit` 是 full 40-hex committed SHA；`basis` 必須可由 fixed
+snapshot 或 named frozen provenance 驗證，`disposition` 必須是 `DISCUSS` 或 `SKIP`。任何缺漏、空 triage、future SHA、
+abbreviated SHA、未驗證 basis，或把 Human-check 寫成 resolved 都 fail closed。
+
+R12 必須完整涵蓋此固定 snapshot（head `73644c2b88257832e1b4d8bedaf516b803c2ee3a`）的下列 current unresolved
+threads。此表是 required factual coverage，不是 C12 對 source／test／docs 的修改授權：
+
+| thread | comment | finding | factual commit / basis | required disposition |
+| --- | --- | --- | --- | --- |
+| `PRRT_kwDOUJTij86jnBpk` | `4043480108` | F：跨 topic declared-path overlap | snapshot plan 與 five architecture authority paths | `DISCUSS` — Human-only `human-check`; no reply/resolve authorization |
+| `PRRT_kwDOUJTij86kQ95O` | `4060023123` | business-capability flow lacks external ACL node | architecture/ACL authority is ReadOnly and overlaps another topic | `DISCUSS` — same Human-only `human-check` |
+| `PRRT_kwDOUJTij86kQe90` | `4059838910` | individual dynamic-import bypass coverage | S11 `e9934dc7bb7b4f81098e635b5f0257c56da659a0` has isolated parametrized cases | `SKIP` — factual C11 coverage; no C12 code claim |
+| `PRRT_kwDOUJTij86kQe94` | `4059838915` | historical RED collection failure | C11 route expressly freezes historical RED evidence; T11/V11 are factual current evidence | `SKIP` — frozen historical provenance |
+| `PRRT_kwDOUJTij86kQ948` | `4060023096` | subject/evidence ancestry | `e9934dc7bb7b4f81098e635b5f0257c56da659a0` → `86a5cd54bec9d687d8d7f1738e9376435d3d1abf` → `73644c2b88257832e1b4d8bedaf516b803c2ee3a` | `SKIP` — factual completed C11 chain |
+| `PRRT_kwDOUJTij86kQ95C` | `4060023103` | assignment dynamic-import alias | S11 alias fixed-point analysis is committed provenance | `SKIP` — factual C11 coverage; no C12 code claim |
+| `PRRT_kwDOUJTij86kQ95K` | `4060023118` | retention outcome label placement | frozen Archify evidence is ReadOnly in C12 | `SKIP` — no C12 artifact mutation |
+| `PRRT_kwDOUJTij86knEY7` | `4068738285` | C11 subject/evidence ancestry | same linear S11→T11→V11 commits above | `SKIP` — factual completed C11 chain |
+| `PRRT_kwDOUJTij86knEY_` | `4068738291` | chained assignment import alias | S11 fixed-point alias analysis is committed provenance | `SKIP` — factual current-source evidence; no C12 code claim |
+| `PRRT_kwDOUJTij86knEZB` | `4068738293` | retention dataflow runtime input | frozen Archify evidence is ReadOnly in C12 | `SKIP` — no C12 artifact mutation |
+
 ## Python implementation metadata
 
 ### Non-goals
@@ -136,8 +164,9 @@ T3／V3 and C5 provenance must never be overwritten, reused, or inferred as C11 
 
 Identity BC、Response Reuse、Model Execution 與 Provider Adapter 都是相鄰但獨立的 bounded context；本 topic 的
 five source contracts、architecture authority 與 Archify dataflow 已存在於 current source ancestor。`pyproject.toml`
-已鎖定 Python 3.12、strict Pyright、Ruff 與 pytest。C11 candidate-only commit 已存在，現正等待獨立 Plan-Reviewer
-審查；architecture-path overlap 保留給 Human review／merge coordination，不能由本 topic writer 擴張路徑或自行解決。
+已鎖定 Python 3.12、strict Pyright、Ruff 與 pytest。C11/R11/S11/T11/V11 已完成並 frozen；C12 只使 planning state
+與 fixed-snapshot triage 可審核，並不新增 implementation work。architecture-path overlap 保留給 Human review／merge
+coordination，不能由本 topic writer 擴張路徑或自行解決。
 
 ### Requirements
 
@@ -147,9 +176,10 @@ five source contracts、architecture authority 與 Archify dataflow 已存在於
    runtime lifecycle side effect；key token 不可成為 `str`／hash API 或由 `repr` 暴露，且 unhashable/custom-equality
    token 不得被 key equality/hash 呼叫。
 3. expected registry lookup failure、`Missing`、`Unavailable`、unexpected exception 與 retention outcomes 必須可區分。
-4. C11 只修改兩個 declared test paths，保留既有 source、architecture／Archify evidence 與 direct-module imports。
-5. C11 不回寫歷史 RED→green 門檻；它在 current source ancestor 建立可執行的 isolated assertions，並以新的 T11/V11
-   same-subject evidence chain 做事實驗證。
+4. C11 的 two-test subject、T11、V11 已完成且 ReadOnly；C12 不改寫 source、tests、architecture／Archify evidence 或
+   direct-module imports。
+5. C12 R12 receipt 必須以 nonempty six-field factual triage 完整覆蓋 fixed snapshot；F 與 architecture/ACL ownership
+   保持 `DISCUSS`／Human-only `human-check`，其餘 entries 是 `SKIP`。
 
 ### Decisions
 
@@ -179,9 +209,9 @@ protocol contracts, not concrete behavior, dependency composition, or a stable r
 
 ### Affected Files / Modules
 
-**Written:** only versioned T11／V11 evidence in `Artifact Paths`.
+**Written:** C12 candidate does not write evidence; only a later independent R12 receipt may use its SHA-bound path.
 
-**Modified:** only the two declared test modules, each with one isolated executable assertion.
+**Modified:** only the five C12 planning artifacts.
 
 **ReadOnly:** all Identity, Response Reuse, Model Execution, Provider Adapter, root-package, five existing source
 modules, architecture/Archify artifacts, configuration, workflow-contract and `.github/agents/**` paths enumerated
@@ -200,9 +230,8 @@ in `Boundaries / Exclusions`.
   `builtins.__import__` alias/module-alias use; and LRC `ModelIdentity`／Identity `RuntimeReuseKey` duplicate semantic
   types. The alias-aware parser rejects those cross-BC paths while `tests/test_package_import.py` preserves existing
   import behavior.
-- **Sequencing:** C5 architecture/dataflow and green-source commits are frozen reusable provenance. After C11's approved
-  receipt, only the two test paths form the C11 assertion subject; fresh T11 then V11 bind that same subject. No new
-  expected-nonzero or green-source gate exists.
+- **Sequencing:** C5 architecture/dataflow and C11/R11/S11/T11/V11 commits are frozen provenance. C12 has no source or
+  test subject; its R12 triage is a plan-review artifact only, and it cannot replace a future independent classification.
 - **Backward compatibility:** the implementation subject contains only declared paths; no root facade, initializer,
   dependency/configuration, or adjacent-BC change appears.
 
@@ -221,31 +250,28 @@ test modules and the Archify evidence gate.
 
 ### Rollback Plan
 
-Revert only the C11 two-test assertion subject and its successor evidence commits without modifying C5→V3 frozen
-provenance. Leave read-only source, architecture, `.gitkeep`, root package, configuration, adjacent BCs and planning /
-evidence history untouched.
+Revert only the C12 five-artifact planning candidate without modifying C11/R11/S11/T11/V11 or C5→V3 frozen provenance.
+Leave read-only source, tests, architecture, `.gitkeep`, root package, configuration, adjacent BCs and evidence history
+untouched.
 
 ## Implementation Steps
 
-1. Preserve C5→V3 source and architecture provenance unchanged; verify it only as read-only context.
-2. After C11's independently approved, committed Plan-Reviewer receipt, add one isolated executable assertion to each
-   declared test module. The single C11 subject contains exactly those two modified paths, no production source,
-   architecture, Archify artifact or evidence.
-3. Run the locked checks against that committed subject. The assertions are executable validation against the current
-   source ancestor, not expected-failing historical RED evidence.
-4. Tester writes factual T11 for that exact subject; an Implementer commits it unchanged alone.
-5. Independent Reviewer consumes only committed passing T11 and writes V11; an Implementer commits it unchanged alone.
-6. Planner then performs Phase 4.5 alignment. Only its pass authorizes independent PR-thread classification; no C11
-   action resolves F Human-check or authorizes merge.
+1. Preserve C11/R11/S11/T11/V11 and C5→V3 provenance unchanged; verify it only as read-only context.
+2. Commit C12 as exactly the five declared planning artifacts; no source, test, architecture, Archify or evidence path
+   may appear in its diff.
+3. Independent Plan-Reviewer writes a versioned R12 receipt with the complete nonempty factual triage table above;
+   Implementer commits it unchanged alone.
+4. Planner then performs Phase 4.5 alignment. Only its pass authorizes independent PR-thread classification; it does
+   not resolve F／architecture-ACL Human-check or authorize merge.
 
 ## Validation / Acceptance Checks
 
-- Run `uv run ruff format --check tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py`.
-- Run `uv run ruff check tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py` and `uv run pyright src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py`.
-- Run `uv run pytest tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py -v`, `uv run pytest -v`, and `uv run pytest tests/test_package_import.py tests/test_loaded_runtime_cache_bc_independence.py -v`.
-- All commands must exit zero for passing T11. All changes must match the two test paths; no deletion, source,
-  architecture or unlisted edit. The assertions prove same-instance opaque handoff and alias-aware BC independence
-  without exposing a token or introducing dynamic-import substitution.
+- Verify C12's candidate diff names exactly the five planning artifacts and excludes source, tests, architecture,
+  Archify artifacts and evidence paths.
+- Verify the fixed C11 chain is linear: S11 `e9934dc7bb7b4f81098e635b5f0257c56da659a0` → T11
+  `86a5cd54bec9d687d8d7f1738e9376435d3d1abf` → V11 `73644c2b88257832e1b4d8bedaf516b803c2ee3a`.
+- R12 must provide all ten table entries with six factual fields, two `DISCUSS` Human-check entries and eight `SKIP`
+  entries. It must not claim a PR reply or resolution.
 
 ## Reviewer Handoff
 
@@ -255,8 +281,20 @@ evidence history untouched.
   "blocking_issues": [],
   "copilot_feedback_triage": {
     "ADDRESS": [],
-    "DISCUSS": [],
-    "SKIP": []
+    "DISCUSS": [
+      {"thread":"PRRT_kwDOUJTij86jnBpk","comment":"4043480108","finding":"F: declared-path overlap","commit":"73644c2b88257832e1b4d8bedaf516b803c2ee3a","basis":"five architecture authority paths overlap another topic","disposition":"DISCUSS — Human-only human-check"},
+      {"thread":"PRRT_kwDOUJTij86kQ95O","comment":"4060023123","finding":"external ACL boundary in architecture authority","commit":"73644c2b88257832e1b4d8bedaf516b803c2ee3a","basis":"architecture/ACL ownership is ReadOnly and overlaps another topic","disposition":"DISCUSS — Human-only human-check"}
+    ],
+    "SKIP": [
+      {"thread":"PRRT_kwDOUJTij86kQe90","comment":"4059838910","finding":"per-bypass dynamic-import coverage","commit":"e9934dc7bb7b4f81098e635b5f0257c56da659a0","basis":"isolated parametrized C11 cases","disposition":"SKIP"},
+      {"thread":"PRRT_kwDOUJTij86kQe94","comment":"4059838915","finding":"historical RED collection","commit":"73644c2b88257832e1b4d8bedaf516b803c2ee3a","basis":"C11 freezes historical RED and records current factual T11/V11","disposition":"SKIP"},
+      {"thread":"PRRT_kwDOUJTij86kQ948","comment":"4060023096","finding":"evidence ancestry","commit":"73644c2b88257832e1b4d8bedaf516b803c2ee3a","basis":"linear S11→T11→V11 provenance","disposition":"SKIP"},
+      {"thread":"PRRT_kwDOUJTij86kQ95C","comment":"4060023103","finding":"assignment alias","commit":"e9934dc7bb7b4f81098e635b5f0257c56da659a0","basis":"committed fixed-point alias analysis","disposition":"SKIP"},
+      {"thread":"PRRT_kwDOUJTij86kQ95K","comment":"4060023118","finding":"retention label placement","commit":"73644c2b88257832e1b4d8bedaf516b803c2ee3a","basis":"Archify evidence is ReadOnly in C12","disposition":"SKIP"},
+      {"thread":"PRRT_kwDOUJTij86knEY7","comment":"4068738285","finding":"C11 evidence ancestry","commit":"73644c2b88257832e1b4d8bedaf516b803c2ee3a","basis":"linear S11→T11→V11 provenance","disposition":"SKIP"},
+      {"thread":"PRRT_kwDOUJTij86knEY_","comment":"4068738291","finding":"chained assignment alias","commit":"e9934dc7bb7b4f81098e635b5f0257c56da659a0","basis":"committed C11 alias-analysis provenance","disposition":"SKIP"},
+      {"thread":"PRRT_kwDOUJTij86knEZB","comment":"4068738293","finding":"retention runtime input","commit":"73644c2b88257832e1b4d8bedaf516b803c2ee3a","basis":"Archify evidence is ReadOnly in C12","disposition":"SKIP"}
+    ]
   }
 }
 ```
@@ -275,6 +313,6 @@ conversion and Registry／Retention implementation remain deferred to future, se
 
 ## Workflow State Contract
 
-- current_step: plan-review-pending
-- next_step: independent-plan-review
-- status: REVIEW_PENDING
+- current_step: C12-planning-candidate-authoring
+- next_step: C12-planning-candidate-commit-then-independent-R12-review
+- status: IN_PROGRESS

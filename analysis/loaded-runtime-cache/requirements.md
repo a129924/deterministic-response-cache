@@ -83,5 +83,24 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
 - C8、C9 與 C10 是 frozen、unapproved predecessor planning provenance，沒有 C11 routing authority，也不能重用其
   receipt、implementation 或 evidence。C11 candidate 只能含這五份 planning artifacts，且以既有 Loaded Runtime
   Cache source ancestor 為 parent；不得倒回乾淨 base、刪除既有 source/tests/architecture，或將 frozen C5→V3
-  evidence 重用為 C11 routing。C11 candidate-only commit 已存在，下一 gate 恆為 Independent Plan-Reviewer；planning
-  text 不得預填 candidate SHA 或 receipt。
+  evidence 重用為 C11 routing。
+
+## C12 review-triage successor
+
+- C11 `55ad5d48c8e638bc5a81f3d0fecfc5a5f35e963c`、R11 receipt commit
+  `01da31b11dcc8013f03a773ad9e9042c8bb527bf`、S11
+  `e9934dc7bb7b4f81098e635b5f0257c56da659a0`、T11 evidence commit
+  `86a5cd54bec9d687d8d7f1738e9376435d3d1abf`，以及 V11 evidence commit
+  `73644c2b88257832e1b4d8bedaf516b803c2ee3a` 已完成且全部 frozen。它們只能提供 factual provenance，不能被
+  C12 覆寫、重建或作為 C12 receipt／subject。
+- C12 的唯一目的，是在固定 PR snapshot `73644c2b88257832e1b4d8bedaf516b803c2ee3a` 建立可審核的 thread-triage
+  contract。它只修改五份 planning artifacts，不寫 source、tests、architecture、Archify artifact 或 Tester／Reviewer
+  evidence，也不回覆或 resolve thread。
+- C12 的下一條且唯一 routing path 是：C12 candidate-only commit → independent R12 SHA-bound Plan-Reviewer receipt
+  → receipt-only commit → Planner Phase 4.5 對固定 snapshot 的 classification。planning text 不得預填 C12 SHA 或
+  R12 receipt path。
+- R12 的 `copilot_feedback_triage` 必須非空，並完整覆蓋固定 snapshot 的 current unresolved threads；每個 entry
+  都必須有 `thread`、`comment`、`finding`、`commit`、`basis`、`disposition` 六個 factual 欄位。F
+  `PRRT_kwDOUJTij86jnBpk`／comment `4043480108` 必須是 `DISCUSS`，並明記 architecture/ACL declared-path
+  ownership 是 Human-only `human-check`；其餘 snapshot facts 只能如實列為 `SKIP`，不得以空 triage、推測或
+  事後實作取代分類。
