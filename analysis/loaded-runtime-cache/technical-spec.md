@@ -87,25 +87,26 @@ backend 或 lifecycle 已交付。authors labels 使用繁體中文；不設定 
 flow，synchronous retain failure 必須使用非-dashed outcome relationship。最終必須是 showcase 9/9、0 composition
 errors、0 warnings，後續才 deliver，並 visual-check 四個 desktop viewports。
 
-## C8 execution order
+## C10 execution order
 
 1. C5→V3 已提交的 architecture authority、dataflow delivery／visual evidence 與 source contracts 均是 frozen
-   provenance。C8 在既有 source ancestor 上進行；不得重跑為新的 architecture gate、不得改寫五份 authority path，
+   provenance。C8 與 C9 是 frozen、unapproved predecessor planning provenance，沒有 routing authority。C10 在既有
+   source ancestor 上進行；不得重跑為新的 architecture gate、不得改寫五份 authority path，
    也不得假裝重新經歷 source-absent 的 RED→green 歷程。
-2. C8 approved Plan-Reviewer receipt committed 後，Implementer 只可修改
+2. C10 approved Plan-Reviewer receipt committed 後，Implementer 只可修改
    `tests/test_loaded_runtime_cache_contracts.py` 與
    `tests/test_loaded_runtime_cache_bc_independence.py`，各新增一個 isolated executable RED assertion。它們在現行
    source ancestor 可執行，並覆蓋 opaque-key identity、direct `importlib.import_module`、direct `__import__`、
    alias/module-alias bypass 和 duplicate semantic type 的五類 regression。
 3. 該兩-path assertion subject 是新的 immutable implementation subject；它不得包含 production source、architecture
    或 evidence。其命名中的 RED 只識別 review repair，並不代表 expected-nonzero 或 historical red failure。Tester 對
-   相同 subject 建立 T8，Independent Reviewer 只在 committed passing T8 後建立 V8；V8 approved 後才可進入 Planner
+   相同 subject 建立 T10，Independent Reviewer 只在 committed passing T10 後建立 V10；V10 approved 後才可進入 Planner
    Phase 4.5 與 thread classification。
 
 ## Deterministic validation evidence boundary
 
-There is no C8 RED-evidence artifact. The assertions are factual executable regression checks against the existing
-source ancestor. Their commands and exit codes are recorded only in T8 after the immutable assertion subject exists.
+There is no C10 RED-evidence artifact. The assertions are factual executable regression checks against the existing
+source ancestor. Their commands and exit codes are recorded only in T10 after the immutable assertion subject exists.
 A failing command is `failing` Tester evidence and returns only to Implementer; it cannot be renamed
 `expected-failing`, converted into green-work authorization, or used to rewrite frozen C5→V3 provenance.
 
@@ -122,14 +123,14 @@ JSON has exactly `schema_version`, `topic`, `implementation_subject_commit`, `te
 `recorded_by: Independent Reviewer`. Malformed, extra-key, mismatched, uncommitted, failing, or abbreviated evidence
 fails closed; it cannot yield Reviewer evidence or implementation routing.
 
-The C8 successor records must be written only to immutable versioned paths
+The C10 successor records must be written only to immutable versioned paths
 `loaded-runtime-cache.tester-evidence-<implementation-subject-40-hex-sha>.json` and
 `loaded-runtime-cache.implementation-review-log-<implementation-subject-40-hex-sha>.json`. They must not overwrite,
 reuse, or be inferred from C5/T3/V3 or legacy `6110cb…` Tester／`44e477…` Reviewer evidence lineage.
 
-## C8 candidate routing constraint
+## C10 candidate routing constraint
 
-C8 只包含 `analysis/loaded-runtime-cache/{requirements,technical-spec}.md` 與
+C10 只包含 `analysis/loaded-runtime-cache/{requirements,technical-spec}.md` 與
 `plan/loaded-runtime-cache/loaded-runtime-cache.{plan,spec,step}.md` 五份 planning artifacts。後續 routing 必須將它
-帶到現行 source ancestor；C8 不得攜帶 source、tests、architecture、Tester／Reviewer evidence 或 receipts。candidate
+帶到現行 source ancestor；C10 不得攜帶 source、tests、architecture、Tester／Reviewer evidence 或 receipts。candidate
 commit 已完成後只能由 Independent Plan-Reviewer 建立新的 SHA-bound receipt；本文件不預填 candidate SHA 或 receipt。
