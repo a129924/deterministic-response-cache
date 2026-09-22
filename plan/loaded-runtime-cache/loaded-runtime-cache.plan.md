@@ -98,7 +98,10 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 | Step tracker | `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator | C13 phase truth only. |
 | Plan-review receipt | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` | Independent Plan-Reviewer writes; Implementer commits unchanged alone | SHA-bound normal-plan verdict. |
 | C13 RED test subject | `tests/test_loaded_runtime_cache_bc_independence.py` | Implementer | Only after approved C13 receipt; collection-success, actual assertion-failing chained-assignment regression. |
+| C13 RED Tester evidence | `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json` | Tester writes; Implementer commits unchanged alone | Exact factual schema; `failing` requires at least one non-zero command exit; no Reviewer record is permitted. |
 | C13 green subject | `tests/test_loaded_runtime_cache_bc_independence.py` | Implementer | New immutable subject; handles all-simple-name chained assignment targets. |
+| C13 green Tester evidence | `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<green-subject-40-hex-sha>.json` | Tester writes; Implementer commits unchanged alone | Exact factual schema; `passing` requires all command exits to be zero. |
+| C13 green review evidence | `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json` | Independent Reviewer writes; Implementer commits unchanged alone | May consume only the committed matching green `passing` Tester evidence. |
 | C13 dataflow evidence | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.validation.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.delivery.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.html` | Implementer | Green subject only; truthful Archify validate/deliver/visual-check evidence. |
 | C13 existing captures | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.dark.png`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.light.png`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.dark.png`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.light.png` | Implementer | Green subject only; exactly these four existing capture paths. |
 | Architecture authority | `docs/business-capability-architecture.md` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
@@ -225,31 +228,41 @@ protocol contracts, not concrete behavior, dependency composition, or a stable r
 
 ### Affected Files / Modules
 
-**Written:** C12 candidate does not write evidence; only a later independent R12 receipt may use its SHA-bound path.
+**Written:** C13 only: (1) the independent Plan-Reviewer receipt at
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`; (2) the
+RED factual Tester record at
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json`; (3) the green
+factual Tester record at
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<green-subject-40-hex-sha>.json`; and (4) the green
+Independent Reviewer record at
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json`. The
+respective independent writer writes each record; only an Implementer may commit it unchanged in its own sole
+evidence-only commit. No Reviewer record exists for the failing RED subject.
 
-**Modified:** only the five C12 planning artifacts.
+**Modified:** C13 candidate changes exactly the five planning artifacts. The RED subject changes only
+`tests/test_loaded_runtime_cache_bc_independence.py`. The later green subject changes only that test plus the ten
+allowlisted dataflow artifacts listed in `Artifact Paths`.
 
 **ReadOnly:** all Identity, Response Reuse, Model Execution, Provider Adapter, root-package, five existing source
-modules, architecture/Archify artifacts, configuration, workflow-contract and `.github/agents/**` paths enumerated
-in `Boundaries / Exclusions`.
+modules, configuration, workflow-contract and `.github/agents/**` paths; every unlisted Archify path; C5→V3,
+C11→V11, C12→R12 and `9aa656b13fdc36492273c97a62eb9d422a1b64b5` (unapproved `needs-rework` provenance); and the
+five Human-owned architecture-authority paths enumerated in `Boundaries / Exclusions`.
 
 ### Test Plan
 
-- **Happy path:** typed fakes prove Registry hit and same-instance `RuntimeReuseKey` pass-through; retention outcomes
-  retain the original runtime instance.
-- **Invalid input:** no key validation is in scope; a non-expected fake exception propagates unchanged rather than
-  being classified.
-- **Edge case:** missing (`None`), expected `RuntimeRegistryLookupUnavailable`, `Unavailable`, and retention failure
-  remain distinct without a signal-to-outcome mapper.
-- **Regression:** the two C11 isolated executable assertions must directly exercise all five regressions: opaque/unhashable/custom-equality
-  token identity-only semantics; direct `importlib.import_module`; direct `__import__`; `importlib` or
-  `builtins.__import__` alias/module-alias use; and LRC `ModelIdentity`／Identity `RuntimeReuseKey` duplicate semantic
-  types. The alias-aware parser rejects those cross-BC paths while `tests/test_package_import.py` preserves existing
-  import behavior.
-- **Sequencing:** C5 architecture/dataflow and C11/R11/S11/T11/V11 commits are frozen provenance. C12 has no source or
-  test subject; its R12 triage is a plan-review artifact only, and it cannot replace a future independent classification.
-- **Backward compatibility:** the implementation subject contains only declared paths; no root facade, initializer,
-  dependency/configuration, or adjacent-BC change appears.
+- **C13 RED:** after a committed approved C13 Plan-Reviewer receipt, run the direct-import regression from the
+  one-file RED subject. Collection must succeed and the chained-assignment import-alias assertion must actually fail;
+  Tester records the actual non-zero exit code in the RED SHA-bound record. It is factual failure, never
+  expected-failing authorization, and fails closed to a new green subject only.
+- **C13 green:** a distinct subject must cover every all-simple-name target in a chained import-alias assignment,
+  remain a direct parser regression, and pass without `importlib`, `__import__`, `sys.modules`, source, or cross-BC
+  workaround. Tester records actual zero exits in the green SHA-bound record.
+- **C13 dataflow:** validate and deliver at showcase quality, then record containment for 1440×900, 1600×1000,
+  1920×1080 and 2048×1320. The diagram must name `RuntimeReuseKey + runtime`, `Retained(runtime)`, and
+  `NotRetained(runtime)` with unobscured synchronous outcome edges.
+- **Evidence gate:** an Independent Reviewer may consume only a committed, same-topic, same-green-subject `passing`
+  Tester record. A failing, malformed, uncommitted, cross-subject, abbreviated-SHA, overwritten, or non-sole evidence
+  record fails closed. C11→V11 and C12→R12 are provenance only, not C13 test authority.
 
 ### TestCase
 
@@ -266,30 +279,41 @@ test modules and the Archify evidence gate.
 
 ### Rollback Plan
 
-Revert only the C12 five-artifact planning candidate without modifying C11/R11/S11/T11/V11 or C5→V3 frozen provenance.
-Leave read-only source, tests, architecture, `.gitkeep`, root package, configuration, adjacent BCs and evidence history
-untouched.
+Before a C13 candidate receipt is approved, revert only the five-artifact C13 planning candidate. After approval,
+revert only the immutable C13 subject or its sole C13 evidence commit that requires repair and restart the applicable
+C13 route with a new subject SHA. Never rewrite, delete, or reuse C5→V3, C11→V11, C12→R12, or
+`9aa656b13fdc36492273c97a62eb9d422a1b64b5` provenance. Leave all Human-owned architecture authority, unlisted
+paths, source contracts, configuration, and adjacent BCs untouched.
 
 ## Implementation Steps
 
-1. Preserve C11/R11/S11/T11/V11 and C5→V3 provenance unchanged; verify it only as read-only context.
-2. Commit C12 as exactly the five declared planning artifacts; no source, test, architecture, Archify or evidence path
-   may appear in its diff.
-3. Independent Plan-Reviewer writes a versioned R12 receipt with the complete nonempty factual triage table above;
-   Implementer commits it unchanged alone.
-4. Planner Phase 4.5 alignment 已完成。其 pass 只授權獨立 Reviewer 進行 PR-thread classification；不授權 reply／resolve，
-   不處理 F／architecture-ACL Human-check，也不授權 merge。
+1. Preserve C5→V3, C11→V11, C12→R12, and `9aa656b13fdc36492273c97a62eb9d422a1b64b5` solely as frozen provenance.
+2. Implementer commits C13 as exactly the five planning artifacts; it predeclares no candidate SHA, receipt, subject,
+   evidence, test result, or verdict.
+3. Independent Plan-Reviewer writes a new SHA-bound `approved` receipt for that committed C13 candidate; Implementer
+   commits it unchanged alone. `needs-rework` stops before any C13 subject.
+4. Implementer creates the one-file RED immutable subject; Tester writes a factual `failing` SHA-bound RED record;
+   Implementer commits it unchanged alone. No Reviewer may write or consume a failing RED record.
+5. Implementer creates a distinct green subject limited to the declared test and ten dataflow artifacts. Tester writes
+   factual `passing` green evidence; Implementer commits it unchanged alone.
+6. Independent Reviewer consumes only that committed passing green evidence, writes the SHA-bound green review record,
+   and Implementer commits it unchanged alone. Planner then performs Phase 4.5 and routes fresh thread classification.
+   F／ACL remain open Human-only `human-check`.
 
 ## Validation / Acceptance Checks
 
-- Verify committed C12 `41d51072901cfd205ebc91644036e6695b1fe81c` names exactly the five planning artifacts and excludes source, tests, architecture,
-  Archify artifacts and evidence paths.
-- Verify the fixed C11 chain is linear: S11 `e9934dc7bb7b4f81098e635b5f0257c56da659a0` → T11
-  `86a5cd54bec9d687d8d7f1738e9376435d3d1abf` → V11 `73644c2b88257832e1b4d8bedaf516b803c2ee3a`.
-- Committed R12 `d738e91eb20869709d605fe7f879b340c9614b6a` must provide all ten table entries with six factual fields, two
-  `DISCUSS` Human-check entries and eight `SKIP` entries. It does not claim a PR reply or resolution.
+- C13 candidate names exactly the five planning artifacts and has no prefilled SHA, receipt, subject, evidence,
+  result, or approval. Its receipt is fresh, SHA-bound, `approved`, and committed alone.
+- RED evidence has the exact Tester schema, a full 40-hex RED subject SHA, a non-empty command list with at least one
+  non-zero exit, and `status: failing`; it has no Reviewer companion record.
+- Green evidence has the exact Tester schema, the same full 40-hex green subject SHA, non-empty all-zero commands and
+  `status: passing`; its sole evidence commit is the only input to the exact-schema green Reviewer record.
+- The green subject modifies exactly the declared test and ten dataflow artifacts; it passes direct-import regression
+  and Archify showcase validate/deliver plus the four required viewport containment checks.
+- F and ACL remain unresolved Human-only `human-check`; neither C13 receipt/evidence nor Phase 4.5 directly replies to
+  or resolves a PR thread.
 
-## Reviewer Handoff
+## Frozen C12 receipt schema (provenance only)
 
 ```json
 {
@@ -354,7 +378,7 @@ untouched.
 - The five Human-owned architecture authority paths are absent from every C13 implementation/evidence diff. F and ACL
   remain unresolved Human-only threads.
 
-### C13 reviewer handoff
+## Reviewer Handoff
 
 ```json
 {
@@ -368,6 +392,23 @@ The receipt is review-only. For C13, all three triage arrays remain empty: threa
 green subject's passing Tester/approved Reviewer chain and Phase 4.5. A `needs-rework` receipt must instead carry
 non-empty exact `issue`/`file`/`fix` blocking objects. Neither form may predeclare candidate/subject SHA, factual test
 outcome, PR reply, thread resolution, Human review, or merge.
+
+For both C13 Tester records, the JSON object has exactly `schema_version`, `topic`,
+`implementation_subject_commit`, `status`, `commands`, `recorded_by`. `schema_version` is integer `1`; `topic` is
+`loaded-runtime-cache`; the subject is the respective full 40-character lowercase hexadecimal subject SHA;
+`recorded_by` is `Tester`; and `commands` is non-empty, with each object having only non-empty string `command` and
+integer `exit_code`. `passing` requires every exit to be `0`; `failing` requires at least one non-zero exit. The RED
+path is bound to the RED SHA and must be `failing`; the green path is bound to the distinct green SHA and must be
+`passing`. Any extra/missing key, wrong status, abbreviated SHA, path collision, uncommitted record, cross-topic or
+cross-subject reference, or non-sole evidence commit fails closed.
+
+The C13 green review record is one JSON object with exactly `schema_version`, `topic`,
+`implementation_subject_commit`, `tester_evidence_commit`, `verdict`, `blocking_issues`, `recorded_by`.
+`schema_version` is integer `1`; both references are full 40-character lowercase hexadecimal SHAs; `recorded_by` is
+`Independent Reviewer`; `verdict` is `approved|needs-rework`; and `blocking_issues` is a string array, empty exactly
+for `approved` and non-empty for `needs-rework`. The `tester_evidence_commit` must be the committed sole
+evidence-only commit containing the same-topic, same-green-subject `passing` Tester record. Independent Reviewer must
+fail closed and produce no record for the RED `failing` evidence or any malformed/mismatched input.
 
 ## Post-merge / release actions
 

@@ -139,3 +139,30 @@ the retain relationship names `RuntimeReuseKey + runtime`, both returns are labe
 `NotRetained(runtime)`, edges do not obscure those labels, and receipts truthfully show showcase validation/delivery
 and containment at 1440×900, 1600×1000, 1920×1080, and 2048×1320. The four existing dark/light 1440×900 and
 2048×1320 PNG captures may be replaced; no other architecture authority path may change.
+
+### Scenario 13 — C13 evidence separation
+
+Given a C13 RED subject with its own full 40-hex SHA, When Tester records the collection-success / assertion-failing
+command, Then it writes only
+`loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json` with exact factual schema and `status: failing`;
+Implementer alone commits it unchanged in a sole evidence-only commit; and no Independent Reviewer record is
+permitted. Given a distinct green subject, When all factual commands pass, Then Tester uses the same SHA-bound Tester
+template with the green SHA and `status: passing`; only its committed sole evidence-only commit can be consumed by an
+Independent Reviewer at
+`loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json`.
+
+### Scenario 14 — C13 fail-closed provenance boundary
+
+Given C5→V3, C11→V11, C12→R12, or
+`9aa656b13fdc36492273c97a62eb9d422a1b64b5`, When any actor attempts to use it as C13 candidate, receipt, subject,
+Tester evidence, or review evidence, Then routing fails closed. `9aa656b13fdc36492273c97a62eb9d422a1b64b5` is unapproved
+`needs-rework` planning provenance only.
+
+## C13 Evidence Edge Cases
+
+1. **Tester schema failure:** Given a C13 Tester record has any missing or extra top-level key, non-integer schema
+   version, non-40-hex/abbreviated subject, empty commands, an invalid command item, `passing` with non-zero exit, or
+   `failing` with no non-zero exit, When Planner or Reviewer consumes it, Then it fails closed.
+2. **Reviewer misuse:** Given a RED failing record, an uncommitted/non-sole Tester record, or a different topic or
+   subject, When Independent Reviewer attempts review, Then it must produce no review record. A green review record
+   may only consume committed same-subject `passing` evidence and must itself have exactly the declared schema.

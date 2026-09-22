@@ -131,3 +131,19 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
   `docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、
   `docs/architecture/business-capability/index.html`、`docs/architecture/business-capability/scene.js`。F／ACL
   threads remain open Human-only `human-check`。
+- C13 RED Tester evidence 的唯一 path 是
+  `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json`；green Tester
+  evidence 使用同一模板但綁定不同的 `<green-subject-40-hex-sha>`；green Reviewer evidence 的唯一 path 是
+  `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json`。
+  Tester 寫 factual evidence、Independent Reviewer 寫 green review record、Implementer 各自以 unchanged sole
+  evidence-only commit 提交。RED `failing` record 不得有 Reviewer record。
+- 每個 Tester JSON 的 top-level keys 恰為 `schema_version`、`topic`、`implementation_subject_commit`、`status`、
+  `commands`、`recorded_by`：integer `1`、topic `loaded-runtime-cache`、full 40-hex lowercase subject SHA、
+  `passing|failing`、non-empty command/integer-exit-code list 與 `Tester`。`passing` 僅限全零；`failing` 至少一個
+  non-zero。green review JSON 的 top-level keys 恰為 `schema_version`、`topic`、
+  `implementation_subject_commit`、`tester_evidence_commit`、`verdict`、`blocking_issues`、`recorded_by`；只可消費
+  committed same-topic/same-green-subject passing Tester evidence，且 `approved` 的 blockers 為空、`needs-rework`
+  為 non-empty。任一 schema、SHA、path、subject、commit 或 role 不符均 fail closed。
+- C5→V3、C11→V11、C12→R12 與
+  `9aa656b13fdc36492273c97a62eb9d422a1b64b5` 都是 frozen provenance；最後一者是 unapproved
+  `needs-rework` planning provenance，絕非 C13 candidate、receipt 或 implementation routing authority。

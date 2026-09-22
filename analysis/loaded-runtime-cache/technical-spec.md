@@ -177,3 +177,32 @@ snapshot entries 列於 `SKIP`，且不得假裝已由 C12 修改、reply 或 re
    `human-check`. After a passing green Tester evidence commit and approved independent Reviewer evidence commit,
    Planner performs Phase 4.5 then routes a new independent thread classification; neither correction evidence nor
    Phase 4.5 resolves a thread directly.
+
+## C13 evidence schemas and fail-closed ordering
+
+The C13 RED factual record path is
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json`. The green factual
+record uses `loaded-runtime-cache.tester-evidence-<green-subject-40-hex-sha>.json`, and only the green review record
+uses `loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json`. Every placeholder is the
+respective immutable subject's full 40-character lowercase hexadecimal SHA; no fixed-name, predecessor, abbreviated,
+or overwritable path is valid.
+
+Tester alone writes each factual JSON object with exactly `schema_version`, `topic`, `implementation_subject_commit`,
+`status`, `commands`, `recorded_by`. Values must be integer `1`, `loaded-runtime-cache`, that full subject SHA,
+`passing|failing`, a non-empty array of objects containing only non-empty string `command` and integer `exit_code`, and
+`Tester`. `passing` requires all exits `0`; `failing` requires at least one non-zero exit. Thus the RED subject must
+produce a committed `failing` record and the distinct green subject must produce a committed `passing` record.
+
+Only Implementer may commit a Tester or review record, unchanged and in its own sole evidence-only commit. Independent
+Reviewer may write only the green JSON object with exactly `schema_version`, `topic`, `implementation_subject_commit`,
+`tester_evidence_commit`, `verdict`, `blocking_issues`, `recorded_by`; the two references are full 40-hex SHAs,
+`verdict` is `approved|needs-rework`, `blocking_issues` is a string array empty exactly for `approved`, and
+`recorded_by` is `Independent Reviewer`. It may consume only the committed sole evidence-only green Tester commit with
+same topic, same subject, and `passing` status. Failing RED evidence, malformed JSON, any extra/missing key, wrong
+role, wrong path, uncommitted or non-sole evidence, cross-subject/topic evidence, or an abbreviated SHA fails closed;
+it produces no Reviewer record and no next gate.
+
+C5→V3, C11→V11, C12→R12 and
+`9aa656b13fdc36492273c97a62eb9d422a1b64b5` are immutable provenance only. The last is an unapproved
+`needs-rework` planning record and cannot supply a C13 candidate, Plan-Reviewer receipt, implementation subject, or
+evidence authority.

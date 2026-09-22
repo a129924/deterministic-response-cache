@@ -36,20 +36,25 @@ C11/C12 stages below are completed frozen provenance. The active C13 stages are 
 - [x] **Actor:** Implementer — **Action:** Committed unchanged R12 receipt as sole evidence-only commit
   `d738e91eb20869709d605fe7f879b340c9614b6a`. Its committed `approved` verdict routes Planner Phase 4.5 thread
   classification only.
+- [x] **Actor:** Planner — **Action:** Classified
+  `9aa656b13fdc36492273c97a62eb9d422a1b64b5` as unapproved `needs-rework` planning provenance. It is frozen,
+  nonrouting context only and cannot be reused as C13 candidate, receipt, subject, Tester evidence, or review evidence.
 - [ ] **Actor:** Implementer — **Action:** Commit C13 as exactly the five declared planning artifacts; no candidate
   SHA, receipt, subject, evidence, test outcome, or approval is prefilled.
 - [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review committed C13 and write a fresh approved SHA-bound
   receipt; Implementer must commit that receipt unchanged alone before any C13 subject.
 - [ ] **Actor:** Implementer / Tester — **Action:** Create a new RED test-only subject containing only
   `tests/test_loaded_runtime_cache_bc_independence.py`; it must collect successfully and actually fail its chained
-  assignment alias assertion. Tester records the actual failing result in new SHA-bound evidence; no Reviewer evidence
-  is allowed for this failing subject.
+  assignment alias assertion. Tester records the actual failing result only at
+  `loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json`; Implementer commits it unchanged alone; no
+  Reviewer evidence is allowed for this failing subject.
 - [ ] **Actor:** Implementer — **Action:** Create a distinct green subject containing only the BC-independence test
   plus the ten exact C13 dataflow artifacts. Repair all-simple-name chained assignment targets and retain dataflow
   inputs/returns/geometry/containment without touching Human-owned architecture authority paths.
 - [ ] **Actor:** Tester / Independent Reviewer — **Action:** Tester records passing evidence for the green subject;
-  Implementer commits it alone. Independent Reviewer consumes only that committed passing evidence, writes approved
-  green-review evidence, and Implementer commits it alone.
+  Implementer commits `loaded-runtime-cache.tester-evidence-<green-subject-40-hex-sha>.json` unchanged alone.
+  Independent Reviewer consumes only that committed same-subject passing evidence, writes
+  `loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json`, and Implementer commits it alone.
 - [ ] **Actor:** Planner / Independent Reviewer — **Action:** After green Phase 4.5, independently classify current
   PR threads. F and ACL remain open Human-only `human-check`; no classification or C13 evidence directly resolves a
   thread.
@@ -89,6 +94,8 @@ C11/C12 stages below are completed frozen provenance. The active C13 stages are 
   authority.
 - C5→V3, C8/C9/C10 and C11/R11/S11/T11/V11 plus C12/R12 are frozen nonrouting provenance. C13 does not replay a
   clean base, recreate historical evidence, or reuse a predecessor receipt/subject.
+- `9aa656b13fdc36492273c97a62eb9d422a1b64b5` is additionally frozen unapproved `needs-rework` provenance. It is not
+  the pending C13 candidate and cannot be used to infer a receipt, test outcome, approval, or next role.
 - The fixed-name legacy plan-review receipt is historical frozen provenance only; it cannot be overwritten, consumed
   or used to route C5 or any successor. A `needs-rework` receipt creates no implementation subject.
 - Architecture-only `442cc94`, historical RED/green subjects, T3/V3 and C11/R11/S11/T11/V11 are frozen provenance
