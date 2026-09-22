@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-eligibility-policy",
+  "implementation_subject_commit": "7a90fffd6622b80eda524d89145cf833bd434d12",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "test \"$(git rev-parse 7a90fffd6622b80eda524d89145cf833bd434d12^)\" = be854af82173a6de219e34192056e01b016b018f",
+      "exit_code": 0
+    },
+    {
+      "command": "test \"$(git diff-tree --no-commit-id --name-only -r 7a90fffd6622b80eda524d89145cf833bd434d12 | sort)\" = uv.lock",
+      "exit_code": 0
+    },
+    {
+      "command": "uv lock --check",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen ruff format --check .",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen ruff check .",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen pyright",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen tach check",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen pytest -v",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check be854af82173a6de219e34192056e01b016b018f 7a90fffd6622b80eda524d89145cf833bd434d12",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
