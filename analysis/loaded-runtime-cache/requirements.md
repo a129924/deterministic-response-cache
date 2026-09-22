@@ -105,33 +105,38 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
   ownership 是 Human-only `human-check`；其餘 snapshot facts 只能如實列為 `SKIP`，不得以空 triage、推測或
   事後實作取代分類。
 
-## C13 correction successor
+## C14 truthful-artifact correction successor
 
-- Human 已明確授權新的 planning successor。C13 的 purpose 僅是處理 three bounded review findings：以新的
-  collection-success、實際 assertion-failing chained-assignment RED subject 取代 historical-red claim；在後續新的
-  green immutable subject 補齊 all-simple-name assignment targets；以及修正既有 Loaded Runtime Cache Archify
-  dataflow evidence 的 retain semantic／geometry／viewport containment。
-- C13 candidate 只可修改本 requirements、`technical-spec.md`、topic plan、topic spec 與 step tracker；不得預填
-  C13 SHA、receipt path、RED/green subject SHA、Tester evidence、Reviewer evidence 或 outcome。candidate commit 後，
+- C13 candidate `a623981989f3363a4b225319a432c3a9d8e28b96`、R13 receipt `cf91b55f80f1764e040c95c822ae55b290e3699c`、RED subject
+  `3ba583bed8c367b756e2cb450e468f1274d04193`、其 failing Tester evidence `c4f229f14d3c4c38d40cdda8ad0429712e0ae189`，以及 green subject `ade584e7eb63a7846a23c073c06a802ff99ff6cf` 全為 frozen provenance；`ade584e7…`
+  是 `needs-rework`，不得作為任何 C14 routing authority。C14 是唯一 active successor。
+- C14 的 purpose 僅修正 C13 的 truthful artifact contract defect：綠色 subject 的 dataflow allowlist 是十個
+  已列 path 的唯一允許集合，但 subject 僅納入因本次 JSON／HTML delivery／visual-check 真實重建而 byte-changed 的
+  path；不得為湊足集合而人為改寫 byte-identical receipt／HTML。
+- C14 candidate 只可修改本 requirements、`technical-spec.md`、topic plan、topic spec 與 step tracker；不得預填
+  C14 SHA、receipt path、RED/green subject SHA、Tester evidence、Reviewer evidence 或 outcome。candidate commit 後，
   必須由獨立 Plan-Reviewer 寫新的 SHA-bound `approved` receipt，並由 Implementer 以 sole receipt-only commit
-  提交，才可開始 C13 implementation route。
-- R13 approved 後，Implementer 先建立 immutable RED subject，且 subject 只修改
+  提交，才可開始 C14 implementation route。
+- C14 approved 後，Implementer 先建立 immutable RED subject，且 subject 只修改
   `tests/test_loaded_runtime_cache_bc_independence.py`。RED test 必須 collection-success 且 assertion 實際失敗，
   specifically exercise chained assignment import alias；它不得重播、重寫或宣稱取代 historical `e2e125` evidence。
   Tester 對該 RED subject 如實記錄非零 exit code；failing evidence 只可回到 Implementer 建立新的 green subject。
-- 新的 green immutable subject 只可修改
-  `tests/test_loaded_runtime_cache_bc_independence.py`，以及下列十個既有 dataflow artifacts：
+- 新的 C14 green immutable subject 可修改
+  `tests/test_loaded_runtime_cache_bc_independence.py`，以及下列十個既有 dataflow artifacts 中真實變更的 subset：
   `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json`、`.html`、`.validation.json`、
   `.delivery.json`、`.visual-check.json`、`.visual-check.html`、`.visual-check.1440x900.dark.png`、
   `.visual-check.1440x900.light.png`、`.visual-check.2048x1320.dark.png`、
   `.visual-check.2048x1320.light.png`。它補齊 parser 對 all-simple-name assignment targets 的 chained-assignment
   coverage，並修正 dataflow retain inputs 為 `RuntimeReuseKey + runtime`、`Retained(runtime)`／
   `NotRetained(runtime)` return labels、edge placement，及 1440×900、1600×1000、1920×1080、2048×1320 containment。
-- C13 不得修改五個 Human-owned architecture authority paths：`docs/business-capability-architecture.md`、
+  `validation.json` 或 `visual-check.html` 若 rebuild byte-identical，必須維持 ReadOnly。已觀測的真實變更 path 為
+  test、dataflow JSON／HTML、delivery JSON、visual-check JSON 與四個既有 PNG captures；此列舉不授權未變更
+  path 的人工改寫。
+- C14 不得修改五個 Human-owned architecture authority paths：`docs/business-capability-architecture.md`、
   `docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、
   `docs/architecture/business-capability/index.html`、`docs/architecture/business-capability/scene.js`。F／ACL
   threads remain open Human-only `human-check`。
-- C13 RED Tester evidence 的唯一 path 是
+- C14 RED Tester evidence 的唯一 path 是
   `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json`；green Tester
   evidence 使用同一模板但綁定不同的 `<green-subject-40-hex-sha>`；green Reviewer evidence 的唯一 path 是
   `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json`。
@@ -146,4 +151,4 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
   為 non-empty。任一 schema、SHA、path、subject、commit 或 role 不符均 fail closed。
 - C5→V3、C11→V11、C12→R12 與
   `9aa656b13fdc36492273c97a62eb9d422a1b64b5` 都是 frozen provenance；最後一者是 unapproved
-  `needs-rework` planning provenance，絕非 C13 candidate、receipt 或 implementation routing authority。
+  `needs-rework` planning provenance，絕非 C14 candidate、receipt 或 implementation routing authority。

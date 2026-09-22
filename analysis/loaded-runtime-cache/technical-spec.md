@@ -152,21 +152,25 @@ future commit。F `PRRT_kwDOUJTij86jnBpk`／comment `4043480108` 與 architectur
 `PRRT_kwDOUJTij86kQ95O`／comment `4060023123` 必須列於 `DISCUSS`，disposition 為 Human-only `human-check`；其餘
 snapshot entries 列於 `SKIP`，且不得假裝已由 C12 修改、reply 或 resolve。
 
-## C13 correction execution contract
+## C14 truthful-artifact correction execution contract
 
-1. C13 candidate is planning-only and changes exactly the five planning artifacts. It contains no candidate SHA,
+1. C13 candidate `a623981989f3363a4b225319a432c3a9d8e28b96`、R13 `cf91b55f80f1764e040c95c822ae55b290e3699c`、RED `3ba583bed8c367b756e2cb450e468f1274d04193`、failing evidence `c4f229f14d3c4c38d40cdda8ad0429712e0ae189` 與
+   `ade584e7eb63a7846a23c073c06a802ff99ff6cf` are frozen provenance; the last is `needs-rework` and cannot route.
+   C14 candidate is planning-only and changes exactly the five planning artifacts. It contains no candidate SHA,
    receipt path, implementation subject SHA, evidence, test result, or approval outcome. Independent Plan-Reviewer
    must create a fresh SHA-bound `approved` receipt; Implementer commits that unchanged receipt alone.
-2. The first C13 implementation subject is a RED test-only subject that changes only
+2. The first C14 implementation subject is a RED test-only subject that changes only
    `tests/test_loaded_runtime_cache_bc_independence.py`. It must collect successfully and contain an assertion that
    actually fails for a chained assignment import-alias bypass. It neither replays nor rewrites historical `e2e125`
    evidence. Tester records the actual non-zero command result in a new SHA-bound failing evidence record; no
    Reviewer evidence may be created from failing Tester evidence.
-3. A later new green immutable subject changes only that same BC-independence test and these existing Archify
-   artifacts: `loaded-runtime-cache.dataflow.json`, `.html`, `.validation.json`, `.delivery.json`,
+3. A later new green immutable subject changes only that same BC-independence test and a truthful changed subset of
+   this sole allowed Archify artifact set: `loaded-runtime-cache.dataflow.json`, `.html`, `.validation.json`, `.delivery.json`,
    `.visual-check.json`, `.visual-check.html`, `.visual-check.1440x900.dark.png`,
    `.visual-check.1440x900.light.png`, `.visual-check.2048x1320.dark.png`, and
-   `.visual-check.2048x1320.light.png`, all below `docs/architecture/loaded-runtime-cache/`.
+   `.visual-check.2048x1320.light.png`, all below `docs/architecture/loaded-runtime-cache/`. A byte-identical
+   rebuild of `.validation.json` or `.visual-check.html` remains ReadOnly and must not be rewritten merely to fill
+   the allowlist.
 4. The green test repair must reject every chained-assignment import alias whose assignment targets are all simple
    names; it must not introduce dynamic import, runtime introspection, or a source/BC-boundary workaround. Archify
    dataflow must show retain inputs `RuntimeReuseKey + runtime`, return labels `Retained(runtime)` and
@@ -178,9 +182,9 @@ snapshot entries 列於 `SKIP`，且不得假裝已由 C12 修改、reply 或 re
    Planner performs Phase 4.5 then routes a new independent thread classification; neither correction evidence nor
    Phase 4.5 resolves a thread directly.
 
-## C13 evidence schemas and fail-closed ordering
+## C14 evidence schemas and fail-closed ordering
 
-The C13 RED factual record path is
+The C14 RED factual record path is
 `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json`. The green factual
 record uses `loaded-runtime-cache.tester-evidence-<green-subject-40-hex-sha>.json`, and only the green review record
 uses `loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json`. Every placeholder is the
@@ -204,5 +208,5 @@ it produces no Reviewer record and no next gate.
 
 C5→V3, C11→V11, C12→R12 and
 `9aa656b13fdc36492273c97a62eb9d422a1b64b5` are immutable provenance only. The last is an unapproved
-`needs-rework` planning record and cannot supply a C13 candidate, Plan-Reviewer receipt, implementation subject, or
+`needs-rework` planning record and cannot supply a C14 candidate, Plan-Reviewer receipt, implementation subject, or
 evidence authority.

@@ -123,26 +123,28 @@ Given C11/R11/S11/T11/V11 已按 commit chain 完成且 snapshot 固定為
    factual fields, uses a future／abbreviated／unverifiable commit, or classifies F／architecture-ACL ownership as resolved,
    When Planner consumes it, Then it fails closed and cannot authorize comment reply or resolution.
 
-### Scenario 11 — C13 chained-assignment RED then green route
+### Scenario 11 — C14 chained-assignment RED then green route
 
-Given a fresh C13 approved planning receipt, When Implementer creates the first immutable C13 test-only subject in
+Given a fresh C14 approved planning receipt, When Implementer creates the first immutable C14 test-only subject in
 `tests/test_loaded_runtime_cache_bc_independence.py`, Then the test module collects successfully and a chained
 assignment import-alias assertion actually fails. This is new factual RED evidence and neither replays nor rewrites
 historical `e2e125` evidence. Given the resulting failing Tester record, When a later green subject is created, Then it
 handles every all-simple-name assignment target in the chained alias and passes the direct-import regression without
 dynamic-import, source, or cross-BC workaround.
 
-### Scenario 12 — C13 retention dataflow correction
+### Scenario 12 — C14 truthful retention dataflow correction
 
-Given the existing C13-allowlisted dataflow artifacts, When the green subject updates the diagram and evidence, Then
+Given the C14 sole ten-path dataflow allowlist, When the green subject updates the diagram and evidence, Then
 the retain relationship names `RuntimeReuseKey + runtime`, both returns are labelled `Retained(runtime)` and
 `NotRetained(runtime)`, edges do not obscure those labels, and receipts truthfully show showcase validation/delivery
 and containment at 1440×900, 1600×1000, 1920×1080, and 2048×1320. The four existing dark/light 1440×900 and
-2048×1320 PNG captures may be replaced; no other architecture authority path may change.
+2048×1320 PNG captures may be replaced; only paths that actually byte-change through JSON／HTML delivery／visual-check
+may enter the green subject. In particular, byte-identical `.validation.json` and `.visual-check.html` remain ReadOnly;
+no other architecture authority path may change.
 
-### Scenario 13 — C13 evidence separation
+### Scenario 13 — C14 evidence separation
 
-Given a C13 RED subject with its own full 40-hex SHA, When Tester records the collection-success / assertion-failing
+Given a C14 RED subject with its own full 40-hex SHA, When Tester records the collection-success / assertion-failing
 command, Then it writes only
 `loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json` with exact factual schema and `status: failing`;
 Implementer alone commits it unchanged in a sole evidence-only commit; and no Independent Reviewer record is
@@ -151,16 +153,16 @@ template with the green SHA and `status: passing`; only its committed sole evide
 Independent Reviewer at
 `loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json`.
 
-### Scenario 14 — C13 fail-closed provenance boundary
+### Scenario 14 — C14 fail-closed provenance boundary
 
 Given C5→V3, C11→V11, C12→R12, or
-`9aa656b13fdc36492273c97a62eb9d422a1b64b5`, When any actor attempts to use it as C13 candidate, receipt, subject,
+`9aa656b13fdc36492273c97a62eb9d422a1b64b5`, or C13 `a623981989f3363a4b225319a432c3a9d8e28b96`/`cf91b55f80f1764e040c95c822ae55b290e3699c`/`3ba583bed8c367b756e2cb450e468f1274d04193`/`c4f229f14d3c4c38d40cdda8ad0429712e0ae189`/`ade584e7eb63a7846a23c073c06a802ff99ff6cf`, When any actor attempts to use it as C14 candidate, receipt, subject,
 Tester evidence, or review evidence, Then routing fails closed. `9aa656b13fdc36492273c97a62eb9d422a1b64b5` is unapproved
 `needs-rework` planning provenance only.
 
-## C13 Evidence Edge Cases
+## C14 Evidence Edge Cases
 
-1. **Tester schema failure:** Given a C13 Tester record has any missing or extra top-level key, non-integer schema
+1. **Tester schema failure:** Given a C14 Tester record has any missing or extra top-level key, non-integer schema
    version, non-40-hex/abbreviated subject, empty commands, an invalid command item, `passing` with non-zero exit, or
    `failing` with no non-zero exit, When Planner or Reviewer consumes it, Then it fails closed.
 2. **Reviewer misuse:** Given a RED failing record, an uncommitted/non-sole Tester record, or a different topic or
