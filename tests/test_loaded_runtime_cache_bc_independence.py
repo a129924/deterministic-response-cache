@@ -314,6 +314,13 @@ def test_identity_bc_does_not_directly_import_loaded_runtime_cache() -> None:
             ),
         ),
         (
+            "chained-assignment-callable-importlib-alias-through-conditional-expression",
+            (
+                "import importlib\nfirst = second = importlib.import_module\n"
+                "(first if True else second)('identity')\n"
+            ),
+        ),
+        (
             "assignment-callable-builtins-alias",
             "import builtins\nload = builtins.__import__\nload('identity')\n",
         ),
