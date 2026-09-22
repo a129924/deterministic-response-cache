@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "6acbbe6d3f9b98566def9448afa760e095833a0b",
+  "status": "failing",
+  "commands": [
+    {
+      "command": "uv run pytest tests/test_loaded_runtime_cache_bc_independence.py --collect-only -q",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_loaded_runtime_cache_bc_independence.py -q -k chained-assignment-callable-importlib-alias-through-conditional-expression",
+      "exit_code": 1
+    }
+  ],
+  "recorded_by": "Tester"
+}
