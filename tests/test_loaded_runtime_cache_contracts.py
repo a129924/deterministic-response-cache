@@ -2,7 +2,10 @@
 
 """Direct-module RED contracts for the protocol-only Loaded Runtime Cache BC."""
 
+from dataclasses import FrozenInstanceError
+
 import pytest
+
 from deterministic_response_cache.loaded_runtime_cache.runtime_reuse.lookup.lookup_outcome import (
     Available,
     LookupOutcome,
@@ -21,8 +24,8 @@ from deterministic_response_cache.loaded_runtime_cache.runtime_reuse.retention.r
     Retained,
     RetentionOutcome,
 )
-from deterministic_response_cache.loaded_runtime_cache.runtime_reuse.retention.runtime_retention import (  # noqa: E501, TC002
-    RuntimeRetention,
+from deterministic_response_cache.loaded_runtime_cache.runtime_reuse.retention.runtime_retention import (  # noqa: E501
+    RuntimeRetention,  # noqa: TC001
 )
 
 
@@ -157,6 +160,14 @@ def test_runtime_reuse_key_uses_instance_identity_for_hostile_and_unhashable_tok
     assert unhashable_key == same_unhashable_key
     assert unhashable_key != RuntimeReuseKey(unhashable_token)
     assert hash(unhashable_key) == hash(same_unhashable_key)
+
+
+def test_runtime_reuse_key_rejects_reassignment_of_its_opaque_token() -> None:
+    """The opaque token binding is frozen after the integration boundary supplies it."""
+    key = RuntimeReuseKey(object())
+
+    with pytest.raises(FrozenInstanceError):
+        key.__setattr__("_token", object())
 
 
 def test_runtime_registry_distinguishes_hit_and_missing_channels() -> None:

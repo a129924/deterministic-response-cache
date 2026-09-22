@@ -5,6 +5,8 @@
 import ast
 from pathlib import Path
 
+import pytest
+
 SOURCE_ROOT = Path(__file__).parents[1] / "src" / "deterministic_response_cache"
 _FORBIDDEN_DYNAMIC_IMPORT_NAMES = frozenset({"import_module", "__import__"})
 _IDENTITY_BC = "deterministic_response_cache.identity"
@@ -71,7 +73,14 @@ def _uses_dynamic_import_substitution(source_directory: Path) -> bool:
 
 
 def _import_aliases(tree: ast.AST) -> tuple[dict[str, str], dict[str, str]]:
-    """Map local aliases to the standard-library modules and callables they expose."""
+    """Map imports and assignment aliases to forbidden standard-library surfaces."""
+    modules, callables = _aliases_from_imports(tree)
+    _add_assignment_aliases(tree, modules, callables)
+    return modules, callables
+
+
+def _aliases_from_imports(tree: ast.AST) -> tuple[dict[str, str], dict[str, str]]:
+    """Map only import statements to their standard-library targets."""
     modules: dict[str, str] = {}
     callables: dict[str, str] = {}
     for statement in ast.walk(tree):
@@ -88,6 +97,101 @@ def _import_aliases(tree: ast.AST) -> tuple[dict[str, str], dict[str, str]]:
                 if alias.name in _FORBIDDEN_DYNAMIC_IMPORT_NAMES | {"modules"}:
                     callables[alias.asname or alias.name] = f"{statement.module}.{alias.name}"
     return modules, callables
+
+
+def _add_assignment_aliases(
+    tree: ast.AST,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> None:
+    """Resolve fixed-point local aliases for forbidden modules and callables."""
+    assignments = [
+        statement
+        for statement in ast.walk(tree)
+        if isinstance(statement, (ast.Assign, ast.AnnAssign))
+    ]
+    for _ in range(len(assignments) + 1):
+        changed = False
+        for statement in assignments:
+            target = _assignment_target_name(statement)
+            value = statement.value
+            if target is None or value is None:
+                continue
+            resolved = _resolve_forbidden_alias(value, modules, callables)
+            if resolved is None:
+                continue
+            kind, imported_name = resolved
+            aliases = modules if kind == "module" else callables
+            if aliases.get(target) != imported_name:
+                aliases[target] = imported_name
+                changed = True
+        if not changed:
+            break
+
+
+def _assignment_target_name(statement: ast.Assign | ast.AnnAssign) -> str | None:
+    """Return one simple local assignment target, if this assignment has one."""
+    if isinstance(statement, ast.AnnAssign):
+        return statement.target.id if isinstance(statement.target, ast.Name) else None
+    if len(statement.targets) != 1 or not isinstance(statement.targets[0], ast.Name):
+        return None
+    return statement.targets[0].id
+
+
+def _resolve_forbidden_alias(
+    value: ast.expr,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> tuple[str, str] | None:
+    """Resolve one direct or assignment-based alias without executing source code."""
+    if isinstance(value, ast.Name):
+        return _resolve_name_alias(value.id, modules, callables)
+    if isinstance(value, ast.Attribute):
+        return _resolve_attribute_alias(value, modules)
+    return None
+
+
+def _resolve_name_alias(
+    name: str,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> tuple[str, str] | None:
+    """Resolve a direct name into an already-known forbidden alias target."""
+    if name in modules:
+        return "module", modules[name]
+    if name == "__import__":
+        return "callable", "builtins.__import__"
+    if name in callables:
+        return "callable", callables[name]
+    return None
+
+
+def _resolve_attribute_alias(
+    value: ast.Attribute,
+    modules: dict[str, str],
+) -> tuple[str, str] | None:
+    """Resolve a module attribute that exposes forbidden import/cache machinery."""
+    qualified_name = _qualified_module_attribute(value, modules)
+    if qualified_name is None:
+        return None
+    if qualified_name in {
+        "builtins.__import__",
+        "importlib.import_module",
+        "sys.modules",
+    } or qualified_name.startswith("sys.modules."):
+        return "callable", qualified_name
+    return None
+
+
+def _qualified_module_attribute(value: ast.Attribute, modules: dict[str, str]) -> str | None:
+    """Return a dotted module attribute path rooted in a known module alias."""
+    if isinstance(value.value, ast.Name):
+        module = modules.get(value.value.id)
+        return f"{module}.{value.attr}" if module is not None else None
+    if not isinstance(value.value, ast.Attribute):
+        return None
+    parent = _qualified_module_attribute(value.value, modules)
+    return f"{parent}.{value.attr}" if parent is not None else None
 
 
 def _is_forbidden_dynamic_import_call(
@@ -122,7 +226,8 @@ def _is_module_cache_access(
 ) -> bool:
     """Return whether an expression reaches ``sys.modules``, including aliases."""
     if isinstance(statement, ast.Name):
-        return callables.get(statement.id) == "sys.modules"
+        target = callables.get(statement.id)
+        return target == "sys.modules" or (target is not None and target.startswith("sys.modules."))
     return (
         isinstance(statement, ast.Attribute)
         and isinstance(statement.value, ast.Name)
@@ -136,7 +241,9 @@ def _declares_forbidden_semantic_type(source_directory: Path, type_name: str) ->
     for source_path in source_directory.rglob("*.py"):
         tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
         for statement in ast.walk(tree):
-            if isinstance(statement, (ast.ClassDef, ast.TypeAlias)) and statement.name == type_name:
+            if isinstance(statement, ast.ClassDef) and statement.name == type_name:
+                return True
+            if isinstance(statement, ast.TypeAlias) and statement.name.id == type_name:
                 return True
             if isinstance(statement, (ast.Assign, ast.AnnAssign)) and _assignment_names(
                 statement,
@@ -172,37 +279,53 @@ def test_identity_bc_does_not_directly_import_loaded_runtime_cache() -> None:
     )
 
 
-def test_bc_independence_rejects_direct_and_alias_dynamic_import_bypasses(tmp_path: Path) -> None:
-    """The parser rejects direct, callable-alias, and module-alias bypass forms."""
+@pytest.mark.parametrize(
+    ("case_name", "source"),
+    [
+        (
+            "direct-importlib",
+            "import importlib\nimportlib.import_module('identity')\n",
+        ),
+        (
+            "direct-builtins",
+            "__import__('deterministic_response_cache.identity')\n",
+        ),
+        (
+            "module-alias",
+            "import importlib as loader\nloader.import_module('identity')\n",
+        ),
+        (
+            "callable-alias",
+            "from importlib import import_module as load_module\nload_module('identity')\n",
+        ),
+        (
+            "assignment-callable-importlib-alias",
+            "import importlib\nload = importlib.import_module\nload('identity')\n",
+        ),
+        (
+            "assignment-callable-builtins-alias",
+            "import builtins\nload = builtins.__import__\nload('identity')\n",
+        ),
+        (
+            "sys-modules-module-alias",
+            "import sys as runtime\ncache = runtime.modules\ncache['identity'] = object()\n",
+        ),
+        (
+            "sys-modules-callable-alias",
+            "import sys\nlookup = sys.modules.get\nlookup('identity')\n",
+        ),
+    ],
+)
+def test_bc_independence_rejects_each_dynamic_import_bypass(
+    tmp_path: Path,
+    case_name: str,
+    source: str,
+) -> None:
+    """Each dynamic bypass is independently rejected without fixture cross-contamination."""
     package_root = tmp_path / "deterministic_response_cache"
-    source_directory = package_root / "loaded_runtime_cache"
+    source_directory = package_root / case_name / "loaded_runtime_cache"
     source_directory.mkdir(parents=True)
-    (source_directory / "direct_importlib.py").write_text(
-        "import importlib\nimportlib.import_module('identity')\n",
-        encoding="utf-8",
-    )
-    (source_directory / "direct_builtin.py").write_text(
-        "__import__('deterministic_response_cache.identity')\n",
-        encoding="utf-8",
-    )
-    (source_directory / "module_aliases.py").write_text(
-        "import builtins as native\nimport importlib as loader\n"
-        "native.__import__('identity')\nloader.import_module('identity')\n",
-        encoding="utf-8",
-    )
-    (source_directory / "callable_aliases.py").write_text(
-        "from builtins import __import__ as native_import\n"
-        "from importlib import import_module as load_module\n"
-        "native_import('identity')\nload_module('identity')\n",
-        encoding="utf-8",
-    )
-    (source_directory / "module_cache.py").write_text(
-        "import sys as runtime_modules\n"
-        "from sys import modules as module_cache\n"
-        "runtime_modules.modules['identity'] = object()\n"
-        "module_cache['identity'] = object()\n",
-        encoding="utf-8",
-    )
+    (source_directory / "bypass.py").write_text(source, encoding="utf-8")
 
     assert _uses_dynamic_import_substitution(source_directory)
 
@@ -220,6 +343,28 @@ def test_bc_independence_rejects_duplicate_foreign_semantic_types(tmp_path: Path
     )
     (identity / "duplicate.py").write_text(
         "RuntimeReuseKey: type[object] = object\n",
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(loaded_runtime_cache, "ModelIdentity")
+    assert _declares_forbidden_semantic_type(identity, "RuntimeReuseKey")
+
+
+def test_bc_independence_rejects_pep695_duplicate_foreign_semantic_type_aliases(
+    tmp_path: Path,
+) -> None:
+    """Python 3.12 TypeAlias names remain subject to BC semantic ownership."""
+    package_root = tmp_path / "deterministic_response_cache"
+    loaded_runtime_cache = package_root / "loaded_runtime_cache"
+    identity = package_root / "identity"
+    loaded_runtime_cache.mkdir(parents=True)
+    identity.mkdir(parents=True)
+    (loaded_runtime_cache / "duplicate.py").write_text(
+        "type ModelIdentity = object\n",
+        encoding="utf-8",
+    )
+    (identity / "duplicate.py").write_text(
+        "type RuntimeReuseKey = object\n",
         encoding="utf-8",
     )
 
