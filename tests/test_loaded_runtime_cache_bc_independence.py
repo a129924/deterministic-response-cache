@@ -319,6 +319,13 @@ def test_identity_bc_does_not_directly_import_loaded_runtime_cache() -> None:
             "import importlib\nload = importlib.import_module\nload('identity')\n",
         ),
         (
+            "mixed-assignment-callable-importlib-alias",
+            (
+                "import importlib\nload = holder.loader = importlib.import_module\n"
+                "load('identity')\n"
+            ),
+        ),
+        (
             "chained-assignment-callable-importlib-alias",
             (
                 "import importlib\nfirst = second = importlib.import_module\n"
