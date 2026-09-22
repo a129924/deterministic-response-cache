@@ -70,7 +70,16 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 
 ## Status / Allowed Transitions
 
-- **Current**: `c14-planning-candidate-ready-for-commit`。C12 candidate
+- **Current**: `c14-phase-4.5-thread-classification-pending`。C14 的 committed factual chain 是 candidate
+  `4d78eaf997847eb3b872c4c609ba23f19c6e5dc5` → approved Plan-Reviewer receipt-only commit
+  `033fa34ca27a9c924c7fc95b9aa9c87c33b24217` → collection-success / assertion-failing RED subject
+  `6acbbe6d3f9b98566def9448afa760e095833a0b` → failing Tester evidence-only commit
+  `287781cee3b7f5603d6ea58059ab3b9782d7e806` → green subject
+  `5201c30e604c8fd9cc84bd6d05c00c6b61575612` → passing Tester evidence-only commit
+  `6a9a543b1fb4c1389c1c5474e50995440a046dcd` → approved Independent Reviewer evidence-only commit
+  `4632380fa1b254046d04a6b92c9d9912836e7ee1`。其後只待 Planner Phase 4.5 與 fresh independent current-thread
+  classification；F／ACL 維持 Human-only `human-check`。本次只是在已提交 receipt/evidence 後依 Human 授權同步 state，
+  不建立新的 candidate、Plan-Reviewer receipt 或任何 PR reply／resolution claim。C12 candidate
   `41d51072901cfd205ebc91644036e6695b1fe81c` 與其 approved R12 receipt-only commit
   `d738e91eb20869709d605fe7f879b340c9614b6a` 已提交，且 receipt 的 SHA-bound path 是
   `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-41d51072901cfd205ebc91644036e6695b1fe81c.json`。
@@ -444,6 +453,6 @@ conversion and Registry／Retention implementation remain deferred to future, se
 
 ## Workflow State Contract
 
-- current_step: c14-planning-candidate-ready-for-commit
-- next_step: c14-candidate-only-commit
+- current_step: c14-phase-4.5-thread-classification-pending
+- next_step: Planner Phase 4.5, then independent current-thread classification
 - status: IN_PROGRESS

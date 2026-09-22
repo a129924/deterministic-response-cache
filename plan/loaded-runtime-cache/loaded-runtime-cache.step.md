@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: c14-planning-candidate-ready-for-commit
+phase: c14-phase-4.5-thread-classification-pending
 created: 2026-09-17
 ---
 
@@ -11,13 +11,13 @@ created: 2026-09-17
 C11/C12/C13 stages below are frozen provenance. The active C14 stages are separate and must not inherit them.
 
 - [x] C14 plan-authoring
-- [ ] C14 planning-candidate-commit
-- [ ] C14 plan-review
-- [ ] C14 RED test-authoring
-- [ ] C14 RED factual-test-evidence
-- [ ] C14 green implementation
-- [ ] C14 green Tester evidence
-- [ ] C14 independent implementation review
+- [x] C14 planning-candidate-commit
+- [x] C14 plan-review
+- [x] C14 RED test-authoring
+- [x] C14 RED factual-test-evidence
+- [x] C14 green implementation
+- [x] C14 green Tester evidence
+- [x] C14 independent implementation review
 - [ ] C14 Phase 4.5 / thread classification
 
 ## Actionable Steps
@@ -41,23 +41,29 @@ C11/C12/C13 stages below are frozen provenance. The active C14 stages are separa
   nonrouting context only and cannot be reused as C13 candidate, receipt, subject, Tester evidence, or review evidence.
 - [x] **Actor:** Planner — **Action:** C13 `a623981989f3363a4b225319a432c3a9d8e28b96`、R13 `cf91b55f80f1764e040c95c822ae55b290e3699c`、RED `3ba583bed8c367b756e2cb450e468f1274d04193`、failing evidence `c4f229f14d3c4c38d40cdda8ad0429712e0ae189` and
   `ade584e7eb63a7846a23c073c06a802ff99ff6cf` are frozen provenance. `ade584e7…` is `needs-rework`; none may route C14.
-- [ ] **Actor:** Implementer — **Action:** Commit C14 as exactly the five declared planning artifacts; no candidate
-  SHA, receipt, subject, evidence, test outcome, or approval is prefilled.
-- [ ] **Actor:** Independent Plan-Reviewer — **Action:** Review committed C14 and write a fresh approved SHA-bound
-  receipt; Implementer must commit that receipt unchanged alone before any C14 subject.
-- [ ] **Actor:** Implementer / Tester — **Action:** Create a new RED test-only subject containing only
+- [x] **Actor:** Implementer — **Action:** Committed C14 candidate `4d78eaf997847eb3b872c4c609ba23f19c6e5dc5` as exactly the
+  five declared planning artifacts; it predeclared no candidate SHA, receipt, subject, evidence, test outcome or approval.
+- [x] **Actor:** Independent Plan-Reviewer / Implementer — **Action:** Independent Plan-Reviewer wrote the approved
+  SHA-bound C14 receipt and Implementer committed it unchanged alone in
+  `033fa34ca27a9c924c7fc95b9aa9c87c33b24217` before any C14 subject.
+- [x] **Actor:** Implementer / Tester — **Action:** Created RED test-only subject
+  `6acbbe6d3f9b98566def9448afa760e095833a0b` containing only
   `tests/test_loaded_runtime_cache_bc_independence.py`; it must collect successfully and actually fail its chained
   assignment alias assertion. Tester records the actual failing result only at
   `loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json`; Implementer commits it unchanged alone; no
-  Reviewer evidence is allowed for this failing subject.
-- [ ] **Actor:** Implementer — **Action:** Create a distinct green subject containing the BC-independence test plus
+  Reviewer evidence is allowed for this failing subject. The factual failing evidence was committed alone in
+  `287781cee3b7f5603d6ea58059ab3b9782d7e806`.
+- [x] **Actor:** Implementer — **Action:** Created distinct green subject
+  `5201c30e604c8fd9cc84bd6d05c00c6b61575612` containing the BC-independence test plus
   only the truthful byte-changed subset of the sole ten-path C14 dataflow allowlist. Repair all-simple-name chained
   assignment targets and retain dataflow inputs/returns/geometry/containment without touching Human-owned architecture
   authority paths; byte-identical `.validation.json`／`.visual-check.html` remain ReadOnly.
-- [ ] **Actor:** Tester / Independent Reviewer — **Action:** Tester records passing evidence for the green subject;
+- [x] **Actor:** Tester / Independent Reviewer — **Action:** Tester recorded passing evidence for the green subject;
   Implementer commits `loaded-runtime-cache.tester-evidence-<green-subject-40-hex-sha>.json` unchanged alone.
   Independent Reviewer consumes only that committed same-subject passing evidence, writes
   `loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json`, and Implementer commits it alone.
+  These sole evidence-only commits are `6a9a543b1fb4c1389c1c5474e50995440a046dcd` and
+  `4632380fa1b254046d04a6b92c9d9912836e7ee1` respectively.
 - [ ] **Actor:** Planner / Independent Reviewer — **Action:** After green Phase 4.5, independently classify current
   PR threads. F and ACL remain open Human-only `human-check`; no classification or C14 evidence directly resolves a
   thread.
@@ -73,13 +79,17 @@ C11/C12/C13 stages below are frozen provenance. The active C14 stages are separa
   are `SKIP` factual entries. The approved receipt is committed in `d738e91eb20869709d605fe7f879b340c9614b6a`.
 - [x] 4. **Phase 4.5:** Planner aligned C12 after the approved R12 receipt. This authorizes only independent PR-thread
   classification. No C12 step comments, resolves, publishes or merges.
-- [ ] 5. **C14 candidate and receipt:** Commit only five planning artifacts, then obtain and separately commit a new
-  SHA-bound approved Plan-Reviewer receipt.
-- [ ] 6. **C14 RED:** Establish the collection-success, assertion-failing chained-assignment test-only subject and
-  commit factual failing Tester evidence only; preserve historical `e2e125` evidence.
-- [ ] 7. **C14 green:** Establish a new immutable green subject with all-simple-name target coverage and only the
+- [x] 5. **C14 candidate and receipt:** Committed only five planning artifacts in
+  `4d78eaf997847eb3b872c4c609ba23f19c6e5dc5`, then separately committed the SHA-bound approved Plan-Reviewer receipt
+  in `033fa34ca27a9c924c7fc95b9aa9c87c33b24217`.
+- [x] 6. **C14 RED:** Established the collection-success, assertion-failing chained-assignment test-only subject
+  `6acbbe6d3f9b98566def9448afa760e095833a0b` and committed factual failing Tester evidence only in
+  `287781cee3b7f5603d6ea58059ab3b9782d7e806`; historical `e2e125` remains preserved.
+- [x] 7. **C14 green:** Established green immutable subject `5201c30e604c8fd9cc84bd6d05c00c6b61575612` with
+  all-simple-name target coverage and only the
   truthful byte-changed subset of the sole ten named dataflow artifacts; record passing Tester and approved Reviewer
-  evidence in separate sole commits.
+  evidence in separate sole commits `6a9a543b1fb4c1389c1c5474e50995440a046dcd` and
+  `4632380fa1b254046d04a6b92c9d9912836e7ee1`.
 - [ ] 8. **C14 classification:** Planner Phase 4.5 then independent thread classification; retain F/ACL Human-only
   boundary and stop before Human review/merge.
 
@@ -110,5 +120,8 @@ C11/C12/C13 stages below are frozen provenance. The active C14 stages are separa
   `d738e91eb20869709d605fe7f879b340c9614b6a` are committed routing facts. Under the Human-authorized post-receipt
   state-alignment rule, this alignment did not create a new candidate or Plan-Reviewer gate. It is completed frozen
   provenance for C14.
-- C14 is the active authorized planning successor. Its candidate and independent Plan-Reviewer receipt are pending;
-  no code review, publish, comments, F／architecture-ACL ownership, or Human action is complete.
+- C14 is at Phase 4.5: its committed candidate/receipt/RED/failing-evidence/green/passing-evidence/approved-review
+  chain is factual in `4d78eaf…` → `033fa34…` → `6acbbe6…` → `287781…` → `5201c30…` → `6a9a543…` → `4632380…`.
+  This post-receipt state alignment is explicitly Human-authorized tracking only: it creates no new candidate or
+  Plan-Reviewer receipt and claims no code review, publish, comment, resolve, F／architecture-ACL ownership, or Human
+  action. Independent thread classification remains pending.
