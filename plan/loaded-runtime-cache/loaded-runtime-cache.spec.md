@@ -122,3 +122,20 @@ Given C11/R11/S11/T11/V11 已按 commit chain 完成且 snapshot 固定為
 9. **Incomplete C12 triage:** Given R12 omits a current snapshot thread, has an empty triage, lacks any of the six
    factual fields, uses a future／abbreviated／unverifiable commit, or classifies F／architecture-ACL ownership as resolved,
    When Planner consumes it, Then it fails closed and cannot authorize comment reply or resolution.
+
+### Scenario 11 — C13 chained-assignment RED then green route
+
+Given a fresh C13 approved planning receipt, When Implementer creates the first immutable C13 test-only subject in
+`tests/test_loaded_runtime_cache_bc_independence.py`, Then the test module collects successfully and a chained
+assignment import-alias assertion actually fails. This is new factual RED evidence and neither replays nor rewrites
+historical `e2e125` evidence. Given the resulting failing Tester record, When a later green subject is created, Then it
+handles every all-simple-name assignment target in the chained alias and passes the direct-import regression without
+dynamic-import, source, or cross-BC workaround.
+
+### Scenario 12 — C13 retention dataflow correction
+
+Given the existing C13-allowlisted dataflow artifacts, When the green subject updates the diagram and evidence, Then
+the retain relationship names `RuntimeReuseKey + runtime`, both returns are labelled `Retained(runtime)` and
+`NotRetained(runtime)`, edges do not obscure those labels, and receipts truthfully show showcase validation/delivery
+and containment at 1440×900, 1600×1000, 1920×1080, and 2048×1320. The four existing dark/light 1440×900 and
+2048×1320 PNG captures may be replaced; no other architecture authority path may change.

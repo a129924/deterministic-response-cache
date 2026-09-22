@@ -136,9 +136,9 @@ C11 只包含 `analysis/loaded-runtime-cache/{requirements,technical-spec}.md` �
 candidate-only commit、R11 receipt、S11、T11 和 V11 都已完成；它們現在是 immutable frozen provenance，不再是
 current routing authority。
 
-## C12 review-triage contract
+## Completed C12 review-triage provenance
 
-C12 是唯一 active planning successor，且只可修改
+C12 was the completed planning successor and only modified
 `analysis/loaded-runtime-cache/{requirements,technical-spec}.md`、
 `plan/loaded-runtime-cache/loaded-runtime-cache.{plan,spec,step}.md`。它不得修改 production source、tests、architecture
 authority、Archify source／receipt、既有 evidence 或 PR thread state。C12 candidate commit 完成後，唯一下一 gate 是
@@ -151,3 +151,29 @@ current unresolved thread。每個 entry 恰有 `thread`、`comment`、`finding`
 future commit。F `PRRT_kwDOUJTij86jnBpk`／comment `4043480108` 與 architecture/ACL thread
 `PRRT_kwDOUJTij86kQ95O`／comment `4060023123` 必須列於 `DISCUSS`，disposition 為 Human-only `human-check`；其餘
 snapshot entries 列於 `SKIP`，且不得假裝已由 C12 修改、reply 或 resolve。
+
+## C13 correction execution contract
+
+1. C13 candidate is planning-only and changes exactly the five planning artifacts. It contains no candidate SHA,
+   receipt path, implementation subject SHA, evidence, test result, or approval outcome. Independent Plan-Reviewer
+   must create a fresh SHA-bound `approved` receipt; Implementer commits that unchanged receipt alone.
+2. The first C13 implementation subject is a RED test-only subject that changes only
+   `tests/test_loaded_runtime_cache_bc_independence.py`. It must collect successfully and contain an assertion that
+   actually fails for a chained assignment import-alias bypass. It neither replays nor rewrites historical `e2e125`
+   evidence. Tester records the actual non-zero command result in a new SHA-bound failing evidence record; no
+   Reviewer evidence may be created from failing Tester evidence.
+3. A later new green immutable subject changes only that same BC-independence test and these existing Archify
+   artifacts: `loaded-runtime-cache.dataflow.json`, `.html`, `.validation.json`, `.delivery.json`,
+   `.visual-check.json`, `.visual-check.html`, `.visual-check.1440x900.dark.png`,
+   `.visual-check.1440x900.light.png`, `.visual-check.2048x1320.dark.png`, and
+   `.visual-check.2048x1320.light.png`, all below `docs/architecture/loaded-runtime-cache/`.
+4. The green test repair must reject every chained-assignment import alias whose assignment targets are all simple
+   names; it must not introduce dynamic import, runtime introspection, or a source/BC-boundary workaround. Archify
+   dataflow must show retain inputs `RuntimeReuseKey + runtime`, return labels `Retained(runtime)` and
+   `NotRetained(runtime)`, corrected edge placement, and truthful validate/deliver/visual-check receipts. Visual-check
+   must cover containment at 1440×900, 1600×1000, 1920×1080, and 2048×1320; only the four listed existing PNG
+   captures may be updated.
+5. The five Human-owned architecture authority paths remain read-only. F and ACL threads remain open Human-only
+   `human-check`. After a passing green Tester evidence commit and approved independent Reviewer evidence commit,
+   Planner performs Phase 4.5 then routes a new independent thread classification; neither correction evidence nor
+   Phase 4.5 resolves a thread directly.

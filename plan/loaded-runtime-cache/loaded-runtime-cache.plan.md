@@ -16,7 +16,7 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 
 | Field | Contract |
 | --- | --- |
-| In-Scope | local immutable opaque `RuntimeReuseKey`（identity-only key semantics）；`RuntimeRegistry[RuntimeT]`、`RuntimeRetention[RuntimeT]` Protocol；`Available`、`Missing`、`Unavailable`、`Retained`、`NotRetained` outcomes；locked module taxonomy、direct-module contract tests、alias-aware BC-independence regression、已提交 architecture/dataflow evidence 的重用；以及已完成 C12/R12 的 frozen-provenance state alignment 與 fixed-snapshot factual PR triage contract。 |
+| In-Scope | local immutable opaque `RuntimeReuseKey`（identity-only key semantics）；`RuntimeRegistry[RuntimeT]`、`RuntimeRetention[RuntimeT]` Protocol；`Available`、`Missing`、`Unavailable`、`Retained`、`NotRetained` outcomes；locked module taxonomy、direct-module contract tests、alias-aware BC-independence regression；completed C12/R12 provenance；以及 C13 的 chained-assignment RED→green correction、bounded Archify evidence correction 與新的 evidence/classification route。 |
 | Out-Of-Scope | Identity BC direct import、`ModelIdentity -> RuntimeReuseKey` mapping／mapper／ACL implementation、concrete Registry／Retention／lookup class、DI、backend、runtime initialization／download／unload／execution、provider management、Response Reuse、Model Execution、Provider Adapter、TTL、eviction、locking、concurrency、retry、timeout、metrics、tracing。 |
 | Non-Goal | root re-export、package facade、dynamic import、`sys.modules` substitution、`service.py`、`utils.py`、`common.py`、README、version、release、tag、merge、post-merge。 |
 
@@ -46,19 +46,27 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 - C12 只處理 planning state 與 current PR snapshot `73644c2b88257832e1b4d8bedaf516b803c2ee3a` 的 factual triage contract。
   F `PRRT_kwDOUJTij86jnBpk`／comment `4043480108` 以及 architecture/ACL ownership 只能 `DISCUSS`、Human-only
   `human-check`；其餘 current factual threads 只能 `SKIP`，不可被 C12 宣稱已修正、回覆或 resolve。
+- C13 是 Human-authorized planning successor。它保留原 mission／scope／Protocol contract，僅重建 review-required
+  evidence chain：collection-success、actual assertion-failing chained-assignment RED test-only subject → factual
+  failing Tester evidence → new green immutable subject with all-simple-name assignment-target repair → passing Tester
+  evidence → approved independent Reviewer evidence → Planner Phase 4.5 → new classification。不得重播或改寫 historical
+  `e2e125` evidence；RED failing evidence 不授權 Reviewer record、publish、reply、resolve 或 merge。
+- C13 green subject 同時只可修正 ten allowlisted Archify artifacts 的 retain input `RuntimeReuseKey + runtime`、
+  `Retained(runtime)`／`NotRetained(runtime)` labels、edge placement 及 four-viewport containment；不得改變
+  protocol-only boundary 或暗示 concrete backend、DI、runtime lifecycle。
 
 ## Boundaries / Exclusions
 
 | Category | Exact contract |
 | --- | --- |
-| ReadOnly | `src/deterministic_response_cache/identity/**`、`response_reuse/**`、`model_execution/**`、`provider_adapter/**`、root `__init__.py`、`loaded_runtime_cache/.gitkeep`、五個 existing source modules、`pyproject.toml`、`README.md`、version metadata、workflow contracts、`.github/agents/**`、`docs/business-capability-architecture.md`、`docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、`docs/architecture/business-capability/index.html`、`docs/architecture/business-capability/scene.js`，以及既有 Archify artifacts。五份 authority paths 的 overlap 僅 Human 處理，本 topic 不得改寫。 |
-| Written | C12 candidate 與 R12 receipt 均已提交；本次 post-R12 alignment 不寫任何 evidence。 |
-| Modify | 僅 `plan/loaded-runtime-cache/loaded-runtime-cache.{plan,step}.md` 可記錄已提交的 C12/R12 facts 與 Phase 4.5 alignment；不建立新的 candidate 或 plan-review gate。 |
+| ReadOnly | `src/deterministic_response_cache/identity/**`、`response_reuse/**`、`model_execution/**`、`provider_adapter/**`、root `__init__.py`、`loaded_runtime_cache/.gitkeep`、五個 existing source modules、`pyproject.toml`、`README.md`、version metadata、workflow contracts、`.github/agents/**`，以及 Human-owned `docs/business-capability-architecture.md`、`docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、`docs/architecture/business-capability/index.html`、`docs/architecture/business-capability/scene.js`。F／ACL threads stay Human-only. |
+| Written | C13 Plan-Reviewer receipt、RED/green SHA-bound Tester evidence 與 green SHA-bound Independent Reviewer evidence；each writer creates it and Implementer commits each unchanged as a sole evidence-only commit. |
+| Modify | C13 candidate only the five planning artifacts; RED only `tests/test_loaded_runtime_cache_bc_independence.py`; green only that test plus the ten exact dataflow paths listed in Artifact Paths. |
 | Deleted | 無；不得刪除 `.gitkeep`、existing tests 或既有 artifacts。 |
 
 ## Status / Allowed Transitions
 
-- **Current**: `phase-4.5-aligned-classification-pending`。C12 candidate
+- **Current**: `c13-planning-candidate-ready-for-commit`。C12 candidate
   `41d51072901cfd205ebc91644036e6695b1fe81c` 與其 approved R12 receipt-only commit
   `d738e91eb20869709d605fe7f879b340c9614b6a` 已提交，且 receipt 的 SHA-bound path 是
   `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-41d51072901cfd205ebc91644036e6695b1fe81c.json`。
@@ -67,13 +75,12 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
   `e9934dc7bb7b4f81098e635b5f0257c56da659a0`、T11
   `86a5cd54bec9d687d8d7f1738e9376435d3d1abf`、V11
   `73644c2b88257832e1b4d8bedaf516b803c2ee3a` 均為 completed frozen provenance。C8/C9/C10 是 frozen、unapproved
-  predecessor；C5→V3 也是 frozen provenance，均不能作 routing authority。
-- **Execution model**: C12 candidate-only commit → independent R12 Plan-Reviewer receipt with nonempty factual triage →
-  receipt-only commit 已完成。依 Human 授權，已提交 candidate／receipt 的 Git facts 是 routing authority；本次
-  state-alignment commit 不需新的 candidate 或 Plan-Reviewer receipt。Planner Phase 4.5 已 aligned；下一步僅為獨立
-  Reviewer 對 fixed snapshot 進行 thread classification。其後才可能有 separately authorized bounded thread
-  reply／resolution；F 與 architecture/ACL Human-check 不得由此 route 處理。C12 不建立新 source／test subject、Tester
-  evidence 或 Reviewer evidence。
+  predecessor；C5→V3 也是 frozen provenance，均不能作 C13 routing authority。
+- **Execution model**: C13 candidate-only commit → independent SHA-bound approved C13 Plan-Reviewer receipt →
+  receipt-only commit → collection-success / assertion-failing RED test-only immutable subject → failing factual
+  Tester evidence-only commit → new green immutable subject → passing Tester evidence-only commit → approved
+  Independent Reviewer evidence-only commit → Planner Phase 4.5 → new independent thread classification. F／ACL
+  Human-check threads remain open and cannot be processed by this route.
 - **Allowed transitions**: `planned` → `planning-candidate-committed` → `plan-review-in-progress` →
   `plan-review-receipt-committed` → `implementation-in-progress` → `tester-in-progress` →
   `tester-evidence-committed` → `reviewer-in-progress` → `reviewer-evidence-committed` → `approved` →
@@ -84,19 +91,22 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 
 | Artifact | Path | Write owner | Decision authority and role |
 | --- | --- | --- | --- |
-| Requirements | `analysis/loaded-runtime-cache/requirements.md` | None — ReadOnly | Committed C12 candidate fact. |
-| Technical specification | `analysis/loaded-runtime-cache/technical-spec.md` | None — ReadOnly | Committed C12 candidate fact. |
-| Topic plan | `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md` | Plan-Creator | Canonical state-alignment record only; no new candidate/review gate. |
-| Topic specification | `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md` | None — ReadOnly | Committed C12 candidate fact. |
-| Step tracker | `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator | Topic-local post-R12 alignment truth only. |
+| Requirements | `analysis/loaded-runtime-cache/requirements.md` | Plan-Creator | C13 candidate-only planning artifact. |
+| Technical specification | `analysis/loaded-runtime-cache/technical-spec.md` | Plan-Creator | C13 candidate-only planning artifact. |
+| Topic plan | `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md` | Plan-Creator | C13 routing contract; no SHA/outcome prefill. |
+| Topic specification | `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md` | Plan-Creator | C13 acceptance and error scenarios. |
+| Step tracker | `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator | C13 phase truth only. |
 | Plan-review receipt | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` | Independent Plan-Reviewer writes; Implementer commits unchanged alone | SHA-bound normal-plan verdict. |
-| Existing C11 source/test subject | five locked source modules plus `tests/test_loaded_runtime_cache_contracts.py` and `tests/test_loaded_runtime_cache_bc_independence.py` | None — ReadOnly | Completed S11 provenance; C12 must not modify it. |
+| C13 RED test subject | `tests/test_loaded_runtime_cache_bc_independence.py` | Implementer | Only after approved C13 receipt; collection-success, actual assertion-failing chained-assignment regression. |
+| C13 green subject | `tests/test_loaded_runtime_cache_bc_independence.py` | Implementer | New immutable subject; handles all-simple-name chained assignment targets. |
+| C13 dataflow evidence | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.validation.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.delivery.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.html` | Implementer | Green subject only; truthful Archify validate/deliver/visual-check evidence. |
+| C13 existing captures | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.dark.png`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.light.png`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.dark.png`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.light.png` | Implementer | Green subject only; exactly these four existing capture paths. |
 | Architecture authority | `docs/business-capability-architecture.md` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
 | Architecture authority | `docs/evolution-roadmap.md` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
 | Architecture authority | `docs/architecture/business-capability/architecture-brief.md` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
 | Architecture authority | `docs/architecture/business-capability/index.html` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
 | Architecture authority | `docs/architecture/business-capability/scene.js` | None — ReadOnly | Human-only overlap / merge coordination; C11 must not rewrite it. |
-| Existing Archify evidence | `docs/architecture/loaded-runtime-cache/**` | None — ReadOnly | C5 architecture provenance reused without edit or re-delivery. |
+| Other Archify evidence | every `docs/architecture/loaded-runtime-cache/**` path not named above | None — ReadOnly | C13 must not broaden its dataflow correction allowlist. |
 | Completed C11/R11/S11/T11/V11 records | C11/R11/S11/T11/V11 exact committed paths and SHAs named in Status | None — ReadOnly | Immutable completed provenance; no C12 routing reuse. |
 | Plan-review receipt (R12) | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-41d51072901cfd205ebc91644036e6695b1fe81c.json` | None — ReadOnly | Approved R12 verdict and nonempty fixed-snapshot triage, committed alone in `d738e91eb20869709d605fe7f879b340c9614b6a`. |
 
@@ -305,6 +315,60 @@ untouched.
 }
 ```
 
+## C13 Successor Route (authoritative for current execution)
+
+### C13 exact implementation sequence
+
+1. Implementer commits C13 as exactly the five declared planning artifacts. No candidate SHA, receipt path, subject,
+   evidence, test result, or verdict is written in advance.
+2. Independent Plan-Reviewer reviews that committed candidate and writes a fresh SHA-bound receipt at
+   `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`.
+   Implementer commits unchanged approved receipt alone. `needs-rework` ends this route without a subject.
+3. Implementer creates the first new immutable RED subject containing only
+   `tests/test_loaded_runtime_cache_bc_independence.py`. It must collect successfully and actually fail one
+   chained-assignment import-alias assertion. It does not replay, rewrite, or relabel historical `e2e125` evidence.
+4. Tester writes a new SHA-bound factual Tester evidence record for that RED subject. Its non-zero command makes
+   `status: failing`; Implementer commits it unchanged alone. Independent Reviewer must fail closed and write no
+   review evidence for that failing subject.
+5. Implementer creates a distinct green immutable subject containing only the BC-independence test plus the ten exact
+   C13 dataflow artifacts. The parser correction covers all simple-name assignment targets in chained assignments.
+   The dataflow correction names retain inputs `RuntimeReuseKey + runtime`, labels both returned outcomes with runtime,
+   and truthfully updates validate/deliver/visual-check receipts plus only the four existing capture PNGs.
+6. Tester records green-subject factual passing evidence at a new SHA-bound path; Implementer commits it unchanged
+   alone. Independent Reviewer then consumes only that committed passing evidence and writes new SHA-bound approved
+   review evidence; Implementer commits it unchanged alone.
+7. Planner performs Phase 4.5 on the green subject, then routes a new independent current-thread classification.
+   Classification alone may identify individually bounded replies/resolutions. F and ACL threads remain Human-only
+   open `human-check`; no C13 role may resolve them.
+
+### C13 validation / acceptance
+
+- Candidate diff names exactly the five planning artifacts; a new receipt is SHA-bound and committed alone.
+- RED test command collects and reaches its actual chained-assignment assertion failure; its Tester evidence records
+  the real non-zero exit code and cannot be used as green/reviewer authorization.
+- Green regression covers `a = b = importlib.import_module`-style all-simple-name targets and remains a direct-import
+  parser test: no `importlib`/`__import__`/`sys.modules` production workaround, no cross-BC import, no source change.
+- The green diff is exactly its declared test plus the ten C13 dataflow artifacts. It names retain input
+  `RuntimeReuseKey + runtime`, labels `Retained(runtime)` and `NotRetained(runtime)`, passes Archify showcase
+  validation/delivery, and records containment at 1440×900, 1600×1000, 1920×1080, 2048×1320.
+- The five Human-owned architecture authority paths are absent from every C13 implementation/evidence diff. F and ACL
+  remain unresolved Human-only threads.
+
+### C13 reviewer handoff
+
+```json
+{
+  "verdict": "approved|needs-rework",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {"ADDRESS": [], "DISCUSS": [], "SKIP": []}
+}
+```
+
+The receipt is review-only. For C13, all three triage arrays remain empty: thread classification occurs only after the
+green subject's passing Tester/approved Reviewer chain and Phase 4.5. A `needs-rework` receipt must instead carry
+non-empty exact `issue`/`file`/`fix` blocking objects. Neither form may predeclare candidate/subject SHA, factual test
+outcome, PR reply, thread resolution, Human review, or merge.
+
 ## Post-merge / release actions
 
 No repository release action is required. Human alone decides merge; this non-stable topic has no README, VERSION,
@@ -319,6 +383,6 @@ conversion and Registry／Retention implementation remain deferred to future, se
 
 ## Workflow State Contract
 
-- current_step: post-R12-phase-4.5-aligned
-- next_step: independent-fixed-snapshot-thread-classification
-- status: CLASSIFICATION_PENDING
+- current_step: c13-planning-candidate-ready-for-commit
+- next_step: c13-candidate-only-commit
+- status: IN_PROGRESS

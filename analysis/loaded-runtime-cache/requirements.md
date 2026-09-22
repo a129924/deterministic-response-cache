@@ -85,7 +85,7 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
   Cache source ancestor 為 parent；不得倒回乾淨 base、刪除既有 source/tests/architecture，或將 frozen C5→V3
   evidence 重用為 C11 routing。
 
-## C12 review-triage successor
+## Completed C12 review-triage provenance
 
 - C11 `55ad5d48c8e638bc5a81f3d0fecfc5a5f35e963c`、R11 receipt commit
   `01da31b11dcc8013f03a773ad9e9042c8bb527bf`、S11
@@ -96,11 +96,38 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
 - C12 的唯一目的，是在固定 PR snapshot `73644c2b88257832e1b4d8bedaf516b803c2ee3a` 建立可審核的 thread-triage
   contract。它只修改五份 planning artifacts，不寫 source、tests、architecture、Archify artifact 或 Tester／Reviewer
   evidence，也不回覆或 resolve thread。
-- C12 的下一條且唯一 routing path 是：C12 candidate-only commit → independent R12 SHA-bound Plan-Reviewer receipt
-  → receipt-only commit → Planner Phase 4.5 對固定 snapshot 的 classification。planning text 不得預填 C12 SHA 或
-  R12 receipt path。
+- C12 candidate-only commit、independent R12 SHA-bound Plan-Reviewer receipt、receipt-only commit 與 Planner
+  Phase 4.5 alignment 已完成。這些 Git facts 是 frozen provenance；不得由後續 correction 覆寫、重建或當成新的
+  candidate／receipt。
 - R12 的 `copilot_feedback_triage` 必須非空，並完整覆蓋固定 snapshot 的 current unresolved threads；每個 entry
   都必須有 `thread`、`comment`、`finding`、`commit`、`basis`、`disposition` 六個 factual 欄位。F
   `PRRT_kwDOUJTij86jnBpk`／comment `4043480108` 必須是 `DISCUSS`，並明記 architecture/ACL declared-path
   ownership 是 Human-only `human-check`；其餘 snapshot facts 只能如實列為 `SKIP`，不得以空 triage、推測或
   事後實作取代分類。
+
+## C13 correction successor
+
+- Human 已明確授權新的 planning successor。C13 的 purpose 僅是處理 three bounded review findings：以新的
+  collection-success、實際 assertion-failing chained-assignment RED subject 取代 historical-red claim；在後續新的
+  green immutable subject 補齊 all-simple-name assignment targets；以及修正既有 Loaded Runtime Cache Archify
+  dataflow evidence 的 retain semantic／geometry／viewport containment。
+- C13 candidate 只可修改本 requirements、`technical-spec.md`、topic plan、topic spec 與 step tracker；不得預填
+  C13 SHA、receipt path、RED/green subject SHA、Tester evidence、Reviewer evidence 或 outcome。candidate commit 後，
+  必須由獨立 Plan-Reviewer 寫新的 SHA-bound `approved` receipt，並由 Implementer 以 sole receipt-only commit
+  提交，才可開始 C13 implementation route。
+- R13 approved 後，Implementer 先建立 immutable RED subject，且 subject 只修改
+  `tests/test_loaded_runtime_cache_bc_independence.py`。RED test 必須 collection-success 且 assertion 實際失敗，
+  specifically exercise chained assignment import alias；它不得重播、重寫或宣稱取代 historical `e2e125` evidence。
+  Tester 對該 RED subject 如實記錄非零 exit code；failing evidence 只可回到 Implementer 建立新的 green subject。
+- 新的 green immutable subject 只可修改
+  `tests/test_loaded_runtime_cache_bc_independence.py`，以及下列十個既有 dataflow artifacts：
+  `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json`、`.html`、`.validation.json`、
+  `.delivery.json`、`.visual-check.json`、`.visual-check.html`、`.visual-check.1440x900.dark.png`、
+  `.visual-check.1440x900.light.png`、`.visual-check.2048x1320.dark.png`、
+  `.visual-check.2048x1320.light.png`。它補齊 parser 對 all-simple-name assignment targets 的 chained-assignment
+  coverage，並修正 dataflow retain inputs 為 `RuntimeReuseKey + runtime`、`Retained(runtime)`／
+  `NotRetained(runtime)` return labels、edge placement，及 1440×900、1600×1000、1920×1080、2048×1320 containment。
+- C13 不得修改五個 Human-owned architecture authority paths：`docs/business-capability-architecture.md`、
+  `docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、
+  `docs/architecture/business-capability/index.html`、`docs/architecture/business-capability/scene.js`。F／ACL
+  threads remain open Human-only `human-check`。
