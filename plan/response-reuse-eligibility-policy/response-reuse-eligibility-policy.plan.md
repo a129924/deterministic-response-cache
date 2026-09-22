@@ -42,7 +42,10 @@
   - CacheStore backend、channel、persistence、retention、TTL、expiry、invalidation、eviction、capacity 或
     concurrency policy。
   - Loaded Runtime Cache、Model Execution、Provider Adapter、downstream orchestration、async、retry、timeout、
-    metrics、tracing、network I/O、README、version、release、migration 或 configuration/dependency change。
+    metrics、tracing、network I/O、README、version、release、migration 或 configuration/dependency change。唯一
+    historic exception 是已提交 subject `7a90fffd6622b80eda524d89145cf833bd434d12` 的 sole `uv.lock`
+    `0.0.0` -> `0.1.0` version-sync；它不授權 `pyproject.toml`、其他 version/configuration/dependency path，或
+    任何額外的 version/configuration relaxation。
 
 ### ReadOnly
 
@@ -55,9 +58,14 @@
     `docs/architecture/business-capability/scene.js`、
     `docs/architecture/business-capability/index.html`。
   - `src/deterministic_response_cache/__init__.py`、所有既有或可新增的 package `__init__.py`、
-    `README.md`、`VERSION`（若存在）、`pyproject.toml`、`uv.lock`、其他 version/configuration/dependency
-    declaration、`tests/test_response_reuse_outcomes.py`、`tests/test_package_import.py`，以及除本 plan
-    Written／Modified path 外的所有 paths。
+    `README.md`、`VERSION`（若存在）、`pyproject.toml`、其他 version/configuration/dependency declaration、
+    `tests/test_response_reuse_outcomes.py`、`tests/test_package_import.py`，以及除本 plan Written／Modified path
+    外的所有 paths。
+  - `uv.lock` 維持 ReadOnly，僅排除 Human 這次明確授權的一次性治理例外：immutable lock-sync subject
+    `7a90fffd6622b80eda524d89145cf833bd434d12`（parent
+    `be854af82173a6de219e34192056e01b016b018f`）只能以 sole `uv.lock` commit 將 package version
+    `0.0.0` 同步為 `0.1.0`。此 carve-out 只適用該 subject 與該 version transition；不將 `uv.lock` 加入
+    Written／Modified implementation paths，亦不放寬任何其他 ReadOnly、Out-Of-Scope 或 Artifact Paths。
 
 ### Written
 
@@ -117,12 +125,15 @@ none。
 
 ## Status / Allowed Transitions
 
-- **Current**: `phase-4.5-alignment / bounded-publish-pending`。fix-3 exact-two workflow-correction candidate
-  `f0047c33a3cb7583c15bd9edd09f95bbaaba6c93` 已由 full-SHA-bound `approved` receipt sole commit
-  `6421be09138b699d8db6773e96d257d5b2e85a5b` 確認；其 fixed implementation subject 的 approved Independent
-  Reviewer evidence 已由 sole commit `be1fba1de2c0c57a45cac704195f138abdfc1d69` 確認。下一合法 gate 是
-  Planner 對已提交同 topic evidence 執行 Phase 4.5 alignment；在 alignment 後才可 route Human 已授權的
-  bounded publish。remote PR head 仍是 `01f80439bd9c57739e588521081406cb343645f8`，尚未推送這個 fix cycle。
+- **Current**: `pr-comment-review-and-fix / lock-sync-plan-review-cycle`。Human 的一次性治理例外已建立
+  immutable sole-`uv.lock` lock-sync subject `7a90fffd6622b80eda524d89145cf833bd434d12`，且只記錄 package
+  version `0.0.0` -> `0.1.0`。若 Git 尚無 exact-two `plan.md`／`step.md` candidate，Planner 可 route Implementer
+  建立它；若 Git 已記錄該 candidate，Planner 可 route fresh Independent Plan-Reviewer 寫入其 actual full-SHA-bound
+  `fix-4` receipt。candidate commit 前它不是 routing evidence，也不得預填 candidate SHA、remote／PR head、review
+  verdict 或 thread outcome；candidate commit 後，Git 記錄的 candidate 與其後 unchanged sole-committed `fix-4`
+  receipt 才是 routing authority。先前四則 thread classification 是 historical、nonrouting record，不能作為目前
+  route 的 resolve authority；`PRRT_kwDOUJTij86kRUJ6` 的出現亦要求後續以當時 live PR 的全部 unresolved threads
+  為準重新獨立分類。
 - **Committed routing history**: initial exact-five non-merge planning candidate
   `cdf4c66ac8534a340118dca50b5e103f22335a25` 的 committed Plan-Reviewer `needs-rework` verdict 保留為
   immutable history，且不等同 planning approval 或 implementation authorization。其後 corrected candidate
@@ -143,14 +154,18 @@ none。
   `6421be09138b699d8db6773e96d257d5b2e85a5b`；同一 code subject/tester binding 的 approved Independent
   Reviewer evidence sole commit 是 `be1fba1de2c0c57a45cac704195f138abdfc1d69`。兩者均不得重寫、重提或
   作為其他 topic 的 evidence。
-- **Current correction handoff**: 已完成的 route 是 committed fix-2 `needs-rework` history → scoped exact-two
-  correction candidate `f0047c33a3cb7583c15bd9edd09f95bbaaba6c93` → Planner route fresh Independent
-  Plan-Reviewer → approved `plan-review-receipt.fix-3.json` sole commit
-  `6421be09138b699d8db6773e96d257d5b2e85a5b` → Planner route Independent Reviewer → approved
-  `implementation-review-log.fix-1.json` sole commit `be1fba1de2c0c57a45cac704195f138abdfc1d69` → Planner
-  Phase 4.5 alignment。既有 receipt/review-log paths 和內容均不得 overwrite 或 delete。alignment 前不得
-  push、reply 或 resolve；alignment 後仍必須先由 independent classification 將每個 exact thread 判為
-  `addressed-and-resolvable`，才可 route Implementer 留下 bounded reply 並 resolve。
+- **Lock-sync correction handoff**: 本 exact-two `plan.md`／`step.md` artifact set 只補足 Human 的 lock-sync
+  exception、state 與 handoff metadata；不改變 product contract、code、tests、`uv.lock`、既有 receipt/evidence 或
+  immutable history。commit 前僅能以本 artifact content 描述下一個 bounded action；commit 後 Git 記錄的 exact-two
+  candidate 與其後 unchanged sole-committed `fix-4` receipt 才是 route authority。固定 durable sequence 是：已提交
+  lock-sync subject `7a90fffd6622b80eda524d89145cf833bd434d12` → Implementer 的 exact-two planning candidate → fresh
+  Independent Plan-Reviewer 的 actual full-SHA-bound `fix-4` receipt → Implementer 不論 actual verdict 均原樣
+  sole evidence-only commit → Planner 依 committed actual verdict route（`approved` → Tester；`needs-rework` →
+  scoped Plan-Creator）→ approved route 的 Tester evidence → Implementer sole Tester-evidence commit → fresh
+  Independent Reviewer → Implementer sole review-evidence commit → Planner Phase 4.5 alignment → Human 已授權的
+  bounded push → fresh classification of **all** live unresolved PR threads → 僅對逐一 `addressed-and-resolvable`
+  的 thread，由 Implementer 留下 bounded reply 並 resolve。每個 future commit SHA、verdict 與 PR state 都只能
+  在事後由其 owner、Git 或 live PR 如實記錄；planning artifacts 不得預填。
 - **Execution model**: isolated topic worktree → five-path planning candidate → independent Plan-Reviewer
   receipt → Planner route → immutable five-path implementation subject → independent Tester evidence → independent
   Reviewer evidence → Planner Phase 4.5 alignment → existing Human-authorized bounded publish → draft PR → Human
@@ -181,6 +196,31 @@ none。
   - `fix-3-plan-review-receipt-committed` -> `needs-rework|reviewer-in-progress`：只有 Planner 依同 topic、
     full-SHA-bound committed verdict route；`needs-rework` 回到 scoped Plan-Creator correction，`approved` 才可
     route Independent Reviewer 寫入 `implementation-review-log.fix-1.json`。
+  - `lock-sync-subject-committed` -> `lock-sync-planning-candidate-next`：Human one-time exception 的 sole
+    `uv.lock` subject 固定為 `7a90fffd6622b80eda524d89145cf833bd434d12`；Plan-Creator 已只寫 exact-two
+    `plan.md`／`step.md` metadata。candidate commit 前不形成 routing authority；只有 Implementer 可將這兩個 paths
+    原樣提交為 candidate，commit 後 Git candidate 才 authoritative。不得混入 code、test、`uv.lock` 或 evidence。
+  - `lock-sync-planning-candidate-committed` -> `fix-4-plan-review-in-progress`：只有 Planner 可 route fresh
+    Independent Plan-Reviewer；receipt 必須在 review 後以 actual candidate full SHA 寫入
+    `plan-review-receipt.fix-4.json`。
+  - `fix-4-plan-review-in-progress` -> `fix-4-plan-review-receipt-committed`：fresh Independent Plan-Reviewer 只可
+    在 review 後以 actual committed candidate full SHA、actual verdict 與 actual blockers 寫 receipt；Implementer
+    必須不論 verdict 將 unchanged receipt 以 sole evidence-only commit 提交。
+  - `fix-4-plan-review-receipt-committed` -> `needs-rework|lock-sync-tester-in-progress`：只有 Planner 可依
+    same-topic committed actual verdict route；`needs-rework` 返回 scoped Plan-Creator，`approved` 才可 route Tester
+    為固定 subject `7a90fffd6622b80eda524d89145cf833bd434d12` 寫 factual `tester-evidence.lock-sync.json`。
+  - `lock-sync-tester-in-progress` -> `lock-sync-tester-evidence-committed`：Tester 只寫同一 subject 的 factual
+    evidence；Independent Implementer 原樣以 sole evidence-only commit 提交。只有 committed `passing` evidence
+    可進入 fresh Independent Reviewer。
+  - `lock-sync-tester-evidence-committed` -> `needs-rework|lock-sync-reviewer-in-progress`：`failing` 返回 Planner
+    route 的 scoped rework；`passing` 才可 route fresh Independent Reviewer 寫
+    `implementation-review-log.lock-sync.json`，其 Tester evidence commit 必須在該時由 Git 的 actual sole commit
+    如實綁定。
+  - `lock-sync-reviewer-in-progress` -> `lock-sync-review-evidence-committed`：Independent Reviewer 只消費同 subject
+    的 committed passing Tester evidence；Independent Implementer 原樣以 sole evidence-only commit 提交。
+  - `lock-sync-review-evidence-committed` -> `approved|needs-rework`：只有 Planner Phase 4.5 可依 same-subject
+    committed actual verdict alignment。alignment 的 `approved` 只可 route Human 已授權的 bounded push；push 後必須
+    對 live PR 的全部 unresolved threads fresh classification，單一 historical classification 不得授權 reply 或 resolve。
   - `plan-review-receipt-committed` -> `implementation-in-progress`：只有 committed receipt verdict 為
     `approved`、receipt 的 full SHA candidate binding 正確，且 Planner 選定後。
   - `implementation-in-progress` -> `tester-in-progress`：一個 non-merge immutable subject 恰好變更五個
@@ -216,6 +256,10 @@ none。
 | Fix-1 immutable plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-1.json` | Independent Plan-Reviewer | Immutable `needs-rework` receipt，僅綁定 candidate `724ebf129eeb99fc06b1c1cd16b58757b1b0148e`，並已由 `dd29fe45626d5b20ffffde8d988fe4843d0924ef` sole-commit；不得改寫或重提。 |
 | Fix-2 immutable plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-2.json` | Independent Plan-Reviewer | Immutable `needs-rework` receipt，僅綁定 candidate `60836827cb9ab0d42e7217eb6b560bca99108a14`，並已由 `d4b2b3de4e451d6561a94381d0998d97957705f9` sole-commit；不得改寫或重提。 |
 | Fix-3 plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-3.json` | Independent Plan-Reviewer only | Immutable `approved` receipt，僅綁定 candidate `f0047c33a3cb7583c15bd9edd09f95bbaaba6c93`，並已由 `6421be09138b699d8db6773e96d257d5b2e85a5b` sole-commit；不得改寫或重提。 |
+| One-time lock-sync subject | `uv.lock` | Implementer only | Human exception 僅授權 immutable subject `7a90fffd6622b80eda524d89145cf833bd434d12` 的 sole path，將 package version `0.0.0` -> `0.1.0`；不是通用 `uv.lock` write authority。 |
+| Fix-4 plan-review receipt | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan-review-receipt.fix-4.json` | fresh Independent Plan-Reviewer only | 僅可 review 後以 actual committed exact-two candidate full SHA 寫入；Implementer 必須不論 actual verdict 原樣 sole evidence-only commit。不得預填 candidate SHA、verdict 或 commit。 |
+| Lock-sync Tester evidence | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.tester-evidence.lock-sync.json` | Tester only | 只記固定 subject `7a90fffd6622b80eda524d89145cf833bd434d12` 的 factual command/exit-code evidence；Implementer 原樣 sole evidence-only commit。 |
+| Lock-sync independent review evidence | `plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.implementation-review-log.lock-sync.json` | fresh Independent Reviewer only | 只消費同 subject committed passing lock-sync Tester evidence；Tester evidence commit 與 verdict 均由 reviewer 當時如實記錄；Implementer 原樣 sole evidence-only commit。 |
 | Eligibility policy | `src/deterministic_response_cache/response_reuse/eligibility/policy.py` **Write** | Implementer | 標準庫-only eligibility decisions、union、generic Protocol 與 leaf boundary。 |
 | Response Reuse protocol | `src/deterministic_response_cache/response_reuse/protocol.py` **Modify** | Implementer | Required policy injection 與 lookup decision mapping；record contract preserved。 |
 | Eligibility tests | `tests/test_response_reuse_eligibility.py` **Write** | Implementer | Direct-import eligibility value, typing and module-boundary regression proof。 |
@@ -260,6 +304,17 @@ deletion 或 new module 後綴都必須停止並返回 Planner。
   `6e79af1f079c0e7031b0e5acd40c6155cefc0ad2`，其 `approved` evidence 已由
   `be1fba1de2c0c57a45cac704195f138abdfc1d69` sole-commit。它與所有既有 immutable evidence files 均不得
   改寫或刪除。
+- `plan-review-receipt.fix-4.json` 沿用前述 plan-review receipt 的 exact seven-key schema；fresh Independent
+  Plan-Reviewer 只能在 committed exact-two candidate review 後，以該 candidate 的 actual full SHA、actual verdict
+  與 actual blockers 寫入；Implementer 必須不論 verdict 原樣 sole evidence-only commit，之後僅 Planner 可依
+  committed actual verdict route。planning artifacts 不得預填任何 `fix-4` receipt commit、verdict 或 candidate SHA。
+- `tester-evidence.lock-sync.json` 沿用前述 Tester evidence 的 exact six-key schema，且
+  `implementation_subject_commit` 固定為 `7a90fffd6622b80eda524d89145cf833bd434d12`。Tester 只可記錄實際 commands
+  與 exit codes；其 status、evidence commit 與後續 outcome 不得預填。
+- `implementation-review-log.lock-sync.json` 沿用前述 independent review evidence 的 exact seven-key schema，且
+  `implementation_subject_commit` 固定為 `7a90fffd6622b80eda524d89145cf833bd434d12`。它的
+  `tester_evidence_commit` 只能在 fresh Independent Reviewer 消費已提交、same-subject、passing 的 sole Tester
+  evidence 時填入 actual full SHA；verdict、blockers 與 review-evidence commit 都不得由 planning artifacts 預填。
 
 ## Python implementation metadata
 
@@ -437,6 +492,31 @@ git diff --check <implementation-subject-parent-sha> <implementation-subject-sha
 The exact-five diff check occurs after the implementation subject commit; all other validations run in the isolated
 topic worktree. Tester writes actual factual results; planning artifacts must not prefill SHA, exit code, verdict or
 outcome facts.
+
+### Lock-sync TestCase
+
+| TestCase | Expected outcome |
+| --- | --- |
+| Lock-sync subject parent | `7a90fffd6622b80eda524d89145cf833bd434d12` 的唯一 parent 是 `be854af82173a6de219e34192056e01b016b018f`。 |
+| Lock-sync subject diff | 該 subject 的 diff name 僅為 `uv.lock`。 |
+| Project-version consistency | `uv.lock` 的 editable `deterministic-response-cache` package version 與 `pyproject.toml` 的 project version 相同。 |
+| Frozen quality suite | format、lint、strict type、tach 與 full pytest 都在 frozen lock 狀態下通過。 |
+| Diff hygiene | subject parent 與 subject 間的 diff 沒有 whitespace error。 |
+
+```bash
+test "$(git rev-parse 7a90fffd6622b80eda524d89145cf833bd434d12^)" = "be854af82173a6de219e34192056e01b016b018f"
+test "$(git diff-tree --no-commit-id --name-only -r 7a90fffd6622b80eda524d89145cf833bd434d12 | sort)" = "uv.lock"
+uv lock --check
+uv run --frozen ruff format --check .
+uv run --frozen ruff check .
+uv run --frozen pyright
+uv run --frozen tach check
+uv run --frozen pytest -v
+git diff --check be854af82173a6de219e34192056e01b016b018f 7a90fffd6622b80eda524d89145cf833bd434d12
+```
+
+這組 lock-sync checks 只驗證 already committed subject，不能取代 exact-five implementation-subject check；Tester
+僅能記錄實際執行的 command 與 exit code，不得由 planning artifacts 預填結果、status 或 verdict。
 
 ## Reviewer Handoff
 
