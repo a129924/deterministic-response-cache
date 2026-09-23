@@ -3,15 +3,15 @@
   "ok": true,
   "command": "deliver",
   "type": "dataflow",
-  "input": "docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json",
-  "output": "docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html",
+  "input": "/Users/andrew/code/python/deterministic-response-cache.worktrees/agent-20260917-loaded-runtime-cache/docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json",
+  "output": "/Users/andrew/code/python/deterministic-response-cache.worktrees/agent-20260917-loaded-runtime-cache/docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html",
   "specification": {
-    "sha256": "0844e8638a72cb5120b33a3af1093eac4eddbfd109e994b6008c5291fe6829e8",
-    "bytes": 3991
+    "sha256": "f1a1dcdc6a662cc680f9c5c8fdb49993dec4397e0853dd4dd32068f95379e7d3",
+    "bytes": 3342
   },
   "artifact": {
-    "sha256": "b5023ec735263dce2299d9b70fd3193e9cbcad0d9813138f9824acd800eacc49",
-    "bytes": 707883
+    "sha256": "44d2f969a22891523488f9810ba3b4a4e5aa09cd194b6105b541d11117d61779",
+    "bytes": 703395
   },
   "validation": {
     "checksPassed": 9,
