@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "7ceb3409d6d8b9ff3dc51485c3588f502bdff882",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "uv run pytest tests/test_loaded_runtime_cache_bc_independence.py -q",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py -q",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest -q",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs validate dataflow docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json --quality showcase --json",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs deliver dataflow docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html --quality showcase --json",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs visual-check docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html --repo-root /Users/andrew/code/python/deterministic-response-cache.worktrees/agent-20260917-loaded-runtime-cache --json",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
