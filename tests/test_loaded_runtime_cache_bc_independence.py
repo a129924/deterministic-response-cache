@@ -131,15 +131,10 @@ def _add_assignment_aliases(
 
 
 def _assignment_target_names(statement: ast.Assign | ast.AnnAssign) -> tuple[str, ...]:
-    """Return all-simple local targets, rejecting mixed assignment targets atomically."""
+    """Return direct local-name targets while ignoring non-simple assignment targets."""
     if isinstance(statement, ast.AnnAssign):
         return (statement.target.id,) if isinstance(statement.target, ast.Name) else ()
-    names: list[str] = []
-    for target in statement.targets:
-        if not isinstance(target, ast.Name):
-            return ()
-        names.append(target.id)
-    return tuple(names)
+    return tuple(target.id for target in statement.targets if isinstance(target, ast.Name))
 
 
 def _resolve_forbidden_alias(
