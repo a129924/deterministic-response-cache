@@ -453,8 +453,8 @@ conversion and Registry／Retention implementation remain deferred to future, se
 
 ## Workflow State Contract
 
-- current_step: c15-plan-authoring
-- next_step: C15 planning-candidate commit
+- current_step: c15-phase-4.5-alignment-pending
+- next_step: Planner C15 Phase 4.5 alignment
 - status: IN_PROGRESS
 
 ## C15 Mixed-Assignment Successor Route (authoritative for current execution)
@@ -499,7 +499,19 @@ is permitted. This is non-stable-library work: no README, VERSION, release note,
 
 ### Status / allowed transitions
 
-**Current state:** `c15-plan-authoring`. This C15 section supersedes every earlier C14 current-state, artifact-path,
+**Current state:** `c15-phase-4.5-alignment-pending`. The committed C15 chain is
+`eadd406409a02dc1c283e7ff9740815f4c9e4596` →
+`d8e759ea0bdd70ca7d6eca4dc030f11879c59c25` →
+`2e9cabd5d21c0ef4c9a9929efedf8efc2a776e6a` →
+`94e6d6f73b85efa5a5895e7eadb4aa9aa24089ee` →
+`7dab2b9742bd19f962bef99be83b40b978f87f0f` →
+`475e3c953f6551bef5834d0bf350d5c79449a43e` →
+`cee5097c176b4321a0d9bc2e810caf7d3425d0f1`.
+It completes C15 planning, the SHA-bound approved Plan-Reviewer receipt, RED subject/evidence, green subject/passing
+Tester evidence, and independent green review evidence. Planner Phase 4.5 alignment is pending. This post-receipt
+state tracking neither creates C16 nor creates a new receipt or evidence; it does not process any PR thread.
+
+This C15 section supersedes every earlier C14 current-state, artifact-path,
 implementation-step, validation, handoff, and workflow-state claim for routing; those C14 sections remain historical
 provenance only.
 

@@ -132,36 +132,52 @@ C14 and `37d7233e7231151c0dac6aaa1a7820bff746ffdc` are frozen nonrouting provena
 all earlier tracker entries for current routing and inherit no predecessor candidate, receipt, subject, result,
 evidence, approval, or next role.
 
-- [ ] C15 plan-authoring
-- [ ] C15 planning-candidate-commit
-- [ ] C15 independent Plan-Reviewer receipt
-- [ ] C15 receipt-only commit
-- [ ] C15 RED test-only subject
-- [ ] C15 RED factual failing Tester evidence
-- [ ] C15 RED evidence-only commit
-- [ ] C15 green test-only subject
-- [ ] C15 green factual passing Tester evidence
-- [ ] C15 green evidence-only commit
-- [ ] C15 independent green review evidence
-- [ ] C15 review-evidence-only commit
+- [x] C15 plan-authoring
+- [x] C15 planning-candidate-commit
+- [x] C15 independent Plan-Reviewer receipt
+- [x] C15 receipt-only commit
+- [x] C15 RED test-only subject
+- [x] C15 RED factual failing Tester evidence
+- [x] C15 RED evidence-only commit
+- [x] C15 green test-only subject
+- [x] C15 green factual passing Tester evidence
+- [x] C15 green evidence-only commit
+- [x] C15 independent green review evidence
+- [x] C15 review-evidence-only commit
 - [ ] C15 Planner Phase 4.5
 - [ ] C15 independent thread classification
 
 ### C15 actionable steps
 
-- [ ] **Actor: Implementer.** Commit only the five C15 planning artifacts with no prefilled future SHA/outcome.
-- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write then unchanged-sole-commit a fresh approved receipt
-  at `loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`.
-- [ ] **Actor: Implementer / Tester.** Create fresh collection-success/assertion-failing RED subject changing only
-  `tests/test_loaded_runtime_cache_bc_independence.py`; Tester records factual failing evidence at its versioned path;
-  Implementer commits it unchanged alone. No Reviewer record is permitted.
-- [ ] **Actor: Implementer.** Create distinct green subject changing only the same test file. For `ast.Assign.targets`,
-  preserve direct `ast.Name`, ignore direct `ast.Attribute`/other non-simple targets, and never recurse. In
-  `load = holder.loader = importlib.import_module`, only `load` is retained.
-- [ ] **Actor: Tester / Independent Reviewer / Implementer.** Commit passing green Tester evidence alone, then
-  approved same-subject Reviewer evidence alone. Both are versioned SHA-bound templates with no predecessor reuse.
+- [x] **Actor: Implementer.** Committed only the five C15 planning artifacts in
+  `eadd406409a02dc1c283e7ff9740815f4c9e4596`, with no prefilled future SHA/outcome.
+- [x] **Actor: Independent Plan-Reviewer / Implementer.** Wrote and unchanged-sole-committed the approved receipt in
+  `d8e759ea0bdd70ca7d6eca4dc030f11879c59c25`, at the candidate-SHA-bound receipt path.
+- [x] **Actor: Implementer / Tester.** Created the collection-success/assertion-failing RED subject
+  `2e9cabd5d21c0ef4c9a9929efedf8efc2a776e6a`, then recorded and unchanged-sole-committed its factual failing
+  evidence in `94e6d6f73b85efa5a5895e7eadb4aa9aa24089ee`. No Reviewer record was created for RED.
+- [x] **Actor: Implementer.** Created distinct green subject `7dab2b9742bd19f962bef99be83b40b978f87f0f` changing
+  only the declared test file. It preserves direct `ast.Name`, ignores direct `ast.Attribute`/other non-simple
+  targets without recursion, and retains only `load` in `load = holder.loader = importlib.import_module`.
+- [x] **Actor: Tester / Independent Reviewer / Implementer.** Committed same-subject passing Tester evidence alone in
+  `475e3c953f6551bef5834d0bf350d5c79449a43e`, then approved matching independent Reviewer evidence alone in
+  `cee5097c176b4321a0d9bc2e810caf7d3425d0f1`.
 - [ ] **Actor: Planner / Independent Reviewer.** Run Phase 4.5, then fresh independent classification. F／ACL/business
   architecture remain Human-only `human-check`; no C15 action replies, resolves, merges, releases or post-merges.
+
+### C15 current state
+
+The full committed C15 chain is
+`eadd406409a02dc1c283e7ff9740815f4c9e4596` →
+`d8e759ea0bdd70ca7d6eca4dc030f11879c59c25` →
+`2e9cabd5d21c0ef4c9a9929efedf8efc2a776e6a` →
+`94e6d6f73b85efa5a5895e7eadb4aa9aa24089ee` →
+`7dab2b9742bd19f962bef99be83b40b978f87f0f` →
+`475e3c953f6551bef5834d0bf350d5c79449a43e` →
+`cee5097c176b4321a0d9bc2e810caf7d3425d0f1`.
+It is **Phase 4.5 alignment pending**. This authorized post-receipt state tracking does not create C16, a new
+candidate, a new receipt, or new Tester/Reviewer evidence, and it does not reply to, resolve, or otherwise process
+any PR thread.
 
 ### C15 guardrails
 
