@@ -346,6 +346,22 @@ def test_identity_bc_does_not_directly_import_loaded_runtime_cache() -> None:
             "sys-modules-callable-alias",
             "import sys\nlookup = sys.modules.get\nlookup('identity')\n",
         ),
+        (
+            "getattr-importlib-callable-alias",
+            (
+                "import importlib as loader\n"
+                "load = getattr(loader, 'import_module')\n"
+                "load('identity')\n"
+            ),
+        ),
+        (
+            "getattr-sys-modules-alias",
+            (
+                "import sys as runtime\n"
+                "module_cache = getattr(runtime, 'modules')\n"
+                "module_cache['identity'] = object()\n"
+            ),
+        ),
     ],
 )
 def test_bc_independence_rejects_each_dynamic_import_bypass(
