@@ -1,6 +1,6 @@
 ---
 topic: model-execution-protocol
-phase: architecture-correction-review-ready
+phase: review-parent-workflow-amendment-in-progress
 created: 2026-09-22
 ---
 
@@ -21,6 +21,8 @@ created: 2026-09-22
 - [X] architecture-amendment-rereview
 - [X] architecture-correction
 - [X] architecture-correction-test
+- [ ] review-parent-workflow-amendment-review
+- [ ] review-parent-status-sync
 - [ ] architecture-correction-review
 - [ ] code-review
 
@@ -47,7 +49,14 @@ created: 2026-09-22
 - [X] **Actor:** Implementer — **Action:** 已原樣以 sole one-path evidence-only commit `793376603b1a67a3e1b5a186df1c5a050018fd1f` 提交 updated `approved` receipt；Planner 已驗證 corrected candidate binding。
 - [X] **Actor:** Planner／Implementer — **Action:** Planner 已依 committed approved receipt route；Implementer 已只修改 exact-five architecture docs，建立 immutable docs-only subject `5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28`。
 - [X] **Actor:** Tester／Implementer — **Action:** Tester 已對 exact-five subject `5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28` 寫 factual architecture-correction evidence；Implementer 已原樣以 passing evidence sole commit `f71de2beb9801cf01c37d02bca658ee0d8f28599` 提交。
-- [ ] **Actor:** Independent Reviewer／Implementer — **Action:** Reviewer 僅消費 committed passing same-subject evidence並寫 correction review log；Implementer 原樣以 sole one-path evidence-only commit 提交 approved log。
+- [X] **Actor:** Human／Planner — **Action:** Human 已選擇 review-parent workflow amendment 並保留既有 commit history；Planner route 的唯一 next role 為 Plan-Creator。subject `5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28` 與 passing Tester evidence `f71de2beb9801cf01c37d02bca658ee0d8f28599` 保持完成且 immutable。
+- [X] **Actor:** Plan-Creator — **Action:** 只修改 topic plan/step，鎖定新 planning receipt、status-sync first-parent ancestry、Reviewer reconfirmation 與 review-log direct-parent contract；不修改或採信現有 untracked review log。
+- [ ] **Actor:** Implementer — **Action:** 只提交本輪 topic plan/step，建立 exact-two workflow-amendment planning candidate；不得納入 untracked review log或其他 path，candidate SHA 不預填。
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** 只審 committed exact-two candidate，寫 `model-execution-protocol.review-parent-amendment-plan-review-receipt.json`；verdict 不預填，不 commit、不 route。
+- [ ] **Actor:** Implementer — **Action:** 原樣以 sole one-path evidence-only commit 提交新 receipt，direct parent 為 planning candidate；receipt commit SHA 不預填，交 Planner 驗證。
+- [ ] **Actor:** Implementer／Planner — **Action:** 只有 Planner 驗證 committed approved receipt 後，Implementer 才以新的 sole-path step commit 同步 review-ready 狀態。status-sync 必須 single-parent、direct parent 為新 receipt commit，且 first-parent ancestry 包含 `f71de2beb9801cf01c37d02bca658ee0d8f28599`；Planner 再驗證 topology，SHA 不預填。
+- [ ] **Actor:** Independent Reviewer — **Action:** 只有 Planner 驗證 status-sync 後，重新審 subject `5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28`、Tester evidence `f71de2beb9801cf01c37d02bca658ee0d8f28599`、first-parent ancestry 與 schema；不得沿用現有 untracked log 的 verdict。
+- [ ] **Actor:** Implementer — **Action:** 只將 Reviewer 新確認的原樣 correction review log 作 sole one-path commit；其 direct parent 必須是 verified status-sync，兩者間不得有其他 commit；SHA/verdict 不預填。
 - [ ] **Actor:** Planner／Implementer／Independent Reviewer — **Action:** Planner 完成 Phase 4.5 alignment 後，Implementer 才 push 到同一 PR；Reviewer 重新分類 exact thread。只有 `addressed-and-resolvable` 才由 Implementer bounded reply 並 resolve，否則 `human-check`。
 
 ## Implementation Steps
@@ -74,5 +83,7 @@ created: 2026-09-22
 - Locked semantics：同步 coordination ports/outcomes/protocol 已實作；Loaded Runtime Cache 實際 wiring／retention/backend、具體 Provider Adapter、cross-BC composition、Response Reuse `Miss`／result handoff integration 仍 future。Python/tests 相對 `9a3460b6e4412384ed7e3426ebc32820a46818e6` 不變。
 - Mirror gate：`scene.js` 必須與 `index.html` 的 `SCENE START (generated)`／`SCENE END` 固定 markers 間內容 byte-for-byte 相同。
 - New evidence paths and exact schemas are authoritative in the source plan: `model-execution-protocol.architecture-amendment-plan-review-receipt.json`（Independent Plan-Reviewer）、`model-execution-protocol.architecture-correction-tester-evidence.json`（Tester）、`model-execution-protocol.architecture-correction-implementation-review-log.json`（Independent Reviewer）。三者均由 Implementer 原樣以各自 sole evidence-only commit 提交，且必須綁定同 candidate/subject 的完整 SHA。
+- Review-parent workflow amendment 新增專用 receipt `model-execution-protocol.review-parent-amendment-plan-review-receipt.json`。目前 `model-execution-protocol.architecture-correction-implementation-review-log.json` 是 untracked、unstaged、nonrouting 工作檔，blob `f3f1eec7cc1d9ef65356d8e4dfc1ac364423a09c`；Plan-Creator 不修改、移動、刪除或採信其 verdict。Reviewer 必須在 verified status-sync 後重新形成 verdict。
+- 在新 review-log commit 完成且 Planner Phase 4.5 alignment 前，thread `PRRT_kwDOUJTij86lAh0Z` 保持 unresolved；push、reply 與 resolve 均 blocked。
 - PR #7 實際 runtime contract 未鎖定；本 topic 以本地 injected port/test doubles 驗證，未來接線另行規劃。
 - predecessor `## Implementation Steps` 的 `[X]` 只保留歷史完成狀態；本次 final PR gate 在新的 architecture correction route 完成前視為未完成。Human 獨占 PR review、merge、release、post-merge、tag 與 final summary。

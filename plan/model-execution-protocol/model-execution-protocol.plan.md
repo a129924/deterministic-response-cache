@@ -22,6 +22,8 @@
 - branch/worktree 固定為 `topic/model-execution-protocol` 與 `<repo-parent>/worktrees/model-execution-protocol`；`dev` 只作已驗證 admission base，不承載本 topic writer。
 - PR thread `PRRT_kwDOUJTij86lAh0Z` 的 status correction 只更新架構敘述：provider-neutral、同步、可注入的 Model Execution coordination contracts（ports、outcomes、protocol）已實作；Loaded Runtime Cache 實際 wiring／retention/backend、具體 Provider Adapter、cross-BC composition，以及 Response Reuse `Miss`／execution result handoff integration 仍是 future。
 - correction implementation subject 只能修改五份 architecture docs；Python、tests 與 public contract 相對 PR HEAD `9a3460b6e4412384ed7e3426ebc32820a46818e6` 必須不變。`scene.js` 是 `index.html` 固定 generated markers 間 scene block 的 source，兩者必須 byte-for-byte mirror。
+- Human 已選擇保留既有 commit history 的 review-parent workflow amendment。新的 correction review-log sole commit 必須以 Planner 驗證過的 status-sync commit 為 direct parent；status-sync 必須是建立於本 amendment 的 committed planning receipt 之後、single-parent 且只修改 `plan/model-execution-protocol/model-execution-protocol.step.md` 的 sole-path commit。status-sync 的 first-parent ancestry 必須包含 passing Tester evidence `f71de2beb9801cf01c37d02bca658ee0d8f28599`；一般 merge-base ancestry 不足以通過。status-sync 與 review-log commit 之間不得有其他 commit。
+- Planner 驗證 status-sync 後，Independent Reviewer 必須重新審查 subject `5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28`、Tester evidence `f71de2beb9801cf01c37d02bca658ee0d8f28599`、first-parent ancestry 與 review-log schema，不能沿用目前 untracked review log 的 verdict。
 
 ## Boundaries / Exclusions
 
@@ -53,7 +55,10 @@
   - `plan-review-in-progress` → `architecture-amendment-receipt-written` → `architecture-amendment-receipt-committed`：Plan-Reviewer 寫專用 receipt，Implementer 原樣以 sole evidence-only commit 提交；`needs-rework` 回 Plan-Creator，只有 Planner 驗證 committed `approved` receipt 才能 route correction Implementer。
   - `architecture-amendment-receipt-committed` → `architecture-correction-in-progress` → `architecture-correction-subject-committed`：Implementer 建立且只建立 exact-five docs-only immutable subject，不改 Python/tests。
   - `architecture-correction-subject-committed` → `tester-in-progress` → `correction-tester-evidence-committed`：Tester 寫同 subject factual evidence，Implementer 原樣以 sole evidence-only commit 提交；只有 committed `passing` 可供 Reviewer 消費。
-  - `correction-tester-evidence-committed` → `reviewer-in-progress` → `correction-review-evidence-committed`：Independent Reviewer 審同一 subject 與 committed passing evidence，Implementer 原樣以 sole evidence-only commit 提交；`needs-rework` 返回 correction Implementer 並以新 subject 重跑 Tester／Reviewer。
+  - `correction-tester-evidence-committed` → `review-parent-workflow-amendment-in-progress`：Human 選擇 workflow amendment 後，Plan-Creator 只修改 topic plan/step；Implementer 只提交兩檔 planning candidate，Independent Plan-Reviewer 寫專用 receipt，Implementer 原樣以 sole one-path evidence-only commit 提交。`needs-rework` 返回 Plan-Creator；只有 Planner 驗證 committed `approved` receipt 才能進 status sync。
+  - `review-parent-amendment-receipt-committed` → `review-parent-status-sync-pending` → `review-parent-status-sync-committed`：Implementer 建立 single-parent、sole-step-path status-sync commit，其 direct parent 是新的 receipt sole commit，且其 first-parent ancestry 必須包含 `f71de2beb9801cf01c37d02bca658ee0d8f28599`。Planner 以 first-parent traversal 驗證，而非只檢查 merge-base。
+  - `review-parent-status-sync-committed` → `reviewer-reconfirmation-in-progress` → `correction-review-evidence-committed`：Planner 驗證 status-sync 後，Independent Reviewer 從 committed subject／Tester evidence／ancestry／schema 重新形成 verdict；目前 untracked log 不得作 review basis。Implementer 只能將 Reviewer 新確認的原樣 log 作 sole one-path commit，且其 direct parent 必須是 verified status-sync；兩者之間不得有其他 commit。
+  - **Superseded current-subject route:** 原 `correction-tester-evidence-committed` → `reviewer-in-progress` 直接路徑不再授權 subject `5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28` 的 review-log commit；本 subject 只能走上述 review-parent workflow amendment。未來若建立新 subject，仍須先由 Planner 依當時 committed plan route，不得自行套用此歷史 transition。
   - `correction-review-evidence-committed` → `phase-4.5-alignment` → `same-pr-push`：只有 Planner 對新 candidate、subject、Tester/Reviewer evidence 完成 alignment 且既有 Human authorization仍適用時，Implementer 才 push 到同一 PR；不得 force push、ready/merge。
   - `same-pr-push` → `same-thread-reclassification` → `comment-resolve|human-check`：Independent Reviewer 重新分類 exact thread；只有明確 `addressed-and-resolvable` 才由 Implementer 留 bounded reply 並 resolve exact thread，否則停止 human-check。
 
@@ -71,6 +76,7 @@
 | Architecture correction plan | `plan/model-execution-protocol/model-execution-protocol.plan.md` | Plan-Creator | 本 parent plan 的本次 amendment section 即 correction-plan authority；不新增 standalone correction plan |
 | Architecture correction step | `plan/model-execution-protocol/model-execution-protocol.step.md` | Plan-Creator 初建；後續各 action owner 更新 | 本 parent step 的 reopened route 即 correction-step authority；不新增 standalone correction step |
 | Architecture amendment review receipt | `plan/model-execution-protocol/model-execution-protocol.architecture-amendment-plan-review-receipt.json` | Independent Plan-Reviewer | 綁定本次 committed five-path planning candidate；Implementer 原樣 sole evidence commit |
+| Review-parent amendment Plan-Reviewer receipt | `plan/model-execution-protocol/model-execution-protocol.review-parent-amendment-plan-review-receipt.json` | Independent Plan-Reviewer | 綁定 exact-two workflow-amendment candidate；Implementer 原樣 sole one-path evidence-only commit，Planner 驗證後才可建 status sync |
 | Runtime/invocation ports | `src/deterministic_response_cache/model_execution/ports.py` | Implementer | 本 plan/spec；immutable implementation subject |
 | Port與 execution outcomes | `src/deterministic_response_cache/model_execution/outcomes.py` | Implementer | 本 plan/spec；immutable implementation subject |
 | Execution protocol | `src/deterministic_response_cache/model_execution/protocol.py` | Implementer | 本 plan/spec；immutable implementation subject |
@@ -83,9 +89,9 @@
 | Architecture scene source | `docs/architecture/business-capability/scene.js` | Correction Implementer | exact-five subject；`index.html` generated scene 的 source |
 | Architecture viewer | `docs/architecture/business-capability/index.html` | Correction Implementer | exact-five subject；marker 間 scene block 必須 exact mirror |
 | Architecture correction Tester evidence | `plan/model-execution-protocol/model-execution-protocol.architecture-correction-tester-evidence.json` | Tester | 綁定 exact-five immutable subject；Implementer 原樣 sole evidence commit |
-| Architecture correction implementation review | `plan/model-execution-protocol/model-execution-protocol.architecture-correction-implementation-review-log.json` | Independent Reviewer | 僅消費 committed passing correction Tester evidence；Implementer 原樣 sole evidence commit |
+| Architecture correction implementation review | `plan/model-execution-protocol/model-execution-protocol.architecture-correction-implementation-review-log.json` | Independent Reviewer | verified status sync 後重新審同 subject/passing evidence/ancestry/schema；Implementer 原樣 sole commit且 direct parent 必須是 status sync |
 
-`README.md`、`VERSION`、`.github/copilot-instructions.md`、`pyproject.toml`、其他 BC、未列 architecture docs、Python/tests 與 package initializers 均不在本 correction 寫入面。未列 path 必須停止並返回 Planner。上述 parent plan/step 加三個專用 evidence paths 合成此 correction 的 exact five-artifact extension。
+`README.md`、`VERSION`、`.github/copilot-instructions.md`、`pyproject.toml`、其他 BC、未列 architecture docs、Python/tests 與 package initializers 均不在本 correction 寫入面。未列 path 必須停止並返回 Planner。上述 parent plan/step 加三個 correction evidence paths 保留原 correction extension；review-parent amendment receipt 是本次 workflow amendment 的額外專用 routing evidence，不取代或覆寫任何既有 receipt。
 
 ### Architecture correction evidence schemas
 
@@ -141,7 +147,24 @@ Architecture correction implementation-review log：
 }
 ```
 
-Reviewer 只可消費已提交、同 topic/thread/correction/subject 且 `passing` 的 Tester evidence；否則不得寫 log。`approved` 要求空 blockers，`needs-rework` 要求至少一個 non-empty string。Reviewer 只寫不 commit；Implementer 原樣以 sole one-path evidence-only commit 提交，第一 parent 為 Tester evidence commit。
+Reviewer 只可消費已提交、同 topic/thread/correction/subject 且 `passing` 的 Tester evidence；否則不得寫 log。`approved` 要求空 blockers，`needs-rework` 要求至少一個 non-empty string。Reviewer 只寫不 commit。對本次 review-parent amendment，Implementer 只可在 Reviewer 重新確認後原樣提交 sole one-path log commit，其 direct parent 必須是 Planner 驗證過的 status-sync；passing Tester evidence `f71de2beb9801cf01c37d02bca658ee0d8f28599` 必須位於該 status-sync 的 first-parent ancestry。原先以 Tester evidence 為直接 parent 的 generic route 對本 subject 已 superseded。
+
+Review-parent workflow amendment Plan-Reviewer receipt：
+
+```json
+{
+  "schema_version": 1,
+  "topic": "model-execution-protocol",
+  "amendment_id": "model-execution-protocol/review-parent-workflow",
+  "thread_id": "PRRT_kwDOUJTij86lAh0Z",
+  "planning_candidate_commit": "<full 40-hex exact-two planning candidate>",
+  "verdict": "approved|needs-rework",
+  "blocking_issues": [],
+  "recorded_by": "Independent Plan-Reviewer"
+}
+```
+
+Top-level keys 必須恰為上述八項；`planning_candidate_commit` 必須是 full lowercase 40-hex 且其 committed diff 只含 topic plan/step。`approved` 要求空 `blocking_issues`；`needs-rework` 要求至少一個 non-empty string。Plan-Reviewer 只寫不 commit；Implementer 原樣以 sole one-path evidence-only commit 提交，direct parent 為 planning candidate。Planner 驗證 receipt schema、candidate binding 與 sole-commit topology 後，才可 route status-sync Implementer。
 
 ## Python implementation metadata
 
@@ -213,6 +236,7 @@ PR #7 runtime 契約未穩定，實際接線可能需要 adapter 或新的 cross
 - `uv run pytest -q`
 - Tester 在 immutable subject 建立後記錄上述實際 command/exit code；Reviewer 驗證 actual diff 僅含四個 implementation paths、三個 method 各只用一層 `match/case` 且分工符合 technical spec、direct imports 與五種情境均成立，沒有讀取 identity 規則、Response Reuse 或 PR #7 未確認 contract。Tester evidence 必須綁定同一 immutable subject；只有 committed passing evidence 可進 Reviewer。
 - correction Tester 另驗證 `git diff-tree --no-commit-id --name-status -r <subject>` 恰為五個 `M` paths、`git diff --exit-code 9a3460b6e4412384ed7e3426ebc32820a46818e6 <subject> -- src tests` 為零、五份來源語意一致、technical spec 所列 Python stdlib mirror command 通過、`git diff --check <subject>^ <subject>` 與 `uv run pytest -q` exit code 為零。實際 `<subject>` 只能在 commit 後填入 evidence，不得預填。
+- review-parent gate 必須驗證 status-sync 恰有一個 parent、diff 恰為 `M\tplan/model-execution-protocol/model-execution-protocol.step.md`、direct parent 是新 planning receipt sole commit，且 `git rev-list --first-parent <status-sync>` 明確包含 `f71de2beb9801cf01c37d02bca658ee0d8f28599`。review-log commit 必須是 sole one-path、single-parent commit，direct parent 恰為 verified status-sync；status-sync 與 review-log 之間不得有其他 commit。
 
 ## Reviewer Handoff
 
@@ -224,7 +248,7 @@ PR #7 runtime 契約未穩定，實際接線可能需要 adapter 或新的 cross
 }
 ```
 
-此三欄 handoff 是 predecessor general planning review 的 frozen contract。architecture correction 的 Independent Plan-Reviewer 僅審查新提交的 five-path planning candidate，並改用上方 `architecture-amendment-plan-review-receipt.json` exact schema；不得覆寫任何舊 receipt。Implementer 原樣以 sole evidence-only commit 提交，第一 parent 必須是新 candidate commit；Planner 以 Git 驗證 binding。兩種 handoff 都不等於 implementation approval。
+此三欄 handoff 是 predecessor general planning review 的 frozen contract。architecture correction 與 review-parent workflow amendment 分別使用上方兩個專用 receipt schemas，不得覆寫任何舊 receipt；Planner 以 Git 驗證各自 binding。任何 planning handoff 都不等於 implementation approval，現有 untracked correction review log 亦不構成 verdict authority。
 
 ## Post-merge / release actions
 
