@@ -36,4 +36,12 @@
 - 上述五種結果均能以直接 import 與 test doubles 驗證，不需模型、網路或 provider。
 - 每次執行至多 resolve 一次、prepare 一次、invoke 一次；準備僅發生在明確缺失時。
 - 成功與失敗使用不同結果型別；失敗結果不攜帶 response。
-- production 變更僅位於 Model Execution BC；既有 BC、架構與 direct-import regression 維持原樣。
+- Python production 變更僅位於 Model Execution BC；既有 BC 與 direct-import regression 維持原樣。
+
+## PR comment architecture status amendment
+
+- Human 已要求處理 PR thread `PRRT_kwDOUJTij86lAh0Z`。該 thread 指出架構文件仍把 Model Execution 全部標成 future，與已交付的 provider-neutral、同步、可注入 coordination contracts 不一致。
+- 本 amendment 只把下列五份架構來源同步為目前狀態：`docs/business-capability-architecture.md`、`docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、`docs/architecture/business-capability/scene.js`、`docs/architecture/business-capability/index.html`。
+- 五份來源必須一致表達：`ports.py`、`outcomes.py`、`protocol.py` 的 coordination contracts 已實作；Loaded Runtime Cache 的實際 wiring、retention/backend、具體 Provider Adapter、cross-BC composition，以及 Response Reuse `Miss`／execution result handoff integration 仍是 future work。
+- 本 amendment 不改 Python 行為、public contract 或測試。相對 immutable predecessor PR HEAD `9a3460b6e4412384ed7e3426ebc32820a46818e6`，`src/` 與 `tests/` 的 blobs 必須不變。
+- `docs/architecture/business-capability/scene.js` 是 `index.html` 中 `SCENE START (generated)` 與 `SCENE END` markers 間的 scene source；correction subject 必須維持該區段與 `scene.js` byte-for-byte 相同。

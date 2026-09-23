@@ -11,6 +11,11 @@
 7. 每次 execute 最多呼叫 resolve、prepare、invoke 各一次；`runtime_request`、`invocation` 與 ready `runtime` 皆原 object 傳遞，不建立或解讀 identity。
 8. 每個 port 回傳 `None` 或宣告 union 外的值均 raise `TypeError`；port 自行拋出的 exception 原樣傳播，不能被轉成任一業務 failure。
 9. 新 module 可以 direct import，既有 Identity、Response Reuse 與 package import regressions 均維持通過。
+10. PR thread `PRRT_kwDOUJTij86lAh0Z` 的 architecture status correction 只修改五個已宣告 docs paths，將 provider-neutral 同步 coordination contracts 標為已實作。
+11. 五份架構來源仍把 Loaded Runtime Cache 實際 wiring／retention/backend、具體 Provider Adapter、cross-BC composition、Response Reuse `Miss`／result handoff integration 標為 future，且不得宣稱已完成 end-to-end execution path。
+12. `scene.js` 與 `index.html` 固定 marker 間的 scene block byte-for-byte 相同；任一 marker 缺失、多重或內容差異均不通過。
+13. correction subject 相對 PR HEAD `9a3460b6e4412384ed7e3426ebc32820a46818e6` 不改 `src/` 或 `tests/` blobs，也不新增、刪除或 rename path。
+14. 舊 planning、implementation、Tester、Reviewer 與 PR-head commits 只作 predecessor provenance；本 correction 必須使用專用 Plan-Reviewer、Tester 與 Reviewer evidence，舊 approval 不得替代。
 
 ## Behavioral Scenarios
 
@@ -49,3 +54,9 @@
 - resolve、prepare 或 invoke 的 foreign/`None` result 各自構成 port contract violation；`TypeError` 後不得繼續至下一步。
 - 任一 port 拋出 exception 時原樣傳播，不製造成功 response、不進行 retry。
 - 本契約不定義 `ModelIdentity`→runtime key 映射、PR #7 實際 API 或 provider adapter；需要接線時由後續 topic 規劃。
+
+## Architecture Correction Scenario
+
+- **Given:** Model Execution coordination contracts 已存在，但五份 architecture sources 仍把整個 Model Execution capability 標為 future。
+- **When:** Implementer 依 approved architecture amendment 只同步 exact-five docs，並維持 `scene.js`／`index.html` scene block exact mirror。
+- **Then:** 所有來源一致區分「已實作 coordination contracts」與「仍 future 的 runtime/provider/cross-BC handoff integration」，且 Python 行為、tests 與 public contract 相對 predecessor 完全不變。

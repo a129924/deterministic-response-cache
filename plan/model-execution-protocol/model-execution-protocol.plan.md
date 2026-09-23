@@ -7,8 +7,8 @@
 
 ## Scope
 
-- **In scope:** 新增 Model Execution BC 的同步 ports、outcomes 與 protocol，以及一份 direct-import 行為測試；產出本 topic 的 analysis、plan、spec、step、Plan-Reviewer／Tester／Reviewer evidence。
-- **Out of scope:** 任何既有 BC 或文件變更、跨 BC composition、真實 runtime/provider 接線、identity/runtime key 映射、response lookup/record、持久化、async、retry、timeout、cancellation 與並行政策。
+- **In scope:** 已交付的 Model Execution BC 同步 ports、outcomes、protocol 與 direct-import 行為測試；Human-directed PR thread `PRRT_kwDOUJTij86lAh0Z` 的 exact-five architecture status correction；本 correction 的 Plan-Reviewer／Tester／Reviewer evidence。
+- **Out of scope:** exact-five 以外的既有 BC 或文件變更、Python/test 行為變更、跨 BC composition、真實 runtime/provider 接線、identity/runtime key 映射、response lookup/record、持久化、async、retry、timeout、cancellation 與並行政策。
 
 ## Locked Decisions
 
@@ -20,17 +20,19 @@
 - 不新增 package `__init__.py`、root export、provider-specific branch、實體 adapter 或 dependency。`model_execution/` 現有 `.gitkeep` 只是 topology marker，不當作功能 module。
 - 實際 Loaded Runtime Cache／Provider Adapter 接線需在各自契約穩定後由獨立 topic 規劃；若相依契約與本地 port 語意不符，先回 Planner 確認 scope 與架構，不讓 Implementer 自行調整其他 BC。
 - branch/worktree 固定為 `topic/model-execution-protocol` 與 `<repo-parent>/worktrees/model-execution-protocol`；`dev` 只作已驗證 admission base，不承載本 topic writer。
+- PR thread `PRRT_kwDOUJTij86lAh0Z` 的 status correction 只更新架構敘述：provider-neutral、同步、可注入的 Model Execution coordination contracts（ports、outcomes、protocol）已實作；Loaded Runtime Cache 實際 wiring／retention/backend、具體 Provider Adapter、cross-BC composition，以及 Response Reuse `Miss`／execution result handoff integration 仍是 future。
+- correction implementation subject 只能修改五份 architecture docs；Python、tests 與 public contract 相對 PR HEAD `9a3460b6e4412384ed7e3426ebc32820a46818e6` 必須不變。`scene.js` 是 `index.html` 固定 generated markers 間 scene block 的 source，兩者必須 byte-for-byte mirror。
 
 ## Boundaries / Exclusions
 
 - Identity BC 獨占 identity 規則；Response Reuse BC 獨占 lookup、eligibility、record 與其內部 CacheStore；Loaded Runtime Cache 獨占 runtime retention、Runtime Store／Registry 與實際 preparation；Provider Adapter 的具體 integration 仍是獨立可替換邊界。Model Execution 只協調已注入的 runtime 與 invocation ports。
-- Plan-Creator 只寫五份 planning artifacts（初稿及其修訂）；Independent Plan-Reviewer 獨立寫 planning receipt；Implementer 只提交 bounded candidate、implementation subject 或原樣 evidence；Tester 寫 factual same-subject evidence；Independent Reviewer 消費 committed passing Tester evidence 後寫 review evidence。Observer 不改檔或自行判 gate。
+- Plan-Creator 只寫五份 planning artifacts（初稿及其修訂）；Independent Plan-Reviewer 獨立寫對應 planning receipt；Implementer 只提交 bounded candidate、exact-five correction subject 或原樣 evidence；Tester 寫 factual same-subject evidence；Independent Reviewer 消費 committed passing Tester evidence 後寫 review evidence。Observer 不改檔或自行判 gate。
 - 既有 direct imports、fixtures、mocks 與 assertions 不得改寫；不使用 `importlib`、`__import__` 或 `sys.modules` 替代 direct-import regression。宣告路徑外的需求回 Planner；架構責任衝突時先確認架構文件。
 
 ## Status / Allowed Transitions
 
-- **Planning provenance / current amendment:** 第一個 five-path planning candidate `5f08dbc610a25fc4ae39eaaac20282f9a94e907d` 與 `needs-rework` receipt commit `64ab26c09831b47599543ce74c61733e052bcd44` 已提交；修訂 candidate `07c0a62bdfb640cc02b7370d1af616c970629084` 的 `approved` receipt 另由 commit `aa41081300cbf2191b5d5b51c64cc67ebfb5cf1b` 提交。Human 已指示本次 `protocol.py` 內部結構修訂取代舊 approved candidate，先補 amendment transition 並重新獨立審查。舊 candidate/receipt 保留 immutable provenance，不作新修訂的 approval；在新 candidate 的獨立 approved receipt 提交及 Planner re-route 前，沒有可供實作的 active candidate，也不得同時存在兩個 active candidates。新 candidate SHA 與 verdict 不預填。
-- **Execution model:** isolated worktree → five-path planning candidate → independent Plan-Reviewer receipt → Planner route → immutable four-path implementation subject → independent Tester evidence → independent Reviewer evidence → Planner Phase 4.5 alignment → 既有 Human authorization 下的 bounded publish/draft PR → Human review/merge。`pr-open` 之後 Human 才能 merge；本 topic 在 merge 後 terminal，無 release action。
+- **Immutable predecessor provenance / current amendment:** active predecessor planning candidate `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`、approved amendment receipt `5145a59be17a3845da074d88e8530b59bfb45e57`、implementation subject `868df3b338e022371a55a2125b270a52ba1c6874`、passing Tester evidence `12bdfb1b5350ee71e3af70df38a462ce9286fba5`、approved Reviewer evidence `dee1740b73d0274445d0c3967272d0475d82e779` 與 current PR HEAD `9a3460b6e4412384ed7e3426ebc32820a46818e6` 均保留 immutable provenance。Human 已指示處理 thread `PRRT_kwDOUJTij86lAh0Z`，Planner 已將 phase 判為 `planning-amendment-pending` 並派 Plan-Creator；舊 Q／Reviewer evidence 與舊 Phase 4.5 結果都不是本 correction 的 approval。新 planning candidate SHA 與 verdict 不預填。
+- **Execution model:** Human-directed PR-comment amendment → five-path planning candidate → independent Plan-Reviewer → sole receipt commit → Planner route → immutable exact-five docs subject → independent Tester → sole Tester-evidence commit → Independent Reviewer → sole Reviewer-evidence commit → Planner Phase 4.5 alignment → push same PR → same-thread reclassification → Implementer bounded reply/resolve only if classified addressed-and-resolvable → Human review/merge。
 - **Allowed transitions:**
   - `planned` → `planning-candidate-committed`：Implementer 只提交五份 initial planning artifacts。
   - `planning-candidate-committed` → `plan-review-in-progress`：Planner 派 Independent Plan-Reviewer 審查該 committed candidate。
@@ -46,6 +48,14 @@
   - `review-ready` → `reviewer-in-progress` → `approved|needs-rework`：Independent Reviewer 驗證同 topic、同 subject、passing Tester evidence；其 evidence 由 Implementer 原樣單獨提交。`needs-rework` 返回 Implementer，建立新 subject 並重跑 Tester/Reviewer。
   - `approved` → `publish-in-progress`：Planner Phase 4.5 alignment 與既有 Human authorization 均具備後，Implementer 才可 bounded commit/push/draft PR。
   - `publish-in-progress` → `pr-open` → `merged`：不得從 publish 直接跳 merge；Human 獨占 PR review 與 merge。`merged` 為本 topic terminal。
+  - `pr-open` → `human-directed-architecture-amendment-pending` → `planning-amendment-in-progress`：僅針對 exact thread `PRRT_kwDOUJTij86lAh0Z`，由 Plan-Creator 修改五份既有 planning artifacts；predecessor evidence 全部 frozen。
+  - `planning-amendment-in-progress` → `planning-candidate-committed` → `plan-review-in-progress`：Implementer 只提交五份 planning artifacts；Independent Plan-Reviewer 只審該 committed candidate。
+  - `plan-review-in-progress` → `architecture-amendment-receipt-written` → `architecture-amendment-receipt-committed`：Plan-Reviewer 寫專用 receipt，Implementer 原樣以 sole evidence-only commit 提交；`needs-rework` 回 Plan-Creator，只有 Planner 驗證 committed `approved` receipt 才能 route correction Implementer。
+  - `architecture-amendment-receipt-committed` → `architecture-correction-in-progress` → `architecture-correction-subject-committed`：Implementer 建立且只建立 exact-five docs-only immutable subject，不改 Python/tests。
+  - `architecture-correction-subject-committed` → `tester-in-progress` → `correction-tester-evidence-committed`：Tester 寫同 subject factual evidence，Implementer 原樣以 sole evidence-only commit 提交；只有 committed `passing` 可供 Reviewer 消費。
+  - `correction-tester-evidence-committed` → `reviewer-in-progress` → `correction-review-evidence-committed`：Independent Reviewer 審同一 subject 與 committed passing evidence，Implementer 原樣以 sole evidence-only commit 提交；`needs-rework` 返回 correction Implementer 並以新 subject 重跑 Tester／Reviewer。
+  - `correction-review-evidence-committed` → `phase-4.5-alignment` → `same-pr-push`：只有 Planner 對新 candidate、subject、Tester/Reviewer evidence 完成 alignment 且既有 Human authorization仍適用時，Implementer 才 push 到同一 PR；不得 force push、ready/merge。
+  - `same-pr-push` → `same-thread-reclassification` → `comment-resolve|human-check`：Independent Reviewer 重新分類 exact thread；只有明確 `addressed-and-resolvable` 才由 Implementer 留 bounded reply 並 resolve exact thread，否則停止 human-check。
 
 ## Artifact Paths
 
@@ -58,14 +68,80 @@
 | Step tracker | `plan/model-execution-protocol/model-execution-protocol.step.md` | Plan-Creator 初建；後續各 action owner 更新 | 同 topic step progression；initial candidate |
 | Planning review receipt | `plan/model-execution-protocol/model-execution-protocol.plan-review-receipt.json` | Independent Plan-Reviewer | 綁定 actual committed planning candidate；Implementer sole evidence commit |
 | Amendment planning review receipt | `plan/model-execution-protocol/model-execution-protocol.amendment-plan-review-receipt.json` | Independent Plan-Reviewer | 僅審本次新 committed planning candidate；Implementer sole evidence commit，Planner 以 Git 驗證 binding |
+| Architecture correction plan | `plan/model-execution-protocol/model-execution-protocol.plan.md` | Plan-Creator | 本 parent plan 的本次 amendment section 即 correction-plan authority；不新增 standalone correction plan |
+| Architecture correction step | `plan/model-execution-protocol/model-execution-protocol.step.md` | Plan-Creator 初建；後續各 action owner 更新 | 本 parent step 的 reopened route 即 correction-step authority；不新增 standalone correction step |
+| Architecture amendment review receipt | `plan/model-execution-protocol/model-execution-protocol.architecture-amendment-plan-review-receipt.json` | Independent Plan-Reviewer | 綁定本次 committed five-path planning candidate；Implementer 原樣 sole evidence commit |
 | Runtime/invocation ports | `src/deterministic_response_cache/model_execution/ports.py` | Implementer | 本 plan/spec；immutable implementation subject |
 | Port與 execution outcomes | `src/deterministic_response_cache/model_execution/outcomes.py` | Implementer | 本 plan/spec；immutable implementation subject |
 | Execution protocol | `src/deterministic_response_cache/model_execution/protocol.py` | Implementer | 本 plan/spec；immutable implementation subject |
 | Direct-import tests | `tests/test_model_execution_protocol.py` | Implementer | 本 plan/spec；immutable implementation subject |
 | Tester evidence | `plan/model-execution-protocol/model-execution-protocol.tester-evidence.json` | Tester | Actual immutable subject/command/exit code；Implementer sole evidence commit |
 | Implementation review log | `plan/model-execution-protocol/model-execution-protocol.implementation-review-log.json` | Independent Reviewer | Same-subject committed passing Tester evidence；Implementer sole evidence commit |
+| Architecture source | `docs/business-capability-architecture.md` | Correction Implementer | exact-five subject；同步已實作 coordination 與 future integration 狀態 |
+| Evolution roadmap | `docs/evolution-roadmap.md` | Correction Implementer | exact-five subject；同步能力完成度與後續順序 |
+| Architecture brief | `docs/architecture/business-capability/architecture-brief.md` | Correction Implementer | exact-five subject；同步文字權責與狀態 |
+| Architecture scene source | `docs/architecture/business-capability/scene.js` | Correction Implementer | exact-five subject；`index.html` generated scene 的 source |
+| Architecture viewer | `docs/architecture/business-capability/index.html` | Correction Implementer | exact-five subject；marker 間 scene block 必須 exact mirror |
+| Architecture correction Tester evidence | `plan/model-execution-protocol/model-execution-protocol.architecture-correction-tester-evidence.json` | Tester | 綁定 exact-five immutable subject；Implementer 原樣 sole evidence commit |
+| Architecture correction implementation review | `plan/model-execution-protocol/model-execution-protocol.architecture-correction-implementation-review-log.json` | Independent Reviewer | 僅消費 committed passing correction Tester evidence；Implementer 原樣 sole evidence commit |
 
-`README.md`、`VERSION`、`.github/copilot-instructions.md`、`pyproject.toml`、其他 BC、architecture docs 與 package initializers 均不在本 topic 寫入面。未列 path 必須停止並返回 Planner；本 topic 不宣告 correction-artifact extension。
+`README.md`、`VERSION`、`.github/copilot-instructions.md`、`pyproject.toml`、其他 BC、未列 architecture docs、Python/tests 與 package initializers 均不在本 correction 寫入面。未列 path 必須停止並返回 Planner。上述 parent plan/step 加三個專用 evidence paths 合成此 correction 的 exact five-artifact extension。
+
+### Architecture correction evidence schemas
+
+三份新 evidence 都是單一 JSON object，top-level keys 必須恰為下列 schema 所列；SHA 必須為完整 lowercase 40-hex。缺鍵、多鍵、縮寫 SHA、topic/thread/correction/subject 不一致均 fail closed。
+
+Architecture amendment Plan-Reviewer receipt：
+
+```json
+{
+  "schema_version": 1,
+  "topic": "model-execution-protocol",
+  "correction_id": "model-execution-protocol/pr-comment-architecture-status",
+  "thread_id": "PRRT_kwDOUJTij86lAh0Z",
+  "planning_candidate_commit": "<40-hex five-planning-path candidate>",
+  "verdict": "approved|needs-rework",
+  "blocking_issues": [],
+  "recorded_by": "Independent Plan-Reviewer"
+}
+```
+
+`approved` 要求空 `blocking_issues`；`needs-rework` 要求至少一個 non-empty string。Plan-Reviewer 只寫不 commit；Implementer 必須原樣以 sole one-path evidence-only commit 提交，第一 parent 為該 planning candidate。Planner 驗證 candidate 與 receipt commit 的 Git binding 後才可 route。
+
+Architecture correction Tester evidence：
+
+```json
+{
+  "schema_version": 1,
+  "topic": "model-execution-protocol",
+  "correction_id": "model-execution-protocol/pr-comment-architecture-status",
+  "thread_id": "PRRT_kwDOUJTij86lAh0Z",
+  "implementation_subject_commit": "<40-hex exact-five docs subject>",
+  "status": "passing|failing",
+  "commands": [{"command": "<non-empty command>", "exit_code": 0}],
+  "recorded_by": "Tester"
+}
+```
+
+`commands` 是 non-empty array，各 entry 只能有 non-empty string `command` 與 integer `exit_code`；所有 exit codes 為 `0` 才能 `passing`，`failing` 至少一個 non-zero。Tester 只寫不 commit；Implementer 原樣以 sole one-path evidence-only commit 提交，第一 parent 為 implementation subject。
+
+Architecture correction implementation-review log：
+
+```json
+{
+  "schema_version": 1,
+  "topic": "model-execution-protocol",
+  "correction_id": "model-execution-protocol/pr-comment-architecture-status",
+  "thread_id": "PRRT_kwDOUJTij86lAh0Z",
+  "implementation_subject_commit": "<same 40-hex exact-five docs subject>",
+  "tester_evidence_commit": "<40-hex sole passing evidence commit>",
+  "verdict": "approved|needs-rework",
+  "blocking_issues": [],
+  "recorded_by": "Independent Reviewer"
+}
+```
+
+Reviewer 只可消費已提交、同 topic/thread/correction/subject 且 `passing` 的 Tester evidence；否則不得寫 log。`approved` 要求空 blockers，`needs-rework` 要求至少一個 non-empty string。Reviewer 只寫不 commit；Implementer 原樣以 sole one-path evidence-only commit 提交，第一 parent 為 Tester evidence commit。
 
 ## Python implementation metadata
 
@@ -78,7 +154,7 @@
 
 ### Current Context
 
-`src/deterministic_response_cache/model_execution/` 只有預留 topology；Response Reuse 已有同步 `Miss()`，但沒有下游 execution module。PR #7 的 Loaded Runtime Cache 契約不在此 baseline 中，不能據此指定 import 或 adapter。Python 版本為 3.12，`pyproject.toml` 使用 strict pyright、ruff 與 pytest。
+predecessor PR HEAD `9a3460b6e4412384ed7e3426ebc32820a46818e6` 已包含 Model Execution 同步 coordination modules 與 tests；五份架構來源仍把整個 capability 呈現為 future，因此需要狹窄 status correction。PR #7 的 Loaded Runtime Cache 契約不在此 topic scope，不能據此指定 import 或 adapter。Python 版本為 3.12，`pyproject.toml` 使用 strict pyright、ruff 與 pytest。
 
 ### Requirements
 
@@ -101,7 +177,7 @@
 
 ### Affected Files / Modules
 
-Written：`src/deterministic_response_cache/model_execution/ports.py`、`src/deterministic_response_cache/model_execution/outcomes.py`、`src/deterministic_response_cache/model_execution/protocol.py`、`tests/test_model_execution_protocol.py`。Modified/Deleted：none。五份 planning artifacts 與各份 evidence 的權責見 `Artifact Paths`。
+Predecessor Written：`src/deterministic_response_cache/model_execution/ports.py`、`src/deterministic_response_cache/model_execution/outcomes.py`、`src/deterministic_response_cache/model_execution/protocol.py`、`tests/test_model_execution_protocol.py`，本 correction 保持其 blobs 不變。Correction Modified：五份 exact architecture paths。Written：三份專用 evidence 依各 phase 產生。Deleted：none。五份 planning artifacts 與各份 evidence 的權責見 `Artifact Paths`。
 
 ### Test Plan
 
@@ -125,6 +201,8 @@ PR #7 runtime 契約未穩定，實際接線可能需要 adapter 或新的 cross
 2. 新增 `src/deterministic_response_cache/model_execution/ports.py`，定義同步 generic `RuntimeAccess` 與 `ModelInvoker` Protocol，僅 import 本 BC outcomes，不 import Identity、Response Reuse、Loaded Runtime Cache 或 Provider Adapter。
 3. 新增 `src/deterministic_response_cache/model_execution/protocol.py`，依 technical spec 以 `execute`、`_prepare_and_invoke`、`_invoke` 各自單層 `match/case` 實作 resolve → conditional prepare → invoke mapping，保留 opaque object identity、限制呼叫次數並拒絕 foreign/`None` results。
 4. 新增 `tests/test_model_execution_protocol.py`，以 direct imports 與 typed fakes 驗證 ready、missing、unavailable、preparation failure、invocation failure、invalid port results、exception propagation 與不觸碰其他 BC 的界線。
+5. 在 approved architecture-amendment receipt 與 Planner route 後，只修改 exact-five architecture sources，使五者一致區分已實作的 provider-neutral coordination contracts 與仍 future 的 runtime/provider/cross-BC handoff integration。
+6. 將更新後 `scene.js` 的完整內容同步到 `index.html` 固定 generated markers 之間，維持 byte-for-byte mirror；不改 viewer 其他程式、幾何或互動行為。
 
 ## Validation / Acceptance Checks
 
@@ -134,6 +212,7 @@ PR #7 runtime 契約未穩定，實際接線可能需要 adapter 或新的 cross
 - `uv run pytest tests/test_model_execution_protocol.py -q`
 - `uv run pytest -q`
 - Tester 在 immutable subject 建立後記錄上述實際 command/exit code；Reviewer 驗證 actual diff 僅含四個 implementation paths、三個 method 各只用一層 `match/case` 且分工符合 technical spec、direct imports 與五種情境均成立，沒有讀取 identity 規則、Response Reuse 或 PR #7 未確認 contract。Tester evidence 必須綁定同一 immutable subject；只有 committed passing evidence 可進 Reviewer。
+- correction Tester 另驗證 `git diff-tree --no-commit-id --name-status -r <subject>` 恰為五個 `M` paths、`git diff --exit-code 9a3460b6e4412384ed7e3426ebc32820a46818e6 <subject> -- src tests` 為零、五份來源語意一致、technical spec 所列 Python stdlib mirror command 通過、`git diff --check <subject>^ <subject>` 與 `uv run pytest -q` exit code 為零。實際 `<subject>` 只能在 commit 後填入 evidence，不得預填。
 
 ## Reviewer Handoff
 
@@ -145,7 +224,7 @@ PR #7 runtime 契約未穩定，實際接線可能需要 adapter 或新的 cross
 }
 ```
 
-Independent Plan-Reviewer 僅審查已提交的 planning candidate，依一般 topic 固定三欄契約填寫 verdict、含 `issue`／`file`／`fix` 的 blocking issues 與 Copilot feedback triage；Implementer 原樣以 sole evidence-only commit 提交 receipt。本次 amendment 使用專用 receipt path，不改舊 receipt；其 sole receipt commit 必須以新 candidate commit 為第一 parent。Planner 以 Git 的 candidate commit/tree、五份 planning artifact blobs 與 sole receipt commit 驗證對應關係，不以 receipt 額外欄位或聊天推定。此 handoff 不等於 implementation approval。
+此三欄 handoff 是 predecessor general planning review 的 frozen contract。architecture correction 的 Independent Plan-Reviewer 僅審查新提交的 five-path planning candidate，並改用上方 `architecture-amendment-plan-review-receipt.json` exact schema；不得覆寫任何舊 receipt。Implementer 原樣以 sole evidence-only commit 提交，第一 parent 必須是新 candidate commit；Planner 以 Git 驗證 binding。兩種 handoff 都不等於 implementation approval。
 
 ## Post-merge / release actions
 
@@ -153,4 +232,4 @@ Independent Plan-Reviewer 僅審查已提交的 planning candidate，依一般 t
 
 ## Open Questions / Unresolved Items
 
-本 topic 自身的協調與 port contract 無未決實作選擇。PR #7 Loaded Runtime Cache 的實際 adapter/composition 及跨 BC 整合仍未鎖定，屬後續獨立 topic；若其最終契約與這裡的語意衝突，先返回 Planner/架構確認，不在 implementation 中推測。
+本 correction 的語意、exact-five paths、mirror 機制與 evidence route 已鎖定，無未決實作選擇。PR #7 Loaded Runtime Cache 的實際 adapter/composition 及跨 BC 整合仍未鎖定，屬後續獨立 topic；若其最終契約與這裡的語意衝突，先返回 Planner/架構確認，不在 correction 中推測。

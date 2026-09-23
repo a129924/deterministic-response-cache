@@ -1,6 +1,6 @@
 ---
 topic: model-execution-protocol
-phase: phase-4.5-alignment-pending
+phase: planning-amendment-in-progress
 created: 2026-09-22
 ---
 
@@ -17,6 +17,10 @@ created: 2026-09-22
 - [X] tdd-test-authoring
 - [X] implementation
 - [X] implementation-review
+- [ ] architecture-amendment-plan-review
+- [ ] architecture-correction
+- [ ] architecture-correction-test
+- [ ] architecture-correction-review
 - [ ] code-review
 
 ## Actionable Steps
@@ -31,6 +35,15 @@ created: 2026-09-22
 - [X] **Actor:** Implementer — **Action:** 在 approved planning receipt 與 Planner route 後，只以四份 declared implementation paths 建 immutable subject `868df3b338e022371a55a2125b270a52ba1c6874`。
 - [X] **Actor:** Tester — **Action:** 對 immutable subject 執行驗證，寫入 actual command/exit-code evidence；Implementer 已原樣以 passing evidence sole commit `12bdfb1b5350ee71e3af70df38a462ce9286fba5` 提交。
 - [X] **Actor:** Independent Reviewer — **Action:** 已只消費 immutable subject `868df3b338e022371a55a2125b270a52ba1c6874` 的 committed passing Tester evidence sole commit `12bdfb1b5350ee71e3af70df38a462ce9286fba5`，並由 Implementer 原樣以 approved review evidence sole commit `dee1740b73d0274445d0c3967272d0475d82e779` 提交。
+- [X] **Actor:** Human／Planner — **Action:** Human 指示處理 thread `PRRT_kwDOUJTij86lAh0Z`；Planner 將其分類為狹窄 architecture status transition，phase 為 `planning-amendment-pending`，next role 為 Plan-Creator。
+- [X] **Actor:** Plan-Creator — **Action:** 只修改五份既有 planning artifacts，記錄 exact-five docs scope、locked status semantics、新 evidence schemas 與 correction route；不得修改 architecture docs、Python、tests 或既有 evidence。
+- [ ] **Actor:** Implementer — **Action:** 將且只將五份 planning artifacts 提交為新的 immutable architecture-amendment candidate；不得混入 docs correction 或 evidence。
+- [ ] **Actor:** Independent Plan-Reviewer — **Action:** 審查 committed candidate，僅寫 `model-execution-protocol.architecture-amendment-plan-review-receipt.json`；不得 commit 或自行 route。
+- [ ] **Actor:** Implementer — **Action:** 原樣以 sole one-path evidence-only commit 提交 approved receipt，第一 parent 為 planning candidate；交 Planner 驗證 binding。`needs-rework` 返回 Plan-Creator。
+- [ ] **Actor:** Planner／Implementer — **Action:** Planner 只在 committed approved receipt 成立後 route；Implementer 只修改 exact-five architecture docs，建立 immutable docs-only subject。
+- [ ] **Actor:** Tester／Implementer — **Action:** Tester 對 exact-five subject 寫 factual architecture-correction evidence；Implementer 原樣以 sole one-path evidence-only commit 提交 passing evidence。
+- [ ] **Actor:** Independent Reviewer／Implementer — **Action:** Reviewer 僅消費 committed passing same-subject evidence並寫 correction review log；Implementer 原樣以 sole one-path evidence-only commit 提交 approved log。
+- [ ] **Actor:** Planner／Implementer／Independent Reviewer — **Action:** Planner 完成 Phase 4.5 alignment 後，Implementer 才 push 到同一 PR；Reviewer 重新分類 exact thread。只有 `addressed-and-resolvable` 才由 Implementer bounded reply 並 resolve，否則 `human-check`。
 
 ## Implementation Steps
 
@@ -41,14 +54,19 @@ created: 2026-09-22
 
 ## Main Agent Actionable Steps — Fixed Tail
 
-- [ ] 只在 required evidence、Planner Phase 4.5 alignment 與既有 Human authorization 均具備時，派 Implementer 對 declared scope 進行 bounded commit、push 與 draft PR；`pr-open` 後交還 Human review/merge。
+- [ ] 只在 architecture-amendment receipt、exact-five correction subject、passing Tester evidence、approved Reviewer evidence、Planner Phase 4.5 alignment 與既有 Human authorization均具備時，派 Implementer push 同一 PR；再派 Independent Reviewer 對 thread `PRRT_kwDOUJTij86lAh0Z` 做 same-thread reclassification。只有明確 `addressed-and-resolvable` 才派 Implementer 留 bounded reply 並 resolve；merge 仍屬 Human。
 
 ## Handoff / Gate Notes
 
 - Source plan：`plan/model-execution-protocol/model-execution-protocol.plan.md`；本 tracker 不代表 Plan-Reviewer approval。
 - Topic selector：`topic=model-execution-protocol; branch=topic/model-execution-protocol; managed-path-intent=<repo-parent>/worktrees/model-execution-protocol; primary-worktree=false`。
 - Planning receipt、Tester evidence、independent Reviewer evidence 只消費同 topic、同 candidate/subject 的 actual committed evidence，不能跨 topic 重用，也不能由 chat 或 branch 狀態補推。
-- 第一個 five-path candidate `5f08dbc610a25fc4ae39eaaac20282f9a94e907d` 與 `needs-rework` receipt commit `64ab26c09831b47599543ce74c61733e052bcd44` 已提交。舊修訂 candidate `07c0a62bdfb640cc02b7370d1af616c970629084` 與其 `approved` receipt sole commit `aa41081300cbf2191b5d5b51c64cc67ebfb5cf1b` 僅保留為 immutable provenance，不再作 active routing authority。本次 amendment active candidate 是 `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`；Independent Plan-Reviewer 的 `approved` amendment receipt 已由 sole evidence-only commit `5145a59be17a3845da074d88e8530b59bfb45e57` 提交，Planner 已以 Git candidate commit/tree、五份 planning artifact blobs 與 receipt commit 核對 binding 成立。後續 implementation route 仍須由 Planner 判定，不由本 tracker 自行宣告。
-- Phase 4.5 alignment binding：active planning candidate `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`、approved amendment Plan-Reviewer receipt sole commit `5145a59be17a3845da074d88e8530b59bfb45e57`、immutable implementation subject `868df3b338e022371a55a2125b270a52ba1c6874`、passing Tester evidence sole commit `12bdfb1b5350ee71e3af70df38a462ce9286fba5` 與 approved Independent Reviewer evidence sole commit `dee1740b73d0274445d0c3967272d0475d82e779` 已綁定；Planner Phase 4.5 alignment 尚待判定，本 tracker 不自行宣告 publish 完成、PR review 或 merge，亦未記錄 remote 或 PR。
+- 第一個 five-path candidate `5f08dbc610a25fc4ae39eaaac20282f9a94e907d` 與 `needs-rework` receipt commit `64ab26c09831b47599543ce74c61733e052bcd44` 已提交。舊修訂 candidate `07c0a62bdfb640cc02b7370d1af616c970629084` 與其 `approved` receipt sole commit `aa41081300cbf2191b5d5b51c64cc67ebfb5cf1b` 僅保留為 immutable provenance。predecessor implementation 使用的 planning candidate 是 `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`；其 `approved` amendment receipt 已由 sole evidence-only commit `5145a59be17a3845da074d88e8530b59bfb45e57` 提交。兩者均不作本次 architecture correction 的 active routing authority。
+- Immutable predecessor provenance：planning candidate `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`、approved amendment receipt `5145a59be17a3845da074d88e8530b59bfb45e57`、implementation subject `868df3b338e022371a55a2125b270a52ba1c6874`、passing Tester evidence `12bdfb1b5350ee71e3af70df38a462ce9286fba5`、approved Reviewer evidence `dee1740b73d0274445d0c3967272d0475d82e779` 與 PR HEAD `9a3460b6e4412384ed7e3426ebc32820a46818e6` 均不得改寫。它們證明 predecessor delivery，但舊 Q／approval 不核准本次 architecture correction。
+- Current correction id：`model-execution-protocol/pr-comment-architecture-status`；exact thread：`PRRT_kwDOUJTij86lAh0Z`。本次 active planning candidate、receipt、correction subject 及 evidence SHAs 尚未建立，不得預填或由 chat 推定。
+- Exact-five correction subject paths：`docs/business-capability-architecture.md`、`docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、`docs/architecture/business-capability/scene.js`、`docs/architecture/business-capability/index.html`。只能是五個 `M` entries；不得 add/delete/rename。
+- Locked semantics：同步 coordination ports/outcomes/protocol 已實作；Loaded Runtime Cache 實際 wiring／retention/backend、具體 Provider Adapter、cross-BC composition、Response Reuse `Miss`／result handoff integration 仍 future。Python/tests 相對 `9a3460b6e4412384ed7e3426ebc32820a46818e6` 不變。
+- Mirror gate：`scene.js` 必須與 `index.html` 的 `SCENE START (generated)`／`SCENE END` 固定 markers 間內容 byte-for-byte 相同。
+- New evidence paths and exact schemas are authoritative in the source plan: `model-execution-protocol.architecture-amendment-plan-review-receipt.json`（Independent Plan-Reviewer）、`model-execution-protocol.architecture-correction-tester-evidence.json`（Tester）、`model-execution-protocol.architecture-correction-implementation-review-log.json`（Independent Reviewer）。三者均由 Implementer 原樣以各自 sole evidence-only commit 提交，且必須綁定同 candidate/subject 的完整 SHA。
 - PR #7 實際 runtime contract 未鎖定；本 topic 以本地 injected port/test doubles 驗證，未來接線另行規劃。
-- 只有 `## Implementation Steps` 是 implementation-completion gate；Human 獨占 PR review、merge、release、post-merge、tag 與 final summary。
+- predecessor `## Implementation Steps` 的 `[X]` 只保留歷史完成狀態；本次 final PR gate 在新的 architecture correction route 完成前視為未完成。Human 獨占 PR review、merge、release、post-merge、tag 與 final summary。
