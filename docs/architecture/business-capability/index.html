@@ -288,7 +288,7 @@ const PLANES = {
   identity: { c: '#7DD3FC', label: 'Identity authority — opaque handoff' },
   reuse: { c: '#4ADE80', label: 'Response reuse — independent protocol' },
   runtime: { c: '#A78BFA', label: 'Runtime retention — future' },
-  execution: { c: '#F6821F', label: 'Model execution — future' },
+  execution: { c: '#F6821F', label: 'Model execution — coordination contracts implemented' },
   provider: { c: '#FB7185', label: 'Provider boundary — future' }
 };
 
@@ -303,7 +303,7 @@ const BANDS = [
     hdr: { x: 184, y: 790, t: 'RESPONSE REUSE PROTOCOL — CACHESTORE IS INTERNAL' },
     tagr: { x: 1396, y: 790, t: 'INDEPENDENT TOPIC', alpha: 0.7 } },
   { id: 'band-future-core', plane: null, x: 160, y: 1150, w: 1260, h: 330, stroke: '#3A4250', alpha: 1,
-    hdr: { x: 184, y: 1180, t: 'FUTURE CORE CAPABILITIES — NOT BASELINE IMPLEMENTATION', fill: C.slate },
+    hdr: { x: 184, y: 1180, t: 'RUNTIME + EXECUTION CAPABILITIES — MIXED DELIVERY STATUS', fill: C.slate },
     tagr: { x: 1396, y: 1180, t: 'OWNED ABSTRACTIONS', fill: C.slate, alpha: 0.7 } },
   { id: 'band-provider', plane: 'provider', x: 160, y: 1570, w: 1260, h: 200, alpha: 0.3,
     hdr: { x: 184, y: 1600, t: 'PROVIDER ADAPTER BOUNDARY — FUTURE · LOCAL OR REMOTE' },
@@ -360,8 +360,8 @@ const BOXES = [
     name: 'Runtime preparation', about: '未來 miss path：取得或準備可執行的 runtime。',
     texts: [ ['bl', 354, 1398, 'Runtime preparation'], ['bs', 354, 1420, '準備可執行的 runtime'], ['bs', 354, 1436, '不保存 response'] ] },
   { id: 'execution', plane: 'execution', band: 'band-future-core', x: 870, y: 1240, w: 490, h: 104, r: 10, dash: true,
-    name: 'Model Execution', about: '未來協調者：當 response 無法重用時，協調 runtime 與模型執行。',
-    texts: [ ['bl', 894, 1268, 'Model Execution'], ['bs', 894, 1290, '協調 runtime 與 invocation'], ['bs', 894, 1306, '不擁有 identity 或 reuse policy'], ['bn', 894, 1328, '未來能力'] ] },
+    name: 'Model Execution', about: '已實作 provider-neutral、同步、可注入的 runtime access／invocation ports、outcomes 與 protocol orchestration；實際 wiring 與跨 BC 組裝仍屬未來。',
+    texts: [ ['bl', 894, 1268, 'Model Execution'], ['bs', 894, 1290, '同步、可注入 coordination'], ['bs', 894, 1306, 'ports + outcomes + protocol'], ['bn', 894, 1328, 'contracts implemented · integration future'] ] },
   { id: 'result-handoff', plane: 'execution', band: 'band-future-core', x: 960, y: 1370, w: 310, h: 80, r: 10, dash: true,
     name: 'Execution result handoff', about: '將未來 execution 結果交回 Response Reuse，但不直接保存。',
     texts: [ ['bl', 984, 1398, 'Execution result handoff'], ['bs', 984, 1420, '將新 response 交回 reuse'], ['bs', 984, 1436, '不直接保存 response'] ] },
@@ -415,10 +415,10 @@ const TEXTS = [
   { s: 'legend', x: 1082, y: 110, t: '實線 — 可替換的 app 或 provider surface' },
   { s: 'legend', x: 1143, y: 134, t: '顏色 — 所屬 capability plane' },
   { s: 'plane', x: 485, y: 1214, t: 'RUNTIME RETENTION — FUTURE', anchor: 'center', fill: planeColor('runtime') },
-  { s: 'plane', x: 1115, y: 1214, t: 'MODEL EXECUTION — FUTURE', anchor: 'center', fill: planeColor('execution') },
+  { s: 'plane', x: 1115, y: 1214, t: 'MODEL EXECUTION — CONTRACTS IMPLEMENTED', anchor: 'center', fill: planeColor('execution') },
   { s: 'bn', x: 160, y: 1844, t: 'invariant：只有 Identity BC 確認模型與完整請求身分；Response Reuse 只消費 opaque handoff' },
   { s: 'bn', x: 160, y: 1864, t: 'boundary：CacheStore 位於 Response Reuse 內部；Runtime Store / Registry 獨立且屬於未來能力' },
-  { s: 'bn', x: 160, y: 1884, t: 'topology：五個目錄的純文字 marker 僅預留；可為 implicit namespace，但不提供 executable module、public symbol 或 re-export' }
+  { s: 'bn', x: 160, y: 1884, t: 'status：Model Execution 已有 direct-import executable modules；runtime/provider/cross-BC integration 仍屬未來' }
 ];
 
 const SWATCHES = [
