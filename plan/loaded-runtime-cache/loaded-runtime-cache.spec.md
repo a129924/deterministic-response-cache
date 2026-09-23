@@ -168,3 +168,27 @@ Tester evidence, or review evidence, Then routing fails closed. `9aa656b13fdc364
 2. **Reviewer misuse:** Given a RED failing record, an uncommitted/non-sole Tester record, or a different topic or
    subject, When Independent Reviewer attempts review, Then it must produce no review record. A green review record
    may only consume committed same-subject `passing` evidence and must itself have exactly the declared schema.
+
+## C15 Mixed-Assignment Successor Scenarios
+
+### Scenario 15 — direct simple target is preserved
+
+Given a fresh C15 approved receipt, when the RED subject adds a collection-success static regression for
+`load = holder.loader = importlib.import_module`, then its assertion actually fails and Tester records factual
+`failing` evidence. Given the distinct green subject, when alias collection examines the assignment, then it retains
+the direct `ast.Name` target `load`, ignores direct `ast.Attribute` target `holder.loader`, and detects a later direct
+call through `load`.
+
+### Scenario 16 — no recursive destructuring or runtime escape
+
+Given tuple/list/starred/subscript/attribute or other non-simple targets, when the helper collects aliases, then it
+does not recurse into them or retain nested names. It executes no AST and uses no dynamic import, runtime
+introspection, cross-BC import, source change, or architecture change.
+
+### Scenario 17 — C15 evidence and human boundary
+
+Given C15, when a candidate or later evidence artifact is written, then it uses only its versioned SHA-bound template
+after the relevant immutable subject exists; no future SHA is prefilled. C14 and
+`37d7233e7231151c0dac6aaa1a7820bff746ffdc` are nonrouting provenance. After passing green Tester and approved
+Reviewer evidence, Planner may perform Phase 4.5 and independent classification only; F／ACL/business architecture
+remain Human-only `human-check`.

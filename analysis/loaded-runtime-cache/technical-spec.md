@@ -210,3 +210,29 @@ C5→V3, C11→V11, C12→R12 and
 `9aa656b13fdc36492273c97a62eb9d422a1b64b5` are immutable provenance only. The last is an unapproved
 `needs-rework` planning record and cannot supply a C14 candidate, Plan-Reviewer receipt, implementation subject, or
 evidence authority.
+
+## C15 mixed-assignment execution contract (current routing)
+
+C15 supersedes C14 only as current routing. It preserves all existing Loaded Runtime Cache protocol and BC
+independence constraints. Its sole implementation file is
+`tests/test_loaded_runtime_cache_bc_independence.py`.
+
+For one `ast.Assign`, static alias collection inspects direct `assignment.targets` only. Each direct `ast.Name` is a
+local alias. Each direct `ast.Attribute` or other non-simple target is ignored; no target is recursively traversed.
+Thus `load = holder.loader = importlib.import_module` retains `load` and excludes `holder.loader`, so a later direct
+`load(...)` invocation remains detectable. The correction is static syntax analysis only: AST execution/evaluation,
+dynamic import, `importlib`／`__import__`／`sys.modules` substitution, runtime introspection, source edits and cross-BC
+imports are forbidden.
+
+C15 order is strict: five-artifact candidate (no future SHA/outcome prefill) → independent approved receipt at
+`loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` → receipt-only commit → fresh
+collection-success/assertion-failing RED test-only subject → factual `failing` Tester evidence at
+`loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json` → distinct green test-only subject → factual
+`passing` Tester evidence at `loaded-runtime-cache.tester-evidence-<green-subject-40-hex-sha>.json` → approved
+independent review evidence at `loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json` →
+Planner Phase 4.5 → fresh independent thread classification. All paths are templates only; no SHA is prefilled.
+Tester/reviewer schemas and sole-evidence-commit requirements remain as defined above; a failing RED record produces
+no Reviewer record.
+
+C14 and `37d7233e7231151c0dac6aaa1a7820bff746ffdc` are frozen nonrouting provenance. F／ACL/business architecture
+remain Human-only `human-check`; no C15 artifact or phase may reply, resolve, approve, merge, release or post-merge.

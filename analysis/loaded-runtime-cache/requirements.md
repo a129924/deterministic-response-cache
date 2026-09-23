@@ -152,3 +152,22 @@ runtime lookup／retention 的 Protocol 與 outcome contracts；不建立 runtim
 - C5→V3、C11→V11、C12→R12 與
   `9aa656b13fdc36492273c97a62eb9d422a1b64b5` 都是 frozen provenance；最後一者是 unapproved
   `needs-rework` planning provenance，絕非 C14 candidate、receipt 或 implementation routing authority。
+
+## C15 mixed-assignment planning successor
+
+Human 已授權 C15 作為新的 planning successor。C15 保留既有 Loaded Runtime Cache mission、scope、Protocol contract、
+testing strategy 與 Human boundary；它只取代 current routing，不重寫 C14 provenance。
+
+- `ast.Assign` alias collection 只看 `assignment.targets` 的直接 children：每個直接 `ast.Name` 是 local alias；
+  `ast.Attribute` 或任何其他 non-simple target 一律忽略，且不得遞迴解構 target。
+- `load = holder.loader = importlib.import_module` 必須保留 `load`，忽略 `holder.loader`。此為 test-side static
+  AST contract；不得執行 AST、動態 import、runtime introspection、source workaround 或 cross-BC import。
+- C15 candidate 只可修改五份 planning artifacts。獨立 Plan-Reviewer 於 candidate committed 後，才可在
+  `loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` 寫 fresh approved receipt；
+  Implementer 必須 unchanged sole receipt-only commit。
+- C15 RED 與 green subjects 都只能修改 `tests/test_loaded_runtime_cache_bc_independence.py`。RED 必須 collect 成功
+  並 actual assertion-fail，Tester 寫 fresh SHA-bound `failing` evidence；其後才可建立 distinct green subject、
+  passing Tester evidence、approved independent Reviewer evidence、Planner Phase 4.5 和 fresh classification。
+- `37d7233e7231151c0dac6aaa1a7820bff746ffdc` 與完整 C14 chain 是 frozen nonrouting provenance，不得作 C15
+  candidate、receipt、subject、evidence、approval 或 next role。F／ACL／business architecture 持續是 Human-only
+  `human-check`，C15 不得 reply、resolve、merge 或 release。

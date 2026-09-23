@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: c14-phase-4.5-thread-classification-pending
+phase: c15-plan-authoring
 created: 2026-09-17
 ---
 
@@ -8,7 +8,7 @@ created: 2026-09-17
 
 ## Workflow Stages
 
-C11/C12/C13 stages below are frozen provenance. The active C14 stages are separate and must not inherit them.
+C11/C12/C13/C14 stages below are frozen provenance. C15 is the active successor and must not inherit them.
 
 - [x] C14 plan-authoring
 - [x] C14 planning-candidate-commit
@@ -18,7 +18,7 @@ C11/C12/C13 stages below are frozen provenance. The active C14 stages are separa
 - [x] C14 green implementation
 - [x] C14 green Tester evidence
 - [x] C14 independent implementation review
-- [ ] C14 Phase 4.5 / thread classification
+- [ ] C14 Phase 4.5 / thread classification (frozen historical state; nonrouting)
 
 ## Actionable Steps
 
@@ -125,3 +125,47 @@ C11/C12/C13 stages below are frozen provenance. The active C14 stages are separa
   This post-receipt state alignment is explicitly Human-authorized tracking only: it creates no new candidate or
   Plan-Reviewer receipt and claims no code review, publish, comment, resolve, F／architecture-ACL ownership, or Human
   action. Independent thread classification remains pending.
+
+## C15 Active Successor Stages (authoritative)
+
+C14 and `37d7233e7231151c0dac6aaa1a7820bff746ffdc` are frozen nonrouting provenance. The C15 stages below supersede
+all earlier tracker entries for current routing and inherit no predecessor candidate, receipt, subject, result,
+evidence, approval, or next role.
+
+- [ ] C15 plan-authoring
+- [ ] C15 planning-candidate-commit
+- [ ] C15 independent Plan-Reviewer receipt
+- [ ] C15 receipt-only commit
+- [ ] C15 RED test-only subject
+- [ ] C15 RED factual failing Tester evidence
+- [ ] C15 RED evidence-only commit
+- [ ] C15 green test-only subject
+- [ ] C15 green factual passing Tester evidence
+- [ ] C15 green evidence-only commit
+- [ ] C15 independent green review evidence
+- [ ] C15 review-evidence-only commit
+- [ ] C15 Planner Phase 4.5
+- [ ] C15 independent thread classification
+
+### C15 actionable steps
+
+- [ ] **Actor: Implementer.** Commit only the five C15 planning artifacts with no prefilled future SHA/outcome.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write then unchanged-sole-commit a fresh approved receipt
+  at `loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`.
+- [ ] **Actor: Implementer / Tester.** Create fresh collection-success/assertion-failing RED subject changing only
+  `tests/test_loaded_runtime_cache_bc_independence.py`; Tester records factual failing evidence at its versioned path;
+  Implementer commits it unchanged alone. No Reviewer record is permitted.
+- [ ] **Actor: Implementer.** Create distinct green subject changing only the same test file. For `ast.Assign.targets`,
+  preserve direct `ast.Name`, ignore direct `ast.Attribute`/other non-simple targets, and never recurse. In
+  `load = holder.loader = importlib.import_module`, only `load` is retained.
+- [ ] **Actor: Tester / Independent Reviewer / Implementer.** Commit passing green Tester evidence alone, then
+  approved same-subject Reviewer evidence alone. Both are versioned SHA-bound templates with no predecessor reuse.
+- [ ] **Actor: Planner / Independent Reviewer.** Run Phase 4.5, then fresh independent classification. F／ACL/business
+  architecture remain Human-only `human-check`; no C15 action replies, resolves, merges, releases or post-merges.
+
+### C15 guardrails
+
+- No recursive destructuring, AST execution, dynamic import (`importlib`, `__import__`, `sys.modules`), runtime
+  introspection, cross-BC import, production-source, Archify, workflow, or architecture modification.
+- The only C15 implementation path is `tests/test_loaded_runtime_cache_bc_independence.py`; every other unlisted path
+  is ReadOnly.

@@ -68,9 +68,9 @@ lineage，不能建立第二 topic、替代 slug、選擇 candidate 或作為 ro
 | Modify | C14 candidate only the five planning artifacts; RED only `tests/test_loaded_runtime_cache_bc_independence.py`; green only that test plus the truthful byte-changed subset of the ten-path dataflow allowlist in Artifact Paths. |
 | Deleted | 無；不得刪除 `.gitkeep`、existing tests 或既有 artifacts。 |
 
-## Status / Allowed Transitions
+## Status / Allowed Transitions (C14 frozen historical provenance)
 
-- **Current**: `c14-phase-4.5-thread-classification-pending`。C14 的 committed factual chain 是 candidate
+- **Historical C14 state**: `c14-phase-4.5-thread-classification-pending`。C14 的 committed factual chain 是 candidate
   `4d78eaf997847eb3b872c4c609ba23f19c6e5dc5` → approved Plan-Reviewer receipt-only commit
   `033fa34ca27a9c924c7fc95b9aa9c87c33b24217` → collection-success / assertion-failing RED subject
   `6acbbe6d3f9b98566def9448afa760e095833a0b` → failing Tester evidence-only commit
@@ -362,7 +362,7 @@ paths, source contracts, configuration, and adjacent BCs untouched.
 }
 ```
 
-## C14 Successor Route (authoritative for current execution)
+## C14 Successor Route (frozen historical provenance)
 
 ### C14 truthful implementation sequence
 
@@ -453,6 +453,116 @@ conversion and Registry／Retention implementation remain deferred to future, se
 
 ## Workflow State Contract
 
-- current_step: c14-phase-4.5-thread-classification-pending
-- next_step: Planner Phase 4.5, then independent current-thread classification
+- current_step: c15-plan-authoring
+- next_step: C15 planning-candidate commit
 - status: IN_PROGRESS
+
+## C15 Mixed-Assignment Successor Route (authoritative for current execution)
+
+### Goal / Outcome
+
+C15 preserves the established Loaded Runtime Cache protocol-first mission and only repairs the static
+BC-independence regression's mixed `ast.Assign` alias semantics: preserve direct simple-name targets and ignore
+direct attribute/non-simple targets. It does not change Registry, Retention, outcomes, source taxonomy, public API,
+or BC boundaries.
+
+### Scope, boundaries, and non-goals
+
+| Field | Contract |
+| --- | --- |
+| In-Scope | exactly five C15 planning artifacts; fresh test-only RED→green correction in `tests/test_loaded_runtime_cache_bc_independence.py`; SHA-bound versioned receipt/evidence templates; C15 Tester/Reviewer/Phase 4.5/classification sequence. |
+| Out-of-Scope | production source, protocols/API, Registry backend, DI, lifecycle, mapper/ACL, other BC, Archify, business architecture, PR reply/resolve/publish/merge/release. |
+| ReadOnly | every unlisted path, all source, all docs/architecture, workflow contracts, prior records, C14, `37d7233e7231151c0dac6aaa1a7820bff746ffdc`, F/ACL thread ownership. |
+| Written | future versioned Plan-Reviewer receipt, RED/green Tester evidence, and green independent Reviewer evidence only; each is written by its designated role then committed unchanged alone by Implementer. |
+| Modified | candidate: exactly the five planning artifacts; RED/green subjects: only `tests/test_loaded_runtime_cache_bc_independence.py`. |
+| Deleted | none. |
+
+No recursive destructuring, AST execution/evaluation, dynamic import, `importlib`/`__import__`/`sys.modules`
+substitution, runtime introspection, cross-BC import, source workaround, architecture change, or Human-only PR action
+is permitted. This is non-stable-library work: no README, VERSION, release note, tag, or post-merge action.
+
+### Locked decisions / Python implementation metadata
+
+- **Async-planning status:** exempt — static synchronous AST test analysis only; no async boundary, lifecycle,
+  concurrency, cancellation, timeout, or external I/O decision.
+- **Module/package placement:** only `tests/test_loaded_runtime_cache_bc_independence.py` after planning approval.
+- **New public API / interface / breaking change / dependencies:** no / no / no / no.
+- **Error handling:** factual assertion outcomes flow to Tester evidence; no production exception behavior changes.
+- **Typing:** retain existing Python 3.12 test typing; no `Any`, cast, dynamic typing workaround, or runtime inspection.
+- For one `ast.Assign`, inspect direct `assignment.targets` only. Every direct `ast.Name` is a local alias. A direct
+  `ast.Attribute` or other non-simple target is ignored, without traversing its children.
+- `load = holder.loader = importlib.import_module` therefore retains `load` only. A later direct `load(...)` must
+  stay detectable; `holder.loader` must never become a local alias.
+- C14 and `37d7233e7231151c0dac6aaa1a7820bff746ffdc` are frozen nonrouting provenance. They establish no C15 fact.
+- F／ACL/business-architecture threads remain open Human-only `human-check`; C15 evidence/classification never
+  replies to, resolves, approves, merges, releases, or post-merges them.
+
+### Status / allowed transitions
+
+**Current state:** `c15-plan-authoring`. This C15 section supersedes every earlier C14 current-state, artifact-path,
+implementation-step, validation, handoff, and workflow-state claim for routing; those C14 sections remain historical
+provenance only.
+
+`planned` → `planning-candidate-committed` → `plan-review-in-progress` → `plan-review-receipt-committed` →
+`implementation-in-progress` → `tester-in-progress` → `tester-evidence-committed` → `reviewer-in-progress` →
+`reviewer-evidence-committed` → `approved` → `phase-4.5-aligned` → `thread-classification-pending`.
+
+The first implementation subject is collection-success/assertion-failing RED and receives factual `failing` Tester
+evidence only. It cannot receive Reviewer evidence. A distinct green subject receives factual `passing` Tester
+evidence then independent approved Reviewer evidence; only that green chain may reach Phase 4.5.
+
+### Artifact paths
+
+| Artifact | Exact path | Write owner | Contract |
+| --- | --- | --- | --- |
+| Requirements | `analysis/loaded-runtime-cache/requirements.md` | Plan-Creator | C15 candidate only. |
+| Technical specification | `analysis/loaded-runtime-cache/technical-spec.md` | Plan-Creator | C15 candidate only. |
+| Topic plan | `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md` | Plan-Creator | C15 routing contract. |
+| Topic specification | `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md` | Plan-Creator | C15 acceptance contract. |
+| Step tracker | `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator | C15 phase truth only. |
+| Plan-review receipt | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` | Independent Plan-Reviewer; Implementer commits unchanged alone | Fresh approved receipt. |
+| RED subject / green subject | `tests/test_loaded_runtime_cache_bc_independence.py` | Implementer | Separate immutable test-only subjects. |
+| RED Tester evidence | `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<red-subject-40-hex-sha>.json` | Tester; Implementer commits unchanged alone | Factual failing record only. |
+| Green Tester evidence | `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<green-subject-40-hex-sha>.json` | Tester; Implementer commits unchanged alone | Same-subject passing record only. |
+| Green review evidence | `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json` | Independent Reviewer; Implementer commits unchanged alone | Consumes only committed matching passing green evidence. |
+
+All versioned paths are templates. No future candidate SHA, receipt, subject SHA, evidence, result, or approval is
+prefilled or created by this candidate.
+
+### Implementation steps
+
+1. Implementer commits exactly the five C15 planning artifacts.
+2. Independent Plan-Reviewer writes a fresh approved SHA-bound receipt; Implementer commits it unchanged alone.
+3. Implementer creates a fresh RED test-only subject with the mixed-assignment assertion; collection succeeds and it
+   factually fails. Tester records non-zero evidence; Implementer commits it unchanged alone.
+4. Implementer creates distinct green test-only subject: direct `ast.Name` targets are preserved, direct non-simple
+   targets are ignored, and no recursion/prohibited mechanism is introduced.
+5. Tester records passing green evidence; Implementer commits it unchanged alone. Independent Reviewer records
+   approved matching green review evidence; Implementer commits it unchanged alone.
+6. Planner runs Phase 4.5 then routes fresh independent thread classification; Human-only boundaries remain open.
+
+### Validation / acceptance checks
+
+- RED collects, then its mixed-assignment assertion exits non-zero and is recorded exactly as `failing`.
+- Green targeted regression passes and proves `load` remains an alias while `holder.loader` does not.
+- Tuple/list/starred/subscript/attribute and all other non-simple targets are not recursively traversed or retained.
+- Both implementation commits modify only the declared test file. No source, docs, architecture, dynamic import,
+  runtime introspection, or cross-BC change occurs.
+- Tester and Reviewer records satisfy the exact existing schemas, full SHA-bound paths, same-subject relation, and
+  sole evidence-only commit ordering.
+
+### Reviewer handoff
+
+The independent Plan-Reviewer verifies exactly five candidate paths, absence of prefilled future facts, the direct
+`ast.Name`/ignored non-simple-target contract, fresh C15 sequence, test-only implementation paths, frozen C14/`37d723`
+provenance, and Human-only F/ACL/business-architecture boundary. It writes exactly one JSON object with `verdict`,
+`blocking_issues`, `copilot_feedback_triage` at the candidate-SHA versioned path. Its receipt has no PR resolution
+authority.
+
+### Post-merge / release actions
+
+None; Human-only merge/release/post-merge remains outside C15.
+
+### Open questions / unresolved items
+
+None for C15 planning. F／ACL/business architecture remains an intentional Human-only boundary.
