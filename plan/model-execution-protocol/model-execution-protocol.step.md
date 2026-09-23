@@ -1,6 +1,6 @@
 ---
 topic: model-execution-protocol
-phase: plan-review
+phase: review-ready
 created: 2026-09-22
 ---
 
@@ -14,8 +14,8 @@ created: 2026-09-22
 - [X] plan-authoring
 - [X] plan-review
 - [X] planning-amendment-review
-- [ ] tdd-test-authoring
-- [ ] implementation
+- [X] tdd-test-authoring
+- [X] implementation
 - [ ] implementation-review
 - [ ] code-review
 
@@ -28,16 +28,16 @@ created: 2026-09-22
 - [X] **Actor:** Implementer — **Action:** 只提交本次修訂的 planning artifacts，建立新的 immutable planning candidate；不得混入 code、receipt 或其他 evidence。
 - [X] **Actor:** Independent Plan-Reviewer — **Action:** 只審新 committed candidate，寫入三欄 `plan/model-execution-protocol/model-execution-protocol.amendment-plan-review-receipt.json`；不覆寫舊 receipt。
 - [X] **Actor:** Implementer — **Action:** 原樣以 sole evidence-only commit 提交 amendment receipt，第一 parent 必須是新 candidate commit；交 Planner 依 Git binding 與 verdict re-route。`needs-rework` 返回 Plan-Creator，只有新 `approved` 可進 implementation。
-- [ ] **Actor:** Implementer — **Action:** 在 approved planning receipt 與 Planner route 後，只以四份 declared implementation paths 建 immutable subject。
-- [ ] **Actor:** Tester — **Action:** 對 immutable subject 執行驗證，寫入 actual command/exit-code evidence；Implementer 原樣單獨提交。
+- [X] **Actor:** Implementer — **Action:** 在 approved planning receipt 與 Planner route 後，只以四份 declared implementation paths 建 immutable subject `868df3b338e022371a55a2125b270a52ba1c6874`。
+- [X] **Actor:** Tester — **Action:** 對 immutable subject 執行驗證，寫入 actual command/exit-code evidence；Implementer 已原樣以 passing evidence sole commit `12bdfb1b5350ee71e3af70df38a462ce9286fba5` 提交。
 - [ ] **Actor:** Independent Reviewer — **Action:** 只消費 committed passing same-subject Tester evidence，寫入 review evidence；Implementer 原樣單獨提交。
 
 ## Implementation Steps
 
-- [ ] 1. 新增 `src/deterministic_response_cache/model_execution/outcomes.py`，定義 technical spec 所列 frozen/slotted port 與 execution outcomes、三種 failure reasons，以及精確 union aliases。
-- [ ] 2. 新增 `src/deterministic_response_cache/model_execution/ports.py`，定義同步 generic `RuntimeAccess` 與 `ModelInvoker` Protocol，僅 import 本 BC outcomes，不 import Identity、Response Reuse、Loaded Runtime Cache 或 Provider Adapter。
-- [ ] 3. 新增 `src/deterministic_response_cache/model_execution/protocol.py`，依 technical spec 以 `execute`、`_prepare_and_invoke`、`_invoke` 各自單層 `match/case` 實作 resolve → conditional prepare → invoke mapping，保留 opaque object identity、限制呼叫次數並拒絕 foreign/`None` results。
-- [ ] 4. 新增 `tests/test_model_execution_protocol.py`，以 direct imports 與 typed fakes 驗證 ready、missing、unavailable、preparation failure、invocation failure、invalid port results、exception propagation 與不觸碰其他 BC 的界線。
+- [X] 1. 新增 `src/deterministic_response_cache/model_execution/outcomes.py`，定義 technical spec 所列 frozen/slotted port 與 execution outcomes、三種 failure reasons，以及精確 union aliases。
+- [X] 2. 新增 `src/deterministic_response_cache/model_execution/ports.py`，定義同步 generic `RuntimeAccess` 與 `ModelInvoker` Protocol，僅 import 本 BC outcomes，不 import Identity、Response Reuse、Loaded Runtime Cache 或 Provider Adapter。
+- [X] 3. 新增 `src/deterministic_response_cache/model_execution/protocol.py`，依 technical spec 以 `execute`、`_prepare_and_invoke`、`_invoke` 各自單層 `match/case` 實作 resolve → conditional prepare → invoke mapping，保留 opaque object identity、限制呼叫次數並拒絕 foreign/`None` results。
+- [X] 4. 新增 `tests/test_model_execution_protocol.py`，以 direct imports 與 typed fakes 驗證 ready、missing、unavailable、preparation failure、invocation failure、invalid port results、exception propagation 與不觸碰其他 BC 的界線。
 
 ## Main Agent Actionable Steps — Fixed Tail
 
@@ -49,5 +49,6 @@ created: 2026-09-22
 - Topic selector：`topic=model-execution-protocol; branch=topic/model-execution-protocol; managed-path-intent=<repo-parent>/worktrees/model-execution-protocol; primary-worktree=false`。
 - Planning receipt、Tester evidence、independent Reviewer evidence 只消費同 topic、同 candidate/subject 的 actual committed evidence，不能跨 topic 重用，也不能由 chat 或 branch 狀態補推。
 - 第一個 five-path candidate `5f08dbc610a25fc4ae39eaaac20282f9a94e907d` 與 `needs-rework` receipt commit `64ab26c09831b47599543ce74c61733e052bcd44` 已提交。舊修訂 candidate `07c0a62bdfb640cc02b7370d1af616c970629084` 與其 `approved` receipt sole commit `aa41081300cbf2191b5d5b51c64cc67ebfb5cf1b` 僅保留為 immutable provenance，不再作 active routing authority。本次 amendment active candidate 是 `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`；Independent Plan-Reviewer 的 `approved` amendment receipt 已由 sole evidence-only commit `5145a59be17a3845da074d88e8530b59bfb45e57` 提交，Planner 已以 Git candidate commit/tree、五份 planning artifact blobs 與 receipt commit 核對 binding 成立。後續 implementation route 仍須由 Planner 判定，不由本 tracker 自行宣告。
+- Review-readiness binding：active planning candidate `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`、immutable implementation subject `868df3b338e022371a55a2125b270a52ba1c6874` 與 passing Tester evidence sole commit `12bdfb1b5350ee71e3af70df38a462ce9286fba5` 已綁定；目前等待 Planner 派遣 Independent Reviewer，尚未記錄 independent review verdict 或 evidence commit。
 - PR #7 實際 runtime contract 未鎖定；本 topic 以本地 injected port/test doubles 驗證，未來接線另行規劃。
 - 只有 `## Implementation Steps` 是 implementation-completion gate；Human 獨占 PR review、merge、release、post-merge、tag 與 final summary。
