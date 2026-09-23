@@ -264,6 +264,46 @@ Human-only README/public-surface boundary. Its completed commit chain is
 
 ### C17 post-receipt alignment
 
-This alignment is explicitly Human-authorized state tracking after the committed receipt/evidence chain. It creates
-no C18, candidate, Plan-Reviewer receipt, Tester/Reviewer evidence, PR reply, or thread resolution. The current
-state is `c17-phase-4.5-aligned / independent-classification-pending`.
+This alignment is frozen provenance. C18 supersedes its pending classification routing; it creates no C17 candidate,
+receipt, Tester/Reviewer evidence, PR reply, or thread resolution.
+
+## C18 C17 Current-Head Classification Successor Stages (authoritative)
+
+C18 is planning-only. It binds completed C17 subject `7ceb3409d6d8b9ff3dc51485c3588f502bdff882`, passing Tester
+evidence commit `b58cb1e330fe12ccc80a8f39b875a61ea6024067`, approved Reviewer evidence commit
+`edbae51a0ee86cff498d6caf4e6aa78b58962a82`, and PR head `bf63a3c6a0533ad0f367305deff029eddc2b18be`. It changes no
+source/test/docs/Archify/README or PR state.
+
+- [ ] C18 plan-authoring
+- [ ] C18 planning-candidate-commit
+- [ ] C18 independent Plan-Reviewer receipt
+- [ ] C18 receipt-only commit
+- [ ] C18 independent classification receipt
+- [ ] C18 classification-receipt-only commit
+- [ ] C18 Planner routing for exact classified pairs
+
+### C18 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C18 planning artifacts and nothing else. Candidate has no
+  future candidate SHA, receipt verdict, classification disposition, reply, or resolution prefill.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write standard approved receipt at
+  `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`, then
+  commit it unchanged alone. A non-approved receipt cannot route classification.
+- [ ] **Actor: Independent Reviewer / Implementer.** Write only
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7ceb3409d6d8b9ff3dc51485c3588f502bdff882.json`,
+  then commit it unchanged alone. Its exact eight keys bind C17 subject/T17/V17/PR-head facts and its classifications
+  are exactly eleven pairs.
+- [ ] **Actor: Planner / Implementer.** Only exact committed `REPLY_AND_RESOLVE` entries can receive their exact
+  factual replies and resolutions. `ADDRESS` returns to Planner; F `4043480108`, ACL `4060023123`, business
+  `4070096561`, and README `4078761998` are locked `HUMAN_CHECK`/`null` and remain open.
+
+### C18 exact classification set
+
+`PRRT_kwDOUJTij86jnBpk`/`4043480108`, `PRRT_kwDOUJTij86jqdPV`/`4044836129`,
+`PRRT_kwDOUJTij86jqdPZ`/`4044836136`, `PRRT_kwDOUJTij86kOjjo`/`4059094458`,
+`PRRT_kwDOUJTij86kQ95O`/`4060023123`, `PRRT_kwDOUJTij86kqiZu`/`4070096548`,
+`PRRT_kwDOUJTij86kqiZ5`/`4070096561`, `PRRT_kwDOUJTij86lAR8J`/`4078761983`,
+`PRRT_kwDOUJTij86lAR8P`/`4078761993`, `PRRT_kwDOUJTij86lAR8T`/`4078761998`,
+`PRRT_kwDOUJTij86lAR8Y`/`4078762005`. Each entry uses exactly `thread`, `comment`, `outcome`, `reply`.
+F, ACL, business and README are the fixed Human-only entries; the other seven outcomes/replies remain exclusively
+for Independent Reviewer to determine in the committed receipt.

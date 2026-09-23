@@ -309,3 +309,46 @@ closed. Authored labels retain `RuntimeRegistry.lookup(key: RuntimeReuseKey) -> 
 
 Existing full-SHA Tester/Independent Reviewer schemas and sole-evidence commits apply unchanged; C17 must not
 prefill a SHA, result or verdict.
+
+## C18 current-head classification receipt contract
+
+C18 是唯一的 C17 post-evidence classification successor。它只建立五份 planning artifacts 的 candidate、標準
+candidate-SHA-bound Plan-Reviewer receipt，以及一份 C17-bound classification receipt；不建立或修改 implementation
+subject、Tester/Reviewer evidence、source、tests、docs、Archify、README、PR reply 或 resolution。
+
+Candidate committed 後，Independent Plan-Reviewer 的唯一 receipt template 是
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`；僅
+approved receipt 的 unchanged sole receipt-only commit 可路由 classification。Independent Reviewer 之唯一
+classification writer path 是
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7ceb3409d6d8b9ff3dc51485c3588f502bdff882.json`；
+僅 Implementer 可將它 unchanged 且作 sole evidence-only commit 提交。
+
+classification JSON has exactly `schema_version`, `topic`, `implementation_subject_commit`,
+`tester_evidence_commit`, `implementation_review_evidence_commit`, `pr_head_commit`, `classifications`,
+`recorded_by`. Its fixed values are integer `1`, `loaded-runtime-cache`, subject
+`7ceb3409d6d8b9ff3dc51485c3588f502bdff882`, Tester commit
+`b58cb1e330fe12ccc80a8f39b875a61ea6024067`, Reviewer commit
+`edbae51a0ee86cff498d6caf4e6aa78b58962a82`, PR head
+`bf63a3c6a0533ad0f367305deff029eddc2b18be`, an exactly eleven-entry `classifications` array, and
+`Independent Reviewer`.
+
+Each entry has exactly `thread`, `comment`, `outcome`, `reply`. Its exact eleven pair set is:
+
+1. `PRRT_kwDOUJTij86jnBpk` / `4043480108` (F; locked `HUMAN_CHECK`, `null`)
+2. `PRRT_kwDOUJTij86jqdPV` / `4044836129`
+3. `PRRT_kwDOUJTij86jqdPZ` / `4044836136`
+4. `PRRT_kwDOUJTij86kOjjo` / `4059094458`
+5. `PRRT_kwDOUJTij86kQ95O` / `4060023123` (ACL; locked `HUMAN_CHECK`, `null`)
+6. `PRRT_kwDOUJTij86kqiZu` / `4070096548`
+7. `PRRT_kwDOUJTij86kqiZ5` / `4070096561` (business architecture; locked `HUMAN_CHECK`, `null`)
+8. `PRRT_kwDOUJTij86lAR8J` / `4078761983`
+9. `PRRT_kwDOUJTij86lAR8P` / `4078761993`
+10. `PRRT_kwDOUJTij86lAR8T` / `4078761998` (README; locked `HUMAN_CHECK`, `null`)
+11. `PRRT_kwDOUJTij86lAR8Y` / `4078762005`
+
+The other seven outcomes and replies are deliberately not planned. Independent Reviewer determines them in the
+committed receipt. `REPLY_AND_RESOLVE` requires a non-empty factual reply; `ADDRESS` and `HUMAN_CHECK` require
+JSON `null`. Only an exact committed `REPLY_AND_RESOLVE` entry lets Implementer leave that exact reply and resolve
+that exact thread. `ADDRESS` returns to Planner; each `HUMAN_CHECK` stays open. Missing/extra keys or pairs,
+wrong role/path/reference, non-ancestor evidence, non-sole commit, invalid enum, or invalid reply nullability fails
+closed.

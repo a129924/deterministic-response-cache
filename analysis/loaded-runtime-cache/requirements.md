@@ -219,3 +219,39 @@ not rewrite their receipts/evidence or treat chat as routing evidence.
 - C17 candidate scope is exactly these five planning artifacts. It needs a fresh approved candidate-SHA-bound
   Plan-Reviewer receipt before implementation. No candidate, receipt, subject, evidence, outcome, validation,
   delivery, visual, reply, resolution, merge, release, or post-merge fact is prefilled.
+
+## C18 C17 current-head classification successor
+
+Human 已授權 C18 作為只處理 C17 completed evidence chain 的 current-head PR-thread classification planning
+successor。C18 不重寫 C17 chain、不新增 implementation、RED／green、Tester／Reviewer evidence，也不修改 source、
+tests、architecture、Archify、README、PR 或 thread state。
+
+- C18 candidate 只可修改本 requirements、`technical-spec.md`、topic plan、topic spec 與 step tracker。candidate
+  不得預填自身 SHA、Plan-Reviewer verdict、classification outcome、reply 或 resolution。
+- candidate committed 後，獨立 Plan-Reviewer 必須在標準 immutable path
+  `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`
+  寫 approved receipt；僅 Implementer 可原樣以 sole receipt-only commit 提交。該 receipt 只授權 C18 classification。
+- C18 classification receipt 的唯一 immutable path 是
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7ceb3409d6d8b9ff3dc51485c3588f502bdff882.json`。
+  它固定綁定 subject `7ceb3409d6d8b9ff3dc51485c3588f502bdff882`、passing Tester evidence commit
+  `b58cb1e330fe12ccc80a8f39b875a61ea6024067`、approved implementation-review evidence commit
+  `edbae51a0ee86cff498d6caf4e6aa78b58962a82` 與 PR head
+  `bf63a3c6a0533ad0f367305deff029eddc2b18be`。Independent Reviewer 是唯一 writer；僅 Implementer 可原樣以
+  sole evidence-only commit 提交；不得覆寫、合併或與其他檔案共用 commit。
+- receipt 必須是唯一 JSON object，top-level keys 恰為 `schema_version`、`topic`、
+  `implementation_subject_commit`、`tester_evidence_commit`、`implementation_review_evidence_commit`、
+  `pr_head_commit`、`classifications`、`recorded_by`。值分別是 integer `1`、`loaded-runtime-cache`、上述四個
+  full 40-hex SHA、exactly eleven-entry array、`Independent Reviewer`。每個 entry 的 keys 恰為
+  `thread`、`comment`、`outcome`、`reply`；`outcome` 只可為 `REPLY_AND_RESOLVE`、`ADDRESS`、`HUMAN_CHECK`，
+  且只有前者有 non-empty reply，其他兩者必為 JSON `null`。
+- exact pair set 是 F `PRRT_kwDOUJTij86jnBpk`/`4043480108`、
+  `PRRT_kwDOUJTij86jqdPV`/`4044836129`、`PRRT_kwDOUJTij86jqdPZ`/`4044836136`、
+  `PRRT_kwDOUJTij86kOjjo`/`4059094458`、ACL `PRRT_kwDOUJTij86kQ95O`/`4060023123`、
+  `PRRT_kwDOUJTij86kqiZu`/`4070096548`、business `PRRT_kwDOUJTij86kqiZ5`/`4070096561`、
+  `PRRT_kwDOUJTij86lAR8J`/`4078761983`、`PRRT_kwDOUJTij86lAR8P`/`4078761993`、README
+  `PRRT_kwDOUJTij86lAR8T`/`4078761998`、`PRRT_kwDOUJTij86lAR8Y`/`4078762005`，不得缺漏、重複或加入其他 pair。
+  F／ACL／business／README 四組固定為 `HUMAN_CHECK` 且 `reply: null`，永遠保持 open。其餘七組直到 Independent
+  Reviewer 實際寫入 receipt 前不得預填 outcome 或 reply。
+- 僅 committed C18 receipt 中 exact `REPLY_AND_RESOLVE` pair 可授權 Implementer 留下該 entry 的 exact factual reply
+  並 resolve 該 exact thread。`ADDRESS` 必回到 Planner 建立新 successor；`HUMAN_CHECK` 不得 reply／resolve。錯誤
+  writer、path、schema、SHA、ancestor、sole-commit、pair set 或 nullability 一律 fail closed。

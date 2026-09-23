@@ -252,3 +252,33 @@ independent classification—not C17 itself—decides an exact reply/resolution 
    scanning.
 2. A non-zero, warning/error, skipped, incomplete-viewport, or hand-edited Archify result fails closed.
 3. A README or unlisted-path change is `needs-rework` and cannot authorize a PR action.
+
+## C18 Current-Head Classification Scenarios
+
+### Scenario 23 — immutable C17-bound eleven-pair receipt
+
+Given committed C17 subject `7ceb3409d6d8b9ff3dc51485c3588f502bdff882`, passing Tester evidence commit
+`b58cb1e330fe12ccc80a8f39b875a61ea6024067`, approved Reviewer evidence commit
+`edbae51a0ee86cff498d6caf4e6aa78b58962a82`, and PR head
+`bf63a3c6a0533ad0f367305deff029eddc2b18be`, when the C18 candidate has an independently committed approved
+standard Plan-Reviewer receipt, then only Independent Reviewer may write
+`loaded-runtime-cache.thread-classification-receipt-7ceb3409d6d8b9ff3dc51485c3588f502bdff882.json`; only
+Implementer may commit that unchanged file alone. The receipt has exactly its eight top-level keys and exactly eleven
+entries with only `thread`, `comment`, `outcome`, `reply`.
+
+### Scenario 24 — fixed Human boundaries and independent remaining outcomes
+
+Given C18's exact eleven pair set, when Independent Reviewer classifies it, then F
+`PRRT_kwDOUJTij86jnBpk`/`4043480108`, ACL `PRRT_kwDOUJTij86kQ95O`/`4060023123`, business architecture
+`PRRT_kwDOUJTij86kqiZ5`/`4070096561`, and README `PRRT_kwDOUJTij86lAR8T`/`4078761998` are `HUMAN_CHECK` with
+`reply: null` and remain open. The other seven outcomes/replies are not preplanned; Independent Reviewer decides
+them. Only an exact committed `REPLY_AND_RESOLVE` entry permits Implementer to leave that non-empty factual reply and
+resolve that exact thread. `ADDRESS` returns to Planner; no Human-only pair is replied to or resolved.
+
+## C18 Error / Edge Cases
+
+1. A classification receipt with missing/extra keys, a wrong writer/path/full SHA, non-ancestor or non-sole
+   evidence, wrong PR head, missing/duplicate/extra pair, invalid outcome, or invalid reply nullability fails closed
+   and authorizes no thread action.
+2. A C18 Plan-Reviewer `needs-rework` receipt, an uncommitted classification receipt, or an entry other than exact
+   `REPLY_AND_RESOLVE` never authorizes reply or resolution.

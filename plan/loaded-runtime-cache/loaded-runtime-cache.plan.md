@@ -720,14 +720,14 @@ concrete runtime backend.
 
 ### Status / allowed transitions
 
-**Current state:** `c17-phase-4.5-aligned / independent-classification-pending`. The committed C17 chain is candidate
+**Historical C17 state:** `c17-phase-4.5-aligned / independent-classification-pending`. The committed C17 chain is candidate
 `dc55f1a6a32ceabf48490e952af2b9fd71b9efd3` → approved Plan-Reviewer receipt-only commit
 `35ccbd6` → collection-success/assertion-failing RED subject `7ec3b57` → failing Tester-evidence-only commit
 `3c9c9b8` → green test/dataflow subject `708091b` → delivery-receipt-only commit `7ceb340` → passing
 Tester-evidence-only commit `b58cb1` → approved Independent Reviewer evidence-only commit
-`edbae51`. This is Human-authorized post-receipt state tracking only: it creates no C18, candidate, receipt,
-Tester/Reviewer evidence, PR reply, or thread resolution. A fresh independent classification remains required for
-the two C17 pairs; `4078761998`, ACL, and business-architecture boundaries remain Human-only/open. Any path
+`edbae51`. This is Human-authorized post-receipt state tracking only. C18 supersedes its pending classification
+routing; C17 creates no additional candidate, receipt, Tester/Reviewer evidence, PR reply, or thread resolution.
+`4078761998`, ACL, and business-architecture boundaries remain Human-only/open. Any path
 violation, malformed evidence, non-zero/skipped Archify result, or `needs-rework` fails closed and cannot authorize
 a reply/resolution.
 
@@ -758,3 +758,56 @@ a reply/resolution.
 - Plan-Reviewer checks candidate scope/no future facts; Independent Reviewer checks same-subject passing evidence,
   test/dataflow boundaries and factual Archify receipts. Neither replies, resolves, approves PRs or merges.
 - No release action; Human alone owns merge/release/post-merge.
+
+## C18 C17 Current-Head Classification Successor (authoritative current routing)
+
+C18 only classifies an immutable current-head snapshot. It preserves the Loaded Runtime Cache mission, C17 chain and
+all locked boundaries. It creates no RED/green/code/docs/Archify/README work; every unlisted path is ReadOnly.
+
+| Field | Contract |
+| --- | --- |
+| In-Scope | Exactly five C18 planning artifacts; a standard candidate-SHA-bound Plan-Reviewer receipt; one immutable C17-bound classification receipt; later exact reply/resolve only where its committed entry is `REPLY_AND_RESOLVE`. |
+| Out-Of-Scope | Implementation, tests, source, dataflow, architecture, README, lifecycle, new evidence chain, release, merge and post-merge. |
+| ReadOnly | All unlisted paths, C17/C16 and predecessor evidence, every thread unless its C18 committed receipt entry permits reply/resolve. |
+| Written | Standard C18 Plan-Reviewer receipt; then only the one C17-bound classification receipt. |
+| Modified | Candidate: only the five planning artifacts. Classification receipt: one new evidence file only. |
+| Deleted | None. |
+
+### C18 immutable receipt contract
+
+The candidate is planning-only and cannot prefill candidate SHA, receipt verdict, classification result, reply or
+resolution. After it is committed, Independent Plan-Reviewer writes a standard approved receipt at
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`; only
+Implementer may commit it unchanged alone. That receipt authorizes classification only.
+
+Independent Reviewer alone writes
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7ceb3409d6d8b9ff3dc51485c3588f502bdff882.json`.
+Only Implementer may commit it unchanged in a sole evidence-only commit. Its top-level keys are exactly
+`schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; its immutable values
+bind subject `7ceb3409d6d8b9ff3dc51485c3588f502bdff882`, passing Tester commit
+`b58cb1e330fe12ccc80a8f39b875a61ea6024067`, approved Reviewer commit
+`edbae51a0ee86cff498d6caf4e6aa78b58962a82`, PR head
+`bf63a3c6a0533ad0f367305deff029eddc2b18be`, schema `1`, topic `loaded-runtime-cache`, and writer
+`Independent Reviewer`.
+
+`classifications` contains exactly eleven entries with only `thread`, `comment`, `outcome`, `reply` each. Exact pair
+set: `PRRT_kwDOUJTij86jnBpk`/`4043480108`, `PRRT_kwDOUJTij86jqdPV`/`4044836129`,
+`PRRT_kwDOUJTij86jqdPZ`/`4044836136`, `PRRT_kwDOUJTij86kOjjo`/`4059094458`,
+`PRRT_kwDOUJTij86kQ95O`/`4060023123`, `PRRT_kwDOUJTij86kqiZu`/`4070096548`,
+`PRRT_kwDOUJTij86kqiZ5`/`4070096561`, `PRRT_kwDOUJTij86lAR8J`/`4078761983`,
+`PRRT_kwDOUJTij86lAR8P`/`4078761993`, `PRRT_kwDOUJTij86lAR8T`/`4078761998`,
+`PRRT_kwDOUJTij86lAR8Y`/`4078762005`. F, ACL, business architecture and README are respectively the first, fifth,
+seventh and tenth pair and are locked `HUMAN_CHECK` with JSON `null` reply. The other seven are unprefilled until
+Independent Reviewer writes the receipt.
+
+`REPLY_AND_RESOLVE` needs a non-empty factual reply and is the only classification that lets Implementer reply and
+resolve the exact pair. `ADDRESS` and `HUMAN_CHECK` require `null`; `ADDRESS` returns to Planner, while
+`HUMAN_CHECK` remains open. Any schema/path/SHA/ancestor/sole-commit/pair/nullability defect fails closed.
+
+### C18 status / transition / handoff
+
+Current state is `c18-planning-candidate-pending`. The only permitted order is candidate-only commit → independent
+approved SHA-bound Plan-Reviewer receipt → receipt-only commit → independent C17-bound classification receipt →
+classification-receipt-only commit → Planner routes exact classified pairs. No classification entry authorizes
+merge, release, post-merge, Human review, or an unclassified thread action.
