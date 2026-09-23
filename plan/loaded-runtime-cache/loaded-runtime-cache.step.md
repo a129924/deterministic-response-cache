@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: c16-plan-authoring
+phase: c17-plan-authoring
 created: 2026-09-17
 ---
 
@@ -230,3 +230,40 @@ The exact pair set is `PRRT_kwDOUJTij86kQ95O`/`4060023123`, `PRRT_kwDOUJTij86kqi
 `PRRT_kwDOUJTij86lAR8P`/`4078761993`, `PRRT_kwDOUJTij86lAR8T`/`4078761998`, and
 `PRRT_kwDOUJTij86lAR8Y`/`4078762005`. ACL `4060023123` and business architecture `4070096561` are locked
 `HUMAN_CHECK`/`null`; C16 does not prefill the other five independent outcomes or replies.
+
+## C17 ADDRESS Remediation Successor Stages (authoritative)
+
+C15/C16 are frozen input. C17 covers only `4078761993` and `4078762005`; it does not prefill a candidate, receipt,
+subject, evidence, outcome or thread action. `4078761998` remains the separate Human-only README/public-surface
+boundary.
+
+- [ ] C17 plan-authoring
+- [ ] C17 planning-candidate-commit
+- [ ] C17 independent Plan-Reviewer receipt
+- [ ] C17 receipt-only commit
+- [ ] C17 RED test-only subject
+- [ ] C17 RED factual failing Tester evidence
+- [ ] C17 RED evidence-only commit
+- [ ] C17 green test/dataflow subject
+- [ ] C17 green factual passing Tester evidence
+- [ ] C17 green evidence-only commit
+- [ ] C17 independent green review evidence
+- [ ] C17 review-evidence-only commit
+- [ ] C17 Planner Phase 4.5
+- [ ] C17 independent thread classification
+
+### C17 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly five C17 planning artifacts; no test, dataflow, README, receipt,
+  evidence, PR or other path shares the candidate commit.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write a fresh approved candidate-SHA-bound receipt and
+  commit it unchanged alone; `needs-rework` routes no RED.
+- [ ] **Actor: Implementer / Tester.** Create only the test RED for `getattr` known `importlib`/`sys` aliases and
+  literal `import_module`/`modules`; collect, factually fail, and sole-commit failing evidence. No RED Reviewer record.
+- [ ] **Actor: Implementer.** Create distinct green scanner repair plus only byte-truthfully changed named dataflow
+  outputs; show `lookup(key: RuntimeReuseKey) -> RuntimeT | None`; run validate → deliver → visual-check (9/9,
+  zero errors/warnings, non-skipped four viewport facts).
+- [ ] **Actor: Tester / Independent Reviewer / Implementer.** Sole-commit matching green passing Tester evidence and
+  approved Reviewer evidence with full-SHA bindings.
+- [ ] **Actor: Planner / Independent Reviewer.** After C17 Q, independently classify the two C17 pairs. Do not
+  reply/resolve before that evidence; retain `4078761998`/README, ACL and business-architecture Human-only/open.

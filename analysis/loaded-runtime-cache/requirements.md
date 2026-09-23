@@ -198,3 +198,24 @@ routing，但不重寫 C15 chain、Protocol、implementation、tests、architect
 - only `REPLY_AND_RESOLVE` may authorize a subsequent Implementer to leave that exact factual reply and resolve that
   exact thread. `ADDRESS` must return to Planner for a new bounded successor with no reply/resolve. `HUMAN_CHECK`
   remains open with `reply: null`; C16 never approves, merges, releases or post-merges.
+
+## C17 bounded ADDRESS successor
+
+C17 is the sole successor for C16 `ADDRESS` pairs `PRRT_kwDOUJTij86lAR8P`/`4078761993` and
+`PRRT_kwDOUJTij86lAR8Y`/`4078762005`. It preserves the protocol-first mission and C15/C16 immutable facts; it does
+not rewrite their receipts/evidence or treat chat as routing evidence.
+
+- `4078761993` requires a fresh collection-success/assertion-failing **test-only** RED subject and distinct green
+  subject in `tests/test_loaded_runtime_cache_bc_independence.py`. The static scanner must reject local aliases from
+  `getattr` of known `importlib`/`sys` module aliases and the literal forbidden surface (`import_module`/`modules`).
+  It must not execute AST, call runtime `getattr`, use dynamic import, inspect runtime modules, modify source, or
+  cross BC boundaries. Fresh factual RED Tester, green Tester, and green Independent Reviewer evidence are required.
+- `4078762005` may change only the topic-owned Loaded Runtime Cache dataflow JSON/HTML and their byte-truthfully
+  regenerated validation, delivery and visual-check evidence. It must show
+  `RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None`, not `Available`/`Missing` as lookup outcomes,
+  and must not imply a mapper, concrete backend, DI, lifecycle, Model Execution, Provider Adapter, or ACL.
+- `PRRT_kwDOUJTij86lAR8T`/`4078761998` is a Human-only README/public-surface `human-check`; `README.md` is ReadOnly
+  and C17 neither selects nor changes it. ACL/business-architecture and every non-C17 pair remain open.
+- C17 candidate scope is exactly these five planning artifacts. It needs a fresh approved candidate-SHA-bound
+  Plan-Reviewer receipt before implementation. No candidate, receipt, subject, evidence, outcome, validation,
+  delivery, visual, reply, resolution, merge, release, or post-merge fact is prefilled.

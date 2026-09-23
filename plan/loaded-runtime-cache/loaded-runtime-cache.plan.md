@@ -682,3 +682,74 @@ only the seven listed current pairs; it cannot modify code or PR state.
 ### Post-merge / release actions
 
 None. Human-only merge/release/post-merge remains outside C16.
+
+## C17 ADDRESS remediation successor (authoritative for current routing)
+
+### Goal / outcome
+
+C17 remediates only C16 `ADDRESS` findings `4078761993` and `4078762005`: it closes the static scanner's
+`getattr`-derived `importlib`/`sys` alias bypass with fresh RED→green evidence, and corrects the topic dataflow to
+show the actual `RuntimeRegistry.lookup -> RuntimeT | None` protocol. It does not make the diagram proof of a
+concrete runtime backend.
+
+### Scope / boundaries
+
+| Field | Contract |
+| --- | --- |
+| In-Scope | five C17 planning artifacts; fresh test-only RED/failing Tester evidence; distinct green test plus byte-truthfully changed subset of the named ten-path dataflow allowlist; fresh green passing Tester/approved Reviewer evidence; Phase 4.5 then independent classification. |
+| Out-of-Scope | production source, Protocol/API, concrete Registry/Retention, mapper/ACL, every other BC, backend/DI/lifecycle, README/public-surface, version/release/tag/merge/post-merge, and every PR reply/resolution. |
+| ReadOnly | `README.md`, all public surfaces, all source outside the named test, architecture authority, C15/C16 artifacts/evidence, and all non-C17 threads. `4078761998` is Human-only `human-check`. |
+| Written | future SHA-bound Plan-Reviewer receipt, RED/green Tester evidence, and green Reviewer evidence only; designated writer creates it and Implementer commits unchanged alone. |
+| Modify | candidate: exactly five planning artifacts; RED: only `tests/test_loaded_runtime_cache_bc_independence.py`; green: that test plus only actual byte-changed files from the named dataflow allowlist. |
+| Deleted | none. |
+
+### Locked decisions / Python implementation metadata
+
+- **Async-planning status:** exempt — static AST regression and static dataflow generation have no async boundary,
+  lifecycle, concurrency, cancellation, timeout, or external runtime-I/O decision.
+- **Module placement / API / interface / breaking / dependencies:** named test plus named dataflow allowlist / no / no
+  / no / no.
+- **Error and typing:** RED's failed assertion is factual evidence; preserve Python 3.12 `ast` static analysis with
+  no `Any`, runtime access, dynamic import, AST evaluation, or source workaround.
+- Recognise only `getattr(<known importlib|sys alias>, <literal import_module|modules>)` assignment aliases; a later
+  local alias use is rejected. Do not evaluate arbitrary expressions or recursive-destructure targets.
+- Dataflow labels must say `RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None`. Never draw
+  `Available`/`Missing` as lookup returns, a mapper, or an implemented backend/lifecycle/ACL.
+- C15/C16 are frozen input. No future C17 SHA, evidence/result, classification, reply, resolution or approval is
+  prefilled.
+
+### Status / allowed transitions
+
+**Current state:** `c17-plan-authoring`; this uncommitted candidate is not routing authority. The only route is
+candidate-only commit → approved receipt-only commit → collection-success/assertion-failing RED → failing
+Tester-evidence-only commit → distinct green subject → passing Tester-evidence-only commit → approved
+review-evidence-only commit → Phase 4.5 → new independent classification. Any path violation, malformed evidence,
+non-zero/skipped Archify result, or `needs-rework` fails closed and cannot authorize a reply/resolution.
+
+### Artifact paths / execution steps
+
+| Artifact | Exact path | Write owner | Contract |
+| --- | --- | --- |
+| Candidate | `analysis/loaded-runtime-cache/requirements.md`; `analysis/loaded-runtime-cache/technical-spec.md`; `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`; `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`; `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator | Exactly these five paths. |
+| Receipt | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c17-candidate-40-hex-sha>.json` | Independent Plan-Reviewer / Implementer | Fresh approved receipt, then unchanged sole commit. |
+| RED/green test | `tests/test_loaded_runtime_cache_bc_independence.py` | Implementer | RED only test; green test plus truthful dataflow subset. |
+| Tester/review evidence | `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<subject-40-hex-sha>.json`; `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<green-subject-40-hex-sha>.json` | Tester / Independent Reviewer / Implementer | Existing exact schema, full SHA bindings and separate sole commits. |
+| Dataflow allowlist | `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.validation.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.delivery.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.json`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.html`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.dark.png`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.light.png`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.dark.png`; `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.light.png` | Implementer | validate → deliver → visual-check; green only includes byte-changed outputs. |
+
+1. Commit only the candidate; write/commit an approved SHA-bound receipt unchanged alone.
+2. Create the test-only RED for the prescribed `getattr` bypass; record/commit factual failing evidence alone.
+3. Create a distinct green scanner repair, regenerate the allowlisted dataflow as validate → deliver → visual-check,
+   and include only byte-changed output files.
+4. Commit matching passing Tester evidence, then matching approved Independent Reviewer evidence, each unchanged alone.
+5. Planner performs Phase 4.5; a new Independent Reviewer classification alone decides a reply/resolve for either
+   C17 pair. README/public-surface, ACL and business-architecture threads stay Human-only/open.
+
+### Validation / reviewer handoff / release
+
+- RED collects and fails; green rejects local aliases derived from known `importlib`/`sys` aliases with literal
+  `import_module`/`modules`, preserving prior direct/chained/mixed regression tests.
+- The diagram has the exact `lookup` union return; validate is 9/9, zero errors/warnings; deliver succeeds; visual
+  check is not skipped and contains 1440×900, 1600×1000, 1920×1080, 2048×1320 facts. `README.md` stays unmodified.
+- Plan-Reviewer checks candidate scope/no future facts; Independent Reviewer checks same-subject passing evidence,
+  test/dataflow boundaries and factual Archify receipts. Neither replies, resolves, approves PRs or merges.
+- No release action; Human alone owns merge/release/post-merge.

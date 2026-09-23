@@ -269,3 +269,43 @@ Malformed keys, wrong writer, wrong/full-SHA mismatch, altered sole evidence, un
 pair, a forbidden reply, or a reference that is not a committed C15 ancestor fails closed. A committed classification
 receipt only routes exact `REPLY_AND_RESOLVE` pairs to an Implementer for that exact reply and resolution. Any
 `ADDRESS` returns routing to Planner for a new successor; `HUMAN_CHECK` stays open and is never replied to or resolved.
+
+## C17 ADDRESS-remediation execution contract
+
+C16's committed classification receipt is frozen C17 input. C17 addresses only `4078761993` and `4078762005`; it
+does not change C15/C16 records, public surface, or any other disposition. `4078761998` is explicitly Human-only:
+`README.md` is ReadOnly.
+
+The route is five candidate artifacts → independently written/sole-committed candidate-SHA-bound approved receipt →
+test-only collection-success/assertion-failing RED subject → sole factual failing Tester evidence → distinct green
+subject → sole passing Tester evidence → sole approved Independent Reviewer evidence → Planner Phase 4.5 → new
+independent classification. RED changes only `tests/test_loaded_runtime_cache_bc_independence.py`; green changes that
+test and only byte-truthfully changed paths from the explicit dataflow allowlist. No stage preclaims reply/resolve.
+
+The test scanner must statically recognise a direct assignment expression of the form
+`getattr(<known-importlib-or-sys-module-alias>, <literal-forbidden-attribute>)`: `import_module` for `importlib`,
+`modules` for `sys`. A later local alias use is rejected. It may not evaluate `getattr`/AST, dynamically import,
+inspect runtime modules, recurse arbitrary expressions, alter production source, or replace direct imports.
+
+The sole documentation allowlist is:
+
+- `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json`
+- `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html`
+- `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.validation.json`
+- `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.delivery.json`
+- `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.json`
+- `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.html`
+- `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.dark.png`
+- `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.light.png`
+- `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.dark.png`
+- `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.light.png`
+
+Regenerate rather than hand-edit evidence: `archify validate dataflow … --quality showcase --json`, then
+`archify deliver dataflow … --quality showcase --json`, then `archify visual-check … --repo-root <repository-root>
+--json`. Validate must be 9/9, zero composition errors/warnings; visual-check must be non-skipped and record
+1440×900, 1600×1000, 1920×1080 and 2048×1320. Byte-identical output remains ReadOnly; non-zero or skipped fails
+closed. Authored labels retain `RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None`; no
+`Available`/`Missing` lookup return or mapper is shown.
+
+Existing full-SHA Tester/Independent Reviewer schemas and sole-evidence commits apply unchanged; C17 must not
+prefill a SHA, result or verdict.

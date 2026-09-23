@@ -222,3 +222,33 @@ that exact pair. `ADDRESS` returns to Planner; `HUMAN_CHECK` is never replied to
 2. Given a C16 Plan-Reviewer receipt is `needs-rework`, a classification receipt is uncommitted/non-sole/altered, or
    `ADDRESS` is present, when any actor attempts a PR reply/resolve, then the action is forbidden; routing returns to
    Plan-Reviewer or Planner as applicable.
+
+## C17 ADDRESS Remediation Scenarios
+
+### Scenario 20 — `getattr` alias RED and green evidence
+
+Given an approved C17 planning receipt, when the RED subject assigns a local alias from `getattr` of a known
+`importlib`/`sys` alias and literal `import_module`/`modules`, then collection succeeds and its assertion fails;
+Tester records factual same-subject `failing` evidence and no Reviewer record exists. Given the distinct green subject,
+when that local alias is used, then the scanner rejects it while preserving direct, chained and mixed alias coverage,
+without executing AST or runtime `getattr`.
+
+### Scenario 21 — truthful protocol-only dataflow
+
+Given the green subject, when the topic dataflow is regenerated, then it shows
+`RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None`, not `Available`/`Missing` as lookup returns or a
+mapper/concrete backend/lifecycle/ACL. When validate, deliver and visual-check succeed, only their byte-changed named
+outputs join the subject; visual evidence is non-skipped and includes 1440×900, 1600×1000, 1920×1080 and 2048×1320.
+
+### Scenario 22 — Human-only README and later classification
+
+Given `4078761998`, when C17 remediates the other two findings, then it does not select/modify `README.md`, reply to,
+or resolve that public-surface thread. After matching green passing Tester and approved Reviewer evidence, a new
+independent classification—not C17 itself—decides an exact reply/resolution for C17's two pairs.
+
+## C17 Error / Edge Cases
+
+1. Unknown/dynamic `getattr` receivers or attributes must not trigger runtime evaluation or arbitrary-expression
+   scanning.
+2. A non-zero, warning/error, skipped, incomplete-viewport, or hand-edited Archify result fails closed.
+3. A README or unlisted-path change is `needs-rework` and cannot authorize a PR action.
