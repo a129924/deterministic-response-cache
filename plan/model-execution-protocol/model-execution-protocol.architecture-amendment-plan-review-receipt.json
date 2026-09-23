@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "topic": "model-execution-protocol",
+  "correction_id": "model-execution-protocol/pr-comment-architecture-status",
+  "thread_id": "PRRT_kwDOUJTij86lAh0Z",
+  "planning_candidate_commit": "7d3475a9094da522d31f611a1a7fba4b5d2eaeef",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "recorded_by": "Independent Plan-Reviewer"
+}

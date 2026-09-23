@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "topic": "model-execution-protocol",
+  "implementation_subject_commit": "868df3b338e022371a55a2125b270a52ba1c6874",
+  "tester_evidence_commit": "12bdfb1b5350ee71e3af70df38a462ce9286fba5",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "recorded_by": "Independent Reviewer"
+}

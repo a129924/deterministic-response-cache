@@ -22,9 +22,11 @@ CacheStore 是 Response Reuse BC 的內部保存元件，而不是頂層 BC。�
 
 Loaded Runtime Cache 重用已初始化且可執行的模型 runtime，避免重複載入。它必須使用獨立的 Runtime Store／Runtime Registry 概念，不能與 Response CacheStore 混用或共用責任。
 
-### Model Execution（未來）
+### Model Execution
 
-Model Execution 在 response 無法重用時，協調取得 runtime 與執行模型。它不擁有 response reuse 或 identity 規則。
+Model Execution 已提供 provider-neutral、同步、可注入的 coordination contracts：runtime access／invocation ports、outcomes，以及協調 runtime resolution、必要時 preparation 與單次 invocation 的 protocol orchestration。這些 executable modules 只支援 defining-module direct imports，不建立 child package initializer、facade 或 re-export。它不擁有 response reuse、identity、runtime retention 或 provider-specific 規則。
+
+Loaded Runtime Cache 的實際 wiring、retention/backend、具體 Provider Adapter、cross-BC composition，以及 Response Reuse `Miss` 到 execution 與 execution result handoff 的整合仍屬未來能力；目前交付不代表端到端 pipeline 已完成。
 
 ### Provider Adapter（未來、可替換）
 
@@ -32,17 +34,17 @@ Provider Adapter 只對接具體的 local 或 remote provider，位於核心 lib
 
 ## Package topology
 
-本 repository 預先保留下列 Business Capability（BC）目錄。此表是 BC 名稱與 package path 的文字 source of truth：目錄中的 `.gitkeep` 是純文字 topology-reservation marker，**不**代表該 BC 已實作或可使用。這些 child directory 可被 Python 解析為 implicit namespace subpackage，但 marker 不提供 executable module、public symbol 或 re-export；每個 BC 的功能仍須依 roadmap 以獨立 topic 實作。
+本 repository 以如下目錄分隔 Business Capability（BC）。此表是 BC 名稱、package path 與目前交付狀態的文字 source of truth。目錄中的 `.gitkeep` 只是 topology-reservation marker；實際能力以各 BC 的 executable modules 為準。child directory 可由 Python 解析為 implicit namespace subpackage，但不因此承諾 child package initializer、facade 或 re-export。
 
 | BC | 預留 directory | Topology boundary |
 | --- | --- | --- |
 | Identity | `src/deterministic_response_cache/identity/` | 模型與完整 request identity 的唯一 authority。 |
 | Response Reuse | `src/deterministic_response_cache/response_reuse/` | 只消費已確認 identity；CacheStore 是其內部元件。 |
 | Loaded Runtime Cache | `src/deterministic_response_cache/loaded_runtime_cache/` | 獨立的未來 BC，不與 response reuse 或 CacheStore 合併。 |
-| Model Execution | `src/deterministic_response_cache/model_execution/` | 獨立的未來 BC，不擁有 identity 或 response reuse。 |
+| Model Execution | `src/deterministic_response_cache/model_execution/` | 已有 provider-neutral coordination executable modules 與 defining-module direct-import contracts；實際 runtime/provider/cross-BC wiring 仍屬未來。 |
 | Provider Adapter | `src/deterministic_response_cache/provider_adapter/` | 獨立、可替換的未來 BC；此處只預留 boundary topology，具體 provider integration 維持核心外部。 |
 
-本 topology 不建立 child package initializer、executable Python module、public symbol、re-export 或 `cache_store/` 頂層目錄。`src/deterministic_response_cache/__init__.py` 仍是唯一既有 package initializer。
+Model Execution 已有 `outcomes.py`、`ports.py` 與 `protocol.py` executable modules；本 topology 不為其建立 child package initializer 或 re-export。其餘只含 marker 的預留目錄不因此提供 executable module 或 public symbol。`src/deterministic_response_cache/__init__.py` 仍是唯一既有 package initializer，且不建立 `cache_store/` 頂層目錄。
 
 ## Boundary violations
 
