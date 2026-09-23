@@ -826,3 +826,52 @@ for either.
 
 This is Human-authorized post-receipt state tracking only. It creates no C19, candidate, receipt, new evidence,
 actual reply, resolution, merge, release, post-merge, Human review, or action for an unclassified thread.
+
+## C19 Current-Head Reconciliation Classification Successor (authoritative current routing)
+
+C19 supersedes C18 only for fresh current-head classification. It preserves the Loaded Runtime Cache mission, C17/C18
+provenance and all locked boundaries; it creates no code, test, dataflow, architecture, README or direct PR action
+until an exact committed receipt authorizes it.
+
+| Field | Contract |
+| --- | --- |
+| In-Scope | Exactly five C19 planning artifacts; standard candidate-SHA-bound Plan-Reviewer receipt; one immutable C17-bound current-head classification/reconciliation receipt; later exact reply/resolve only for its committed `REPLY_AND_RESOLVE` entry. |
+| Out-Of-Scope | Implementation, source, tests, dataflow, architecture, README, lifecycle, new C17 evidence, release, merge and post-merge. |
+| ReadOnly | All unlisted paths; C17/C18 and predecessor artifacts; every thread outside an exact C19 committed `REPLY_AND_RESOLVE` entry. |
+| Written | Standard C19 Plan-Reviewer receipt, then one C19 classification receipt. |
+| Modified | Candidate: only the five planning artifacts. Classification: only one new receipt file. |
+| Deleted | None. |
+
+### C19 immutable receipt contract
+
+The candidate must not prefill its SHA, review verdict, classification outcome, reply or resolution. After a committed
+approved standard Plan-Reviewer receipt, Independent Reviewer alone writes
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7ceb3409d6d8b9ff3dc51485c3588f502bdff882-3e803a507b2dfa74efdf71164c260da172aadb81.json`; Implementer alone commits it unchanged in a
+sole evidence-only commit. The eight exact top-level keys are `schema_version`, `topic`,
+`implementation_subject_commit`, `tester_evidence_commit`, `implementation_review_evidence_commit`,
+`pr_head_commit`, `classifications`, `recorded_by`, binding schema `1`, topic `loaded-runtime-cache`, C17 subject
+`7ceb3409d6d8b9ff3dc51485c3588f502bdff882`, Tester commit `b58cb1e330fe12ccc80a8f39b875a61ea6024067`, Reviewer
+commit `edbae51a0ee86cff498d6caf4e6aa78b58962a82`, and current PR head
+`3e803a507b2dfa74efdf71164c260da172aadb81`.
+
+`classifications` contains exactly five entries with only `thread`, `comment`, `outcome`, `reply`: new pairs
+`PRRT_kwDOUJTij86lCkFr`/`4079664571`, `PRRT_kwDOUJTij86lCkFu`/`4079664575`,
+`PRRT_kwDOUJTij86lDH2-`/`4079885261`, `PRRT_kwDOUJTij86lDH3C`/`4079885267`, and reconciliation pair
+`PRRT_kwDOUJTij86lAR8Y`/`4078762005`. The future Independent Reviewer alone determines all first-four
+outcomes/replies. For `lAR8Y`, it first verifies current GitHub state and may record `ALREADY_RESOLVED` with `null`
+only if it evidences existing resolution; otherwise it independently classifies the pair. General outcomes are
+`REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; `ALREADY_RESOLVED` is exclusive to `lAR8Y`. Only
+`REPLY_AND_RESOLVE` has a non-empty factual reply and authorizes an exact reply/resolution; all other outcomes use
+`null`, while `ADDRESS` returns to Planner and Human checks stay open.
+
+F `PRRT_kwDOUJTij86jnBpk`/`4043480108`, ACL `PRRT_kwDOUJTij86kQ95O`/`4060023123`, business
+`PRRT_kwDOUJTij86kqiZ5`/`4070096561`, and README `PRRT_kwDOUJTij86lAR8T`/`4078761998` remain excluded
+Human-only locks: they are not C19 receipt entries and must not be replied to or resolved. Any malformed keys,
+role/path/SHA/head/ancestor/sole-commit defect, incorrect pair count, invalid enum, or invalid reply nullability
+fails closed.
+
+### C19 transition / handoff
+
+`planned` → C19 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → independent C19
+classification receipt-only commit → Planner classification routing. The receipt alone may route exact
+`REPLY_AND_RESOLVE` entries to Implementer; it never approves PR, merge, release or post-merge.

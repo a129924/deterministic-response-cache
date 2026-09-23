@@ -320,3 +320,33 @@ Its exact seven `REPLY_AND_RESOLVE` pairs are pending Implementer action. F
 `PRRT_kwDOUJTij86kqiZ5`/`4070096561`, and README `PRRT_kwDOUJTij86lAR8T`/`4078761998` remain open
 `HUMAN_CHECK`. New `PRRT_kwDOUJTij86lCkFr` and `PRRT_kwDOUJTij86lCkFu` are open/unclassified and outside C18.
 This state alignment creates no C19, candidate, receipt, new evidence, actual reply, or resolution.
+
+## C19 Current-Head Reconciliation Classification Successor Stages (authoritative)
+
+C19 supersedes C18 only for fresh current-head classification. It binds C17 subject
+`7ceb3409d6d8b9ff3dc51485c3588f502bdff882`, passing Tester evidence commit
+`b58cb1e330fe12ccc80a8f39b875a61ea6024067`, approved Reviewer evidence commit
+`edbae51a0ee86cff498d6caf4e6aa78b58962a82`, and current PR head
+`3e803a507b2dfa74efdf71164c260da172aadb81`. It changes no source/test/docs/Archify/README or PR state.
+
+- [x] C19 plan-authoring
+- [ ] C19 planning-candidate-commit
+- [ ] C19 independent Plan-Reviewer receipt
+- [ ] C19 receipt-only commit
+- [ ] C19 independent classification/reconciliation receipt
+- [ ] C19 classification-receipt-only commit
+- [ ] C19 Planner routing for exact classified pairs
+
+### C19 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C19 planning artifacts; prefill no candidate SHA, receipt
+  verdict, classification disposition, reply or resolution.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write an approved standard candidate-SHA-bound receipt,
+  then unchanged-sole-commit it.
+- [ ] **Actor: Independent Reviewer / Implementer.** Write and unchanged-sole-commit only
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7ceb3409d6d8b9ff3dc51485c3588f502bdff882-3e803a507b2dfa74efdf71164c260da172aadb81.json`.
+  It has exactly eight top-level keys and exactly five pairs: `lCkFr`/`4079664571`, `lCkFu`/`4079664575`,
+  `lDH2-`/`4079885261`, `lDH3C`/`4079885267`, and `lAR8Y`/`4078762005`.
+- [ ] **Actor: Planner.** Route only exact committed `REPLY_AND_RESOLVE` entries. For `lAR8Y`, an
+  `ALREADY_RESOLVED`/`null` entry is valid only when current GitHub state was independently verified; it never
+  authorizes action. Do not act on F, ACL, business or README Human-only locks.

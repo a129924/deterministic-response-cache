@@ -352,3 +352,34 @@ JSON `null`. Only an exact committed `REPLY_AND_RESOLVE` entry lets Implementer 
 that exact thread. `ADDRESS` returns to Planner; each `HUMAN_CHECK` stays open. Missing/extra keys or pairs,
 wrong role/path/reference, non-ancestor evidence, non-sole commit, invalid enum, or invalid reply nullability fails
 closed.
+
+## C19 current-head reconciliation classification receipt contract
+
+C19 supersedes C18 only as current routing. It is planning-only and creates a fresh standard Plan-Reviewer receipt
+plus one C17-bound current-head classification/reconciliation receipt. It creates or modifies no implementation
+subject, Tester/Reviewer evidence, source, test, documentation, architecture, Archify, README, PR reply or
+resolution before its exact committed classification entry authorizes that action.
+
+The C19 candidate is exactly the five planning artifacts and pre-fills no candidate SHA, verdict, classification
+outcome, reply or resolution. After a committed approved standard candidate-SHA-bound Plan-Reviewer receipt, only
+Independent Reviewer may write
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7ceb3409d6d8b9ff3dc51485c3588f502bdff882-3e803a507b2dfa74efdf71164c260da172aadb81.json`.
+Only Implementer may commit that unchanged file in one sole evidence-only commit.
+
+The receipt has exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`. Their values bind
+schema `1`, topic `loaded-runtime-cache`, C17 subject `7ceb3409d6d8b9ff3dc51485c3588f502bdff882`, Tester-evidence
+commit `b58cb1e330fe12ccc80a8f39b875a61ea6024067`, review-evidence commit
+`edbae51a0ee86cff498d6caf4e6aa78b58962a82`, current PR head `3e803a507b2dfa74efdf71164c260da172aadb81`, exactly five
+classifications, and writer `Independent Reviewer`.
+
+Each classification has only `thread`, `comment`, `outcome`, `reply`; its exact pair set is
+`PRRT_kwDOUJTij86lCkFr`/`4079664571`, `PRRT_kwDOUJTij86lCkFu`/`4079664575`,
+`PRRT_kwDOUJTij86lDH2-`/`4079885261`, `PRRT_kwDOUJTij86lDH3C`/`4079885267`, and
+`PRRT_kwDOUJTij86lAR8Y`/`4078762005`. For the first four pairs, Independent Reviewer alone chooses
+`REPLY_AND_RESOLVE`, `ADDRESS`, or `HUMAN_CHECK`; the candidate supplies no outcome or reply. For `lAR8Y`, Reviewer
+first reconciles its GitHub current state. It may use `ALREADY_RESOLVED` only if that observed state proves resolution;
+that outcome requires `reply: null`, is exclusive to `lAR8Y`, and authorizes no action. Otherwise it independently
+selects one general outcome. `REPLY_AND_RESOLVE` requires a non-empty factual reply; every other outcome requires
+`null`. The four pre-existing Human-only pairs are excluded and remain untouched/open. Any malformed, extra, stale,
+non-sole, cross-subject, wrong-head, wrong-pair, invalid-enum or invalid-nullability record fails closed.

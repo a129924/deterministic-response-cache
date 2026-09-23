@@ -255,3 +255,40 @@ tests、architecture、Archify、README、PR 或 thread state。
 - 僅 committed C18 receipt 中 exact `REPLY_AND_RESOLVE` pair 可授權 Implementer 留下該 entry 的 exact factual reply
   並 resolve 該 exact thread。`ADDRESS` 必回到 Planner 建立新 successor；`HUMAN_CHECK` 不得 reply／resolve。錯誤
   writer、path、schema、SHA、ancestor、sole-commit、pair set 或 nullability 一律 fail closed。
+
+## C19 C17 current-head reconciliation classification successor
+
+Human 已授權 C19 作為 C18 後唯一的 current-head classification planning successor。它只處理四個 C18 之後
+未分類的 thread/comment pairs，以及 `lAR8Y` 的 current-state reconciliation；它不重寫 C17/C18 chain、既有
+receipt/evidence、source、tests、docs、Archify、README、PR 或 thread state。
+
+- C19 candidate 只可修改本 requirements、`technical-spec.md`、topic plan、topic spec 與 step tracker。candidate
+  不得預填自身 SHA、Plan-Reviewer verdict、任一 classification outcome、reply 或 resolution。
+- candidate committed 後，獨立 Plan-Reviewer 必須在標準 immutable path
+  `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`
+  寫 approved receipt；僅 Implementer 可原樣以 sole receipt-only commit 提交。該 receipt 只授權 C19 classification。
+- C19 classification receipt 的唯一 immutable path 是
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7ceb3409d6d8b9ff3dc51485c3588f502bdff882-3e803a507b2dfa74efdf71164c260da172aadb81.json`。
+  它固定綁定 C17 subject `7ceb3409d6d8b9ff3dc51485c3588f502bdff882`、passing Tester evidence commit
+  `b58cb1e330fe12ccc80a8f39b875a61ea6024067`、approved implementation-review evidence commit
+  `edbae51a0ee86cff498d6caf4e6aa78b58962a82` 與 current PR head
+  `3e803a507b2dfa74efdf71164c260da172aadb81`。Independent Reviewer 是唯一 writer；僅 Implementer 可原樣以
+  sole evidence-only commit 提交；不得覆寫或與任何其他檔案共用 commit。
+- receipt 必須是唯一 JSON object，top-level keys 恰為 `schema_version`、`topic`、
+  `implementation_subject_commit`、`tester_evidence_commit`、`implementation_review_evidence_commit`、
+  `pr_head_commit`、`classifications`、`recorded_by`。其固定值為 integer `1`、`loaded-runtime-cache`、上述
+  four full 40-hex SHA、exactly five-entry array、`Independent Reviewer`。每個 entry 的 keys 恰為
+  `thread`、`comment`、`outcome`、`reply`。
+- exact pair set 僅為 `PRRT_kwDOUJTij86lCkFr`/`4079664571`、`PRRT_kwDOUJTij86lCkFu`/`4079664575`、
+  `PRRT_kwDOUJTij86lDH2-`/`4079885261`、`PRRT_kwDOUJTij86lDH3C`/`4079885267` 與
+  `PRRT_kwDOUJTij86lAR8Y`/`4078762005`。前四組 outcome/reply 一律由 Independent Reviewer 在 future receipt
+  獨立決定，不得由 candidate 預填。`lAR8Y` 必須先核對 GitHub current state：只有 Reviewer 在 receipt 寫入時可
+  驗證其已 resolved，才可記為 `ALREADY_RESOLVED`／`reply: null`；否則亦由 Reviewer 獨立選擇一般 outcome。
+  `REPLY_AND_RESOLVE` 需 non-empty factual reply；`ADDRESS`、`HUMAN_CHECK` 與 `ALREADY_RESOLVED` 均需 JSON
+  `null` reply。`ALREADY_RESOLVED` 只可用於 `lAR8Y`，且不授權任何 thread action。
+- F `PRRT_kwDOUJTij86jnBpk`/`4043480108`、ACL `PRRT_kwDOUJTij86kQ95O`/`4060023123`、business
+  `PRRT_kwDOUJTij86kqiZ5`/`4070096561`、README `PRRT_kwDOUJTij86lAR8T`/`4078761998` 是既有 Human-only locks，
+  不在 C19 pair set 中，保持 open、不得 reply 或 resolve。僅 committed C19 receipt 的 exact
+  `REPLY_AND_RESOLVE` entry 可授權 Implementer 留下該 exact factual reply 並 resolve 該 exact thread；
+  `ADDRESS` 返回 Planner，`HUMAN_CHECK` 保持 open。任何錯誤 writer、path、schema、SHA、ancestor、sole-commit、
+  pair set、enum 或 nullability 一律 fail closed。

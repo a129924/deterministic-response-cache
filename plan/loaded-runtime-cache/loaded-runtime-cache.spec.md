@@ -282,3 +282,31 @@ resolve that exact thread. `ADDRESS` returns to Planner; no Human-only pair is r
    and authorizes no thread action.
 2. A C18 Plan-Reviewer `needs-rework` receipt, an uncommitted classification receipt, or an entry other than exact
    `REPLY_AND_RESOLVE` never authorizes reply or resolution.
+
+## C19 Current-Head Reconciliation Classification Scenarios
+
+### Scenario 25 — immutable five-pair C17-bound receipt
+
+Given C17 subject `7ceb3409d6d8b9ff3dc51485c3588f502bdff882`, passing Tester evidence commit
+`b58cb1e330fe12ccc80a8f39b875a61ea6024067`, approved Reviewer evidence commit
+`edbae51a0ee86cff498d6caf4e6aa78b58962a82`, and current PR head
+`3e803a507b2dfa74efdf71164c260da172aadb81`, when C19 has a committed approved standard Plan-Reviewer receipt,
+then only Independent Reviewer may write the current-head-suffixed immutable classification receipt and only
+Implementer may commit it unchanged alone. The receipt has exactly its eight top-level keys and five entries with
+only `thread`, `comment`, `outcome`, `reply`.
+
+### Scenario 26 — new-pair independence and `lAR8Y` reconciliation
+
+Given the C19 exact pair set, when Independent Reviewer classifies it, then the four new pairs
+`lCkFr`/`4079664571`, `lCkFu`/`4079664575`, `lDH2-`/`4079885261`, and `lDH3C`/`4079885267` receive no planned
+outcome or reply. For `lAR8Y`/`4078762005`, `ALREADY_RESOLVED`/`null` is legal only when Reviewer verifies the
+current GitHub state already resolved it; otherwise Reviewer independently applies the general outcome rules. Exact
+committed `REPLY_AND_RESOLVE` alone allows the exact non-empty factual reply and resolve action. F, ACL, business
+architecture and README Human-only locks are excluded and remain open.
+
+## C19 Error / Edge Cases
+
+1. A receipt that uses the prior C18 path, omits its current-head suffix, has other than the exact eight top-level
+   keys/five pair set, or mismatches C17 subject/T17/V17/current head fails closed.
+2. `ALREADY_RESOLVED` on any pair except `lAR8Y`, without current-state verification, or with a non-null reply fails
+   closed. It never authorizes comment or resolution.
