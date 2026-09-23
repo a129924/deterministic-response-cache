@@ -1,6 +1,6 @@
 ---
 topic: model-execution-protocol
-phase: review-ready
+phase: phase-4.5-alignment-pending
 created: 2026-09-22
 ---
 
@@ -16,7 +16,7 @@ created: 2026-09-22
 - [X] planning-amendment-review
 - [X] tdd-test-authoring
 - [X] implementation
-- [ ] implementation-review
+- [X] implementation-review
 - [ ] code-review
 
 ## Actionable Steps
@@ -30,7 +30,7 @@ created: 2026-09-22
 - [X] **Actor:** Implementer — **Action:** 原樣以 sole evidence-only commit 提交 amendment receipt，第一 parent 必須是新 candidate commit；交 Planner 依 Git binding 與 verdict re-route。`needs-rework` 返回 Plan-Creator，只有新 `approved` 可進 implementation。
 - [X] **Actor:** Implementer — **Action:** 在 approved planning receipt 與 Planner route 後，只以四份 declared implementation paths 建 immutable subject `868df3b338e022371a55a2125b270a52ba1c6874`。
 - [X] **Actor:** Tester — **Action:** 對 immutable subject 執行驗證，寫入 actual command/exit-code evidence；Implementer 已原樣以 passing evidence sole commit `12bdfb1b5350ee71e3af70df38a462ce9286fba5` 提交。
-- [ ] **Actor:** Independent Reviewer — **Action:** 只消費 committed passing same-subject Tester evidence，寫入 review evidence；Implementer 原樣單獨提交。
+- [X] **Actor:** Independent Reviewer — **Action:** 已只消費 immutable subject `868df3b338e022371a55a2125b270a52ba1c6874` 的 committed passing Tester evidence sole commit `12bdfb1b5350ee71e3af70df38a462ce9286fba5`，並由 Implementer 原樣以 approved review evidence sole commit `dee1740b73d0274445d0c3967272d0475d82e779` 提交。
 
 ## Implementation Steps
 
@@ -49,6 +49,6 @@ created: 2026-09-22
 - Topic selector：`topic=model-execution-protocol; branch=topic/model-execution-protocol; managed-path-intent=<repo-parent>/worktrees/model-execution-protocol; primary-worktree=false`。
 - Planning receipt、Tester evidence、independent Reviewer evidence 只消費同 topic、同 candidate/subject 的 actual committed evidence，不能跨 topic 重用，也不能由 chat 或 branch 狀態補推。
 - 第一個 five-path candidate `5f08dbc610a25fc4ae39eaaac20282f9a94e907d` 與 `needs-rework` receipt commit `64ab26c09831b47599543ce74c61733e052bcd44` 已提交。舊修訂 candidate `07c0a62bdfb640cc02b7370d1af616c970629084` 與其 `approved` receipt sole commit `aa41081300cbf2191b5d5b51c64cc67ebfb5cf1b` 僅保留為 immutable provenance，不再作 active routing authority。本次 amendment active candidate 是 `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`；Independent Plan-Reviewer 的 `approved` amendment receipt 已由 sole evidence-only commit `5145a59be17a3845da074d88e8530b59bfb45e57` 提交，Planner 已以 Git candidate commit/tree、五份 planning artifact blobs 與 receipt commit 核對 binding 成立。後續 implementation route 仍須由 Planner 判定，不由本 tracker 自行宣告。
-- Review-readiness binding：active planning candidate `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`、immutable implementation subject `868df3b338e022371a55a2125b270a52ba1c6874` 與 passing Tester evidence sole commit `12bdfb1b5350ee71e3af70df38a462ce9286fba5` 已綁定；目前等待 Planner 派遣 Independent Reviewer，尚未記錄 independent review verdict 或 evidence commit。
+- Phase 4.5 alignment binding：active planning candidate `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`、approved amendment Plan-Reviewer receipt sole commit `5145a59be17a3845da074d88e8530b59bfb45e57`、immutable implementation subject `868df3b338e022371a55a2125b270a52ba1c6874`、passing Tester evidence sole commit `12bdfb1b5350ee71e3af70df38a462ce9286fba5` 與 approved Independent Reviewer evidence sole commit `dee1740b73d0274445d0c3967272d0475d82e779` 已綁定；Planner Phase 4.5 alignment 尚待判定，本 tracker 不自行宣告 publish 完成、PR review 或 merge，亦未記錄 remote 或 PR。
 - PR #7 實際 runtime contract 未鎖定；本 topic 以本地 injected port/test doubles 驗證，未來接線另行規劃。
 - 只有 `## Implementation Steps` 是 implementation-completion gate；Human 獨占 PR review、merge、release、post-merge、tag 與 final summary。
