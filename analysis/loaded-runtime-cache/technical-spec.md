@@ -236,3 +236,36 @@ no Reviewer record.
 
 C14 and `37d7233e7231151c0dac6aaa1a7820bff746ffdc` are frozen nonrouting provenance. F／ACL/business architecture
 remain Human-only `human-check`; no C15 artifact or phase may reply, resolve, approve, merge, release or post-merge.
+
+## C16 immutable C15 thread-classification receipt contract
+
+C16 is a planning-only successor. Its candidate changes exactly the five planning artifacts and must receive a fresh,
+committed, candidate-SHA-bound `approved` Plan-Reviewer receipt before classification. It creates no RED/green subject,
+Tester record, implementation-review record, source, test, documentation, architecture, Archify, PR reply, resolution,
+publish, merge, release or post-merge action.
+
+After that approved planning receipt, only Independent Reviewer may write the one JSON object at
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7dab2b9742bd19f962bef99be83b40b978f87f0f.json`.
+Only Implementer may commit that exact unchanged file, in one sole evidence-only commit. The object top-level keys are
+exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`. Their values are exactly:
+integer `1`; `loaded-runtime-cache`; C15 subject
+`7dab2b9742bd19f962bef99be83b40b978f87f0f`; Tester-evidence commit
+`475e3c953f6551bef5834d0bf350d5c79449a43e`; implementation-review-evidence commit
+`cee5097c176b4321a0d9bc2e810caf7d3425d0f1`; PR snapshot
+`7e525b1ad8dc77c25b0b11a467f6b1f24884ecd3`; an array of exactly seven entries; and `Independent Reviewer`.
+
+Every classification entry has exactly `thread`, `comment`, `outcome`, `reply`. The seven `thread`/`comment` pairs are
+exactly `PRRT_kwDOUJTij86kQ95O`/`4060023123`, `PRRT_kwDOUJTij86kqiZu`/`4070096548`,
+`PRRT_kwDOUJTij86kqiZ5`/`4070096561`, `PRRT_kwDOUJTij86lAR8J`/`4078761983`,
+`PRRT_kwDOUJTij86lAR8P`/`4078761993`, `PRRT_kwDOUJTij86lAR8T`/`4078761998`, and
+`PRRT_kwDOUJTij86lAR8Y`/`4078762005`, with no duplicate or extra pair. `outcome` is exactly one of
+`REPLY_AND_RESOLVE`, `ADDRESS`, `HUMAN_CHECK`. `reply` is a non-empty string only for `REPLY_AND_RESOLVE`; it is JSON
+`null` for `ADDRESS` and `HUMAN_CHECK`. The ACL pair `4060023123` and business-architecture pair `4070096561` are
+locked `HUMAN_CHECK` with `reply: null`; Independent Reviewer must independently classify the other five pairs and
+the candidate must not prefill their outcome/reply.
+
+Malformed keys, wrong writer, wrong/full-SHA mismatch, altered sole evidence, uncommitted evidence, a missing/extra
+pair, a forbidden reply, or a reference that is not a committed C15 ancestor fails closed. A committed classification
+receipt only routes exact `REPLY_AND_RESOLVE` pairs to an Implementer for that exact reply and resolution. Any
+`ADDRESS` returns routing to Planner for a new successor; `HUMAN_CHECK` stays open and is never replied to or resolved.

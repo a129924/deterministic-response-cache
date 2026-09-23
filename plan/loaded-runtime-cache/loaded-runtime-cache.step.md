@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: c15-plan-authoring
+phase: c16-plan-authoring
 created: 2026-09-17
 ---
 
@@ -185,3 +185,48 @@ any PR thread.
   introspection, cross-BC import, production-source, Archify, workflow, or architecture modification.
 - The only C15 implementation path is `tests/test_loaded_runtime_cache_bc_independence.py`; every other unlisted path
   is ReadOnly.
+
+## C16 Thread-Classification Receipt Successor Stages (authoritative)
+
+C15's completed chain is frozen C16 input only. C16 supersedes C15's pending Phase 4.5/classification state; it adds
+no implementation, Tester, or green-review subject.
+
+- [x] C15 immutable subject / passing Tester / approved Reviewer inputs exist
+- [ ] C16 plan-authoring
+- [ ] C16 planning-candidate-commit
+- [ ] C16 independent Plan-Reviewer receipt
+- [ ] C16 receipt-only commit
+- [ ] C16 independent classification receipt
+- [ ] C16 classification-receipt-only commit
+- [ ] C16 Planner routing for exact classified pairs
+
+### C16 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C16 planning artifacts; no source, test, docs/architecture,
+  Archify, PR, or evidence file may share this candidate commit.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write fresh approved C16 candidate-SHA-bound Plan-Reviewer
+  receipt, then commit it unchanged alone. A `needs-rework` receipt cannot route classification.
+- [ ] **Actor: Independent Reviewer / Implementer.** After the committed approved C16 planning receipt, Independent
+  Reviewer alone writes
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7dab2b9742bd19f962bef99be83b40b978f87f0f.json`;
+  Implementer commits it unchanged alone. It binds subject `7dab2b9742bd19f962bef99be83b40b978f87f0f`, Tester commit
+  `475e3c953f6551bef5834d0bf350d5c79449a43e`, Reviewer commit
+  `cee5097c176b4321a0d9bc2e810caf7d3425d0f1`, snapshot `7e525b1ad8dc77c25b0b11a467f6b1f24884ecd3`, and exactly
+  seven listed pairs.
+- [ ] **Actor: Planner / Implementer.** Only an exact committed `REPLY_AND_RESOLVE` pair may receive its factual
+  reply and resolution. `ADDRESS` returns to Planner. ACL `4060023123` and business architecture `4070096561` remain
+  `HUMAN_CHECK` with no reply/resolve.
+
+### C16 receipt schema / fixed pair set
+
+The receipt's exact top-level keys are `schema_version`, `topic`, `implementation_subject_commit`,
+`tester_evidence_commit`, `implementation_review_evidence_commit`, `pr_head_commit`, `classifications`,
+`recorded_by`; values are `1`, `loaded-runtime-cache`, the four fixed C15/Snapshot SHAs above, an exact seven-entry
+array, and `Independent Reviewer`. Each entry has exactly `thread`, `comment`, `outcome`, `reply`; outcomes are only
+`REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`, with a non-empty reply only for `REPLY_AND_RESOLVE` and JSON `null` otherwise.
+
+The exact pair set is `PRRT_kwDOUJTij86kQ95O`/`4060023123`, `PRRT_kwDOUJTij86kqiZu`/`4070096548`,
+`PRRT_kwDOUJTij86kqiZ5`/`4070096561`, `PRRT_kwDOUJTij86lAR8J`/`4078761983`,
+`PRRT_kwDOUJTij86lAR8P`/`4078761993`, `PRRT_kwDOUJTij86lAR8T`/`4078761998`, and
+`PRRT_kwDOUJTij86lAR8Y`/`4078762005`. ACL `4060023123` and business architecture `4070096561` are locked
+`HUMAN_CHECK`/`null`; C16 does not prefill the other five independent outcomes or replies.

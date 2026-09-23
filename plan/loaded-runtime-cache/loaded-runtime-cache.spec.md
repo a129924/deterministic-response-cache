@@ -192,3 +192,33 @@ after the relevant immutable subject exists; no future SHA is prefilled. C14 and
 `37d7233e7231151c0dac6aaa1a7820bff746ffdc` are nonrouting provenance. After passing green Tester and approved
 Reviewer evidence, Planner may perform Phase 4.5 and independent classification only; F／ACL/business architecture
 remain Human-only `human-check`.
+
+## C16 Thread-Classification Receipt Successor Scenarios
+
+### Scenario 18 — immutable C15-bound seven-pair receipt
+
+Given the completed C15 subject `7dab2b9742bd19f962bef99be83b40b978f87f0f`, passing Tester evidence commit
+`475e3c953f6551bef5834d0bf350d5c79449a43e`, approved review evidence commit
+`cee5097c176b4321a0d9bc2e810caf7d3425d0f1`, and snapshot `7e525b1ad8dc77c25b0b11a467f6b1f24884ecd3`, when C16
+has a committed approved planning receipt, then only Independent Reviewer writes
+`loaded-runtime-cache.thread-classification-receipt-7dab2b9742bd19f962bef99be83b40b978f87f0f.json`, and only
+Implementer commits it unchanged alone. The JSON has exactly its eight declared top-level keys and exactly the seven
+listed current thread/comment pairs, each with only `thread`, `comment`, `outcome`, `reply`.
+
+### Scenario 19 — independent disposition and Human-only locks
+
+Given the classification receipt, when Independent Reviewer examines the seven pairs, then ACL
+`PRRT_kwDOUJTij86kQ95O`/`4060023123` and business-architecture
+`PRRT_kwDOUJTij86kqiZ5`/`4070096561` are `HUMAN_CHECK` with `reply: null` and stay open. The other five outcomes are
+not planned or prefilled: Reviewer independently selects `REPLY_AND_RESOLVE`, `ADDRESS`, or `HUMAN_CHECK`. Only an
+exact committed `REPLY_AND_RESOLVE` entry permits an Implementer to leave its non-empty factual reply and resolve
+that exact pair. `ADDRESS` returns to Planner; `HUMAN_CHECK` is never replied to or resolved.
+
+## C16 Error / Edge Cases
+
+1. Given a receipt has a missing/extra top-level or entry key, wrong role/path/full SHA, non-ancestor C15 binding,
+   wrong snapshot, missing/duplicate/extra pair, invalid outcome, or an invalid reply nullability, when Planner
+   consumes it, then it fails closed and no thread action is routed.
+2. Given a C16 Plan-Reviewer receipt is `needs-rework`, a classification receipt is uncommitted/non-sole/altered, or
+   `ADDRESS` is present, when any actor attempts a PR reply/resolve, then the action is forbidden; routing returns to
+   Plan-Reviewer or Planner as applicable.

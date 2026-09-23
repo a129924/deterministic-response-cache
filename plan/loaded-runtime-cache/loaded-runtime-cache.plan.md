@@ -453,8 +453,8 @@ conversion and Registry／Retention implementation remain deferred to future, se
 
 ## Workflow State Contract
 
-- current_step: c15-phase-4.5-alignment-pending
-- next_step: Planner C15 Phase 4.5 alignment
+- current_step: c16-plan-authoring
+- next_step: Implementer commits the five C16 planning artifacts
 - status: IN_PROGRESS
 
 ## C15 Mixed-Assignment Successor Route (authoritative for current execution)
@@ -578,3 +578,107 @@ None; Human-only merge/release/post-merge remains outside C15.
 ### Open questions / unresolved items
 
 None for C15 planning. F／ACL/business architecture remains an intentional Human-only boundary.
+
+## C16 C15 Thread-Classification Receipt Successor (authoritative for current execution)
+
+### Goal / Outcome
+
+C16 establishes the missing immutable, auditable receipt contract for independently classifying the seven unresolved
+PR #7 threads against the already approved C15 chain. It does not change the Loaded Runtime Cache capability or repair
+any finding itself.
+
+### Scope, boundaries, and non-goals
+
+| Field | Contract |
+| --- | --- |
+| In-Scope | exactly five C16 planning artifacts; C16 candidate/independent Plan-Reviewer receipt; one fixed C15-bound classification receipt; later exact reply/resolve only for pairs classified `REPLY_AND_RESOLVE`. |
+| Out-of-Scope / Non-Goal | production source, tests, Protocol/API, Registry backend, DI, runtime lifecycle, mapper/ACL implementation, all docs/architecture/Archify, C15 evidence rewrite, new RED/green work, merge/release/post-merge. |
+| ReadOnly | every unlisted path; all earlier C15/C14/C12 provenance; the two Human-only threads; every PR thread unless the committed classification receipt marks that exact pair `REPLY_AND_RESOLVE`. |
+| Written | standard C16 Plan-Reviewer receipt, then only `loaded-runtime-cache.thread-classification-receipt-7dab2b9742bd19f962bef99be83b40b978f87f0f.json`. |
+| Modified | C16 candidate: exactly the five planning artifacts. The classification receipt is a new evidence file only. |
+| Deleted | none. |
+
+### Locked evidence and classification schema
+
+The binding C15 facts are subject `7dab2b9742bd19f962bef99be83b40b978f87f0f`, passing Tester-evidence commit
+`475e3c953f6551bef5834d0bf350d5c79449a43e`, approved implementation-review-evidence commit
+`cee5097c176b4321a0d9bc2e810caf7d3425d0f1`, and PR snapshot `7e525b1ad8dc77c25b0b11a467f6b1f24884ecd3`.
+They must be complete 40-character lower-case hexadecimal committed ancestor facts; none may be replaced, abbreviated,
+or inferred from chat.
+
+The one classification receipt path is exact and non-overwritable:
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7dab2b9742bd19f962bef99be83b40b978f87f0f.json`.
+Independent Reviewer is its sole writer; Implementer is the sole committer and must commit it unchanged in a sole
+evidence-only commit. It must have exactly these top-level keys:
+
+```json
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "7dab2b9742bd19f962bef99be83b40b978f87f0f",
+  "tester_evidence_commit": "475e3c953f6551bef5834d0bf350d5c79449a43e",
+  "implementation_review_evidence_commit": "cee5097c176b4321a0d9bc2e810caf7d3425d0f1",
+  "pr_head_commit": "7e525b1ad8dc77c25b0b11a467f6b1f24884ecd3",
+  "classifications": [],
+  "recorded_by": "Independent Reviewer"
+}
+```
+
+`classifications` must ultimately contain exactly these seven pairs, and every entry must have exactly `thread`,
+`comment`, `outcome`, `reply`: `PRRT_kwDOUJTij86kQ95O`/`4060023123`,
+`PRRT_kwDOUJTij86kqiZu`/`4070096548`, `PRRT_kwDOUJTij86kqiZ5`/`4070096561`,
+`PRRT_kwDOUJTij86lAR8J`/`4078761983`, `PRRT_kwDOUJTij86lAR8P`/`4078761993`,
+`PRRT_kwDOUJTij86lAR8T`/`4078761998`, `PRRT_kwDOUJTij86lAR8Y`/`4078762005`.
+`outcome` is `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`. A non-empty `reply` is allowed only for
+`REPLY_AND_RESOLVE`; `ADDRESS` and `HUMAN_CHECK` require JSON `null`. ACL
+`PRRT_kwDOUJTij86kQ95O`/`4060023123` and business-architecture
+`PRRT_kwDOUJTij86kqiZ5`/`4070096561` are locked `HUMAN_CHECK`/`null`; the other five outcomes and replies are not
+prefilled and remain the independent Reviewer's decision.
+
+### Status / allowed transitions
+
+**Current state:** `c16-plan-authoring`. C15 is completed frozen routing evidence only; C16 supersedes its pending
+Phase 4.5/classification claim. The allowed route is `planned` → `planning-candidate-committed` →
+`plan-review-receipt-committed` → `classification-review-in-progress` →
+`classification-receipt-committed` → (`reply-resolve` for exact `REPLY_AND_RESOLVE` pairs | new Planner successor
+for `ADDRESS` | `human-check` for `HUMAN_CHECK`). C16 has no RED, green, Tester, or implementation-review phase.
+
+### Artifact paths and execution steps
+
+| Artifact | Exact path | Write owner | Contract |
+| --- | --- | --- | --- |
+| Requirements | `analysis/loaded-runtime-cache/requirements.md` | Plan-Creator | C16 candidate only. |
+| Technical specification | `analysis/loaded-runtime-cache/technical-spec.md` | Plan-Creator | C16 candidate only. |
+| Topic plan | `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md` | Plan-Creator | C16 routing contract. |
+| Topic specification | `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md` | Plan-Creator | C16 acceptance contract. |
+| Step tracker | `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator | C16 phase truth. |
+| Plan-review receipt | `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c16-candidate-40-hex-sha>.json` | Independent Plan-Reviewer; Implementer commits unchanged alone | Fresh approved C16 planning receipt. |
+| Classification receipt | `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7dab2b9742bd19f962bef99be83b40b978f87f0f.json` | Independent Reviewer; Implementer commits unchanged alone | C15-bound seven-pair factual classification. |
+
+1. Implementer commits exactly the five C16 planning artifacts.
+2. Independent Plan-Reviewer writes an approved, candidate-SHA-bound C16 receipt; Implementer commits it unchanged
+   alone. A `needs-rework` receipt routes no classification.
+3. Independent Reviewer validates the four bound C15 facts and writes the sole classification receipt, with exact
+   seven pairs and no prefilled result for the five independent decisions.
+4. Implementer commits that receipt unchanged alone. Only then may Planner route an Implementer to reply and resolve
+   an exact `REPLY_AND_RESOLVE` pair. `ADDRESS` returns to Planner; `HUMAN_CHECK` stays open.
+
+### Validation / acceptance checks
+
+- C16 candidate modifies only the five declared planning artifacts and has a fresh approved Plan-Reviewer receipt.
+- Classification receipt has exactly its declared path, top-level keys, writer, full-SHA bindings, and seven unique
+  thread/comment pairs.
+- ACL `4060023123` and business-architecture `4070096561` are `HUMAN_CHECK` with JSON `null` reply; no actor replies
+  to or resolves either thread.
+- Only a committed same-snapshot `REPLY_AND_RESOLVE` entry authorizes one factual reply and resolve for its exact pair;
+  `ADDRESS` never masquerades as resolved.
+
+### Reviewer handoff
+
+The independent Plan-Reviewer checks C16's five-path candidate scope, C15 bindings, exact schema/value space,
+Human-only pair locks, and absence of outcomes/replies for the other five pairs. Independent Reviewer then classifies
+only the seven listed current pairs; it cannot modify code or PR state.
+
+### Post-merge / release actions
+
+None. Human-only merge/release/post-merge remains outside C16.

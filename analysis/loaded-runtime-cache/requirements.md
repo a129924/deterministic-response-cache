@@ -171,3 +171,30 @@ testing strategy 與 Human boundary；它只取代 current routing，不重寫 C
 - `37d7233e7231151c0dac6aaa1a7820bff746ffdc` 與完整 C14 chain 是 frozen nonrouting provenance，不得作 C15
   candidate、receipt、subject、evidence、approval 或 next role。F／ACL／business architecture 持續是 Human-only
   `human-check`，C15 不得 reply、resolve、merge 或 release。
+
+## C16 C15 thread-classification receipt successor
+
+Human 已授權 C16 作為只處理 C15 post-Q PR-thread classification 的 planning successor。C16 取代 C15 的 current
+routing，但不重寫 C15 chain、Protocol、implementation、tests、architecture 或既有 receipt/evidence。
+
+- C16 candidate 只可修改本 requirements、`technical-spec.md`、topic plan、topic spec 與 step tracker。獨立
+  Plan-Reviewer 必須先以標準 candidate-SHA-bound path 寫 fresh `approved` receipt，且 Implementer 必須以 unchanged
+  sole receipt-only commit 提交；該 receipt 只授權 C16 classification，不授權新 source/test/docs work。
+- C15 immutable facts 固定為 subject `7dab2b9742bd19f962bef99be83b40b978f87f0f`、passing Tester evidence commit
+  `475e3c953f6551bef5834d0bf350d5c79449a43e`、approved implementation-review evidence commit
+  `cee5097c176b4321a0d9bc2e810caf7d3425d0f1`，以及 classification snapshot
+  `7e525b1ad8dc77c25b0b11a467f6b1f24884ecd3`。任一不相符、非祖先、縮寫或未提交 reference 一律 fail closed。
+- classification receipt 的唯一 immutable path 是
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7dab2b9742bd19f962bef99be83b40b978f87f0f.json`。
+  Independent Reviewer 是唯一 writer；Implementer 是唯一可將其原樣以 sole evidence-only commit 提交者。receipt
+  不可覆寫、不可與 candidate、Plan-Reviewer receipt、source/test/docs 或其他 evidence 共用 commit。
+- receipt 僅能列 seven exact current unresolved pairs：
+  `PRRT_kwDOUJTij86kQ95O`/`4060023123`、`PRRT_kwDOUJTij86kqiZu`/`4070096548`、
+  `PRRT_kwDOUJTij86kqiZ5`/`4070096561`、`PRRT_kwDOUJTij86lAR8J`/`4078761983`、
+  `PRRT_kwDOUJTij86lAR8P`/`4078761993`、`PRRT_kwDOUJTij86lAR8T`/`4078761998`、
+  `PRRT_kwDOUJTij86lAR8Y`/`4078762005`。ACL `4060023123` 和 business-architecture `4070096561` 固定為
+  `HUMAN_CHECK`、`reply: null`，不得回覆或 resolve；其餘五組在 receipt 實際由 Independent Reviewer 寫入前一律不
+  預填 outcome 或 reply。
+- only `REPLY_AND_RESOLVE` may authorize a subsequent Implementer to leave that exact factual reply and resolve that
+  exact thread. `ADDRESS` must return to Planner for a new bounded successor with no reply/resolve. `HUMAN_CHECK`
+  remains open with `reply: null`; C16 never approves, merges, releases or post-merges.
