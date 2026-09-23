@@ -377,13 +377,14 @@ def test_bc_independence_resolves_every_simple_target_of_chained_import_alias() 
     assert callables["second"] == "importlib.import_module"
 
 
-def test_bc_independence_rejects_mixed_assignment_targets_atomically() -> None:
-    """A mixed-target assignment never grants an alias to only one target."""
+def test_bc_independence_retains_simple_target_from_mixed_assignment() -> None:
+    """A mixed assignment retains its simple local alias but ignores attributes."""
     _, callables = _import_aliases(
-        ast.parse("import importlib\nfirst = holder.value = importlib.import_module\n"),
+        ast.parse("import importlib\nload = holder.loader = importlib.import_module\n"),
     )
 
-    assert "first" not in callables
+    assert callables["load"] == "importlib.import_module"
+    assert "holder" not in callables
 
 
 def test_bc_independence_rejects_duplicate_foreign_semantic_types(tmp_path: Path) -> None:
