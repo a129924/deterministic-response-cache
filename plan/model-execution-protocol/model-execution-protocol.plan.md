@@ -193,7 +193,7 @@ PR #7 runtime 契約未穩定，實際接線可能需要 adapter 或新的 cross
 
 ### Rollback Plan
 
-在 Human merge 前，由獲授權 Implementer 對本 topic 四個 implementation paths 與相關新 tests 作 bounded revert，保留已提交 planning/evidence provenance；不改其他 BC。merge 後由 Human 決定後續修復 topic。
+在 Human merge 前，任何 rollback 或 superseding correction 只可由獲授權 Implementer 限定於五個 declared architecture paths，必須保持 predecessor `src/`／`tests/` blobs 不變，並保留所有已提交的 planning／evidence provenance；不得授權回退 Python implementation 或 test paths。merge 後任何修復或回退均由 Human 決定，automatic workflow 停止。
 
 ## Implementation Steps
 
