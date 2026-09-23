@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "dataflow",
+  "input": "/Users/andrew/code/python/deterministic-response-cache.worktrees/agent-20260917-loaded-runtime-cache/docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json",
+  "output": "/Users/andrew/code/python/deterministic-response-cache.worktrees/agent-20260917-loaded-runtime-cache/docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html",
+  "specification": {
+    "sha256": "f1a1dcdc6a662cc680f9c5c8fdb49993dec4397e0853dd4dd32068f95379e7d3",
+    "bytes": 3342
+  },
+  "artifact": {
+    "sha256": "44d2f969a22891523488f9810ba3b4a4e5aa09cd194b6105b541d11117d61779",
+    "bytes": 703395
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

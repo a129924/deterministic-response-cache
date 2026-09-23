@@ -287,7 +287,7 @@ const PLANES = {
   consumer: { c: '#94A3B8', label: 'Consumer integration' },
   identity: { c: '#7DD3FC', label: 'Identity authority — opaque handoff' },
   reuse: { c: '#4ADE80', label: 'Response reuse — independent protocol' },
-  runtime: { c: '#A78BFA', label: 'Runtime retention — future' },
+  runtime: { c: '#A78BFA', label: 'Runtime reuse protocol — current' },
   execution: { c: '#F6821F', label: 'Model execution — future' },
   provider: { c: '#FB7185', label: 'Provider boundary — future' }
 };
@@ -303,8 +303,8 @@ const BANDS = [
     hdr: { x: 184, y: 790, t: 'RESPONSE REUSE PROTOCOL — CACHESTORE IS INTERNAL' },
     tagr: { x: 1396, y: 790, t: 'INDEPENDENT TOPIC', alpha: 0.7 } },
   { id: 'band-future-core', plane: null, x: 160, y: 1150, w: 1260, h: 330, stroke: '#3A4250', alpha: 1,
-    hdr: { x: 184, y: 1180, t: 'FUTURE CORE CAPABILITIES — NOT BASELINE IMPLEMENTATION', fill: C.slate },
-    tagr: { x: 1396, y: 1180, t: 'OWNED ABSTRACTIONS', fill: C.slate, alpha: 0.7 } },
+    hdr: { x: 184, y: 1180, t: 'RUNTIME PROTOCOL + FUTURE CORE CAPABILITIES', fill: C.slate },
+    tagr: { x: 1396, y: 1180, t: 'CONTRACTS + FUTURE OWNED ABSTRACTIONS', fill: C.slate, alpha: 0.7 } },
   { id: 'band-provider', plane: 'provider', x: 160, y: 1570, w: 1260, h: 200, alpha: 0.3,
     hdr: { x: 184, y: 1600, t: 'PROVIDER ADAPTER BOUNDARY — FUTURE · LOCAL OR REMOTE' },
     tagr: { x: 1396, y: 1600, t: 'SWAPPABLE EXTERNAL SURFACES', alpha: 0.7 } }
@@ -351,11 +351,11 @@ const BOXES = [
     texts: [ ['bl', 1164, 1008, 'Retention result'], ['bs', 1164, 1024, 'Cached / NotCached'] ] },
 
   { id: 'runtime-cache', plane: 'runtime', band: 'band-future-core', x: 200, y: 1240, w: 270, h: 104, r: 10, dash: true,
-    name: 'Loaded Runtime Cache', about: '未來能力：重用已初始化且可執行的模型 runtime。',
-    texts: [ ['bl', 224, 1268, 'Loaded Runtime Cache'], ['bs', 224, 1290, '未來：重用 initialized runtime'], ['bs', 224, 1306, '不屬於 response reuse'], ['bn', 224, 1328, '未來能力'] ] },
+    name: 'Loaded Runtime Cache', about: '已交付 protocol-only runtime reuse contracts；外部 ACL 提供 local key，無 lifecycle。',
+    texts: [ ['bl', 224, 1268, 'Loaded Runtime Cache'], ['bs', 224, 1290, 'protocol-only reuse contracts'], ['bs', 224, 1306, 'external ACL → local RuntimeReuseKey'], ['bn', 224, 1328, 'no backend / lifecycle'] ] },
   { id: 'runtime-registry', plane: 'runtime', band: 'band-future-core', x: 500, y: 1240, w: 270, h: 104, r: 10, dash: true,
-    name: 'Runtime Store / Registry', about: '未來 runtime 專用保存元件，結構上與 CacheStore 分離。',
-    texts: [ ['bl', 524, 1268, 'Runtime Store / Registry'], ['bs', 524, 1290, '只保存 runtime state'], ['bs', 524, 1306, '與 CacheStore 分離'], ['bn', 524, 1328, '未來能力'] ] },
+    name: 'RuntimeRegistry — internal port', about: '已交付 Registry／Retention contract；與 CacheStore 分離，但不是 backend。',
+    texts: [ ['bl', 524, 1268, 'RuntimeRegistry — internal port'], ['bs', 524, 1290, 'lookup / retain contracts'], ['bs', 524, 1306, '與 CacheStore 分離'], ['bn', 524, 1328, 'no backend or mapper'] ] },
   { id: 'runtime-preparation', plane: 'runtime', band: 'band-future-core', x: 330, y: 1370, w: 310, h: 80, r: 10, dash: true,
     name: 'Runtime preparation', about: '未來 miss path：取得或準備可執行的 runtime。',
     texts: [ ['bl', 354, 1398, 'Runtime preparation'], ['bs', 354, 1420, '準備可執行的 runtime'], ['bs', 354, 1436, '不保存 response'] ] },
@@ -389,9 +389,9 @@ const EDGES = [
   { from: 'reuse-decision', to: 'reuse-return', pts: [[885,946],[885,970],[695,970],[695,974]], label: { s: 'al', x: 800, y: 962, t: '安全 hit', anchor: 'center' } },
   { from: 'reuse-return', to: 'receiver', pts: [[856,1006],[1436,1006],[1436,300],[1386,300]], label: { s: 'al', x: 1452, y: 660, t: '回傳重用 response', rot: -90, anchor: 'center' } },
   { from: 'cache-store', to: 'unavailable-stop', pts: [[1215,946],[1215,962],[995,962],[995,974]], label: { s: 'al', x: 1105, y: 960, t: 'read failure', anchor: 'center' } },
-  { from: 'reuse-decision', to: 'runtime-cache', pts: [[885,946],[885,1100],[335,1100],[335,1234]], label: { s: 'al', x: 610, y: 1088, t: 'miss — 未來路徑', anchor: 'center' } },
-  { from: 'runtime-cache', to: 'runtime-registry', pts: [[472,1292],[494,1292]], label: { s: 'al', x: 483, y: 1280, t: '保存', anchor: 'center' } },
-  { from: 'runtime-registry', to: 'runtime-preparation', pts: [[635,1346],[635,1358],[485,1358],[485,1364]], label: { s: 'al', x: 560, y: 1350, t: '取得', anchor: 'center' } },
+  { from: 'reuse-decision', to: 'runtime-cache', pts: [[885,946],[885,1100],[335,1100],[335,1234]], label: { s: 'al', x: 610, y: 1088, t: 'miss — future integration', anchor: 'center' } },
+  { from: 'runtime-cache', to: 'runtime-registry', pts: [[472,1292],[494,1292]], label: { s: 'al', x: 483, y: 1280, t: 'lookup / retain', anchor: 'center' } },
+  { from: 'runtime-registry', to: 'runtime-preparation', pts: [[635,1346],[635,1358],[485,1358],[485,1364]], label: { s: 'al', x: 560, y: 1350, t: 'future lifecycle only', anchor: 'center' } },
   { from: 'runtime-preparation', to: 'execution', pts: [[642,1410],[800,1410],[800,1292],[864,1292]], label: { s: 'al', x: 814, y: 1360, t: 'runtime' } },
   { from: 'execution', to: 'adapter-boundary', pts: [[1115,1346],[1115,1510],[380,1510],[380,1634]], label: { s: 'al', x: 748, y: 1498, t: '呼叫 provider', anchor: 'center' } },
   { from: 'adapter-boundary', to: 'local-adapter', pts: [[562,1684],[624,1684]], label: { s: 'al', x: 593, y: 1672, t: 'local', anchor: 'center' } },
@@ -404,7 +404,7 @@ const EDGES = [
 
 const TEXTS = [
   { s: 'title', x: 160, y: 86, t: 'deterministic-response-cache — business capability architecture' },
-  { s: 'sub', x: 160, y: 118, t: 'provider-agnostic library baseline：確認 identity → 安全重用 response → 保留 runtime → 執行模型' },
+  { s: 'sub', x: 160, y: 118, t: 'provider-agnostic library：確認 identity → 安全重用 response → runtime reuse protocol → 未來執行' },
   { s: 'tag', x: 160, y: 146, runs: [
     { t: 'Identity', fill: C.sky }, { t: ' → ', fill: '#4A5462' },
     { t: 'Response Reuse', fill: C.green }, { t: ' → ', fill: '#4A5462' },
@@ -414,11 +414,11 @@ const TEXTS = [
   { s: 'legend', x: 1082, y: 86, t: '虛線 — 自有的核心 abstraction' },
   { s: 'legend', x: 1082, y: 110, t: '實線 — 可替換的 app 或 provider surface' },
   { s: 'legend', x: 1143, y: 134, t: '顏色 — 所屬 capability plane' },
-  { s: 'plane', x: 485, y: 1214, t: 'RUNTIME RETENTION — FUTURE', anchor: 'center', fill: planeColor('runtime') },
+  { s: 'plane', x: 485, y: 1214, t: 'RUNTIME REUSE PROTOCOL — CURRENT', anchor: 'center', fill: planeColor('runtime') },
   { s: 'plane', x: 1115, y: 1214, t: 'MODEL EXECUTION — FUTURE', anchor: 'center', fill: planeColor('execution') },
   { s: 'bn', x: 160, y: 1844, t: 'invariant：只有 Identity BC 確認模型與完整請求身分；Response Reuse 只消費 opaque handoff' },
-  { s: 'bn', x: 160, y: 1864, t: 'boundary：CacheStore 位於 Response Reuse 內部；Runtime Store / Registry 獨立且屬於未來能力' },
-  { s: 'bn', x: 160, y: 1884, t: 'topology：五個目錄的純文字 marker 僅預留；可為 implicit namespace，但不提供 executable module、public symbol 或 re-export' }
+  { s: 'bn', x: 160, y: 1864, t: 'boundary：CacheStore 位於 Response Reuse 內部；RuntimeRegistry 是獨立 protocol，不是 backend' },
+  { s: 'bn', x: 160, y: 1884, t: 'boundary：ModelIdentity → RuntimeReuseKey 僅在外部 ACL；Loaded Runtime Cache 不 direct import Identity' }
 ];
 
 const SWATCHES = [
