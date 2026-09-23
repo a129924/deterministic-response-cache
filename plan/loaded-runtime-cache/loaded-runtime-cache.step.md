@@ -233,37 +233,37 @@ The exact pair set is `PRRT_kwDOUJTij86kQ95O`/`4060023123`, `PRRT_kwDOUJTij86kqi
 
 ## C17 ADDRESS Remediation Successor Stages (authoritative)
 
-C15/C16 are frozen input. C17 covers only `4078761993` and `4078762005`; it does not prefill a candidate, receipt,
-subject, evidence, outcome or thread action. `4078761998` remains the separate Human-only README/public-surface
-boundary.
+C15/C16 are frozen input. C17 covers only `4078761993` and `4078762005`; `4078761998` remains the separate
+Human-only README/public-surface boundary. Its completed commit chain is
+`dc55f1a6a32ceabf48490e952af2b9fd71b9efd3` → `35ccbd6` → `7ec3b57` → `3c9c9b8` → `708091b` →
+`7ceb340` → `b58cb1` → `edbae51`.
 
-- [ ] C17 plan-authoring
-- [ ] C17 planning-candidate-commit
-- [ ] C17 independent Plan-Reviewer receipt
-- [ ] C17 receipt-only commit
-- [ ] C17 RED test-only subject
-- [ ] C17 RED factual failing Tester evidence
-- [ ] C17 RED evidence-only commit
-- [ ] C17 green test/dataflow subject
-- [ ] C17 green factual passing Tester evidence
-- [ ] C17 green evidence-only commit
-- [ ] C17 independent green review evidence
-- [ ] C17 review-evidence-only commit
-- [ ] C17 Planner Phase 4.5
+- [x] C17 plan-authoring
+- [x] C17 planning-candidate-commit
+- [x] C17 independent Plan-Reviewer receipt
+- [x] C17 receipt-only commit
+- [x] C17 RED test-only subject
+- [x] C17 RED factual failing Tester evidence
+- [x] C17 RED evidence-only commit
+- [x] C17 green test/dataflow subject
+- [x] C17 green factual passing Tester evidence
+- [x] C17 green evidence-only commit
+- [x] C17 independent green review evidence
+- [x] C17 review-evidence-only commit
+- [x] C17 Planner Phase 4.5 (Human-authorized post-receipt alignment only)
 - [ ] C17 independent thread classification
 
 ### C17 actionable steps
 
-- [ ] **Actor: Implementer.** Commit exactly five C17 planning artifacts; no test, dataflow, README, receipt,
-  evidence, PR or other path shares the candidate commit.
-- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write a fresh approved candidate-SHA-bound receipt and
-  commit it unchanged alone; `needs-rework` routes no RED.
-- [ ] **Actor: Implementer / Tester.** Create only the test RED for `getattr` known `importlib`/`sys` aliases and
-  literal `import_module`/`modules`; collect, factually fail, and sole-commit failing evidence. No RED Reviewer record.
-- [ ] **Actor: Implementer.** Create distinct green scanner repair plus only byte-truthfully changed named dataflow
-  outputs; show `lookup(key: RuntimeReuseKey) -> RuntimeT | None`; run validate → deliver → visual-check (9/9,
-  zero errors/warnings, non-skipped four viewport facts).
-- [ ] **Actor: Tester / Independent Reviewer / Implementer.** Sole-commit matching green passing Tester evidence and
-  approved Reviewer evidence with full-SHA bindings.
-- [ ] **Actor: Planner / Independent Reviewer.** After C17 Q, independently classify the two C17 pairs. Do not
-  reply/resolve before that evidence; retain `4078761998`/README, ACL and business-architecture Human-only/open.
+- [x] **Actor: Implementer / Plan-Reviewer / Tester / Independent Reviewer.** Completed the immutable C17
+  candidate → approved receipt → RED/failing evidence → green/dataflow → delivery receipt → passing evidence →
+  approved review chain in `dc55f1a6a32ceabf48490e952af2b9fd71b9efd3` → `35ccbd6` → `7ec3b57` → `3c9c9b8` →
+  `708091b` → `7ceb340` → `b58cb1` → `edbae51`.
+- [ ] **Actor: Independent Reviewer.** Independently classify the two C17 pairs after Phase 4.5. Do not reply or
+  resolve before that receipt; retain `4078761998`/README, ACL, and business-architecture threads Human-only/open.
+
+### C17 post-receipt alignment
+
+This alignment is explicitly Human-authorized state tracking after the committed receipt/evidence chain. It creates
+no C18, candidate, Plan-Reviewer receipt, Tester/Reviewer evidence, PR reply, or thread resolution. The current
+state is `c17-phase-4.5-aligned / independent-classification-pending`.

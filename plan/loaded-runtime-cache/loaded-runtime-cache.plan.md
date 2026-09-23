@@ -720,11 +720,16 @@ concrete runtime backend.
 
 ### Status / allowed transitions
 
-**Current state:** `c17-plan-authoring`; this uncommitted candidate is not routing authority. The only route is
-candidate-only commit → approved receipt-only commit → collection-success/assertion-failing RED → failing
-Tester-evidence-only commit → distinct green subject → passing Tester-evidence-only commit → approved
-review-evidence-only commit → Phase 4.5 → new independent classification. Any path violation, malformed evidence,
-non-zero/skipped Archify result, or `needs-rework` fails closed and cannot authorize a reply/resolution.
+**Current state:** `c17-phase-4.5-aligned / independent-classification-pending`. The committed C17 chain is candidate
+`dc55f1a6a32ceabf48490e952af2b9fd71b9efd3` → approved Plan-Reviewer receipt-only commit
+`35ccbd6` → collection-success/assertion-failing RED subject `7ec3b57` → failing Tester-evidence-only commit
+`3c9c9b8` → green test/dataflow subject `708091b` → delivery-receipt-only commit `7ceb340` → passing
+Tester-evidence-only commit `b58cb1` → approved Independent Reviewer evidence-only commit
+`edbae51`. This is Human-authorized post-receipt state tracking only: it creates no C18, candidate, receipt,
+Tester/Reviewer evidence, PR reply, or thread resolution. A fresh independent classification remains required for
+the two C17 pairs; `4078761998`, ACL, and business-architecture boundaries remain Human-only/open. Any path
+violation, malformed evidence, non-zero/skipped Archify result, or `needs-rework` fails closed and cannot authorize
+a reply/resolution.
 
 ### Artifact paths / execution steps
 
