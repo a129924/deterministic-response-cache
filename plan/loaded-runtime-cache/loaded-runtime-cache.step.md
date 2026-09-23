@@ -274,28 +274,31 @@ evidence commit `b58cb1e330fe12ccc80a8f39b875a61ea6024067`, approved Reviewer ev
 `edbae51a0ee86cff498d6caf4e6aa78b58962a82`, and PR head `bf63a3c6a0533ad0f367305deff029eddc2b18be`. It changes no
 source/test/docs/Archify/README or PR state.
 
-- [ ] C18 plan-authoring
-- [ ] C18 planning-candidate-commit
-- [ ] C18 independent Plan-Reviewer receipt
-- [ ] C18 receipt-only commit
-- [ ] C18 independent classification receipt
-- [ ] C18 classification-receipt-only commit
-- [ ] C18 Planner routing for exact classified pairs
+- [x] C18 plan-authoring
+- [x] C18 planning-candidate-commit
+- [x] C18 independent Plan-Reviewer receipt
+- [x] C18 receipt-only commit
+- [x] C18 independent classification receipt
+- [x] C18 classification-receipt-only commit
+- [x] C18 Planner routing for exact classified pairs (post-receipt state alignment only)
 
 ### C18 actionable steps
 
-- [ ] **Actor: Implementer.** Commit exactly the five C18 planning artifacts and nothing else. Candidate has no
-  future candidate SHA, receipt verdict, classification disposition, reply, or resolution prefill.
-- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write standard approved receipt at
-  `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json`, then
-  commit it unchanged alone. A non-approved receipt cannot route classification.
-- [ ] **Actor: Independent Reviewer / Implementer.** Write only
-  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7ceb3409d6d8b9ff3dc51485c3588f502bdff882.json`,
-  then commit it unchanged alone. Its exact eight keys bind C17 subject/T17/V17/PR-head facts and its classifications
-  are exactly eleven pairs.
-- [ ] **Actor: Planner / Implementer.** Only exact committed `REPLY_AND_RESOLVE` entries can receive their exact
-  factual replies and resolutions. `ADDRESS` returns to Planner; F `4043480108`, ACL `4060023123`, business
-  `4070096561`, and README `4078761998` are locked `HUMAN_CHECK`/`null` and remain open.
+- [x] **Actor: Implementer.** Committed exactly the five C18 planning artifacts in
+  `f4f27899eb34976776d4cd6baeb4fd971715edd3`; it prefilled no future candidate SHA, receipt verdict,
+  classification disposition, reply, or resolution.
+- [x] **Actor: Independent Plan-Reviewer / Implementer.** Wrote and unchanged-sole-committed the approved
+  candidate-SHA-bound receipt in `4cd60b2794493b54c8cb9b5b1b4b48b2c04261a0`.
+- [x] **Actor: Independent Reviewer / Implementer.** Wrote only
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-7ceb3409d6d8b9ff3dc51485c3588f502bdff882.json`
+  and unchanged-sole-committed it in `a4054d23823dd446a0d5ee6ad1cd52ac8430c80c`. Its exact eight keys bind
+  C17 subject/T17/V17/PR-head facts and its classifications are exactly eleven pairs.
+- [ ] **Actor: Implementer.** Leave the exact committed receipt reply and resolve only these seven pairs:
+  `PRRT_kwDOUJTij86jqdPV`/`4044836129`, `PRRT_kwDOUJTij86jqdPZ`/`4044836136`,
+  `PRRT_kwDOUJTij86kOjjo`/`4059094458`, `PRRT_kwDOUJTij86kqiZu`/`4070096548`,
+  `PRRT_kwDOUJTij86lAR8J`/`4078761983`, `PRRT_kwDOUJTij86lAR8P`/`4078761993`, and
+  `PRRT_kwDOUJTij86lAR8Y`/`4078762005`. Do not act on the four `HUMAN_CHECK` pairs or on new unclassified threads
+  `PRRT_kwDOUJTij86lCkFr` and `PRRT_kwDOUJTij86lCkFu`.
 
 ### C18 exact classification set
 
@@ -305,5 +308,15 @@ source/test/docs/Archify/README or PR state.
 `PRRT_kwDOUJTij86kqiZ5`/`4070096561`, `PRRT_kwDOUJTij86lAR8J`/`4078761983`,
 `PRRT_kwDOUJTij86lAR8P`/`4078761993`, `PRRT_kwDOUJTij86lAR8T`/`4078761998`,
 `PRRT_kwDOUJTij86lAR8Y`/`4078762005`. Each entry uses exactly `thread`, `comment`, `outcome`, `reply`.
-F, ACL, business and README are the fixed Human-only entries; the other seven outcomes/replies remain exclusively
-for Independent Reviewer to determine in the committed receipt.
+F, ACL, business and README are the fixed Human-only entries; the committed receipt classifies each of the other
+seven as `REPLY_AND_RESOLVE` with its exact factual reply.
+
+### C18 post-receipt state alignment
+
+The committed C18 chain is `f4f27899eb34976776d4cd6baeb4fd971715edd3` →
+`4cd60b2794493b54c8cb9b5b1b4b48b2c04261a0` → `a4054d23823dd446a0d5ee6ad1cd52ac8430c80c`.
+Its exact seven `REPLY_AND_RESOLVE` pairs are pending Implementer action. F
+`PRRT_kwDOUJTij86jnBpk`/`4043480108`, ACL `PRRT_kwDOUJTij86kQ95O`/`4060023123`, business
+`PRRT_kwDOUJTij86kqiZ5`/`4070096561`, and README `PRRT_kwDOUJTij86lAR8T`/`4078761998` remain open
+`HUMAN_CHECK`. New `PRRT_kwDOUJTij86lCkFr` and `PRRT_kwDOUJTij86lCkFu` are open/unclassified and outside C18.
+This state alignment creates no C19, candidate, receipt, new evidence, actual reply, or resolution.

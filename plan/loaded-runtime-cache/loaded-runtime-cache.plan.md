@@ -798,8 +798,8 @@ set: `PRRT_kwDOUJTij86jnBpk`/`4043480108`, `PRRT_kwDOUJTij86jqdPV`/`4044836129`,
 `PRRT_kwDOUJTij86kqiZ5`/`4070096561`, `PRRT_kwDOUJTij86lAR8J`/`4078761983`,
 `PRRT_kwDOUJTij86lAR8P`/`4078761993`, `PRRT_kwDOUJTij86lAR8T`/`4078761998`,
 `PRRT_kwDOUJTij86lAR8Y`/`4078762005`. F, ACL, business architecture and README are respectively the first, fifth,
-seventh and tenth pair and are locked `HUMAN_CHECK` with JSON `null` reply. The other seven are unprefilled until
-Independent Reviewer writes the receipt.
+seventh and tenth pair and are locked `HUMAN_CHECK` with JSON `null` reply. The committed receipt classifies each
+of the other seven as `REPLY_AND_RESOLVE` with its exact non-empty factual reply.
 
 `REPLY_AND_RESOLVE` needs a non-empty factual reply and is the only classification that lets Implementer reply and
 resolve the exact pair. `ADDRESS` and `HUMAN_CHECK` require `null`; `ADDRESS` returns to Planner, while
@@ -807,7 +807,22 @@ resolve the exact pair. `ADDRESS` and `HUMAN_CHECK` require `null`; `ADDRESS` re
 
 ### C18 status / transition / handoff
 
-Current state is `c18-planning-candidate-pending`. The only permitted order is candidate-only commit → independent
-approved SHA-bound Plan-Reviewer receipt → receipt-only commit → independent C17-bound classification receipt →
-classification-receipt-only commit → Planner routes exact classified pairs. No classification entry authorizes
-merge, release, post-merge, Human review, or an unclassified thread action.
+The committed C18 evidence chain is candidate
+`f4f27899eb34976776d4cd6baeb4fd971715edd3` → approved Plan-Reviewer receipt-only commit
+`4cd60b2794493b54c8cb9b5b1b4b48b2c04261a0` → independent classification-receipt-only commit
+`a4054d23823dd446a0d5ee6ad1cd52ac8430c80c`.
+
+Current state is `c18-exact-reply-resolve-pending`. The seven committed `REPLY_AND_RESOLVE` pairs are
+`PRRT_kwDOUJTij86jqdPV`/`4044836129`, `PRRT_kwDOUJTij86jqdPZ`/`4044836136`,
+`PRRT_kwDOUJTij86kOjjo`/`4059094458`, `PRRT_kwDOUJTij86kqiZu`/`4070096548`,
+`PRRT_kwDOUJTij86lAR8J`/`4078761983`, `PRRT_kwDOUJTij86lAR8P`/`4078761993`, and
+`PRRT_kwDOUJTij86lAR8Y`/`4078762005`; only these exact receipt replies/resolutions are pending.
+
+`PRRT_kwDOUJTij86jnBpk`/`4043480108`, `PRRT_kwDOUJTij86kQ95O`/`4060023123`,
+`PRRT_kwDOUJTij86kqiZ5`/`4070096561`, and `PRRT_kwDOUJTij86lAR8T`/`4078761998` remain
+`HUMAN_CHECK`, open, and without reply/resolution authority. New open threads `PRRT_kwDOUJTij86lCkFr` and
+`PRRT_kwDOUJTij86lCkFu` are outside the immutable C18 receipt and remain unclassified; no action is authorized
+for either.
+
+This is Human-authorized post-receipt state tracking only. It creates no C19, candidate, receipt, new evidence,
+actual reply, resolution, merge, release, post-merge, Human review, or action for an unclassified thread.
