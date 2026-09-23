@@ -1,6 +1,6 @@
 ---
 topic: model-execution-protocol
-phase: architecture-correction-ready
+phase: architecture-correction-review-ready
 created: 2026-09-22
 ---
 
@@ -19,8 +19,8 @@ created: 2026-09-22
 - [X] implementation-review
 - [X] architecture-amendment-plan-review
 - [X] architecture-amendment-rereview
-- [ ] architecture-correction
-- [ ] architecture-correction-test
+- [X] architecture-correction
+- [X] architecture-correction-test
 - [ ] architecture-correction-review
 - [ ] code-review
 
@@ -45,8 +45,8 @@ created: 2026-09-22
 - [X] **Actor:** Implementer — **Action:** 已只提交本輪 corrected `plan.md` 與 `step.md`，建立 immutable planning candidate `7d3475a9094da522d31f611a1a7fba4b5d2eaeef`；未混入 receipt、docs correction 或其他 path。
 - [X] **Actor:** Independent Plan-Reviewer — **Action:** 已只審 committed corrected candidate `7d3475a9094da522d31f611a1a7fba4b5d2eaeef`，更新專用 architecture-amendment receipt並記錄 `approved`；未自行 commit 或 route。
 - [X] **Actor:** Implementer — **Action:** 已原樣以 sole one-path evidence-only commit `793376603b1a67a3e1b5a186df1c5a050018fd1f` 提交 updated `approved` receipt；Planner 已驗證 corrected candidate binding。
-- [ ] **Actor:** Planner／Implementer — **Action:** Planner 只在 committed approved receipt 成立後 route；Implementer 只修改 exact-five architecture docs，建立 immutable docs-only subject。
-- [ ] **Actor:** Tester／Implementer — **Action:** Tester 對 exact-five subject 寫 factual architecture-correction evidence；Implementer 原樣以 sole one-path evidence-only commit 提交 passing evidence。
+- [X] **Actor:** Planner／Implementer — **Action:** Planner 已依 committed approved receipt route；Implementer 已只修改 exact-five architecture docs，建立 immutable docs-only subject `5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28`。
+- [X] **Actor:** Tester／Implementer — **Action:** Tester 已對 exact-five subject `5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28` 寫 factual architecture-correction evidence；Implementer 已原樣以 passing evidence sole commit `f71de2beb9801cf01c37d02bca658ee0d8f28599` 提交。
 - [ ] **Actor:** Independent Reviewer／Implementer — **Action:** Reviewer 僅消費 committed passing same-subject evidence並寫 correction review log；Implementer 原樣以 sole one-path evidence-only commit 提交 approved log。
 - [ ] **Actor:** Planner／Implementer／Independent Reviewer — **Action:** Planner 完成 Phase 4.5 alignment 後，Implementer 才 push 到同一 PR；Reviewer 重新分類 exact thread。只有 `addressed-and-resolvable` 才由 Implementer bounded reply 並 resolve，否則 `human-check`。
 
@@ -68,7 +68,7 @@ created: 2026-09-22
 - Planning receipt、Tester evidence、independent Reviewer evidence 只消費同 topic、同 candidate/subject 的 actual committed evidence，不能跨 topic 重用，也不能由 chat 或 branch 狀態補推。
 - 第一個 five-path candidate `5f08dbc610a25fc4ae39eaaac20282f9a94e907d` 與 `needs-rework` receipt commit `64ab26c09831b47599543ce74c61733e052bcd44` 已提交。舊修訂 candidate `07c0a62bdfb640cc02b7370d1af616c970629084` 與其 `approved` receipt sole commit `aa41081300cbf2191b5d5b51c64cc67ebfb5cf1b` 僅保留為 immutable provenance。predecessor implementation 使用的 planning candidate 是 `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`；其 `approved` amendment receipt 已由 sole evidence-only commit `5145a59be17a3845da074d88e8530b59bfb45e57` 提交。兩者均不作本次 architecture correction 的 active routing authority。
 - Immutable predecessor provenance：planning candidate `b2847eb2e7ac0ed65a5bef8c33d13cb3248aee99`、approved amendment receipt `5145a59be17a3845da074d88e8530b59bfb45e57`、implementation subject `868df3b338e022371a55a2125b270a52ba1c6874`、passing Tester evidence `12bdfb1b5350ee71e3af70df38a462ce9286fba5`、approved Reviewer evidence `dee1740b73d0274445d0c3967272d0475d82e779` 與 PR HEAD `9a3460b6e4412384ed7e3426ebc32820a46818e6` 均不得改寫。它們證明 predecessor delivery，但舊 Q／approval 不核准本次 architecture correction。
-- Current correction id：`model-execution-protocol/pr-comment-architecture-status`；exact thread：`PRRT_kwDOUJTij86lAh0Z`。active approved planning binding 是 corrected candidate `7d3475a9094da522d31f611a1a7fba4b5d2eaeef` 與 updated `approved` receipt sole commit `793376603b1a67a3e1b5a186df1c5a050018fd1f`；correction subject、Tester evidence、Reviewer evidence、Phase 4.5、push 與 thread actions 尚未完成，其 SHA 不得預填或由 chat 推定。
+- Current correction id：`model-execution-protocol/pr-comment-architecture-status`；exact thread：`PRRT_kwDOUJTij86lAh0Z`。active approved planning binding 是 corrected candidate `7d3475a9094da522d31f611a1a7fba4b5d2eaeef` 與 updated `approved` receipt sole commit `793376603b1a67a3e1b5a186df1c5a050018fd1f`；active correction validation binding 是 exact-five subject `5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28` 與 passing Tester evidence sole commit `f71de2beb9801cf01c37d02bca658ee0d8f28599`。Reviewer evidence、Phase 4.5、push、reclassification、reply 與 resolve 尚未建立或完成，其 SHA 不得預填或由 chat 推定。
 - Architecture-amendment rework provenance：candidate `d43621f2a604f206bbbd50684a3672bd84a1cfb9` 與其 committed `needs-rework` receipt `50cd69e7178597e7ffa61da02339ce45cd1a6e44` 已凍結，只證明前輪 review outcome，不作 active approval；active authority 僅為 corrected candidate `7d3475a9094da522d31f611a1a7fba4b5d2eaeef` 與其 committed `approved` receipt `793376603b1a67a3e1b5a186df1c5a050018fd1f`。
 - Exact-five correction subject paths：`docs/business-capability-architecture.md`、`docs/evolution-roadmap.md`、`docs/architecture/business-capability/architecture-brief.md`、`docs/architecture/business-capability/scene.js`、`docs/architecture/business-capability/index.html`。只能是五個 `M` entries；不得 add/delete/rename。
 - Locked semantics：同步 coordination ports/outcomes/protocol 已實作；Loaded Runtime Cache 實際 wiring／retention/backend、具體 Provider Adapter、cross-BC composition、Response Reuse `Miss`／result handoff integration 仍 future。Python/tests 相對 `9a3460b6e4412384ed7e3426ebc32820a46818e6` 不變。
