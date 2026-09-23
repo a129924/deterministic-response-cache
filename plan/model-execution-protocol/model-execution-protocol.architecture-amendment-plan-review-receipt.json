@@ -3,10 +3,8 @@
   "topic": "model-execution-protocol",
   "correction_id": "model-execution-protocol/pr-comment-architecture-status",
   "thread_id": "PRRT_kwDOUJTij86lAh0Z",
-  "planning_candidate_commit": "d43621f2a604f206bbbd50684a3672bd84a1cfb9",
-  "verdict": "needs-rework",
-  "blocking_issues": [
-    "Python implementation metadata > Rollback Plan still authorizes reverting the predecessor Python implementation paths and omits a rollback for this exact-five architecture correction. Replace it with correction-scoped rollback guidance that keeps predecessor src/tests unchanged and limits any pre-merge revert or superseding correction to the five declared architecture paths; retain the Human boundary after merge."
-  ],
+  "planning_candidate_commit": "7d3475a9094da522d31f611a1a7fba4b5d2eaeef",
+  "verdict": "approved",
+  "blocking_issues": [],
   "recorded_by": "Independent Plan-Reviewer"
 }
