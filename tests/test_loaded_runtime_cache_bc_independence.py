@@ -9,6 +9,7 @@ import pytest
 
 SOURCE_ROOT = Path(__file__).parents[1] / "src" / "deterministic_response_cache"
 _FORBIDDEN_DYNAMIC_IMPORT_NAMES = frozenset({"import_module", "__import__"})
+_GETATTR_ARGUMENT_COUNT = 2
 _IDENTITY_BC = "deterministic_response_cache.identity"
 _RUNTIME_CACHE_BC = "deterministic_response_cache.loaded_runtime_cache"
 
@@ -147,6 +148,33 @@ def _resolve_forbidden_alias(
         return _resolve_name_alias(value.id, modules, callables)
     if isinstance(value, ast.Attribute):
         return _resolve_attribute_alias(value, modules)
+    if isinstance(value, ast.Call):
+        return _resolve_getattr_alias(value, modules)
+    return None
+
+
+def _resolve_getattr_alias(
+    value: ast.Call,
+    modules: dict[str, str],
+) -> tuple[str, str] | None:
+    """Resolve the one static ``getattr(module_alias, literal)`` bypass shape."""
+    if (
+        not isinstance(value.func, ast.Name)
+        or value.func.id != "getattr"
+        or len(value.args) != _GETATTR_ARGUMENT_COUNT
+        or value.keywords
+        or not isinstance(value.args[0], ast.Name)
+        or not isinstance(value.args[1], ast.Constant)
+        or not isinstance(value.args[1].value, str)
+    ):
+        return None
+    module = modules.get(value.args[0].id)
+    attribute = value.args[1].value
+    if (module, attribute) in {
+        ("importlib", "import_module"),
+        ("sys", "modules"),
+    }:
+        return "callable", f"{module}.{attribute}"
     return None
 
 
