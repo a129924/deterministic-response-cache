@@ -34,7 +34,10 @@ from deterministic_response_cache.response_reuse.outcomes import (
     UnavailableReason,
 )
 from deterministic_response_cache.response_reuse.protocol import ResponseReuseProtocol
-from deterministic_response_cache.response_reuse.stored_response import StoredResponse
+from deterministic_response_cache.response_reuse.stored_response import (
+    ResponseCodecId,
+    StoredResponse,
+)
 
 DEFAULT_WRITE_RESULT = TokenWritten()
 
@@ -230,6 +233,21 @@ def test_lookup_returns_unavailable_for_cache_store_failure_channel() -> None:
 
     assert outcome == Unavailable(UnavailableReason.STORE_FAILURE)
     assert len(store.read_identities) == 1
+    assert policy.evaluated_responses == []
+
+
+def test_lookup_deep_json_returns_invalid_payload_without_evaluating_policy() -> None:
+    """A parseable entry that exhausts JSON validation depth is unavailable."""
+    identity = object()
+    payload = b"[" * 600 + b"0" + b"]" * 600
+    store = FakeStore(read_result=StoredResponse(ResponseCodecId.JSON_V1, payload))
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
+
+    outcome = ResponseReuseProtocol(store, eligibility_policy=policy).lookup(identity)
+
+    assert outcome == Unavailable(UnavailableReason.INVALID_PAYLOAD)
+    assert not isinstance(outcome, Miss)
+    assert store.read_identities == [identity]
     assert policy.evaluated_responses == []
 
 

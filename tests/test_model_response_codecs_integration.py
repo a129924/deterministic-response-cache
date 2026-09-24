@@ -248,6 +248,35 @@ def test_invalid_envelope_and_unknown_codec_are_unavailable() -> None:
     assert protocol.lookup(identity) == Unavailable(UnavailableReason.UNKNOWN_CODEC)
 
 
+def test_deep_json_lookup_is_unavailable_without_policy_evaluation() -> None:
+    """A parseable entry rejected by JSON validation never becomes a miss."""
+
+    class TrackingPolicy:
+        """Record any eligibility call for this lookup."""
+
+        def __init__(self) -> None:
+            """Start with no evaluations."""
+            self.evaluated: list[ModelResponse[object]] = []
+
+        def evaluate(self, response: ModelResponse[object], /) -> ReuseEligibilityDecision:
+            """Record the decoded response if lookup reaches policy."""
+            self.evaluated.append(response)
+            return ReuseAllowed()
+
+    identity = object()
+    payload = b"[" * 600 + b"0" + b"]" * 600
+    store = InMemoryCacheStore[object, StoredResponse]()
+    store.write(identity, StoredResponse(ResponseCodecId.JSON_V1, payload))
+    policy = TrackingPolicy()
+    protocol = ResponseReuseProtocol(store, eligibility_policy=policy)
+
+    outcome = protocol.lookup(identity)
+
+    assert outcome == Unavailable(UnavailableReason.INVALID_PAYLOAD)
+    assert not isinstance(outcome, Miss)
+    assert policy.evaluated == []
+
+
 def test_foreign_malformed_envelope_is_unavailable() -> None:
     """A foreign Store entry with invalid shape or bytes fails closed."""
     identity = object()

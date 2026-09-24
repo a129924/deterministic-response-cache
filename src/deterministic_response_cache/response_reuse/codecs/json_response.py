@@ -80,6 +80,12 @@ class JsonResponseCodec(ResponseCodec[JsonPayload]):
             value: object = json.loads(payload.decode("utf-8"))
         except (UnicodeError, ValueError, TypeError, RecursionError):
             return InvalidPayload()
-        if type(value) not in (dict, list) or not _valid_json_tree(value):
+        if type(value) not in (dict, list):
+            return InvalidPayload()
+        try:
+            valid = _valid_json_tree(value)
+        except RecursionError:
+            return InvalidPayload()
+        if not valid:
             return InvalidPayload()
         return Decoded(ModelResponse(cast("JsonPayload", value)))

@@ -116,6 +116,14 @@ def test_json_rejects_invalid_stored_bytes(payload: bytes) -> None:
     assert JsonResponseCodec().decode(payload) == InvalidPayload()
 
 
+def test_json_decode_reports_invalid_payload_for_parseable_deep_array() -> None:
+    """Validator depth exhaustion is a stored-data result, not an exception."""
+    payload = b"[" * 600 + b"0" + b"]" * 600
+    assert isinstance(json.loads(payload), list)
+
+    assert JsonResponseCodec().decode(payload) == InvalidPayload()
+
+
 def test_fixed_selector_rejects_other_payloads_and_unknown_id() -> None:
     """No registry or byte sniffing can make a foreign format usable."""
     assert encode_response(ModelResponse(42)) == UnsupportedPayload()
