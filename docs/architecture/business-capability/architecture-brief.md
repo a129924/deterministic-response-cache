@@ -31,10 +31,10 @@
 | Model identity | Identity authority | Owned abstraction | 確認是否為同一模型。 | 不以名稱或路徑單獨保證身分。 |
 | Complete request identity | Identity authority | Owned abstraction | 確認是否為同一完整請求。 | 不由 CacheStore 推測欄位。 |
 | Identity confirmation | Identity authority | Owned abstraction | 交付已確認 identity。 | 是唯一 identity authority。 |
-| Response Reuse BC | Response reuse | Owned abstraction | 決定是否安全重用。 | 不執行模型。 |
-| Safe reuse decision | Response reuse | Owned abstraction | 分出 Hit、Miss 與 Unavailable。 | 不建立 identity，也不將 unavailable 降級為 miss。 |
-| CacheStore | Response reuse | Owned abstraction | 保存與取回 response。 | 內部元件，不是頂層 BC。 |
-| Reused response return | Response reuse | Owned abstraction | 將 Hit response 交還 consumer。 | 不呼叫 runtime。 |
+| Response Reuse BC | Response reuse | Owned abstraction | 依固定 codec 編碼、解碼並決定是否安全重用。 | 不執行模型或解讀 identity。 |
+| Safe reuse decision | Response reuse | Owned abstraction | 解碼後分出 Hit、Miss 與具 reason 的 Unavailable。 | 未知 codec 或壞 bytes 不降級為 miss。 |
+| CacheStore | Response reuse | Owned abstraction | 保存與取回帶 codec id 的 bytes envelope。 | 內部元件，不選 codec。 |
+| Reused response return | Response reuse | Owned abstraction | 將解碼後的原生型別 Hit response 交還 consumer。 | 不呼叫 runtime。 |
 | Retention result | Response reuse | Owned abstraction | 將新 response 的 Cached 或 NotCached 結果交還 consumer。 | NotCached 仍保留 response。 |
 | Loaded Runtime Cache | Runtime retention | Owned abstraction | 重用 initialized runtime。 | 未來能力，非 Response Reuse 一部分。 |
 | Runtime Store / Registry | Runtime retention | Owned abstraction | 保存 runtime retention state。 | 與 CacheStore 分離。 |
@@ -50,15 +50,15 @@
 1. Python consumer 將模型與請求脈絡交給 Identity authority。
 2. Model identity 與 Complete request identity 匯入 Identity confirmation。
 3. Identity confirmation 將已確認 identity 交給 Response Reuse BC。
-4. Response Reuse BC 查詢內部 CacheStore。
-5. Safe reuse decision 在 Hit 時走向 Reused response return，再回到 Result receiver；在 Unavailable 時停在 Response Reuse boundary。
+4. Response Reuse BC 查詢內部 CacheStore，僅依保存的 codec id 解碼 bytes envelope。
+5. Safe reuse decision 在 Hit 時以原生型別走向 Reused response return，再回到 Result receiver；未知 codec、壞 bytes 或 Store read failure 的 Unavailable 停在 Response Reuse boundary。
 6. Safe reuse decision 在 Miss 時走向未來的 Loaded Runtime Cache；此 cross-BC handoff 尚未整合。
 7. Loaded Runtime Cache 使用其獨立 Runtime Store／Registry。
 8. Runtime preparation 未來將可執行 runtime 交給 Model Execution；Model Execution 的 injected runtime access contract 已實作，實際 wiring 尚未整合。
 9. Model Execution 的 injected invocation contract 已實作；具體 Provider adapter 與 cross-BC composition 未來才會接上可替換的 Local 或 Remote provider adapter。
 10. Provider adapter 將執行結果交回 Execution result handoff。
 11. Execution result handoff 未來將新結果交回 Response Reuse BC；目前尚未整合。
-12. Response Reuse BC 透過 CacheStore 嘗試保存新 response，產生 Cached 或保留 response 的 NotCached 結果。
+12. Response Reuse BC 對新 response 選固定 codec，DataFrame 經 Arrow IPC 往返 `equals` 驗證後才透過 CacheStore 保存 bytes envelope；產生 Cached 或保留原 response 的 NotCached 結果。
 13. Response Reuse BC 將 retention result 交還 Result receiver。
 
 ## Phase split

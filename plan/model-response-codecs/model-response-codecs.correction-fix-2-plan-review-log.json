@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "topic": "model-response-codecs",
+  "correction_id": "fix-2",
+  "candidate": {
+    "commit_sha": "a45a7d3a31794b9d9ce75c2695efcdee93ebd539",
+    "tree_sha": "867e9e4b29b159f5659cce925be68015faf6f155",
+    "active": true
+  },
+  "reviewed_artifacts": [
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.plan.md",
+      "blob_sha": "b91df48fe71bf6e79e670851fd5c7b7a9d206bf0"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.step.md",
+      "blob_sha": "a956664594543da3fdbbdb8ef09dd53a265da1ac"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.correction-fix-2-plan.md",
+      "blob_sha": "2a0cb7a227394ad1612adb84fb4c4fbb2e64b50b"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.correction-fix-2-step.md",
+      "blob_sha": "a0507b467c8be1a9d97ed8dc6527b380d0dbfe53"
+    }
+  ],
+  "first_parent_admission": {
+    "parent_sha": "4d1a730783d5904f36f5a0a0a43cc69c578a9538",
+    "non_merge": true,
+    "name_status": [
+      {
+        "status": "A",
+        "path": "plan/model-response-codecs/model-response-codecs.correction-fix-2-plan.md"
+      },
+      {
+        "status": "A",
+        "path": "plan/model-response-codecs/model-response-codecs.correction-fix-2-step.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.plan.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.step.md"
+      }
+    ]
+  },
+  "review_basis": {
+    "workflow_contract": "plan/agent-handoff-workflow.md",
+    "topic_plan_contract": "plan/topic-plan-contract.md",
+    "checkout": "a45a7d3a31794b9d9ce75c2695efcdee93ebd539"
+  },
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "route_authorization": {
+    "next_phase": "creator-in-progress",
+    "next_role": "Implementer",
+    "scope": "fix-2-exact-three-subject"
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}

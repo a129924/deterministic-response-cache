@@ -6,13 +6,13 @@
 
 → Response Reuse Protocol lookup：Hit / Miss / Unavailable
 
-→ Hit 時直接回傳 response；Unavailable 停在 Response Reuse boundary
+→ Hit 時依保存的 codec id 解碼後回傳原生 `ModelResponse`；Unavailable 停在 Response Reuse boundary
 
 → Miss 時，未來由 Loaded Runtime Cache 取得或準備 runtime
 
 → Model Execution 已有同步、可注入的 coordination contracts；未來由 cross-BC composition 接上 runtime 與 provider 後執行模型
 
-→ 未來新 response 以相同 confirmed identity 交回 Response Reuse record，得到 Cached / NotCached
+→ 未來新 response 以相同 confirmed identity 交回 Response Reuse record，編成 bytes envelope 後得到 Cached / NotCached
 
 → 回傳結果
 

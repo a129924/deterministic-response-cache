@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "topic": "model-response-codecs",
+  "correction_id": "fix-3",
+  "implementation_subject_commit": "b9a68575b24472a136bc7f3b826c8e7e581250b2",
+  "tester_evidence_commit": "2ff945e236aaa76afce61dbac1df62fc860f45c7",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    "JsonResponseCodec.decode does not return its closed DecodeResult for deeply nested stored JSON. json_response.py:79-84 catches RecursionError from json.loads but calls _valid_json_tree outside the try; a parseable array nested 600 levels raises RecursionError instead of returning InvalidPayload(). ResponseReuseProtocol.lookup therefore propagates that data-dependent exception instead of Unavailable(INVALID_PAYLOAD), contrary to the approved fix-3 expected-failure value contract. Handle recursion from validation as InvalidPayload and add a direct codec plus protocol regression using a parseable deeply nested JSON payload, while preserving unexpected program-error propagation."
+  ],
+  "recorded_by": "Independent Reviewer"
+}
