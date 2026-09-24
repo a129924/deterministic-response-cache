@@ -1,6 +1,6 @@
 ---
 topic: model-response-codecs
-phase: correction-fix-2-plan-authoring
+phase: correction-fix-3-plan-authoring
 created: 2026-09-24
 ---
 
@@ -25,11 +25,17 @@ created: 2026-09-24
 - [X] **Actor:** Independent Reviewer／Implementer — **Action:** Reviewer 已只消費原 subject 的 committed passing Tester evidence，寫 `needs-rework` log，Implementer 已原樣 sole evidence-only commit `57e4940150157d3cc73799c20461000eacc6bfe2`；此 verdict 阻斷 Q/publish。
 - [X] **Actor:** Implementer — **Action:** 已只提交 parent plan/step 與 `fix-1` correction plan/step 的 exact-four candidate `b51e557c535510c7660a4c17229ed1f0c008c4cf`。
 - [X] **Actor:** Independent Plan-Reviewer／Implementer — **Action:** Reviewer 已審 committed `fix-1` candidate 並寫 extended `needs-rework` receipt；Implementer 原樣 sole evidence-only commit `4d1a730783d5904f36f5a0a0a43cc69c578a9538`。`fix-1` 沒有實作 authority、subject 或新 Tester/Reviewer evidence。
-- [ ] **Actor:** Implementer — **Action:** 只提交 parent plan/step 與 `fix-2` correction plan/step 的 exact-four non-merge planning candidate；不混入 code/evidence。
-- [ ] **Actor:** Independent Plan-Reviewer／Implementer — **Action:** Reviewer 審 committed `fix-2` candidate，只寫 active extended receipt `correction-fix-2-plan-review-log.json`；Implementer 原樣 sole evidence-only commit，Planner 僅 route committed approved。Needs-rework 停回 Planner／Plan-Creator 宣告新 path。
-- [ ] **Actor:** Implementer — **Action:** 只修改 `json_response.py` 與兩個 declared codec tests，建立新 exact-three `fix-2` immutable subject；不得覆寫初始/fix-1 evidence。
-- [ ] **Actor:** Tester／Implementer — **Action:** Tester 對新 subject 寫 `tester-evidence.fix-2.json` actual command/exit-code evidence；Implementer 原樣 sole evidence-only commit。
-- [ ] **Actor:** Independent Reviewer／Implementer — **Action:** Reviewer 只消費同 subject committed passing `fix-2` Tester evidence，寫 `implementation-review-log.fix-2.json`；Implementer 原樣 sole evidence-only commit。Tester failing 或 Reviewer needs-rework 停回 Planner／Plan-Creator 宣告新 evidence paths，不可進 Phase 4.5。
+- [X] **Actor:** Implementer — **Action:** 已只提交 parent plan/step 與 fix-2 correction plan/step 的 exact-four candidate `a45a7d3a31794b9d9ce75c2695efcdee93ebd539`。
+- [X] **Actor:** Independent Plan-Reviewer／Implementer — **Action:** fix-2 approved extended receipt 已由 sole evidence-only commit `7277980b9442fc4142b6b9ba11b9e6ecc21ec6cd` 提交並經 Planner route。
+- [X] **Actor:** Implementer — **Action:** 只修改 `json_response.py` 與兩個 declared codec tests，建立 exact-three fix-2 subject `3a1c19f3db126f8f87235c47aaf52a98cdcacb50`。
+- [X] **Actor:** Tester／Implementer — **Action:** fix-2 passing factual evidence 已由 sole evidence-only commit `b4021849b92a8e67a9342f10504cfaef049336cc` 提交。
+- [X] **Actor:** Independent Reviewer／Implementer — **Action:** fix-2 approved Independent Reviewer evidence 已由 sole evidence-only commit `7c474f2ff57c4a0af355e8953929f2d856e66424` 提交；只對該 subject 有效。
+- [X] **Actor:** Planner／Implementer — **Action:** fix-2 已經既有 bounded publish gate 開 Draft PR #11 base `dev`；Human 現要求同 topic `needs-rework`，舊 approval 不授權 fix-3。
+- [ ] **Actor:** Implementer — **Action:** 只提交 parent plan/step/spec、analysis technical spec 與 fix-3 correction plan/step 的 exact-six non-merge planning candidate；不混入 code/evidence。
+- [ ] **Actor:** Independent Plan-Reviewer／Implementer — **Action:** Reviewer 審 committed fix-3 candidate，只寫 active extended receipt `correction-fix-3-plan-review-log.json`；Implementer 原樣 sole evidence-only commit，Planner 僅 route committed approved。Needs-rework 停回 Planner／Plan-Creator 新 path。
+- [ ] **Actor:** Implementer — **Action:** 只修改 fix-3 exact-eight code/test paths，建立新 immutable subject；不得覆寫 initial/fix-1/fix-2 evidence。
+- [ ] **Actor:** Tester／Implementer — **Action:** Tester 對新 subject 寫 `tester-evidence.fix-3.json` actual command/exit-code evidence；Implementer 原樣 sole evidence-only commit。
+- [ ] **Actor:** Independent Reviewer／Implementer — **Action:** Reviewer 只消費同 subject committed passing fix-3 Tester evidence，寫 `implementation-review-log.fix-3.json`；Implementer 原樣 sole evidence-only commit。Tester failing 或 Reviewer needs-rework 停回 Planner／Plan-Creator 宣告新 evidence paths，不可進 Phase 4.5。
 
 ## Implementation Steps
 
@@ -45,16 +51,20 @@ created: 2026-09-24
 - [X] 10. 在 `docs/architecture/model-response-codecs.dataflow.json` 依 archify dataflow schema 產生繁體中文圖規格，通過 showcase validation，交付 `docs/architecture/model-response-codecs.html`，再以 `visual-check --repo-root` 產生 `Artifact Paths` 所列六個 sidecars，檢查四種 desktop containment 及實際圖面；最後對 docs/code/test/archify 建同一 immutable implementation subject。
 - [X] 11. 僅在新的 committed `fix-2` planning candidate 與 Independent Plan-Reviewer approved extended receipt 經 Planner route 後，修改 `src/deterministic_response_cache/response_reuse/codecs/json_response.py`，將已知不支援的 JSON 樹改丟 `UnsupportedPayloadError`，保留真正 serializer failure 的 `EncodeFailureError`；不修改 selector/protocol 既有 outcome 映射。
 - [X] 12. 修改 `tests/test_response_reuse_codecs.py`、`tests/test_model_response_codecs_integration.py`，補 Reviewer 指定的五類 substantive edge/assertion，保留 direct imports、fixtures/mocks；Implementer 只以這三個 code/test paths 建新的 immutable `fix-2` subject，之後交 Tester／Independent Reviewer 重跑完整新 evidence chain。
+- [ ] 13. 僅在 committed exact-six fix-3 planning candidate 與 Independent Plan-Reviewer approved extended receipt 經 Planner route 後，在 `src/deterministic_response_cache/response_reuse/codecs/contract.py` 定義 frozen/slotted `Encoded`／`Decoded` 與六個失敗 variant、兩個 closed union，修改三 member `ResponseCodec` 簽名；不改 public outcome enums。
+- [ ] 14. 修改 `src/deterministic_response_cache/response_reuse/codecs/json_response.py`、`src/deterministic_response_cache/response_reuse/codecs/pyarrow_dataframe.py`，保留明確繼承／`@override`、JSON/Arrow 格式與 equals gate，將預期成功與已知失敗直接回 result 值；只捕捉預期編解碼例外，不 catch-all。
+- [ ] 15. 修改 `src/deterministic_response_cache/response_reuse/codecs/selector.py` 固定選擇並對 unsupported root、缺 optional codec、unknown id、bad bytes 回值；修改 `src/deterministic_response_cache/response_reuse/protocol.py` 以 `match/case` 將 result 映到既有 reasons，只有成功值進 Store/policy，TypeError 只保留 Store/policy contract violation。
+- [ ] 16. 修改 `tests/test_response_reuse_codecs.py`、`tests/test_model_response_codecs_integration.py`、`tests/test_response_reuse_protocol.py`，逐一驗證所有預期 variant、JSON/DF 成功、對外 reason、Store/policy 邊界與 JSON-only direct import；Implementer 只以上述 exact-eight code/test paths 建新 immutable fix-3 subject，接獨立 Tester／Reviewer 新 evidence chain。
 
 ## Main Agent Actionable Steps — Fixed Tail
 
-- [ ] Planner 依同 topic committed approved evidence 完成 Phase 4.5 alignment；既有 Human authorization 俱全後才派 Implementer bounded push 並開 draft PR，停於 Human PR review/merge boundary。
+- [ ] Planner 依 fix-3 同 topic／同 subject committed approved evidence 完成 Phase 4.5 alignment；既有 Human authorization 俱全後才派 Implementer bounded push 並更新已 open Draft PR #11，停於 Human PR review/merge boundary。
 
 ## Handoff / Gate Notes
 
 - Source plan：`plan/model-response-codecs/model-response-codecs.plan.md`；analysis routing 為 strict mode。本 tracker 不代表 Plan-Reviewer approval。
 - Topic selector：`topic=model-response-codecs; branch=topic/model-response-codecs; managed-path-intent=/Users/andrew/code/python/worktrees/model-response-codecs; primary-worktree=false`。
-- 原 `## Implementation Steps` 1–10 已對原 subject 完成，卻因 committed Reviewer `needs-rework` 不構成 topic completion；11–12 substantive repair 原樣 pending，現只由 active `fix-2` committed approved extended planning receipt 開啟。`fix-1` planning receipt `needs-rework`，未進 implementation。其餘 stage/action markers 僅依真實 committed evidence 更新。
+- 原 `## Implementation Steps` 1–10 對原 subject、11–12 對 fix-2 subject 均已完成；fix-1 planning receipt `needs-rework`，未進 implementation。fix-2 approved chain 已 open Draft PR #11；Human 續提 fix-3 回修。13–16 pending，只有 fix-3 committed approved extended planning receipt 經 Planner route 後可做。各 marker 僅依真實 committed evidence 更新。
 - Normal planning receipt 不含 candidate SHA；只有它的 sole commit direct parent 是 exact-five planning candidate 時，Planner 才可由 Git topology 綁定。Tester／Independent Reviewer evidence 須同 topic、同 immutable full-SHA subject；不能跨 topic 重用，也不能從 chat、branch 或本 tracker 自行推斷 approval。
 - Human 獨占 PR review、merge、release、post-merge、tag 與 final summary；此 topic 不執行 release。
-- Active `fix-2` 五個 conditional artifact paths、writer、schema 與先後順序以 parent plan 與 `model-response-codecs.correction-fix-2-plan.md` 為準。舊 subject `5d8873f3088769f1bd8b6da7b42d2ec96b9254f5`、Tester commit `226b95b2a1c29c7f1103d8f4e11939c29a96f266`、Reviewer needs-rework commit `57e4940150157d3cc73799c20461000eacc6bfe2`、`fix-1` candidate `b51e557c535510c7660a4c17229ed1f0c008c4cf`／needs-rework receipt commit `4d1a730783d5904f36f5a0a0a43cc69c578a9538` 均 immutable nonrouting provenance；未寫的 `fix-1` Tester/Reviewer paths 保持 absent，`fix-2` candidate/subject/evidence SHA 與 verdict 尚未產生。
+- Active fix-3 五個 conditional artifact paths、writer、schema 與先後順序以 parent plan 與 `model-response-codecs.correction-fix-3-plan.md` 為準。舊 subject `5d8873f3088769f1bd8b6da7b42d2ec96b9254f5`／Tester `226b95b2a1c29c7f1103d8f4e11939c29a96f266`／Reviewer needs-rework `57e4940150157d3cc73799c20461000eacc6bfe2`、fix-1 candidate `b51e557c535510c7660a4c17229ed1f0c008c4cf`／needs-rework receipt `4d1a730783d5904f36f5a0a0a43cc69c578a9538`、fix-2 candidate `a45a7d3a31794b9d9ce75c2695efcdee93ebd539`／approved receipt `7277980b9442fc4142b6b9ba11b9e6ecc21ec6cd`／subject `3a1c19f3db126f8f87235c47aaf52a98cdcacb50`／passing Tester `b4021849b92a8e67a9342f10504cfaef049336cc`／approved Reviewer `7c474f2ff57c4a0af355e8953929f2d856e66424` 均 immutable predecessor。未寫的 fix-1 Tester/Reviewer paths 保持 absent；fix-3 candidate/subject/evidence SHA 與 verdict 尚未產生。

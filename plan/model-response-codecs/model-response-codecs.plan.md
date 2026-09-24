@@ -7,25 +7,25 @@
 
 ## Scope
 
-- **In-Scope:** `ModelResponse.value`、封閉 codec id 與 bytes envelope、共同 codec Protocol、兩個明確繼承且使用 `@override` 的具體 codec、固定 selector、record/lookup outcomes、可選 pandas/pyarrow extra、受 source break 影響的測試、五個 BC 架構面與 archify dataflow 交付；精確寫入面見 `Artifact Paths`。
+- **In-Scope:** `ModelResponse.value`、封閉 codec id 與 bytes envelope、共同 codec Protocol、兩個明確繼承且使用 `@override` 的具體 codec、固定 selector、record/lookup outcomes、可選 pandas/pyarrow extra、受 source break 影響的測試、五個 BC 架構面與 archify dataflow 交付；fix-3 將 codec/selector 的預期成功與失敗改為封閉可判別回傳值、protocol 保持既有對外 reasons；精確寫入面見 `Artifact Paths`。
 - **Out-Of-Scope:** Identity 建立／比對／規則、Loaded Runtime Cache、Model Execution、Provider Adapter、跨 BC orchestration、Store backend／TTL／持久化／遷移、其他 payload、動態 registry、跨版本或跨程序相容、release。
 - **ReadOnly:** `AGENTS.md`、`plan/topic-plan-contract.md`、`plan/agent-handoff-workflow.md`、`README.md`、`src/deterministic_response_cache/__init__.py`、`src/deterministic_response_cache/response_reuse/_cache_store.py`、`src/deterministic_response_cache/response_reuse/stores/in_memory.py`、`src/deterministic_response_cache/response_reuse/eligibility/policy.py`、`tests/test_response_reuse_eligibility.py`、`tests/test_package_import.py`、其他 BC 與所有未列寫入路徑。
-- **Written:** 原 subject 已新增 VO、codec、test、archify paths；`fix-1` planning artifacts 與 `needs-rework` receipt 已提交，均為 frozen history。本輪 Plan-Creator 只新增 `fix-2` correction plan/step；新 `fix-2` receipt/Tester/Reviewer evidence 依表列角色順序寫入。
-- **Modify:** 原 subject 已修改 protocol/outcomes、依賴檔、既有測試與架構面；本輪 planning 只修改 parent plan/step，後續 repair subject 只修改三個標為 `fix-2` **Modify** 的 code/test paths。
+- **Written:** 原 subject 已新增 VO、codec、test、archify paths；initial/fix-1/fix-2 planning/evidence 均為 frozen history。本輪 Plan-Creator 只新增 `fix-3` correction plan/step；新 `fix-3` receipt/Tester/Reviewer evidence 依表列角色順序寫入。
+- **Modify:** 原 subject 已修改 protocol/outcomes、依賴檔、既有測試與架構面；本輪 planning 只修改 parent plan/step/spec 與 analysis technical spec，後續 fix-3 subject 只修改八個標為 **Modify** 的 code/test paths。
 - **Deleted:** 無。原對話舊提案的單一 `src/deterministic_response_cache/response_reuse/codecs.py` 從計畫移除，原本不存在且本 topic 不建立或刪除它。
-- **Current correction `fix-2`:** 原 implementation Reviewer 判 `needs-rework` 後，`fix-1` committed planning candidate `b51e557c535510c7660a4c17229ed1f0c008c4cf` 又獲 committed Plan-Reviewer `needs-rework` receipt `4d1a730783d5904f36f5a0a0a43cc69c578a9538`；沒有 active approved correction candidate 或新 code subject。本輪只維持 `json_response.py` 與兩個 codec tests 的原 exact-three repair；原 analysis/spec、其餘 source、依賴、架構圖及 archify 交付均 read-only。
+- **Current correction `fix-3`:** fix-2 已有 committed approved Plan-Reviewer、passing Tester 與 approved Independent Reviewer evidence，並已開 Draft PR #11（base `dev`）。Human 要求同 topic 局部回修，故由 `pr-open` 進 `needs-rework`；尚無 fix-3 approved planning candidate、新 subject 或新 evidence。本輪只修封閉 codec/selector result 與 protocol 翻譯，原 Goal/BC/Arrow/equals/optional extra/direct imports/outcomes/archify 保持。
 
 ## Locked Decisions
 
 - `ModelResponse[PayloadT]` 為 frozen、slotted VO，欄位僅 `value`，直接保有 dict/list/DataFrame；`StoredResponse` 為 frozen、slotted 未解碼 bytes envelope，欄位 `codec_id: ResponseCodecId`、`payload: bytes`；`ResponseCodecId(StrEnum)` 僅 `JSON_V1="json/v1"`、`DATAFRAME_V1="dataframe/v1"`。
-- `ResponseCodec[PayloadT](Protocol)` 只宣告 `codec_id` property、`encode(response: ModelResponse[PayloadT]) -> StoredResponse` 與 `decode(payload: bytes) -> ModelResponse[PayloadT]`。`JsonResponseCodec(ResponseCodec[JsonPayload])` 與 `PyArrowDataFrameCodec(ResponseCodec[pandas.DataFrame])` 明確繼承；每個實作的 property 與兩個方法都用 `typing.override`，property decorator 依序是 `@property`、`@override`。
+- `ResponseCodec[PayloadT](Protocol)` 只宣告 `codec_id` property、`encode(response: ModelResponse[PayloadT]) -> EncodeResult` 與 `decode(payload: bytes) -> DecodeResult[PayloadT]`。`EncodeResult` 恰為 `Encoded(StoredResponse) | UnsupportedPayload | CodecUnavailable | EncodeFailure | RoundTripMismatch`；`DecodeResult[PayloadT]` 恰為 `Decoded(ModelResponse[PayloadT]) | UnknownCodec | CodecUnavailable | InvalidPayload`，皆 frozen/slotted 且依 class 可判別。這是 fix-3 授權的 codec/selector return source break。`JsonResponseCodec(ResponseCodec[JsonPayload])` 與 `PyArrowDataFrameCodec(ResponseCodec[pandas.DataFrame])` 明確繼承；每個實作的 property 與兩個方法都用 `typing.override`，property decorator 依序是 `@property`、`@override`。
 - JSON 寫入僅接收 dict/list 與可無損往返的 JSON 樹；DataFrame 是唯一 Arrow IPC payload codec，不另設 PyArrow payload codec。DataFrame encode 使用記憶體內 Arrow IPC stream，將完整 `ModelResponse` 傳入，寫入前 decode 並檢查 `original.equals(decoded)`；每次 hit 重新 decode。
 - selector 無動態 registry。寫入依 `response.value` 固定分流，讀取只依保存的 codec id 以 `match/case` 分流；未知／不合法 id fail closed，絕不嗅探 bytes。純 JSON direct import 與操作不急切載入 pandas/pyarrow；沒有 `codecs.py`、`codecs/__init__.py`、任何套件層 re-export、`importlib`、`__import__` 或 `sys.modules` 替換。
 - 既有 generic response 直存 API 改為 `ModelResponse`／`StoredResponse` 是已授權 source break；只調整因此失效的既有行為斷言，保留 direct imports 及可沿用 fixture/mock。Store generic port/backend 的實作不變，eligibility policy 在 decode 後評估 `ModelResponse`。
 - `NotCached` 的封閉 reason 為 `UNSUPPORTED_PAYLOAD`、`CODEC_UNAVAILABLE`、`ENCODE_FAILURE`、`ROUND_TRIP_MISMATCH`、`STORE_WRITE_FAILURE`；`Unavailable` 的封閉 reason 為 `STORE_FAILURE`、`UNKNOWN_CODEC`、`CODEC_UNAVAILABLE`、`INVALID_PAYLOAD`。`Cached`、`NotCached` 均保留原 `ModelResponse`。只有 entry 缺失或 eligibility 拒絕產生 `Miss`。
 - 本 topic 不修改 README row、VERSION、release notes 或 release timing；沒有 repository release action。bytes 只承諾同一 cache instance 內使用，不承諾跨重啟、跨程序、跨版本讀取。
 - 若 proposal 與既有 BC 圖文衝突，同一 implementation 工作中必須先更新五個既有 BC 架構面並完成唯讀一致性確認，才改 Python/source/test/dependency。此停點只確認本 topic 的架構責任符合已核准 plan 及 `docs/`／BC 圖，不建立另一個 approval gate、commit 或 evidence path；確認失敗停回 Planner。最後 docs、Python、archify 一次性建立同一 immutable implementation subject，接單一 Tester／Independent Reviewer sequence。
-- **Correction `fix-2` 繼承原兩個 blocker，scope 不擴。** 原 subject `5d8873f3088769f1bd8b6da7b42d2ec96b9254f5`、Tester commit `226b95b2a1c29c7f1103d8f4e11939c29a96f266`、implementation Reviewer `needs-rework` commit `57e4940150157d3cc73799c20461000eacc6bfe2`，以及 `fix-1` planning candidate／Plan-Reviewer `needs-rework` receipt 均為 immutable nonrouting provenance。已知不支援 JSON 樹固定產生 `UNSUPPORTED_PAYLOAD`，真正 serializer failure 才是 `ENCODE_FAILURE`；補齊原五類 edge assertions。Goal、BC、Arrow IPC、equals、optional extra、direct imports、archify 不變。
+- **Correction `fix-3` 僅改內部預期失敗傳遞方式。** 具體 codec 對預期失敗直接回上述結果值；固定 selector 對 unsupported root、缺 optional codec、未知 id、壞 bytes 回值；protocol `match/case` 翻譯為既有 `NotCached`／`Unavailable` reasons。只有成功 variant 可寫 Store/交 policy，TypeError 僅為 Store/policy contract violation；無 catch-all。fix-2 已修正的 JSON unsupported-tree reason、五類 edge assertions 與全部歷史 SHA/verdict 保留。Goal、BC、Arrow IPC、equals、optional extra、direct imports、archify 不變。
 
 ## Boundaries / Exclusions
 
@@ -36,39 +36,40 @@
 
 ## Status / Allowed Transitions
 
-- **Current:** `needs-rework`；`fix-2` correction plan authoring 進行中。原 implementation subject 的 passing Tester／needs-rework Reviewer evidence、`fix-1` candidate 與其 committed `needs-rework` Plan-Reviewer receipt 都是 history；沒有 active approved correction candidate、`fix-2` receipt 或新 implementation subject。
-- **Initial execution model（historical through needs-rework）:** Plan-Creator author → Implementer 提交 exactly five planning artifacts → Independent Plan-Reviewer 審 committed candidate → Implementer 以 sole receipt commit 作 direct child 綁定 candidate → Planner route → Implementer 先更新／確認 BC docs、再寫 Python 並建立原 immutable subject → independent Tester evidence → Independent Reviewer `needs-rework` evidence。此歷史不授權 Phase 4.5 或 publish；當前 route 僅以下述 `fix-2` 為準，本 topic 仍停在 release 前。
+- **Current:** `needs-rework`，fix-3 planning authoring；Draft PR #11 OPEN base `dev` 是 Human review surface。fix-2 approved plan receipt、subject、passing Tester 與 approved Independent Reviewer evidence 均已提交，僅對 fix-2 subject 有效；Human-directed fix-3 尚無 candidate、receipt、subject 或新 Tester/Reviewer evidence。PR 仍 open 不等於 fix-3 approval。
+- **Initial execution model（historical）：** Plan-Creator author → Implementer 提交 exactly five planning artifacts → Independent Plan-Reviewer 審 committed candidate → Implementer 以 sole receipt commit 作 direct child 綁定 candidate → Planner route → Implementer 先更新／確認 BC docs、再寫 Python 並建立原 immutable subject → independent Tester evidence → Independent Reviewer `needs-rework` evidence。之後 fix-1 planning review `needs-rework`，fix-2 planning/Tester/Reviewer `approved` 並開 Draft PR #11。這些都是各自 subject 的 immutable history；當前 route 只用 fix-3 新證據。
 - **Initial historical transitions:** `planned` → `planning-candidate-committed` → `plan-review-in-progress` → `plan-review-receipt-committed`，再經原 implementation／Tester／Reviewer 到 `needs-rework`；normal 三鍵 receipt 僅綁 initial candidate，不能供 `fix-2` route。
 - **Implementation route:** `creator-in-progress` → `tester-in-progress` → `review-ready` → `reviewer-in-progress` → `approved|needs-rework`；本 topic 的再次 `needs-rework` 須先回 Planner／Plan-Creator 另宣告 bounded correction route 與新 evidence paths，不能直接覆寫既有 Add evidence 再做新 subject。只有同 subject committed passing Tester evidence 可進 Reviewer。
-- **Publish route:** `approved` → `publish-in-progress` 僅在 Planner Phase 4.5 alignment 與既有 Human authorization 俱全時成立；`publish-in-progress` → `pr-open`；`pr-open` → `needs-rework|merged`，其中 PR review/merge 唯 Human；`merged` terminal。沒有 `publish-in-progress` → `merged`，Reviewer approval 不等於 Human PR approval。
+- **Publish route:** `approved` → `publish-in-progress` 僅在 Planner Phase 4.5 alignment 與既有 Human authorization 俱全時成立；`publish-in-progress` → `pr-open`；`pr-open` → `needs-rework|merged`，其中 PR review/merge 唯 Human；`merged` terminal。此輪已由 `pr-open` 因 Human 指示進 `needs-rework`，完成 fix-3 新 Q/Phase 4.5 後只能 bounded push 並更新原 Draft PR #11，不能宣稱 Human PR approval/merge。
 - **`fix-1` frozen route:** exact-four planning candidate `b51e557c535510c7660a4c17229ed1f0c008c4cf` 的 extended receipt 由 sole commit `4d1a730783d5904f36f5a0a0a43cc69c578a9538` 記 `needs-rework`、`candidate.active=false`、`route_authorization=null`；沒有新 implementation subject、Tester/Reviewer `fix-1` evidence 或 publish authority。`fix-1` planning artifacts/receipt 不覆寫；保留未寫的 `fix-1` evidence paths 為 frozen reserved history。
-- **Active `fix-2` route:** Plan-Creator 只修 parent plan/step、新增 `fix-2` correction plan/step；Implementer 建 exact-four non-merge planning candidate。Independent Plan-Reviewer 只審 committed candidate 並寫 `fix-2` extended JSON；Implementer 原樣 sole evidence-only commit，Planner 僅從其 committed `approved` 與 actual binding route exact-three code/test subject。其後 Tester 寫新 `fix-2` factual evidence、Implementer sole commit；Independent Reviewer 只消費 committed passing 同 subject evidence，寫新 `fix-2` review evidence、Implementer sole commit；只有新 committed `approved` 可進 Planner Phase 4.5。此輪任何 `needs-rework`／`failing` 停回 Planner／Plan-Creator 宣告下一輪新 paths，不覆寫 `fix-2` evidence，不 publish。
+- **`fix-2` closed history:** exact-four candidate `a45a7d3a31794b9d9ce75c2695efcdee93ebd539` → approved Plan-Reviewer receipt sole commit `7277980b9442fc4142b6b9ba11b9e6ecc21ec6cd` → exact-three subject `3a1c19f3db126f8f87235c47aaf52a98cdcacb50` → passing Tester sole commit `b4021849b92a8e67a9342f10504cfaef049336cc` → approved Independent Reviewer sole commit `7c474f2ff57c4a0af355e8953929f2d856e66424`。這些不能授權 fix-3 subject 或覆寫。
+- **Active `fix-3` route:** Plan-Creator 只改 parent plan/step/spec 與 technical spec、新增 fix-3 correction plan/step；Implementer 以 `7c474f2ff57c4a0af355e8953929f2d856e66424` 為 first parent 建 exact-six non-merge planning candidate。Independent Plan-Reviewer 審 committed candidate 寫新 extended JSON；Implementer 原樣 sole evidence-only commit，Planner 僅從 committed approved receipt 與 actual binding route exact-eight code/test subject。其後 Tester 寫 fix-3 factual evidence、Implementer sole commit；Independent Reviewer 只消費 committed passing 同 subject evidence，寫 fix-3 review evidence、Implementer sole commit；只有新 committed approved 可進 Planner Phase 4.5，再 bounded push/update Draft PR #11。任何 needs-rework/failing 停回 Planner／Plan-Creator 宣告下一輪新 paths，不覆寫本輪 evidence。
 
 ## Artifact Paths
 
-下表每列的 **Authority / role** 指定該 path 的決策權；未列 path 不得寫。所有路徑相對此 topic worktree 根目錄。Initial 與 `fix-1` 路徑保留歷史；本輪 Plan-Creator 只修改 parent plan/step 並新增 `fix-2` correction plan/step。
+下表每列的 **Authority / role** 指定該 path 的決策權；未列 path 不得寫。所有路徑相對此 topic worktree 根目錄。Initial/fix-1/fix-2 均為歷史；本輪 Plan-Creator 只修改 parent plan/step/spec 與 technical spec 並新增 fix-3 correction plan/step。
 
 | Artifact | Exact path / action | Write owner | Authority / role |
 | --- | --- | --- | --- |
 | Requirements | `analysis/model-response-codecs/requirements.md` **Add** | Plan-Creator | Human intent 的 business guardrail；planning candidate |
-| Technical spec | `analysis/model-response-codecs/technical-spec.md` **Add** | Plan-Creator | Execution-facing contract；planning candidate |
-| Topic plan | `plan/model-response-codecs/model-response-codecs.plan.md` **Add** | Plan-Creator | 本 topic 的 canonical path/scope authority；planning candidate |
-| Topic spec | `plan/model-response-codecs/model-response-codecs.spec.md` **Add** | Plan-Creator | Acceptance / scenario authority；planning candidate |
-| Step tracker | `plan/model-response-codecs/model-response-codecs.step.md` **Add** | Plan-Creator；後續 Implementer 僅可依 gate 更新 implementation markers | Topic progression truth；planning candidate |
-| Plan review receipt | `plan/model-response-codecs/model-response-codecs.plan-review-receipt.json` 原 **Add** | Independent Plan-Reviewer | Initial normal 三鍵 approved receipt；已提交 frozen history，不能作 `fix-2` handoff |
+| Technical spec | `analysis/model-response-codecs/technical-spec.md` 原 **Add**；fix-3 **Modify** | Plan-Creator | Execution-facing contract；fix-3 planning candidate |
+| Topic plan | `plan/model-response-codecs/model-response-codecs.plan.md` 原 **Add**；fix-3 **Modify** | Plan-Creator | Canonical path/scope authority；fix-3 planning candidate |
+| Topic spec | `plan/model-response-codecs/model-response-codecs.spec.md` 原 **Add**；fix-3 **Modify** | Plan-Creator | Acceptance/scenario authority；fix-3 planning candidate |
+| Step tracker | `plan/model-response-codecs/model-response-codecs.step.md` 原 **Add**；fix-3 **Modify** | Plan-Creator；後續 Implementer 僅可依 gate 更新 markers | Progress truth；fix-3 planning candidate |
+| Plan review receipt | `plan/model-response-codecs/model-response-codecs.plan-review-receipt.json` 原 **Add** | Independent Plan-Reviewer | Initial normal 三鍵 approved receipt；frozen history |
 | Model response VO | `src/deterministic_response_cache/response_reuse/model_response.py` **Add** | Implementer | 本 plan/spec；immutable subject |
 | Stored response VO | `src/deterministic_response_cache/response_reuse/stored_response.py` **Add** | Implementer | 本 plan/spec；immutable subject |
-| Codec Protocol | `src/deterministic_response_cache/response_reuse/codecs/contract.py` **Add** | Implementer | 本 plan/spec；immutable subject |
-| JSON codec | `src/deterministic_response_cache/response_reuse/codecs/json_response.py` 原 **Add**；`fix-2` **Modify** | Implementer | `fix-1` 未進 implementation；active correction 只修 unsupported-tree failure classification |
-| DataFrame codec | `src/deterministic_response_cache/response_reuse/codecs/pyarrow_dataframe.py` **Add** | Implementer | 本 plan/spec；immutable subject |
-| Fixed selector | `src/deterministic_response_cache/response_reuse/codecs/selector.py` **Add** | Implementer | 本 plan/spec；immutable subject |
-| Response Reuse protocol | `src/deterministic_response_cache/response_reuse/protocol.py` **Modify** | Implementer | 本 plan/spec；immutable subject |
+| Codec Protocol | `src/deterministic_response_cache/response_reuse/codecs/contract.py` 原 **Add**；fix-3 **Modify** | Implementer | 封閉 result variants 與三 member Protocol；fix-3 subject |
+| JSON codec | `src/deterministic_response_cache/response_reuse/codecs/json_response.py` 原 **Add**、fix-2 **Modify**；fix-3 **Modify** | Implementer | 預期成功/失敗直接回 result；fix-3 subject |
+| DataFrame codec | `src/deterministic_response_cache/response_reuse/codecs/pyarrow_dataframe.py` 原 **Add**；fix-3 **Modify** | Implementer | Arrow/equals 保留，預期結果回值；fix-3 subject |
+| Fixed selector | `src/deterministic_response_cache/response_reuse/codecs/selector.py` 原 **Add**；fix-3 **Modify** | Implementer | 固定分流及 expected failure 值；fix-3 subject |
+| Response Reuse protocol | `src/deterministic_response_cache/response_reuse/protocol.py` 原 **Modify**；fix-3 **Modify** | Implementer | result → 既有 outcomes/reasons；fix-3 subject |
 | Response Reuse outcomes | `src/deterministic_response_cache/response_reuse/outcomes.py` **Modify** | Implementer | 本 plan/spec；immutable subject |
 | Optional dependencies | `pyproject.toml` **Modify** | Implementer | 本 plan/spec；pandas/pyarrow extra only；immutable subject |
 | Locked dependencies | `uv.lock` **Modify** | Implementer | 同步 `pyproject.toml`；immutable subject |
-| Codec unit tests | `tests/test_response_reuse_codecs.py` 原 **Add**；`fix-2` **Modify** | Implementer | active correction 補 unsupported-tree 與 empty DataFrame 等邊界 assertion |
-| Codec integration tests | `tests/test_model_response_codecs_integration.py` 原 **Add**；`fix-2` **Modify** | Implementer | active correction 補 outcome/Store 與 foreign envelope cases |
-| Existing protocol tests | `tests/test_response_reuse_protocol.py` **Modify** | Implementer | 只更新 source break 受影響斷言；immutable subject |
+| Codec unit tests | `tests/test_response_reuse_codecs.py` 原 **Add**、fix-2 **Modify**；fix-3 **Modify** | Implementer | 每個 expected result variant 與 JSON/DF 成功；fix-3 subject |
+| Codec integration tests | `tests/test_model_response_codecs_integration.py` 原 **Add**、fix-2 **Modify**；fix-3 **Modify** | Implementer | 舊 public reason、Store/policy 與 JSON-only 直接 import；fix-3 subject |
+| Existing protocol tests | `tests/test_response_reuse_protocol.py` 原 **Modify**；fix-3 **Modify** | Implementer | direct codec fixture unwrap 與既有 Store/policy contract；fix-3 subject |
 | Existing outcome tests | `tests/test_response_reuse_outcomes.py` **Modify** | Implementer | 只更新 source break 受影響斷言；immutable subject |
 | Existing in-memory store tests | `tests/response_reuse/test_in_memory_store.py` **Modify** | Implementer | envelope integration 斷言，保留 generic store regression；immutable subject |
 | BC architecture | `docs/business-capability-architecture.md` **Modify** | Implementer | BC 文本 authority；immutable subject |
@@ -84,27 +85,32 @@
 | Visual dark small | `docs/architecture/model-response-codecs.visual-check.1440x900.dark.png` **Add** | Implementer | visual-check screenshot；immutable subject |
 | Visual light large | `docs/architecture/model-response-codecs.visual-check.2048x1320.light.png` **Add** | Implementer | visual-check screenshot；immutable subject |
 | Visual dark large | `docs/architecture/model-response-codecs.visual-check.2048x1320.dark.png` **Add** | Implementer | visual-check screenshot；immutable subject |
-| Tester evidence | `plan/model-response-codecs/model-response-codecs.tester-evidence.json` 原 **Add** | Tester | 原 subject passing evidence；已提交 frozen history，不能作 `fix-2` evidence |
-| Implementation review | `plan/model-response-codecs/model-response-codecs.implementation-review-log.json` 原 **Add** | Independent Reviewer | 原 subject needs-rework evidence；已提交 frozen history，不能作 `fix-2` approval |
+| Tester evidence | `plan/model-response-codecs/model-response-codecs.tester-evidence.json` 原 **Add** | Tester | 原 subject passing evidence；frozen history |
+| Implementation review | `plan/model-response-codecs/model-response-codecs.implementation-review-log.json` 原 **Add** | Independent Reviewer | 原 subject needs-rework evidence；frozen history |
 | Correction plan `fix-1` | `plan/model-response-codecs/model-response-codecs.correction-fix-1-plan.md` 原 **Add** | Plan-Creator | Frozen needs-rework planning provenance；read-only |
 | Correction step `fix-1` | `plan/model-response-codecs/model-response-codecs.correction-fix-1-step.md` 原 **Add** | Plan-Creator | Frozen needs-rework planning provenance；read-only |
 | Correction Plan-Reviewer receipt `fix-1` | `plan/model-response-codecs/model-response-codecs.correction-fix-1-plan-review-log.json` 原 **Add** | Independent Plan-Reviewer | Committed needs-rework sole evidence `4d1a730783d5904f36f5a0a0a43cc69c578a9538`；frozen read-only |
 | Correction Tester evidence `fix-1` | `plan/model-response-codecs/model-response-codecs.tester-evidence.fix-1.json` reserved, **not written** | Tester | `fix-1` never entered implementation；不得建立或作 routing evidence |
 | Correction implementation review `fix-1` | `plan/model-response-codecs/model-response-codecs.implementation-review-log.fix-1.json` reserved, **not written** | Independent Reviewer | `fix-1` never entered implementation；不得建立或作 routing evidence |
-| Correction plan `fix-2` | `plan/model-response-codecs/model-response-codecs.correction-fix-2-plan.md` **Add** | Plan-Creator | Active correction trigger、exact-three scope、schemas、parent sync；exact-four planning candidate |
-| Correction step `fix-2` | `plan/model-response-codecs/model-response-codecs.correction-fix-2-step.md` **Add** | Plan-Creator | Active ordered repair、review、evidence、closure checkpoints；exact-four planning candidate |
-| Correction Plan-Reviewer receipt `fix-2` | `plan/model-response-codecs/model-response-codecs.correction-fix-2-plan-review-log.json` **Add** | Independent Plan-Reviewer | 只審 committed exact-four candidate，依 `fix-2` extended schema 寫入；Implementer 原樣 sole evidence-only commit，Planner 只 route committed approved |
-| Correction Tester evidence `fix-2` | `plan/model-response-codecs/model-response-codecs.tester-evidence.fix-2.json` **Add** | Tester | 對新 exact-three immutable subject 記 actual commands/exit codes；Implementer 原樣 sole evidence-only commit |
-| Correction implementation review `fix-2` | `plan/model-response-codecs/model-response-codecs.implementation-review-log.fix-2.json` **Add** | Independent Reviewer | 只消費同 subject committed passing `fix-2` Tester evidence；Implementer 原樣 sole evidence-only commit |
+| Correction plan `fix-2` | `plan/model-response-codecs/model-response-codecs.correction-fix-2-plan.md` 原 **Add** | Plan-Creator | Frozen approved planning history；read-only |
+| Correction step `fix-2` | `plan/model-response-codecs/model-response-codecs.correction-fix-2-step.md` 原 **Add** | Plan-Creator | Frozen approved planning history；read-only |
+| Correction Plan-Reviewer receipt `fix-2` | `plan/model-response-codecs/model-response-codecs.correction-fix-2-plan-review-log.json` 原 **Add** | Independent Plan-Reviewer | Committed approved sole evidence `7277980b9442fc4142b6b9ba11b9e6ecc21ec6cd`；frozen |
+| Correction Tester evidence `fix-2` | `plan/model-response-codecs/model-response-codecs.tester-evidence.fix-2.json` 原 **Add** | Tester | Committed passing sole evidence `b4021849b92a8e67a9342f10504cfaef049336cc`；frozen |
+| Correction implementation review `fix-2` | `plan/model-response-codecs/model-response-codecs.implementation-review-log.fix-2.json` 原 **Add** | Independent Reviewer | Committed approved sole evidence `7c474f2ff57c4a0af355e8953929f2d856e66424`；frozen |
+| Correction plan `fix-3` | `plan/model-response-codecs/model-response-codecs.correction-fix-3-plan.md` **Add** | Plan-Creator | Active scope/result/schema authority；exact-six planning candidate |
+| Correction step `fix-3` | `plan/model-response-codecs/model-response-codecs.correction-fix-3-step.md` **Add** | Plan-Creator | Active ordered checkpoints；exact-six planning candidate |
+| Correction Plan-Reviewer receipt `fix-3` | `plan/model-response-codecs/model-response-codecs.correction-fix-3-plan-review-log.json` **Add** | Independent Plan-Reviewer | Only after committed exact-six candidate；Implementer unchanged sole evidence-only commit |
+| Correction Tester evidence `fix-3` | `plan/model-response-codecs/model-response-codecs.tester-evidence.fix-3.json` **Add** | Tester | New exact-eight subject factual commands/exits；Implementer unchanged sole evidence-only commit |
+| Correction implementation review `fix-3` | `plan/model-response-codecs/model-response-codecs.implementation-review-log.fix-3.json` **Add** | Independent Reviewer | Only after committed passing same-subject Tester evidence；Implementer unchanged sole evidence-only commit |
 
-本 `fix-2` planning candidate 僅修改 parent plan/step 並新增兩份 `fix-2` correction planning 檔；新 implementation subject 僅修改上述三個 `fix-2` code/test paths。`analysis/model-response-codecs/{requirements,technical-spec}.md`、原 `*.spec.md`、initial/fix-1 artifacts 與 receipt/evidence、`README.md`、VERSION（若存在）、`.github/copilot-instructions.md`（若存在）、package `__init__.py`、Store implementation、原 docs/archify 交付、其他 topic 與其他未列路徑均 read-only；沒有 deletion。未寫的 `fix-1` Tester/Reviewer paths 保持不存在。若 visual-check 因工具不可用未生成四圖與 contact sheet，Implementer 記錄 skipped receipt 並回 Planner 做 path/gate alignment，不以缺件冒稱交付完成。
+本 `fix-3` planning candidate 僅 **M** parent plan/step/spec 與 analysis technical spec、**A** 兩份 fix-3 correction planning 檔；新 implementation subject 僅 **M** 上述八個 fix-3 code/test paths。原 requirements、initial/fix-1/fix-2 artifacts 與 receipts/evidence、`outcomes.py`、VO、`README.md`、VERSION（若存在）、`.github/copilot-instructions.md`（若存在）、package `__init__.py`、Store/policy implementation、依賴檔、docs/archify 與 visual-check 交付、其他 topic 與未列路徑均 read-only；沒有 deletion。未寫的 fix-1 Tester/Reviewer paths 保持不存在。原圖面與 visual-check 的已提交事實留在歷史，fix-3 不重做。
 
 ### Evidence shape and order
 
-- 原 initial planning candidate 的 Normal Plan-Reviewer receipt 是 `.agents/skills/plan-reviewer/SKILL.md` §Process 7 的單一三鍵 JSON object，top-level **恰為** `verdict: approved|needs-rework`、`blocking_issues: [{issue, file, fix}, ...]`、`copilot_feedback_triage: {ADDRESS: [{comment, location, why}, ...], DISCUSS: [{comment, optional, why}, ...], SKIP: [{comment, why}, ...]}`；無 candidate SHA、topic、schema version、recorded_by 等 extended 欄位。此三鍵格式只屬原 initial route；`fix-1` 的 extended correction receipt 亦已提交 `needs-rework`，兩者都不是當前 handoff。原 receipt 曾由 Independent Plan-Reviewer 寫、Implementer 原樣 sole evidence commit；Planner 以 Git direct-parent／exact-five diff 綁定原 candidate。當前唯一 Plan-Reviewer handoff 是下方 `fix-2` extended JSON path/schema，不能由 initial/fix-1 歷史 receipt route。
+- 原 initial planning candidate 的 Normal Plan-Reviewer receipt 是 `.agents/skills/plan-reviewer/SKILL.md` §Process 7 的單一三鍵 JSON object，top-level **恰為** `verdict: approved|needs-rework`、`blocking_issues: [{issue, file, fix}, ...]`、`copilot_feedback_triage: {ADDRESS: [{comment, location, why}, ...], DISCUSS: [{comment, optional, why}, ...], SKIP: [{comment, why}, ...]}`；無 candidate SHA、topic、schema version、recorded_by 等 extended 欄位。原 receipt 曾由 Independent Plan-Reviewer 寫、Implementer 原樣 sole evidence commit；Planner 以 Git direct-parent／exact-five diff 綁定原 candidate。Initial normal 與 fix-1/fix-2 extended receipts 都是歷史；當前唯一 Plan-Reviewer handoff 是下方 fix-3 extended JSON path/schema。
 - 原 Tester evidence 為單一 JSON object：`schema_version: 1`、`topic`、`implementation_subject_commit: <full 40-hex>`、`status: passing|failing`、`commands: [{command: <non-empty string>, exit_code: <integer>}, ...]`、`recorded_by: "Tester"`；已提交 passing，僅作原 subject history。
 - 原 Independent Reviewer evidence 為單一 JSON object：`schema_version: 1`、`topic`、`implementation_subject_commit: <same full 40-hex>`、`tester_evidence_commit: <passing evidence sole commit full 40-hex>`、`verdict: approved|needs-rework`、`blocking_issues: []|[string]`、`recorded_by: "Independent Reviewer"`；已提交 needs-rework，不能進 Phase 4.5 或授權 `fix-2`。
-- 上述 normal receipt 與原 Tester/Reviewer evidence、`fix-1` planning artifacts 及 committed `needs-rework` receipt 均為 immutable predecessor truth；`fix-1` 未建立 subject 或新 Tester/Reviewer evidence。當前唯一 handoff 與 route 是 `fix-2`：exact-four planning candidate → Independent Plan-Reviewer 依 `model-response-codecs.correction-fix-2-plan.md` 的 extended schema 寫 `fix-2` receipt → Implementer sole evidence commit → Planner 驗 committed approved → exact-three subject → Tester `fix-2` evidence → Implementer sole evidence commit → Independent Reviewer `fix-2` evidence → Implementer sole evidence commit → Planner Phase 4.5。新 SHA、verdict、outcome 均只能 post-commit 記錄。
+- 上述 initial/fix-1/fix-2 artifacts 與證據均為 immutable predecessor truth；fix-1 未建立 subject 或 Tester/Reviewer evidence，fix-2 已完成 approved chain 與 Draft PR #11。當前唯一 handoff 與 route 是 fix-3：exact-six planning candidate → Independent Plan-Reviewer 依 `model-response-codecs.correction-fix-3-plan.md` extended schema 寫新 receipt → Implementer sole evidence commit → Planner 驗 committed approved → exact-eight subject → Tester fix-3 evidence → Implementer sole evidence commit → Independent Reviewer fix-3 evidence → Implementer sole evidence commit → Planner Phase 4.5 → bounded push/update Draft PR #11。新 SHA、verdict、outcome 均只能 post-commit 記錄。
 
 ## Python implementation metadata
 
@@ -117,13 +123,13 @@
 
 ### Current Context
 
-初始 planning 時 `response_reuse/protocol.py` 將 generic `ResponseT` 直存；現已依本 topic 建 `ModelResponse`／`StoredResponse`、JSON/DataFrame codecs、optional extra 與圖面。原 implementation subject `5d8873f3088769f1bd8b6da7b42d2ec96b9254f5` 經 passing Tester 後被 Independent Reviewer 判 `needs-rework`；`fix-1` planning candidate 又因 parent Reviewer Handoff 指向舊 normal 三鍵 JSON 而獲 committed Plan-Reviewer `needs-rework`，並未實作。`json_response.py` 仍把已知不支援 JSON 樹丟為 `EncodeFailureError`，protocol 因而映射 `ENCODE_FAILURE`；兩個 codec tests 仍缺原 Reviewer 指定邊界案例。其餘原 subject 是 frozen predecessor，不在本 correction 改動面。
+初始 planning 時 `response_reuse/protocol.py` 將 generic `ResponseT` 直存；現已依本 topic 建 `ModelResponse`／`StoredResponse`、JSON/DataFrame codecs、optional extra 與圖面。原 subject `5d8873f3088769f1bd8b6da7b42d2ec96b9254f5` 曾獲 Reviewer `needs-rework`；fix-1 planning review `needs-rework`；fix-2 subject `3a1c19f3db126f8f87235c47aaf52a98cdcacb50` 的 Tester/Independent Reviewer 均通過並已開 Draft PR #11。Human 現要求將 codec/selector 的已知編解碼失敗改為封閉可判別回傳值，讓 protocol 明確轉成原有 reasons；舊 exception-style contract 僅為 frozen predecessor。
 
 ### Requirements
 
 - 只存有 `ResponseCodecId` 與 bytes 的 `StoredResponse`；讀取只依 id decode，不嗅探 bytes。
 - JSON dict/list round trip 無損；DataFrame 以 Arrow IPC 保存 pandas metadata，寫入以 equals gate，hit 獨立。
-- optional pandas/pyarrow 不污染 JSON-only import；所有 expected failure 可由 outcome reason 區分，identity 原樣傳給 Store。
+- optional pandas/pyarrow 不污染 JSON-only import；codec/selector 的所有 expected failure 由封閉結果值辨別，對外 outcome reason 不變，identity 原樣傳給 Store。
 - direct-import 回歸、pyright strict、ruff、pytest 與 archify showcase/desktop visual gate 均有實際證據。
 
 ### Decisions
@@ -131,22 +137,22 @@
 - **Async-planning status:** exempt — 現有 Response Reuse Protocol 與新 codecs 都是純同步、process-local bytes 編解碼；本 topic 不加入 async boundary、pooled resource、背景任務、timeout 或 cancellation。
 - **Module/package placement:** VO 在 `response_reuse/` defining modules；codec 共同契約與兩個實作、selector 在 `response_reuse/codecs/` 的四個 defining modules，沒有 package initializer。
 - **New public API:** `ModelResponse`、`StoredResponse`、`ResponseCodecId`、`ResponseCodec`、`JsonResponseCodec`、`PyArrowDataFrameCodec` 透過各自 defining module direct import。
-- **Interface changes:** `ResponseReuseProtocol` 收 `CacheStore[IdentityT, StoredResponse]`，record/lookup 的 response 改為 `ModelResponse`；`Hit`、`Cached`、`NotCached` 包含此 VO，失敗 outcome 增加封閉 reason。
-- **Breaking changes allowed:** yes，Human 已接受 generic `ResponseT` 直存 API source break；不另設 compatibility layer。
+- **Interface changes:** `ResponseReuseProtocol` 收 `CacheStore[IdentityT, StoredResponse]`，record/lookup 的 response 是 `ModelResponse`；`Hit`、`Cached`、`NotCached` 包含此 VO。fix-3 將 `ResponseCodec.encode/decode` 與 selector return 改為封閉可判別結果，protocol 對外 reason enum 不變。
+- **Breaking changes allowed:** yes，Human 已接受 generic `ResponseT` 直存 API 及 fix-3 codec/selector return source break；不另設 compatibility layer。
 - **New dependencies:** yes，只在 `pyproject.toml` 可選 `dataframe` extra 宣告 `pandas>=2.2`、`pyarrow>=20`，並同步 `uv.lock`；基礎安裝為零 runtime dependencies。
-- **Error-handling strategy:** JSON/DataFrame 預期 codec 失敗映射到明確 `NotCached`/`Unavailable` reason；不合法/未知 id fail closed；Store value channel 維持原映射；未預期 Store/policy exception 依既有邊界傳播。
+- **Error-handling strategy:** JSON/DataFrame codec 與 selector 的已知成功/失敗直接回封閉 result variants；protocol 是唯一轉成既有 `NotCached`/`Unavailable` reason 的邊界；未知 id fail closed。`TypeError` 僅用於 Store/policy contract violation；未預期程式錯誤與 Store/policy exception 依既有邊界傳播，不 catch-all。
 - **Typing strategy:** Python 3.12 generics/StrEnum/Protocol、`typing.override`、pyright strict；具體 codec 明確繼承且簽名符合 contract，無 `Any` 或動態載入替代 direct imports。
 
 ### Public Contract / API Changes
 
 - `ModelResponse[PayloadT](value: PayloadT)`：frozen/slotted。`ResponseCodecId(StrEnum)` 僅 `json/v1`、`dataframe/v1`。`StoredResponse(codec_id: ResponseCodecId, payload: bytes)`：frozen/slotted。
-- `ResponseCodec[PayloadT]`：唯讀 `codec_id`、`encode(ModelResponse[PayloadT]) -> StoredResponse`、`decode(bytes) -> ModelResponse[PayloadT]`。`JsonResponseCodec` 明確繼承 `ResponseCodec[JsonPayload]`；`PyArrowDataFrameCodec` 明確繼承 `ResponseCodec[pandas.DataFrame]`，並用 `@override` 實作全部三個 member。
+- `ResponseCodec[PayloadT]`：唯讀 `codec_id`、`encode(ModelResponse[PayloadT]) -> EncodeResult`、`decode(bytes) -> DecodeResult[PayloadT]`。`EncodeResult` 恰為 `Encoded(stored: StoredResponse) | UnsupportedPayload | CodecUnavailable | EncodeFailure | RoundTripMismatch`；`DecodeResult[PayloadT]` 恰為 `Decoded(response: ModelResponse[PayloadT]) | UnknownCodec | CodecUnavailable | InvalidPayload`，各 variant frozen/slotted。`JsonResponseCodec` 明確繼承 `ResponseCodec[JsonPayload]`；`PyArrowDataFrameCodec` 明確繼承 `ResponseCodec[pandas.DataFrame]`，並用 `@override` 實作全部三個 member。
 - `ResponseReuseProtocol[IdentityT, PayloadT]`：`record(confirmed_identity, response: ModelResponse[PayloadT]) -> RecordOutcome[PayloadT]`、`lookup(confirmed_identity) -> LookupOutcome[PayloadT]`；其 Store 為 `CacheStore[IdentityT, StoredResponse]`，eligibility policy 對 `ModelResponse[PayloadT]` 評估。outcome 封裝新 response VO；`NotCached`、`Unavailable` 另帶上述 reason。原泛型 response 直存呼叫端須改用 VO。
-- 具體 codec 的預期 encode/decode failure 使用其本地 typed failure，再由 protocol 翻譯為 outcome；不把壞 bytes／未知 id 當 miss，也不引入新的 Store exception contract。
+- 具體 codec 直接回 `Encoded`／`Decoded` 或預期失敗 variant；固定 selector 保持相同 union 並負責 optional codec/unknown id。Protocol 用 `match/case` 將 variant 轉為既有 outcome/reason；不把壞 bytes／未知 id 當 miss，也不引入 Store exception contract。
 
 ### Affected Files / Modules
 
-**Likely affected files:** `Artifact Paths` 中全部 **Add** VO/codec/test/archify paths、全部 **Modify** source/test/dependency/BC paths。**Candidate files to inspect, read-only:** `response_reuse/_cache_store.py`、`response_reuse/stores/in_memory.py`、`response_reuse/eligibility/policy.py`、`tests/test_response_reuse_eligibility.py`、`tests/test_package_import.py`、`docs/architecture/canonical-identity-pipeline.dataflow.json`（僅作圖形範例，不作本 topic 事實來源）。
+**Current fix-3 implementation allowlist:** `Artifact Paths` 中五個 codec/protocol source 與三個 codec/protocol test 的 fix-3 **Modify**，exact eight；不新增 outcomes file。**Candidate files to inspect, read-only:** `response_reuse/_cache_store.py`、`response_reuse/stores/in_memory.py`、`response_reuse/eligibility/policy.py`、`response_reuse/outcomes.py`、`tests/test_response_reuse_eligibility.py`、`tests/test_response_reuse_outcomes.py`、`tests/test_package_import.py`、既有 docs/archify 交付。
 
 ### Test Plan
 
@@ -157,6 +163,7 @@
 - **Backward compatibility:** 明確驗證 source break；舊 generic response 直存用法不再屬可支援 API，其他 BC、Store generic port/backend 及 eligibility policy 本體保持原行為。
 - **Architecture precedence:** 在 implementation 工作中先完成五個既有 BC 架構面的更新，唯讀對照 docs/ BC authority、BC 圖責任與 scene mirror，確認後才開始 Python；若不通過則停止，不建立 implementation subject。最終 Tester/Reviewer 檢查同一 subject 的全部 docs/code/test/archify 變更。
 - **Correction `fix-2`:** `tests/test_response_reuse_codecs.py` 與 `tests/test_model_response_codecs_integration.py` 對已知 unsupported JSON tree、empty DataFrame、DataFrame optional codec unavailable record、真正 encoder failure、foreign malformed envelope 補有意義的 assertion；由 `src/deterministic_response_cache/response_reuse/codecs/json_response.py` 區分 unsupported value 與 serializer failure。舊測試的 defining-module direct imports、fixtures/mocks 與原有 assertions 保留。除此三檔無新的 Python/API、依賴、docs 或 archify 修改。
+- **Correction `fix-3`:** 在 `tests/test_response_reuse_codecs.py` 對 JSON/DF success 的 `Encoded`/`Decoded` 及 `UnsupportedPayload`、`CodecUnavailable`、`EncodeFailure`、`RoundTripMismatch`、`UnknownCodec`、`InvalidPayload` 各變體做 direct result assertion；在 `tests/test_model_response_codecs_integration.py` 驗各變體映到舊 public reasons、Store 不誤寫、DataFrame 隔離、foreign envelope、JSON-only direct import；在 `tests/test_response_reuse_protocol.py` 更新 direct codec fixture 的成功值取用，保留 Store/policy contract `TypeError`、異常傳播與既有 fixtures/mocks。pyright strict 驗證明確繼承／`@override` 簽名。不得用只檢查 decorator 存在的測試。
 
 ### Risks
 
@@ -167,7 +174,7 @@
 
 ### Rollback Plan
 
-若本 topic 尚未 merge，任何 rollback/superseding subject 均須先返回 Planner 建立獨立 bounded route；本 `fix-2` 只可修改 exact-three repair paths，不能回復 generic API 或改寫其他 topic/初始/fix-1 committed provenance。Implementer 不得自行 merge、release 或刪除 evidence。
+若本 topic 尚未 merge，任何 rollback/superseding subject 均須先返回 Planner 建立獨立 bounded route；本 fix-3 只可修改 exact-eight repair paths，不能回復 generic API 或改寫其他 topic/initial/fix-1/fix-2 committed provenance。Implementer 不得自行 merge、release 或刪除 evidence。
 
 ## Implementation Steps
 
@@ -183,26 +190,30 @@
 10. 在 `docs/architecture/model-response-codecs.dataflow.json` 依 archify dataflow schema 產生繁體中文圖規格，通過 showcase validation，交付 `docs/architecture/model-response-codecs.html`，再以 `visual-check --repo-root` 產生 `Artifact Paths` 所列六個 sidecars，檢查四種 desktop containment 及實際圖面；最後對 docs/code/test/archify 建同一 immutable implementation subject。
 11. 僅在新的 committed `fix-2` planning candidate 與 Independent Plan-Reviewer approved extended receipt 經 Planner route 後，修改 `src/deterministic_response_cache/response_reuse/codecs/json_response.py`，將已知不支援的 JSON 樹改丟 `UnsupportedPayloadError`，保留真正 serializer failure 的 `EncodeFailureError`；不修改 selector/protocol 既有 outcome 映射。
 12. 修改 `tests/test_response_reuse_codecs.py`、`tests/test_model_response_codecs_integration.py`，補 Reviewer 指定的五類 substantive edge/assertion，保留 direct imports、fixtures/mocks；Implementer 只以這三個 code/test paths 建新的 immutable `fix-2` subject，之後交 Tester／Independent Reviewer 重跑完整新 evidence chain。
+13. 僅在 committed exact-six fix-3 planning candidate 與 Independent Plan-Reviewer approved extended receipt 經 Planner route 後，在 `src/deterministic_response_cache/response_reuse/codecs/contract.py` 定義 frozen/slotted `Encoded`／`Decoded` 與六個失敗 variant、兩個 closed union，修改三 member `ResponseCodec` 簽名；不改 public outcome enums。
+14. 修改 `src/deterministic_response_cache/response_reuse/codecs/json_response.py`、`src/deterministic_response_cache/response_reuse/codecs/pyarrow_dataframe.py`，保留明確繼承／`@override`、JSON/Arrow 格式與 equals gate，將預期成功與已知失敗直接回 result 值；只捕捉預期編解碼例外，不 catch-all。
+15. 修改 `src/deterministic_response_cache/response_reuse/codecs/selector.py` 固定選擇並對 unsupported root、缺 optional codec、unknown id、bad bytes 回值；修改 `src/deterministic_response_cache/response_reuse/protocol.py` 以 `match/case` 將 result 映到既有 reasons，只有成功值進 Store/policy，TypeError 只保留 Store/policy contract violation。
+16. 修改 `tests/test_response_reuse_codecs.py`、`tests/test_model_response_codecs_integration.py`、`tests/test_response_reuse_protocol.py`，逐一驗證所有預期 variant、JSON/DF 成功、對外 reason、Store/policy 邊界與 JSON-only direct import；Implementer 只以上述 exact-eight code/test paths 建新 immutable fix-3 subject，接獨立 Tester／Reviewer 新 evidence chain。
 
 ## Validation / Acceptance Checks
 
 - `uv run --extra dataframe pytest`、`uv run --extra dataframe pyright`（strict 由 `pyproject.toml` 配置）、`uv run --extra dataframe ruff check .` 全部完成且 Tester 記錄實際 exit code；保留 direct-import regression，不新增 decorator-presence-only 測試。
 - 實作前的架構確認需核對五個 BC 面仍顯示 Identity 唯一 authority、CacheStore 內部保存、其他 BC 未被提前實作、`scene.js` 與 `index.html` generated block 一致；未通過即停止。此確認發生在任何 Python/source/test/dependency 編輯前，最終由 Tester/Reviewer 對同一 committed subject 再驗證。
-- 原 initial normal Plan-Reviewer receipt 僅三鍵、已 frozen；`fix-1` extended receipt 為 committed `needs-rework`。當前 `fix-2` 必須依其獨立 extended schema、exact-four candidate/tree/blob/first-parent facts 與 sole receipt commit 判定，不接受舊 receipt、chat 或 branch 作 routing authority。
-- 核對 immutable implementation subject 只觸碰表中 **Add/Modify** implementation paths；`codecs.py`、`codecs/__init__.py` 及 package re-export 均不存在，無 `importlib`、`__import__`、`sys.modules` 替換。
+- 原 initial normal Plan-Reviewer receipt 僅三鍵、已 frozen；fix-1 extended receipt 為 committed `needs-rework`，fix-2 extended receipt 為 committed `approved` 且只屬舊 subject。當前 fix-3 必須依新 extended schema、exact-six candidate/tree/blob/first-parent facts 與 sole receipt commit 判定，不接受舊 receipt、chat、branch 或 PR state 作新 route authority。
+- 核對 fix-3 immutable implementation subject 只觸碰八個 declared **Modify** paths；`codecs.py`、`codecs/__init__.py` 及 package re-export 均不存在，無 `importlib`、`__import__`、`sys.modules` 替換。
 - 在不安裝 pandas/pyarrow 的基礎環境驗證 `json_response.py`、selector 與 protocol 的 defining-module direct imports 和 JSON record/lookup；DataFrame path 回明確 unavailable/not-cached reason。
 - archify：`node /Users/andrew/.codex/skills/archify/bin/archify.mjs validate dataflow docs/architecture/model-response-codecs.dataflow.json --quality showcase --json`，需 9/9、0 composition errors、0 warnings；`deliver` 後執行 `visual-check docs/architecture/model-response-codecs.html --repo-root . --json`，檢查 1440×900、1600×1000、1920×1080、2048×1320 containment、兩種主題截圖並實際目視。未可目視時如實標 skipped。
 - Independent Reviewer 核對同 topic full-SHA subject、committed passing Tester evidence、public/source-break contract、架構邊界、path exactness 和圖面 receipt；Planner Phase 4.5 只在同 subject approved review evidence 提交後 align。
-- `fix-2` 只接受 exact-four planning candidate、committed approved extended Plan-Reviewer receipt、exact-three new implementation subject、同 subject 新 committed passing Tester evidence 與新 approved Independent Reviewer evidence。測試須證明已知 unsupported JSON tree 回 `UNSUPPORTED_PAYLOAD` 且 Store 未寫入，真正 encode failure 仍是 `ENCODE_FAILURE`；empty DataFrame、可選 codec 不可用時的 DataFrame record、foreign malformed envelope 都有明確 outcome/assertion。Initial/fix-1 needs-rework evidence 不得改寫或用作新 subject gate。
+- Fix-2 的 exact-four candidate、approved receipt、exact-three subject、passing Tester 與 approved Independent Reviewer 均為已提交歷史；不授權 fix-3。Fix-3 只接受 exact-six planning candidate、committed approved extended Plan-Reviewer receipt、exact-eight new subject、同 subject committed passing Tester evidence 與 approved Independent Reviewer evidence。測試須逐一證明所有預期 result variants、舊 outcome/reason 映射、Store/policy TypeError 限界、JSON-only direct import。Initial/fix-1/fix-2 evidence 不得改寫或重用作新 subject gate。
 
 ## Reviewer Handoff
 
 ```json
 {
-  "active_correction_id": "fix-2",
+  "active_correction_id": "fix-3",
   "handoff_kind": "extended-correction-json",
-  "sole_active_plan_review_path": "plan/model-response-codecs/model-response-codecs.correction-fix-2-plan-review-log.json",
-  "schema_authority": "plan/model-response-codecs/model-response-codecs.correction-fix-2-plan.md#active-extended-plan-reviewer-receipt-schema",
+  "sole_active_plan_review_path": "plan/model-response-codecs/model-response-codecs.correction-fix-3-plan-review-log.json",
+  "schema_authority": "plan/model-response-codecs/model-response-codecs.correction-fix-3-plan.md#active-extended-plan-reviewer-receipt-schema",
   "required_receipt_keys": [
     "schema_version", "topic", "correction_id", "candidate", "reviewed_artifacts",
     "first_parent_admission", "review_basis", "verdict", "blocking_issues",
@@ -220,4 +231,4 @@
 
 ## Open Questions / Unresolved Items
 
-None；Human 已決定 DataFrame Arrow IPC、`equals` 門檻、optional extra、source break、codec 分層與圖面交付。任何實作新問題先回 Planner，不自行擴張 scope。
+None；Human 已決定 DataFrame Arrow IPC、`equals` 門檻、optional extra、source break、codec 分層、圖面交付與 fix-3 封閉可判別 codec 結果契約。任何實作新問題先回 Planner，不自行擴張 scope。
