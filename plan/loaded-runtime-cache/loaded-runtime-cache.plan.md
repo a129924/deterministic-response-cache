@@ -923,3 +923,20 @@ Independent Reviewer is its only writer; Implementer is its only committer, unch
 eight top-level keys and exact two entries specified in the technical specification. `REPLY_AND_RESOLVE` is the only
 actionable outcome and requires an exact non-empty factual reply; `ADDRESS` and `HUMAN_CHECK` use `null`, return to
 Planner or remain open, respectively. No other thread is authorized by C20.
+
+### C20 committed post-review state
+
+The complete committed C20 chain is: planning candidate
+`77835c29b90304cff9b0c3193bde4c297ec96612` → approved Plan-Reviewer receipt
+`8a31db2d9ccccaf46363d714be457a0cd4700a3e` → RED subject
+`f87bb1a9580a08196989374e069a82cccafd6c72` → failing Tester evidence
+`55e91c9ff3a785af3279d8ebd9e3dfd3d69bc2a3` → green subject
+`fa1468301af1906a05ee31ba0d267d2270d7af5f` → passing Tester evidence
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e` → approved independent Reviewer evidence
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`.
+
+This is factual post-review state only. C20 is `phase-4.5-alignment-pending`: Planner must first verify that the
+actual PR head includes this committed chain and perform Phase 4.5 alignment. Only then may an Independent Reviewer
+write the already-defined C20 green-subject-bound, exact-two-pair classification receipt for
+`lCkFu`/`4079664575` and `lDH2-`/`4079885261`; Implementer may commit that receipt unchanged and alone. This
+state alignment creates no C21, no contract change, and no authorization to reply to or resolve a thread.

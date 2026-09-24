@@ -358,18 +358,23 @@ verdict, subject, test result, PR head, classification outcome, reply or resolut
 are ReadOnly.
 
 - [x] C20 plan-authoring
-- [ ] C20 planning-candidate-commit
-- [ ] C20 independent Plan-Reviewer receipt
-- [ ] C20 receipt-only commit
-- [ ] C20 test-only RED subject
-- [ ] C20 failing Tester evidence-only commit
-- [ ] C20 green subject plus truthful dataflow outputs
-- [ ] C20 passing Tester evidence-only commit
-- [ ] C20 approved independent Reviewer evidence-only commit
+- [x] C20 planning-candidate-commit (`77835c29b90304cff9b0c3193bde4c297ec96612`)
+- [x] C20 independent Plan-Reviewer receipt
+- [x] C20 receipt-only commit (`8a31db2d9ccccaf46363d714be457a0cd4700a3e`)
+- [x] C20 test-only RED subject (`f87bb1a9580a08196989374e069a82cccafd6c72`)
+- [x] C20 failing Tester evidence-only commit (`55e91c9ff3a785af3279d8ebd9e3dfd3d69bc2a3`)
+- [x] C20 green subject plus truthful dataflow outputs (`fa1468301af1906a05ee31ba0d267d2270d7af5f`)
+- [x] C20 passing Tester evidence-only commit (`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`)
+- [x] C20 approved independent Reviewer evidence-only commit (`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`)
 - [ ] C20 Planner Phase 4.5 alignment
 - [ ] C20 independent two-pair classification receipt
 - [ ] C20 classification-receipt-only commit
 - [ ] C20 Planner routing for exact classified pairs
+
+**C20 post-review state:** the seven commits above are the complete committed chain. Phase 4.5 remains pending until
+Planner verifies the actual pushed PR head contains it. That alignment alone may route the already-defined independent
+two-pair classification receipt for `lCkFu`/`4079664575` and `lDH2-`/`4079885261`; it creates neither C21 nor a new
+contract and authorizes no reply or resolution.
 
 ### C20 actionable steps
 
