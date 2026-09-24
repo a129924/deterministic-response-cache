@@ -6,12 +6,12 @@
   "input": "/Users/andrew/code/python/deterministic-response-cache.worktrees/agent-20260917-loaded-runtime-cache/docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json",
   "output": "/Users/andrew/code/python/deterministic-response-cache.worktrees/agent-20260917-loaded-runtime-cache/docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html",
   "specification": {
-    "sha256": "b1dacc0448684a39d5eedf58663c80755462361ada76c98fd2a175cb8af1a0fb",
-    "bytes": 3518
+    "sha256": "3a4c9657067060e1d17560ae79967a7e760d0a08db197b06769965e0c4379ee7",
+    "bytes": 3836
   },
   "artifact": {
-    "sha256": "96a7cc1e62ef58291f1e565c08b5623db541d401fadfba96aca2713b4b76859e",
-    "bytes": 704646
+    "sha256": "9920fd806ce388eb900740154c21203ad94ef4b48abb1eeac7980bf6fc35c0c6",
+    "bytes": 705569
   },
   "validation": {
     "checksPassed": 9,

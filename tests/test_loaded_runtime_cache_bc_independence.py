@@ -117,7 +117,7 @@ def _add_assignment_aliases(
     assignments = [
         statement
         for statement in ast.walk(tree)
-        if isinstance(statement, (ast.Assign, ast.AnnAssign))
+        if isinstance(statement, (ast.Assign, ast.AnnAssign, ast.NamedExpr))
     ]
     for _ in range(len(assignments) + 1):
         changed = False
@@ -139,8 +139,12 @@ def _add_assignment_aliases(
             break
 
 
-def _assignment_target_names(statement: ast.Assign | ast.AnnAssign) -> tuple[str, ...]:
+def _assignment_target_names(
+    statement: ast.Assign | ast.AnnAssign | ast.NamedExpr,
+) -> tuple[str, ...]:
     """Return direct local-name targets while ignoring non-simple assignment targets."""
+    if isinstance(statement, ast.NamedExpr):
+        return (statement.target.id,)
     if isinstance(statement, ast.AnnAssign):
         return (statement.target.id,) if isinstance(statement.target, ast.Name) else ()
     return tuple(target.id for target in statement.targets if isinstance(target, ast.Name))
@@ -252,6 +256,12 @@ def _is_forbidden_import_callable_expression(
             modules,
             callables,
         ) or _is_forbidden_import_callable_expression(expression.orelse, modules, callables)
+    if isinstance(expression, ast.NamedExpr):
+        resolved = _resolve_forbidden_alias(expression.value, modules, callables)
+        return resolved in {
+            ("callable", "builtins.__import__"),
+            ("callable", "importlib.import_module"),
+        }
     if isinstance(expression, ast.Name):
         return expression.id == "__import__" or (
             expression.id in callables

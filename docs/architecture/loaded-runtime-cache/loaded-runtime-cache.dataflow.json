@@ -27,7 +27,8 @@
     { "id": "key-to-registry", "from": "reuse-key", "to": "runtime-registry", "label": "key: RuntimeReuseKey", "classification": "opaque pass-through", "variant": "emphasis" },
     { "id": "key-to-retention", "from": "reuse-key", "to": "runtime-retention", "label": "key: RuntimeReuseKey", "classification": "opaque pass-through", "variant": "emphasis", "fromSide": "right", "toSide": "left", "via": [[190, 271], [190, 400], [550, 400], [550, 499]], "labelAt": [370, 388] },
     { "id": "runtime-to-retention", "from": "initialized-runtime", "to": "runtime-retention", "label": "runtime", "classification": "呼叫端提供", "variant": "emphasis", "route": "straight", "labelDy": 30 },
-    { "id": "lookup-return", "from": "runtime-registry", "to": "lookup-return", "label": "RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None", "classification": "同步 Protocol", "variant": "emphasis", "route": "straight", "labelAt": [430, 220] },
+    { "id": "lookup-return", "from": "runtime-registry", "to": "lookup-return", "label": "RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None", "classification": "同步 Protocol", "variant": "emphasis", "route": "straight", "labelAt": [550, 100] },
+    { "id": "lookup-unavailable", "from": "runtime-registry", "to": "lookup-unavailable", "label": "預期 lookup failure signal", "classification": "RuntimeRegistryLookupUnavailable", "variant": "default", "fromSide": "bottom", "toSide": "right", "via": [[315, 335], [700, 335], [700, 271]], "labelAt": [700, 365] },
     { "id": "retain-success", "from": "runtime-retention", "to": "retained", "label": "成功：回交 runtime", "classification": "Retained(runtime)；同一 runtime", "variant": "emphasis", "route": "straight", "labelAt": [855, 560] },
     { "id": "retain-failure", "from": "runtime-retention", "to": "not-retained", "label": "失敗：回交 runtime", "classification": "NotRetained(runtime)；同一 runtime", "variant": "default", "route": "auto", "labelAt": [855, 445] }
   ],
