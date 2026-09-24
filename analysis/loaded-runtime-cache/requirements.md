@@ -435,3 +435,28 @@ protocol-first boundary，且只能消費 committed C22 classification receipt
 - F `PRRT_kwDOUJTij86jnBpk`/`4043480108`、ACL `PRRT_kwDOUJTij86kQ95O`/`4060023123`、business
   `PRRT_kwDOUJTij86kqiZ5`/`4070096561`、README `PRRT_kwDOUJTij86lAR8T`/`4078761998` 與
   `PRRT_kwDOUJTij86ld9Ai`/`4090688118` 是 C23 ReadOnly/open/unclassified boundary；前四者是 Human-only locks。
+
+## C24 current-head dual-pair classification successor
+
+C24 是 C23 classification provenance `e5872d5dfb2018743b1f7e319551d52f25f5ef02` 後唯一的 planning-only successor，
+只分類 NamedExpr module-alias scanner gap `PRRT_kwDOUJTij86lfQl9`/`4091213935` 與 topology stale executable-module
+statement `PRRT_kwDOUJTij86lfQmF`/`4091213944`。它固定消費 C23 subject
+`240c694fa5078dc1d35f154f7a85b06381db2e47`、passing Tester `dabce082058805281990c52b12352b87c2b46801`、approved Reviewer
+`489752c727aa86cfaf49038cc2ed6dfddf33ba2d`、current PR head `e5872d5dfb2018743b1f7e319551d52f25f5ef02`，以及 C23 receipt
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-240c694fa5078dc1d35f154f7a85b06381db2e47-489752c727aa86cfaf49038cc2ed6dfddf33ba2d.json`。
+
+- Candidate 僅修改五份 planning artifacts，不得預填 candidate SHA、Plan-Reviewer verdict、classification outcome、reply
+  或 resolution。獨立 Plan-Reviewer 在 `loaded-runtime-cache.plan-review-receipt-<candidate-40-hex-sha>.json` 寫 approved
+  receipt；僅 Implementer 可原樣 sole receipt-only commit。
+- 獨立 Reviewer 之後唯一可寫
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-240c694fa5078dc1d35f154f7a85b06381db2e47-e5872d5dfb2018743b1f7e319551d52f25f5ef02.json`；僅 Implementer 可原樣 sole evidence-only commit。JSON top-level keys
+  恰為 `schema_version`、`topic`、`implementation_subject_commit`、`tester_evidence_commit`、
+  `implementation_review_evidence_commit`、`pr_head_commit`、`classifications`、`recorded_by`，固定綁定 integer `1`、
+  `loaded-runtime-cache`、上述 subject/evidence/head facts、exactly two entries 與 `Independent Reviewer`。entry keys 恰為
+  `thread`、`comment`、`outcome`、`reply`，pair set 僅為 `lfQl9`/`4091213935` 與 `lfQmF`/`4091213944`。
+- Reviewer 獨立決定 `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`；僅 committed `REPLY_AND_RESOLVE` 有 non-empty factual reply
+  並只授權該 exact pair 的 reply/resolve。`ADDRESS` 與 `HUMAN_CHECK` 必為 JSON `null`，分別回到 Planner／保持 open；任一
+  writer/path/SHA/schema/pair/enum/nullability/sole-commit defect 都 fail closed。
+- C23 resolved `ldeVI`/`4090495760`、`ldeVO`/`4090495770` frozen；F/ACL/business/README 四個 Human-only pairs 與
+  `ld9Ai`/`4090688118` 維持 ReadOnly/open exclusions。未列 path/thread、source、tests、dataflow、architecture、README、
+  PR、merge、release、post-merge 都不在 scope。

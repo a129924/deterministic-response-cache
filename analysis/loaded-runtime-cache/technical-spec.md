@@ -533,3 +533,24 @@ corresponding exact reply/resolve. `ADDRESS` and `HUMAN_CHECK` use JSON `null` r
 
 The four Human-only pairs F/ACL/business/README and `ld9Ai`/`4090688118` are excluded, ReadOnly and open; no C23
 artifact, evidence or action may classify, reply to, resolve or otherwise alter them.
+
+## C24 current-head classification technical contract
+
+C24 is planning-only. It consumes C23 subject `240c694fa5078dc1d35f154f7a85b06381db2e47`, passing Tester
+`dabce082058805281990c52b12352b87c2b46801`, approved Reviewer `489752c727aa86cfaf49038cc2ed6dfddf33ba2d`, C23 classification
+provenance/current PR head `e5872d5dfb2018743b1f7e319551d52f25f5ef02`, and only classifies
+`PRRT_kwDOUJTij86lfQl9`/`4091213935` and `PRRT_kwDOUJTij86lfQmF`/`4091213944`.
+
+The candidate is exactly the five planning artifacts and pre-fills no future SHA, verdict, outcome, reply or resolution.
+An Independent Plan-Reviewer writes an approved standard SHA-bound receipt; only Implementer commits it unchanged alone.
+Then only Independent Reviewer may write
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-240c694fa5078dc1d35f154f7a85b06381db2e47-e5872d5dfb2018743b1f7e319551d52f25f5ef02.json`.
+It has exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; binding integer `1`, topic,
+the fixed C23 facts, exactly two entries and `Independent Reviewer`. Each entry has only `thread`, `comment`, `outcome`,
+`reply`. `outcome` is only `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; only the first has a non-empty factual reply and
+permits exact Implementer reply/resolve. The other outcomes require `reply: null`; `ADDRESS` returns to Planner and
+`HUMAN_CHECK` stays open. Implementer commits the receipt unchanged alone; all malformed/stale/non-sole records fail closed.
+
+C23 resolved pairs are frozen. F/ACL/business/README Human-only pairs and `ld9Ai` remain ReadOnly/open exclusions;
+C24 cannot modify source, tests, docs, architecture, PR state, those threads, or any unlisted path.

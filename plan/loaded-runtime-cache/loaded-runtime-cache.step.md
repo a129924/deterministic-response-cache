@@ -503,3 +503,31 @@ permits otherwise.
   `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`, with non-empty factual reply only for `REPLY_AND_RESOLVE` and JSON `null`
   otherwise. Only exact committed `REPLY_AND_RESOLVE` entries may receive their factual reply and resolution.
   F/ACL/business/README Human-only locks and `ld9Ai` stay open/unclassified.
+
+## C24 C23 Current-Head Dual-Pair Classification Successor Stages (authoritative)
+
+C24 supersedes C23 only for `PRRT_kwDOUJTij86lfQl9`/`4091213935` and
+`PRRT_kwDOUJTij86lfQmF`/`4091213944`. It consumes subject `240c694fa5078dc1d35f154f7a85b06381db2e47`, passing Tester
+`dabce082058805281990c52b12352b87c2b46801`, approved Reviewer `489752c727aa86cfaf49038cc2ed6dfddf33ba2d`, and C23
+classification provenance/current head `e5872d5dfb2018743b1f7e319551d52f25f5ef02`. It changes no source, tests,
+docs, architecture, README or PR state.
+
+- [x] C24 plan-authoring
+- [ ] C24 planning-candidate-commit
+- [ ] C24 independent Plan-Reviewer receipt
+- [ ] C24 receipt-only commit
+- [ ] C24 independent dual-pair classification receipt
+- [ ] C24 classification-receipt-only commit
+- [ ] C24 Planner routing for exact classified pairs
+
+### C24 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C24 planning artifacts; do not prefill candidate SHA, receipt
+  verdict, classification outcome, reply or resolution.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write approved standard candidate-SHA-bound receipt, then
+  commit it unchanged alone.
+- [ ] **Actor: Independent Reviewer / Implementer.** Write and unchanged-sole-commit only
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-240c694fa5078dc1d35f154f7a85b06381db2e47-e5872d5dfb2018743b1f7e319551d52f25f5ef02.json`.
+  It has exactly eight top-level keys and exactly two pairs: `lfQl9`/`4091213935`, `lfQmF`/`4091213944`.
+- [ ] **Actor: Planner.** Route only exact committed `REPLY_AND_RESOLVE` entries. C23 resolved pairs remain frozen;
+  F/ACL/business/README remain Human-only open locks and `ld9Ai` is excluded, open and unclassified.

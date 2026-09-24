@@ -1083,3 +1083,40 @@ Reviewer`. Each entry has only `thread`, `comment`, `outcome`, `reply`, for exac
 `ADDRESS` and `HUMAN_CHECK` remain JSON `null`, returning to Planner/open respectively. F `jnBpk`/`4043480108`, ACL
 `kQ95O`/`4060023123`, business `kqiZ5`/`4070096561`, README `lAR8T`/`4078761998`, and `ld9Ai`/`4090688118` are
 excluded/open; the first four are Human-only locks.
+
+## C24 C23 Current-Head Dual-Pair Classification Successor (authoritative current routing)
+
+C24 supersedes C23 only for fresh classification of `PRRT_kwDOUJTij86lfQl9`/`4091213935` and
+`PRRT_kwDOUJTij86lfQmF`/`4091213944`. It consumes immutable C23 subject
+`240c694fa5078dc1d35f154f7a85b06381db2e47`, passing Tester evidence `dabce082058805281990c52b12352b87c2b46801`, approved
+Reviewer evidence `489752c727aa86cfaf49038cc2ed6dfddf33ba2d`, C23 classification provenance and current PR head
+`e5872d5dfb2018743b1f7e319551d52f25f5ef02`.
+
+| Field | Contract |
+| --- | --- |
+| Goal | Independently classify only the two new current-head pairs, with no product or PR authority change before an exact committed receipt. |
+| In-Scope | Exactly five planning artifacts; a standard candidate-SHA-bound Plan-Reviewer receipt; one fixed-subject/current-head-bound C24 classification receipt; later exact action only if classified `REPLY_AND_RESOLVE`. |
+| Out-Of-Scope / Non-Goal | Implementation, source, tests, dataflow, docs/architecture, README, PR authority, Human review, merge, release and post-merge. |
+| ReadOnly | Every unlisted path; C23 and predecessor evidence; C23 resolved pairs; F/ACL/business/README Human-only locks; `ld9Ai`; every thread except the two exact C24 entries. |
+| Written | Standard C24 Plan-Reviewer receipt, then one C24 classification receipt. |
+| Modified | Candidate: exactly the five planning artifacts. Classification: one new receipt only. |
+| Deleted | None. |
+
+### C24 immutable receipt contract
+
+Candidate planning pre-fills neither candidate SHA, review verdict, classification outcome, reply nor resolution. After a
+committed approved standard Plan-Reviewer receipt, Independent Reviewer alone writes
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-240c694fa5078dc1d35f154f7a85b06381db2e47-e5872d5dfb2018743b1f7e319551d52f25f5ef02.json`; Implementer alone commits it unchanged in a sole evidence-only commit.
+Its exact eight top-level keys are `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`, binding `1`,
+`loaded-runtime-cache`, the fixed C23 subject/Tester/Reviewer/head facts, exactly two entries and `Independent Reviewer`.
+Entries have exactly `thread`, `comment`, `outcome`, `reply` for only `lfQl9`/`4091213935` and `lfQmF`/`4091213944`.
+Reviewer independently selects `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; only exact committed
+`REPLY_AND_RESOLVE` with a non-empty factual reply permits the corresponding reply/resolve. `ADDRESS` and `HUMAN_CHECK`
+require JSON `null` and return to Planner/open state. Any binding, schema, writer, pair, enum, nullability or sole-commit
+defect fails closed.
+
+### C24 transition / handoff
+
+`planned` → C24 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → independent C24
+classification receipt-only commit → Planner routing. This never approves a PR, merge, release or post-merge.

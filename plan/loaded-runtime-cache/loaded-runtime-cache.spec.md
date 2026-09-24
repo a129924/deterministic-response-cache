@@ -444,3 +444,28 @@ README and `ld9Ai` remain open and excluded; no action changes them.
 3. Missing/incorrect SHA-bound candidate, receipt, RED/green evidence, review evidence or current-head classification
    path (including either required subject/head suffix); an extra pair; wrong writer; a non-sole evidence commit;
    invalid top-level/entry keys, outcome or nullability; or action on an excluded pair fails closed.
+
+## C24 Current-Head Dual-Pair Classification Scenarios
+
+### Scenario 37 — C23-bound immutable two-pair receipt
+
+Given C23 subject `240c694fa5078dc1d35f154f7a85b06381db2e47`, passing Tester evidence
+`dabce082058805281990c52b12352b87c2b46801`, approved Reviewer evidence
+`489752c727aa86cfaf49038cc2ed6dfddf33ba2d`, C23 classification provenance/current PR head
+`e5872d5dfb2018743b1f7e319551d52f25f5ef02`, and a committed approved C24 Plan-Reviewer receipt, then only
+Independent Reviewer may write the current-head-suffixed receipt and only Implementer may commit it unchanged alone.
+The receipt has exactly eight top-level keys and exactly two entries with only `thread`, `comment`, `outcome`, `reply` for
+`PRRT_kwDOUJTij86lfQl9`/`4091213935` and `PRRT_kwDOUJTij86lfQmF`/`4091213944`.
+
+### Scenario 38 — independent outcome and frozen exclusions
+
+Given the exact C24 pair set, Reviewer independently determines every outcome and reply; planning supplies neither.
+Only committed `REPLY_AND_RESOLVE` plus non-empty factual reply permits the matching Implementer reply/resolve.
+`ADDRESS`/`HUMAN_CHECK` require null reply and route to Planner/open state. C23 resolved pairs, F/ACL/business/README
+Human-only locks and `ld9Ai` are excluded, ReadOnly and untouched.
+
+## C24 Error / Edge Cases
+
+1. A path without the fixed subject/head suffix, an incorrect binding, missing/extra JSON key or pair, wrong writer,
+   non-sole commit, invalid enum/nullability, or stale classification fails closed and authorizes no action.
+2. Any action on a C23-resolved pair, Human-only lock, `ld9Ai`, or another unclassified thread is out of scope.
