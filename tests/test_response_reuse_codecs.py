@@ -77,7 +77,7 @@ def test_json_round_trip(value: dict[str, object] | list[object]) -> None:
 )
 def test_json_rejects_lossy_trees(value: object) -> None:
     """Neither key coercion nor nested Python type changes are cached."""
-    with pytest.raises(EncodeFailureError):
+    with pytest.raises(UnsupportedPayloadError):
         JsonResponseCodec().encode(ModelResponse(cast("dict[str, object] | list[object]", value)))
 
 
@@ -119,6 +119,24 @@ def test_dataframe_arrow_ipc_round_trip_keeps_metadata() -> None:
     decoded = PyArrowDataFrameCodec().decode(stored.payload)
 
     assert stored.codec_id is ResponseCodecId.DATAFRAME_V1
+    assert frame.equals(decoded.value)
+    assert frame.dtypes.equals(decoded.value.dtypes)
+    assert frame.index.equals(decoded.value.index)
+    assert decoded.value is not frame
+
+
+def test_empty_dataframe_arrow_ipc_round_trip() -> None:
+    """An empty frame retains its nullable dtype and named index."""
+    frame = pd.DataFrame(
+        {"count": pd.Series([], dtype="Int64")},
+        index=pd.Index([], name="row"),
+    )
+
+    stored = PyArrowDataFrameCodec().encode(ModelResponse(frame))
+    decoded = PyArrowDataFrameCodec().decode(stored.payload)
+
+    assert stored.codec_id is ResponseCodecId.DATAFRAME_V1
+    assert decoded.value.empty
     assert frame.equals(decoded.value)
     assert frame.dtypes.equals(decoded.value.dtypes)
     assert frame.index.equals(decoded.value.index)

@@ -11,6 +11,7 @@ from deterministic_response_cache.response_reuse.codecs.contract import (
     EncodeFailureError,
     InvalidPayloadError,
     ResponseCodec,
+    UnsupportedPayloadError,
 )
 from deterministic_response_cache.response_reuse.model_response import ModelResponse
 from deterministic_response_cache.response_reuse.stored_response import (
@@ -54,7 +55,7 @@ class JsonResponseCodec(ResponseCodec[JsonPayload]):
         except RecursionError as exc:
             raise EncodeFailureError from exc
         if type(response.value) not in (dict, list) or not valid:
-            raise EncodeFailureError
+            raise UnsupportedPayloadError
         try:
             payload = json.dumps(
                 response.value,

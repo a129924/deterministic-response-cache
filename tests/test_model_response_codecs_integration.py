@@ -2,6 +2,7 @@
 
 """Response Reuse end-to-end codec and Store behavior."""
 
+import json
 import os
 import subprocess
 import sys
@@ -12,6 +13,7 @@ import pandas as pd  # pyright: ignore[reportMissingTypeStubs]
 import pytest
 
 from deterministic_response_cache.response_reuse._cache_store import NotFound
+from deterministic_response_cache.response_reuse.codecs.contract import CodecUnavailableError
 from deterministic_response_cache.response_reuse.codecs.pyarrow_dataframe import (
     PyArrowDataFrameCodec,
 )
@@ -129,6 +131,77 @@ def test_unsupported_payload_retains_original_response_without_store_write() -> 
     assert protocol.lookup(identity) == Miss()
 
 
+@pytest.mark.parametrize(
+    "value",
+    [
+        {1: "non-string key"},
+        {"nonfinite": float("nan")},
+        {"tuple": (1, 2)},
+        {"object": object()},
+        {"nested": [{"tuple": (1, 2)}]},
+        [float("inf")],
+    ],
+)
+def test_unsupported_json_tree_has_protocol_reason_and_no_store_write(value: object) -> None:
+    """Known lossy JSON trees retain the caller response as unsupported."""
+    identity = object()
+    store = InMemoryCacheStore[object, StoredResponse]()
+    protocol = ResponseReuseProtocol(store, eligibility_policy=AllowPolicy())
+    response = ModelResponse(value)
+
+    outcome = protocol.record(identity, response)
+
+    assert isinstance(outcome, NotCached)
+    assert outcome.reason is NotCachedReason.UNSUPPORTED_PAYLOAD
+    assert outcome.response is response
+    assert store.read(identity) == NotFound()
+
+
+def test_json_serializer_failure_has_distinct_record_reason(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A serializer error remains an encode failure without a Store write."""
+    identity = object()
+    store = InMemoryCacheStore[object, StoredResponse]()
+    protocol = ResponseReuseProtocol(store, eligibility_policy=AllowPolicy())
+    response = ModelResponse({"answer": 1})
+
+    def failing_dumps(*args: object, **kwargs: object) -> str:
+        del args, kwargs
+        raise TypeError
+
+    monkeypatch.setattr(json, "dumps", failing_dumps)
+    outcome = protocol.record(identity, response)
+
+    assert isinstance(outcome, NotCached)
+    assert outcome.reason is NotCachedReason.ENCODE_FAILURE
+    assert outcome.response is response
+    assert store.read(identity) == NotFound()
+
+
+def test_dataframe_codec_unavailable_on_record(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A selected unavailable optional codec retains the original frame."""
+    identity = object()
+    store = InMemoryCacheStore[object, StoredResponse]()
+    protocol = ResponseReuseProtocol(store, eligibility_policy=AllowPolicy())
+    response = ModelResponse(pd.DataFrame({"count": [1]}))
+
+    def unavailable_encode(
+        self: PyArrowDataFrameCodec,
+        response: ModelResponse[pd.DataFrame],
+    ) -> StoredResponse:
+        del self, response
+        raise CodecUnavailableError
+
+    monkeypatch.setattr(PyArrowDataFrameCodec, "encode", unavailable_encode)
+    outcome = protocol.record(identity, response)
+
+    assert isinstance(outcome, NotCached)
+    assert outcome.reason is NotCachedReason.CODEC_UNAVAILABLE
+    assert outcome.response is response
+    assert store.read(identity) == NotFound()
+
+
 def test_invalid_envelope_and_unknown_codec_are_unavailable() -> None:
     """Lookup never treats a damaged entry as absence."""
     identity = object()
@@ -138,6 +211,18 @@ def test_invalid_envelope_and_unknown_codec_are_unavailable() -> None:
     assert protocol.lookup(identity) == Unavailable(UnavailableReason.INVALID_PAYLOAD)
     store.write(identity, StoredResponse(cast("ResponseCodecId", "alien/v1"), b"{}"))
     assert protocol.lookup(identity) == Unavailable(UnavailableReason.UNKNOWN_CODEC)
+
+
+def test_foreign_malformed_envelope_is_unavailable() -> None:
+    """A foreign Store entry with invalid shape or bytes fails closed."""
+    identity = object()
+    store = InMemoryCacheStore[object, StoredResponse]()
+    protocol = ResponseReuseProtocol(store, eligibility_policy=AllowPolicy())
+
+    store.write(identity, StoredResponse(ResponseCodecId.JSON_V1, cast("bytes", "{}")))
+    assert protocol.lookup(identity) == Unavailable(UnavailableReason.INVALID_PAYLOAD)
+    store.write(identity, cast("StoredResponse", object()))
+    assert protocol.lookup(identity) == Unavailable(UnavailableReason.INVALID_PAYLOAD)
 
 
 def test_eligibility_denial_remains_miss() -> None:
