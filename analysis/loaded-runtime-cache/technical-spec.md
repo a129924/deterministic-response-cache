@@ -383,3 +383,51 @@ that outcome requires `reply: null`, is exclusive to `lAR8Y`, and authorizes no 
 selects one general outcome. `REPLY_AND_RESOLVE` requires a non-empty factual reply; every other outcome requires
 `null`. The four pre-existing Human-only pairs are excluded and remain untouched/open. Any malformed, extra, stale,
 non-sole, cross-subject, wrong-head, wrong-pair, invalid-enum or invalid-nullability record fails closed.
+
+## C20 C19 ADDRESS remediation execution contract
+
+C20 is the only bounded successor for C19 `ADDRESS` pairs `lCkFu`/`4079664575` and `lDH2-`/`4079885261`. Its
+candidate is exactly the five planning artifacts. A standard immutable
+`loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` approved receipt must be written by
+Independent Plan-Reviewer and unchanged-sole-committed by Implementer before any C20 implementation subject.
+
+The RED subject modifies only `tests/test_loaded_runtime_cache_bc_independence.py`, collects successfully, and makes
+two newly introduced assertions fail: (1) a temporary Loaded Runtime Cache source containing
+`from deterministic_response_cache.identity.contracts import ModelIdentity as LocalModelIdentity` is rejected as a
+foreign semantic-type alias, and (2) the topic dataflow contract contains a distinct
+`RuntimeRegistryLookupUnavailable` expected-failure signal rather than treating it as the `RuntimeT | None` lookup
+union. RED Tester evidence is factual, SHA-bound and `failing`; it is not Reviewer evidence.
+
+The distinct green subject may modify only that test and these exact topic dataflow outputs:
+
+1. `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json`
+2. `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html`
+3. `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.validation.json`
+4. `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.delivery.json`
+5. `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.json`
+6. `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.html`
+7. `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.dark.png`
+8. `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.1440x900.light.png`
+9. `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.dark.png`
+10. `docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.visual-check.2048x1320.light.png`
+
+The JSON must retain the normal lookup contract `RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None`
+and add a distinct expected-failure signal labelled `RuntimeRegistryLookupUnavailable`; no flow, node, label or card
+may connect/translate that signal to `Available`、`Missing`、`Unavailable` or any mapper. The scanner check is AST-only
+and only forbids an `ImportFrom` from the Identity BC that imports `ModelIdentity`, including an `as` local alias; it
+does not execute a fixture, use `importlib`/`__import__`/`sys.modules`, or redefine Identity semantics.
+
+All generated artifacts must be byte-truthful command outputs: `archify validate dataflow … --quality showcase --json`
+must report 9/9, 0 composition errors and 0 warnings; only then may `deliver` run, followed by non-skipped
+`visual-check … --repo-root <repository-root> --json` that records 1440×900, 1600×1000, 1920×1080 and 2048×1320.
+Unchanged listed output remains ReadOnly; hand editing receipts or sidecars is forbidden.
+
+After a same-subject passing Tester evidence commit, approved independent Reviewer evidence commit, and Planner
+Phase 4.5 alignment, Independent Reviewer alone may write the immutable
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c20-green-subject-40-hex-sha>.json`.
+It has exactly eight top-level keys: `schema_version`, `topic`, `implementation_subject_commit`,
+`tester_evidence_commit`, `implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, and
+`recorded_by`; it binds C20's actual full SHA facts and has exactly two entries, each with only `thread`, `comment`,
+`outcome`, `reply`, for `lCkFu`/`4079664575` and `lDH2-`/`4079885261`. Independent Reviewer alone chooses
+`REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; only the first has a non-empty factual reply. Implementer alone may
+unchanged-sole-commit the receipt. No outcome, reply, PR head, subject or evidence SHA is prefilled by C20 planning.

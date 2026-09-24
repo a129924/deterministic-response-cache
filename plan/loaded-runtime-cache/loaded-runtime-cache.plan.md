@@ -875,3 +875,51 @@ fails closed.
 `planned` → C19 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → independent C19
 classification receipt-only commit → Planner classification routing. The receipt alone may route exact
 `REPLY_AND_RESOLVE` entries to Implementer; it never approves PR, merge, release or post-merge.
+
+## C20 C19 ADDRESS Remediation Successor (authoritative current routing)
+
+C20 supersedes C19 only for remediation of its two `ADDRESS` entries. It preserves the Loaded Runtime Cache mission,
+protocol-first boundary and all prior evidence as frozen provenance.
+
+| Field | Contract |
+| --- | --- |
+| Goal | Resolve the two C19 findings without changing identity ownership, runtime lifecycle, public API, or PR authority. |
+| In-Scope | A foreign `ModelIdentity` `ImportFrom`-alias static scanner regression; distinct expected lookup-failure signal in the topic dataflow; C20 candidate/receipt/RED/green/Tester/Reviewer/one two-pair classification chain. |
+| Out-Of-Scope | Mapper, source protocol change, concrete registry/backend, lifecycle, Identity BC change, new semantic type, README, root export, merge, release, post-merge and Human review. |
+| ReadOnly | Every unlisted path, all prior C17–C19 records, all production source, README/public surfaces, architecture index, threads outside C20's two pairs, and all existing Human-only locks. |
+| Written | Standard C20 Plan-Reviewer receipt; red Tester evidence; green Tester evidence; green independent Reviewer evidence; one C20 classification receipt. |
+| Modified | Candidate: exactly five planning artifacts. RED: exactly `tests/test_loaded_runtime_cache_bc_independence.py`. Green: that test plus only byte-truthfully changed members of the ten named dataflow outputs. |
+| Deleted | None. |
+
+### C20 locked implementation contract
+
+`PRRT_kwDOUJTij86lCkFu` / `4079664575` is resolved only by presenting
+`RuntimeRegistryLookupUnavailable` as a separate expected Registry lookup-failure signal alongside—not inside or
+translated from—the normal `RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None` contract. No mapper to
+`Available`、`Missing`、`Unavailable` or another outcome is permitted.
+
+`PRRT_kwDOUJTij86lDH2-` / `4079885261` is resolved only by a pure-AST test/scanner regression that rejects the
+foreign semantic `ImportFrom` shape `from deterministic_response_cache.identity.contracts import ModelIdentity as
+LocalModelIdentity`. The check must treat the imported symbol's source semantic name as authoritative even when a
+local alias changes its binding name. It must not evaluate source, dynamically import, inspect module state, or expand
+the rule to unrelated imports.
+
+The exact dataflow allowlist is the ten paths named in the C20 technical specification. Their JSON/HTML/receipt/image
+bytes must arise from validate → deliver → visual-check in order. `validate` must be showcase 9/9 with zero errors and
+warnings; visual-check must be non-skipped and cover all four desktop viewports. Exact output may be included only
+when changed by the corresponding command; otherwise it stays ReadOnly.
+
+### C20 evidence and classification contract
+
+The route is: five-artifact candidate-only commit → independent approved standard Plan-Reviewer receipt-only commit
+→ test-only collection-success/assertion-failing RED subject → factual failing Tester evidence-only commit → distinct
+green subject → factual passing Tester evidence-only commit → approved independent Reviewer evidence-only commit →
+Planner Phase 4.5 → independent C20 classification receipt-only commit. C20 candidate planning pre-fills none of the
+candidate SHA, verdicts, subject SHA, evidence result, PR head, classification outcome, reply or resolution.
+
+The final receipt path is
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c20-green-subject-40-hex-sha>.json`.
+Independent Reviewer is its only writer; Implementer is its only committer, unchanged and alone. It has the exact
+eight top-level keys and exact two entries specified in the technical specification. `REPLY_AND_RESOLVE` is the only
+actionable outcome and requires an exact non-empty factual reply; `ADDRESS` and `HUMAN_CHECK` use `null`, return to
+Planner or remain open, respectively. No other thread is authorized by C20.

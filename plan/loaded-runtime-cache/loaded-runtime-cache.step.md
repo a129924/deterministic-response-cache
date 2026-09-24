@@ -350,3 +350,41 @@ C19 supersedes C18 only for fresh current-head classification. It binds C17 subj
 - [ ] **Actor: Planner.** Route only exact committed `REPLY_AND_RESOLVE` entries. For `lAR8Y`, an
   `ALREADY_RESOLVED`/`null` entry is valid only when current GitHub state was independently verified; it never
   authorizes action. Do not act on F, ACL, business or README Human-only locks.
+
+## C20 C19 ADDRESS Remediation Successor Stages (authoritative)
+
+C20 supersedes C19 only for `lCkFu`/`4079664575` and `lDH2-`/`4079885261`. It does not prefill a candidate SHA,
+verdict, subject, test result, PR head, classification outcome, reply or resolution. All locks and every unlisted path
+are ReadOnly.
+
+- [x] C20 plan-authoring
+- [ ] C20 planning-candidate-commit
+- [ ] C20 independent Plan-Reviewer receipt
+- [ ] C20 receipt-only commit
+- [ ] C20 test-only RED subject
+- [ ] C20 failing Tester evidence-only commit
+- [ ] C20 green subject plus truthful dataflow outputs
+- [ ] C20 passing Tester evidence-only commit
+- [ ] C20 approved independent Reviewer evidence-only commit
+- [ ] C20 Planner Phase 4.5 alignment
+- [ ] C20 independent two-pair classification receipt
+- [ ] C20 classification-receipt-only commit
+- [ ] C20 Planner routing for exact classified pairs
+
+### C20 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C20 planning artifacts, then only an unchanged standard
+  candidate-SHA-bound approved Plan-Reviewer receipt in its sole receipt-only commit.
+- [ ] **Actor: Implementer / Tester.** Make a test-only RED subject in
+  `tests/test_loaded_runtime_cache_bc_independence.py` that collects and fails for the separate expected-failure
+  dataflow signal and `ModelIdentity as LocalModelIdentity` foreign `ImportFrom` alias; Tester writes factual failing
+  evidence and Implementer commits only that evidence unchanged.
+- [ ] **Actor: Implementer / Tester / Independent Reviewer.** Make a distinct green subject in that test and only
+  byte-truthfully changed paths in the ten-path C20 dataflow allowlist; validate → deliver → non-skipped visual-check
+  must pass (including 1440×900, 1600×1000, 1920×1080, 2048×1320). Tester then records passing evidence; Independent
+  Reviewer may review only that committed passing evidence; each evidence is committed by Implementer unchanged and
+  alone.
+- [ ] **Actor: Independent Reviewer / Implementer.** After Phase 4.5, write then unchanged-sole-commit only the
+  C20 green-subject-SHA-bound classification receipt. It has exactly two pairs: `lCkFu`/`4079664575` and
+  `lDH2-`/`4079885261`; it preselects neither outcome nor reply. Only its exact committed
+  `REPLY_AND_RESOLVE` entry can later authorize the corresponding reply and resolve action.

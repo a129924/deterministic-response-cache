@@ -310,3 +310,37 @@ architecture and README Human-only locks are excluded and remain open.
    keys/five pair set, or mismatches C17 subject/T17/V17/current head fails closed.
 2. `ALREADY_RESOLVED` on any pair except `lAR8Y`, without current-state verification, or with a non-null reply fails
    closed. It never authorizes comment or resolution.
+
+## C20 ADDRESS Remediation Scenarios
+
+### Scenario 27 — separate expected lookup failure in the dataflow
+
+Given C20's approved planning receipt and a test-only RED subject, when the topic dataflow has no separate
+`RuntimeRegistryLookupUnavailable` signal, then the new assertion fails while collection succeeds. Given the green
+subject and regenerated topic outputs, when the dataflow is inspected, then
+`RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None` remains the normal lookup return and
+`RuntimeRegistryLookupUnavailable` is a distinct expected-failure signal; no mapper or signal-to-outcome flow exists.
+
+### Scenario 28 — foreign semantic ImportFrom local alias
+
+Given a temporary Loaded Runtime Cache source that says
+`from deterministic_response_cache.identity.contracts import ModelIdentity as LocalModelIdentity`, when C20 RED is
+executed, then the scanner assertion fails because that import shape is not yet rejected. Given the distinct C20 green
+subject, then the scanner rejects the foreign semantic import despite the local alias, without execution, dynamic
+imports, module-cache access, or a rule that rejects unrelated `ImportFrom` names.
+
+### Scenario 29 — exact evidence and two-pair classification boundary
+
+Given the green subject, when Archify validate, deliver and visual-check succeed in order, then only byte-truthful
+members of the exact ten C20 dataflow paths accompany the test change. After same-subject passing Tester evidence,
+approved independent Reviewer evidence and Phase 4.5, only an immutable C20 classification receipt may classify
+`lCkFu`/`4079664575` and `lDH2-`/`4079885261`; planning does not preselect either outcome or reply.
+
+## C20 Error / Edge Cases
+
+1. Treating `RuntimeRegistryLookupUnavailable` as `RuntimeT | None`, or adding any mapper between the signal and a
+   lookup outcome, is scope/contract drift and fails closed.
+2. A scanner that executes fixture source, uses `importlib`、`__import__` or `sys.modules`, misses the `as` alias, or
+   rejects an unrelated foreign import is invalid.
+3. An unlisted dataflow artifact, non-zero/skip/warning/error Archify result, hand-edited receipt, missing exact
+   viewport, or uncommitted/non-sole/mismatched evidence fails closed and authorizes no PR action.

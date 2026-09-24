@@ -292,3 +292,34 @@ receipt/evidence、source、tests、docs、Archify、README、PR 或 thread stat
   `REPLY_AND_RESOLVE` entry 可授權 Implementer 留下該 exact factual reply 並 resolve 該 exact thread；
   `ADDRESS` 返回 Planner，`HUMAN_CHECK` 保持 open。任何錯誤 writer、path、schema、SHA、ancestor、sole-commit、
   pair set、enum 或 nullability 一律 fail closed。
+
+## C20 C19 ADDRESS remediation successor
+
+Human 已授權 C20，且它是 C19 兩個 `ADDRESS` pair 的唯一 remediation successor：
+`PRRT_kwDOUJTij86lCkFu`/`4079664575` 與 `PRRT_kwDOUJTij86lDH2-`/`4079885261`。它不重寫 C17–C19 的
+candidate、receipt、subject 或 classification，也不將任一舊 receipt 當成 C20 routing authority。
+
+- `lCkFu` 僅要求 topic-owned dataflow 明確表達 `RuntimeRegistryLookupUnavailable` 是 Registry expected
+  lookup failure signal；它必須與 `RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None` 的正常
+  union return 分開呈現，且不得描繪、實作或暗示 signal-to-`Unavailable`、`Missing` 或其他 outcome 的 mapper。
+- `lDH2-` 僅要求 BC-independence scanner 對
+  `from deterministic_response_cache.identity.contracts import ModelIdentity as <local-name>` 這種 foreign
+  semantic-type `ImportFrom` local alias 做純 AST 靜態拒絕。它不得執行來源、dynamic import、讀取 runtime module，
+  或將此規則擴張到非 `ModelIdentity`／非 Identity BC 的一般 import。
+- C20 candidate 只可修改本 requirements、`technical-spec.md`、topic plan、topic spec 與 step tracker；不得
+  預填 candidate SHA、Plan-Reviewer verdict、RED/green subject、Tester/Reviewer 結果、classification outcome、
+  reply 或 resolution。它必須先有新的 candidate-SHA-bound approved Plan-Reviewer receipt。
+- RED subject 只可修改 `tests/test_loaded_runtime_cache_bc_independence.py`，必須 collect 成功並以兩個新 contract
+  assertions 實際失敗：foreign `ImportFrom` semantic alias 被拒絕，及 dataflow 有獨立 expected failure signal。
+  Tester 寫同 subject、factual `failing` evidence；其後才可建立 distinct green subject。
+- green subject 只可修改同一 test 與 C20 technical specification 列出的 exact ten dataflow outputs；僅有
+  byte-truthfully changed outputs 才可納入。
+  必須先 validate（showcase 9/9、0 errors、0 warnings），再 deliver，最後 non-skipped visual-check（1440×900、
+  1600×1000、1920×1080、2048×1320）；任一 non-zero、warning/error、skipped 或 hand-edited evidence 都 fail closed。
+- green passing Tester evidence、approved independent Reviewer evidence 與 Planner Phase 4.5 後，才可建立 C20
+  current-head classification receipt。該 receipt 只含上述兩個 exact pairs；Independent Reviewer 決定
+  `REPLY_AND_RESOLVE`、`ADDRESS` 或 `HUMAN_CHECK`，candidate 不得預填 outcome/reply。只有 committed exact
+  `REPLY_AND_RESOLVE` 才可讓 Implementer 對該 pair 留 factual reply 並 resolve。
+- 所有未列路徑、所有既有 candidate/receipt/evidence、source/public API、README、architecture index、其他 dataflow
+  artifacts、所有其他 PR threads 與全部既有 Human-only locks 都是 ReadOnly。C20 不授權 merge、release、post-merge 或
+  Human review。
