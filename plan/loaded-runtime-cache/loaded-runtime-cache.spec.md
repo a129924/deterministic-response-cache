@@ -400,3 +400,47 @@ return to Planner or remain open respectively. F, ACL, business architecture, RE
    fails closed and authorizes no PR action.
 2. A non-null `ADDRESS`/`HUMAN_CHECK` reply, empty `REPLY_AND_RESOLVE` reply, wrong writer, or any attempt to act on
    a Human-only or otherwise excluded thread fails closed.
+
+## C23 ADDRESS Remediation Scenarios
+
+### Scenario 34 — dataflow protocol fidelity
+
+Given the C22 `ldeVI` ADDRESS result recorded in classification receipt commit
+`a9065a8332119930347214f07f2980d655d8d314`, bound to C20 subject
+`fa1468301af1906a05ee31ba0d267d2270d7af5f`, passing Tester evidence
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`, approved Reviewer evidence
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`, and C22 PR head
+`0991c56ec7e562ea512449bda1a41118dbc48203`, when C23 RED/green evidence is produced, then the dataflow retains exactly
+`RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None` and only
+`RuntimeRegistry -> RuntimeRegistryLookupUnavailable` as the expected-failure edge. It never connects lookup to
+`Available`, `Missing`, `Unavailable` or a mapper, and never claims a concrete backend, DI, lifecycle, execution,
+provider or ACL.
+
+### Scenario 35 — NamedExpr alias is statically rejected
+
+Given `(load := importlib.import_module)(...)`, when the BC-independence AST scanner collects aliases, then it detects
+the simple-name walrus binding without executing a fixture, dynamic import or runtime module. Given
+`load = holder.loader = importlib.import_module`, it retains only `load` and ignores `holder.loader`.
+
+### Scenario 36 — evidence and only eventual exact PR action
+
+Given a committed approved C23 Plan-Reviewer receipt, C23 RED failing Tester evidence, distinct green passing Tester
+evidence and approved independent green review evidence, when Planner verifies the actual current head, then only
+Independent Reviewer may create the SHA-bound two-pair classification receipt at
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c23-green-subject-40-hex-sha>-<current-pr-head-40-hex-sha>.json`.
+Its exact top-level keys are `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; its entries have only
+`thread`, `comment`, `outcome`, `reply` for `ldeVI`/`4090495760` and `ldeVO`/`4090495770`, and outcome is only
+`REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`. Only an exact committed `REPLY_AND_RESOLVE` classification with non-empty
+factual reply permits the corresponding reply/resolve; `ADDRESS` and `HUMAN_CHECK` use JSON `null`. F, ACL, business,
+README and `ld9Ai` remain open and excluded; no action changes them.
+
+## C23 Error / Edge Cases
+
+1. Any recursive NamedExpr target parsing, fixture execution, dynamic import or runtime-module inspection fails
+   closed, as does any change that alters the existing mixed-assignment semantics.
+2. A dataflow connection from `RuntimeRegistry.lookup` to outcome/mapper nodes, or any non-signal expected-failure
+   edge, is out of scope and fails review.
+3. Missing/incorrect SHA-bound candidate, receipt, RED/green evidence, review evidence or current-head classification
+   path (including either required subject/head suffix); an extra pair; wrong writer; a non-sole evidence commit;
+   invalid top-level/entry keys, outcome or nullability; or action on an excluded pair fails closed.

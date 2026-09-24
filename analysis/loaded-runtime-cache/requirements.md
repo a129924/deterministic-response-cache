@@ -387,3 +387,51 @@ Archify、README、PR 或 thread state。
   C22 pair set 中，保持 open、不得 reply 或 resolve。新 `PRRT_kwDOUJTij86ld9Ai` 亦明確排除於 C22 receipt，保持
   open、未分類且不得 action。所有其他 threads 與未列路徑維持 ReadOnly。任何錯誤 writer、path、schema、SHA、ancestor、
   sole-commit、pair set、enum 或 nullability 一律 fail closed。
+
+## C23 bounded ADDRESS remediation successor
+
+C23 是 C22 對 `PRRT_kwDOUJTij86ldeVI`/`4090495760` 與
+`PRRT_kwDOUJTij86ldeVO`/`4090495770` 的 ADDRESS 結果之唯一 bounded remediation successor。它保留既有 mission、
+protocol-first boundary，且只能消費 committed C22 classification receipt
+`a9065a8332119930347214f07f2980d655d8d314` 的
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-0991c56ec7e562ea512449bda1a41118dbc48203.json`。
+該 receipt 固定綁定 C20 subject `fa1468301af1906a05ee31ba0d267d2270d7af5f`、passing Tester evidence
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`、approved Reviewer evidence
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e` 與 C22 PR head
+`0991c56ec7e562ea512449bda1a41118dbc48203`；不改寫任何 predecessor candidate、receipt 或 evidence，亦不將 chat、branch
+或工作樹狀態視為 routing authority。
+
+- Dataflow 修正只可使圖忠實保留
+  `RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None`，以及唯一的 expected-failure edge
+  `RuntimeRegistry → RuntimeRegistryLookupUnavailable`。不得把 Registry lookup 連到
+  `Available`、`Missing`、`Unavailable` 或 mapper，也不得暗示 concrete backend、DI、runtime lifecycle、Model
+  Execution、Provider Adapter 或 ACL implementation。
+- BC-independence AST scanner 修正只可偵測
+  `(load := importlib.import_module)(...)` 的 walrus alias bypass。scanner 僅解析 `ast.NamedExpr` 的直接 simple-name
+  `target` 與其 `value`；它不得遞迴拆解、執行 fixture、執行 dynamic import 或 import runtime module。既有 mixed-assignment
+  規則維持：`load = holder.loader = importlib.import_module` 保留 simple-name `load`、忽略 attribute target
+  `holder.loader`。
+- C23 candidate 只可修改本 requirements、`technical-spec.md`、topic plan、topic spec 與 step tracker，且不得預填
+  candidate SHA、Plan-Reviewer verdict、RED/green subject SHA、Tester/Reviewer outcome、current head、classification
+  outcome、reply 或 resolution。candidate committed 後，Independent Plan-Reviewer 必須在標準
+  `loaded-runtime-cache.plan-review-receipt-<candidate-40-hex-sha>.json` 寫 fresh approved receipt；僅 Implementer 可
+  原樣以 sole receipt-only commit 提交。
+- approved receipt 後，Implementer 必須先建立 collection-success/assertion-failing RED subject，再由 Tester 寫同 subject
+  SHA-bound factual `failing` evidence，並由 Implementer 原樣 sole evidence-only commit。只有該 committed failing evidence
+  可路由 distinct green subject。green subject 只可修改 BC scanner test 與 dataflow JSON/HTML 及其真實變更的既有
+  validation/delivery/visual-check evidence；Tester 必須寫 same-green-subject `passing` evidence，Implementer 單獨提交；
+  Independent Reviewer 只可消費該 committed passing evidence 並寫 approved/needs-rework review record，再由 Implementer
+  單獨提交。任何 evidence 的 schema、writer、path、SHA、subject、sole-commit 或 status 不符皆 fail closed。
+- 僅在 Planner 確認 C23 approved green chain 與 actual current PR head 後，Independent Reviewer 可在唯一 immutable path
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c23-green-subject-40-hex-sha>-<current-pr-head-40-hex-sha>.json`
+  寫 future classification receipt；只有 Implementer 可原樣以 sole evidence-only commit 提交。其 JSON object top-level keys
+  恰為 `schema_version`、`topic`、`implementation_subject_commit`、`tester_evidence_commit`、
+  `implementation_review_evidence_commit`、`pr_head_commit`、`classifications`、`recorded_by`：值分別綁定 integer `1`、
+  `loaded-runtime-cache`、C23 green subject、該 green subject 的 passing Tester/review evidence commits、actual current PR
+  head、exactly two classifications 與 `Independent Reviewer`。每個 classification entry 的 keys 恰為 `thread`、`comment`、
+  `outcome`、`reply`，且 pair set 僅為 `ldeVI`/`4090495760` 與 `ldeVO`/`4090495770`；outcome 僅可為
+  `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`。只有 `REPLY_AND_RESOLVE` 可有 non-empty factual reply 並授權 Implementer 對該
+  exact thread reply/resolve；`ADDRESS` 與 `HUMAN_CHECK` 必為 JSON `null`，分別回到 Planner／保持 open。
+- F `PRRT_kwDOUJTij86jnBpk`/`4043480108`、ACL `PRRT_kwDOUJTij86kQ95O`/`4060023123`、business
+  `PRRT_kwDOUJTij86kqiZ5`/`4070096561`、README `PRRT_kwDOUJTij86lAR8T`/`4078761998` 與
+  `PRRT_kwDOUJTij86ld9Ai`/`4090688118` 是 C23 ReadOnly/open/unclassified boundary；前四者是 Human-only locks。

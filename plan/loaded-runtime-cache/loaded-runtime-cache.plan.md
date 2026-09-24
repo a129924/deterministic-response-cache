@@ -1029,3 +1029,57 @@ enum or nullability defect fails closed.
 `planned` → C22 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → independent C22
 classification receipt-only commit → Planner classification routing. This receipt may route only its exact committed
 `REPLY_AND_RESOLVE` entries to Implementer; it never approves PR, merge, release or post-merge.
+
+## C23 C22 ADDRESS Remediation Successor (authoritative current routing)
+
+C23 is the sole bounded successor for C22 ADDRESS pairs `PRRT_kwDOUJTij86ldeVI`/`4090495760` and
+`PRRT_kwDOUJTij86ldeVO`/`4090495770`. It consumes only C22 classification receipt commit
+`a9065a8332119930347214f07f2980d655d8d314` at
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-0991c56ec7e562ea512449bda1a41118dbc48203.json`,
+bound to C20 subject `fa1468301af1906a05ee31ba0d267d2270d7af5f`, passing Tester evidence
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`, approved Reviewer evidence
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`, and C22 PR head `0991c56ec7e562ea512449bda1a41118dbc48203`.
+It preserves all prior immutable facts and cannot treat C22 planning, chat, branch or worktree state as a substitute
+for its own committed evidence chain.
+
+| Field | Contract |
+| --- | --- |
+| Goal | Correct only the two independently classified defects, then independently classify only those same two current-head pairs. |
+| In-Scope | Five C23 planning artifacts; standard Plan-Reviewer receipt; RED/failing Tester; distinct green/passing Tester; independent green review; current-head two-pair classification; eventual exact reply/resolve only for committed `REPLY_AND_RESOLVE`. |
+| Out-Of-Scope / Non-Goal | Production behavior beyond scanner/dataflow correction; mapper; outcome conversion; concrete backend; DI; runtime lifecycle; Model Execution; Provider Adapter; ACL; merge, release and post-merge. |
+| ReadOnly | Every unlisted path and predecessor artifact; the four Human-only pairs F/ACL/business/README; `ld9Ai`/`4090688118`; every thread except the two C23 entries. |
+| Written | Candidate planning artifacts; one standard Plan-Reviewer receipt; SHA-bound RED/green Tester evidence; green independent review evidence; one green-subject/current-head classification receipt. |
+| Modified | RED: scanner test only. Green: scanner test plus dataflow JSON/HTML and only byte-truthfully changed pre-existing validation/delivery/visual-check evidence. |
+| Deleted | None. |
+
+### C23 locked remediation contract
+
+The dataflow contract remains `RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None`; the sole permitted
+expected-failure relationship is `RuntimeRegistry -> RuntimeRegistryLookupUnavailable`. There is no lookup edge to
+`Available`, `Missing`, `Unavailable` or any mapper. The graph remains protocol-only and cannot imply a concrete
+backend, DI, lifecycle, execution, provider or ACL.
+
+The static scanner must reject `(load := importlib.import_module)(...)`. It parses only `ast.NamedExpr` direct
+simple-name target/value; it must neither recurse through targets nor execute a fixture/dynamic import. Existing
+mixed-assignment semantics are locked: `load = holder.loader = importlib.import_module` retains `load` and ignores
+the attribute target.
+
+Candidate → independent approved Plan-Reviewer receipt → receipt-only commit → collection-success/assertion-failing
+RED → factual failing Tester evidence-only commit → distinct green → factual passing Tester evidence-only commit →
+independent approved/needs-rework green review evidence-only commit is mandatory. Every candidate/evidence path is
+fresh, SHA-bound and immutable; only its prescribed writer may write it and only Implementer may make its unchanged
+sole commit. Any missing, stale, malformed, cross-subject or non-sole record fails closed.
+
+After Planner verifies an approved green chain and actual current PR head, Independent Reviewer alone may write the
+eight-key immutable classification receipt only at
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c23-green-subject-40-hex-sha>-<current-pr-head-40-hex-sha>.json`;
+Implementer alone may unchanged-sole-commit it. Its top-level keys are exactly `schema_version`, `topic`,
+`implementation_subject_commit`, `tester_evidence_commit`, `implementation_review_evidence_commit`,
+`pr_head_commit`, `classifications`, `recorded_by`, binding integer `1`, `loaded-runtime-cache`, the C23 green
+subject, its passing Tester/review evidence commits, actual current PR head, exactly two entries, and `Independent
+Reviewer`. Each entry has only `thread`, `comment`, `outcome`, `reply`, for exactly `ldeVI`/`4090495760` and
+`ldeVO`/`4090495770`; `outcome` is only `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`. Only committed
+`REPLY_AND_RESOLVE` with a non-empty factual reply permits Implementer to reply and resolve that exact pair;
+`ADDRESS` and `HUMAN_CHECK` remain JSON `null`, returning to Planner/open respectively. F `jnBpk`/`4043480108`, ACL
+`kQ95O`/`4060023123`, business `kqiZ5`/`4070096561`, README `lAR8T`/`4078761998`, and `ld9Ai`/`4090688118` are
+excluded/open; the first four are Human-only locks.

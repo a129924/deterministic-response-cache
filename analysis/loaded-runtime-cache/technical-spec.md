@@ -489,3 +489,47 @@ F `PRRT_kwDOUJTij86jnBpk`/`4043480108`, ACL `PRRT_kwDOUJTij86kQ95O`/`4060023123`
 `PRRT_kwDOUJTij86ld9Ai` are excluded from C22 and remain open; the four former pairs are Human-only locks. Any
 malformed, extra, stale, non-sole, cross-subject, wrong-head, wrong-pair, invalid-enum or invalid-nullability record
 fails closed.
+
+## C23 bounded ADDRESS remediation contract
+
+C23 remediates only C22 ADDRESS pairs `PRRT_kwDOUJTij86ldeVI`/`4090495760` and
+`PRRT_kwDOUJTij86ldeVO`/`4090495770`. It consumes only committed C22 classification receipt
+`a9065a8332119930347214f07f2980d655d8d314` at
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-0991c56ec7e562ea512449bda1a41118dbc48203.json`,
+which binds C20 subject `fa1468301af1906a05ee31ba0d267d2270d7af5f`, passing Tester evidence
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`, approved Reviewer evidence
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`, and C22 PR head `0991c56ec7e562ea512449bda1a41118dbc48203`.
+The candidate is exactly the five planning artifacts and creates no source, test, dataflow, receipt, evidence, PR
+reply or resolution fact. An Independent Plan-Reviewer writes a fresh approved candidate-SHA-bound standard receipt;
+Implementer commits that unchanged file alone before any implementation.
+
+The RED subject must collect successfully and fail an assertion for both defects: the dataflow must retain
+`RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None` and only the expected-failure relationship
+`RuntimeRegistry -> RuntimeRegistryLookupUnavailable`, with no lookup connection to `Available`, `Missing`,
+`Unavailable` or any mapper; the static BC-independence scanner must reject the alias created by
+`(load := importlib.import_module)(...)`. The scanner parses only an `ast.NamedExpr` direct `ast.Name` target and its
+value. It preserves the existing direct-assignment rule that retains `load` but ignores `holder.loader` in
+`load = holder.loader = importlib.import_module`; it executes neither fixture nor dynamic import.
+
+Tester records a new full-SHA-bound factual `failing` RED record. Only after its unchanged sole evidence-only commit
+may Implementer create a distinct green subject. Green is limited to the scanner test and the dataflow JSON/HTML plus
+only byte-truthfully changed existing validation/delivery/visual-check artifacts. It cannot create a mapper, backend,
+DI composition, lifecycle, execution, provider or ACL behavior. Tester writes the full-SHA-bound passing green record;
+Independent Reviewer consumes only that committed passing record and writes an approved/needs-rework green review
+record. Implementer commits each evidence file unchanged and alone. The normal Tester/review schemas, writer roles,
+full-SHA binding, status invariants and sole-evidence commit rules remain mandatory.
+
+Only after Planner verifies the approved green chain and actual current PR head can Independent Reviewer write a new
+immutable C23 classification receipt at
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c23-green-subject-40-hex-sha>-<current-pr-head-40-hex-sha>.json`.
+Only Implementer may unchanged-sole-commit it. It has exactly `schema_version`, `topic`,
+`implementation_subject_commit`, `tester_evidence_commit`, `implementation_review_evidence_commit`,
+`pr_head_commit`, `classifications`, `recorded_by`; these bind integer `1`, `loaded-runtime-cache`, the C23 green
+subject, its passing Tester/review evidence commits, the actual current full head, exactly two classifications, and
+`Independent Reviewer`. Each classification has exactly `thread`, `comment`, `outcome`, `reply`, for only
+`ldeVI`/`4090495760` and `ldeVO`/`4090495770`; `outcome` is only
+`REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`. Only `REPLY_AND_RESOLVE` has a non-empty factual reply and can authorize the
+corresponding exact reply/resolve. `ADDRESS` and `HUMAN_CHECK` use JSON `null` reply and remain Planner/open paths.
+
+The four Human-only pairs F/ACL/business/README and `ld9Ai`/`4090688118` are excluded, ReadOnly and open; no C23
+artifact, evidence or action may classify, reply to, resolve or otherwise alter them.

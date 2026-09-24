@@ -450,3 +450,56 @@ C22 supersedes C21 only for `PRRT_kwDOUJTij86ldeVI`/`4090495760` and
   It has exactly eight top-level keys and exactly two pairs: `ldeVI`/`4090495760` and `ldeVO`/`4090495770`.
 - [ ] **Actor: Planner.** Route only exact committed `REPLY_AND_RESOLVE` entries. F, ACL, business architecture and
   README remain Human-only open locks. `PRRT_kwDOUJTij86ld9Ai` is excluded, unclassified and open; do not act on it.
+
+## C23 C22 ADDRESS Remediation Successor Stages (authoritative)
+
+C23 supersedes C22 only for `PRRT_kwDOUJTij86ldeVI`/`4090495760` and
+`PRRT_kwDOUJTij86ldeVO`/`4090495770`. It consumes only C22 classification receipt commit
+`a9065a8332119930347214f07f2980d655d8d314`, at
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-0991c56ec7e562ea512449bda1a41118dbc48203.json`,
+which binds C20 subject `fa1468301af1906a05ee31ba0d267d2270d7af5f`, passing Tester evidence
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`, approved Reviewer evidence
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`, and C22 PR head `0991c56ec7e562ea512449bda1a41118dbc48203`.
+It leaves source behavior, Human-only locks and `ld9Ai`/`4090688118` ReadOnly unless an exact declared C23 step
+permits otherwise.
+
+- [x] C23 plan-authoring
+- [ ] C23 planning-candidate-commit
+- [ ] C23 independent Plan-Reviewer receipt
+- [ ] C23 receipt-only commit
+- [ ] C23 RED scanner/dataflow subject
+- [ ] C23 RED factual failing Tester evidence
+- [ ] C23 RED evidence-only commit
+- [ ] C23 green scanner/dataflow subject
+- [ ] C23 green factual passing Tester evidence
+- [ ] C23 green evidence-only commit
+- [ ] C23 independent green review evidence
+- [ ] C23 review-evidence-only commit
+- [ ] C23 Planner Phase 4.5/current-head verification
+- [ ] C23 independent dual-pair classification receipt
+- [ ] C23 classification-receipt-only commit
+- [ ] C23 Planner routing for exact classified pairs
+
+### C23 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C23 planning artifacts; do not prefill a future SHA, verdict,
+  outcome, reply, resolution or current head.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write fresh approved standard candidate-SHA-bound receipt,
+  then commit it unchanged alone.
+- [ ] **Actor: Implementer / Tester.** Create a collection-success/assertion-failing RED subject limited to the
+  scanner test. It must expose the NamedExpr alias bypass and dataflow fidelity defect without fixture execution or
+  dynamic import; Tester writes factual failing SHA-bound evidence and Implementer commits that evidence alone.
+- [ ] **Actor: Implementer / Tester / Independent Reviewer.** Create a distinct green subject changing only the
+  scanner test and the dataflow JSON/HTML plus byte-truthfully changed existing validation/delivery/visual-check
+  evidence. Preserve `lookup(...) -> RuntimeT | None` and the sole signal edge. Commit passing Tester evidence alone;
+  Independent Reviewer consumes it and Implementer commits only that review record.
+- [ ] **Actor: Planner / Independent Reviewer / Implementer.** After actual-current-head verification, Independent
+  Reviewer writes only
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c23-green-subject-40-hex-sha>-<current-pr-head-40-hex-sha>.json`;
+  Implementer commits it unchanged alone. Its top-level keys are exactly `schema_version`, `topic`,
+  `implementation_subject_commit`, `tester_evidence_commit`, `implementation_review_evidence_commit`,
+  `pr_head_commit`, `classifications`, `recorded_by`; entries have exactly `thread`, `comment`, `outcome`, `reply` for
+  only `ldeVI`/`4090495760` and `ldeVO`/`4090495770`; outcome is only
+  `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`, with non-empty factual reply only for `REPLY_AND_RESOLVE` and JSON `null`
+  otherwise. Only exact committed `REPLY_AND_RESOLVE` entries may receive their factual reply and resolution.
+  F/ACL/business/README Human-only locks and `ld9Ai` stay open/unclassified.
