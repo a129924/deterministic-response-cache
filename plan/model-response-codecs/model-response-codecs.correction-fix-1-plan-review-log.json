@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "topic": "model-response-codecs",
+  "correction_id": "fix-1",
+  "candidate": {
+    "commit_sha": "b51e557c535510c7660a4c17229ed1f0c008c4cf",
+    "tree_sha": "b50986a2b5863d0b72e861598c018aebadbc5f48",
+    "active": false
+  },
+  "reviewed_artifacts": [
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.plan.md",
+      "blob_sha": "134abb756a95c9d2cdd311b44b476534c2044cb2"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.step.md",
+      "blob_sha": "5bab0cee0a469d46553fd694d0174f5a0f76af50"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.correction-fix-1-plan.md",
+      "blob_sha": "236ff8848317054c6e4a48c60bb51edee4c6588e"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.correction-fix-1-step.md",
+      "blob_sha": "f501340f7fa899ff78f9c6b84b8d8221041754cf"
+    }
+  ],
+  "first_parent_admission": {
+    "parent_sha": "57e4940150157d3cc73799c20461000eacc6bfe2",
+    "non_merge": true,
+    "name_status": [
+      {
+        "status": "A",
+        "path": "plan/model-response-codecs/model-response-codecs.correction-fix-1-plan.md"
+      },
+      {
+        "status": "A",
+        "path": "plan/model-response-codecs/model-response-codecs.correction-fix-1-step.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.plan.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.step.md"
+      }
+    ]
+  },
+  "review_basis": {
+    "workflow_contract": "plan/agent-handoff-workflow.md",
+    "topic_plan_contract": "plan/topic-plan-contract.md",
+    "checkout": "b51e557c535510c7660a4c17229ed1f0c008c4cf"
+  },
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    {
+      "issue": "The current parent plan's Reviewer Handoff still specifies only the initial normal three-key JSON object. The fix-1 route requires its declared extended correction record, while the parent plan remains the current topic contract; this makes the current handoff section inconsistent with the active correction route.",
+      "file": "plan/model-response-codecs/model-response-codecs.plan.md",
+      "fix": "In the next bounded correction planning candidate, make the parent plan's Reviewer Handoff specify the active correction's extended JSON handoff and preserve the original three-key format only as historical initial-route evidence. Use a new receipt path as the fix-1 route requires after needs-rework."
+    }
+  ],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "route_authorization": null,
+  "recorded_by": "Independent Plan-Reviewer"
+}
