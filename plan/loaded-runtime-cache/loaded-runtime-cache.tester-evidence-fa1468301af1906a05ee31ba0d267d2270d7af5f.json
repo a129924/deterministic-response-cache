@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "fa1468301af1906a05ee31ba0d267d2270d7af5f",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "uv run pytest tests/test_loaded_runtime_cache_bc_independence.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
