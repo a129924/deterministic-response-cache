@@ -18,6 +18,7 @@
     { "id": "initialized-runtime", "type": "external", "label": "已初始化 runtime", "tag": "retain input", "stage": 0, "row": 3, "width": 152 },
     { "id": "runtime-registry", "type": "backend", "label": "RuntimeRegistry", "tag": "內部 Protocol port", "stage": 1, "row": 0, "width": 180 },
     { "id": "lookup-return", "type": "cloud", "label": "RuntimeT | None", "tag": "lookup union return", "stage": 2, "row": 0, "width": 176 },
+    { "id": "lookup-unavailable", "type": "security", "label": "RuntimeRegistryLookupUnavailable", "tag": "預期 lookup failure signal", "stage": 2, "row": 1, "width": 232 },
     { "id": "runtime-retention", "type": "backend", "label": "RuntimeRetention", "tag": "Loaded Runtime Cache protocol（contract only）", "stage": 3, "row": 3, "width": 220 },
     { "id": "retained", "type": "cloud", "label": "Retained(runtime)", "stage": 4, "row": 3 },
     { "id": "not-retained", "type": "cloud", "label": "NotRetained(runtime)", "tag": "同步 outcome", "stage": 4, "row": 2, "width": 164 }

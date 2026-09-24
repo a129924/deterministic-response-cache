@@ -284,7 +284,7 @@ def _is_module_cache_access(
 
 
 def _declares_forbidden_semantic_type(source_directory: Path, type_name: str) -> bool:
-    """Detect a local nominal or type-alias declaration of the foreign BC semantic type."""
+    """Detect local declarations or Identity imports of a foreign semantic type."""
     for source_path in source_directory.rglob("*.py"):
         tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
         for statement in ast.walk(tree):
@@ -292,12 +292,25 @@ def _declares_forbidden_semantic_type(source_directory: Path, type_name: str) ->
                 return True
             if isinstance(statement, ast.TypeAlias) and statement.name.id == type_name:
                 return True
+            if _imports_identity_semantic_type(statement, type_name):
+                return True
             if isinstance(statement, (ast.Assign, ast.AnnAssign)) and _assignment_names(
                 statement,
                 type_name,
             ):
                 return True
     return False
+
+
+def _imports_identity_semantic_type(statement: ast.AST, type_name: str) -> bool:
+    """Return whether an Identity-BC ImportFrom imports the semantic source name."""
+    return (
+        isinstance(statement, ast.ImportFrom)
+        and type_name == "ModelIdentity"
+        and statement.module is not None
+        and (statement.module == _IDENTITY_BC or statement.module.startswith(f"{_IDENTITY_BC}."))
+        and any(alias.name == type_name for alias in statement.names)
+    )
 
 
 def _assignment_names(statement: ast.Assign | ast.AnnAssign, name: str) -> bool:
@@ -497,7 +510,15 @@ def test_dataflow_declares_lookup_unavailable_as_independent_signal() -> None:
         edge["label"] == "RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None"
         for edge in dataflow["flows"]
     )
-    assert any(node["label"] == "RuntimeRegistryLookupUnavailable" for node in dataflow["nodes"])
+    unavailable_signal = next(
+        node for node in dataflow["nodes"] if node["label"] == "RuntimeRegistryLookupUnavailable"
+    )
+
+    assert not any(
+        edge[endpoint] == unavailable_signal["id"]
+        for edge in dataflow["flows"]
+        for endpoint in ("from", "to")
+    )
 
 
 def test_bc_independence_accepts_current_sources_only_when_no_boundary_bypass_exists() -> None:

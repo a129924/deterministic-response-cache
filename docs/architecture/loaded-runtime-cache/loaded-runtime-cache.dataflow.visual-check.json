@@ -6,8 +6,8 @@
   "visualReview": "pending",
   "artifact": {
     "path": "docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html",
-    "sha256": "44d2f969a22891523488f9810ba3b4a4e5aa09cd194b6105b541d11117d61779",
-    "bytes": 703395
+    "sha256": "96a7cc1e62ef58291f1e565c08b5623db541d401fadfba96aca2713b4b76859e",
+    "bytes": 704646
   },
   "state": {
     "detail": "read",
