@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "fa1468301af1906a05ee31ba0d267d2270d7af5f",
+  "tester_evidence_commit": "6423f55b6dbcde5bee190ef86dc8c31f5c27c94e",
+  "implementation_review_evidence_commit": "3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e",
+  "pr_head_commit": "a1aae44897c0f0b0ac52f1ca1697554c2f79cdb5",
+  "classifications": [
+    {
+      "thread": "PRRT_kwDOUJTij86ldYVf",
+      "comment": 4090457782,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前 C20 subject、passing Tester evidence 與 approved Reviewer evidence 均依序位於 current PR head 的祖先鏈，且兩個 evidence commits 各自只包含其指定 evidence；被引用的舊 squashed commit 不再是 current routing evidence。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}
