@@ -3,11 +3,19 @@
 """RED regression contracts for Loaded Runtime Cache bounded-context independence."""
 
 import ast
+import json
 from pathlib import Path
 
 import pytest
 
 SOURCE_ROOT = Path(__file__).parents[1] / "src" / "deterministic_response_cache"
+DATAFLOW_SOURCE = (
+    Path(__file__).parents[1]
+    / "docs"
+    / "architecture"
+    / "loaded-runtime-cache"
+    / "loaded-runtime-cache.dataflow.json"
+)
 _FORBIDDEN_DYNAMIC_IMPORT_NAMES = frozenset({"import_module", "__import__"})
 _GETATTR_ARGUMENT_COUNT = 2
 _IDENTITY_BC = "deterministic_response_cache.identity"
@@ -466,6 +474,30 @@ def test_bc_independence_rejects_pep695_duplicate_foreign_semantic_type_aliases(
 
     assert _declares_forbidden_semantic_type(loaded_runtime_cache, "ModelIdentity")
     assert _declares_forbidden_semantic_type(identity, "RuntimeReuseKey")
+
+
+def test_bc_independence_rejects_foreign_semantic_import_from_alias(tmp_path: Path) -> None:
+    """A foreign semantic type remains foreign when its local import name changes."""
+    loaded_runtime_cache = tmp_path / "deterministic_response_cache" / "loaded_runtime_cache"
+    loaded_runtime_cache.mkdir(parents=True)
+    (loaded_runtime_cache / "foreign_identity_alias.py").write_text(
+        "from deterministic_response_cache.identity.contracts import "
+        "ModelIdentity as LocalModelIdentity\n",
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(loaded_runtime_cache, "ModelIdentity")
+
+
+def test_dataflow_declares_lookup_unavailable_as_independent_signal() -> None:
+    """The expected lookup failure is a distinct dataflow signal, not a lookup return."""
+    dataflow = json.loads(DATAFLOW_SOURCE.read_text(encoding="utf-8"))
+
+    assert any(
+        edge["label"] == "RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None"
+        for edge in dataflow["flows"]
+    )
+    assert any(node["label"] == "RuntimeRegistryLookupUnavailable" for node in dataflow["nodes"])
 
 
 def test_bc_independence_accepts_current_sources_only_when_no_boundary_bypass_exists() -> None:
