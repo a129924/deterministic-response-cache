@@ -43,8 +43,8 @@ created: 2026-09-24
 - [X] 8. 在 `pyproject.toml` 新增 pandas/pyarrow 的 `dataframe` optional extra 並更新 `uv.lock`；基礎 JSON 安裝維持無 runtime deps。
 - [X] 9. 在 `tests/test_response_reuse_codecs.py`、`tests/test_model_response_codecs_integration.py` 建立 codec、selector、JSON-only import、outcome 與 DataFrame isolation 測試；在 `tests/test_response_reuse_protocol.py`、`tests/test_response_reuse_outcomes.py`、`tests/response_reuse/test_in_memory_store.py` 僅調整本次 source break 影響的斷言。
 - [X] 10. 在 `docs/architecture/model-response-codecs.dataflow.json` 依 archify dataflow schema 產生繁體中文圖規格，通過 showcase validation，交付 `docs/architecture/model-response-codecs.html`，再以 `visual-check --repo-root` 產生 `Artifact Paths` 所列六個 sidecars，檢查四種 desktop containment 及實際圖面；最後對 docs/code/test/archify 建同一 immutable implementation subject。
-- [ ] 11. 僅在新的 committed `fix-2` planning candidate 與 Independent Plan-Reviewer approved extended receipt 經 Planner route 後，修改 `src/deterministic_response_cache/response_reuse/codecs/json_response.py`，將已知不支援的 JSON 樹改丟 `UnsupportedPayloadError`，保留真正 serializer failure 的 `EncodeFailureError`；不修改 selector/protocol 既有 outcome 映射。
-- [ ] 12. 修改 `tests/test_response_reuse_codecs.py`、`tests/test_model_response_codecs_integration.py`，補 Reviewer 指定的五類 substantive edge/assertion，保留 direct imports、fixtures/mocks；Implementer 只以這三個 code/test paths 建新的 immutable `fix-2` subject，之後交 Tester／Independent Reviewer 重跑完整新 evidence chain。
+- [X] 11. 僅在新的 committed `fix-2` planning candidate 與 Independent Plan-Reviewer approved extended receipt 經 Planner route 後，修改 `src/deterministic_response_cache/response_reuse/codecs/json_response.py`，將已知不支援的 JSON 樹改丟 `UnsupportedPayloadError`，保留真正 serializer failure 的 `EncodeFailureError`；不修改 selector/protocol 既有 outcome 映射。
+- [X] 12. 修改 `tests/test_response_reuse_codecs.py`、`tests/test_model_response_codecs_integration.py`，補 Reviewer 指定的五類 substantive edge/assertion，保留 direct imports、fixtures/mocks；Implementer 只以這三個 code/test paths 建新的 immutable `fix-2` subject，之後交 Tester／Independent Reviewer 重跑完整新 evidence chain。
 
 ## Main Agent Actionable Steps — Fixed Tail
 
