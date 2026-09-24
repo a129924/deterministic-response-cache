@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "topic": "model-response-codecs",
+  "correction_id": "fix-4",
+  "implementation_subject_commit": "9a0eef1845113801c4d250826df4e9a9dee09917",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "COVERAGE_FILE=/private/tmp/model-response-codecs-fix-4-tester.coverage UV_CACHE_DIR=/private/tmp/model-response-codecs-fix-4-tester-uv-cache uv run --no-sync --extra dataframe pytest -o 'addopts=--strict-config --strict-markers --cov=deterministic_response_cache --cov-report=term-missing --cov-report=xml:/private/tmp/model-response-codecs-fix-4-tester-coverage.xml' -o cache_dir=/private/tmp/model-response-codecs-fix-4-tester-pytest-cache",
+      "exit_code": 0
+    },
+    {
+      "command": "UV_CACHE_DIR=/private/tmp/model-response-codecs-fix-4-tester-uv-cache uv run --no-sync --extra dataframe pytest -o addopts= -o cache_dir=/private/tmp/model-response-codecs-fix-4-tester-pytest-cache tests/test_model_response_codecs_integration.py::test_json_only_direct_import_works_without_site_packages",
+      "exit_code": 0
+    },
+    {
+      "command": "UV_CACHE_DIR=/private/tmp/model-response-codecs-fix-4-tester-uv-cache uv run --no-sync --extra dataframe pyright",
+      "exit_code": 0
+    },
+    {
+      "command": "UV_CACHE_DIR=/private/tmp/model-response-codecs-fix-4-tester-uv-cache uv run --no-sync --extra dataframe ruff check .",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs validate dataflow docs/architecture/model-response-codecs.dataflow.json --quality showcase --json",
+      "exit_code": 0
+    },
+    {
+      "command": "python -c 'import hashlib,json,pathlib; root=pathlib.Path(\"docs/architecture\"); receipt=json.loads((root/\"model-response-codecs.visual-check.json\").read_text()); html=root/\"model-response-codecs.html\"; assert receipt[\"ok\"] and receipt[\"status\"]==\"pass\" and receipt[\"artifact\"][\"sha256\"]==hashlib.sha256(html.read_bytes()).hexdigest(); assert len(receipt[\"containment\"][\"viewports\"])==4 and all(v[\"ok\"] for v in receipt[\"containment\"][\"viewports\"]); assert all((root/s[\"file\"]).is_file() for s in receipt[\"captures\"][\"screenshots\"]); print(\"visual-check receipt: four viewports and four screenshots match committed HTML\")'",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
