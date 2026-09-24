@@ -427,6 +427,24 @@ def test_bc_independence_rejects_each_dynamic_import_bypass(
     assert _uses_dynamic_import_substitution(source_directory)
 
 
+def test_bc_independence_rejects_named_expression_import_alias_without_executing_source(
+    tmp_path: Path,
+) -> None:
+    """A direct-name walrus alias is rejected by static AST analysis only."""
+    source_directory = tmp_path / "deterministic_response_cache" / "loaded_runtime_cache"
+    source_directory.mkdir(parents=True)
+    execution_marker = tmp_path / "source-was-executed"
+    (source_directory / "bypass.py").write_text(
+        "import importlib\n"
+        "(load := importlib.import_module)('identity')\n"
+        f"open({str(execution_marker)!r}, 'w').write('executed')\n",
+        encoding="utf-8",
+    )
+
+    assert _uses_dynamic_import_substitution(source_directory)
+    assert not execution_marker.exists()
+
+
 def test_bc_independence_resolves_every_simple_target_of_chained_import_alias() -> None:
     """Every simple target of a chained assignment retains the resolved import alias."""
     _, callables = _import_aliases(
@@ -502,23 +520,39 @@ def test_bc_independence_rejects_foreign_semantic_import_from_alias(tmp_path: Pa
     assert _declares_forbidden_semantic_type(loaded_runtime_cache, "ModelIdentity")
 
 
-def test_dataflow_declares_lookup_unavailable_as_independent_signal() -> None:
-    """The expected lookup failure is a distinct dataflow signal, not a lookup return."""
+def test_dataflow_preserves_lookup_return_and_only_registry_failure_signal() -> None:
+    """The normal return and expected failure are distinct Registry relationships."""
     dataflow = json.loads(DATAFLOW_SOURCE.read_text(encoding="utf-8"))
+    nodes_by_label = {node["label"]: node["id"] for node in dataflow["nodes"]}
+    runtime_registry = nodes_by_label["RuntimeRegistry"]
+    lookup_return = nodes_by_label["RuntimeT | None"]
+    unavailable_signal = nodes_by_label["RuntimeRegistryLookupUnavailable"]
 
     assert any(
-        edge["label"] == "RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None"
+        edge["from"] == runtime_registry
+        and edge["to"] == lookup_return
+        and edge["label"] == "RuntimeRegistry.lookup(key: RuntimeReuseKey) -> RuntimeT | None"
         for edge in dataflow["flows"]
     )
-    unavailable_signal = next(
-        node for node in dataflow["nodes"] if node["label"] == "RuntimeRegistryLookupUnavailable"
-    )
+    assert [
+        (edge["from"], edge["to"])
+        for edge in dataflow["flows"]
+        if unavailable_signal in (edge["from"], edge["to"])
+    ] == [(runtime_registry, unavailable_signal)]
 
-    assert not any(
-        edge[endpoint] == unavailable_signal["id"]
+    forbidden_lookup_targets = {
+        node["id"]
+        for node in dataflow["nodes"]
+        if node["label"] in {"Available", "Missing", "Unavailable"}
+        or "mapper" in node["label"].casefold()
+    }
+    lookup_connections = {
+        endpoint
         for edge in dataflow["flows"]
-        for endpoint in ("from", "to")
-    )
+        if runtime_registry in (edge["from"], edge["to"])
+        for endpoint in (edge["from"], edge["to"])
+    }
+    assert not lookup_connections & forbidden_lookup_targets
 
 
 def test_bc_independence_accepts_current_sources_only_when_no_boundary_bypass_exists() -> None:
