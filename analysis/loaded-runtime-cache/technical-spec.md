@@ -457,3 +457,35 @@ and is exactly `PRRT_kwDOUJTij86ldYVf`/`4090457782`. Independent Reviewer alone 
 uses JSON `null`. Only the exact committed `REPLY_AND_RESOLVE` entry permits Implementer to leave that exact reply
 and resolve that exact thread. `ADDRESS` returns to Planner; `HUMAN_CHECK` remains open. Any malformed, extra,
 stale, non-sole, cross-subject, wrong-head, wrong-pair, invalid-enum or invalid-nullability record fails closed.
+
+## C22 current-head dual-pair classification receipt contract
+
+C22 is planning-only and is the sole successor authorized to classify
+`PRRT_kwDOUJTij86ldeVI`/`4090495760` and `PRRT_kwDOUJTij86ldeVO`/`4090495770` at current head
+`0991c56ec7e562ea512449bda1a41118dbc48203`. It consumes only C20 subject
+`fa1468301af1906a05ee31ba0d267d2270d7af5f`, passing Tester-evidence commit
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`, and approved implementation-review-evidence commit
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`; it creates no implementation subject, Tester/Reviewer evidence, source,
+test, documentation, architecture, Archify, PR reply or resolution before its exact committed classification entry
+authorizes action.
+
+The C22 candidate is exactly the five planning artifacts and pre-fills no candidate SHA, verdict, classification
+outcome, reply or resolution. After a committed approved standard candidate-SHA-bound Plan-Reviewer receipt, only
+Independent Reviewer may write
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-0991c56ec7e562ea512449bda1a41118dbc48203.json`.
+Only Implementer may commit that unchanged file in one sole evidence-only commit.
+
+The receipt has exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`. Their values bind
+schema `1`, topic `loaded-runtime-cache`, the four C20/current-head full 40-hex SHAs above, exactly two
+classifications, and writer `Independent Reviewer`. Each entry has only `thread`, `comment`, `outcome`, `reply`; its
+exact pair set is `PRRT_kwDOUJTij86ldeVI`/`4090495760` and `PRRT_kwDOUJTij86ldeVO`/`4090495770`. Independent Reviewer
+alone chooses `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; only the first has a non-empty factual reply. Every other
+outcome uses JSON `null`. Only the exact committed `REPLY_AND_RESOLVE` entry permits Implementer to leave that exact
+reply and resolve that exact thread. `ADDRESS` returns to Planner; `HUMAN_CHECK` remains open.
+
+F `PRRT_kwDOUJTij86jnBpk`/`4043480108`, ACL `PRRT_kwDOUJTij86kQ95O`/`4060023123`, business
+`PRRT_kwDOUJTij86kqiZ5`/`4070096561`, README `PRRT_kwDOUJTij86lAR8T`/`4078761998`, and new
+`PRRT_kwDOUJTij86ld9Ai` are excluded from C22 and remain open; the four former pairs are Human-only locks. Any
+malformed, extra, stale, non-sole, cross-subject, wrong-head, wrong-pair, invalid-enum or invalid-nullability record
+fails closed.

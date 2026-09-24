@@ -983,3 +983,49 @@ sole-commit, pair-count, enum or nullability defect fails closed.
 `planned` → C21 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → independent C21
 classification receipt-only commit → Planner classification routing. This receipt may route only its exact committed
 `REPLY_AND_RESOLVE` entry to Implementer; it never approves PR, merge, release or post-merge.
+
+## C22 C20 Current-Head Dual-Pair Classification Successor (authoritative current routing)
+
+C22 supersedes C21 only for a fresh, immutable classification of
+`PRRT_kwDOUJTij86ldeVI`/`4090495760` and `PRRT_kwDOUJTij86ldeVO`/`4090495770`. It preserves the Loaded Runtime Cache
+mission, protocol-first boundary, completed C20 chain, all predecessor provenance and all Human-only locks.
+
+| Field | Contract |
+| --- | --- |
+| Goal | Independently classify exactly two previously unclassified current-head threads, without changing product behavior or PR authority before a committed exact receipt permits it. |
+| In-Scope | Exactly five C22 planning artifacts; standard candidate-SHA-bound Plan-Reviewer receipt; one C20-subject/current-head-bound immutable two-pair classification receipt; later exact reply/resolve only if its committed entry is `REPLY_AND_RESOLVE`. |
+| Out-Of-Scope | Implementation, source, tests, dataflow, architecture, README, lifecycle, new C20 evidence, release, merge, post-merge and Human review. |
+| ReadOnly | Every unlisted path; C20/C21 and predecessor records; every thread except the two exact C22 receipt entries; all existing Human-only locks and new `PRRT_kwDOUJTij86ld9Ai`. |
+| Written | Standard C22 Plan-Reviewer receipt, then one C22 classification receipt. |
+| Modified | Candidate: exactly the five planning artifacts. Classification: one new receipt file only. |
+| Deleted | None. |
+
+### C22 immutable receipt contract
+
+Candidate planning cannot prefill its SHA, review verdict, classification outcome, reply or resolution. After a
+committed approved standard Plan-Reviewer receipt, Independent Reviewer alone writes
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-0991c56ec7e562ea512449bda1a41118dbc48203.json`.
+Implementer alone commits it unchanged in a sole evidence-only commit. The exact eight top-level keys are
+`schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; they bind schema `1`,
+topic `loaded-runtime-cache`, C20 subject `fa1468301af1906a05ee31ba0d267d2270d7af5f`, Tester-evidence commit
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`, Reviewer-evidence commit
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`, and PR head
+`0991c56ec7e562ea512449bda1a41118dbc48203`.
+
+`classifications` contains exactly two entries with only `thread`, `comment`, `outcome`, `reply`, for
+`PRRT_kwDOUJTij86ldeVI`/`4090495760` and `PRRT_kwDOUJTij86ldeVO`/`4090495770`. Independent Reviewer alone determines
+`REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; candidate planning supplies neither outcome nor reply.
+`REPLY_AND_RESOLVE` requires a non-empty factual reply and is the only outcome that permits Implementer to reply and
+resolve the matching exact pair. `ADDRESS` and `HUMAN_CHECK` require JSON `null`; `ADDRESS` returns to Planner and
+`HUMAN_CHECK` remains open. F `PRRT_kwDOUJTij86jnBpk`/`4043480108`, ACL
+`PRRT_kwDOUJTij86kQ95O`/`4060023123`, business `PRRT_kwDOUJTij86kqiZ5`/`4070096561`, and README
+`PRRT_kwDOUJTij86lAR8T`/`4078761998` remain excluded Human-only locks. New `PRRT_kwDOUJTij86ld9Ai` is likewise
+excluded, remains open and is not action-authorized. Any key, role, path, SHA, ancestor, sole-commit, pair-count,
+enum or nullability defect fails closed.
+
+### C22 transition / handoff
+
+`planned` → C22 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → independent C22
+classification receipt-only commit → Planner classification routing. This receipt may route only its exact committed
+`REPLY_AND_RESOLVE` entries to Implementer; it never approves PR, merge, release or post-merge.

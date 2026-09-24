@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: c21-plan-authoring
+phase: c22-plan-authoring
 created: 2026-09-17
 ---
 
@@ -421,3 +421,32 @@ C21 supersedes C20 only for `PRRT_kwDOUJTij86ldYVf`/`4090457782`. It binds C20 s
   It has exactly eight top-level keys and exactly one pair: `PRRT_kwDOUJTij86ldYVf`/`4090457782`.
 - [ ] **Actor: Planner.** Route only an exact committed `REPLY_AND_RESOLVE` entry. Do not act on every other
   thread, including all existing Human-only locks; `ADDRESS` returns to planning and `HUMAN_CHECK` remains open.
+
+## C22 Current-Head Dual-Pair Classification Successor Stages (authoritative)
+
+C22 supersedes C21 only for `PRRT_kwDOUJTij86ldeVI`/`4090495760` and
+`PRRT_kwDOUJTij86ldeVO`/`4090495770`. It binds C20 subject
+`fa1468301af1906a05ee31ba0d267d2270d7af5f`, passing Tester evidence commit
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`, approved Reviewer evidence commit
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`, and current PR head
+`0991c56ec7e562ea512449bda1a41118dbc48203`. It changes no source, tests, docs, Archify, README or PR state.
+
+- [x] C22 plan-authoring
+- [ ] C22 planning-candidate-commit
+- [ ] C22 independent Plan-Reviewer receipt
+- [ ] C22 receipt-only commit
+- [ ] C22 independent dual-pair classification receipt
+- [ ] C22 classification-receipt-only commit
+- [ ] C22 Planner routing for the exact classified pairs
+
+### C22 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C22 planning artifacts; prefill no candidate SHA, receipt
+  verdict, classification outcome, reply or resolution.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write an approved standard candidate-SHA-bound receipt,
+  then unchanged-sole-commit it.
+- [ ] **Actor: Independent Reviewer / Implementer.** Write and unchanged-sole-commit only
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-0991c56ec7e562ea512449bda1a41118dbc48203.json`.
+  It has exactly eight top-level keys and exactly two pairs: `ldeVI`/`4090495760` and `ldeVO`/`4090495770`.
+- [ ] **Actor: Planner.** Route only exact committed `REPLY_AND_RESOLVE` entries. F, ACL, business architecture and
+  README remain Human-only open locks. `PRRT_kwDOUJTij86ld9Ai` is excluded, unclassified and open; do not act on it.

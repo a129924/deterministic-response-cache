@@ -353,3 +353,37 @@ Archify、README、PR 或 thread state。
   留下該 reply 並 resolve；`ADDRESS` 和 `HUMAN_CHECK` 必為 JSON `null`，前者返回 Planner、後者保持 open。所有其他
   threads、既有 Human-only locks 與未列路徑維持 ReadOnly。任何錯誤 writer、path、schema、SHA、ancestor、sole-commit、
   pair set、enum 或 nullability 一律 fail closed。
+
+## C22 current-head dual-pair classification successor
+
+Human 已授權 C22 作為 C21 後唯一的 current-head classification successor。它只處理
+`PRRT_kwDOUJTij86ldeVI`/`4090495760` 與 `PRRT_kwDOUJTij86ldeVO`/`4090495770`，並固定消費 C20 immutable subject
+`fa1468301af1906a05ee31ba0d267d2270d7af5f`、passing Tester evidence commit
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`、approved independent Reviewer evidence commit
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e` 及 current PR head
+`0991c56ec7e562ea512449bda1a41118dbc48203`。它不重寫 C20/C21 或任何 predecessor evidence、source、tests、docs、
+Archify、README、PR 或 thread state。
+
+- C22 candidate 只可修改本 requirements、`technical-spec.md`、topic plan、topic spec 與 step tracker；不得預填自身
+  SHA、Plan-Reviewer verdict、classification outcome、reply 或 resolution。candidate committed 後，獨立
+  Plan-Reviewer 必須先在標準 immutable path
+  `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` 寫 approved
+  receipt，且僅 Implementer 可原樣以 sole receipt-only commit 提交。
+- C22 classification receipt 的唯一 immutable path 是
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-0991c56ec7e562ea512449bda1a41118dbc48203.json`。
+  Independent Reviewer 是唯一 writer；僅 Implementer 可原樣以 sole evidence-only commit 提交；不得覆寫、重用
+  C20/C21 receipt 或與其他檔案共用 commit。
+- receipt 必須是唯一 JSON object，top-level keys 恰為 `schema_version`、`topic`、
+  `implementation_subject_commit`、`tester_evidence_commit`、`implementation_review_evidence_commit`、
+  `pr_head_commit`、`classifications`、`recorded_by`。固定值為 integer `1`、`loaded-runtime-cache`、上述四個完整
+  40-hex SHA、exactly two-entry array、`Independent Reviewer`。每個 entry 的 keys 恰為 `thread`、`comment`、
+  `outcome`、`reply`，且 exact pair set 僅為 `PRRT_kwDOUJTij86ldeVI`/`4090495760` 與
+  `PRRT_kwDOUJTij86ldeVO`/`4090495770`。
+- Independent Reviewer 在 future receipt 獨立決定 `REPLY_AND_RESOLVE`、`ADDRESS` 或 `HUMAN_CHECK`，candidate 不得
+  預填 outcome 或 reply。僅 `REPLY_AND_RESOLVE` 可有 non-empty factual reply，並授權 Implementer 對該 exact pair
+  留下該 reply 並 resolve；`ADDRESS` 和 `HUMAN_CHECK` 必為 JSON `null`，前者返回 Planner、後者保持 open。
+  F `PRRT_kwDOUJTij86jnBpk`/`4043480108`、ACL `PRRT_kwDOUJTij86kQ95O`/`4060023123`、business
+  `PRRT_kwDOUJTij86kqiZ5`/`4070096561` 與 README `PRRT_kwDOUJTij86lAR8T`/`4078761998` 是 Human-only locks；它們不在
+  C22 pair set 中，保持 open、不得 reply 或 resolve。新 `PRRT_kwDOUJTij86ld9Ai` 亦明確排除於 C22 receipt，保持
+  open、未分類且不得 action。所有其他 threads 與未列路徑維持 ReadOnly。任何錯誤 writer、path、schema、SHA、ancestor、
+  sole-commit、pair set、enum 或 nullability 一律 fail closed。

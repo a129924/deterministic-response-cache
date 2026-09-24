@@ -371,3 +371,32 @@ or remain open respectively. All other threads, including existing Human-only lo
    fails closed and authorizes no PR action.
 2. A non-null `ADDRESS`/`HUMAN_CHECK` reply, empty `REPLY_AND_RESOLVE` reply, wrong writer, or any attempt to act on
    an excluded thread fails closed.
+
+## C22 Current-Head Dual-Pair Classification Scenarios
+
+### Scenario 32 — immutable C20-bound two-pair receipt
+
+Given C20 subject `fa1468301af1906a05ee31ba0d267d2270d7af5f`, passing Tester evidence commit
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`, approved Reviewer evidence commit
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`, and current PR head
+`0991c56ec7e562ea512449bda1a41118dbc48203`, when C22 has a committed approved standard Plan-Reviewer receipt,
+then only Independent Reviewer may write the current-head-suffixed immutable classification receipt and only
+Implementer may commit it unchanged alone. The receipt has exactly eight top-level keys and two entries with only
+`thread`, `comment`, `outcome`, `reply` for `PRRT_kwDOUJTij86ldeVI`/`4090495760` and
+`PRRT_kwDOUJTij86ldeVO`/`4090495770`.
+
+### Scenario 33 — independent outcome and excluded boundary
+
+Given the C22 exact pair set, Independent Reviewer independently determines each outcome and reply; planning
+preselects neither. Only an exact committed `REPLY_AND_RESOLVE` entry with a non-empty factual reply permits
+Implementer to leave that reply and resolve that exact thread. `ADDRESS` and `HUMAN_CHECK` require `reply: null`,
+return to Planner or remain open respectively. F, ACL, business architecture, README Human-only locks, and new
+`PRRT_kwDOUJTij86ld9Ai` are excluded and untouched.
+
+## C22 Error / Edge Cases
+
+1. A receipt whose path omits either the C20 subject or current-head suffix, has any missing/extra top-level or entry
+   key, binds a different subject/evidence/head, has a non-sole commit, or contains any extra/duplicate/missing pair
+   fails closed and authorizes no PR action.
+2. A non-null `ADDRESS`/`HUMAN_CHECK` reply, empty `REPLY_AND_RESOLVE` reply, wrong writer, or any attempt to act on
+   a Human-only or otherwise excluded thread fails closed.
