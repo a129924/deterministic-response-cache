@@ -13,7 +13,11 @@ import pandas as pd  # pyright: ignore[reportMissingTypeStubs]
 import pytest
 
 from deterministic_response_cache.response_reuse._cache_store import NotFound
-from deterministic_response_cache.response_reuse.codecs.contract import CodecUnavailableError
+from deterministic_response_cache.response_reuse.codecs.contract import (
+    CodecUnavailable,
+    Decoded,
+    EncodeResult,
+)
 from deterministic_response_cache.response_reuse.codecs.pyarrow_dataframe import (
     PyArrowDataFrameCodec,
 )
@@ -103,9 +107,9 @@ def test_dataframe_mismatch_never_reaches_store(monkeypatch: pytest.MonkeyPatch)
     identity = object()
     response = ModelResponse(pd.DataFrame({"count": [1]}))
 
-    def unequal_decode(self: PyArrowDataFrameCodec, payload: bytes) -> ModelResponse[pd.DataFrame]:
+    def unequal_decode(self: PyArrowDataFrameCodec, payload: bytes) -> Decoded[pd.DataFrame]:
         del self, payload
-        return ModelResponse(pd.DataFrame({"count": [2]}))
+        return Decoded(ModelResponse(pd.DataFrame({"count": [2]})))
 
     monkeypatch.setattr(PyArrowDataFrameCodec, "decode", unequal_decode)
     outcome = protocol.record(identity, response)
@@ -179,6 +183,37 @@ def test_json_serializer_failure_has_distinct_record_reason(
     assert store.read(identity) == NotFound()
 
 
+def test_dataframe_arrow_failure_has_encode_failure_reason() -> None:
+    """An Arrow conversion failure retains the frame without a Store write."""
+    identity = object()
+    store = InMemoryCacheStore[object, StoredResponse]()
+    protocol = ResponseReuseProtocol(store, eligibility_policy=AllowPolicy())
+    response = ModelResponse(pd.DataFrame({"value": [object()]}))
+
+    outcome = protocol.record(identity, response)
+
+    assert isinstance(outcome, NotCached)
+    assert outcome.reason is NotCachedReason.ENCODE_FAILURE
+    assert outcome.response is response
+    assert store.read(identity) == NotFound()
+
+
+def test_unexpected_serializer_error_propagates(monkeypatch: pytest.MonkeyPatch) -> None:
+    """An unexpected program error is not translated into an expected result."""
+    identity = object()
+    store = InMemoryCacheStore[object, StoredResponse]()
+    protocol = ResponseReuseProtocol(store, eligibility_policy=AllowPolicy())
+
+    def broken_dumps(*args: object, **kwargs: object) -> str:
+        del args, kwargs
+        raise RuntimeError
+
+    monkeypatch.setattr(json, "dumps", broken_dumps)
+    with pytest.raises(RuntimeError):
+        protocol.record(identity, ModelResponse({"answer": 1}))
+    assert store.read(identity) == NotFound()
+
+
 def test_dataframe_codec_unavailable_on_record(monkeypatch: pytest.MonkeyPatch) -> None:
     """A selected unavailable optional codec retains the original frame."""
     identity = object()
@@ -189,9 +224,9 @@ def test_dataframe_codec_unavailable_on_record(monkeypatch: pytest.MonkeyPatch) 
     def unavailable_encode(
         self: PyArrowDataFrameCodec,
         response: ModelResponse[pd.DataFrame],
-    ) -> StoredResponse:
+    ) -> EncodeResult:
         del self, response
-        raise CodecUnavailableError
+        return CodecUnavailable()
 
     monkeypatch.setattr(PyArrowDataFrameCodec, "encode", unavailable_encode)
     outcome = protocol.record(identity, response)
@@ -244,6 +279,8 @@ def test_json_only_direct_import_works_without_site_packages() -> None:
         "from deterministic_response_cache.response_reuse.model_response import ModelResponse;"
         "from deterministic_response_cache.response_reuse.codecs.json_response "
         "import JsonResponseCodec;"
+        "from deterministic_response_cache.response_reuse.codecs.contract "
+        "import Encoded, Decoded, CodecUnavailable;"
         "from deterministic_response_cache.response_reuse.codecs.selector "
         "import encode_response, decode_response;"
         "from deterministic_response_cache.response_reuse.protocol "
@@ -255,9 +292,14 @@ def test_json_only_direct_import_works_without_site_packages() -> None:
         "from deterministic_response_cache.response_reuse.outcomes "
         "import Unavailable, UnavailableReason;"
         "value = ModelResponse({'answer': [1]});"
-        "assert decode_response(encode_response(value)).value == value.value;"
+        "encoded = encode_response(value);"
+        "assert isinstance(encoded, Encoded);"
+        "decoded = decode_response(encoded.stored);"
+        "assert isinstance(decoded, Decoded) and decoded.response.value == value.value;"
         "store = InMemoryCacheStore();"
         "store.write('key', StoredResponse(ResponseCodecId.DATAFRAME_V1, b'bytes'));"
+        "assert decode_response(StoredResponse(ResponseCodecId.DATAFRAME_V1, b'bytes')) "
+        "== CodecUnavailable();"
         "protocol = ResponseReuseProtocol(store, eligibility_policy=object());"
         "assert protocol.lookup('key') == Unavailable(UnavailableReason.CODEC_UNAVAILABLE)"
     )

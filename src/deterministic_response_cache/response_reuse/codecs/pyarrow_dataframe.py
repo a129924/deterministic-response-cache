@@ -10,10 +10,14 @@ import pandas as pd
 import pyarrow as pa
 
 from deterministic_response_cache.response_reuse.codecs.contract import (
-    EncodeFailureError,
-    InvalidPayloadError,
+    Decoded,
+    DecodeResult,
+    Encoded,
+    EncodeFailure,
+    EncodeResult,
+    InvalidPayload,
     ResponseCodec,
-    RoundTripMismatchError,
+    RoundTripMismatch,
 )
 from deterministic_response_cache.response_reuse.model_response import ModelResponse
 from deterministic_response_cache.response_reuse.stored_response import (
@@ -32,7 +36,7 @@ class PyArrowDataFrameCodec(ResponseCodec[pd.DataFrame]):
         return ResponseCodecId.DATAFRAME_V1
 
     @override
-    def encode(self, response: ModelResponse[pd.DataFrame]) -> StoredResponse:
+    def encode(self, response: ModelResponse[pd.DataFrame]) -> EncodeResult:
         """Write a stream only if an immediate decode preserves equality."""
         try:
             table = pa.Table.from_pandas(response.value, preserve_index=True)
@@ -40,21 +44,25 @@ class PyArrowDataFrameCodec(ResponseCodec[pd.DataFrame]):
             with pa.ipc.new_stream(sink, table.schema) as writer:
                 writer.write_table(table)
             payload = sink.getvalue().to_pybytes()
-            decoded = self.decode(payload)
-        except InvalidPayloadError as exc:
-            raise EncodeFailureError from exc
-        except (ValueError, TypeError, pa.ArrowException) as exc:
-            raise EncodeFailureError from exc
-        if not response.value.equals(decoded.value):
-            raise RoundTripMismatchError
-        return StoredResponse(self.codec_id, payload)
+        except (ValueError, TypeError, pa.ArrowException):
+            return EncodeFailure()
+        decoded = self.decode(payload)
+        if not isinstance(decoded, Decoded):
+            return EncodeFailure()
+        try:
+            equal = response.value.equals(decoded.response.value)
+        except (ValueError, TypeError):
+            return EncodeFailure()
+        if not equal:
+            return RoundTripMismatch()
+        return Encoded(StoredResponse(self.codec_id, payload))
 
     @override
-    def decode(self, payload: bytes) -> ModelResponse[pd.DataFrame]:
+    def decode(self, payload: bytes) -> DecodeResult[pd.DataFrame]:
         """Decode an Arrow IPC stream into an independent DataFrame."""
         try:
             table = pa.ipc.open_stream(payload).read_all()
             value = table.to_pandas()
-        except (ValueError, TypeError, pa.ArrowException) as exc:
-            raise InvalidPayloadError from exc
-        return ModelResponse(value)
+        except (ValueError, TypeError, pa.ArrowException):
+            return InvalidPayload()
+        return Decoded(ModelResponse(value))

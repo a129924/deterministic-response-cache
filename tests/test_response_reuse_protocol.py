@@ -13,6 +13,7 @@ from deterministic_response_cache.response_reuse._cache_store import (
     NotFound,
     TokenWritten,
 )
+from deterministic_response_cache.response_reuse.codecs.contract import Encoded
 from deterministic_response_cache.response_reuse.codecs.json_response import (
     JsonPayload,
     JsonResponseCodec,
@@ -40,7 +41,9 @@ DEFAULT_WRITE_RESULT = TokenWritten()
 
 def stored_json(value: object) -> StoredResponse:
     """Build a real stored envelope for existing protocol branch tests."""
-    return JsonResponseCodec().encode(ModelResponse(cast("JsonPayload", value)))
+    encoded = JsonResponseCodec().encode(ModelResponse(cast("JsonPayload", value)))
+    assert isinstance(encoded, Encoded)
+    return encoded.stored
 
 
 class FakeStore[ResponseT]:

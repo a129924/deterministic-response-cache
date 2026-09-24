@@ -8,10 +8,14 @@ import math
 from typing import cast, override
 
 from deterministic_response_cache.response_reuse.codecs.contract import (
-    EncodeFailureError,
-    InvalidPayloadError,
+    Decoded,
+    DecodeResult,
+    Encoded,
+    EncodeFailure,
+    EncodeResult,
+    InvalidPayload,
     ResponseCodec,
-    UnsupportedPayloadError,
+    UnsupportedPayload,
 )
 from deterministic_response_cache.response_reuse.model_response import ModelResponse
 from deterministic_response_cache.response_reuse.stored_response import (
@@ -48,34 +52,34 @@ class JsonResponseCodec(ResponseCodec[JsonPayload]):
         return ResponseCodecId.JSON_V1
 
     @override
-    def encode(self, response: ModelResponse[JsonPayload]) -> StoredResponse:
+    def encode(self, response: ModelResponse[JsonPayload]) -> EncodeResult:
         """Encode only a lossless dict or list response."""
         try:
             valid = _valid_json_tree(response.value)
-        except RecursionError as exc:
-            raise EncodeFailureError from exc
+        except RecursionError:
+            return EncodeFailure()
         if type(response.value) not in (dict, list) or not valid:
-            raise UnsupportedPayloadError
+            return UnsupportedPayload()
         try:
             payload = json.dumps(
                 response.value,
                 ensure_ascii=False,
                 allow_nan=False,
             ).encode("utf-8")
-            decoded = self.decode(payload)
-        except (TypeError, ValueError, UnicodeError, RecursionError) as exc:
-            raise EncodeFailureError from exc
-        if decoded.value != response.value:
-            raise EncodeFailureError
-        return StoredResponse(self.codec_id, payload)
+        except (TypeError, ValueError, UnicodeError, RecursionError):
+            return EncodeFailure()
+        decoded = self.decode(payload)
+        if not isinstance(decoded, Decoded) or decoded.response.value != response.value:
+            return EncodeFailure()
+        return Encoded(StoredResponse(self.codec_id, payload))
 
     @override
-    def decode(self, payload: bytes) -> ModelResponse[JsonPayload]:
+    def decode(self, payload: bytes) -> DecodeResult[JsonPayload]:
         """Decode a stored JSON dict or list without guessing its format."""
         try:
             value: object = json.loads(payload.decode("utf-8"))
-        except (UnicodeError, ValueError, TypeError) as exc:
-            raise InvalidPayloadError from exc
+        except (UnicodeError, ValueError, TypeError, RecursionError):
+            return InvalidPayload()
         if type(value) not in (dict, list) or not _valid_json_tree(value):
-            raise InvalidPayloadError
-        return ModelResponse(cast("JsonPayload", value))
+            return InvalidPayload()
+        return Decoded(ModelResponse(cast("JsonPayload", value)))

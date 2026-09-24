@@ -3,7 +3,7 @@
 
 """Synchronous orchestration at the Response Reuse boundary."""
 
-from typing import cast
+from typing import assert_never, cast
 
 from deterministic_response_cache.response_reuse._cache_store import (
     CacheStore,
@@ -13,12 +13,14 @@ from deterministic_response_cache.response_reuse._cache_store import (
     TokenWritten,
 )
 from deterministic_response_cache.response_reuse.codecs.contract import (
-    CodecUnavailableError,
-    EncodeFailureError,
-    InvalidPayloadError,
-    RoundTripMismatchError,
-    UnknownCodecError,
-    UnsupportedPayloadError,
+    CodecUnavailable,
+    Decoded,
+    Encoded,
+    EncodeFailure,
+    InvalidPayload,
+    RoundTripMismatch,
+    UnknownCodec,
+    UnsupportedPayload,
 )
 from deterministic_response_cache.response_reuse.codecs.selector import (
     decode_response,
@@ -57,7 +59,7 @@ class ResponseReuseProtocol[IdentityT, PayloadT]:
         self._store = store
         self._eligibility_policy = eligibility_policy
 
-    def lookup(self, confirmed_identity: IdentityT) -> LookupOutcome[PayloadT]:  # noqa: PLR0911
+    def lookup(self, confirmed_identity: IdentityT) -> LookupOutcome[PayloadT]:  # noqa: C901, PLR0911
         """Find a reusable response without interpreting the identity."""
         read_result: object = self._store.read(confirmed_identity)
         match read_result:
@@ -69,14 +71,18 @@ class ResponseReuseProtocol[IdentityT, PayloadT]:
                 msg = "CacheStore.read must not return None"
                 raise TypeError(msg)
             case StoredResponse() as stored:
-                try:
-                    response = cast("ModelResponse[PayloadT]", decode_response(stored))
-                except UnknownCodecError:
-                    return Unavailable(UnavailableReason.UNKNOWN_CODEC)
-                except CodecUnavailableError:
-                    return Unavailable(UnavailableReason.CODEC_UNAVAILABLE)
-                except InvalidPayloadError:
-                    return Unavailable(UnavailableReason.INVALID_PAYLOAD)
+                decoded = decode_response(stored)
+                match decoded:
+                    case UnknownCodec():
+                        return Unavailable(UnavailableReason.UNKNOWN_CODEC)
+                    case CodecUnavailable():
+                        return Unavailable(UnavailableReason.CODEC_UNAVAILABLE)
+                    case InvalidPayload():
+                        return Unavailable(UnavailableReason.INVALID_PAYLOAD)
+                    case Decoded(response=decoded_response):
+                        response = cast("ModelResponse[PayloadT]", decoded_response)
+                    case _ as unreachable:
+                        assert_never(unreachable)
                 decision = self._eligibility_policy.evaluate(response)
                 if type(decision) is ReuseAllowed:
                     return Hit(response)
@@ -93,16 +99,20 @@ class ResponseReuseProtocol[IdentityT, PayloadT]:
         response: ModelResponse[PayloadT],
     ) -> RecordOutcome[PayloadT]:
         """Attempt to retain a response while preserving it on write failure."""
-        try:
-            stored = encode_response(cast("ModelResponse[object]", response))
-        except UnsupportedPayloadError:
-            return NotCached(response, NotCachedReason.UNSUPPORTED_PAYLOAD)
-        except CodecUnavailableError:
-            return NotCached(response, NotCachedReason.CODEC_UNAVAILABLE)
-        except RoundTripMismatchError:
-            return NotCached(response, NotCachedReason.ROUND_TRIP_MISMATCH)
-        except EncodeFailureError:
-            return NotCached(response, NotCachedReason.ENCODE_FAILURE)
+        encoded = encode_response(cast("ModelResponse[object]", response))
+        match encoded:
+            case UnsupportedPayload():
+                return NotCached(response, NotCachedReason.UNSUPPORTED_PAYLOAD)
+            case CodecUnavailable():
+                return NotCached(response, NotCachedReason.CODEC_UNAVAILABLE)
+            case RoundTripMismatch():
+                return NotCached(response, NotCachedReason.ROUND_TRIP_MISMATCH)
+            case EncodeFailure():
+                return NotCached(response, NotCachedReason.ENCODE_FAILURE)
+            case Encoded(stored=stored):
+                pass
+            case _ as unreachable:
+                assert_never(unreachable)
         match self._store.write(confirmed_identity, stored):
             case TokenWritten():
                 return Cached(response)
