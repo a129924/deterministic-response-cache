@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "模型回應的編碼、保存與重用",
+    "quality_profile": "showcase",
+    "viewBox": [1080, 540]
+  },
+  "stages": [
+    { "label": "應用輸入" },
+    { "label": "固定分流" },
+    { "label": "格式編碼" },
+    { "label": "保存與讀取" },
+    { "label": "回應結果" }
+  ],
+  "nodes": [
+    { "id": "response", "type": "external", "label": "ModelResponse", "sublabel": "dict、list 或 DataFrame", "stage": 0, "row": 1 },
+    { "id": "selector", "type": "backend", "label": "固定 selector", "sublabel": "只依 value 選 encoder", "stage": 1, "row": 1 },
+    { "id": "json", "type": "backend", "label": "JSON_V1", "sublabel": "無損 JSON bytes", "stage": 2, "row": 0 },
+    { "id": "dataframe", "type": "backend", "label": "DATAFRAME_V1", "sublabel": "Arrow IPC + equals 門檻", "stage": 2, "row": 2 },
+    { "id": "store", "type": "database", "label": "CacheStore", "sublabel": "只保存 codec id + bytes", "stage": 3, "row": 1 },
+    { "id": "decode", "type": "backend", "label": "依保存 id 解碼", "sublabel": "不猜測 bytes 格式", "stage": 3, "row": 2 },
+    { "id": "hit", "type": "external", "label": "原生 ModelResponse", "sublabel": "每次 hit 取得新物件", "stage": 4, "row": 0 },
+    { "id": "failure", "type": "security", "label": "Unavailable outcome", "sublabel": "壞資料不成 Miss", "stage": 4, "row": 2 }
+  ],
+  "flows": [
+    { "from": "response", "to": "selector", "label": "record 原回應", "variant": "emphasis" },
+    { "from": "selector", "to": "json", "label": "dict／list", "variant": "emphasis" },
+    { "from": "selector", "to": "dataframe", "label": "DataFrame", "variant": "emphasis" },
+    { "from": "json", "to": "store", "label": "JSON bytes", "variant": "emphasis" },
+    { "from": "dataframe", "to": "store", "label": "IPC bytes", "variant": "emphasis" },
+    { "from": "store", "to": "decode", "label": "lookup envelope", "variant": "emphasis" },
+    { "from": "decode", "to": "hit", "label": "驗證後 Hit", "variant": "emphasis" },
+    { "from": "decode", "to": "failure", "label": "未知 id 或壞 bytes", "variant": "security", "route": "straight", "labelDy": 38 }
+  ],
+  "cards": [
+    { "dot": "emerald", "title": "保存契約", "items": ["Store 只接收 StoredResponse", "失真或寫入失敗 → NotCached，保留原回應"] },
+    { "dot": "amber", "title": "讀取契約", "items": ["只依保存的 codec id 解碼", "DataFrame 每次 hit 都獨立"] },
+    { "dot": "rose", "title": "邊界", "items": ["Identity 僅提供 opaque confirmed identity", "壞資料不能降級為 Miss"] }
+  ]
+}

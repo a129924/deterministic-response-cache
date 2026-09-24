@@ -3,6 +3,7 @@
 """Branch mapping tests for the synchronous Response Reuse Protocol."""
 
 from inspect import Parameter, signature
+from typing import cast
 
 import pytest
 
@@ -12,21 +13,34 @@ from deterministic_response_cache.response_reuse._cache_store import (
     NotFound,
     TokenWritten,
 )
+from deterministic_response_cache.response_reuse.codecs.json_response import (
+    JsonPayload,
+    JsonResponseCodec,
+)
 from deterministic_response_cache.response_reuse.eligibility.policy import (
     ReuseAllowed,
     ReuseDenied,
     ReuseEligibilityDecision,
 )
+from deterministic_response_cache.response_reuse.model_response import ModelResponse
 from deterministic_response_cache.response_reuse.outcomes import (
     Cached,
     Hit,
     Miss,
     NotCached,
+    NotCachedReason,
     Unavailable,
+    UnavailableReason,
 )
 from deterministic_response_cache.response_reuse.protocol import ResponseReuseProtocol
+from deterministic_response_cache.response_reuse.stored_response import StoredResponse
 
 DEFAULT_WRITE_RESULT = TokenWritten()
+
+
+def stored_json(value: object) -> StoredResponse:
+    """Build a real stored envelope for existing protocol branch tests."""
+    return JsonResponseCodec().encode(ModelResponse(cast("JsonPayload", value)))
 
 
 class FakeStore[ResponseT]:
@@ -164,38 +178,38 @@ def test_cache_store_channels_are_immutable_slotted_value_objects(
 def test_lookup_returns_hit_and_forwards_opaque_identity_once() -> None:
     """A policy-approved response becomes Hit without inspecting its identity."""
     identity = object()
-    response = object()
-    store = FakeStore(read_result=response)
-    policy = RecordingEligibilityPolicy[object](ReuseAllowed())
+    stored = stored_json({"answer": "yes"})
+    store = FakeStore(read_result=stored)
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
 
     outcome = ResponseReuseProtocol(store, eligibility_policy=policy).lookup(identity)
 
-    assert outcome == Hit(response)
+    assert outcome == Hit(ModelResponse({"answer": "yes"}))
     assert isinstance(outcome, Hit)
-    assert outcome.response is response
+    assert outcome.response.value == {"answer": "yes"}
     assert store.read_identities == [identity]
     assert store.writes == []
-    assert policy.evaluated_responses == [response]
+    assert policy.evaluated_responses == [outcome.response]
 
 
 def test_lookup_returns_miss_without_leaking_a_policy_denied_response() -> None:
     """A policy-denied response cannot become a Hit or trigger a retention write."""
-    response = object()
-    store = FakeStore(read_result=response)
-    policy = RecordingEligibilityPolicy[object](ReuseDenied())
+    stored = stored_json({"answer": "no"})
+    store = FakeStore(read_result=stored)
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseDenied())
 
     outcome = ResponseReuseProtocol(store, eligibility_policy=policy).lookup(object())
 
     assert outcome == Miss()
     assert not isinstance(outcome, Hit)
     assert store.writes == []
-    assert policy.evaluated_responses == [response]
+    assert policy.evaluated_responses == [ModelResponse({"answer": "no"})]
 
 
 def test_lookup_returns_miss_for_not_found_channel() -> None:
     """An explicit absent-entry value channel becomes Miss."""
-    store = FakeStore[object](NotFound())
-    policy = RecordingEligibilityPolicy[object](ReuseAllowed())
+    store = FakeStore[StoredResponse](NotFound())
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
 
     outcome = ResponseReuseProtocol(store, eligibility_policy=policy).lookup(object())
 
@@ -206,12 +220,12 @@ def test_lookup_returns_miss_for_not_found_channel() -> None:
 
 def test_lookup_returns_unavailable_for_cache_store_failure_channel() -> None:
     """Operational read-failure values never become cache misses."""
-    store = FakeStore[object](CacheStoreFailure())
-    policy = RecordingEligibilityPolicy[object](ReuseAllowed())
+    store = FakeStore[StoredResponse](CacheStoreFailure())
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
 
     outcome = ResponseReuseProtocol(store, eligibility_policy=policy).lookup(object())
 
-    assert outcome == Unavailable()
+    assert outcome == Unavailable(UnavailableReason.STORE_FAILURE)
     assert len(store.read_identities) == 1
     assert policy.evaluated_responses == []
 
@@ -219,7 +233,7 @@ def test_lookup_returns_unavailable_for_cache_store_failure_channel() -> None:
 def test_lookup_rejects_none_read_channel_after_one_read() -> None:
     """None is not a valid response, miss, or failure channel."""
     store = NoneReadStore()
-    policy = RecordingEligibilityPolicy[object](ReuseAllowed())
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
 
     with pytest.raises(TypeError, match="must not return None"):
         ResponseReuseProtocol[object, object](
@@ -233,8 +247,8 @@ def test_lookup_rejects_none_read_channel_after_one_read() -> None:
 
 def test_lookup_propagates_store_exception() -> None:
     """Exceptions are transport failures, not Response Reuse value channels."""
-    store = FakeStore[object](NotFound(), read_exception=ValueError("invalid adapter"))
-    policy = RecordingEligibilityPolicy[object](ReuseAllowed())
+    store = FakeStore[StoredResponse](NotFound(), read_exception=ValueError("invalid adapter"))
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
 
     with pytest.raises(ValueError, match="invalid adapter"):
         ResponseReuseProtocol(store, eligibility_policy=policy).lookup(object())
@@ -247,8 +261,8 @@ def test_lookup_rejects_invalid_policy_decisions_after_one_evaluation(
     invalid_result: object,
 ) -> None:
     """No falsey, truthy, or foreign result can be interpreted as a decision."""
-    response = object()
-    store = FakeStore(read_result=response)
+    stored = stored_json({"test": True})
+    store = FakeStore(read_result=stored)
     policy = InvalidDecisionPolicy(invalid_result)
 
     with pytest.raises(TypeError):
@@ -258,7 +272,7 @@ def test_lookup_rejects_invalid_policy_decisions_after_one_evaluation(
         ).lookup(object())
 
     assert store.writes == []
-    assert policy.evaluated_responses == [response]
+    assert policy.evaluated_responses == [ModelResponse({"test": True})]
 
 
 @pytest.mark.parametrize(
@@ -269,23 +283,26 @@ def test_lookup_rejects_derived_policy_decisions_after_one_evaluation(
     derived_decision: ReuseEligibilityDecision,
 ) -> None:
     """Only the two exact decision value types can produce a lookup outcome."""
-    response = object()
-    store = FakeStore(read_result=response)
-    policy = RecordingEligibilityPolicy[object](derived_decision)
+    stored = stored_json({"test": True})
+    store = FakeStore(read_result=stored)
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](derived_decision)
 
     with pytest.raises(TypeError):
         ResponseReuseProtocol(store, eligibility_policy=policy).lookup(object())
 
     assert store.writes == []
-    assert policy.evaluated_responses == [response]
+    assert policy.evaluated_responses == [ModelResponse({"test": True})]
 
 
 def test_lookup_propagates_policy_exception_after_one_evaluation() -> None:
     """A policy exception remains visible instead of becoming a cache outcome."""
-    response = object()
+    response = ModelResponse({"test": True})
     policy_error = ValueError("policy failed")
-    store = FakeStore(read_result=response)
-    policy = RecordingEligibilityPolicy[object](ReuseAllowed(), exception=policy_error)
+    store = FakeStore(read_result=stored_json(response.value))
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](
+        ReuseAllowed(),
+        exception=policy_error,
+    )
 
     with pytest.raises(ValueError, match="policy failed") as error_info:
         ResponseReuseProtocol(store, eligibility_policy=policy).lookup(object())
@@ -306,8 +323,8 @@ def test_protocol_requires_a_keyword_only_eligibility_policy() -> None:
 
 def test_protocol_rejects_omitted_or_positional_eligibility_policy() -> None:
     """The intentional source break is enforced through Python call semantics."""
-    store = FakeStore[object](NotFound())
-    policy = RecordingEligibilityPolicy[object](ReuseAllowed())
+    store = FakeStore[StoredResponse](NotFound())
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
 
     with pytest.raises(TypeError):
         ResponseReuseProtocol(store)  # pyright: ignore[reportCallIssue]
@@ -318,9 +335,9 @@ def test_protocol_rejects_omitted_or_positional_eligibility_policy() -> None:
 def test_record_returns_cached_and_forwards_opaque_objects_once() -> None:
     """A successful write retains the caller's exact identity and response."""
     identity = object()
-    response = object()
-    store = FakeStore(response)
-    policy = RecordingEligibilityPolicy[object](ReuseAllowed())
+    response = ModelResponse({"answer": "yes"})
+    store = FakeStore[StoredResponse](NotFound())
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
 
     outcome = ResponseReuseProtocol(store, eligibility_policy=policy).record(identity, response)
 
@@ -328,33 +345,33 @@ def test_record_returns_cached_and_forwards_opaque_objects_once() -> None:
     assert isinstance(outcome, Cached)
     assert outcome.response is response
     assert store.read_identities == []
-    assert store.writes == [(identity, response)]
+    assert store.writes == [(identity, stored_json(response.value))]
     assert policy.evaluated_responses == []
 
 
 def test_record_returns_not_cached_and_preserves_response_on_write_failure() -> None:
     """An explicit retention-failure value keeps the response available."""
     identity = object()
-    response = object()
-    store = FakeStore(response, write_result=CacheStoreWriteFailure())
-    policy = RecordingEligibilityPolicy[object](ReuseAllowed())
+    response = ModelResponse({"answer": "yes"})
+    store = FakeStore[StoredResponse](NotFound(), write_result=CacheStoreWriteFailure())
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
 
     outcome = ResponseReuseProtocol(store, eligibility_policy=policy).record(identity, response)
 
-    assert outcome == NotCached(response)
+    assert outcome == NotCached(response, NotCachedReason.STORE_WRITE_FAILURE)
     assert isinstance(outcome, NotCached)
     assert outcome.response is response
     assert store.read_identities == []
-    assert store.writes == [(identity, response)]
+    assert store.writes == [(identity, stored_json(response.value))]
     assert policy.evaluated_responses == []
 
 
 def test_record_rejects_foreign_write_channel_after_one_write() -> None:
     """Only explicit write channels may be mapped to record outcomes."""
     identity = object()
-    response = object()
+    response = ModelResponse({"answer": "yes"})
     store = ForeignWriteStore()
-    policy = RecordingEligibilityPolicy[object](ReuseAllowed())
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
 
     with pytest.raises(TypeError, match="must return a write channel value"):
         ResponseReuseProtocol[object, object](
@@ -365,15 +382,15 @@ def test_record_rejects_foreign_write_channel_after_one_write() -> None:
             response,
         )
 
-    assert store.writes == [(identity, response)]
+    assert store.writes == [(identity, stored_json(response.value))]
     assert policy.evaluated_responses == []
 
 
 def test_record_propagates_store_exception() -> None:
     """Exceptions remain visible rather than becoming record outcomes."""
-    response = object()
-    store = FakeStore(response, write_exception=ValueError("invalid adapter"))
-    policy = RecordingEligibilityPolicy[object](ReuseAllowed())
+    response = ModelResponse({"answer": "yes"})
+    store = FakeStore[StoredResponse](NotFound(), write_exception=ValueError("invalid adapter"))
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
 
     with pytest.raises(ValueError, match="invalid adapter"):
         ResponseReuseProtocol(store, eligibility_policy=policy).record(object(), response)

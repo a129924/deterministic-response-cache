@@ -4,18 +4,20 @@
 """Contract tests for the process-local InMemoryCacheStore."""
 
 import pytest
-from deterministic_response_cache.response_reuse.eligibility.policy import (
-    ReuseAllowed,
-    ReuseEligibilityDecision,
-)
 
 from deterministic_response_cache.response_reuse._cache_store import (
     CacheStoreFailure,
     NotFound,
     TokenWritten,
 )
+from deterministic_response_cache.response_reuse.eligibility.policy import (
+    ReuseAllowed,
+    ReuseEligibilityDecision,
+)
+from deterministic_response_cache.response_reuse.model_response import ModelResponse
 from deterministic_response_cache.response_reuse.outcomes import Cached, Hit, Miss
 from deterministic_response_cache.response_reuse.protocol import ResponseReuseProtocol
+from deterministic_response_cache.response_reuse.stored_response import StoredResponse
 from deterministic_response_cache.response_reuse.stores.in_memory import (  # pyright: ignore[reportPrivateUsage]
     InMemoryCacheStore,
     _MissingEntry,  # pyright: ignore[reportPrivateUsage]
@@ -154,14 +156,14 @@ def test_reserved_read_channels_cannot_be_retained(response: object | None) -> N
 def test_store_is_injectable_into_the_response_reuse_protocol() -> None:
     """The concrete store satisfies the existing generic internal port."""
     protocol = ResponseReuseProtocol(
-        InMemoryCacheStore[str, str](),
-        eligibility_policy=AlwaysAllowPolicy[str](),
+        InMemoryCacheStore[str, StoredResponse](),
+        eligibility_policy=AlwaysAllowPolicy[ModelResponse[dict[str, str]]](),
     )
 
     miss = protocol.lookup("opaque-key")
-    cached = protocol.record("opaque-key", "response")
+    cached = protocol.record("opaque-key", ModelResponse({"answer": "response"}))
     hit = protocol.lookup("opaque-key")
 
     assert miss == Miss()
-    assert cached == Cached("response")
-    assert hit == Hit("response")
+    assert cached == Cached(ModelResponse({"answer": "response"}))
+    assert hit == Hit(ModelResponse({"answer": "response"}))
