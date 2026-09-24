@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: c17-plan-authoring
+phase: c21-plan-authoring
 created: 2026-09-17
 ---
 
@@ -393,3 +393,31 @@ contract and authorizes no reply or resolution.
   C20 green-subject-SHA-bound classification receipt. It has exactly two pairs: `lCkFu`/`4079664575` and
   `lDH2-`/`4079885261`; it preselects neither outcome nor reply. Only its exact committed
   `REPLY_AND_RESOLVE` entry can later authorize the corresponding reply and resolve action.
+
+## C21 Current-Head Single-Pair Classification Successor Stages (authoritative)
+
+C21 supersedes C20 only for `PRRT_kwDOUJTij86ldYVf`/`4090457782`. It binds C20 subject
+`fa1468301af1906a05ee31ba0d267d2270d7af5f`, passing Tester evidence commit
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`, approved Reviewer evidence commit
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`, and current PR head
+`a1aae44897c0f0b0ac52f1ca1697554c2f79cdb5`. It changes no source, tests, docs, Archify, README or PR state.
+
+- [x] C21 plan-authoring
+- [ ] C21 planning-candidate-commit
+- [ ] C21 independent Plan-Reviewer receipt
+- [ ] C21 receipt-only commit
+- [ ] C21 independent single-pair classification receipt
+- [ ] C21 classification-receipt-only commit
+- [ ] C21 Planner routing for the exact classified pair
+
+### C21 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C21 planning artifacts; prefill no candidate SHA, receipt
+  verdict, classification outcome, reply or resolution.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write an approved standard candidate-SHA-bound receipt,
+  then unchanged-sole-commit it.
+- [ ] **Actor: Independent Reviewer / Implementer.** Write and unchanged-sole-commit only
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-a1aae44897c0f0b0ac52f1ca1697554c2f79cdb5.json`.
+  It has exactly eight top-level keys and exactly one pair: `PRRT_kwDOUJTij86ldYVf`/`4090457782`.
+- [ ] **Actor: Planner.** Route only an exact committed `REPLY_AND_RESOLVE` entry. Do not act on every other
+  thread, including all existing Human-only locks; `ADDRESS` returns to planning and `HUMAN_CHECK` remains open.

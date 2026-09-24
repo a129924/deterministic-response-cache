@@ -323,3 +323,33 @@ candidate、receipt、subject 或 classification，也不將任一舊 receipt �
 - 所有未列路徑、所有既有 candidate/receipt/evidence、source/public API、README、architecture index、其他 dataflow
   artifacts、所有其他 PR threads 與全部既有 Human-only locks 都是 ReadOnly。C20 不授權 merge、release、post-merge 或
   Human review。
+
+## C21 current-head single-pair classification successor
+
+Human 已授權 C21 作為 C20 之後唯一的 current-head classification successor。它只處理
+`PRRT_kwDOUJTij86ldYVf`/`4090457782`，並固定消費 C20 immutable subject
+`fa1468301af1906a05ee31ba0d267d2270d7af5f`、passing Tester evidence commit
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`、approved independent Reviewer evidence commit
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e` 及 current PR head
+`a1aae44897c0f0b0ac52f1ca1697554c2f79cdb5`。它不重寫 C20 或任何 predecessor evidence、source、tests、docs、
+Archify、README、PR 或 thread state。
+
+- C21 candidate 只可修改本 requirements、`technical-spec.md`、topic plan、topic spec 與 step tracker；不得預填自身
+  SHA、Plan-Reviewer verdict、classification outcome、reply 或 resolution。candidate committed 後，獨立
+  Plan-Reviewer 必須先在標準 immutable path
+  `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` 寫 approved
+  receipt，且僅 Implementer 可原樣以 sole receipt-only commit 提交。
+- C21 classification receipt 的唯一 immutable path 是
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-a1aae44897c0f0b0ac52f1ca1697554c2f79cdb5.json`。
+  Independent Reviewer 是唯一 writer；僅 Implementer 可原樣以 sole evidence-only commit 提交；不得覆寫、重用
+  C20 receipt 或與其他檔案共用 commit。
+- receipt 必須是唯一 JSON object，top-level keys 恰為 `schema_version`、`topic`、
+  `implementation_subject_commit`、`tester_evidence_commit`、`implementation_review_evidence_commit`、
+  `pr_head_commit`、`classifications`、`recorded_by`。固定值為 integer `1`、`loaded-runtime-cache`、上述四個完整
+  40-hex SHA、exactly one-entry array、`Independent Reviewer`。唯一 entry 的 keys 恰為 `thread`、`comment`、
+  `outcome`、`reply`，且固定為 `PRRT_kwDOUJTij86ldYVf`/`4090457782`。
+- Independent Reviewer 在 future receipt 獨立決定 `REPLY_AND_RESOLVE`、`ADDRESS` 或 `HUMAN_CHECK`，candidate 不得
+  預填 outcome 或 reply。僅 `REPLY_AND_RESOLVE` 可有 non-empty factual reply，並授權 Implementer 對該 exact pair
+  留下該 reply 並 resolve；`ADDRESS` 和 `HUMAN_CHECK` 必為 JSON `null`，前者返回 Planner、後者保持 open。所有其他
+  threads、既有 Human-only locks 與未列路徑維持 ReadOnly。任何錯誤 writer、path、schema、SHA、ancestor、sole-commit、
+  pair set、enum 或 nullability 一律 fail closed。

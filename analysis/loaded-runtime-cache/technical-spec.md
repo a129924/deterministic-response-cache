@@ -431,3 +431,29 @@ It has exactly eight top-level keys: `schema_version`, `topic`, `implementation_
 `outcome`, `reply`, for `lCkFu`/`4079664575` and `lDH2-`/`4079885261`. Independent Reviewer alone chooses
 `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; only the first has a non-empty factual reply. Implementer alone may
 unchanged-sole-commit the receipt. No outcome, reply, PR head, subject or evidence SHA is prefilled by C20 planning.
+
+## C21 current-head single-pair classification receipt contract
+
+C21 is planning-only and is the sole successor authorized to classify
+`PRRT_kwDOUJTij86ldYVf`/`4090457782` at current head `a1aae44897c0f0b0ac52f1ca1697554c2f79cdb5`. It consumes only C20
+subject `fa1468301af1906a05ee31ba0d267d2270d7af5f`, passing Tester-evidence commit
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`, and approved implementation-review-evidence commit
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`; it creates no implementation subject, Tester/Reviewer evidence, source,
+test, documentation, architecture, Archify, PR reply or resolution before its exact committed classification entry
+authorizes action.
+
+The C21 candidate is exactly the five planning artifacts and pre-fills no candidate SHA, verdict, classification
+outcome, reply or resolution. After a committed approved standard candidate-SHA-bound Plan-Reviewer receipt, only
+Independent Reviewer may write
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-a1aae44897c0f0b0ac52f1ca1697554c2f79cdb5.json`.
+Only Implementer may commit that unchanged file in one sole evidence-only commit.
+
+The receipt has exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`. Their values bind
+schema `1`, topic `loaded-runtime-cache`, the four C20/current-head full 40-hex SHAs above, exactly one
+classification, and writer `Independent Reviewer`. Its one entry has only `thread`, `comment`, `outcome`, `reply`
+and is exactly `PRRT_kwDOUJTij86ldYVf`/`4090457782`. Independent Reviewer alone chooses
+`REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; only `REPLY_AND_RESOLVE` has a non-empty factual reply. Every other outcome
+uses JSON `null`. Only the exact committed `REPLY_AND_RESOLVE` entry permits Implementer to leave that exact reply
+and resolve that exact thread. `ADDRESS` returns to Planner; `HUMAN_CHECK` remains open. Any malformed, extra,
+stale, non-sole, cross-subject, wrong-head, wrong-pair, invalid-enum or invalid-nullability record fails closed.

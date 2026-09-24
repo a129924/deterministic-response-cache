@@ -940,3 +940,46 @@ actual PR head includes this committed chain and perform Phase 4.5 alignment. On
 write the already-defined C20 green-subject-bound, exact-two-pair classification receipt for
 `lCkFu`/`4079664575` and `lDH2-`/`4079885261`; Implementer may commit that receipt unchanged and alone. This
 state alignment creates no C21, no contract change, and no authorization to reply to or resolve a thread.
+
+## C21 C20 Current-Head Single-Pair Classification Successor (authoritative current routing)
+
+C21 supersedes C20 only for a fresh, immutable classification of
+`PRRT_kwDOUJTij86ldYVf`/`4090457782`. It preserves the Loaded Runtime Cache mission, protocol-first boundary,
+completed C20 chain, all predecessor provenance and all Human-only locks.
+
+| Field | Contract |
+| --- | --- |
+| Goal | Independently classify exactly one previously unclassified current-head thread, without changing product behavior or PR authority before a committed exact receipt permits it. |
+| In-Scope | Exactly five C21 planning artifacts; standard candidate-SHA-bound Plan-Reviewer receipt; one C20-subject/current-head-bound immutable classification receipt; later exact reply/resolve only if its committed entry is `REPLY_AND_RESOLVE`. |
+| Out-Of-Scope | Implementation, source, tests, dataflow, architecture, README, lifecycle, new C20 evidence, release, merge, post-merge and Human review. |
+| ReadOnly | Every unlisted path; C20 and predecessor records; every thread except the one exact C21 receipt entry; all existing Human-only locks. |
+| Written | Standard C21 Plan-Reviewer receipt, then one C21 classification receipt. |
+| Modified | Candidate: exactly the five planning artifacts. Classification: one new receipt file only. |
+| Deleted | None. |
+
+### C21 immutable receipt contract
+
+Candidate planning cannot prefill its SHA, review verdict, classification outcome, reply or resolution. After a
+committed approved standard Plan-Reviewer receipt, Independent Reviewer alone writes
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-fa1468301af1906a05ee31ba0d267d2270d7af5f-a1aae44897c0f0b0ac52f1ca1697554c2f79cdb5.json`.
+Implementer alone commits it unchanged in a sole evidence-only commit. The exact eight top-level keys are
+`schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; they bind schema `1`,
+topic `loaded-runtime-cache`, C20 subject `fa1468301af1906a05ee31ba0d267d2270d7af5f`, Tester-evidence commit
+`6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`, Reviewer-evidence commit
+`3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e`, and PR head
+`a1aae44897c0f0b0ac52f1ca1697554c2f79cdb5`.
+
+`classifications` contains exactly one entry with only `thread`, `comment`, `outcome`, `reply`, for
+`PRRT_kwDOUJTij86ldYVf`/`4090457782`. Independent Reviewer alone determines
+`REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; candidate planning supplies neither outcome nor reply.
+`REPLY_AND_RESOLVE` requires a non-empty factual reply and is the only outcome that permits Implementer to reply and
+resolve this exact pair. `ADDRESS` and `HUMAN_CHECK` require JSON `null`; `ADDRESS` returns to Planner and
+`HUMAN_CHECK` remains open. All other threads and Human-only locks are excluded. Any key, role, path, SHA, ancestor,
+sole-commit, pair-count, enum or nullability defect fails closed.
+
+### C21 transition / handoff
+
+`planned` → C21 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → independent C21
+classification receipt-only commit → Planner classification routing. This receipt may route only its exact committed
+`REPLY_AND_RESOLVE` entry to Implementer; it never approves PR, merge, release or post-merge.
