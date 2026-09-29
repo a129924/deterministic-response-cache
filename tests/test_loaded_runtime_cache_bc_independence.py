@@ -262,6 +262,14 @@ def _is_forbidden_import_callable_expression(
             ("callable", "builtins.__import__"),
             ("callable", "importlib.import_module"),
         }
+    if isinstance(expression, ast.Attribute) and isinstance(expression.value, ast.NamedExpr):
+        named_expression = expression.value
+        resolved = _resolve_forbidden_alias(named_expression.value, modules, callables)
+        return (
+            type(named_expression.target) is ast.Name
+            and resolved == ("module", "importlib")
+            and expression.attr == "import_module"
+        )
     if isinstance(expression, ast.Name):
         return expression.id == "__import__" or (
             expression.id in callables
