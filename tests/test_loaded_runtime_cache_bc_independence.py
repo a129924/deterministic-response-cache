@@ -421,6 +421,10 @@ def test_identity_bc_does_not_directly_import_loaded_runtime_cache() -> None:
                 "module_cache['identity'] = object()\n"
             ),
         ),
+        (
+            "attribute-base-named-expression-importlib-alias",
+            "import importlib\n(loader := importlib).import_module('identity')\n",
+        ),
     ],
 )
 def test_bc_independence_rejects_each_dynamic_import_bypass(
