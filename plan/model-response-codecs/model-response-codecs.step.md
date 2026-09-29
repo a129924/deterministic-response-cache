@@ -1,6 +1,7 @@
 ---
 topic: model-response-codecs
-phase: correction-fix-5-plan-authoring
+phase: correction-fix-6-plan-authoring
+phase_note: authoring snapshot at 66de1646462e9fc0d978e1a986fcb928f752cf38; not live routing authority
 created: 2026-09-24
 ---
 
@@ -42,11 +43,11 @@ created: 2026-09-24
 - [X] **Actor:** Tester／Implementer — **Action:** fix-4 passing Tester evidence 已由 sole evidence-only commit `2cef0406fb401be36563c247ff409bc7ed7dc44c` 提交。
 - [X] **Actor:** Independent Reviewer／Implementer — **Action:** fix-4 approved Reviewer evidence 已由 sole evidence-only commit `853628596f177896b09c72a25f1a9f3b6391be46` 提交。
 - [X] **Actor:** Planner／Implementer — **Action:** fix-4 已通過 Phase 4.5 並發布 Ready PR #11 head `b66f77d6382b22b147e556e270e233a8abb62fe5`；thread 1 resolved、2–4 unresolved。Human 已選 DataFrame `.equals`/JSON 值比較；進 fix-5 needs-rework。
-- [ ] **Actor:** Implementer — **Action:** 只提交 analysis requirements/technical spec、parent plan/spec/step M 與 fix-5 correction plan/step A 的 exact-seven non-merge planning candidate；不混入 code/evidence。
-- [ ] **Actor:** Independent Plan-Reviewer／Implementer — **Action:** Reviewer 審 committed fix-5 candidate，只寫 active extended receipt `correction-fix-5-plan-review-log.json`；Implementer 原樣 sole evidence-only commit，Planner 僅 route committed approved。Needs-rework 停回 Planner／Plan-Creator 新 path。
-- [ ] **Actor:** Implementer — **Action:** 只修改 fix-5 exact-six source/test paths，建立新 immutable subject；不得覆寫 initial/fix-1/fix-2/fix-3/fix-4 evidence。
-- [ ] **Actor:** Tester／Implementer — **Action:** Tester 對新 subject 寫 `tester-evidence.fix-5.json` actual command/exit-code evidence；Implementer 原樣 sole evidence-only commit。
-- [ ] **Actor:** Independent Reviewer／Implementer — **Action:** Reviewer 只消費同 subject committed passing fix-5 Tester evidence，寫 `implementation-review-log.fix-5.json`；Implementer 原樣 sole evidence-only commit。Tester failing 或 Reviewer needs-rework 停回 Planner／Plan-Creator 新 evidence paths，不可進 Phase 4.5。
+- [X] **Actor:** Implementer — **Action:** 已只提交 analysis requirements/technical spec、parent plan/spec/step M 與 fix-5 correction plan/step A 的 exact-seven non-merge planning candidate `ea38d4404e5509047d5d3c20acdbdfad0ec5a049`；無 code/evidence。
+- [X] **Actor:** Independent Plan-Reviewer／Implementer — **Action:** Reviewer 已審 committed fix-5 candidate 並寫 approved extended receipt `correction-fix-5-plan-review-log.json`；Implementer 原樣 sole evidence-only commit `fc1524c91f7d1d5d663bdbbe958aa66cbff8f480`，Planner 依 committed approved route。
+- [X] **Actor:** Implementer — **Action:** 已只修改 fix-5 exact-six source/test paths，建立 immutable subject `a6e5db20005c55f2c10a978001f0c0380811c2da`；未覆寫 initial/fix-1/fix-2/fix-3/fix-4 evidence。
+- [X] **Actor:** Tester／Implementer — **Action:** Tester 已對該 subject 寫 passing `tester-evidence.fix-5.json` actual command/exit-code evidence；Implementer 原樣 sole evidence-only commit `8a1689c62407f7929bf9cb7f905964d549d8512a`。
+- [X] **Actor:** Independent Reviewer／Implementer — **Action:** Reviewer 已只消費同 subject committed passing fix-5 Tester evidence，寫 approved `implementation-review-log.fix-5.json`；Implementer 原樣 sole evidence-only commit `66de1646462e9fc0d978e1a986fcb928f752cf38`。Phase 4.5 尚待 Planner 重核。
 
 ## Implementation Steps
 
@@ -82,7 +83,7 @@ created: 2026-09-24
 
 - Source plan：`plan/model-response-codecs/model-response-codecs.plan.md`；analysis routing 為 strict mode。本 tracker 不代表 Plan-Reviewer approval。
 - Topic selector：`topic=model-response-codecs; branch=topic/model-response-codecs; managed-path-intent=/Users/andrew/code/python/worktrees/model-response-codecs; primary-worktree=false`。
-- 原 `## Implementation Steps` 1–10 對原 subject、11–12 對 fix-2、13–16 對 fix-3、17–18 對 fix-4 subject 均已完成；fix-1 planning receipt、fix-3 implementation Reviewer 的 `needs-rework` 保留歷史。Fix-4 已 approved/Phase 4.5/published；PR #11 OPEN/Ready、head `b66f77d6382b22b147e556e270e233a8abb62fe5`；thread 1 resolved、2–4 unresolved。19–21 pending，僅 fix-5 committed approved extended planning receipt 經 Planner route 後可做。各 marker 僅依真實 committed evidence 更新。
+- 截至 `66de1646462e9fc0d978e1a986fcb928f752cf38`，`## Implementation Steps` 1–21 均 `[X]`：1–10 原 subject、11–12 fix-2、13–16 fix-3、17–18 fix-4、19–21 fix-5。fix-1 planning receipt、fix-3 implementation Reviewer 的 `needs-rework` 保留歷史。Fix-4 已 approved/Phase 4.5/published；fix-5 candidate `ea38d4404e5509047d5d3c20acdbdfad0ec5a049`、approved Plan-Reviewer receipt `fc1524c91f7d1d5d663bdbbe958aa66cbff8f480`、subject `a6e5db20005c55f2c10a978001f0c0380811c2da`、passing Tester evidence `8a1689c62407f7929bf9cb7f905964d549d8512a`、approved Reviewer evidence `66de1646462e9fc0d978e1a986fcb928f752cf38` 已提交。當時 PR #11 OPEN/Ready remote head `b66f77d6382b22b147e556e270e233a8abb62fe5`；fix-5 Phase 4.5/push/thread tail pending，live thread 本輪查詢未成功。後續狀態須 Planner 核對當下 committed evidence、Git 與 live PR。
 - Normal planning receipt 不含 candidate SHA；只有它的 sole commit direct parent 是 exact-five planning candidate 時，Planner 才可由 Git topology 綁定。Tester／Independent Reviewer evidence 須同 topic、同 immutable full-SHA subject；不能跨 topic 重用，也不能從 chat、branch 或本 tracker 自行推斷 approval。
 - Human 獨占 PR review、merge、release、post-merge、tag 與 final summary；此 topic 不執行 release。
-- Active fix-5 五個 conditional artifact paths、writer、schema 與先後順序以 parent plan 與 `model-response-codecs.correction-fix-5-plan.md` 為準。原/fix-1/fix-2/fix-3 的已提交 SHA/verdict 保持 immutable；fix-4 candidate `e916ed767d6a4155b6368a530f18a5009401e389`／approved receipt `5ff48411db917fded0ed8bcd8ced45b802e68ff1`／subject `9a0eef1845113801c4d250826df4e9a9dee09917`／passing Tester `2cef0406fb401be36563c247ff409bc7ed7dc44c`／approved Reviewer `853628596f177896b09c72a25f1a9f3b6391be46`／published head `b66f77d6382b22b147e556e270e233a8abb62fe5` 均 immutable predecessor。未寫的 fix-1 Tester/Reviewer paths 保持 absent；fix-5 candidate/subject/evidence SHA、verdict 與 thread reclassification 尚未產生。
+- Active fix-6 exact-four planning paths、唯一新 extended Plan-Reviewer receipt、writer/schema/先後順序以 parent plan 與 `model-response-codecs.correction-fix-6-plan.md` 為準；其 committed approved receipt 僅授權 Planner 重核既有 fix-5 Phase 4.5，不建立新 subject、Tester 或 Independent Reviewer evidence。原/fix-1/fix-2/fix-3/fix-4/fix-5 SHA/verdict 保持 immutable；未寫的 fix-1 Tester/Reviewer paths 仍 absent。截至 base `66de1646462e9fc0d978e1a986fcb928f752cf38`，fix-6 candidate/tree/blob/receipt verdict、fix-5 publish、新 remote head 與 thread reclassification 尚未產生或核實；frontmatter `phase` 只記本輪 authoring snapshot，並非 live routing authority。未來狀態必須依 Planner 當下 committed evidence、Git 與 live PR 核對，不預填。tdd-test-authoring 與 code-review workflow stages 保持 pending。
