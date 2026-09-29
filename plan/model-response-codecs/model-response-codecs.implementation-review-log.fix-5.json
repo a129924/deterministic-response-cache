@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "topic": "model-response-codecs",
+  "correction_id": "fix-5",
+  "implementation_subject_commit": "a6e5db20005c55f2c10a978001f0c0380811c2da",
+  "tester_evidence_commit": "8a1689c62407f7929bf9cb7f905964d549d8512a",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "recorded_by": "Independent Reviewer"
+}
