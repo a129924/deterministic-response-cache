@@ -42,6 +42,24 @@ def _valid_json_tree(value: object) -> bool:
     return False
 
 
+def _valid_utf8_strings(value: object) -> bool:
+    """Reject lone surrogates in stored JSON keys and values."""
+    if type(value) is str:
+        try:
+            value.encode("utf-8")
+        except UnicodeEncodeError:
+            return False
+        return True
+    if type(value) is list:
+        return all(_valid_utf8_strings(item) for item in cast("list[object]", value))
+    if type(value) is dict:
+        return all(
+            _valid_utf8_strings(key) and _valid_utf8_strings(item)
+            for key, item in cast("dict[str, object]", value).items()
+        )
+    return True
+
+
 class JsonResponseCodec(ResponseCodec[JsonPayload]):
     """UTF-8 JSON codec with explicit root and round-trip checks."""
 
@@ -83,7 +101,7 @@ class JsonResponseCodec(ResponseCodec[JsonPayload]):
         if type(value) not in (dict, list):
             return InvalidPayload()
         try:
-            valid = _valid_json_tree(value)
+            valid = _valid_json_tree(value) and _valid_utf8_strings(value)
         except RecursionError:
             return InvalidPayload()
         if not valid:

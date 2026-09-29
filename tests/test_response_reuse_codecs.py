@@ -124,6 +124,27 @@ def test_json_decode_reports_invalid_payload_for_parseable_deep_array() -> None:
     assert JsonResponseCodec().decode(payload) == InvalidPayload()
 
 
+@pytest.mark.parametrize(
+    "payload",
+    [
+        b'{"value":"\\ud800"}',
+        b'{"\\udfff":"value"}',
+        b'{"nested":[{"value":"\\ud800"}]}',
+    ],
+)
+def test_json_decode_rejects_lone_surrogate_in_value_or_key(payload: bytes) -> None:
+    """Parseable escaped lone surrogates are invalid stored JSON data."""
+    assert isinstance(json.loads(payload), dict)
+    assert JsonResponseCodec().decode(payload) == InvalidPayload()
+
+
+def test_json_decode_accepts_valid_surrogate_pair() -> None:
+    """A complete escaped pair decodes to a valid Unicode scalar."""
+    decoded = JsonResponseCodec().decode(b'{"emoji":"\\ud83d\\ude00"}')
+    assert isinstance(decoded, Decoded)
+    assert decoded.response.value == {"emoji": "😀"}
+
+
 def test_fixed_selector_rejects_other_payloads_and_unknown_id() -> None:
     """No registry or byte sniffing can make a foreign format usable."""
     assert encode_response(ModelResponse(42)) == UnsupportedPayload()

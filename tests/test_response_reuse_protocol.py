@@ -251,6 +251,21 @@ def test_lookup_deep_json_returns_invalid_payload_without_evaluating_policy() ->
     assert policy.evaluated_responses == []
 
 
+def test_lookup_lone_surrogate_returns_invalid_payload_without_policy() -> None:
+    """Malformed Unicode in a stored key cannot become a reusable hit."""
+    identity = object()
+    stored = StoredResponse(ResponseCodecId.JSON_V1, b'{"\\ud800":"value"}')
+    store = FakeStore(read_result=stored)
+    policy = RecordingEligibilityPolicy[ModelResponse[object]](ReuseAllowed())
+
+    outcome = ResponseReuseProtocol(store, eligibility_policy=policy).lookup(identity)
+
+    assert outcome == Unavailable(UnavailableReason.INVALID_PAYLOAD)
+    assert not isinstance(outcome, (Hit, Miss))
+    assert store.read_identities == [identity]
+    assert policy.evaluated_responses == []
+
+
 def test_lookup_rejects_none_read_channel_after_one_read() -> None:
     """None is not a valid response, miss, or failure channel."""
     store = NoneReadStore()

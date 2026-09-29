@@ -277,6 +277,33 @@ def test_deep_json_lookup_is_unavailable_without_policy_evaluation() -> None:
     assert policy.evaluated == []
 
 
+@pytest.mark.parametrize(
+    "payload",
+    [b'{"value":"\\ud800"}', b'{"\\udfff":"value"}', b'{"nested":["\\ud800"]}'],
+)
+def test_lone_surrogate_lookup_never_hits_or_evaluates_policy(
+    payload: bytes,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """An escaped lone surrogate is unavailable before eligibility evaluation."""
+    identity = object()
+    store = InMemoryCacheStore[object, StoredResponse]()
+    store.write(identity, StoredResponse(ResponseCodecId.JSON_V1, payload))
+    policy = AllowPolicy()
+    evaluated: list[ModelResponse[object]] = []
+
+    def evaluate(response: ModelResponse[object]) -> ReuseEligibilityDecision:
+        evaluated.append(response)
+        return ReuseAllowed()
+
+    monkeypatch.setattr(policy, "evaluate", evaluate)
+    outcome = ResponseReuseProtocol(store, eligibility_policy=policy).lookup(identity)
+
+    assert outcome == Unavailable(UnavailableReason.INVALID_PAYLOAD)
+    assert not isinstance(outcome, (Hit, Miss))
+    assert evaluated == []
+
+
 def test_foreign_malformed_envelope_is_unavailable() -> None:
     """A foreign Store entry with invalid shape or bytes fails closed."""
     identity = object()
@@ -321,6 +348,8 @@ def test_json_only_direct_import_works_without_site_packages() -> None:
         "from deterministic_response_cache.response_reuse.outcomes "
         "import Unavailable, UnavailableReason;"
         "value = ModelResponse({'answer': [1]});"
+        "assert value == ModelResponse({'answer': [1]});"
+        "assert ModelResponse([1]) == ModelResponse([1]);"
         "encoded = encode_response(value);"
         "assert isinstance(encoded, Encoded);"
         "decoded = decode_response(encoded.stored);"
