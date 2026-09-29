@@ -1167,3 +1167,44 @@ paths. Any binding, schema, writer, pair, enum, nullability or sole-commit defec
 → green/passing evidence → independent approved review evidence → Planner actual-head verification → independent C25
 classification receipt-only commit → Planner routing. C25 does not itself reply, resolve, approve, merge, release or
 post-merge.
+
+## C26 Current-Head Seven-Pair Classification Successor (authoritative current routing)
+
+C26 supersedes C25 only for a fresh, independent classification of the exact seven current-head pairs below. It
+preserves the Loaded Runtime Cache mission, protocol-first boundary, C25 evidence and every locked decision. It creates
+no code, test, documentation, dataflow, architecture, reply or resolution until its exact committed receipt authorizes
+later routing.
+
+| Field | Contract |
+| --- | --- |
+| Goal | Independently classify exactly seven new/open current-head pairs without changing product behavior or PR authority before a committed exact receipt. |
+| In-Scope | Exactly five C26 planning artifacts; standard candidate-SHA-bound Plan-Reviewer receipt; one C25-subject/current-head-bound immutable seven-pair classification receipt; later exact action only for a committed `REPLY_AND_RESOLVE` entry. |
+| Out-Of-Scope / Non-Goal | Implementation, source, tests, docs, dataflow, architecture, README, lifecycle, PR approval, Human review, merge, release and post-merge. |
+| ReadOnly | Every unlisted path; C25 and predecessor artifacts; C25 `lfQl9`; all threads other than the exact seven receipt entries; Human-only `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, `lfQmF`. |
+| Written | Standard C26 Plan-Reviewer receipt, then one C26 classification receipt. |
+| Modified | Candidate: exactly the five planning artifacts. Classification: one new receipt only. |
+| Deleted | None. |
+
+### C26 immutable receipt contract
+
+Candidate planning pre-fills neither candidate SHA, review verdict, classification outcome, reply nor resolution. After a
+committed approved standard Plan-Reviewer receipt, Independent Reviewer alone writes
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-13f987a41119590621671c429293cf549055672b-8bd9460950237c48c9befb73a1c5b80d084e88ae.json`; Implementer alone commits it unchanged in a sole evidence-only commit.
+Its exact eight top-level keys are `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`, binding `1`,
+`loaded-runtime-cache`, C25 subject `13f987a41119590621671c429293cf549055672b`, Tester evidence
+`e85f936505a323e6c84c02e90f4c4114e39b6505`, Reviewer evidence
+`24d5141332cbc4dcf7a87dea7f134207a16ab37e`, current-head base
+`8bd9460950237c48c9befb73a1c5b80d084e88ae`, exactly seven entries and `Independent Reviewer`.
+
+Each entry has exactly `thread`, `comment`, `outcome`, `reply`; its pair set is exactly
+`ld9Ai`/`4090688118`, `lfYsF`/`4091265104`, `lfYsH`/`4091265108`, `lfYsK`/`4091265115`, `m8u00`/`4129370918`,
+`m8u04`/`4129370926`, `m8u09`/`4129370931`. Reviewer independently selects
+`REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`. Only exact committed `REPLY_AND_RESOLVE` with a non-empty factual reply may
+permit the matching reply/resolve. `ADDRESS` and `HUMAN_CHECK` require JSON `null` and return to Planner/open state.
+Any binding, schema, writer, pair, enum, nullability, staleness or sole-commit defect fails closed.
+
+### C26 transition / handoff
+
+`planned` → C26 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → independent C26
+classification receipt-only commit → Planner routing. This never approves a PR, merge, release or post-merge.

@@ -501,3 +501,33 @@ open/unclassified threads remain untouched.
    frozen scanner path is out of scope and fails review.
 2. Any C25 production/docs/dataflow/predecessor-evidence change, `lfQmF` action, or malformed/stale/non-sole
    candidate/evidence/classification record fails closed and authorizes no PR action.
+
+## C26 Current-Head Seven-Pair Classification Scenarios
+
+### Scenario 42 — C25-bound immutable seven-pair receipt
+
+Given C25 green subject `13f987a41119590621671c429293cf549055672b`, passing Tester evidence commit
+`e85f936505a323e6c84c02e90f4c4114e39b6505`, approved Reviewer evidence commit
+`24d5141332cbc4dcf7a87dea7f134207a16ab37e`, current-head base
+`8bd9460950237c48c9befb73a1c5b80d084e88ae`, and a committed approved C26 Plan-Reviewer receipt, when Independent
+Reviewer creates the classification record, then only
+`loaded-runtime-cache.thread-classification-receipt-13f987a41119590621671c429293cf549055672b-8bd9460950237c48c9befb73a1c5b80d084e88ae.json`
+is valid and only Implementer may commit it unchanged alone. It has exactly eight top-level keys and exactly seven
+entries with only `thread`, `comment`, `outcome`, `reply` for `ld9Ai`/`4090688118`, `lfYsF`/`4091265104`,
+`lfYsH`/`4091265108`, `lfYsK`/`4091265115`, `m8u00`/`4129370918`, `m8u04`/`4129370926`, and
+`m8u09`/`4129370931`.
+
+### Scenario 43 — independent disposition and protected exclusions
+
+Given the exact C26 pair set, Reviewer independently determines every outcome and reply; planning supplies neither.
+Only committed `REPLY_AND_RESOLVE` with a non-empty factual reply permits the matching exact Implementer reply/resolve.
+`ADDRESS` and `HUMAN_CHECK` require null reply and route to Planner/open state. `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`,
+and `lfQmF` stay Human-only/open; C25 `lfQl9` and every unlisted thread stay untouched.
+
+## C26 Error / Edge Cases
+
+1. A path without the fixed C25-subject/current-head suffix, incorrect C25 binding, missing/extra JSON key or pair,
+   duplicate pair, wrong writer, stale head, non-sole commit, invalid enum/nullability, or preclassified candidate
+   fails closed and authorizes no action.
+2. Any source, test, documentation, dataflow, architecture, README, PR-authority, merge, release, post-merge, or
+   Human-only thread action is out of scope.

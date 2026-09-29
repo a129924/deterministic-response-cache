@@ -591,3 +591,33 @@ or cross-subject record fails closed.
 Production source, docs, dataflow, all predecessor evidence, `lfQmF`/`4091213944`, F/ACL/business/README Human-only
 locks, `ld9Ai`, every other thread and every unlisted path are ReadOnly. C25 does not itself reply, resolve, approve a
 PR, merge, release or post-merge.
+
+## C26 current-head seven-pair classification technical contract
+
+C26 is planning-only. It binds C25 immutable green subject
+`13f987a41119590621671c429293cf549055672b`, passing Tester evidence commit
+`e85f936505a323e6c84c02e90f4c4114e39b6505`, approved Independent Reviewer evidence commit
+`24d5141332cbc4dcf7a87dea7f134207a16ab37e`, and actual current-head base
+`8bd9460950237c48c9befb73a1c5b80d084e88ae`. The candidate changes exactly the five planning artifacts and supplies
+no future candidate SHA, Plan-Reviewer verdict, classification outcome, reply or resolution. An Independent
+Plan-Reviewer writes the standard approved candidate-SHA-bound receipt; only Implementer commits it unchanged alone.
+
+Then only Independent Reviewer may write
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-13f987a41119590621671c429293cf549055672b-8bd9460950237c48c9befb73a1c5b80d084e88ae.json`.
+Only Implementer may commit that unchanged receipt in one sole evidence-only commit. Its JSON object top-level keys
+are exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; values bind integer `1`,
+`loaded-runtime-cache`, the listed C25 subject/evidence facts, the listed current-head base, exactly seven entries and
+`Independent Reviewer`. Each entry has only `thread`, `comment`, `outcome`, `reply`, with this exact pair set and no
+duplicates or extras: `ld9Ai`/`4090688118`, `lfYsF`/`4091265104`, `lfYsH`/`4091265108`, `lfYsK`/`4091265115`,
+`m8u00`/`4129370918`, `m8u04`/`4129370926`, `m8u09`/`4129370931`.
+
+`outcome` is exactly `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`. Only `REPLY_AND_RESOLVE` has a non-empty factual
+`reply` and may later authorize the exact matching Implementer reply/resolve. `ADDRESS` and `HUMAN_CHECK` require
+`reply: null` and route to Planner/open respectively. A malformed, missing, extra, stale, cross-subject, wrong-head,
+wrong-writer, invalid-enum/nullability, or non-sole record fails closed and authorizes no action.
+
+F/ACL/business/README Human-only locks `jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561`,
+`lAR8T`/`4078761998`, and `lfQmF`/`4091213944` remain open exclusions. C25 `lfQl9`/`4091213935`, every unlisted
+thread, and all source, tests, docs, architecture, dataflow, README, PR authority, merge, release and post-merge
+actions are ReadOnly.

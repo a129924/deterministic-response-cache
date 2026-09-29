@@ -576,3 +576,35 @@ production source, docs and dataflow are ReadOnly.
   Implementer commits it unchanged alone. It has exact eight top-level keys and exactly one `thread`, `comment`,
   `outcome`, `reply` entry for `lfQl9`/`4091213935`. Only committed `REPLY_AND_RESOLVE` with non-empty factual reply
   can later route exact reply/resolve; `ADDRESS` returns to Planner and `HUMAN_CHECK` remains open.
+
+## C26 Current-Head Seven-Pair Classification Successor Stages (authoritative)
+
+C26 is the current planning-only successor. It binds C25 green subject
+`13f987a41119590621671c429293cf549055672b`, passing Tester evidence commit
+`e85f936505a323e6c84c02e90f4c4114e39b6505`, approved Reviewer evidence commit
+`24d5141332cbc4dcf7a87dea7f134207a16ab37e`, and current-head base
+`8bd9460950237c48c9befb73a1c5b80d084e88ae`. It changes no source, test, docs, dataflow, architecture, README or PR
+state before a committed exact C26 classification receipt authorizes later routing.
+
+- [x] C26 plan-authoring
+- [ ] C26 planning-candidate-commit
+- [ ] C26 independent Plan-Reviewer receipt
+- [ ] C26 receipt-only commit
+- [ ] C26 independent seven-pair classification receipt
+- [ ] C26 classification-receipt-only commit
+- [ ] C26 Planner routing for exact classified pairs
+
+### C26 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C26 planning artifacts; do not prefill candidate SHA, receipt
+  verdict, classification outcome, reply or resolution.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write approved standard candidate-SHA-bound receipt, then
+  commit it unchanged alone.
+- [ ] **Actor: Independent Reviewer / Implementer.** Write and unchanged-sole-commit only
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-13f987a41119590621671c429293cf549055672b-8bd9460950237c48c9befb73a1c5b80d084e88ae.json`.
+  It has exactly eight top-level keys and exactly seven `thread`, `comment`, `outcome`, `reply` entries for
+  `ld9Ai`/`4090688118`, `lfYsF`/`4091265104`, `lfYsH`/`4091265108`, `lfYsK`/`4091265115`, `m8u00`/`4129370918`,
+  `m8u04`/`4129370926`, `m8u09`/`4129370931`. Only committed `REPLY_AND_RESOLVE` with non-empty factual reply may
+  later receive the matching exact reply/resolve; `ADDRESS` returns to Planner and `HUMAN_CHECK` remains open.
+- [ ] **Actor: Planner.** Route only exact committed C26 entries. `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, and `lfQmF`
+  remain Human-only open exclusions; C25 `lfQl9` and every other unlisted thread remain ReadOnly.

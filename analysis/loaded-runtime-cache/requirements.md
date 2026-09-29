@@ -486,3 +486,33 @@ simple-name，value 解析為既有已知 `importlib` module alias，且 attribu
   寫一份只含 `lfQl9`/`4091213935` 的 immutable receipt；Implementer 只能原樣 sole evidence-only commit。classification
   outcome/reply 由 Reviewer 獨立決定且 candidate 不得預填；只有 committed `REPLY_AND_RESOLVE` 的 non-empty factual
   reply 才可在後續授權 exact reply/resolve，否則 `ADDRESS` 回到 Planner、`HUMAN_CHECK` 保持 open。
+
+## C26 current-head seven-pair classification successor
+
+C26 是 C25 classification receipt commit `8bd9460950237c48c9befb73a1c5b80d084e88ae` 後唯一的 planning-only
+successor。它只建立 current-head independent classification contract，pair set 恰為
+`PRRT_kwDOUJTij86ld9Ai`/`4090688118`、`PRRT_kwDOUJTij86lfYsF`/`4091265104`、
+`PRRT_kwDOUJTij86lfYsH`/`4091265108`、`PRRT_kwDOUJTij86lfYsK`/`4091265115`、
+`PRRT_kwDOUJTij86m8u00`/`4129370918`、`PRRT_kwDOUJTij86m8u04`/`4129370926`、及
+`PRRT_kwDOUJTij86m8u09`/`4129370931`。它固定消費 C25 green subject
+`13f987a41119590621671c429293cf549055672b`、passing Tester evidence commit
+`e85f936505a323e6c84c02e90f4c4114e39b6505`、approved Reviewer evidence commit
+`24d5141332cbc4dcf7a87dea7f134207a16ab37e` 與 current-head base
+`8bd9460950237c48c9befb73a1c5b80d084e88ae`。
+
+- Candidate 只修改五份 planning artifacts，且不得預填 candidate SHA、Plan-Reviewer verdict、classification
+  outcome、reply 或 resolution。獨立 Plan-Reviewer 必須先於
+  `loaded-runtime-cache.plan-review-receipt-<planning-candidate-40-hex-sha>.json` 寫標準 approved receipt；僅
+  Implementer 可原樣以 sole receipt-only commit 提交。
+- approved receipt 後，僅 Independent Reviewer 可寫入 immutable current-head receipt
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-13f987a41119590621671c429293cf549055672b-8bd9460950237c48c9befb73a1c5b80d084e88ae.json`；
+  僅 Implementer 可原樣以 sole evidence-only commit 提交。其 top-level keys 恰為 `schema_version`、`topic`、
+  `implementation_subject_commit`、`tester_evidence_commit`、`implementation_review_evidence_commit`、
+  `pr_head_commit`、`classifications`、`recorded_by`，固定綁定 schema `1`、本 topic、上述 C25 facts、exactly seven
+  entries 與 `Independent Reviewer`。每個 entry keys 恰為 `thread`、`comment`、`outcome`、`reply`；Reviewer 獨立選擇
+  `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`。僅 committed `REPLY_AND_RESOLVE` 可有 non-empty factual reply 並在後續
+  授權該 exact pair 的 reply/resolve；其餘兩者必為 JSON `null`，分別回到 Planner/open。
+- `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、`kqiZ5`/`4070096561`、`lAR8T`/`4078761998` 與
+  `lfQmF`/`4091213944` 維持 Human-only open exclusions。C25 `lfQl9`/`4091213935` 與所有其他未列 threads、source、
+  tests、docs、dataflow、architecture、README、PR authority、merge、release、post-merge 皆 ReadOnly。任一錯誤 writer、
+  path、schema、binding、pair set、enum、nullability、staleness 或 non-sole commit 一律 fail closed。
