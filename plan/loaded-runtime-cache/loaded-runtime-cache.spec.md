@@ -469,3 +469,35 @@ Human-only locks and `ld9Ai` are excluded, ReadOnly and untouched.
 1. A path without the fixed subject/head suffix, an incorrect binding, missing/extra JSON key or pair, wrong writer,
    non-sole commit, invalid enum/nullability, or stale classification fails closed and authorizes no action.
 2. Any action on a C23-resolved pair, Human-only lock, `ld9Ai`, or another unclassified thread is out of scope.
+
+## C25 Static Attribute-base NamedExpr Remediation Scenarios
+
+### Scenario 39 — collection-success then actual static failure
+
+Given a committed approved C25 Plan-Reviewer receipt, when the RED-only scanner test subject is created for
+`(loader := importlib).import_module(...)`, then it collects successfully and its assertion actually fails. The test
+does not execute a fixture or AST, import dynamically, or inspect runtime modules.
+
+### Scenario 40 — bounded green static recognition
+
+Given the direct `ast.Attribute` base is an `ast.NamedExpr` with direct simple-name target `loader`, value resolving to
+a known `importlib` module alias and attribute `import_module`, when the green scanner subject runs, then it rejects the
+alias bypass. It does not recurse through the target or expression, and it preserves direct-name NamedExpr, mixed
+assignment simple-name/attribute-target behavior, `getattr`, and `sys.modules` behavior unchanged.
+
+### Scenario 41 — immutable one-pair current-head classification
+
+Given committed C25 passing Tester evidence and approved independent green review evidence, when Planner verifies the
+actual current PR head, then only Independent Reviewer may write
+`loaded-runtime-cache.thread-classification-receipt-<c25-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`
+with exactly eight top-level keys and one `thread`, `comment`, `outcome`, `reply` entry for `lfQl9`/`4091213935`.
+Only Implementer may commit it unchanged alone. Candidate supplies no SHA, outcome or reply; only committed
+`REPLY_AND_RESOLVE` with non-empty factual reply can later route exact action. `lfQmF`, Human-only locks and other
+open/unclassified threads remain untouched.
+
+## C25 Error / Edge Cases
+
+1. Any recursive target/expression walk, execution, dynamic import, runtime introspection, or modification of a
+   frozen scanner path is out of scope and fails review.
+2. Any C25 production/docs/dataflow/predecessor-evidence change, `lfQmF` action, or malformed/stale/non-sole
+   candidate/evidence/classification record fails closed and authorizes no PR action.

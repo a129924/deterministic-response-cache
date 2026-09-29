@@ -554,3 +554,40 @@ permits exact Implementer reply/resolve. The other outcomes require `reply: null
 
 C23 resolved pairs are frozen. F/ACL/business/README Human-only pairs and `ld9Ai` remain ReadOnly/open exclusions;
 C24 cannot modify source, tests, docs, architecture, PR state, those threads, or any unlisted path.
+
+## C25 lfQl9 static Attribute-base NamedExpr remediation contract
+
+C25 is the sole bounded remediation successor for C24 `ADDRESS` pair
+`PRRT_kwDOUJTij86lfQl9`/`4091213935`. It changes exactly five planning artifacts as its candidate; after independent
+approved review, both RED and green subjects change only
+`tests/test_loaded_runtime_cache_bc_independence.py`. It does not prefill any future SHA, verdict, test result,
+PR head, classification outcome, reply or resolution.
+
+The RED regression must collect and fail for `(loader := importlib).import_module(...)`. The green repair is limited to
+static recognition of a direct `ast.Attribute` whose `value` is an `ast.NamedExpr` with direct `ast.Name` target, whose
+value resolves to a known `importlib` module alias, and whose `attr` is `import_module`. It must not recursively process
+the NamedExpr target or expression, execute a fixture/AST, dynamically import, or introspect runtime modules. Direct-name
+NamedExpr detection, mixed assignment's simple-name-only target handling, `getattr`, and `sys.modules` handling are
+frozen and must remain unchanged.
+
+The exact order is candidate-only commit → independent standard candidate-SHA-bound approved Plan-Reviewer receipt →
+receipt-only commit → collection-success/assertion-failing RED test subject → full-SHA-bound factual failing Tester
+evidence-only commit → distinct green test subject → full-SHA-bound factual passing Tester evidence-only commit →
+approved independent green review evidence-only commit → Planner verification of actual current PR head → one-pair
+independent classification receipt-only commit. Tester and Independent Reviewer schemas, writer separation, full SHA
+binding, and unchanged sole-evidence commit rules remain exactly as already defined. Failing RED evidence cannot produce
+Reviewer evidence or authorize green work outside this route.
+
+After the approved green chain and actual current head are verified, only Independent Reviewer may write
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c25-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`.
+Its top-level keys are exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; it binds schema `1`,
+topic `loaded-runtime-cache`, actual C25 green-chain facts/current head, exactly one entry, and `Independent Reviewer`.
+The one entry has only `thread`, `comment`, `outcome`, `reply` and is exactly `lfQl9`/`4091213935`. Outcome is only
+`REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; only the first carries a non-empty factual reply. The others require JSON
+`null`. Implementer alone may commit the receipt unchanged in a sole evidence-only commit. Any malformed/stale/non-sole
+or cross-subject record fails closed.
+
+Production source, docs, dataflow, all predecessor evidence, `lfQmF`/`4091213944`, F/ACL/business/README Human-only
+locks, `ld9Ai`, every other thread and every unlisted path are ReadOnly. C25 does not itself reply, resolve, approve a
+PR, merge, release or post-merge.

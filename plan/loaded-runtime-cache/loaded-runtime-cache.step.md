@@ -531,3 +531,48 @@ docs, architecture, README or PR state.
   It has exactly eight top-level keys and exactly two pairs: `lfQl9`/`4091213935`, `lfQmF`/`4091213944`.
 - [ ] **Actor: Planner.** Route only exact committed `REPLY_AND_RESOLVE` entries. C23 resolved pairs remain frozen;
   F/ACL/business/README remain Human-only open locks and `ld9Ai` is excluded, open and unclassified.
+
+## C25 lfQl9 Static Attribute-base NamedExpr Remediation Stages (authoritative)
+
+C25 supersedes C24 only for `PRRT_kwDOUJTij86lfQl9`/`4091213935`. It adds no outcome, reply, current-head or SHA fact
+to its candidate. `lfQmF`/`4091213944`, F/ACL/business/README Human-only locks, `ld9Ai`, all predecessor evidence,
+production source, docs and dataflow are ReadOnly.
+
+- [x] C25 plan-authoring
+- [ ] C25 planning-candidate-commit
+- [ ] C25 independent Plan-Reviewer receipt
+- [ ] C25 receipt-only commit
+- [ ] C25 test-only RED subject
+- [ ] C25 factual failing Tester evidence
+- [ ] C25 RED evidence-only commit
+- [ ] C25 test-only green subject
+- [ ] C25 factual passing Tester evidence
+- [ ] C25 green evidence-only commit
+- [ ] C25 independent green review evidence
+- [ ] C25 review-evidence-only commit
+- [ ] C25 Planner actual-current-head verification
+- [ ] C25 independent one-pair classification receipt
+- [ ] C25 classification-receipt-only commit
+- [ ] C25 Planner routing for exact classified pair
+
+### C25 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C25 planning artifacts. Do not prefill candidate SHA, receipt
+  verdict, implementation/evidence SHA, PR head, classification outcome, reply or resolution.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write fresh approved standard candidate-SHA-bound receipt,
+  then commit it unchanged alone.
+- [ ] **Actor: Implementer / Tester.** Create a collection-success/assertion-failing RED subject changing only
+  `tests/test_loaded_runtime_cache_bc_independence.py`, exposing static
+  `(loader := importlib).import_module(...)` attribute-base NamedExpr alias detection. Tester writes factual failing
+  evidence; Implementer commits only that evidence unchanged.
+- [ ] **Actor: Implementer / Tester / Independent Reviewer.** Create a distinct green subject changing only the same
+  test. Detect only direct `ast.Attribute`/`ast.NamedExpr`/simple-name-target/known-`importlib`-alias/`import_module`
+  shape; do not recurse, execute, dynamically import or introspect. Preserve direct-name NamedExpr, mixed assignment,
+  `getattr` and `sys.modules`. Commit passing Tester evidence alone; Independent Reviewer consumes it and Implementer
+  commits only that review record.
+- [ ] **Actor: Planner / Independent Reviewer / Implementer.** After actual-current-head verification, Independent
+  Reviewer writes only
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c25-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`;
+  Implementer commits it unchanged alone. It has exact eight top-level keys and exactly one `thread`, `comment`,
+  `outcome`, `reply` entry for `lfQl9`/`4091213935`. Only committed `REPLY_AND_RESOLVE` with non-empty factual reply
+  can later route exact reply/resolve; `ADDRESS` returns to Planner and `HUMAN_CHECK` remains open.

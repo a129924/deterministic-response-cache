@@ -460,3 +460,29 @@ statement `PRRT_kwDOUJTij86lfQmF`/`4091213944`。它固定消費 C23 subject
 - C23 resolved `ldeVI`/`4090495760`、`ldeVO`/`4090495770` frozen；F/ACL/business/README 四個 Human-only pairs 與
   `ld9Ai`/`4090688118` 維持 ReadOnly/open exclusions。未列 path/thread、source、tests、dataflow、architecture、README、
   PR、merge、release、post-merge 都不在 scope。
+
+## C25 lfQl9 bounded static-attribute remediation successor
+
+C25 僅處理 C24 對 `PRRT_kwDOUJTij86lfQl9`/`4091213935` 的靜態 scanner 缺口：
+`(loader := importlib).import_module(...)`。它不處理 C24 的另一 pair `lfQmF`/`4091213944`，也不重新分類、回覆或
+resolve 任何 thread。scanner 的唯一新辨識是：direct `ast.Attribute` 的 base 為 `ast.NamedExpr`，其 target 是直接
+simple-name，value 解析為既有已知 `importlib` module alias，且 attribute 為 `import_module`。此為靜態語法判定，
+不得遞迴處理 target 或 expression、執行 fixture／AST、dynamic import 或 runtime introspection。
+
+- C25 candidate 只可修改本 requirements、`technical-spec.md`、topic plan、topic spec 與 step tracker；不得預填
+  candidate SHA、Plan-Reviewer verdict、RED/green SHA、Tester/Reviewer outcome、PR head、classification outcome、reply
+  或 resolution。獨立 Plan-Reviewer 必須先寫標準 SHA-bound approved receipt，且僅 Implementer 可原樣 sole
+  receipt-only commit。
+- approved receipt 後，RED 與 distinct green implementation subject 都只可修改
+  `tests/test_loaded_runtime_cache_bc_independence.py`。RED 必須 collection-success 並以此 attribute-base NamedExpr
+  alias 的 assertion 實際失敗；Tester 如實寫 SHA-bound `failing` evidence，由 Implementer 原樣 sole commit。green
+  僅修正此 static detection，Tester 寫 same-green-subject `passing` evidence，Independent Reviewer 僅可消費該已提交
+  passing evidence，所有 evidence 皆由 Implementer unchanged sole commit。
+- 既有 direct-name NamedExpr、mixed assignment（保留 simple-name target、忽略 attribute target）、`getattr`、
+  `sys.modules` 規則都不得改變。production source、docs、dataflow、所有 predecessor candidate／receipt／evidence、
+  `lfQmF`/`4091213944`、F/ACL/business/README Human-only locks、`ld9Ai` 與所有未列 path/thread 均 ReadOnly/open。
+- 僅在 Planner 驗證 approved C25 green chain 與 actual current PR head 後，Independent Reviewer 可在
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c25-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`
+  寫一份只含 `lfQl9`/`4091213935` 的 immutable receipt；Implementer 只能原樣 sole evidence-only commit。classification
+  outcome/reply 由 Reviewer 獨立決定且 candidate 不得預填；只有 committed `REPLY_AND_RESOLVE` 的 non-empty factual
+  reply 才可在後續授權 exact reply/resolve，否則 `ADDRESS` 回到 Planner、`HUMAN_CHECK` 保持 open。

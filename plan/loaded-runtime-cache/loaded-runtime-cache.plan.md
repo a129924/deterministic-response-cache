@@ -1120,3 +1120,50 @@ defect fails closed.
 
 `planned` → C24 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → independent C24
 classification receipt-only commit → Planner routing. This never approves a PR, merge, release or post-merge.
+
+## C25 lfQl9 Static Attribute-base NamedExpr Remediation Successor (authoritative current routing)
+
+C25 is the only bounded successor for C24 `ADDRESS` pair `PRRT_kwDOUJTij86lfQl9`/`4091213935`. It preserves the
+Loaded Runtime Cache mission, protocol-first boundary and all predecessor provenance. It neither reopens C24 nor
+authorizes action on `lfQmF` or any other thread.
+
+| Field | Contract |
+| --- | --- |
+| Goal | Statically reject `(loader := importlib).import_module(...)` without expanding the scanner or any BC boundary. |
+| In-Scope | Exactly five C25 planning artifacts; standard candidate-SHA-bound Plan-Reviewer receipt; RED/failing Tester; distinct green/passing Tester; independent green review; one actual-current-head one-pair classification chain for `lfQl9` only. |
+| Out-Of-Scope / Non-Goal | Production behavior; docs/dataflow; recursive parsing; execution; dynamic import; runtime introspection; direct-name NamedExpr, mixed assignment, `getattr`, `sys.modules`; PR reply/resolution before classification; merge, release and post-merge. |
+| ReadOnly | Every unlisted path; all predecessor artifacts/evidence; production source; docs/dataflow; `lfQmF`/`4091213944`; F/ACL/business/README Human-only locks; `ld9Ai`; all other threads. |
+| Written | Standard C25 Plan-Reviewer receipt; SHA-bound RED/green Tester evidence; green independent review evidence; one C25 green-subject/current-head classification receipt. |
+| Modified | Candidate: exactly five planning artifacts. RED and green: only `tests/test_loaded_runtime_cache_bc_independence.py`. |
+| Deleted | None. |
+
+### C25 locked remediation contract
+
+The sole scanner repair recognises a direct `ast.Attribute` with an `ast.NamedExpr` base only where the NamedExpr has a
+direct `ast.Name` target, its value resolves to a known `importlib` module alias, and the attribute is
+`import_module`. It catches `(loader := importlib).import_module(...)` using static syntax only. It must not recurse
+through NamedExpr targets or expressions, execute any fixture/AST, dynamically import or introspect runtime modules.
+The direct-name NamedExpr path and existing mixed-assignment rule (retain direct simple-name targets, ignore attribute
+targets) remain unchanged, as do `getattr` and `sys.modules` handling.
+
+Candidate → independent approved Plan-Reviewer receipt → receipt-only commit → collection-success/assertion-failing
+RED subject → factual failing Tester evidence-only commit → distinct green subject → factual passing Tester
+evidence-only commit → independent approved green review evidence-only commit → Planner actual-current-head verification
+→ one-pair independent classification receipt-only commit is mandatory. All candidate/evidence paths are fresh,
+immutable and SHA-bound; C25 planning pre-fills no SHA, verdict, outcome, reply or resolution.
+
+After Planner's actual-head verification, Independent Reviewer alone may write
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c25-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`.
+Implementer alone may unchanged-sole-commit it. Its exact eight top-level keys are `schema_version`, `topic`,
+`implementation_subject_commit`, `tester_evidence_commit`, `implementation_review_evidence_commit`, `pr_head_commit`,
+`classifications`, `recorded_by`; it contains exactly one `thread`, `comment`, `outcome`, `reply` entry for
+`lfQl9`/`4091213935`. Reviewer independently selects `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; only an exact committed
+`REPLY_AND_RESOLVE` with non-empty factual reply can authorize later action. All other results remain Planner/open
+paths. Any binding, schema, writer, pair, enum, nullability or sole-commit defect fails closed.
+
+### C25 transition / handoff
+
+`planned` → C25 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → RED/failing evidence
+→ green/passing evidence → independent approved review evidence → Planner actual-head verification → independent C25
+classification receipt-only commit → Planner routing. C25 does not itself reply, resolve, approve, merge, release or
+post-merge.
