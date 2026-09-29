@@ -4,13 +4,35 @@
 """Deterministic outcomes produced at the Response Reuse boundary."""
 
 from dataclasses import dataclass
+from enum import StrEnum
+
+from deterministic_response_cache.response_reuse.model_response import ModelResponse
+
+
+class NotCachedReason(StrEnum):
+    """Closed reasons why a response was not retained."""
+
+    UNSUPPORTED_PAYLOAD = "unsupported_payload"
+    CODEC_UNAVAILABLE = "codec_unavailable"
+    ENCODE_FAILURE = "encode_failure"
+    ROUND_TRIP_MISMATCH = "round_trip_mismatch"
+    STORE_WRITE_FAILURE = "store_write_failure"
+
+
+class UnavailableReason(StrEnum):
+    """Closed reasons why lookup could not provide a response."""
+
+    STORE_FAILURE = "store_failure"
+    UNKNOWN_CODEC = "unknown_codec"
+    CODEC_UNAVAILABLE = "codec_unavailable"
+    INVALID_PAYLOAD = "invalid_payload"
 
 
 @dataclass(frozen=True, slots=True)
-class Hit[ResponseT]:
+class Hit[PayloadT]:
     """A reusable response was found."""
 
-    response: ResponseT
+    response: ModelResponse[PayloadT]
 
 
 @dataclass(frozen=True, slots=True)
@@ -20,22 +42,25 @@ class Miss:
 
 @dataclass(frozen=True, slots=True)
 class Unavailable:
-    """The CacheStore could not complete a lookup."""
+    """A stored response could not become a reusable native response."""
+
+    reason: UnavailableReason
 
 
 @dataclass(frozen=True, slots=True)
-class Cached[ResponseT]:
+class Cached[PayloadT]:
     """A response was retained by the CacheStore."""
 
-    response: ResponseT
+    response: ModelResponse[PayloadT]
 
 
 @dataclass(frozen=True, slots=True)
-class NotCached[ResponseT]:
+class NotCached[PayloadT]:
     """A response remains available even though retention failed."""
 
-    response: ResponseT
+    response: ModelResponse[PayloadT]
+    reason: NotCachedReason
 
 
-type LookupOutcome[ResponseT] = Hit[ResponseT] | Miss | Unavailable
-type RecordOutcome[ResponseT] = Cached[ResponseT] | NotCached[ResponseT]
+type LookupOutcome[PayloadT] = Hit[PayloadT] | Miss | Unavailable
+type RecordOutcome[PayloadT] = Cached[PayloadT] | NotCached[PayloadT]

@@ -12,11 +12,11 @@ Identity BC 不保存 response、不執行模型，也不管理 loaded runtime�
 
 Response Reuse BC 只消費 Identity BC 已確認、但在此 BC 中保持 opaque 的 `confirmed_identity`，並決定既有 response 是否能安全重用。它是可獨立交付的 Protocol topic，不以 Identity 的 implementation completion 為 gate；這不改變 Identity 作為唯一 authority 的責任。它不自行推導模型或請求身分，不執行模型，也不管理 loaded runtime。
 
-其 synchronous Protocol 的 `lookup` outcome 是 `Hit(response)`、`Miss()` 或 `Unavailable()`：CacheStore 以 immutable slotted value object `NotFound` 表示缺失、失效或過期 entry，並映射為 miss；以 `CacheStoreFailure` 表示 read failure，並維持為 unavailable，不能降級為 miss。read 的其他 non-`None` value 保持為 opaque response；`None` 是 port contract violation。未來下游只可在 miss boundary 之後接手，並不由本 BC 執行。未來下游交回同一 confirmed identity 與新 response 時，`record` 會將 `TokenWritten` 映射為 `Cached(response)`，或將 `CacheStoreWriteFailure` 映射為保留 response 的 `NotCached(response)`；任何其他 write result 都是 port contract violation。
+其 synchronous Protocol 以 `ModelResponse.value` 接收 dict、list 或 pandas DataFrame；record 依固定 codec 將回應編為帶 `ResponseCodecId` 的 bytes envelope，再由內部 CacheStore 保存。lookup 只依保存的 codec id 解碼，成功時交 eligibility policy 評估並回傳原生型別的 `Hit(response)`。DataFrame 寫入先通過 Arrow IPC 往返的 `DataFrame.equals` 門檻，每次 hit 均產生獨立物件。CacheStore 的 `NotFound` 與 eligibility 拒絕映射為 `Miss()`；Store read failure、未知 codec、無法使用的 codec 或壞 bytes 映射為具 reason 的 `Unavailable()`，不能降級為 miss。未支援或無法無損編碼的回應不寫入，`NotCached(response)` 保留原回應；Store write failure 亦如此。`None` read value 與未定義 write result 仍是 port contract violation。未來下游只可在 miss boundary 後接手，本 BC 不執行模型。
 
 ### CacheStore
 
-CacheStore 是 Response Reuse BC 的內部保存元件，而不是頂層 BC。它只保存與取回 response；不得建立 identity、判定模型版本、推測 request 欄位、執行模型或管理 runtime。Response Reuse 只透過其 internal synchronous port 讀寫；本 topic 不定義 backend、持久化方式或 lifecycle policy。
+CacheStore 是 Response Reuse BC 的內部保存元件，而不是頂層 BC。它只保存與取回帶 codec id 的 bytes envelope，不選擇或執行 codec；不得建立 identity、判定模型版本、推測 request 欄位、執行模型或管理 runtime。Response Reuse 只透過其 internal synchronous port 讀寫；本 topic 不定義 backend、持久化方式或 lifecycle policy。
 
 ### Loaded Runtime Cache（未來）
 

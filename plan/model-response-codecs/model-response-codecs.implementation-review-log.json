@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "topic": "model-response-codecs",
+  "implementation_subject_commit": "5d8873f3088769f1bd8b6da7b42d2ec96b9254f5",
+  "tester_evidence_commit": "226b95b2a1c29c7f1103d8f4e11939c29a96f266",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    "JSON unsupported-tree outcome violates the approved contract: json_response.py:56-57 raises EncodeFailureError for non-string dict keys, non-finite values, tuples and other non-JSON tree members, so protocol.py:103-104 returns NotCached(ENCODE_FAILURE). The technical spec Error / Edge Cases requires NotCached(UNSUPPORTED_PAYLOAD) for those known unsupported values and reserves ENCODE_FAILURE for an actual serializer failure. A read-only protocol reproduction confirmed encode_failure for {1: 'x'}, {'tuple': (1, 2)} and {'nan': NaN}. Distinguish unsupported-tree rejection from encoding failure without changing the source-break contract.",
+    "The approved Test Plan's edge/invalid scenarios are incomplete in the implementation tests: tests/test_response_reuse_codecs.py:68-81 asserts only EncodeFailureError for unsupported JSON trees, and tests/test_model_response_codecs_integration.py has no protocol-level unsupported-tree reason check, empty DataFrame case, DataFrame record with unavailable optional codec, encoder failure mapping, or foreign malformed envelope case. Add substantive assertions for these declared outcomes and paths, preserving existing direct imports and fixtures."
+  ],
+  "recorded_by": "Independent Reviewer"
+}
