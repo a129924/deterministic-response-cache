@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-eligibility-policy",
+  "planning_candidate_commit": "e6aed777ab7eb729535b8d6c5033e4cc9fb959d5",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    {
+      "issue": "`Current Context` still states in the present tense that `ResponseReuseProtocol` accepts only a store and has not yet performed eligibility evaluation, while this same committed plan records all six implementation steps as complete and declares the policy-injected public contract. The conflicting state is not a reliable routing contract.",
+      "file": "plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan.md",
+      "fix": "Revise `Current Context` to identify that description as the historical pre-implementation baseline, or state the current implemented policy-injected protocol accurately. Preserve the locked product contract, the one-time `uv.lock` carve-out, and the six completed implementation markers."
+    }
+  ],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}

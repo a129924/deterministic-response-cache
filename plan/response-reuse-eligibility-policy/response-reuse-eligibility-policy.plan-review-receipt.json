@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-eligibility-policy",
+  "planning_candidate_commit": "43a255f03b69be94e56abcc7ca13bf684e3395f3",
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}

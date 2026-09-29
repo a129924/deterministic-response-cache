@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "topic": "response-reuse-eligibility-policy",
+  "planning_candidate_commit": "724ebf129eeb99fc06b1c1cd16b58757b1b0148e",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    {
+      "issue": "Allowed transitions 只宣告 initial exact-five candidate 的 plan-review route，未宣告本 fix-cycle two-file workflow-correction planning candidate 至 fix-1 receipt 的合法 transition。",
+      "file": "plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.plan.md",
+      "fix": "新增該 fix-cycle transition，並保留 initial historical flow。"
+    },
+    {
+      "issue": "step 的 pending row 混合 Plan-Creator、Implementer 與 Independent Plan-Reviewer ownership，且 candidate 已提交仍指示 commit。",
+      "file": "plan/response-reuse-eligibility-policy/response-reuse-eligibility-policy.step.md",
+      "fix": "改為 role-separated 的有序 actions：receipt 寫入 → Implementer sole receipt commit → Planner 才 route Independent Reviewer review log。"
+    }
+  ],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}

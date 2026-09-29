@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "topic": "model-execution-protocol",
+  "correction_id": "model-execution-protocol/pr-comment-architecture-status",
+  "thread_id": "PRRT_kwDOUJTij86lAh0Z",
+  "implementation_subject_commit": "5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "python3 -c 'import subprocess; s=\"5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28\"; expected=[\"M\\tdocs/architecture/business-capability/architecture-brief.md\",\"M\\tdocs/architecture/business-capability/index.html\",\"M\\tdocs/architecture/business-capability/scene.js\",\"M\\tdocs/business-capability-architecture.md\",\"M\\tdocs/evolution-roadmap.md\"]; p=subprocess.run([\"git\",\"diff-tree\",\"--no-commit-id\",\"--name-status\",\"-r\",s],capture_output=True,text=True); assert p.returncode==0,p.stderr; actual=[line for line in p.stdout.splitlines() if line]; assert sorted(actual)==sorted(expected),(actual,expected); print(\"\\n\".join(actual))'",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check 5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28^ 5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --exit-code 9a3460b6e4412384ed7e3426ebc32820a46818e6 5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28 -- src tests",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -c 'import subprocess; s=\"5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28\"; checks={\"docs/business-capability-architecture.md\":([\"Model Execution 已提供 provider-neutral、同步、可注入的 coordination contracts\",\"Loaded Runtime Cache 的實際 wiring、retention/backend、具體 Provider Adapter、cross-BC composition，以及 Response Reuse `Miss` 到 execution 與 execution result handoff 的整合仍屬未來能力\",\"目前交付不代表端到端 pipeline 已完成\"],[\"### Model Execution（未來）\",\"獨立的未來 BC，不擁有 identity 或 response reuse。\"]),\"docs/evolution-roadmap.md\":([\"Model Execution 已有同步、可注入的 coordination contracts\",\"已交付 provider-neutral runtime access／invocation ports、outcomes 與同步 protocol orchestration\",\"Loaded Runtime Cache 的實際 wiring／retention/backend、具體 Provider Adapter、cross-BC composition，以及 Response Reuse `Miss`／execution result handoff integration 仍是後續獨立工作\",\"目前不宣稱端到端 pipeline 已完成\"],[\"→ 未來由 Model Execution 執行模型\",\"Loaded Runtime Cache、Model Execution 與 Provider Adapter 各自保留為後續獨立 BC。\"]),\"docs/architecture/business-capability/architecture-brief.md\":([\"Model Execution 已提供 provider-neutral coordination contracts\",\"runtime access／invocation ports、outcomes 與同步 protocol orchestration\",\"Loaded Runtime Cache 實際 wiring／retention/backend、具體 Provider Adapter、cross-BC composition，以及 Response Reuse `Miss`／execution result handoff integration 仍屬未來\",\"目前不宣稱端到端 pipeline 已完成\"],[\"| Model execution | 在 reuse miss 後協調 runtime 與模型執行。 | Implementation order 4 |\",\"Loaded Runtime Cache、Model Execution 與 Provider Adapter 保持三個彼此獨立、尚未實作的 BC\"]),\"docs/architecture/business-capability/scene.js\":([\"Model execution — coordination contracts implemented\",\"ports + outcomes + protocol\",\"contracts implemented · integration future\",\"runtime/provider/cross-BC integration 仍屬未來\",\"Execution result handoff\",\"未來 execution 結果交回 Response Reuse\"],[\"Model execution — future\",\"MODEL EXECUTION — FUTURE\",\"未來協調者：當 response 無法重用時\",\"topology：五個目錄的純文字 marker 僅預留\"]),\"docs/architecture/business-capability/index.html\":([\"Model execution — coordination contracts implemented\",\"ports + outcomes + protocol\",\"contracts implemented · integration future\",\"runtime/provider/cross-BC integration 仍屬未來\",\"Execution result handoff\",\"未來 execution 結果交回 Response Reuse\"],[\"Model execution — future\",\"MODEL EXECUTION — FUTURE\",\"未來協調者：當 response 無法重用時\",\"topology：五個目錄的純文字 marker 僅預留\"])}; \nfor path,(present,absent) in checks.items():\n t=subprocess.check_output([\"git\",\"show\",s+\":\"+path],text=True); missing=[m for m in present if m not in t]; forbidden=[m for m in absent if m in t]; assert not missing and not forbidden,(path,missing,forbidden); print(path+\": current-coordination+future-integration OK\")'",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -c 'from pathlib import Path; s=Path(\"docs/architecture/business-capability/scene.js\").read_text(); h=Path(\"docs/architecture/business-capability/index.html\").read_text(); a=\"  // ======================== SCENE START (generated) =========================\\n\"; b=\"\\n  // ========================= SCENE END ======================================\\n\"; assert h.count(a)==h.count(b)==1; assert h.split(a,1)[1].split(b,1)[0]==s'",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -c 'import subprocess; s=\"5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28\"; paths=[\"docs/architecture/business-capability/scene.js\",\"docs/architecture/business-capability/index.html\"]; pairs=[(\"  execution: { c: \\x27#F6821F\\x27, label: \\x27Model execution — future\\x27 },\",\"  execution: { c: \\x27#F6821F\\x27, label: \\x27Model execution — coordination contracts implemented\\x27 },\"),(\"    hdr: { x: 184, y: 1180, t: \\x27FUTURE CORE CAPABILITIES — NOT BASELINE IMPLEMENTATION\\x27, fill: C.slate },\",\"    hdr: { x: 184, y: 1180, t: \\x27RUNTIME + EXECUTION CAPABILITIES — MIXED DELIVERY STATUS\\x27, fill: C.slate },\"),(\"    name: \\x27Model Execution\\x27, about: \\x27未來協調者：當 response 無法重用時，協調 runtime 與模型執行。\\x27,\",\"    name: \\x27Model Execution\\x27, about: \\x27已實作 provider-neutral、同步、可注入的 runtime access／invocation ports、outcomes 與 protocol orchestration；實際 wiring 與跨 BC 組裝仍屬未來。\\x27,\"),(\"    texts: [ [\\x27bl\\x27, 894, 1268, \\x27Model Execution\\x27], [\\x27bs\\x27, 894, 1290, \\x27協調 runtime 與 invocation\\x27], [\\x27bs\\x27, 894, 1306, \\x27不擁有 identity 或 reuse policy\\x27], [\\x27bn\\x27, 894, 1328, \\x27未來能力\\x27] ] },\",\"    texts: [ [\\x27bl\\x27, 894, 1268, \\x27Model Execution\\x27], [\\x27bs\\x27, 894, 1290, \\x27同步、可注入 coordination\\x27], [\\x27bs\\x27, 894, 1306, \\x27ports + outcomes + protocol\\x27], [\\x27bn\\x27, 894, 1328, \\x27contracts implemented · integration future\\x27] ] },\"),(\"  { s: \\x27plane\\x27, x: 1115, y: 1214, t: \\x27MODEL EXECUTION — FUTURE\\x27, anchor: \\x27center\\x27, fill: planeColor(\\x27execution\\x27) },\",\"  { s: \\x27plane\\x27, x: 1115, y: 1214, t: \\x27MODEL EXECUTION — CONTRACTS IMPLEMENTED\\x27, anchor: \\x27center\\x27, fill: planeColor(\\x27execution\\x27) },\"),(\"  { s: \\x27bn\\x27, x: 160, y: 1884, t: \\x27topology：五個目錄的純文字 marker 僅預留；可為 implicit namespace，但不提供 executable module、public symbol 或 re-export\\x27 }\",\"  { s: \\x27bn\\x27, x: 160, y: 1884, t: \\x27status：Model Execution 已有 direct-import executable modules；runtime/provider/cross-BC integration 仍屬未來\\x27 }\")]; \nfor path in paths:\n old=subprocess.check_output([\"git\",\"show\",s+\"^:\"+path],text=True); new=subprocess.check_output([\"git\",\"show\",s+\":\"+path],text=True); expected=old\n for before,after in pairs:\n  assert expected.count(before)==1,(path,\"missing-or-duplicate-approved-before\",before); expected=expected.replace(before,after)\n assert expected==new,(path,\"non-approved scene/viewer structural change\"); print(path+\": approved status-text replacements only\")'",
+      "exit_code": 0
+    },
+    {
+      "command": "node --check docs/architecture/business-capability/scene.js",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest -q",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}

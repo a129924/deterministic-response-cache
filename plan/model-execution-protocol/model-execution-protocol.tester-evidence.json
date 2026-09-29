@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "topic": "model-execution-protocol",
+  "implementation_subject_commit": "868df3b338e022371a55a2125b270a52ba1c6874",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "uv run ruff check src/deterministic_response_cache/model_execution tests/test_model_execution_protocol.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run ruff format --check src/deterministic_response_cache/model_execution tests/test_model_execution_protocol.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pyright",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest tests/test_model_execution_protocol.py -q",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run pytest -q",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}

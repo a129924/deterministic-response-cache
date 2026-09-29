@@ -4,6 +4,10 @@
 """Contract tests for the process-local InMemoryCacheStore."""
 
 import pytest
+from deterministic_response_cache.response_reuse.eligibility.policy import (
+    ReuseAllowed,
+    ReuseEligibilityDecision,
+)
 
 from deterministic_response_cache.response_reuse._cache_store import (
     CacheStoreFailure,
@@ -25,6 +29,15 @@ class KeyWithFailingHash:
         """Expose a key-operation error that must not become a cache miss."""
         msg = "key hash failed"
         raise KeyError(msg)
+
+
+class AlwaysAllowPolicy[ResponseT]:
+    """Provide the deterministic allow policy required by this integration test."""
+
+    def evaluate(self, response: ResponseT, /) -> ReuseEligibilityDecision:
+        """Allow the supplied response without interpreting its value."""
+        del response
+        return ReuseAllowed()
 
 
 def test_read_returns_not_found_for_an_unknown_opaque_hashable_key() -> None:
@@ -140,7 +153,10 @@ def test_reserved_read_channels_cannot_be_retained(response: object | None) -> N
 
 def test_store_is_injectable_into_the_response_reuse_protocol() -> None:
     """The concrete store satisfies the existing generic internal port."""
-    protocol = ResponseReuseProtocol(InMemoryCacheStore[str, str]())
+    protocol = ResponseReuseProtocol(
+        InMemoryCacheStore[str, str](),
+        eligibility_policy=AlwaysAllowPolicy[str](),
+    )
 
     miss = protocol.lookup("opaque-key")
     cached = protocol.record("opaque-key", "response")
