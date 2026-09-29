@@ -97,6 +97,9 @@ def _aliases_from_imports(tree: ast.AST) -> tuple[dict[str, str], dict[str, str]
             for alias in statement.names:
                 if alias.name in {"builtins", "importlib", "sys"}:
                     modules[alias.asname or alias.name] = alias.name
+                elif alias.name.startswith("importlib.") and alias.asname is None:
+                    # ``import importlib.util`` binds ``importlib`` at module scope.
+                    modules["importlib"] = "importlib"
         elif isinstance(statement, ast.ImportFrom) and statement.module in {
             "builtins",
             "importlib",
@@ -160,6 +163,12 @@ def _resolve_forbidden_alias(
         return _resolve_name_alias(value.id, modules, callables)
     if isinstance(value, ast.Attribute):
         return _resolve_attribute_alias(value, modules)
+    if isinstance(value, ast.IfExp):
+        return _resolve_forbidden_alias(value.body, modules, callables) or _resolve_forbidden_alias(
+            value.orelse,
+            modules,
+            callables,
+        )
     if isinstance(value, ast.Call):
         return _resolve_getattr_alias(value, modules)
     return None
@@ -227,6 +236,13 @@ def _qualified_module_attribute(value: ast.Attribute, modules: dict[str, str]) -
     if isinstance(value.value, ast.Name):
         module = modules.get(value.value.id)
         return f"{module}.{value.attr}" if module is not None else None
+    if isinstance(value.value, ast.NamedExpr):
+        named_expression = value.value
+        resolved = _resolve_forbidden_alias(named_expression.value, modules, {})
+        if type(named_expression.target) is ast.Name and resolved is not None:
+            kind, module = resolved
+            if kind == "module":
+                return f"{module}.{value.attr}"
     if not isinstance(value.value, ast.Attribute):
         return None
     parent = _qualified_module_attribute(value.value, modules)
@@ -250,12 +266,12 @@ def _is_forbidden_import_callable_expression(
     callables: dict[str, str],
 ) -> bool:
     """Return whether a callable expression can reach forbidden import machinery."""
-    if isinstance(expression, ast.IfExp):
-        return _is_forbidden_import_callable_expression(
-            expression.body,
-            modules,
-            callables,
-        ) or _is_forbidden_import_callable_expression(expression.orelse, modules, callables)
+    resolved = _resolve_forbidden_alias(expression, modules, callables)
+    if resolved in {
+        ("callable", "builtins.__import__"),
+        ("callable", "importlib.import_module"),
+    }:
+        return True
     if isinstance(expression, ast.NamedExpr):
         resolved = _resolve_forbidden_alias(expression.value, modules, callables)
         return resolved in {
@@ -290,6 +306,13 @@ def _is_module_cache_access(
     callables: dict[str, str],
 ) -> bool:
     """Return whether an expression reaches ``sys.modules``, including aliases."""
+    resolved = (
+        _resolve_forbidden_alias(statement, modules, callables)
+        if isinstance(statement, ast.expr)
+        else None
+    )
+    if resolved is not None and resolved[1] == "sys.modules":
+        return True
     if isinstance(statement, ast.Name):
         target = callables.get(statement.id)
         return target == "sys.modules" or (target is not None and target.startswith("sys.modules."))

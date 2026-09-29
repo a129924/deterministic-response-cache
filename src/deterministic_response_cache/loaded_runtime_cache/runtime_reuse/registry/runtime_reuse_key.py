@@ -3,19 +3,23 @@
 
 """Opaque local key contract for reusable runtime lookup."""
 
-from dataclasses import dataclass
+from dataclasses import FrozenInstanceError
 
 
-@dataclass(frozen=True, slots=True, eq=False, repr=False, init=False)
 class RuntimeReuseKey:
     """An immutable local locator with instance-identity semantics only."""
 
-    _token: object
+    __slots__ = ()
 
     def __init__(self, token: object) -> None:
-        """Store an externally decided construction token without interpreting it."""
-        object.__setattr__(self, "_token", token)
+        """Accept an externally decided token without retaining or interpreting it."""
+        del token
 
     def __repr__(self) -> str:
         """Avoid exposing the externally supplied construction token."""
         return "RuntimeReuseKey()"
+
+    def __setattr__(self, name: str, value: object) -> None:
+        """Prevent later state from being added to an opaque identity-only key."""
+        del name, value
+        raise FrozenInstanceError
