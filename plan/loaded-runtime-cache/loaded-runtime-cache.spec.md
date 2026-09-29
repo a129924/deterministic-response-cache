@@ -545,11 +545,15 @@ committed fact sets without making a new architecture decision.
 
 ### Scenario 45 — preserved boundaries and evidence ordering
 
-Given the integration subject, when the five documents are resolved, then Runtime Cache remains protocol-only with no
-Identity direct import, mapper, concrete backend, or runtime lifecycle; Model Execution remains provider-neutral
-coordination; and their wiring remains future work. Tester records factual same-subject results before Independent
-Reviewer can review. Only passing Tester evidence followed by approved independent review permits Planner Phase 4.5
-and then a bounded push updating the existing draft PR.
+Given the committed five-file integration subject, when the five documents are resolved, then Runtime Cache remains
+protocol-only with no Identity direct import, mapper, concrete backend, or runtime lifecycle; Model Execution remains
+provider-neutral coordination; and their wiring remains future work. Tester alone writes factual same-subject results
+at `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c27-integration-subject-40-hex-sha>.json`, and
+Implementer commits that unchanged record alone before Independent Reviewer may review. Independent Reviewer then
+writes only `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c27-integration-subject-40-hex-sha>.json`
+for the same subject and committed passing evidence; Implementer commits it unchanged alone. Only that passing Tester
+evidence followed by approved independent review permits Planner Phase 4.5 and then a bounded push updating the
+existing draft PR.
 
 ## C27 Error / Edge Cases
 

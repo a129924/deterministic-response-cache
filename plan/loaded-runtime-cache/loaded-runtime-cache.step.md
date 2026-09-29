@@ -633,15 +633,22 @@ base `37d433e198a955f0710ecd5335666760aa86a20c`, Runtime Cache fact
 
 - [ ] **Actor: Implementer.** Commit exactly the five C27 planning artifacts; do not prefill candidate SHA, receipt
   verdict, integration subject SHA, test result, or review verdict.
-- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write a standard candidate-SHA-bound approved receipt, then
-  commit it unchanged alone.
+- [ ] **Actor: Plan-Reviewer.** Write a standard candidate-SHA-bound approved receipt.
+- [ ] **Actor: Implementer.** Commit that Plan-Reviewer receipt unchanged in its own sole receipt-only commit.
 - [ ] **Actor: Implementer.** Create one immutable integration subject that manually resolves only
   `docs/architecture/business-capability/architecture-brief.md`,
   `docs/architecture/business-capability/index.html`, `docs/architecture/business-capability/scene.js`,
   `docs/business-capability-architecture.md`, and `docs/evolution-roadmap.md`; retain only the listed committed facts,
   no new architecture decision.
-- [ ] **Actor: Tester / Implementer / Independent Reviewer.** Record factual same-subject Tester evidence, commit it
-  unchanged alone, then write and unchanged-sole-commit independent review evidence. Passing evidence and approved
-  review are required before Planner Phase 4.5.
-- [ ] **Actor: Planner / Implementer.** After Phase 4.5, route only the bounded push updating the existing draft PR.
+- [ ] **Actor: Tester.** Only after the five-file integration subject is committed, write factual evidence at
+  `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c27-integration-subject-40-hex-sha>.json`, bound
+  to that exact full subject SHA.
+- [ ] **Actor: Implementer.** Commit that Tester evidence unchanged in its own sole evidence-only commit.
+- [ ] **Actor: Independent Reviewer.** Consume only the committed passing Tester evidence for that same full subject
+  SHA and write review evidence at
+  `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c27-integration-subject-40-hex-sha>.json`.
+- [ ] **Actor: Implementer.** Commit that Independent Reviewer evidence unchanged in its own later, separate sole
+  evidence-only commit.
+- [ ] **Actor: Planner.** After the committed approved review evidence, perform C27 Phase 4.5 alignment.
+- [ ] **Actor: Implementer.** After Planner Phase 4.5, push only the bounded update to the existing draft PR.
   All PR threads—including C26 outcomes and Human-only locks—remain ReadOnly; no reply or resolution is authorized.

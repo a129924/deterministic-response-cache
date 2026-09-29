@@ -1224,7 +1224,7 @@ conflicts. It is a factual three-way integration, not an architecture redesign: 
 | In-Scope | Five C27 planning artifacts; standard candidate-SHA-bound Plan-Reviewer receipt; one immutable integration subject limited to the five conflict files; same-subject Tester evidence; independent Reviewer evidence; Planner Phase 4.5; existing draft PR push update. |
 | Out-Of-Scope / Non-Goal | New architecture, contracts, BC wiring, Runtime Cache backend/lifecycle/mapper/Identity import, Model Execution provider behavior, source, tests, PR-thread action, PR approval, merge, release and post-merge. |
 | ReadOnly | Every unlisted path; C26 and predecessor records; all classified and Human-only PR threads; Runtime Cache and Model Execution code/contracts outside the five documents. |
-| Written | Standard C27 Plan-Reviewer receipt; normal SHA-bound Tester evidence; normal same-subject independent Reviewer evidence. |
+| Written | Standard C27 Plan-Reviewer receipt; after the five-file integration subject only, Tester writes `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c27-integration-subject-40-hex-sha>.json` bound to that full subject SHA; after its passing sole evidence-only commit, Independent Reviewer writes `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c27-integration-subject-40-hex-sha>.json` bound to the same full subject SHA. Implementer alone commits each unchanged record in its own sole evidence-only commit. |
 | Modified | Candidate: exactly the five planning artifacts. Integration subject: only `docs/architecture/business-capability/architecture-brief.md`, `docs/architecture/business-capability/index.html`, `docs/architecture/business-capability/scene.js`, `docs/business-capability-architecture.md`, and `docs/evolution-roadmap.md`. |
 | Deleted | None. |
 
@@ -1237,7 +1237,11 @@ fact, added decision, or an edit outside the exact five-file allowlist fails clo
 
 ### C27 transition / handoff
 
-`planned` → C27 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → five-file immutable
-integration subject → factual passing Tester evidence-only commit → independent approved Reviewer evidence-only commit
-→ Planner Phase 4.5 → bounded push updating the existing draft PR. C27 never authorizes thread reply/resolution, PR
-approval, merge, release, or post-merge.
+`planned` → C27 candidate-only commit → Plan-Reviewer writes an independent approved candidate-SHA-bound receipt →
+Implementer commits that receipt unchanged alone → five-file immutable integration subject → Tester writes factual
+evidence at `loaded-runtime-cache.tester-evidence-<c27-integration-subject-40-hex-sha>.json` → Implementer commits
+that same-subject evidence unchanged alone → Independent Reviewer writes review evidence at
+`loaded-runtime-cache.implementation-review-log-<c27-integration-subject-40-hex-sha>.json` only after consuming the
+committed same-subject passing evidence → Implementer commits that review unchanged alone → Planner Phase 4.5 → bounded
+push updating the existing draft PR. C27 never authorizes thread reply/resolution, PR approval, merge, release, or
+post-merge.

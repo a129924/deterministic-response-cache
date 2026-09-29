@@ -536,7 +536,12 @@ architecture-document merge conflicts，並只整合已提交的事實：merge b
   `docs/evolution-roadmap.md`。不得修改其他檔案、刪除任一已提交事實，或藉由解衝新增架構決策。
 - 整合內容必須同時保留 Runtime Cache 的 protocol-only、無 Identity BC direct import、無 mapper、backend 或 runtime
   lifecycle，與 Model Execution 的 provider-neutral coordination contracts；兩者的 wiring 均為未來工作，不能描述為已
-  實作。Tester 必須以同一 immutable integration subject 記錄 factual verification；Independent Reviewer 只能消費
-  committed passing evidence。完成 approved review 與 Planner Phase 4.5 後，Implementer 才可 push 更新既有 draft PR。
+  實作。五檔 integration subject 提交後，Tester 唯一可在
+  `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c27-integration-subject-40-hex-sha>.json`
+  寫入該 subject 的 factual verification；只有 Implementer 可原樣以 sole evidence-only commit 提交。Independent
+  Reviewer 只能消費該 committed、same-subject 的 passing evidence，並唯一可在
+  `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c27-integration-subject-40-hex-sha>.json`
+  寫入 review；只有 Implementer 可再原樣以獨立 sole evidence-only commit 提交。完成 approved review 與 Planner
+  Phase 4.5 後，Implementer 才可 push 更新既有 draft PR。
 - C26 的 classified pairs、所有 Human-only locks、所有未列 PR threads、source/tests、Runtime Registry contract 與
   非本五檔文件均 ReadOnly。C27 本身不回覆、resolve、approve、merge、release 或 post-merge。

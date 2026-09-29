@@ -645,9 +645,13 @@ protocol-only boundary with no Identity direct import, mapper, backend, or runti
 provider-neutral coordination contracts; their wiring remains future work. Conflict markers, omitted committed facts,
 new architecture choices, and every path outside the five-file allowlist fail closed.
 
-Tester writes the normal full-SHA-bound factual evidence only for the immutable integration subject; Implementer alone
-commits it unchanged in a sole evidence-only commit. Independent Reviewer may consume only that committed passing
-evidence and writes the normal same-subject review evidence; Implementer alone commits it unchanged in a sole
-evidence-only commit. Following approved review, Planner Phase 4.5 is required before an Implementer may push the
-existing draft PR update. C27 does not classify, reply to, or resolve a PR thread, and does not authorize PR approval,
-merge, release, or post-merge.
+Only after the five-file immutable integration subject is committed, Tester writes the normal full-SHA-bound factual
+evidence at the authoritative exact path
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c27-integration-subject-40-hex-sha>.json`; only an
+Implementer commits that unchanged record in its own sole evidence-only commit. Independent Reviewer may consume only
+that committed `passing` evidence for the same integration-subject full SHA and writes the normal same-subject review
+evidence at the authoritative exact path
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c27-integration-subject-40-hex-sha>.json`;
+only an Implementer commits that unchanged record in a later, separate sole evidence-only commit. Following approved
+review, Planner Phase 4.5 is required before an Implementer may push the existing draft PR update. C27 does not
+classify, reply to, or resolve a PR thread, and does not authorize PR approval, merge, release, or post-merge.
