@@ -1245,3 +1245,53 @@ that same-subject evidence unchanged alone → Independent Reviewer writes revie
 committed same-subject passing evidence → Implementer commits that review unchanged alone → Planner Phase 4.5 → bounded
 push updating the existing draft PR. C27 never authorizes thread reply/resolution, PR approval, merge, release, or
 post-merge.
+
+## C28 Post-C27 Eight-Pair Repair and Classification Successor (authoritative current routing)
+
+C28 supersedes C27 only after its committed factual chain: repaired candidate
+`2dac62be230fe3daf6c259389c93a6e29cfa7006` → integration subject
+`21747f2a24dedc2d18eaf2fbd6c8bc0bb0670585` → passing Tester evidence
+`294f7fb5ea0502236c277e545ba9e2dc311596e3` → approved Reviewer evidence
+`190c41bb3480753f78bdf97c778583bee0f6ff2f`. C25 green and C26 receipt facts are frozen C28 inputs. C28 repairs and
+later independently classifies exactly the four C26 `ADDRESS` pairs `lfYsH`/`4091265108`, `lfYsK`/`4091265115`,
+`m8u04`/`4129370926`, `m8u09`/`4129370931`, plus unclassified `m82WL`/`4129419161`, `m82WS`/`4129419173`,
+`m9eUV`/`4129677944`, `m9eUY`/`4129677947`. It makes no disposition or PR action before its own committed receipt.
+
+| Field | Contract |
+| --- | --- |
+| Goal | Close the eight bounded non-Human review findings without changing the Loaded Runtime Cache mission, protocol-first boundary, or architecture decisions. |
+| In-Scope | Five C28 planning artifacts; standard Plan-Reviewer receipt; RED/green test and bounded source/dataflow correction; SHA-bound Tester/Reviewer evidence; actual-current-head eight-pair classification receipt; later exact action only for committed `REPLY_AND_RESOLVE`. |
+| Out-Of-Scope / Non-Goal | New BC wiring, backend, mapper, lifecycle, Identity import, execution, provider behavior, PR approval, merge, release and post-merge. |
+| ReadOnly | Every unlisted path and thread; all predecessor artifacts; Human-only `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, `lfQmF`. |
+| Written | Standard C28 Plan-Reviewer receipt; RED/green Tester evidence; green Independent Reviewer evidence; one C28 classification receipt. |
+| Modified | Candidate: exactly the five planning artifacts. RED: only `tests/test_loaded_runtime_cache_bc_independence.py` and `tests/test_loaded_runtime_cache_contracts.py`. Green: those tests; `src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/registry/runtime_reuse_key.py`; and only the truthful byte-changed subset of the ten C14 dataflow paths already enumerated in `Artifact Paths` above. |
+| Deleted | None. |
+
+### C28 locked repair contract
+
+The candidate aligns C25/C26/C27 tracking states solely from committed facts and predeclares no candidate SHA, receipt
+verdict, subject SHA, result, PR head, classification outcome, reply or resolution. After its independently approved
+receipt, RED must collect then factually fail for direct `getattr(importlib, "import_module")` callable use, direct
+`getattr(sys, "modules")` module-cache access, `import importlib.<child>` top-level binding, a forbidden callable in
+either `IfExp` assignment branch, and readable `RuntimeReuseKey` construction-token state. No RED Reviewer record exists.
+
+Green preserves static AST-only analysis and all locked earlier shapes while recognising just those direct forms.
+`RuntimeReuseKey` remains immutable with instance-identity semantics but must not expose its uninterpreted token through
+a readable instance attribute. The dataflow's truthful changed subset must add `RuntimeRegistry.retain(key, runtime) ->
+None` input/completion information separately from `RuntimeRetention` outcomes, without depicting a backend, mapper,
+lifecycle, or cross-BC wiring. Validation/delivery/visual-check evidence must remain truthful; byte-identical artifacts
+are ReadOnly.
+
+### C28 immutable classification / handoff
+
+Candidate-only commit → independent approved SHA-bound Plan-Reviewer receipt-only commit → RED/failing Tester
+evidence-only commit → distinct green/passing Tester evidence-only commit → independent approved green review
+evidence-only commit → Planner actual-current-head verification → independent C28 classification receipt-only commit →
+Planner routing. The final receipt path is
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c28-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`.
+It has exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; its exactly eight entries
+have only `thread`, `comment`, `outcome`, `reply` for the listed pair set. Independent Reviewer alone selects
+`REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; only the former has a non-empty factual reply and can later authorize the
+matching exact reply/resolve. All other replies are JSON `null`; malformed, stale, non-sole, cross-subject, wrong-head,
+wrong-writer or wrong-pair evidence fails closed.

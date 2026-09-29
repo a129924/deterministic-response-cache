@@ -655,3 +655,54 @@ evidence at the authoritative exact path
 only an Implementer commits that unchanged record in a later, separate sole evidence-only commit. Following approved
 review, Planner Phase 4.5 is required before an Implementer may push the existing draft PR update. C27 does not
 classify, reply to, or resolve a PR thread, and does not authorize PR approval, merge, release, or post-merge.
+
+## C28 post-C27 eight-pair repair and classification technical contract
+
+C28 is the sole successor for four C26 `ADDRESS` pairs — `lfYsH`/`4091265108`, `lfYsK`/`4091265115`,
+`m8u04`/`4129370926`, `m8u09`/`4129370931` — and the four unclassified pairs `m82WL`/`4129419161`, `m82WS`/`4129419173`,
+`m9eUV`/`4129677944`, `m9eUY`/`4129677947`. Its committed input provenance is C25 green
+`13f987a41119590621671c429293cf549055672b`, C26 classification receipt
+`31ab754aae443f702fa4ccc028d53a6c687e48aa`, C27 repaired candidate
+`2dac62be230fe3daf6c259389c93a6e29cfa7006`, integration subject
+`21747f2a24dedc2d18eaf2fbd6c8bc0bb0670585`, passing Tester evidence
+`294f7fb5ea0502236c277e545ba9e2dc311596e3`, and approved Reviewer evidence
+`190c41bb3480753f78bdf97c778583bee0f6ff2f`. These are factual inputs only; no C28 future SHA, verdict, result,
+classification, reply or resolution is prefilled.
+
+The C28 candidate changes exactly the five planning artifacts and aligns C25/C26/C27 tracker facts from their committed
+records. An independently written standard candidate-SHA-bound approved Plan-Reviewer receipt is committed unchanged
+and alone before implementation. The RED subject changes only
+`tests/test_loaded_runtime_cache_bc_independence.py` and `tests/test_loaded_runtime_cache_contracts.py`; it must collect
+and actually fail for the four static scanner gaps and for readable `RuntimeReuseKey` token state. Tester writes only
+factual full-SHA-bound failing evidence; no Reviewer record is permitted for RED.
+
+The distinct green subject may change only those two tests,
+`src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/registry/runtime_reuse_key.py`, and the truthful
+byte-changed subset of the existing ten dataflow artifacts under `docs/architecture/loaded-runtime-cache/`:
+`loaded-runtime-cache.dataflow.json`, `.html`, `.validation.json`, `.delivery.json`, `.visual-check.json`,
+`.visual-check.html`, and the 1440×900/2048×1320 dark/light capture PNGs. It must statically reject direct callable
+`getattr(importlib, "import_module")`, direct module-cache base `getattr(sys, "modules")`, `import importlib.<child>`
+through Python's top-level `importlib` binding, and an assignment RHS `IfExp` when either branch reaches a forbidden
+callable. It must not execute fixture source, dynamically import, inspect runtime modules, recursively broaden AST
+handling, or change the locked simple-name mixed-assignment behavior. `RuntimeReuseKey` preserves immutable
+instance-identity semantics without inspecting, serializing, hashing or exposing its construction token through a
+readable instance attribute. The dataflow explicitly presents `RuntimeRegistry.retain(key, runtime) -> None`, including
+key/runtime inputs and completion, separately from `RuntimeRetention` outcome flows and without a backend/lifecycle/
+mapper/wiring claim.
+
+Tester writes passing evidence only for the green full SHA; Independent Reviewer consumes only its committed,
+same-subject passing evidence and writes an approved or needs-rework same-subject review record. Implementer commits
+each unchanged record in a separate sole evidence-only commit. After Planner verifies the actual current PR head, only
+Independent Reviewer may write
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c28-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`.
+It has exactly `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; it binds schema `1`, this
+topic, the new green/evidence/head facts, exactly eight entries, and `Independent Reviewer`. Every entry has exactly
+`thread`, `comment`, `outcome`, `reply`; the pair set is exactly the eight pairs named above. Only
+`REPLY_AND_RESOLVE` has a non-empty factual reply and can authorize later exact action; `ADDRESS` and `HUMAN_CHECK`
+have JSON `null` replies and return to Planner/open state. Every malformed, extra, stale, cross-subject, wrong-head,
+wrong-writer, invalid-enum/nullability, or non-sole record fails closed.
+
+`jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561`, `lAR8T`/`4078761998`, and `lfQmF`/`4091213944` remain
+Human-only/open exclusions. All unlisted paths, threads, predecessor artifacts, PR approval, merge, release and
+post-merge are ReadOnly.

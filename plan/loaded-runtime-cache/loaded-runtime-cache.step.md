@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: c22-plan-authoring
+phase: c28-plan-authoring
 created: 2026-09-17
 ---
 
@@ -539,38 +539,38 @@ to its candidate. `lfQmF`/`4091213944`, F/ACL/business/README Human-only locks, 
 production source, docs and dataflow are ReadOnly.
 
 - [x] C25 plan-authoring
-- [ ] C25 planning-candidate-commit
-- [ ] C25 independent Plan-Reviewer receipt
-- [ ] C25 receipt-only commit
-- [ ] C25 test-only RED subject
-- [ ] C25 factual failing Tester evidence
-- [ ] C25 RED evidence-only commit
-- [ ] C25 test-only green subject
-- [ ] C25 factual passing Tester evidence
-- [ ] C25 green evidence-only commit
-- [ ] C25 independent green review evidence
-- [ ] C25 review-evidence-only commit
-- [ ] C25 Planner actual-current-head verification
-- [ ] C25 independent one-pair classification receipt
-- [ ] C25 classification-receipt-only commit
-- [ ] C25 Planner routing for exact classified pair
+- [x] C25 planning-candidate-commit
+- [x] C25 independent Plan-Reviewer receipt
+- [x] C25 receipt-only commit
+- [x] C25 test-only RED subject
+- [x] C25 factual failing Tester evidence
+- [x] C25 RED evidence-only commit
+- [x] C25 test-only green subject
+- [x] C25 factual passing Tester evidence
+- [x] C25 green evidence-only commit
+- [x] C25 independent green review evidence
+- [x] C25 review-evidence-only commit
+- [x] C25 Planner actual-current-head verification
+- [x] C25 independent one-pair classification receipt
+- [x] C25 classification-receipt-only commit
+- [x] C25 Planner routing for exact classified pair
 
 ### C25 actionable steps
 
-- [ ] **Actor: Implementer.** Commit exactly the five C25 planning artifacts. Do not prefill candidate SHA, receipt
+- [x] **Actor: Implementer.** Commit exactly the five C25 planning artifacts. Do not prefill candidate SHA, receipt
   verdict, implementation/evidence SHA, PR head, classification outcome, reply or resolution.
-- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write fresh approved standard candidate-SHA-bound receipt,
+- [x] **Actor: Independent Plan-Reviewer / Implementer.** Write fresh approved standard candidate-SHA-bound receipt,
   then commit it unchanged alone.
-- [ ] **Actor: Implementer / Tester.** Create a collection-success/assertion-failing RED subject changing only
+- [x] **Actor: Implementer / Tester.** Create a collection-success/assertion-failing RED subject changing only
   `tests/test_loaded_runtime_cache_bc_independence.py`, exposing static
   `(loader := importlib).import_module(...)` attribute-base NamedExpr alias detection. Tester writes factual failing
   evidence; Implementer commits only that evidence unchanged.
-- [ ] **Actor: Implementer / Tester / Independent Reviewer.** Create a distinct green subject changing only the same
+- [x] **Actor: Implementer / Tester / Independent Reviewer.** Create a distinct green subject changing only the same
   test. Detect only direct `ast.Attribute`/`ast.NamedExpr`/simple-name-target/known-`importlib`-alias/`import_module`
   shape; do not recurse, execute, dynamically import or introspect. Preserve direct-name NamedExpr, mixed assignment,
   `getattr` and `sys.modules`. Commit passing Tester evidence alone; Independent Reviewer consumes it and Implementer
   commits only that review record.
-- [ ] **Actor: Planner / Independent Reviewer / Implementer.** After actual-current-head verification, Independent
+- [x] **Actor: Planner / Independent Reviewer / Implementer.** After actual-current-head verification, Independent
   Reviewer writes only
   `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c25-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`;
   Implementer commits it unchanged alone. It has exact eight top-level keys and exactly one `thread`, `comment`,
@@ -587,26 +587,26 @@ C26 is the current planning-only successor. It binds C25 green subject
 state before a committed exact C26 classification receipt authorizes later routing.
 
 - [x] C26 plan-authoring
-- [ ] C26 planning-candidate-commit
-- [ ] C26 independent Plan-Reviewer receipt
-- [ ] C26 receipt-only commit
-- [ ] C26 independent seven-pair classification receipt
-- [ ] C26 classification-receipt-only commit
-- [ ] C26 Planner routing for exact classified pairs
+- [x] C26 planning-candidate-commit
+- [x] C26 independent Plan-Reviewer receipt
+- [x] C26 receipt-only commit
+- [x] C26 independent seven-pair classification receipt
+- [x] C26 classification-receipt-only commit
+- [x] C26 Planner routing for exact classified pairs
 
 ### C26 actionable steps
 
-- [ ] **Actor: Implementer.** Commit exactly the five C26 planning artifacts; do not prefill candidate SHA, receipt
+- [x] **Actor: Implementer.** Commit exactly the five C26 planning artifacts; do not prefill candidate SHA, receipt
   verdict, classification outcome, reply or resolution.
-- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write approved standard candidate-SHA-bound receipt, then
+- [x] **Actor: Independent Plan-Reviewer / Implementer.** Write approved standard candidate-SHA-bound receipt, then
   commit it unchanged alone.
-- [ ] **Actor: Independent Reviewer / Implementer.** Write and unchanged-sole-commit only
+- [x] **Actor: Independent Reviewer / Implementer.** Write and unchanged-sole-commit only
   `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-13f987a41119590621671c429293cf549055672b-8bd9460950237c48c9befb73a1c5b80d084e88ae.json`.
   It has exactly eight top-level keys and exactly seven `thread`, `comment`, `outcome`, `reply` entries for
   `ld9Ai`/`4090688118`, `lfYsF`/`4091265104`, `lfYsH`/`4091265108`, `lfYsK`/`4091265115`, `m8u00`/`4129370918`,
   `m8u04`/`4129370926`, `m8u09`/`4129370931`. Only committed `REPLY_AND_RESOLVE` with non-empty factual reply may
   later receive the matching exact reply/resolve; `ADDRESS` returns to Planner and `HUMAN_CHECK` remains open.
-- [ ] **Actor: Planner.** Route only exact committed C26 entries. `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, and `lfQmF`
+- [x] **Actor: Planner.** Route only exact committed C26 entries. `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, and `lfQmF`
   remain Human-only open exclusions; C25 `lfQl9` and every other unlisted thread remain ReadOnly.
 
 ## C27 Bounded Architecture-Document Conflict-Resolution Stages (authoritative)
@@ -618,37 +618,81 @@ base `37d433e198a955f0710ecd5335666760aa86a20c`, Runtime Cache fact
 `1501f380f20492c71275474f800fdaaffbf0a76a`; it adds no architecture decision.
 
 - [x] C27 plan-authoring
-- [ ] C27 planning-candidate-commit
-- [ ] C27 independent Plan-Reviewer receipt
-- [ ] C27 receipt-only commit
-- [ ] C27 five-file integration subject
-- [ ] C27 factual Tester evidence
-- [ ] C27 Tester-evidence-only commit
-- [ ] C27 independent implementation review evidence
-- [ ] C27 review-evidence-only commit
-- [ ] C27 Planner Phase 4.5 alignment
-- [ ] C27 bounded push updating existing draft PR
+- [x] C27 planning-candidate-commit
+- [x] C27 independent Plan-Reviewer receipt
+- [x] C27 receipt-only commit
+- [x] C27 five-file integration subject
+- [x] C27 factual Tester evidence
+- [x] C27 Tester-evidence-only commit
+- [x] C27 independent implementation review evidence
+- [x] C27 review-evidence-only commit
+- [x] C27 Planner Phase 4.5 alignment
+- [x] C27 bounded push updating existing draft PR
 
 ### C27 actionable steps
 
-- [ ] **Actor: Implementer.** Commit exactly the five C27 planning artifacts; do not prefill candidate SHA, receipt
+- [x] **Actor: Implementer.** Commit exactly the five C27 planning artifacts; do not prefill candidate SHA, receipt
   verdict, integration subject SHA, test result, or review verdict.
-- [ ] **Actor: Plan-Reviewer.** Write a standard candidate-SHA-bound approved receipt.
-- [ ] **Actor: Implementer.** Commit that Plan-Reviewer receipt unchanged in its own sole receipt-only commit.
-- [ ] **Actor: Implementer.** Create one immutable integration subject that manually resolves only
+- [x] **Actor: Plan-Reviewer.** Write a standard candidate-SHA-bound approved receipt.
+- [x] **Actor: Implementer.** Commit that Plan-Reviewer receipt unchanged in its own sole receipt-only commit.
+- [x] **Actor: Implementer.** Create one immutable integration subject that manually resolves only
   `docs/architecture/business-capability/architecture-brief.md`,
   `docs/architecture/business-capability/index.html`, `docs/architecture/business-capability/scene.js`,
   `docs/business-capability-architecture.md`, and `docs/evolution-roadmap.md`; retain only the listed committed facts,
   no new architecture decision.
-- [ ] **Actor: Tester.** Only after the five-file integration subject is committed, write factual evidence at
+- [x] **Actor: Tester.** Only after the five-file integration subject is committed, write factual evidence at
   `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c27-integration-subject-40-hex-sha>.json`, bound
   to that exact full subject SHA.
-- [ ] **Actor: Implementer.** Commit that Tester evidence unchanged in its own sole evidence-only commit.
-- [ ] **Actor: Independent Reviewer.** Consume only the committed passing Tester evidence for that same full subject
+- [x] **Actor: Implementer.** Commit that Tester evidence unchanged in its own sole evidence-only commit.
+- [x] **Actor: Independent Reviewer.** Consume only the committed passing Tester evidence for that same full subject
   SHA and write review evidence at
   `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c27-integration-subject-40-hex-sha>.json`.
-- [ ] **Actor: Implementer.** Commit that Independent Reviewer evidence unchanged in its own later, separate sole
+- [x] **Actor: Implementer.** Commit that Independent Reviewer evidence unchanged in its own later, separate sole
   evidence-only commit.
-- [ ] **Actor: Planner.** After the committed approved review evidence, perform C27 Phase 4.5 alignment.
-- [ ] **Actor: Implementer.** After Planner Phase 4.5, push only the bounded update to the existing draft PR.
+- [x] **Actor: Planner.** After the committed approved review evidence, perform C27 Phase 4.5 alignment.
+- [x] **Actor: Implementer.** After Planner Phase 4.5, push only the bounded update to the existing draft PR.
   All PR threads—including C26 outcomes and Human-only locks—remain ReadOnly; no reply or resolution is authorized.
+
+## C28 Post-C27 Eight-Pair Repair and Classification Stages (authoritative)
+
+C25 and C26 tracker states above are aligned to their committed receipts and routes; C27 is aligned to candidate
+`2dac62be230fe3daf6c259389c93a6e29cfa7006`, integration subject
+`21747f2a24dedc2d18eaf2fbd6c8bc0bb0670585`, Tester evidence
+`294f7fb5ea0502236c277e545ba9e2dc311596e3`, and approved review
+`190c41bb3480753f78bdf97c778583bee0f6ff2f`. All are frozen C28 inputs. C28 covers only `lfYsH`/`4091265108`,
+`lfYsK`/`4091265115`, `m8u04`/`4129370926`, `m8u09`/`4129370931`, `m82WL`/`4129419161`,
+`m82WS`/`4129419173`, `m9eUV`/`4129677944`, and `m9eUY`/`4129677947`.
+
+- [x] C28 plan-authoring
+- [ ] C28 planning-candidate-commit
+- [ ] C28 independent Plan-Reviewer receipt
+- [ ] C28 receipt-only commit
+- [ ] C28 RED test subject
+- [ ] C28 RED factual failing Tester evidence
+- [ ] C28 RED evidence-only commit
+- [ ] C28 green bounded repair subject
+- [ ] C28 green factual passing Tester evidence
+- [ ] C28 green Tester-evidence-only commit
+- [ ] C28 independent green review evidence
+- [ ] C28 green review-evidence-only commit
+- [ ] C28 Planner actual-current-head verification
+- [ ] C28 independent eight-pair classification receipt
+- [ ] C28 classification-receipt-only commit
+- [ ] C28 Planner routing for exact classified pairs
+
+### C28 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C28 planning artifacts; do not prefill future SHA, verdict,
+  test result, classification outcome, reply or resolution.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write an approved standard candidate-SHA-bound receipt and
+  commit it unchanged alone.
+- [ ] **Actor: Implementer / Tester.** Create RED only in `tests/test_loaded_runtime_cache_bc_independence.py` and
+  `tests/test_loaded_runtime_cache_contracts.py`; record factual failure unchanged and alone. No RED review evidence.
+- [ ] **Actor: Implementer / Tester / Independent Reviewer.** Create distinct green only in those tests,
+  `runtime_reuse_key.py`, and the truthful changed subset of the ten existing dataflow artifacts. Record passing Tester
+  and approved same-subject Independent Reviewer evidence in separate sole commits.
+- [ ] **Actor: Planner / Independent Reviewer / Implementer.** After actual-current-head verification, Independent
+  Reviewer writes only the SHA-bound C28 eight-pair classification receipt. Implementer commits it unchanged alone;
+  only exact committed `REPLY_AND_RESOLVE` entries may later receive their factual reply and resolution.
+- [ ] **Actor: Planner.** Keep `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, and `lfQmF` Human-only/open; all unlisted threads
+  and paths remain ReadOnly.

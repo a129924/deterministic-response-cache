@@ -561,3 +561,35 @@ existing draft PR.
    exact five-file allowlist fails closed.
 2. Any PR-thread reply/resolution, approval, merge, release, post-merge, source/test change, or use of uncommitted
    facts is out of scope.
+
+## C28 Eight-Pair Repair and Classification Scenarios
+
+### Scenario 46 — factual historical state alignment
+
+Given the committed C25, C26 and C27 facts, when the C28 candidate is authored, then it updates only the five planning
+artifacts to mark those historical routes consistently and does not prefill any C28 candidate, evidence, outcome, reply
+or resolution.
+
+### Scenario 47 — bounded RED and green repair
+
+Given a committed approved C28 Plan-Reviewer receipt, when RED tests cover direct `getattr` import/module-cache shapes,
+an `importlib` submodule top-level binding, an `IfExp` assignment alias, and readable key token state, then they collect
+and fail factually. When green runs, it rejects only those additional static bypasses, preserves prior scanner shapes,
+keeps the token opaque and non-readable, and presents the Registry retain channel separately from Retention outcomes in
+the truthful dataflow artifact subset.
+
+### Scenario 48 — immutable eight-pair current-head classification
+
+Given committed C28 green passing Tester and approved Reviewer evidence and an actual current PR head, when Independent
+Reviewer writes the C28 classification receipt, then its exact eight top-level keys and exactly eight four-field entries
+cover only `lfYsH`/`4091265108`, `lfYsK`/`4091265115`, `m8u04`/`4129370926`, `m8u09`/`4129370931`,
+`m82WL`/`4129419161`, `m82WS`/`4129419173`, `m9eUV`/`4129677944`, and `m9eUY`/`4129677947`. Candidate planning does
+not choose outcomes. Only a committed `REPLY_AND_RESOLVE` entry with a factual non-empty reply may later authorize
+that exact thread action.
+
+## C28 Error / Edge Cases
+
+1. Any C28 change outside its declared planning, test, key-module, or truthful dataflow allowlist; recursive/runtime
+   AST inspection; token interpretation; or backend/lifecycle/wiring claim fails review.
+2. A missing/extra pair or key, wrong SHA/head/writer, stale or non-sole evidence, or any action on a Human-only thread
+   fails closed and authorizes no reply, resolution, approval, merge, release or post-merge.

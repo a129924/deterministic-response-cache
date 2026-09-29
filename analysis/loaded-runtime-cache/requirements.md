@@ -545,3 +545,44 @@ architecture-document merge conflicts，並只整合已提交的事實：merge b
   Phase 4.5 後，Implementer 才可 push 更新既有 draft PR。
 - C26 的 classified pairs、所有 Human-only locks、所有未列 PR threads、source/tests、Runtime Registry contract 與
   非本五檔文件均 ReadOnly。C27 本身不回覆、resolve、approve、merge、release 或 post-merge。
+
+## C28 post-C27 eight-pair repair and classification successor
+
+C28 以已提交的 C25、C26 與 C27 facts 為唯一歷史輸入：C25 green subject
+`13f987a41119590621671c429293cf549055672b`、C26 classification receipt
+`31ab754aae443f702fa4ccc028d53a6c687e48aa`，以及 C27 repaired candidate
+`2dac62be230fe3daf6c259389c93a6e29cfa7006`、integration subject
+`21747f2a24dedc2d18eaf2fbd6c8bc0bb0670585`、passing Tester evidence
+`294f7fb5ea0502236c277e545ba9e2dc311596e3`、approved Reviewer evidence
+`190c41bb3480753f78bdf97c778583bee0f6ff2f`。它只處理 C26 已獨立分類為 `ADDRESS` 的
+`lfYsH`/`4091265108`、`lfYsK`/`4091265115`、`m8u04`/`4129370926`、`m8u09`/`4129370931`，以及尚未分類的
+`m82WL`/`4129419161`、`m82WS`/`4129419173`、`m9eUV`/`4129677944`、`m9eUY`/`4129677947`。C28 candidate 不得預填
+任何 C28 candidate SHA、review verdict、RED/green SHA、Tester/Reviewer result、PR head、classification outcome、reply 或 resolution。
+
+- Candidate 只修改五份 planning artifacts，並以 committed facts 對齊 C25/C26/C27 的 historical tracker state；它不得
+  回寫 receipt、evidence 或宣稱任何 C28 thread 已處理。先由 Independent Plan-Reviewer 在
+  `loaded-runtime-cache.plan-review-receipt-<c28-candidate-40-hex-sha>.json` 寫標準 approved receipt，再由
+  Implementer 原樣以 sole receipt-only commit 提交。
+- approved receipt 後，RED subject 只可修改 `tests/test_loaded_runtime_cache_bc_independence.py` 與
+  `tests/test_loaded_runtime_cache_contracts.py`：它必須 collection-success 並實際暴露四個 static scanner gaps
+  （direct `getattr(importlib, "import_module")` callable、direct `getattr(sys, "modules")` base、`import importlib.util`
+  的 top-level module binding、以及 `IfExp` assignment 任一分支的 forbidden callable），並暴露 `RuntimeReuseKey`
+  construction token 不得成為可讀 instance attribute。Tester 只如實寫 full-SHA-bound `failing` evidence；沒有 RED Reviewer record。
+- green subject 只可修改上述兩個 tests、
+  `src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/registry/runtime_reuse_key.py`，以及下列 dataflow
+  artifact allowlist 中真實 byte-changed subset：`loaded-runtime-cache.dataflow.json`、`.html`、`.validation.json`、
+  `.delivery.json`、`.visual-check.json`、`.visual-check.html` 與四個既有 desktop capture PNG。修正須保持純 AST、
+  不遞迴執行 source、不 dynamic import／runtime introspection；保留 direct-name NamedExpr、mixed assignment
+  simple-name-only rule、既有 `getattr`/`sys.modules` alias behavior，僅擴充直接 expression 與 top-level importlib
+  submodule shape。`RuntimeReuseKey` 仍為 instance-identity、immutable、token-uninterpreted local type，但不得留下可讀 token
+  attribute。dataflow 必須明示 `RuntimeRegistry.retain(key, runtime) -> None` 的 key/runtime inputs 與 completion，且與
+  `RuntimeRetention` outcomes 分離；不得暗示 backend、mapper、lifecycle 或 BC wiring。
+- green passing Tester evidence 與 approved Independent Reviewer evidence 都必須綁定新的 green subject full SHA，並各由
+  Implementer unchanged sole evidence-only commit。其後 Planner 驗證 actual current PR head，只有 Independent Reviewer 可寫
+  `loaded-runtime-cache.thread-classification-receipt-<c28-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`。
+  receipt 有既定八個 top-level keys與恰好八個 `thread`、`comment`、`outcome`、`reply` entries，pair set 僅為上述八對；
+  Reviewer 獨立選擇 `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`。只有 committed `REPLY_AND_RESOLVE` 的 non-empty factual reply
+  才能在後續授權 exact reply/resolve；其餘 reply 必為 JSON `null`。
+- `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944` 是
+  Human-only/open exclusions。每個其他 thread、所有 predecessor artifacts、未列 path、PR approval、merge、release 與 post-merge
+  皆 ReadOnly；錯誤 writer/path/SHA/schema/pair/enum/nullability/staleness/non-sole commit 一律 fail closed。
