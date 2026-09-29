@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "topic": "model-response-codecs",
+  "correction_id": "fix-6",
+  "candidate": {
+    "commit_sha": "dcedc55d2eb17fefbf12a7d26ddabbbe1b6e53b9",
+    "tree_sha": "5ac1637bdf9f82a33905e5a8ffd7edab67b6f11d",
+    "active": true
+  },
+  "reviewed_artifacts": [
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.correction-fix-6-plan.md",
+      "blob_sha": "3d843f92df65cc51832ab750ab021b9644bc3cdf"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.correction-fix-6-step.md",
+      "blob_sha": "43617e6ee8f20cc2c6da02bdf1eb0a9c62ad556e"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.plan.md",
+      "blob_sha": "9bfc22456ef965bab868a1e9b83f73dad48f6ca8"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.step.md",
+      "blob_sha": "03713cde5b56da073b2dbf2550cd6429cd1387a4"
+    }
+  ],
+  "first_parent_admission": {
+    "parent_sha": "66de1646462e9fc0d978e1a986fcb928f752cf38",
+    "non_merge": true,
+    "name_status": [
+      {
+        "status": "A",
+        "path": "plan/model-response-codecs/model-response-codecs.correction-fix-6-plan.md"
+      },
+      {
+        "status": "A",
+        "path": "plan/model-response-codecs/model-response-codecs.correction-fix-6-step.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.plan.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.step.md"
+      }
+    ]
+  },
+  "review_basis": {
+    "workflow_contract": "plan/agent-handoff-workflow.md",
+    "topic_plan_contract": "plan/topic-plan-contract.md",
+    "checkout": "dcedc55d2eb17fefbf12a7d26ddabbbe1b6e53b9"
+  },
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "route_authorization": {
+    "next_phase": "phase-4.5-recheck",
+    "scope": "existing-fix-5-Q-chain-only"
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}
