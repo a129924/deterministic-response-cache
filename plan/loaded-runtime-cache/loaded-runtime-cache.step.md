@@ -608,3 +608,40 @@ state before a committed exact C26 classification receipt authorizes later routi
   later receive the matching exact reply/resolve; `ADDRESS` returns to Planner and `HUMAN_CHECK` remains open.
 - [ ] **Actor: Planner.** Route only exact committed C26 entries. `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, and `lfQmF`
   remain Human-only open exclusions; C25 `lfQl9` and every other unlisted thread remain ReadOnly.
+
+## C27 Bounded Architecture-Document Conflict-Resolution Stages (authoritative)
+
+C27 follows committed C26 classification receipt `31ab754aae443f702fa4ccc028d53a6c687e48aa`. It is limited to the factual three-way integration of merge
+base `37d433e198a955f0710ecd5335666760aa86a20c`, Runtime Cache fact
+`442cc9461854d3909345edb26d1434bfaaa1b86e`, Model Execution fact
+`5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28`, and dev head
+`1501f380f20492c71275474f800fdaaffbf0a76a`; it adds no architecture decision.
+
+- [x] C27 plan-authoring
+- [ ] C27 planning-candidate-commit
+- [ ] C27 independent Plan-Reviewer receipt
+- [ ] C27 receipt-only commit
+- [ ] C27 five-file integration subject
+- [ ] C27 factual Tester evidence
+- [ ] C27 Tester-evidence-only commit
+- [ ] C27 independent implementation review evidence
+- [ ] C27 review-evidence-only commit
+- [ ] C27 Planner Phase 4.5 alignment
+- [ ] C27 bounded push updating existing draft PR
+
+### C27 actionable steps
+
+- [ ] **Actor: Implementer.** Commit exactly the five C27 planning artifacts; do not prefill candidate SHA, receipt
+  verdict, integration subject SHA, test result, or review verdict.
+- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write a standard candidate-SHA-bound approved receipt, then
+  commit it unchanged alone.
+- [ ] **Actor: Implementer.** Create one immutable integration subject that manually resolves only
+  `docs/architecture/business-capability/architecture-brief.md`,
+  `docs/architecture/business-capability/index.html`, `docs/architecture/business-capability/scene.js`,
+  `docs/business-capability-architecture.md`, and `docs/evolution-roadmap.md`; retain only the listed committed facts,
+  no new architecture decision.
+- [ ] **Actor: Tester / Implementer / Independent Reviewer.** Record factual same-subject Tester evidence, commit it
+  unchanged alone, then write and unchanged-sole-commit independent review evidence. Passing evidence and approved
+  review are required before Planner Phase 4.5.
+- [ ] **Actor: Planner / Implementer.** After Phase 4.5, route only the bounded push updating the existing draft PR.
+  All PR threads—including C26 outcomes and Human-only locks—remain ReadOnly; no reply or resolution is authorized.

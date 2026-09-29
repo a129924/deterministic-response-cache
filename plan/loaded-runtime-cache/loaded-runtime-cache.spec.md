@@ -531,3 +531,29 @@ and `lfQmF` stay Human-only/open; C25 `lfQl9` and every unlisted thread stay unt
    fails closed and authorizes no action.
 2. Any source, test, documentation, dataflow, architecture, README, PR-authority, merge, release, post-merge, or
    Human-only thread action is out of scope.
+
+## C27 Architecture-Document Conflict-Resolution Scenarios
+
+### Scenario 44 — bounded factual three-way integration
+
+Given committed facts at base `37d433e198a955f0710ecd5335666760aa86a20c`, Runtime Cache
+`442cc9461854d3909345edb26d1434bfaaa1b86e`, Model Execution
+`5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28`, and dev head
+`1501f380f20492c71275474f800fdaaffbf0a76a`, and a committed approved C27 Plan-Reviewer receipt, when Implementer
+creates the integration subject, then it changes only the five declared architecture-document files and retains both
+committed fact sets without making a new architecture decision.
+
+### Scenario 45 — preserved boundaries and evidence ordering
+
+Given the integration subject, when the five documents are resolved, then Runtime Cache remains protocol-only with no
+Identity direct import, mapper, concrete backend, or runtime lifecycle; Model Execution remains provider-neutral
+coordination; and their wiring remains future work. Tester records factual same-subject results before Independent
+Reviewer can review. Only passing Tester evidence followed by approved independent review permits Planner Phase 4.5
+and then a bounded push updating the existing draft PR.
+
+## C27 Error / Edge Cases
+
+1. A conflict marker, omitted committed fact, invented architecture or wiring decision, or a modified path outside the
+   exact five-file allowlist fails closed.
+2. Any PR-thread reply/resolution, approval, merge, release, post-merge, source/test change, or use of uncommitted
+   facts is out of scope.

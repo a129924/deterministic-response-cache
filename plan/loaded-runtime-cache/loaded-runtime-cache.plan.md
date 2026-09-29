@@ -1208,3 +1208,36 @@ Any binding, schema, writer, pair, enum, nullability, staleness or sole-commit d
 
 `planned` → C26 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → independent C26
 classification receipt-only commit → Planner routing. This never approves a PR, merge, release or post-merge.
+
+## C27 Bounded Architecture-Document Conflict-Resolution Successor (authoritative current routing)
+
+C27 follows C26 committed classification receipt `31ab754aae443f702fa4ccc028d53a6c687e48aa` and is the sole route for the PR's five architecture-document
+conflicts. It is a factual three-way integration, not an architecture redesign: it may use only merge-base facts at
+`37d433e198a955f0710ecd5335666760aa86a20c`, Loaded Runtime Cache facts at
+`442cc9461854d3909345edb26d1434bfaaa1b86e`, Model Execution facts at
+`5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28`, and dev-head facts at
+`1501f380f20492c71275474f800fdaaffbf0a76a`.
+
+| Field | Contract |
+| --- | --- |
+| Goal | Resolve only the five displayed architecture-document conflicts while retaining both already-committed capability facts. |
+| In-Scope | Five C27 planning artifacts; standard candidate-SHA-bound Plan-Reviewer receipt; one immutable integration subject limited to the five conflict files; same-subject Tester evidence; independent Reviewer evidence; Planner Phase 4.5; existing draft PR push update. |
+| Out-Of-Scope / Non-Goal | New architecture, contracts, BC wiring, Runtime Cache backend/lifecycle/mapper/Identity import, Model Execution provider behavior, source, tests, PR-thread action, PR approval, merge, release and post-merge. |
+| ReadOnly | Every unlisted path; C26 and predecessor records; all classified and Human-only PR threads; Runtime Cache and Model Execution code/contracts outside the five documents. |
+| Written | Standard C27 Plan-Reviewer receipt; normal SHA-bound Tester evidence; normal same-subject independent Reviewer evidence. |
+| Modified | Candidate: exactly the five planning artifacts. Integration subject: only `docs/architecture/business-capability/architecture-brief.md`, `docs/architecture/business-capability/index.html`, `docs/architecture/business-capability/scene.js`, `docs/business-capability-architecture.md`, and `docs/evolution-roadmap.md`. |
+| Deleted | None. |
+
+### C27 locked integration facts
+
+The resolved documents must preserve Loaded Runtime Cache as protocol-only, with no direct Identity BC import, mapper,
+concrete backend, or runtime lifecycle. They must preserve Model Execution as provider-neutral coordination contracts.
+Their wiring is future work and must not be portrayed as present implementation. A conflict marker, dropped committed
+fact, added decision, or an edit outside the exact five-file allowlist fails closed.
+
+### C27 transition / handoff
+
+`planned` → C27 candidate-only commit → independent approved Plan-Reviewer receipt-only commit → five-file immutable
+integration subject → factual passing Tester evidence-only commit → independent approved Reviewer evidence-only commit
+→ Planner Phase 4.5 → bounded push updating the existing draft PR. C27 never authorizes thread reply/resolution, PR
+approval, merge, release, or post-merge.

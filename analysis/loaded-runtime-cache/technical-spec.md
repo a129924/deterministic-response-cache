@@ -621,3 +621,33 @@ F/ACL/business/README Human-only locks `jnBpk`/`4043480108`, `kQ95O`/`4060023123
 `lAR8T`/`4078761998`, and `lfQmF`/`4091213944` remain open exclusions. C25 `lfQl9`/`4091213935`, every unlisted
 thread, and all source, tests, docs, architecture, dataflow, README, PR authority, merge, release and post-merge
 actions are ReadOnly.
+
+## C27 architecture-document conflict-resolution technical contract
+
+C27 is a planning-only successor after committed C26 classification receipt `31ab754aae443f702fa4ccc028d53a6c687e48aa`. It is bounded to a manual
+three-way textual integration of facts already committed at merge base `37d433e198a955f0710ecd5335666760aa86a20c`,
+Loaded Runtime Cache fact `442cc9461854d3909345edb26d1434bfaaa1b86e`, Model Execution fact
+`5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28`, and dev head `1501f380f20492c71275474f800fdaaffbf0a76a`. No candidate,
+receipt, integration subject, verification result, or verdict is prefilled.
+
+The candidate changes exactly the five planning artifacts. After an independently written approved standard
+candidate-SHA-bound Plan-Reviewer receipt is committed unchanged and alone, the sole integration implementation
+subject may manually edit only these exact conflict paths:
+
+1. `docs/architecture/business-capability/architecture-brief.md`
+2. `docs/architecture/business-capability/index.html`
+3. `docs/architecture/business-capability/scene.js`
+4. `docs/business-capability-architecture.md`
+5. `docs/evolution-roadmap.md`
+
+The resolved files retain both committed facts without inventing their relationship: Loaded Runtime Cache remains a
+protocol-only boundary with no Identity direct import, mapper, backend, or runtime lifecycle; Model Execution remains
+provider-neutral coordination contracts; their wiring remains future work. Conflict markers, omitted committed facts,
+new architecture choices, and every path outside the five-file allowlist fail closed.
+
+Tester writes the normal full-SHA-bound factual evidence only for the immutable integration subject; Implementer alone
+commits it unchanged in a sole evidence-only commit. Independent Reviewer may consume only that committed passing
+evidence and writes the normal same-subject review evidence; Implementer alone commits it unchanged in a sole
+evidence-only commit. Following approved review, Planner Phase 4.5 is required before an Implementer may push the
+existing draft PR update. C27 does not classify, reply to, or resolve a PR thread, and does not authorize PR approval,
+merge, release, or post-merge.

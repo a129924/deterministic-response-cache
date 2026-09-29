@@ -516,3 +516,27 @@ successor。它只建立 current-head independent classification contract，pair
   `lfQmF`/`4091213944` 維持 Human-only open exclusions。C25 `lfQl9`/`4091213935` 與所有其他未列 threads、source、
   tests、docs、dataflow、architecture、README、PR authority、merge、release、post-merge 皆 ReadOnly。任一錯誤 writer、
   path、schema、binding、pair set、enum、nullability、staleness 或 non-sole commit 一律 fail closed。
+
+## C27 bounded architecture-document conflict-resolution successor
+
+C27 是 C26 committed classification receipt `31ab754aae443f702fa4ccc028d53a6c687e48aa` 後唯一授權的 planning successor。它只處理 PR 顯示的五個
+architecture-document merge conflicts，並只整合已提交的事實：merge base
+`37d433e198a955f0710ecd5335666760aa86a20c`、Loaded Runtime Cache fact
+`442cc9461854d3909345edb26d1434bfaaa1b86e`、Model Execution fact
+`5f483a05e63c9dc8f3c63b04a63c8adec3ed2e28`，以及 dev head
+`1501f380f20492c71275474f800fdaaffbf0a76a`。這不是新的 architecture decision。
+
+- Candidate 只修改五份 planning artifacts，且不得預填 candidate SHA、Plan-Reviewer verdict、integration subject
+  SHA、test result 或 review verdict。獨立 Plan-Reviewer 必須先寫 standard SHA-bound approved receipt；只有
+  Implementer 可原樣以 sole receipt-only commit 提交。
+- approved receipt 後的唯一 integration subject 只可手動解決以下五個檔案的 textual conflicts：
+  `docs/architecture/business-capability/architecture-brief.md`、
+  `docs/architecture/business-capability/index.html`、
+  `docs/architecture/business-capability/scene.js`、`docs/business-capability-architecture.md`、
+  `docs/evolution-roadmap.md`。不得修改其他檔案、刪除任一已提交事實，或藉由解衝新增架構決策。
+- 整合內容必須同時保留 Runtime Cache 的 protocol-only、無 Identity BC direct import、無 mapper、backend 或 runtime
+  lifecycle，與 Model Execution 的 provider-neutral coordination contracts；兩者的 wiring 均為未來工作，不能描述為已
+  實作。Tester 必須以同一 immutable integration subject 記錄 factual verification；Independent Reviewer 只能消費
+  committed passing evidence。完成 approved review 與 Planner Phase 4.5 後，Implementer 才可 push 更新既有 draft PR。
+- C26 的 classified pairs、所有 Human-only locks、所有未列 PR threads、source/tests、Runtime Registry contract 與
+  非本五檔文件均 ReadOnly。C27 本身不回覆、resolve、approve、merge、release 或 post-merge。
