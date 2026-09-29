@@ -12,7 +12,7 @@ created: 2026-09-24
 - [X] plan-review
 - [ ] tdd-test-authoring
 - [X] implementation
-- [ ] implementation-review
+- [X] implementation-review
 - [ ] code-review
 
 ## Actionable Steps
@@ -36,11 +36,11 @@ created: 2026-09-24
 - [X] **Actor:** Implementer — **Action:** 已只修改 fix-3 exact-eight code/test paths，建立 immutable subject `b9a68575b24472a136bc7f3b826c8e7e581250b2`。
 - [X] **Actor:** Tester／Implementer — **Action:** fix-3 passing factual evidence 已由 sole evidence-only commit `2ff945e236aaa76afce61dbac1df62fc860f45c7` 提交。
 - [X] **Actor:** Independent Reviewer／Implementer — **Action:** fix-3 Reviewer needs-rework log 已由 sole evidence-only commit `dff896ce0548c8d9c8ae36cabbe60792c9211225` 提交，阻斷 Q/publish；其唯一 blocker 是深層 JSON decode 不回 `InvalidPayload`。
-- [ ] **Actor:** Implementer — **Action:** 只提交 parent plan/step M 與 fix-4 correction plan/step A 的 exact-four non-merge planning candidate；不混入 code/evidence。
-- [ ] **Actor:** Independent Plan-Reviewer／Implementer — **Action:** Reviewer 審 committed fix-4 candidate，只寫 active extended receipt `correction-fix-4-plan-review-log.json`；Implementer 原樣 sole evidence-only commit，Planner 僅 route committed approved。Needs-rework 停回 Planner／Plan-Creator 新 path。
-- [ ] **Actor:** Implementer — **Action:** 只修改 fix-4 exact-four source/test paths，建立新 immutable subject；不得覆寫 initial/fix-1/fix-2/fix-3 evidence。
-- [ ] **Actor:** Tester／Implementer — **Action:** Tester 對新 subject 寫 `tester-evidence.fix-4.json` actual command/exit-code evidence；Implementer 原樣 sole evidence-only commit。
-- [ ] **Actor:** Independent Reviewer／Implementer — **Action:** Reviewer 只消費同 subject committed passing fix-4 Tester evidence，寫 `implementation-review-log.fix-4.json`；Implementer 原樣 sole evidence-only commit。Tester failing 或 Reviewer needs-rework 停回 Planner／Plan-Creator 宣告新 evidence paths，不可進 Phase 4.5。
+- [X] **Actor:** Implementer — **Action:** 只提交 parent plan/step M 與 fix-4 correction plan/step A 的 exact-four non-merge planning candidate；不混入 code/evidence。
+- [X] **Actor:** Independent Plan-Reviewer／Implementer — **Action:** Reviewer 審 committed fix-4 candidate，只寫 active extended receipt `correction-fix-4-plan-review-log.json`；Implementer 原樣 sole evidence-only commit，Planner 僅 route committed approved。Needs-rework 停回 Planner／Plan-Creator 新 path。
+- [X] **Actor:** Implementer — **Action:** 只修改 fix-4 exact-four source/test paths，建立新 immutable subject；不得覆寫 initial/fix-1/fix-2/fix-3 evidence。
+- [X] **Actor:** Tester／Implementer — **Action:** Tester 對新 subject 寫 `tester-evidence.fix-4.json` actual command/exit-code evidence；Implementer 原樣 sole evidence-only commit。
+- [X] **Actor:** Independent Reviewer／Implementer — **Action:** Reviewer 只消費同 subject committed passing fix-4 Tester evidence，寫 `implementation-review-log.fix-4.json`；Implementer 原樣 sole evidence-only commit。Tester failing 或 Reviewer needs-rework 停回 Planner／Plan-Creator 宣告新 evidence paths，不可進 Phase 4.5。
 
 ## Implementation Steps
 
@@ -65,7 +65,7 @@ created: 2026-09-24
 
 ## Main Agent Actionable Steps — Fixed Tail
 
-- [ ] Planner 依 fix-4 同 topic／同 subject committed approved evidence 完成 Phase 4.5 alignment；既有 Human authorization 俱全後才派 Implementer bounded push 並更新已 open Draft PR #11，停於 Human PR review/merge boundary。
+- [X] Planner 依 fix-4 同 topic／同 subject committed approved evidence 完成 Phase 4.5 alignment；既有 Human authorization 俱全後才派 Implementer bounded push 並更新已 open Draft PR #11，停於 Human PR review/merge boundary。
 
 ## Handoff / Gate Notes
 
