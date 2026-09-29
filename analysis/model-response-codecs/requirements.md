@@ -11,11 +11,14 @@
 - DataFrame 寫入只在 Arrow IPC round trip 滿足 `original.equals(decoded)` 時發生；未通過時原回應仍可用。
 - unsupported payload、無法 encode、缺少可選依賴及 Store write failure 產生帶 reason 的 `NotCached`；未知 codec、損壞 bytes、缺少 decoder 及 Store read failure 產生帶 reason 的 `Unavailable`，皆不得誤稱為 `Miss`。
 - 既有 eligibility policy 在解碼後評估 `ModelResponse`；entry 缺失或 policy 拒絕時才是 `Miss`。
+- 已保存 JSON 若含 lone surrogate（含 escaped 字串或 key），decode 回 `InvalidPayload`，lookup 回 `Unavailable(INVALID_PAYLOAD)`；不得回 `Hit`／`Miss` 或讓 Unicode 編解碼例外逸出。
+- 公開 VO 值比較保留：JSON dict/list 仍按既有 Python 值比較；`ModelResponse` 持有 pandas DataFrame 時以 `DataFrame.equals` 比較，包住它的 `Hit`／`Cached` 可得到確定的布林相等結果，不因 DataFrame `==` 的逐格結果發生 ambiguous truth error。
 
 ## 範圍與限制
 
 - 本次接受既有 generic `ResponseT` 直存 API 的 source break；新契約是 `ModelResponse.value`、`StoredResponse(codec_id, payload)` 與固定 JSON/DataFrame codec。
 - pandas 與 pyarrow 是可選 extra；純 JSON import 與操作不要求安裝或載入兩者。
+- 純 JSON 的 VO 比較也不得急切載入 pandas／pyarrow；DataFrame 比較只在實際需要時使用 pandas。此修正不增加 payload 類型、codec id、外部 outcome/reason 或動態 import/registry。
 - 只承諾同一 cache instance 內的保存與還原，不承諾跨重啟、跨程序或跨版本 bytes 相容性。
 - Identity BC 獨占 identity 規則；CacheStore 仍為 Response Reuse 內部元件。Loaded Runtime Cache、Model Execution、Provider Adapter、跨 BC handoff、持久化 backend、其他 payload codec 均不在此 Mission。
 - 交付同步更新的 BC 文字與圖，以及以 archify 製作的繁體中文 dataflow 圖與視覺驗證證據。

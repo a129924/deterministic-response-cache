@@ -14,6 +14,8 @@
 10. 五個 BC 架構面與 archify dataflow 同步本能力且不宣稱其他 BC 已整合。archify HTML 通過 showcase 9/9、0 error、0 warning，visual-check 產生宣告 sidecars 並完成 desktop containment 與實際目視；不能檢視時明記 skipped。
 11. 既有五個 BC 架構面在任何 Python/source/test/dependency 編輯之前完成更新與唯讀一致性確認；檢查失敗停回 Planner。確認不取代 final immutable subject 的 Tester/Independent Reviewer gate。
 12. fix-3 中兩個具體 codec 的預期成功/失敗直接回傳 result 值，固定 selector 對 root 分流、可選 codec 缺失、unknown id 與壞 bytes 直接回對應 variant；protocol 將結果翻譯為第 7 項既有對外 outcome/reason。只有 `Encoded` 寫 Store、只有 `Decoded` 交 policy。預期 codec/selector failure 不以例外或 `TypeError` 表示；明確 `TypeError` 只處理 Store/policy contract violation，不新增 catch-all。原本直接拿到 `StoredResponse`/`ModelResponse` 的 codec/selector 呼叫者須取成功 variant 欄位，這是已授權 fix-3 source break。
+13. fix-5 中 JSON decode 遇 lone surrogate（含 value、key 或巢狀）直接回 `InvalidPayload`，經 lookup 為 `Unavailable(INVALID_PAYLOAD)`、非 `Hit`/`Miss`，不交 policy。意外程式錯誤維持傳播；不加 catch-all。
+14. `ModelResponse` 仍是 frozen/slotted 單欄 VO；dict/list 保留既有值比較，雙方為 DataFrame 時以 `DataFrame.equals` 得布林結果，一方為 DataFrame 而另一方不是時不相等。`Hit`／`Cached` 包裝 DataFrame `ModelResponse` 的相等比較也得確定布林結果；不改 `outcomes.py`、不要求 DataFrame hashability。純 JSON import／比較不載入 pandas/pyarrow。
 
 ## Behavioral Scenarios
 
@@ -40,6 +42,18 @@
 - **Given:** Store read 回來的 envelope 帶未知／不合法 codec id，或 id 合法但 bytes 損壞。
 - **When:** 呼叫 lookup。
 - **Then:** 不猜測格式，不交 policy，也不回 `Miss`；分別回 `Unavailable(UNKNOWN_CODEC)` 或 `Unavailable(INVALID_PAYLOAD)`。
+
+### Scenario 5: Lone surrogate stored JSON
+
+- **Given:** `StoredResponse(JSON_V1, <parseable JSON bytes containing escaped lone surrogate in a value or key>)`。
+- **When:** 直接 decode 或經 protocol lookup。
+- **Then:** 直接回 `InvalidPayload`；lookup 回 `Unavailable(INVALID_PAYLOAD)`，policy 不評估，不出現 `Hit`／`Miss` 或 Unicode 例外。
+
+### Scenario 6: Public DataFrame value equality
+
+- **Given:** 兩個不同實體但 `DataFrame.equals` 為真的 DataFrame，或一對 `.equals` 為假的 DataFrame；另有 JSON dict/list `ModelResponse`。
+- **When:** 比較 `ModelResponse`、`Hit`、`Cached`。
+- **Then:** DataFrame 路徑分別得到 `True`／`False` 布林值，不觸發逐格 `==` 的 ambiguous truth；JSON 保持值比較。純 JSON 比較不載入 pandas/pyarrow。
 
 ## Error / Edge Cases
 

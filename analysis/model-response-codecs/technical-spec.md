@@ -2,7 +2,7 @@
 
 ## Authority
 
-本 spec 是同 topic plan 的 execution-facing source of truth；`requirements.md` 是 business-intent guardrail。fix-3 是 Human 在 Draft PR #11 要求的同 topic 局部回修，不引入第二 Mission。未列實作路徑或架構衝突需先回 Planner，不由 Implementer 擴張。
+本 spec 是同 topic plan 的 execution-facing source of truth；`requirements.md` 是 business-intent guardrail。fix-3 與 fix-5 都是 Draft PR #11 同 topic 的局部回修，不引入第二 Mission。未列實作路徑或架構衝突需先回 Planner，不由 Implementer 擴張。
 
 ## 契約
 
@@ -35,3 +35,10 @@
 - 唯一新 subject allowlist：**Modify** `src/deterministic_response_cache/response_reuse/codecs/contract.py`、`src/deterministic_response_cache/response_reuse/codecs/json_response.py`、`src/deterministic_response_cache/response_reuse/codecs/pyarrow_dataframe.py`、`src/deterministic_response_cache/response_reuse/codecs/selector.py`、`src/deterministic_response_cache/response_reuse/protocol.py`、`tests/test_response_reuse_codecs.py`、`tests/test_model_response_codecs_integration.py`、`tests/test_response_reuse_protocol.py`。不新增 outcomes module，不修改 `outcomes.py` 或 Store/policy。Plan-Reviewer、Tester、Independent Reviewer 使用 `fix-3` 新證據路徑與 sole commits，詳見 correction plan。
 - Direct codec/selector tests 對 `Encoded`、`Decoded` 及各預期失敗 variant 逐一檢查，含 JSON/DF 成功、lossy JSON、serializer/Arrow failure、equals mismatch、missing optional codec、unknown id、invalid bytes。Protocol tests 逐一檢查舊 `NotCached`／`Unavailable` reason、原 VO 保留與 Store 未寫入；Store/policy 違約 `TypeError`、意外 exception 傳播及 `Miss` 邊界保留。JSON-only base install 直接 import/操作且不急切載入 pandas/pyarrow；既有 fixture/mock/assertions 只按新回傳契約調整。Pyright strict 驗證 Protocol 明確繼承／override 簽名。
 - 既有 docs/archify 及 visual-check sidecars 已交付，fix-3 不更新圖面；若審查發現架構描述與新內部結果契約衝突，停回 Planner，不偷擴路徑。原五個 BC docs 先於最初 Python subject 更新與確認的 gate 是已完成歷史，不在 fix-3 重做。
+
+## fix-5 精確契約與驗證
+
+- `JsonResponseCodec.decode` 對 parseable JSON 中的 lone surrogate Unicode code point（字串值或 object key，含巢狀）回封閉 `InvalidPayload()`；既有固定 selector/protocol 將其映為 `Unavailable(INVALID_PAYLOAD)`，不得成 `Hit` 或 `Miss`，policy 不評估。只在 JSON decode 的資料驗證邊界處理預期 Unicode 問題；不以 `except Exception` 或其他 catch-all 吞掉意外程式錯誤。UTF-8 JSON、closed id、JSON supported-tree 與既有 encode failure 分類維持。
+- `ModelResponse[PayloadT]` 仍是唯一 `value` 欄位的 frozen/slotted VO。公開 equality 對 dict/list 保留既有 Python 值比較；雙方都是 pandas DataFrame 時使用 `left.equals(right)` 並產生布林值；只有一方是 DataFrame 時為不相等；不同 VO 類型仍按 Python 比較協定處理。`Hit` 與 `Cached` 的 dataclass equality 經其 `ModelResponse` 欄位自然取得相同語意，不改 `outcomes.py`。不以 DataFrame `==` 產生的逐格布林物件作 truth test；不新增 hashability 承諾。
+- JSON-only import、record/lookup 與 `ModelResponse` dict/list 比較不得急切載入 pandas/pyarrow；DataFrame 分支只用 defining-module 內的 direct import，無 `importlib`、`__import__`、`sys.modules` 替換或 package re-export。可選 extra、Arrow IPC、equals 寫入門檻、hit 隔離、所有對外 outcome/reason 與 Identity/Store BC 權責不變。
+- Fix-5 唯一 future implementation subject 是六個 **Modify**：`src/deterministic_response_cache/response_reuse/codecs/json_response.py`、`src/deterministic_response_cache/response_reuse/model_response.py`、`tests/test_response_reuse_codecs.py`、`tests/test_model_response_codecs_integration.py`、`tests/test_response_reuse_protocol.py`、`tests/test_response_reuse_outcomes.py`。Codec 直測需覆蓋 lone surrogate value/key，protocol/integration 需覆蓋 `Unavailable(INVALID_PAYLOAD)`、非 `Hit`/`Miss`、policy 不評估；VO/outcomes tests 需覆蓋相等/不相等 DataFrame、JSON dict/list 值比較、Hit/Cached 布林 equality 與 JSON-only 不載入可選依賴。保留 direct imports、fixture/mocks 與可沿用 assertions。Tester 跑 pytest、pyright strict、ruff 與 JSON-only regression，記實際命令/exit code；新證據與 gate 由 fix-5 correction plan 精確宣告。
