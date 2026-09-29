@@ -430,8 +430,42 @@ def test_identity_bc_does_not_directly_import_loaded_runtime_cache() -> None:
             ),
         ),
         (
+            "direct-getattr-importlib-callable",
+            ("import importlib\ngetattr(importlib, 'import_module')('identity')\n"),
+        ),
+        (
+            "direct-getattr-sys-modules-base",
+            ("import sys\ngetattr(sys, 'modules')['identity'] = object()\n"),
+        ),
+        (
+            "importlib-submodule-top-level-binding",
+            ("import importlib.util\nimportlib.import_module('identity')\n"),
+        ),
+        (
+            "if-expression-assignment-import-alias",
+            (
+                "import importlib\n"
+                "fallback = object()\n"
+                "load = importlib.import_module if enabled else fallback\n"
+                "load('identity')\n"
+            ),
+        ),
+        (
+            "if-expression-assignment-import-alias-in-else-branch",
+            (
+                "import importlib\n"
+                "fallback = object()\n"
+                "load = fallback if enabled else importlib.import_module\n"
+                "load('identity')\n"
+            ),
+        ),
+        (
             "attribute-base-named-expression-importlib-alias",
             "import importlib\n(loader := importlib).import_module('identity')\n",
+        ),
+        (
+            "attribute-base-named-expression-sys-modules-alias",
+            ("import sys\n(runtime := sys).modules['identity'] = object()\n"),
         ),
     ],
 )
@@ -575,6 +609,38 @@ def test_dataflow_preserves_lookup_return_and_only_registry_failure_signal() -> 
         for endpoint in (edge["from"], edge["to"])
     }
     assert not lookup_connections & forbidden_lookup_targets
+
+
+def test_dataflow_keeps_registry_retain_separate_from_retention_outcomes() -> None:
+    """Registry retention declares its inputs and ``None`` completion without outcomes."""
+    dataflow = json.loads(DATAFLOW_SOURCE.read_text(encoding="utf-8"))
+    nodes_by_label = {node["label"]: node["id"] for node in dataflow["nodes"]}
+    runtime_registry = nodes_by_label["RuntimeRegistry"]
+    reuse_key = nodes_by_label["RuntimeReuseKey"]
+    initialized_runtime = nodes_by_label["已初始化 runtime"]
+    retain_label = "RuntimeRegistry.retain(key: RuntimeReuseKey, runtime: RuntimeT) -> None"
+
+    assert any(
+        edge["from"] == reuse_key
+        and edge["to"] == runtime_registry
+        and edge["label"] == retain_label
+        for edge in dataflow["flows"]
+    )
+    assert any(
+        edge["from"] == initialized_runtime
+        and edge["to"] == runtime_registry
+        and edge["label"] == "runtime: RuntimeT"
+        for edge in dataflow["flows"]
+    )
+    assert not any(
+        edge["from"] == runtime_registry
+        and edge["to"]
+        in {
+            nodes_by_label["Retained(runtime)"],
+            nodes_by_label["NotRetained(runtime)"],
+        }
+        for edge in dataflow["flows"]
+    )
 
 
 def test_bc_independence_accepts_current_sources_only_when_no_boundary_bypass_exists() -> None:

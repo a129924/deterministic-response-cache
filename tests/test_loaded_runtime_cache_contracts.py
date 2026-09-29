@@ -170,6 +170,13 @@ def test_runtime_reuse_key_rejects_reassignment_of_its_opaque_token() -> None:
         key.__setattr__("_token", object())
 
 
+def test_runtime_reuse_key_does_not_expose_its_construction_token() -> None:
+    """The construction token remains unreadable after the local key is created."""
+    key = RuntimeReuseKey(object())
+
+    assert not hasattr(key, "_token")
+
+
 def test_runtime_registry_distinguishes_hit_and_missing_channels() -> None:
     """The port value channels remain distinct from lookup outcome vocabulary."""
     key = _runtime_reuse_key_fixture()
