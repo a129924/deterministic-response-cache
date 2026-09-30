@@ -754,3 +754,34 @@ Original mission／protocol／outcomes／visualization／follow-ups unchanged; n
 Human-only/open `jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561`, `lAR8T`/`4078761998`,
 `lfQmF`/`4091213944`; unclassified/open `m-94E`/`4130289778`, `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
 `nXrAw`/`4140406331`, `nXrA0`/`4140406337`. No disposition supplied; all predecessor evidence stays ReadOnly.
+
+## C30 Current-Head Seven-Pair Classification Technical Contract (current route)
+
+C29 factual publish／audit 已完成，audited PR head 為 `ee2825c785aad152e5785a021acdb68e3056e84d`。
+C30 classification-only successor 固定消費 integration subject
+`9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa`、passing Tester sole commit
+`31e727d96d4e0843714dca1c7898ac93da9c33ef`、approved independent review sole commit
+`fc12dea6be989aaecfdfc71a86fa1b330256fffe`。沒有新 implementation subject／RED／green。
+
+Plan-Creator 只修改五個 standard planning artifacts。Implementer 建立 non-merge candidate-only commit；
+獨立 Plan-Reviewer 只寫 `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c30-candidate-40-hex-sha>.json`，
+exact three keys `verdict`、`blocking_issues`、`copilot_feedback_triage`，verdict `approved|needs-rework`，approved
+blockers 空、needs-rework nonempty，triage 使用 `ADDRESS|DISCUSS|SKIP`。Implementer 將 approved receipt 原樣 sole
+evidence-only commit。不得預填 candidate SHA、verdict、classification outcome、reply 或 resolution。
+
+Planner 核對 committed C29 triple 與 PR audited head 後，Independent Reviewer 唯一可寫 immutable path：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa-ee2825c785aad152e5785a021acdb68e3056e84d.json`。
+exact top-level keys：`schema_version`、`topic`、`implementation_subject_commit`、`tester_evidence_commit`、
+`implementation_review_evidence_commit`、`pr_head_commit`、`classifications`、`recorded_by`。
+Values 分別固定 integer `1`、`loaded-runtime-cache`、上述 S／T／V／head full SHA、exact seven entries、
+`Independent Reviewer`。每個 entry exact keys `thread`、`comment`、`outcome`、`reply`；pair set 恰為
+`m-94E`/`4130289778`、`m-94K`/`4130289786`、`nXkrM`/`4140364926`、`nXrAw`/`4140406331`、
+`nXrA0`/`4140406337`、`nXzEu`/`4140459575`、`nXzE1`/`4140459585`。
+Outcome enum `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`；僅 `REPLY_AND_RESOLVE` reply 為 nonempty factual string，
+其餘必為 JSON null。Implementer 原樣 separate sole evidence-only commit receipt，Planner 才可 route exact reply／resolve；
+ADDRESS 回 Planner 的 bounded repair route，HUMAN_CHECK 保持 open。Planning approval 本身不授權 thread actions。
+
+Wrong／stale head、extra／missing pair、malformed keys／enum／nullability、wrong writer／SHA、非 sole commit、overwrite
+或跨 topic evidence 均 fail closed。五個 Human-only/open exclusions：`jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944`。未列 paths／threads 全部 ReadOnly。
+C30 不作新 architecture／source／test／dataflow 修改，不授權 Human approval／merge／release／post-merge。

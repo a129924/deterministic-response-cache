@@ -634,3 +634,16 @@ visualization／follow-ups persist. No PR approval／Human merge／release／pos
 Wrong parent/base, extra manual path, omitted committed fact, invented architecture decision, marker, schema/writer/SHA
 mismatch, overwritten evidence, non-sole evidence commit, or reordered Tester/Reviewer fails closed. Automatic fixed-dev
 parent changes outside three manual files are valid parent integration, not extra manual scope.
+
+## C30 Current-Head Seven-Pair Classification Acceptance
+
+C29 publish／audit completion 以 audited head `ee2825c785aad152e5785a021acdb68e3056e84d` 記錄。
+C30 僅分類 `m-94E`/`4130289778`、`m-94K`/`4130289786`、`nXkrM`/`4140364926`、`nXrAw`/`4140406331`、
+`nXrA0`/`4140406337`、`nXzEu`/`4140459575`、`nXzE1`/`4140459585`。
+驗收：five-artifact candidate → independent approved SHA-bound standard receipt → sole receipt commit → Planner
+C29 S/T/V/head verification → independent exact eight-key/seven-pair classification → separate sole receipt commit。
+固定 S `9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa`、T `31e727d96d4e0843714dca1c7898ac93da9c33ef`、
+V `fc12dea6be989aaecfdfc71a86fa1b330256fffe`；exact receipt path/schema/writer 依 technical-spec C30。
+TestCase：拒絕 stale head／extra pair／wrong SHA／writer／schema／enum／reply nullability／non-sole／overwrite；
+僅 committed `REPLY_AND_RESOLVE` 可 route exact factual reply／resolve，ADDRESS／HUMAN_CHECK 不 resolve。
+五個 Human-only locks 與其餘未列 threads 保持 open／ReadOnly，無 implementation／test／architecture 新修改。

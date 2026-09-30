@@ -606,3 +606,16 @@ C28 以已提交的 C25、C26 與 C27 facts 為唯一歷史輸入：C25 green su
 - Human-only/open 五對 `jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561`,
   `lAR8T`/`4078761998`, `lfQmF`/`4091213944`。其餘五對 `m-94E`/`4130289778`, `m-94K`/`4130289786`,
   `nXkrM`/`4140364926`, `nXrAw`/`4140406331`, `nXrA0`/`4140406337` 未分類/open，無 disposition。
+
+## C30 Current-Head Seven-Pair Classification Intent
+
+C29 已完成 bounded push 與 PR audit；實際 audited PR head 為
+`ee2825c785aad152e5785a021acdb68e3056e84d`。C30 僅獨立分類七對未分類 comments：
+`m-94E`/`4130289778`、`m-94K`/`4130289786`、`nXkrM`/`4140364926`、`nXrAw`/`4140406331`、
+`nXrA0`/`4140406337`、`nXzEu`/`4140459575`、`nXzE1`/`4140459585`。
+Goal／In-Scope：固定 C29 subject／passing Tester／approved Reviewer／audited head 的 immutable classification。
+Modify：五份 standard planning artifacts；Written：獨立 Plan-Reviewer receipt 與 classification receipt。
+Deleted：無。ReadOnly：其餘 paths、predecessor evidence、dev worktree、五個 Human-only locks。
+Non-Goal／Out-Of-Scope：新實作、RED／green、source／tests／architecture 修改、PR approval／merge／release。
+TestCase：exact pairs、writer／schema／SHA binding、sole evidence-only ordering 與 stale-head fail-closed。
+原 mission、scope、protocol、outcomes、測試策略、Architecture Visualization 與 follow-up missions 不變。

@@ -1347,13 +1347,13 @@ mapper／lifecycle 與未實作 BC wiring 等邊界。不創造跨 BC 關係；�
 
 ### Status / Allowed Transitions / Artifact Paths
 
-**Current C29 state:** `phase4.5-aligned / publish-in-progress`。已提交 candidate
+**Historical C29 state:** `pr-open / bounded publish and audit completed`。已提交 candidate
 `bd465e53614594ce2d4739cac19d28d17927986c`，approved Plan-Reviewer receipt sole commit
 `b3e9b0f242632be4280553f0bed64214020e167f`，integration subject
 `9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa`，passing Tester evidence sole commit
 `31e727d96d4e0843714dca1c7898ac93da9c33ef`，approved independent review sole commit
 `fc12dea6be989aaecfdfc71a86fa1b330256fffe`。Phase 4.5 factual plan／step alignment 已完成；bounded push 與
-actual PR head／mergeability／thread audit 尚待執行。既定順序：candidate-only commit → independent approved
+actual PR head／mergeability／thread audit 已完成，audited head `ee2825c785aad152e5785a021acdb68e3056e84d`。既定順序：candidate-only commit → independent approved
 Plan-Reviewer receipt → receipt-only commit → `creator-in-progress` integration subject → `tester-in-progress` →
 committed passing evidence → `review-ready`／independent review → committed approved evidence → Planner Phase 4.5 →
 `publish-in-progress` bounded push → `pr-open` audit。`needs-rework` 回 Implementer，以新 subject 重走 Tester／Reviewer。
@@ -1407,3 +1407,45 @@ tag or final summary.
 Human-only/open: `jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561`, `lAR8T`/`4078761998`,
 `lfQmF`/`4091213944`. Unclassified/open: `m-94E`/`4130289778`, `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
 `nXrAw`/`4140406331`, `nXrA0`/`4140406337`. These are observations without disposition; later Planner routing required.
+
+## C30 Current-Head Seven-Pair Classification Successor (authoritative current routing)
+
+Current：`planning-draft / candidate commit pending`。C30 只分類 exact seven pairs；承接 completed C29 factual
+publish／audit 與固定 S `9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa`、T `31e727d96d4e0843714dca1c7898ac93da9c33ef`、
+V `fc12dea6be989aaecfdfc71a86fa1b330256fffe`、audited head `ee2825c785aad152e5785a021acdb68e3056e84d`。
+
+| Field | Contract |
+| --- | --- |
+| Goal / In-Scope | Current-head-bound independent classification of seven pairs, followed only by individually authorized exact actions. |
+| Out-Of-Scope / Non-Goal | New implementation／RED／green／architecture decisions／source／tests／dataflow changes, Human PR approval／merge／release／post-merge. |
+| Modify | `analysis/loaded-runtime-cache/requirements.md`, `analysis/loaded-runtime-cache/technical-spec.md`, `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`, `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`, `plan/loaded-runtime-cache/loaded-runtime-cache.step.md`: Plan-Creator only. |
+| Written | Independent Plan-Reviewer standard receipt and Independent Reviewer fixed classification receipt below; Implementer alone commits each unchanged separately. |
+| ReadOnly | Predecessor evidence, dev worktree, all unlisted paths／threads, five Human-only locks. |
+| Deleted | None. |
+| TestCase | Exact SHA／head／pair／writer／schema／enum／nullability／sole commit checks; invalid evidence fails closed. |
+
+Exact pairs：`m-94E`/`4130289778`、`m-94K`/`4130289786`、`nXkrM`/`4140364926`、`nXrAw`/`4140406331`、
+`nXrA0`/`4140406337`、`nXzEu`/`4140459575`、`nXzE1`/`4140459585`。No prefilled outcomes／replies／resolutions。
+
+### Artifact paths / writer / ordering
+
+Implementer commits exactly five planning artifacts in a non-merge candidate-only commit. Independent Plan-Reviewer
+alone writes `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c30-candidate-40-hex-sha>.json`;
+standard exact keys `verdict`, `blocking_issues`, `copilot_feedback_triage`, approved requires empty blockers and
+needs-rework nonempty, triage `ADDRESS|DISCUSS|SKIP`. Implementer unchanged sole evidence-only commits approved receipt.
+Planner then checks committed C29 S/T/V and actual audited head. Independent Reviewer alone writes immutable
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa-ee2825c785aad152e5785a021acdb68e3056e84d.json`.
+Exact eight-key schema: `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; values bind integer `1`,
+this topic, fixed S/T/V/head above, exactly seven entries and `Independent Reviewer`. Each entry exactly `thread`,
+`comment`, `outcome`, `reply`; outcome `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`. Only REPLY_AND_RESOLVE has nonempty
+factual string reply; other replies JSON null. Full technical-spec C30 schema／fail-closed rules apply.
+Implementer alone unchanged sole evidence-only commits classification receipt separately; Planner then routes only
+exact committed REPLY_AND_RESOLVE entries for Implementer factual reply／resolve. ADDRESS needs bounded repair route;
+HUMAN_CHECK remains open. Wrong／stale head, pair, writer, schema, SHA, ordering or overwritten receipt fails closed.
+
+### Human boundary / unresolved items
+
+`jnBpk`/`4043480108`、`kQ95O`/`4060023123`、`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、
+`lfQmF`/`4091213944` remain Human-only/open. C30 classification does not authorize their actions or Human approval／
+merge／release／post-merge. Original mission／protocol／outcomes／visualization／follow-ups remain unchanged.

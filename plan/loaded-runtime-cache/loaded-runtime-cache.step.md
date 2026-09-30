@@ -715,11 +715,12 @@ replies：`lfYsH`→`4140433910`、`lfYsK`→`4140435052`、`m8u04`→`414043606
 
 ## C29 Three-File Architecture Conflict Integration Stages (authoritative current routing)
 
-Current: `phase4.5-aligned / publish-in-progress`。candidate `bd465e53614594ce2d4739cac19d28d17927986c`；
+Historical C29: `pr-open / bounded publish and audit completed`。candidate `bd465e53614594ce2d4739cac19d28d17927986c`；
 approved plan receipt sole commit `b3e9b0f242632be4280553f0bed64214020e167f`；integration subject
 `9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa`；passing Tester sole commit
 `31e727d96d4e0843714dca1c7898ac93da9c33ef`；approved independent review sole commit
-`fc12dea6be989aaecfdfc71a86fa1b330256fffe`。bounded push／PR audit pending。
+`fc12dea6be989aaecfdfc71a86fa1b330256fffe`。bounded push／PR audit completed，audited head
+`ee2825c785aad152e5785a021acdb68e3056e84d`。
 dev `d6ff74ddf65c615f65eeba252e648784252a2bfd`，已整合 base
 `1501f380f20492c71275474f800fdaaffbf0a76a`。完整 committed dev tree 自動整合，手動解衝僅
 `docs/architecture/business-capability/architecture-brief.md`、`docs/architecture/business-capability/index.html`、
@@ -742,10 +743,33 @@ committed facts，不作新決策。三檔外不可手動修改；dev worktree �
   exact seven-key schema／same subject／Tester sole commit binding 依 technical-spec C29。
 - [x] **Actor: Implementer.** 原樣 review evidence later separate sole commit；needs-rework 回新 subject 完整 sequence。
 - [x] **Actor: Planner / Plan-Creator.** committed approved evidence 後 Phase 4.5 factual plan／step alignment。
-- [ ] **Actor: Implementer.** bounded push 更新既有 PR。
-- [ ] **Actor: Planner.** actual head／mergeability／thread audit；C29 無 thread actions。
+- [x] **Actor: Implementer.** bounded push 更新既有 PR。
+- [x] **Actor: Planner.** actual head／mergeability／thread audit；C29 無 thread actions。
 
 Human-only `jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561`, `lAR8T`/`4078761998`,
 `lfQmF`/`4091213944` 維持 open。未分類/open `m-94E`/`4130289778`, `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
 `nXrAw`/`4140406331`, `nXrA0`/`4140406337` 無 disposition。C29 不授權 classification／reply／resolve、Human PR
 approval／merge、release／post-merge。
+
+## C30 Current-Head Seven-Pair Classification Stages (authoritative current routing)
+
+Current：`planning-draft / candidate commit pending`。Fixed C29 S `9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa`、
+T `31e727d96d4e0843714dca1c7898ac93da9c33ef`、V `fc12dea6be989aaecfdfc71a86fa1b330256fffe`、
+audited head `ee2825c785aad152e5785a021acdb68e3056e84d`。Pairs 恰為 `m-94E`/`4130289778`、
+`m-94K`/`4130289786`、`nXkrM`/`4140364926`、`nXrAw`/`4140406331`、`nXrA0`/`4140406337`、
+`nXzEu`/`4140459575`、`nXzE1`/`4140459585`。No new implementation／RED／green。
+
+- [x] **Actor: Plan-Creator.** Five-artifact C30 draft, C29 factual publish／audit alignment only.
+- [ ] **Actor: Implementer.** Exact-five non-merge planning-candidate-only commit, no prefilled future SHA／outcome.
+- [ ] **Actor: Independent Plan-Reviewer.** Standard three-key SHA-bound C30 candidate receipt.
+- [ ] **Actor: Implementer.** Approved receipt unchanged sole evidence-only commit.
+- [ ] **Actor: Planner.** Verify committed C29 S/T/V and fixed actual PR head.
+- [ ] **Actor: Independent Reviewer.** Write only fixed immutable C30 seven-pair classification receipt:
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa-ee2825c785aad152e5785a021acdb68e3056e84d.json`;
+  exact eight-key／four-key entries／writer／enums／nullability per technical-spec C30, no preclassified disposition.
+- [ ] **Actor: Implementer.** Receipt unchanged separate sole evidence-only commit.
+- [ ] **Actor: Planner.** Route individually from committed receipt; ADDRESS repair／HUMAN_CHECK open.
+- [ ] **Actor: Implementer.** Only exact authorized REPLY_AND_RESOLVE replies／resolutions, bounded push, factual audit.
+
+Five Human-only locks `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, `lfQmF` excluded/open. All unlisted paths／threads
+ReadOnly; no Human approval／merge／release／post-merge. Invalid head／pair／schema／writer／SHA／sole ordering fails closed.
