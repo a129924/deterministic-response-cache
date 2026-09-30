@@ -23,6 +23,183 @@ _IDENTITY_BC = "deterministic_response_cache.identity"
 _RUNTIME_CACHE_BC = "deterministic_response_cache.loaded_runtime_cache"
 
 
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "target",
+    [
+        "{name}, other",
+        "[other, {name}]",
+        "[other, ({name}, tail)]",
+        "(other, [tail, {name}])",
+        "*{name}, other",
+        "[other, *{name}]",
+        "(other, [tail, *{name}])",
+        "holder.value, {name}",
+    ],
+)
+def test_c37_rejects_foreign_semantic_assignment_targets(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    target: str,
+) -> None:
+    """Target syntax declares foreign local names independently of unknown RHS values."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "target.py").write_text(
+        f"{target.format(name=foreign_name)} = unknown_values\n",
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "target",
+    [
+        "local, other",
+        "[local, (other, tail)]",
+        "[other, *local]",
+        "holder.{name}, other",
+        "[other, (holder.{name}, tail)]",
+        "[other, *holder.{name}]",
+    ],
+)
+def test_c37_accepts_benign_and_attribute_assignment_targets(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    target: str,
+) -> None:
+    """Attribute labels are not local semantic declarations, even inside nested targets."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "target.py").write_text(
+        f"{target.format(name=foreign_name)} = unknown_values\n",
+        encoding="utf-8",
+    )
+
+    assert not _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+def test_c37_rejects_foreign_semantic_named_expression(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+) -> None:
+    """A direct walrus target declares the opposite BC's semantic name."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "target.py").write_text(
+        f"({foreign_name} := unknown_value)\n",
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+def test_c37_accepts_benign_named_expression_without_rhs_inference(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+) -> None:
+    """A foreign name on the RHS does not make a benign target a declaration."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "target.py").write_text(
+        f"(local := {foreign_name})\n",
+        encoding="utf-8",
+    )
+
+    assert not _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize("getter", ["getattr", "read_attribute"])
+@pytest.mark.parametrize(
+    ("module", "attribute", "operation"),
+    [
+        ("builtins", "__import__", "('identity')"),
+        ("importlib", "import_module", "('identity')"),
+        ("sys", "modules", "['identity'] = object()"),
+    ],
+)
+def test_c37_rejects_direct_imported_builtins_getattr(
+    tmp_path: Path,
+    getter: str,
+    module: str,
+    attribute: str,
+    operation: str,
+) -> None:
+    """Direct known-builtins imports retain literal forbidden-attribute detection."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    import_name = "getattr" if getter == "getattr" else f"getattr as {getter}"
+    (directory / "getter.py").write_text(
+        f"from builtins import {import_name}\nimport {module} as known_module\n"
+        f"{getter}(known_module, '{attribute}'){operation}\n",
+        encoding="utf-8",
+    )
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "from builtins import getattr\nimport builtins\ngetattr(builtins, 'len')([])\n",
+        (
+            "from builtins import getattr as read_attribute\nimport builtins\n"
+            "read_attribute(builtins, 'len')([])\n"
+        ),
+        (
+            "from other_library import getattr as read_attribute\nimport importlib\n"
+            "read_attribute(importlib, 'import_module')('identity')\n"
+        ),
+        (
+            "from builtins import getattr as read_attribute\n"
+            "read_attribute(unknown_module, 'import_module')('identity')\n"
+        ),
+        (
+            "from builtins import getattr as read_attribute\nimport importlib\n"
+            "read_attribute(importlib, unknown_attribute)('identity')\n"
+        ),
+        (
+            "from builtins import getattr as read_attribute\nimport importlib\n"
+            "read_attribute(importlib, 'import_module', None)('identity')\n"
+        ),
+        (
+            "from builtins import getattr as read_attribute\nimport importlib\n"
+            "read_attribute(importlib, name='import_module')('identity')\n"
+        ),
+    ],
+)
+def test_c37_accepts_benign_unknown_or_out_of_bounds_imported_getters(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Known module/literal/exact-arity bounds exclude unrelated imported callables."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "getter.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(directory)
+
+
 def _direct_imports_from(
     source_directory: Path,
     *,
