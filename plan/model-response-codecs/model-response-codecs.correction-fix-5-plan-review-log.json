@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "topic": "model-response-codecs",
+  "correction_id": "fix-5",
+  "candidate": {
+    "commit_sha": "ea38d4404e5509047d5d3c20acdbdfad0ec5a049",
+    "tree_sha": "83de05f5ae8d45d8e47c5125655a77a11e4f4512",
+    "active": true
+  },
+  "reviewed_artifacts": [
+    {
+      "path": "analysis/model-response-codecs/requirements.md",
+      "blob_sha": "64dbb57706cc93bd2e7874e49bf014ec1e113183"
+    },
+    {
+      "path": "analysis/model-response-codecs/technical-spec.md",
+      "blob_sha": "155a925907221bdc8aeefcb4754f7a8ae6f29a6b"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.plan.md",
+      "blob_sha": "db933e54a4c13312f7d0610d2dd2d6981317a6c4"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.spec.md",
+      "blob_sha": "984d38768859670b6b406273c914013b70338476"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.step.md",
+      "blob_sha": "a256dc40aa35a72c1de67ab744dd25003e16001d"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.correction-fix-5-plan.md",
+      "blob_sha": "e1c7c04f91cb5dd53d0f62e2460535144c1f3f05"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.correction-fix-5-step.md",
+      "blob_sha": "8f180f360f8d29fdaf7b5b7708b718ac64dd9db0"
+    }
+  ],
+  "first_parent_admission": {
+    "parent_sha": "b66f77d6382b22b147e556e270e233a8abb62fe5",
+    "non_merge": true,
+    "name_status": [
+      {
+        "status": "M",
+        "path": "analysis/model-response-codecs/requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "analysis/model-response-codecs/technical-spec.md"
+      },
+      {
+        "status": "A",
+        "path": "plan/model-response-codecs/model-response-codecs.correction-fix-5-plan.md"
+      },
+      {
+        "status": "A",
+        "path": "plan/model-response-codecs/model-response-codecs.correction-fix-5-step.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.plan.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.spec.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.step.md"
+      }
+    ]
+  },
+  "review_basis": {
+    "workflow_contract": "plan/agent-handoff-workflow.md",
+    "topic_plan_contract": "plan/topic-plan-contract.md",
+    "checkout": "ea38d4404e5509047d5d3c20acdbdfad0ec5a049"
+  },
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "route_authorization": {
+    "next_phase": "creator-in-progress",
+    "next_role": "Implementer",
+    "scope": "fix-5-exact-six-subject"
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}

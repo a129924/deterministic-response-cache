@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "topic": "model-response-codecs",
+  "correction_id": "fix-3",
+  "candidate": {
+    "commit_sha": "c67f5c23bc2b6f3a6cb1f6b8e883b9ee77a561d1",
+    "tree_sha": "f4d660f72a24a61900b7f93a07275055dfa8e2f7",
+    "active": true
+  },
+  "reviewed_artifacts": [
+    {
+      "path": "analysis/model-response-codecs/technical-spec.md",
+      "blob_sha": "38a08da0b96b0f3ff80bc0d4be9ffbc1682756c5"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.plan.md",
+      "blob_sha": "709a8548a0bf9637f56953c8b4cb21dc41f9e534"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.spec.md",
+      "blob_sha": "c5481e42003e022d47cc12e3822cf140baf38382"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.step.md",
+      "blob_sha": "5549fc75ddeacea621065313357d7c3b2e54df96"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.correction-fix-3-plan.md",
+      "blob_sha": "a8347c83f96361c18bf5c529b36fbd1e96ad64ee"
+    },
+    {
+      "path": "plan/model-response-codecs/model-response-codecs.correction-fix-3-step.md",
+      "blob_sha": "6fe36d3bfb1e62a83c24155cfa3da222326e0e98"
+    }
+  ],
+  "first_parent_admission": {
+    "parent_sha": "7c474f2ff57c4a0af355e8953929f2d856e66424",
+    "non_merge": true,
+    "name_status": [
+      {
+        "status": "M",
+        "path": "analysis/model-response-codecs/technical-spec.md"
+      },
+      {
+        "status": "A",
+        "path": "plan/model-response-codecs/model-response-codecs.correction-fix-3-plan.md"
+      },
+      {
+        "status": "A",
+        "path": "plan/model-response-codecs/model-response-codecs.correction-fix-3-step.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.plan.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.spec.md"
+      },
+      {
+        "status": "M",
+        "path": "plan/model-response-codecs/model-response-codecs.step.md"
+      }
+    ]
+  },
+  "review_basis": {
+    "workflow_contract": "plan/agent-handoff-workflow.md",
+    "topic_plan_contract": "plan/topic-plan-contract.md",
+    "checkout": "c67f5c23bc2b6f3a6cb1f6b8e883b9ee77a561d1"
+  },
+  "verdict": "approved",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {
+    "ADDRESS": [],
+    "DISCUSS": [],
+    "SKIP": []
+  },
+  "route_authorization": {
+    "next_phase": "creator-in-progress",
+    "next_role": "Implementer",
+    "scope": "fix-3-exact-eight-subject"
+  },
+  "recorded_by": "Independent Plan-Reviewer"
+}
