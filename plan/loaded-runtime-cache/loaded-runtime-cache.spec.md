@@ -684,7 +684,7 @@ Wrong element-to-target aliasing, attribute binding, lost prior behavior, source
 false cross-BC wiring, stale head, wrong SHA/schema/writer/pair, overwritten/non-sole evidence or actor reordering fail
 closed. `nYQqw`/`4140648790` and five Human-only locks excluded/open. No dev writes or Human approval/merge/release.
 
-## C32 Current-Head Three-Pair Classification Successor（authoritative current routing）
+## C32 Current-Head Three-Pair Classification Successor（completed predecessor routing）
 
 C31 已完成 committed S `4448c9d144db74787f8c1947b51064e291552a6a`、
 passing T `7787c8b8edb760df6f81f44182bb146f8730c69d`、
@@ -694,7 +694,10 @@ approved V `b75242afc8fcf211c4b0e1aebe20fc410f567d6f`；C31 classification sole 
 `nXzEu`→`4141038483`、`nXzE1`→`4141038696`。
 
 C32 exact pairs 僅 `nYQqw`/`4140648790`、`nZI5l`/`4141010658`、
-`nZI5n`/`4141010661`，均待 independent classification，不預填 outcome／reply／resolution。
+`nZI5n`/`4141010661`。Committed candidate `42ec2293d306546df06529996bc63adb058b3eee`、
+approved receipt commit `6a3271af13443c1b794c28038a68d4c158163071`、classification sole commit
+`83ffddf831da3f4ecb26656a96bc6aeb28ef98d5` 為 completed predecessor facts。
+`nYQqw` 已回覆 `4141149003` 並 resolved；另外兩 pairs 為 ADDRESS，後续權限僅見 C33。
 五個 Human-only pairs `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
 `kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944` 排除/open。
 舊 rejected receipt `loaded-runtime-cache.plan-review-receipt-a46241e4245957cd820eae13fd2bf22ab0a9226d.json`
@@ -718,3 +721,118 @@ approved receipt commit precede independent classification at the exact immutabl
 Only the three listed pairs appear once each; exact eight-key object/four-key entries, enums and nullability apply.
 Sole classification commit precedes per-pair routing/actions. ADDRESS/HUMAN_CHECK cannot be resolved.
 Wrong head/binding/path/schema/writer/order/overwrite fails closed; no implementation or prechosen outcome.
+
+## C33 Qualified Builtins getattr Repair Successor（authoritative current routing）
+
+C32 classification 已由 committed receipt 將 `nZI5l`/`4141010658` 分為 ADDRESS；
+`nYQqw`/`4140648790` 已回覆 `4141149003` 並 resolved。C32 為 completed predecessor routing。
+C33 僅修正 `nZI5l`/`4141010658`；`nZI5n`/`4141010661` 的 starred argument
+問題留在 human-check/open，與五個既有 Human-only pairs `jnBpk`/`4043480108`、
+`kQ95O`/`4060023123`、`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、
+`lfQmF`/`4091213944` 一律排除。舊 rejected receipt
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-a46241e4245957cd820eae13fd2bf22ab0a9226d.json`
+保持 frozen nonrouting provenance；不可覆寫或作 approval。
+
+### Goal / Outcome / Scope
+
+Goal／In-Scope：既有 static BC-independence scanner 識別 known builtins module 的 qualified
+`getattr` 與其 module alias，在既有 forbidden attribute lookup 範圍內拒絕 direct invocation
+及 assignment-retained callable bypass。Current：`c33-plan-authoring`。
+Modify：Plan-Creator 僅五份標準 planning artifacts；Implementer RED 與 green 均僅
+`tests/test_loaded_runtime_cache_bc_independence.py`。Written：獨立 Plan-Reviewer／Tester／
+Independent Reviewer evidence at C33 immutable SHA-bound paths below，僅 Implementer 原樣 sole-commit。
+ReadOnly：dev worktree、所有 predecessor evidence、source、architecture／visualization、其他 paths／threads。
+Deleted：無。Out-Of-Scope／Non-Goal：starred arguments／任意 iterable inference、general callable inference、
+source/import execution、新 architecture／ACL／mapper／wiring／backend／DI／lifecycle、production API、
+README／VERSION、PR approval／merge／release／post-merge。無 stable-library surface 或 release change。
+TestCase：qualified direct／module-alias／assignment callable regressions、bare getattr preservation、
+benign len／unknown-receiver controls、exact path／writer／schema／SHA／sole evidence ordering。
+
+### Locked Decisions / Boundaries
+
+Execution authority 是 technical-spec 本 C33 section。維持既有 bare `getattr` 行為；
+額外只接受 `ast.Attribute` callee，其 attribute 是 `getattr`、receiver 是 simple-name 且
+existing module alias map 明確解析為 `builtins`。例如 `builtins.getattr`、
+`bi.getattr`（`import builtins as bi`）與既有 alias map 已知的 module assignment alias。
+不將未知 receiver 或任意同名方法視為 builtins。延續 exactly two positional arguments、
+no keyword arguments、simple-name module target、literal string attribute 與既有 forbidden set：
+`builtins.__import__`、`importlib.import_module`、`sys.modules`。不增加第三/default argument、
+star／iterable expansion、general-purpose interpretation、callable getattr alias inference 或動態 execution。
+維持 existing direct imports、fixtures、mocks、assertions 與所有先前 scanner regressions。
+原 mission、scope、outcomes、Runtime Registry reuse protocol、測試策略、Architecture Visualization
+與 follow-up missions 不變。
+
+### Artifact Paths / Implementation Steps / Allowed Transitions
+
+Plan-Creator 在 feature worktree 只修改：
+`analysis/loaded-runtime-cache/requirements.md`、
+`analysis/loaded-runtime-cache/technical-spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`。
+Implementer 獨立 non-merge exact-five candidate-only commit 後，Independent Plan-Reviewer 唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c33-candidate-40-hex-sha>.json`。
+Exact keys：`verdict`、`blocking_issues`、`copilot_feedback_triage`。
+Verdict `approved|needs-rework`；blockers 是 exact `issue`／`file`／`fix` nonempty string objects
+array，approved 空、needs-rework 非空；triage exact `ADDRESS`／`DISCUSS`／`SKIP` arrays。
+Implementer 原樣 separate sole evidence-only commit approved receipt；Planner 才可 route RED。
+
+Implementer only test-file non-merge RED subject → Tester actual collection-success／declared-behavior failure →
+failing evidence → Implementer unchanged sole evidence-only commit → distinct test-file-only green subject →
+Tester actual scoped pytest and existing runtime contract regressions → passing evidence → Implementer unchanged
+sole evidence-only commit → Independent Reviewer same-subject review → Implementer unchanged sole approved
+review commit → Planner Phase 4.5 → Plan-Creator factual plan／step alignment → Implementer separate tracking
+commit／bounded push → actual PR-head audit → Independent Reviewer single-pair classification → Implementer
+sole receipt commit／bounded push → Planner exact action route → Implementer factual reply／resolve／live audit。
+creator-in-progress → tester-in-progress → review-ready → reviewer-in-progress → approved or needs-rework；
+approved → publish-in-progress → pr-open。Needs-rework 必須新的 green subject 與完整 Tester／Reviewer chain。
+Planning approval 不授權 thread actions。Human alone PR approval／merge／release／post-merge。
+
+Tester 唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c33-red-subject-40-hex-sha>.json` 或
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c33-green-subject-40-hex-sha>.json`，
+對應各自實際 immutable subject。Exact six keys `schema_version`、`topic`、
+`implementation_subject_commit`、`status`、`commands`、`recorded_by`：
+integer `1`、string `loaded-runtime-cache`、actual full lowercase 40-hex SHA、
+`passing|failing`、nonempty array of exact `command` nonempty string／`exit_code` integer objects、`Tester`。
+passing 要求全部實際 exit codes 為 0；failing 至少一個 nonzero，RED 需確認為新增指定行為失敗，
+不可用 syntax／dependency／無關 failure 代替。Tester 不 commit；Implementer 原樣分別 sole-commit。
+
+Independent Reviewer 只消費 committed passing same-green-subject Tester evidence，唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c33-green-subject-40-hex-sha>.json`。
+Exact seven keys `schema_version` integer `1`、`topic` string `loaded-runtime-cache`、
+`implementation_subject_commit` same actual full green SHA、`tester_evidence_commit` actual full sole passing
+Tester commit SHA、`verdict` `approved|needs-rework`、`blocking_issues` string array
+(approved 空／needs-rework 非空)、`recorded_by` string `Independent Reviewer`。
+Reviewer 不 commit；Implementer 原樣 separate sole evidence-only commit。
+
+### Validation / Acceptance / Current-Head Classification
+
+RED covers qualified known builtins direct calls、imported module alias、module-assignment alias、retrieved callable
+assignment，目標覆蓋既有 forbidden set；benign `len` 與 unknown receiver 不誤判。
+Green scoped independence pytest 與既有 loaded-runtime-cache contract regressions passing，確認 bare getattr、
+原 tests direct-import behavior、one-file subject bounds。Evidence 必須實際 command facts；不預填任何 future
+candidate／subject／commit／verdict／result／PR head／reply／resolution。
+
+已提交 approved review 與 Phase 4.5／push／actual-head audit 後 Independent Reviewer 唯一可寫：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c33-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`。
+Exact eight top-level keys `schema_version`、`topic`、`implementation_subject_commit`、
+`tester_evidence_commit`、`implementation_review_evidence_commit`、`pr_head_commit`、
+`classifications`、`recorded_by`。Values integer `1`、string `loaded-runtime-cache`、
+actual full lowercase 40-hex S／sole passing T commit／sole approved V commit／audited PR head、
+exact one-entry array、`Independent Reviewer`。Entry exact `thread`、`comment`、
+`outcome`、`reply`；string IDs `nZI5l`／`4141010658`；
+outcome `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`，只有 REPLY_AND_RESOLVE reply 為 nonempty factual
+string，其餘為 JSON null。Implementer 原樣 separate sole evidence-only commit，Planner 方可 route
+exact committed REPLY_AND_RESOLVE entry 的指定 reply／resolve；ADDRESS 要 bounded repair，
+HUMAN_CHECK 保持 open。所有 receipts immutable；wrong/stale head、binding、path、key、writer、SHA、
+pair、enum、nullability、order、non-sole commit 或 overwritten evidence fail closed。
+
+### Reviewer Handoff / Post-merge / Unresolved Items
+
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+
+No release／post-merge actions。本輪唯一 pending implementation 是 qualified known-builtins getattr；
+starred `nZI5n` 與上述 Human-only five 留在 human-check/open，unlisted threads 不可回覆／resolve。
