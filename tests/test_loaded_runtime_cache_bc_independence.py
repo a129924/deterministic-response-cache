@@ -164,11 +164,12 @@ def _resolve_forbidden_alias(
     if isinstance(value, ast.Attribute):
         return _resolve_attribute_alias(value, modules)
     if isinstance(value, ast.IfExp):
-        return _resolve_forbidden_alias(value.body, modules, callables) or _resolve_forbidden_alias(
-            value.orelse,
-            modules,
-            callables,
-        )
+        body = _resolve_forbidden_alias(value.body, modules, callables)
+        alternative = _resolve_forbidden_alias(value.orelse, modules, callables)
+        for resolved in (body, alternative):
+            if resolved is not None and resolved[0] == "callable":
+                return resolved
+        return body or alternative
     if isinstance(value, ast.Call):
         return _resolve_getattr_alias(value, modules)
     return None
@@ -481,6 +482,14 @@ def test_identity_bc_does_not_directly_import_loaded_runtime_cache() -> None:
                 "load = fallback if enabled else importlib.import_module\n"
                 "load('identity')\n"
             ),
+        ),
+        (
+            "if-expression-module-before-forbidden-callable",
+            ("import importlib\nload = importlib if enabled else __import__\nload('identity')\n"),
+        ),
+        (
+            "if-expression-forbidden-callable-before-module",
+            ("import importlib\nload = __import__ if enabled else importlib\nload('identity')\n"),
         ),
         (
             "attribute-base-named-expression-importlib-alias",
