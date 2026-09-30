@@ -1489,7 +1489,9 @@ Planning paths (Plan-Creator only): `analysis/loaded-runtime-cache/requirements.
 `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`, `plan/loaded-runtime-cache/loaded-runtime-cache.step.md`.
 Implementer commits these alone as non-merge candidate; Independent Plan-Reviewer writes only
 `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c31-candidate-40-hex-sha>.json`.
-Standard three-key handoff below, approved empty blockers／needs-rework nonempty. Implementer sole-commits approved receipt.
+Standard three-key handoff below: `blocking_issues` is an array of objects with exactly `issue`, `file`, `fix` keys,
+each a nonempty string; approved requires an empty array and needs-rework requires a nonempty array.
+Implementer sole-commits approved receipt.
 
 After Planner routing, Implementer commits RED only in declared test file. Tester writes factual failing evidence only
 `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c31-red-subject-40-hex-sha>.json`; Implementer

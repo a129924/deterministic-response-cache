@@ -821,8 +821,9 @@ The existing direct imports, fixtures, mocks, assertions and prior scanner behav
 
 Implementer commits exactly five planning files in one non-merge candidate-only commit. Independent Plan-Reviewer alone
 writes `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c31-candidate-40-hex-sha>.json`, exact keys
-`verdict`, `blocking_issues`, `copilot_feedback_triage`; verdict `approved|needs-rework`, blockers string array empty only
-for approved, triage exact `ADDRESS`, `DISCUSS`, `SKIP` arrays. Implementer commits approved receipt unchanged alone.
+`verdict`, `blocking_issues`, `copilot_feedback_triage`; verdict `approved|needs-rework`, `blocking_issues` is an array
+of objects with exactly `issue`, `file`, `fix` keys, each a nonempty string. It is empty for `approved` and nonempty
+for `needs-rework`; triage exact `ADDRESS`, `DISCUSS`, `SKIP` arrays. Implementer commits approved receipt unchanged alone.
 No candidate/subject SHA, future result, verdict, PR head, reply or classification outcome is prefilled.
 
 After committed approval and Planner routing, Implementer commits a distinct non-merge RED test subject in the one
