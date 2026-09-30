@@ -892,11 +892,11 @@ Wrong/stale head、wrong binding、extra/missing key/pair、wrong writer、overw
 本輪三個 pairs 尚待獨立分類。六個 Human-only pairs 保持 open；
 unlisted threads 不可回覆／resolve。No release／post-merge actions。
 
-## C35 Current-Head Five-Pair Classification Successor（authoritative current routing）
+## C35 Current-Head Five-Pair Classification Successor（needs-rework predecessor routing）
 
 ### Goal / Outcome / Scope
 
-Current：`c35-planning-draft`。Goal／In-Scope：僅獨立分類五個新 pairs
+Historical state：`c35-classification-needs-rework`。Goal／In-Scope：僅獨立分類五個新 pairs
 `naZCW`/`4141524912`、`naZCY`/`4141524919`、`na5mB`/`4141737461`、
 `na5mE`/`4141737466`、`na5mM`/`4141737476`；
 不預填分類結果、reply 或 resolution。本輪固定使用同 topic committed C33
@@ -997,3 +997,90 @@ Wrong/stale head、wrong binding、extra/missing key/pair、wrong writer、overw
 
 本輪五個 pairs 尚待獨立分類。六個 Human-only pairs 保持 open；
 unlisted threads 不可回覆／resolve。No release／post-merge actions。
+
+## C36 Replacement Five-Pair Classification Successor（authoritative current routing）
+
+### Goal / Outcome / Scope / Locked Decisions
+
+Current：`c36-planning-draft`。僅為 C35 needs-rework 建立新的獨立 classification
+receipt，不作 implementation。C35 candidate `0e9c84959ec602dbc117413613ce6afd371b6822`
+與 approved planning receipt commit `53b19a478f23a31de6183510cc6569901f9f66f9`
+是已提交事實；其未提交 classification receipt 使用 full PRRT thread IDs，
+不符合 suffix ID contract，屬 rejected nonrouting provenance。原 path
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-82e3dc7efa04d7a432568e254ffca82bc3337ecd-71545af8c0d6f87ea4f43bf28d380edfed75aa82.json`
+保留原樣，不覆寫、不提交作有效 evidence、不重用其 outcomes。
+
+本輪 exact pairs 僅 `naZCW`/`4141524912`、`naZCY`/`4141524919`、
+`na5mB`/`4141737461`、`na5mE`/`4141737466`、`na5mM`/`4141737476`。
+thread 欄位必為這五個 suffix IDs，不是 full PRRT node IDs；comment 為上述 string IDs。
+固定 S `82e3dc7efa04d7a432568e254ffca82bc3337ecd`、
+passing T commit `eff8eb2f5f554d6eb01f57fcf5755cddcab4adfe`、
+approved V commit `d29da7b8a855b3887c9bcbb7183b1db0cd744043`、
+live audited head `71545af8c0d6f87ea4f43bf28d380edfed75aa82`。
+不得预填新 candidate SHA、verdict、outcomes、replies 或 resolutions。
+
+### Boundaries / Exclusions
+
+In-Scope／Goal：replacement receipt contract 與 independent five-pair classification。
+Modify：Plan-Creator 僅以下五個 artifacts。Written：獨立 review／classification receipts。
+ReadOnly：dev、source/tests/diagram/governance、舊 receipts、unlisted pairs。Deleted：無。
+Out-Of-Scope／Non-Goal：implementation、RED/green、新 architecture/runtime/API/ACL/backend/DI/lifecycle
+決策、README/VERSION、PR approval／merge／release／post-merge。
+六 Human-only pairs `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、
+`lfQmF`/`4091213944`、`nZI5n`/`4141010661` 保持 excluded/open。
+`nZm9d`/`4141203134` 與 `nZm9h`/`4141203139` ADDRESS 尚未修復，
+既有 For boundary/lock 保持，本輪不授權其修改或 resolve。
+原 mission、scope、outcomes、Runtime Registry protocol、測試策略、
+Architecture Visualization、follow-up missions 維持，無 stable-library/release 變更。
+
+### Status / Allowed Transitions / Artifact Paths / Implementation Steps
+
+Plan-Creator 僅 feature worktree：
+`analysis/loaded-runtime-cache/requirements.md`、
+`analysis/loaded-runtime-cache/technical-spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`。
+Implementer exact-five non-merge candidate-only commit；Independent Plan-Reviewer 唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c36-candidate-40-hex-sha>.json`。
+單一 JSON object exact keys `verdict`、`blocking_issues`、`copilot_feedback_triage`；
+verdict `approved|needs-rework`，blockers exact `issue`/`file`/`fix` nonempty
+string objects array，approved 空、needs-rework 非空；triage exact `ADDRESS`/`DISCUSS`/`SKIP` arrays。
+Implementer 原樣 sole evidence-only commit approved receipt；Planner 核對 fixed S/T/V/live head，
+Independent Reviewer 才獨立重新分類，唯一寫全新 replacement path：
+
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-82e3dc7efa04d7a432568e254ffca82bc3337ecd-71545af8c0d6f87ea4f43bf28d380edfed75aa82-c36-<c36-candidate-40-hex-sha>.json`
+
+Template variable 必為本輪實際 committed exact-five candidate full lowercase 40-hex SHA；
+同一值也綁定本輪 Plan-Reviewer receipt filename。Candidate 未提交前不預填。
+此 path 不重用 C35 path，writer 寫入前確認從未存在；immutable 禁止覆寫。
+Classification JSON top-level exact eight keys `schema_version`、`topic`、
+`implementation_subject_commit`、`tester_evidence_commit`、
+`implementation_review_evidence_commit`、`pr_head_commit`、
+`classifications`、`recorded_by`；values 為 integer `1`、string `loaded-runtime-cache`、
+上述 fixed full S/T/V/head、exact five-entry array、string `Independent Reviewer`。
+每 entry exact `thread`、`comment`、`outcome`、`reply`，每上述 suffix pair 恰一次。
+Outcome enum `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`；
+僅 REPLY_AND_RESOLVE reply 為 nonempty factual string，其餘 JSON null。
+Reviewer 不 commit；Implementer 原樣 separate sole evidence-only commit，bounded push。
+Planning commits 留 local 到 fixed live-head classification 完成後才 push。
+
+Sequence：new candidate → independent approved Plan-Reviewer receipt → sole receipt commit →
+fixed-triple/live-head verification → independent NEW classification → sole classification commit →
+bounded push → Planner exact-action route → Implementer 指定 factual reply/resolve/live audit。
+不沿用 rejected outcomes；planning approval 不授權 thread actions。
+ADDRESS 回 bounded repair，HUMAN_CHECK 保持 open；只對 committed REPLY_AND_RESOLVE entries 執行。
+publish-in-progress 只可進 pr-open；Human alone PR approval／merge／release／post-merge。
+
+### Validation / Acceptance / TestCase / Reviewer Handoff / Unresolved Items
+
+Verify exact five suffix IDs/pairs、same-topic committed S/T/V、passing/approved evidence、
+fixed live head、fresh candidate-bound path、schema/writers/enum/nullability/actor order/
+sole commits/immutability。Wrong/stale binding、full PRRT IDs、extra/missing pairs/keys、
+overwriting/reusing old receipt、prefilled outcomes、非 sole commit 一律 fail closed。
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+五 pairs 尚待 new independent classification；六 Human locks 與 For boundary 保持 open。
+No release/post-merge actions。
