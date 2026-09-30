@@ -1284,6 +1284,16 @@ are ReadOnly.
 
 ### C28 immutable classification / handoff
 
+**Current C28 state:** `publish-in-progress`。Planner 已依 committed approved review 完成 Phase 4.5 alignment。
+已提交的 candidate `2de07fc0732f617fbbaccd67245fec3db883686a` → approved Plan-Reviewer receipt
+`e3664935458a4c6b6a9db6a61f4287c16cc14703` → RED subject
+`7de94edc65630f9b62815083cb0c0ddd501a8bca` → factual failing Tester evidence
+`64068f0a566fd3bdaa7729dabec325c800fccd6a` 之後，green review rework 最終形成 immutable subject
+`e4734aaa7d630542e13c37920593602fe8eb64cd` → passing Tester evidence-only commit
+`b310dd12666aba754b55b0e1d6af5d9520696582` → approved Independent Reviewer evidence-only commit
+`79b8095864ec8ed54db4ef107dbd06a33cdfab87`。actual-current-PR-head verification、eight-pair classification、
+classification receipt commit 與 exact reply／resolution 尚未完成；本次只同步 plan／step factual state。
+
 Candidate-only commit → independent approved SHA-bound Plan-Reviewer receipt-only commit → RED/failing Tester
 evidence-only commit → distinct green/passing Tester evidence-only commit → independent approved green review
 evidence-only commit → Planner actual-current-head verification → independent C28 classification receipt-only commit →

@@ -664,17 +664,19 @@ C25 and C26 tracker states above are aligned to their committed receipts and rou
 `m82WS`/`4129419173`, `m9eUV`/`4129677944`, and `m9eUY`/`4129677947`.
 
 - [x] C28 plan-authoring
-- [ ] C28 planning-candidate-commit
-- [ ] C28 independent Plan-Reviewer receipt
-- [ ] C28 receipt-only commit
-- [ ] C28 RED test subject
-- [ ] C28 RED factual failing Tester evidence
-- [ ] C28 RED evidence-only commit
-- [ ] C28 green bounded repair subject
-- [ ] C28 green factual passing Tester evidence
-- [ ] C28 green Tester-evidence-only commit
-- [ ] C28 independent green review evidence
-- [ ] C28 green review-evidence-only commit
+- [x] C28 planning-candidate-commit
+- [x] C28 independent Plan-Reviewer receipt
+- [x] C28 receipt-only commit
+- [x] C28 RED test subject
+- [x] C28 RED factual failing Tester evidence
+- [x] C28 RED evidence-only commit
+- [x] C28 green bounded repair subject
+- [x] C28 green factual passing Tester evidence
+- [x] C28 green Tester-evidence-only commit
+- [x] C28 independent green review evidence
+- [x] C28 green review-evidence-only commit
+- [x] C28 Planner Phase 4.5 alignment
+- [ ] C28 bounded push update
 - [ ] C28 Planner actual-current-head verification
 - [ ] C28 independent eight-pair classification receipt
 - [ ] C28 classification-receipt-only commit
@@ -682,13 +684,19 @@ C25 and C26 tracker states above are aligned to their committed receipts and rou
 
 ### C28 actionable steps
 
-- [ ] **Actor: Implementer.** Commit exactly the five C28 planning artifacts; do not prefill future SHA, verdict,
+**Current C28 state:** `publish-in-progress`。已提交 final green subject
+`e4734aaa7d630542e13c37920593602fe8eb64cd`、passing Tester evidence
+`b310dd12666aba754b55b0e1d6af5d9520696582` 與 approved Independent Reviewer evidence
+`79b8095864ec8ed54db4ef107dbd06a33cdfab87`；Planner 已完成 Phase 4.5 alignment。actual-current-head
+classification 與 reply／resolve 尚未完成。
+
+- [x] **Actor: Implementer.** Commit exactly the five C28 planning artifacts; do not prefill future SHA, verdict,
   test result, classification outcome, reply or resolution.
-- [ ] **Actor: Independent Plan-Reviewer / Implementer.** Write an approved standard candidate-SHA-bound receipt and
+- [x] **Actor: Independent Plan-Reviewer / Implementer.** Write an approved standard candidate-SHA-bound receipt and
   commit it unchanged alone.
-- [ ] **Actor: Implementer / Tester.** Create RED only in `tests/test_loaded_runtime_cache_bc_independence.py` and
+- [x] **Actor: Implementer / Tester.** Create RED only in `tests/test_loaded_runtime_cache_bc_independence.py` and
   `tests/test_loaded_runtime_cache_contracts.py`; record factual failure unchanged and alone. No RED review evidence.
-- [ ] **Actor: Implementer / Tester / Independent Reviewer.** Create distinct green only in those tests,
+- [x] **Actor: Implementer / Tester / Independent Reviewer.** Create distinct green only in those tests,
   `runtime_reuse_key.py`, and the truthful changed subset of the ten existing dataflow artifacts. Record passing Tester
   and approved same-subject Independent Reviewer evidence in separate sole commits.
 - [ ] **Actor: Planner / Independent Reviewer / Implementer.** After actual-current-head verification, Independent
