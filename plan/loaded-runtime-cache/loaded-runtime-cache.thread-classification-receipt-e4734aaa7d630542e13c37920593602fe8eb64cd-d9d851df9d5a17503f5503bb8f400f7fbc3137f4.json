@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "e4734aaa7d630542e13c37920593602fe8eb64cd",
+  "tester_evidence_commit": "b310dd12666aba754b55b0e1d6af5d9520696582",
+  "implementation_review_evidence_commit": "79b8095864ec8ed54db4ef107dbd06a33cdfab87",
+  "pr_head_commit": "d9d851df9d5a17503f5503bb8f400f7fbc3137f4",
+  "classifications": [
+    {
+      "thread": "PRRT_kwDOUJTij86lfYsH",
+      "comment": 4091265108,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已修正直接 getattr surface 的辨識：callee 與 module-cache expression 都會解析 literal getattr(importlib, 'import_module')／getattr(sys, 'modules')。兩種直接使用形狀均有各自隔離的 static AST regression。C28 final subject e4734aaa7d630542e13c37920593602fe8eb64cd 已有 passing Tester evidence b310dd12666aba754b55b0e1d6af5d9520696582 與 approved independent review 79b8095864ec8ed54db4ef107dbd06a33cdfab87。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lfYsK",
+      "comment": 4091265115,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已移除 construction token 的 instance storage。RuntimeReuseKey 使用空 slots，constructor 不保留 token，維持 immutable、instance-identity equality/hash；新增 regression 驗證沒有可讀取的 _token attribute。C28 final subject e4734aaa7d630542e13c37920593602fe8eb64cd 已通過 Tester 與獨立 Reviewer 驗證。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86m8u04",
+      "comment": 4129370926,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已依 Python import statement 的頂層綁定辨識無 asname 的 import importlib.<child>，使 import importlib.util 後的 importlib.import_module 呼叫被 scanner 拒絕；新增獨立 regression 覆蓋該形狀。C28 final subject e4734aaa7d630542e13c37920593602fe8eb64cd 已通過 Tester 與獨立 Reviewer 驗證。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86m8u09",
+      "comment": 4129370931,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在 qualified module attribute 解析 simple-name NamedExpr base，辨識 (runtime := sys).modules 的 module-cache access；新增獨立 regression 覆蓋該 walrus base。C28 final subject e4734aaa7d630542e13c37920593602fe8eb64cd 已通過 Tester 與獨立 Reviewer 驗證。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86m82WL",
+      "comment": 4129419161,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已解析 IfExp assignment 的兩個分支，任一分支含禁止 callable 都會保留其禁止 alias；新增 body／else 分支各自的 regression，並保留 conditional walrus callable 的既有辨識。C28 final subject e4734aaa7d630542e13c37920593602fe8eb64cd 已有 passing Tester evidence 與 approved independent review。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86m82WS",
+      "comment": 4129419173,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已依 committed facts 同步 C25 tracker：actual-head verification、one-pair classification receipt、receipt-only commit 與 Planner routing 均標為完成。C28 current section 明確將 C25 作為 frozen input，後續未完成步驟只留在 C28 的 current routing；此更新已提交於目前 PR head d9d851df9d5a17503f5503bb8f400f7fbc3137f4。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86m9eUV",
+      "comment": 4129677944,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已依 committed C26 receipt 31ab754aae443f702fa4ccc028d53a6c687e48aa 同步 tracker，seven-pair classification receipt、receipt-only commit 與 Planner routing 均標為完成。C28 current section 明確將 C26 作為 frozen input，保留 C28 自身尚待完成的分類與 routing；更新已提交於目前 PR head d9d851df9d5a17503f5503bb8f400f7fbc3137f4。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86m9eUY",
+      "comment": 4129677947,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在 dataflow 新增 RuntimeRegistry.retain(key: RuntimeReuseKey, runtime: RuntimeT) -> None 的獨立 Protocol relationship，並新增 caller-provided runtime 輸入 Registry 的通道；與 RuntimeRetention 的 Retained／NotRetained outcomes 分開。JSON、standalone HTML 及 validation／delivery／visual-check evidence 已同步，passing Tester evidence 包含 showcase 與四種 viewport、artifact hash binding 驗證。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}
