@@ -1950,11 +1950,11 @@ Wrong/stale head、wrong binding、extra/missing key/pair、wrong writer、overw
 本輪五個 pairs 尚待獨立分類。六個 Human-only pairs 保持 open；
 unlisted threads 不可回覆／resolve。No release／post-merge actions。
 
-## C36 Replacement Five-Pair Classification Successor（authoritative current routing）
+## C36 Replacement Five-Pair Classification Successor（completed predecessor routing）
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c36-planning-draft`。僅為 C35 needs-rework 建立新的獨立 classification
+Historical state：`c36-completed`。僅為 C35 needs-rework 建立新的獨立 classification
 receipt，不作 implementation。C35 candidate `0e9c84959ec602dbc117413613ce6afd371b6822`
 與 approved planning receipt commit `53b19a478f23a31de6183510cc6569901f9f66f9`
 是已提交事實；其未提交 classification receipt 使用 full PRRT thread IDs，
@@ -2035,4 +2035,177 @@ overwriting/reusing old receipt、prefilled outcomes、非 sole commit 一律 fa
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 五 pairs 尚待 new independent classification；六 Human locks 與 For boundary 保持 open。
+No release/post-merge actions。
+
+## C37 Static BC Independence Scanner Repair（authoritative current routing）
+
+### C37 Executable Validation Commands / Configuration
+
+RED 新增 tests function names 必含 `c37`，指定 forbidden/foreign regressions 另含
+`rejects`；benign/attribute/non-builtins controls 不含 rejects，確保 collection/control/failure
+selection 可直接驗證且 nonempty。這是既有三項 bounded fixtures 的命名，不新增行為。
+Tester 在各自 immutable subject 實際執行並記錄：
+- RED collection：`uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c37 --collect-only -q`，
+  必須成功並確認三項 declared regression/control coverage。
+- RED benign controls：`uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k 'c37 and not rejects' -q`，
+  必須 passing，不能以 unrelated failure 充作 RED。
+- RED declared behavior failure：`uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c37 -q`，
+  必須 actual assertion failure，對應新增 foreign-target／walrus／imported-getattr behavior。
+- Green complete scanner/runtime regressions：
+  `uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py -q`。
+- Scoped Ruff：
+  `uv run --frozen ruff check tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py`。
+- Scoped strict Pyright：
+  `uv run --frozen pyright tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py`。
+
+`-p no:tach` 明確停用 tach selection/filter，確保列出的 tests 真正執行；
+沿 C33 committed passing Tester evidence 的相同 green invocation。
+Config authority：`pyproject.toml` 的 `[tool.pyright]`（Python 3.12、strict、
+extraPaths src）、`[tool.pytest.ini_options]`（strict config/markers 與既有 coverage）、
+`[tool.ruff]`／`[tool.ruff.lint]`（py312、line-length 100、ALL）、
+`[tool.ruff.lint.per-file-ignores]`（test S101）。不改 config。
+Commands 是待執行 contract，不是預填結果；所有 passing evidence 需上述實際 exit code 0，
+RED failing evidence 需 actual declared assertion nonzero。
+
+
+### Python implementation metadata（canonical python-implementation-plan profile）
+
+- Async-planning status：exempt — 本輪僅同步 static AST test analysis，沒有 async boundary、
+  external I/O、resource lifecycle、concurrency、timeout/retry/cancellation 或 runtime ownership。
+- Module/package placement：僅 `tests/test_loaded_runtime_cache_bc_independence.py`。
+- New public API：no，既有 direct-module API 不變。
+- Interface changes：no，既有 Protocol signatures 不變。
+- Breaking changes allowed：no，保留既有 direct imports/fixtures/mocks/assertions。
+- New dependencies：no，僅既有 standard-library ast 與 pytest tooling。
+- Error-handling strategy：scanner 的 factual assertion failures 交 Tester；不改 production exceptions。
+- Typing strategy：保留現有 Python 3.12 test typing；不用 Any/cast/dynamic import/runtime introspection。
+- Non-goals：不做 RHS destructuring/alias/iterable inference；不擴張 For/star-call handling；
+  不修改 production source/API；不建立 backend/DI/lifecycle；不更改 architecture 或 Human locks。
+- Test categories：happy path（指定 foreign semantic target／forbidden getter 被發現）；
+  edge cases（nested tuple/list/starred targets、import asname、direct walrus）；
+  failure paths（RED declared assertion failures，排除 collection/dependency errors）；
+  forbidden behaviors（不執行 source、不讀 RHS 推論、不把 attributes/unknown getter 視為 local imports）；
+  regression preservation（direct imports/fixtures/mocks/assertions、bare/qualified getter、
+  no-star alias behavior、既有 scanner/runtime contract tests）。
+
+
+### Goal / Outcome / Scope / Locked Decisions
+
+Current：`c37-planning-draft`。本輪同 static BC independence scanner mission，
+僅修正三個 ADDRESS pairs：`nZm9h`/`4141203139`、
+`naZCY`/`4141524919`、`na5mM`/`4141737476`。
+C36 candidate `8a35890310d788d7834be035e891bb0b53baa96d`、
+approved planning receipt commit `55a65a036b20ad566d8a9a9fa410f33f5393fc2c`、
+classification sole commit `8306cf004eb86ac26da016a009d73da0582bc0be`
+均已提交。已 reply/resolved：`naZCW`→`4142061895`、
+`na5mB`→`4142062611`、`na5mE`→`4142063556`。
+C36 completed predecessor routing，本 C37 取代其 current routing。
+
+### Boundaries / In-Scope / Out-Of-Scope / Goal / Non-Goal
+
+Implementation sole path：`tests/test_loaded_runtime_cache_bc_independence.py`。
+1. Assignment-target semantic-name checks recursively inspect only syntactic
+   `ast.Tuple`/`ast.List` elements and `ast.Starred.value`, including nested targets；
+   each `ast.Name` target applies the existing opposite-BC semantic-name rule。
+   Attribute targets 不算 local names；不讀 RHS 配對、不推論 aliases/iterables/values。
+   既有 alias inference 與其 direct-name/no-star 行為維持，不因本 semantic-name check 擴張。
+2. `ast.NamedExpr` 的 direct-name target 套用既有 foreign semantic-name detector；
+   不移除或改寫其他已宣告 detectors，不以 RHS 推論 semantic identity。
+3. 直接 `from builtins import getattr`（含 `asname`）所建立的 local callable
+   可用於既有 literal attribute check。限定 import 的 known-builtins module，
+   callee 為該 local simple-name，exact two positional args、no keywords，
+   first arg simple-name module 且 existing map 已知、second arg literal string。
+   forbidden set 維持 `builtins.__import__`、`importlib.import_module`、
+   `sys.modules`。不推論任意 getter assignment/callable alias，不展開 star/iterable；
+   bare/qualified known-builtins getattr 既有行為維持。
+
+ReadOnly：dev、source/docs/governance/diagram、舊 evidence、其他 threads。
+Modify：五個 planning artifacts；RED/green 僅上述 test path。Written：各 actor 的
+SHA-bound immutable evidence。Deleted：無。Out-Of-Scope／Non-Goal：source/API/runtime/
+registry/backend/DI/lifecycle、new architecture/ACL、README/VERSION、PR approval/merge/release/post-merge。
+六 Human-only pairs `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、
+`lfQmF`/`4091213944`、`nZI5n`/`4141010661` 保持 excluded/open。
+`nZm9d`/`4141203134` For boundary/lock 保留，不授權 repair/resolve。
+兩份既有 untracked rejected receipts 保留原樣 nonrouting provenance，不覆寫、不提交。
+原 mission/scope/outcomes/Runtime Registry protocol/測試策略/Architecture Visualization/
+follow-up missions 維持；無 stable-library/release changes。
+
+### Artifact Paths / Status / Allowed Transitions / Implementation Steps
+
+Plan-Creator 只在 feature worktree 修改五個 exact artifacts：
+`analysis/loaded-runtime-cache/requirements.md`、
+`analysis/loaded-runtime-cache/technical-spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`。
+Implementer exact-five non-merge candidate-only commit；Independent Plan-Reviewer 唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c37-candidate-40-hex-sha>.json`。
+Single JSON exact keys `verdict`、`blocking_issues`、`copilot_feedback_triage`；
+verdict approved|needs-rework，blockers exact issue/file/fix nonempty string objects array
+(approved 空／needs-rework 非空)，triage exact ADDRESS/DISCUSS/SKIP arrays。
+Implementer 原樣 separate sole evidence-only commit approved receipt，Planner 才 route RED。
+
+Implementer sole-test-path RED subject（只加 isolated regression fixtures/assertions，未修 detector）→
+Tester actual collection-success and declared-behavior failure evidence → Implementer sole evidence commit →
+distinct sole-test-path green subject → Tester scoped scanner and existing runtime contract regression evidence →
+Implementer sole passing evidence commit → Independent Reviewer same-subject committed passing-evidence review →
+Implementer sole approved review commit → Planner Phase 4.5 → Plan-Creator factual plan/step alignment →
+Implementer separate alignment commit/push → actual PR-head audit → Independent Reviewer new three-pair
+classification → Implementer sole classification commit/push → Planner exact actions →
+Implementer factual replies/resolutions/live audit。
+creator-in-progress → tester-in-progress → review-ready → reviewer-in-progress → approved|needs-rework；
+needs-rework 要新 subject 與完整 Tester/Reviewer chain；
+approved → publish-in-progress → pr-open。Human alone approval/merge/release/post-merge。
+
+Tester 唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c37-red-subject-40-hex-sha>.json`
+或 `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c37-green-subject-40-hex-sha>.json`。
+Exact six keys schema_version/topic/implementation_subject_commit/status/commands/recorded_by；
+integer 1、string loaded-runtime-cache、actual subject full lowercase 40-hex SHA、
+passing|failing、nonempty array of exact command(nonempty string)/exit_code(integer) objects、
+string Tester。Passing 要所有 actual exit codes 0；failing 至少一個 nonzero，
+RED 須新增 declared assertion failure，不可 syntax/dependency/無關 failure。
+Tester 不 commit；Implementer 原樣各自 separate sole evidence-only commit。
+
+Independent Reviewer 只消費 committed passing same-green-subject evidence，唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c37-green-subject-40-hex-sha>.json`。
+Exact seven keys schema_version/topic/implementation_subject_commit/tester_evidence_commit/
+verdict/blocking_issues/recorded_by：integer 1、loaded-runtime-cache、same actual full green SHA、
+actual full sole passing T commit SHA、approved|needs-rework、string array
+(approved 空／needs-rework 非空)、Independent Reviewer。
+Reviewer 不 commit；Implementer 原樣 separate sole evidence-only commit。
+
+### Validation / Acceptance / TestCase
+
+RED fixtures 以 original comment examples 的 isolated source strings 作靜態 AST assertions，
+不 exec fixture source。兩 BC foreign/benign names、tuple/list/nested/starred targets、
+attribute-only controls；walrus foreign/benign controls；
+direct imported/asname getattr 對 __import__/import_module/sys.modules forbidden controls，
+benign attributes/non-builtins imports controls。保留 existing direct imports、fixtures/mocks/assertions、
+bare/qualified getattr、no-star iterable alias behavior 與其他 regressions。
+Green 須 actual scoped independence pytest 與 existing loaded-runtime-cache contract regressions passing；
+Reviewer 驗證只改 sole test path、semantic-target recursion 與 alias inference 分離、
+walrus detectors preservation、getter import bounds，無動態執行。
+
+### Current-Head Classification / Reviewer Handoff / Unresolved Items
+
+Full chain committed/pushed 且 audit 後 Independent Reviewer 唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c37-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`。
+Exact eight keys schema_version/topic/implementation_subject_commit/tester_evidence_commit/
+implementation_review_evidence_commit/pr_head_commit/classifications/recorded_by；
+integer 1、loaded-runtime-cache、actual full same S/sole passing T/sole approved V/audited head SHA、
+exact three-entry array、Independent Reviewer。Each entry exact thread/comment/outcome/reply；
+上述 three pairs 各一次，thread 必為 suffix IDs、comment string IDs，
+outcome REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK；僅 REPLY_AND_RESOLVE reply nonempty factual string，
+其餘 JSON null。Reviewer 不 commit；Implementer 原樣 separate sole evidence-only commit。
+Planner 才可 route exact REPLY_AND_RESOLVE replies/resolutions；ADDRESS 回 bounded repair，
+HUMAN_CHECK 保持 open。Planning approval 不授權 thread actions。
+All paths immutable/fresh；wrong/stale SHA/head/binding/schema/pair/writer/order/non-sole commit
+或 overwritten receipt fail closed。禁止預填 future SHA/verdict/result/classification/reply/resolution。
+
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+三 pairs 待 bounded repair/verification；六 Human-only 與 For lock 保持 open。
 No release/post-merge actions。
