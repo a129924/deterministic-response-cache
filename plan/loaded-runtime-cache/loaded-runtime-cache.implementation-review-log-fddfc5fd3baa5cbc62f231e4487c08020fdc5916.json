@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "fddfc5fd3baa5cbc62f231e4487c08020fdc5916",
+  "tester_evidence_commit": "251539e5f88e19e0ba9e3a8eeb807f71a6631d6d",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    "C28 green must preserve earlier static callable shapes. Replacing recursive IfExp handling in _is_forbidden_import_callable_expression with _resolve_forbidden_alias drops recognition of a NamedExpr callable branch: static reproduction `((load := __import__) if enabled else fallback)(\"identity\")` returns False because _resolve_forbidden_alias does not resolve NamedExpr, whereas the prior recursive predicate recognized this branch. Restore recursive branch checking alongside assignment-alias resolution and add isolated regressions for this NamedExpr callable in either conditional branch. The existing 41 passing scoped tests do not cover this regression."
+  ],
+  "recorded_by": "Independent Reviewer"
+}
