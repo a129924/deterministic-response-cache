@@ -776,26 +776,26 @@ ReadOnly; no Human approval／merge／release／post-merge. Invalid head／pair�
 
 ## C31 Five-ADDRESS Bounded Repair Stages（authoritative current routing）
 
-Current：`planning-draft / candidate commit pending`。Exact pairs: `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
+Current：`publish-in-progress / bounded push pending`。Exact pairs: `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
 `nXrA0`/`4140406337`, `nXzEu`/`4140459575`, `nXzE1`/`4140459585`. RED only independence test file;
 green only that file and business-capability `scene.js`, `index.html`. Detailed locked cases/path/schema authority is
 technical-spec C31. No future subject/head/result/verdict/classification/reply/resolution is prefilled.
 
 - [x] **Actor: Plan-Creator.** Five standard planning artifacts draft and verified C30 historical alignment only.
-- [ ] **Actor: Implementer.** Non-merge exact-five candidate-only commit.
-- [ ] **Actor: Independent Plan-Reviewer.** Write standard three-key candidate-SHA-bound approved/needs-rework receipt.
-- [ ] **Actor: Implementer.** Approved receipt unchanged sole evidence-only commit.
-- [ ] **Actor: Implementer.** Test-only immutable RED subject covering all declared cases, including bounded scene assertions.
-- [ ] **Actor: Tester.** Write subject-SHA-bound factual failing six-key evidence after actual collect/failure checks.
-- [ ] **Actor: Implementer.** RED Tester evidence unchanged sole commit; do not create RED approval.
-- [ ] **Actor: Implementer.** Distinct bounded three-path green subject; paired aliases/defaults/arguments and truthful Miss endpoint.
-- [ ] **Actor: Tester.** Actual scoped pytest/regressions, JS syntax, scene/inline agreement, endpoint and diff-bound checks;
+- [x] **Actor: Implementer.** Non-merge exact-five candidate-only commit; schema-aligned candidate `6604b7a41a679d6c85fc90bcc5d4ca6ab621e3c7`.
+- [x] **Actor: Independent Plan-Reviewer.** Write standard three-key candidate-SHA-bound approved receipt.
+- [x] **Actor: Implementer.** Approved receipt unchanged sole evidence-only commit `854878afd7dd0ea1ba8866c07a616bdeac7a5785`.
+- [x] **Actor: Implementer.** Test-only immutable RED subject `d84ea7b410ff4811806bdeebba568c5ee88fc399` covering all declared cases, including bounded scene assertions.
+- [x] **Actor: Tester.** Write subject-SHA-bound factual failing six-key evidence after actual collect/failure checks.
+- [x] **Actor: Implementer.** RED Tester evidence unchanged sole commit `d68196a308b2f2fd333f0838cdb29fe8ce7a260e`; no RED approval.
+- [x] **Actor: Implementer.** Distinct bounded three-path green subject `4448c9d144db74787f8c1947b51064e291552a6a`; paired aliases/defaults/arguments and truthful Miss endpoint.
+- [x] **Actor: Tester.** Actual scoped pytest/regressions, JS syntax, scene/inline agreement, endpoint and diff-bound checks;
   write only `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c31-green-subject-40-hex-sha>.json`.
-- [ ] **Actor: Implementer.** Passing Tester evidence unchanged sole commit.
-- [ ] **Actor: Independent Reviewer.** Consume committed passing same-subject evidence; write only
+- [x] **Actor: Implementer.** Passing Tester evidence unchanged sole commit `7787c8b8edb760df6f81f44182bb146f8730c69d`.
+- [x] **Actor: Independent Reviewer.** Consume committed passing same-subject evidence; write only
   `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c31-green-subject-40-hex-sha>.json`.
-- [ ] **Actor: Implementer.** Review evidence unchanged separate sole commit; needs-rework returns new green/full evidence.
-- [ ] **Actor: Planner / Plan-Creator.** Phase 4.5 factual plan/step alignment after committed approved review.
+- [x] **Actor: Implementer.** Approved review evidence unchanged separate sole commit `b75242afc8fcf211c4b0e1aebe20fc410f567d6f`.
+- [x] **Actor: Planner / Plan-Creator.** Phase 4.5 factual plan/step alignment after committed approved review.
 - [ ] **Actor: Implementer / Planner.** Separate tracking commit, bounded push, actual PR head/mergeability/thread audit.
 - [ ] **Actor: Independent Reviewer.** Write immutable eight-key exact-five-pair classification only at
   `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c31-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`.

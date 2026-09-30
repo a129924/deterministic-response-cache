@@ -1454,7 +1454,15 @@ merge／release／post-merge. Original mission／protocol／outcomes／visualiza
 
 ### Goal / Outcome / Scope
 
-Current：`planning-draft / candidate commit pending`。C30 classification sole commit
+Current：`publish-in-progress / bounded push pending`。C31 已完成 Phase 4.5 factual alignment；
+committed candidate `6604b7a41a679d6c85fc90bcc5d4ca6ab621e3c7` → approved planning receipt
+`854878afd7dd0ea1ba8866c07a616bdeac7a5785` → RED subject
+`d84ea7b410ff4811806bdeebba568c5ee88fc399` → failing Tester evidence
+`d68196a308b2f2fd333f0838cdb29fe8ce7a260e` → green subject
+`4448c9d144db74787f8c1947b51064e291552a6a` → passing Tester evidence
+`7787c8b8edb760df6f81f44182bb146f8730c69d` → approved independent review
+`b75242afc8fcf211c4b0e1aebe20fc410f567d6f`。Tracking commit、push、live audit、classification
+與逐項 thread action 尚未完成；不預填其 head、結果或 verdict。C30 classification sole commit
 `005ec865f216de9f63f7dbfdd8df424d78a03afa` is completed predecessor evidence. Live completed replies:
 `m-94E`/`4130289778`→`4140750473`、`nXrAw`/`4140406331`→`4140753564`; both resolved.
 C31 addresses only `m-94K`/`4130289786`, `nXkrM`/`4140364926`, `nXrA0`/`4140406337`,
