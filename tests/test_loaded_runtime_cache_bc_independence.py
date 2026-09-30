@@ -208,10 +208,16 @@ def _resolve_getattr_alias(
     value: ast.Call,
     modules: dict[str, str],
 ) -> tuple[str, str] | None:
-    """Resolve the one static ``getattr(module_alias, literal)`` bypass shape."""
+    """Resolve static bare or known-builtins-qualified ``getattr`` lookups."""
+    getter = value.func
+    is_getattr = (isinstance(getter, ast.Name) and getter.id == "getattr") or (
+        isinstance(getter, ast.Attribute)
+        and getter.attr == "getattr"
+        and isinstance(getter.value, ast.Name)
+        and modules.get(getter.value.id) == "builtins"
+    )
     if (
-        not isinstance(value.func, ast.Name)
-        or value.func.id != "getattr"
+        not is_getattr
         or len(value.args) != _GETATTR_ARGUMENT_COUNT
         or value.keywords
         or not isinstance(value.args[0], ast.Name)
