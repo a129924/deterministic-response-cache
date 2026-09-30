@@ -286,6 +286,8 @@ def _aliases_from_imports(tree: ast.AST) -> tuple[dict[str, str], dict[str, str]
             for alias in statement.names:
                 if alias.name in _FORBIDDEN_DYNAMIC_IMPORT_NAMES | {"modules"}:
                     callables[alias.asname or alias.name] = f"{statement.module}.{alias.name}"
+                elif statement.module == "builtins" and alias.name == "getattr":
+                    callables[alias.asname or alias.name] = "builtins.getattr"
     return modules, callables
 
 
@@ -377,17 +379,21 @@ def _resolve_forbidden_alias(
                 return resolved
         return body or alternative
     if isinstance(value, ast.Call):
-        return _resolve_getattr_alias(value, modules)
+        return _resolve_getattr_alias(value, modules, callables)
     return None
 
 
 def _resolve_getattr_alias(
     value: ast.Call,
     modules: dict[str, str],
+    callables: dict[str, str],
 ) -> tuple[str, str] | None:
-    """Resolve static bare or known-builtins-qualified ``getattr`` lookups."""
+    """Resolve bare, qualified, or directly imported known-builtins ``getattr``."""
     getter = value.func
-    is_getattr = (isinstance(getter, ast.Name) and getter.id == "getattr") or (
+    is_getattr = (
+        isinstance(getter, ast.Name)
+        and (getter.id == "getattr" or callables.get(getter.id) == "builtins.getattr")
+    ) or (
         isinstance(getter, ast.Attribute)
         and getter.attr == "getattr"
         and isinstance(getter.value, ast.Name)
@@ -423,7 +429,7 @@ def _resolve_name_alias(
         return "module", modules[name]
     if name == "__import__":
         return "callable", "builtins.__import__"
-    if name in callables:
+    if name in callables and callables[name] != "builtins.getattr":
         return "callable", callables[name]
     return None
 
@@ -562,10 +568,10 @@ def _declares_forbidden_semantic_type(source_directory: Path, type_name: str) ->
                 return True
             if _imports_identity_semantic_type(statement, type_name):
                 return True
-            if isinstance(statement, (ast.Assign, ast.AnnAssign)) and _assignment_names(
+            if isinstance(
                 statement,
-                type_name,
-            ):
+                (ast.Assign, ast.AnnAssign, ast.NamedExpr),
+            ) and _assignment_names(statement, type_name):
                 return True
     return False
 
@@ -581,11 +587,22 @@ def _imports_identity_semantic_type(statement: ast.AST, type_name: str) -> bool:
     )
 
 
-def _assignment_names(statement: ast.Assign | ast.AnnAssign, name: str) -> bool:
+def _assignment_names(statement: ast.Assign | ast.AnnAssign | ast.NamedExpr, name: str) -> bool:
     """Return whether an assignment gives a local binding the forbidden type name."""
-    if isinstance(statement, ast.AnnAssign):
-        return isinstance(statement.target, ast.Name) and statement.target.id == name
-    return any(isinstance(target, ast.Name) and target.id == name for target in statement.targets)
+    if isinstance(statement, (ast.AnnAssign, ast.NamedExpr)):
+        return _semantic_target_names(statement.target, name)
+    return any(_semantic_target_names(target, name) for target in statement.targets)
+
+
+def _semantic_target_names(target: ast.expr, name: str) -> bool:
+    """Inspect local target syntax only, without interpreting values or attribute labels."""
+    if isinstance(target, ast.Name):
+        return target.id == name
+    if isinstance(target, (ast.Tuple, ast.List)):
+        return any(_semantic_target_names(element, name) for element in target.elts)
+    if isinstance(target, ast.Starred):
+        return _semantic_target_names(target.value, name)
+    return False
 
 
 def test_loaded_runtime_cache_does_not_directly_import_identity_bc() -> None:
