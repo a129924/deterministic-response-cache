@@ -1322,6 +1322,25 @@ No release/post-merge actions。
 
 ## C37 Static BC Independence Scanner Repair（authoritative current routing）
 
+### C37 Risks / Rollback
+
+Risks：recursive semantic-target traversal 可能誤擴張 existing alias inference；
+必須只檢查 target-side tuple/list/starred 的 local semantic names，不配對或讀取 RHS，
+attribute targets 維持 non-local。直接 imported builtins getattr 可能誤判任意同名 callable；
+僅接受 known-builtins import local/asname 與既有 exact-two-positional/no-keyword/
+known-module/literal-attribute bounds。NamedExpr 新 semantic check 可能遮蔽既有 detectors；
+保留其 regression assertions，並以 benign/attribute/non-builtins controls 排除 false positives。
+Scoped tests、Ruff、strict Pyright 與 independent review 驗證上述風險。
+
+Rollback：僅對本輪五份 planning artifacts 的尚未核准差異作 bounded planning repair，
+或对 `tests/test_loaded_runtime_cache_bc_independence.py` 的本輪 immutable test subject
+作新的 bounded repair commit；不得 broad reset、改 frozen C14 scope 或覆寫舊 evidence。
+Implementation needs-rework／回修須建立新的 immutable subject，重新執行 Tester →
+passing evidence sole commit → Independent Reviewer → review sole commit，再走後續 alignment/
+classification route。已提交或 rejected receipts 原樣保留 nonrouting provenance，包括
+本輪先前 needs-rework Plan-Reviewer receipt；六 Human locks／For boundary 保持。
+
+
 ### C37 Executable Validation Commands / Configuration
 
 RED 新增 tests function names 必含 `c37`，指定 forbidden/foreign regressions 另含
