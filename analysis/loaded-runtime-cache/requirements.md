@@ -586,3 +586,23 @@ C28 以已提交的 C25、C26 與 C27 facts 為唯一歷史輸入：C25 green su
 - `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944` 是
   Human-only/open exclusions。每個其他 thread、所有 predecessor artifacts、未列 path、PR approval、merge、release 與 post-merge
   皆 ReadOnly；錯誤 writer/path/SHA/schema/pair/enum/nullability/staleness/non-sole commit 一律 fail closed。
+
+## C29 三檔 architecture conflict integration 補充（current route）
+
+- C28 八對 exact receipt replies 已由 Implementer／Planner live 核實且均 resolved；preceding tracking commit
+  `2d204b070cc9701cfdce31940cbfe377403f1894` 非 action evidence。reply IDs 映射：`lfYsH`→`4140433910`、
+  `lfYsK`→`4140435052`、`m8u04`→`4140436064`、`m8u09`→`4140436858`、`m82WL`→`4140437667`、
+  `m82WS`→`4140438539`、`m9eUV`→`4140439397`、`m9eUY`→`4140440128`。
+- Goal／In-Scope：完整整合 dev `d6ff74ddf65c615f65eeba252e648784252a2bfd` 已提交 tree，base
+  `1501f380f20492c71275474f800fdaaffbf0a76a`；僅手動解衝 business-capability 的 `architecture-brief.md`、
+  `index.html`、`scene.js`。其餘 committed dev tree 自動 parent integration，不授權手動改動。
+- 保留 feature Runtime protocol／Model Execution 與 dev Response Reuse fixed-codec／bytes-envelope committed facts；
+  不新增架構／BC wiring 決策。原 mission、scope、outcomes、reuse protocol、測試、visualization、follow-ups 延續。
+- 五份 planning candidate → independent SHA-bound approved Plan-Reviewer receipt sole commit → immutable merge subject →
+  factual Tester evidence sole commit → independent same-subject review sole commit → Phase 4.5 → push／PR audit。
+  新 evidence 的 exact path／schema／writer／sole ordering 由 technical-spec C29 定義；future facts 不預填。
+- Out-Of-Scope／Non-Goal：thread classification／reply／resolve、新架構、backend／DI／mapper／lifecycle、Human PR
+  approval／merge、release／post-merge。ReadOnly：predecessor receipts、三檔外手動修改與 dev worktree。Deleted：無。
+- Human-only/open 五對 `jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561`,
+  `lAR8T`/`4078761998`, `lfQmF`/`4091213944`。其餘五對 `m-94E`/`4130289778`, `m-94K`/`4130289786`,
+  `nXkrM`/`4140364926`, `nXrAw`/`4140406331`, `nXrA0`/`4140406337` 未分類/open，無 disposition。

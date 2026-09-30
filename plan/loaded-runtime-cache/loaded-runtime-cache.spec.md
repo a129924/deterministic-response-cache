@@ -593,3 +593,44 @@ that exact thread action.
    AST inspection; token interpretation; or backend/lifecycle/wiring claim fails review.
 2. A missing/extra pair or key, wrong SHA/head/writer, stale or non-sole evidence, or any action on a Human-only thread
    fails closed and authorizes no reply, resolution, approval, merge, release or post-merge.
+
+## C29 Three-File Architecture Integration Acceptance
+
+### Scenario 49 — full committed dev tree, bounded manual resolution
+
+Given an independently approved committed C29 candidate receipt, fixed dev
+`d6ff74ddf65c615f65eeba252e648784252a2bfd` and already-integrated base `1501f380f20492c71275474f800fdaaffbf0a76a`,
+when Implementer integrates dev in feature worktree, then one immutable merge subject records actual prior feature HEAD
+first parent and fixed dev second parent, incorporates automatic committed dev tree changes, and limits manual conflict
+resolution to `docs/architecture/business-capability/architecture-brief.md`, `docs/architecture/business-capability/index.html`,
+`docs/architecture/business-capability/scene.js`. No other manual edits or conflict markers remain. Both feature Runtime
+protocol／Model Execution facts and dev Response Reuse fixed-codec／bytes-envelope facts survive without new architecture
+or BC wiring decisions; documentation and scene agree. Facts requiring a new decision return human-check.
+
+### Scenario 50 — new immutable same-subject evidence and publish order
+
+Given the committed integration subject, Tester alone records actual scoped verification at
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c29-integration-subject-40-hex-sha>.json`, exact six-key
+schema and factual command exit codes per technical-spec C29. Implementer unchanged-sole-commits it. Only committed
+passing same-subject evidence permits Independent Reviewer to write
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c29-integration-subject-40-hex-sha>.json`
+with exact seven-key schema, full subject and Tester-commit binding. Implementer later unchanged-sole-commits it.
+Only committed approved review permits Phase 4.5 factual alignment → bounded push → actual PR head/mergeability audit.
+SHA-bound paths are immutable; future subject/result/verdict facts are never prefilled. Failing evidence or needs-rework
+blocks publish; repaired new subject repeats the entire Tester/Reviewer sequence.
+
+### Scenario 51 — factual C28 closure and retained open-thread boundaries
+
+Given live Implementer／Planner verified C28 exact receipt reply IDs `4140433910`, `4140435052`, `4140436064`,
+`4140436858`, `4140437667`, `4140438539`, `4140439397`, `4140440128` and all eight threads resolved, C29 aligns
+historical tracking without attributing actions to preceding commit `2d204b070cc9701cfdce31940cbfe377403f1894`.
+Five Human-only locks (`jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, `lfQmF`) stay open; `m-94E`/`4130289778`,
+`m-94K`/`4130289786`, `nXkrM`/`4140364926`, `nXrAw`/`4140406331`, `nXrA0`/`4140406337` remain
+unclassified/open. C29 assigns no disposition, classification, reply or resolution; original protocol／outcomes／
+visualization／follow-ups persist. No PR approval／Human merge／release／post-merge authority.
+
+## C29 Error / Edge Cases
+
+Wrong parent/base, extra manual path, omitted committed fact, invented architecture decision, marker, schema/writer/SHA
+mismatch, overwritten evidence, non-sole evidence commit, or reordered Tester/Reviewer fails closed. Automatic fixed-dev
+parent changes outside three manual files are valid parent integration, not extra manual scope.

@@ -1284,7 +1284,7 @@ are ReadOnly.
 
 ### C28 immutable classification / handoff
 
-**Current C28 state:** `pr-open / exact reply-and-resolve pending`。Planner 已依 committed approved review 完成 Phase 4.5 alignment。
+**Historical C28 state:** `pr-open / exact eight-pair reply-and-resolve completed`。Planner 已依 committed approved review 完成 Phase 4.5 alignment。
 已提交的 candidate `2de07fc0732f617fbbaccd67245fec3db883686a` → approved Plan-Reviewer receipt
 `e3664935458a4c6b6a9db6a61f4287c16cc14703` → RED subject
 `7de94edc65630f9b62815083cb0c0ddd501a8bca` → factual failing Tester evidence
@@ -1297,7 +1297,10 @@ classification receipt 已原樣以 sole evidence-only commit `e41235af9eee729b1
 提交並推送；其 exact eight entries 全為 `REPLY_AND_RESOLVE`，Planner 已據此 routing。
 receipt path 為
 `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-e4734aaa7d630542e13c37920593602fe8eb64cd-d9d851df9d5a17503f5503bb8f400f7fbc3137f4.json`。
-八個 exact reply／resolution actions 仍 pending；本次只同步 plan／step factual state。
+`2d204b070cc9701cfdce31940cbfe377403f1894` 是 preceding tracking commit，並非 PR action evidence。其後 Implementer／Planner
+live 核實八個 exact receipt reply 與 `isResolved: true`：`lfYsH`→`4140433910`、`lfYsK`→`4140435052`、
+`m8u04`→`4140436064`、`m8u09`→`4140436858`、`m82WL`→`4140437667`、`m82WS`→`4140438539`、
+`m9eUV`→`4140439397`、`m9eUY`→`4140440128`。C29 僅同步已核實 post-commit facts。
 
 Candidate-only commit → independent approved SHA-bound Plan-Reviewer receipt-only commit → RED/failing Tester
 evidence-only commit → distinct green/passing Tester evidence-only commit → independent approved green review
@@ -1310,3 +1313,91 @@ have only `thread`, `comment`, `outcome`, `reply` for the listed pair set. Indep
 `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; only the former has a non-empty factual reply and can later authorize the
 matching exact reply/resolve. All other replies are JSON `null`; malformed, stale, non-sole, cross-subject, wrong-head,
 wrong-writer or wrong-pair evidence fails closed.
+
+## C29 Three-File Architecture Conflict Integration Successor (authoritative current routing)
+
+### Goal / Outcome and Scope
+
+C29 承接 C28 completed eight-pair actions，解除 PR 與 dev 的三檔 architecture conflict。原 mission、Runtime reuse
+protocol、outcomes、測試策略、Architecture Visualization、follow-up missions 延續既有定義。analysis strict mode 延續，
+以下 contract 同步五份 artifacts。本次是 non-stable-library document integration；README／VERSION／release 不變。
+
+| Field | Contract |
+| --- | --- |
+| Goal | 整合 dev 已提交 tree，三個衝突檔保留雙方 committed facts，更新 PR mergeability。 |
+| In-Scope | 五份 planning artifacts、Plan-Reviewer receipt、完整 dev parent integration、三檔手動解衝、同 subject Tester／Reviewer evidence、Phase 4.5、bounded push、唯讀 PR audit。 |
+| Out-Of-Scope / Non-Goal | 新架構決策、backend／DI／mapper／lifecycle／execution wiring、thread classification／reply／resolve、Human PR approval／merge、release／post-merge。 |
+| ReadOnly | predecessor evidence；三檔之外禁止手動修改；五個 Human-only locks 與五個未分類 pairs 保持 open；dev worktree 不寫入。 |
+| Written | 下列 immutable SHA-bound receipts，指定 writer 寫入、Implementer 各自 unchanged sole evidence-only commit。 |
+| Modify | candidate 僅五份 artifacts；integration 手動解衝僅三檔，其他 dev tree 自動 parent integration；Phase 4.5 僅 plan／step factual alignment。 |
+| Deleted | 無手動刪除；dev committed tree 的 automatic changes 屬 parent integration，不授權額外手動刪除。 |
+| TestCase | parent topology、three-file manual-delta、no conflict markers、facts preservation、document/scene consistency、同 subject evidence schema／actor order、PR actual head／mergeability audit。 |
+
+### Locked Decisions / Boundaries
+
+來源固定 `dev@d6ff74ddf65c615f65eeba252e648784252a2bfd`，已整合 base
+`1501f380f20492c71275474f800fdaaffbf0a76a`。first parent 是 integration 開始前實際已提交 feature HEAD，需記錄
+完整 SHA；second parent 恰為上述 dev SHA。其他 dev committed changes 可由 merge 自動帶入，並非三檔 allowlist
+違規；禁止對其手動修改。candidate／receipt／subject SHA、result／verdict 都不得預填。
+
+三檔保留 feature committed Loaded Runtime Cache protocol-only、Model Execution provider-neutral coordination facts，
+以及 dev committed Response Reuse fixed-codec／bytes-envelope facts；不重開 BC 獨立性、無 concrete runtime backend／DI／
+mapper／lifecycle 與未實作 BC wiring 等邊界。不創造跨 BC 關係；若 committed facts 不能共存而需新決策，human-check。
+三檔 source of truth／render representation 必須一致，沒有新 Archify／dataflow delivery authority。
+
+### Status / Allowed Transitions / Artifact Paths
+
+**Current C29 state:** `planned / planning-candidate pending`。candidate-only commit → independent approved
+Plan-Reviewer receipt → receipt-only commit → `creator-in-progress` integration subject → `tester-in-progress` →
+committed passing evidence → `review-ready`／independent review → committed approved evidence → Planner Phase 4.5 →
+`publish-in-progress` bounded push → `pr-open` audit。`needs-rework` 回 Implementer，以新 subject 重走 Tester／Reviewer。
+feature integration merge 是本次 bounded subject，不授權 Human-only PR merge。
+
+| Exact path | Writer / role | Authority |
+| --- | --- | --- |
+| `analysis/loaded-runtime-cache/requirements.md` | Plan-Creator / intent | C29 contract |
+| `analysis/loaded-runtime-cache/technical-spec.md` | Plan-Creator / execution spec | C29 contract |
+| `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md` | Plan-Creator / plan, later factual alignment | Planner route |
+| `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md` | Plan-Creator / acceptance | C29 contract |
+| `plan/loaded-runtime-cache/loaded-runtime-cache.step.md` | Plan-Creator / tracker, later factual alignment | Planner route |
+| `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c29-candidate-40-hex-sha>.json` | Independent Plan-Reviewer / standard verdict | committed candidate |
+| `docs/architecture/business-capability/architecture-brief.md` | Implementer / manual resolution | approved C29 receipt |
+| `docs/architecture/business-capability/index.html` | Implementer / manual resolution | approved C29 receipt |
+| `docs/architecture/business-capability/scene.js` | Implementer / manual resolution | approved C29 receipt |
+| `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c29-integration-subject-40-hex-sha>.json` | Tester / factual checks | immutable subject |
+| `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c29-integration-subject-40-hex-sha>.json` | Independent Reviewer / verification | committed passing same-subject evidence |
+
+SHA substitutions are deterministic full lowercase 40-hex commit facts only. Versioned paths are immutable, never
+overwritten. Automatic dev tree changes are bounded by the exact committed parent, not a manual wildcard writer path.
+
+### Implementation Steps / Validation / Evidence Contract
+
+1. Implementer commits only five artifacts. Independent Plan-Reviewer reviews committed candidate and writes standard
+   JSON with exactly `verdict`, `blocking_issues`, `copilot_feedback_triage` (`ADDRESS`, `DISCUSS`, `SKIP`). Only an approved
+   receipt committed unchanged alone opens integration.
+2. Implementer integrates fixed dev parent in feature worktree, resolves only three manual paths, records actual parents
+   and commits one immutable merge subject. Verify markers absent, both committed fact sets preserved, and no extra manual
+   edits relative to automatic merge result. Integration subject includes full automatic dev tree, not merely three-file diff.
+3. Tester checks actual topology, manual-delta bounds, facts, document/scene consistency and relevant existing regressions.
+   Tester alone writes exact six-key JSON: `schema_version` (integer `1`), `topic` (`loaded-runtime-cache`),
+   `implementation_subject_commit` (full subject SHA), `status` (`passing|failing`), `commands` (nonempty array, each object
+   exactly nonempty string `command` and integer `exit_code`), `recorded_by` (`Tester`). Passing requires all zero;
+   failing at least one nonzero. Implementer commits unchanged Tester evidence as the sole path, no planning/source mix.
+4. Independent Reviewer consumes only committed same-subject passing Tester evidence, verifies integration and actor
+   order, and writes exact seven-key JSON: `schema_version` (integer `1`), `topic` (`loaded-runtime-cache`),
+   `implementation_subject_commit` (same full SHA), `tester_evidence_commit` (full sole evidence commit SHA),
+   `verdict` (`approved|needs-rework`), `blocking_issues` (string array; empty for approved, nonempty for needs-rework),
+   `recorded_by` (`Independent Reviewer`). Implementer unchanged-sole-commits it separately after Tester commit.
+   No committed passing evidence means no review record; no evidence may share another evidence or subject commit.
+5. Approved committed review permits Planner Phase 4.5 factual plan／step alignment, existing-PR bounded push and actual
+   head／mergeability／thread audit. Schema／writer／SHA／non-sole commit／topology／scope／fact failures fail closed.
+
+### Reviewer Handoff / Post-merge / Unresolved Items
+
+Machine-consumable planning handoff is the standard three-key receipt above; implementation handoff is the seven-key
+same-subject review record. C29 authorizes no classification, reply, resolve, PR approval／merge, release, post-merge,
+tag or final summary.
+
+Human-only/open: `jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561`, `lAR8T`/`4078761998`,
+`lfQmF`/`4091213944`. Unclassified/open: `m-94E`/`4130289778`, `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
+`nXrAw`/`4140406331`, `nXrA0`/`4140406337`. These are observations without disposition; later Planner routing required.

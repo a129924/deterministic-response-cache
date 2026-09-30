@@ -706,3 +706,51 @@ wrong-writer, invalid-enum/nullability, or non-sole record fails closed.
 `jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561`, `lAR8T`/`4078761998`, and `lfQmF`/`4091213944` remain
 Human-only/open exclusions. All unlisted paths, threads, predecessor artifacts, PR approval, merge, release and
 post-merge are ReadOnly.
+
+## C29 Three-File Architecture Conflict Integration Technical Contract (current route)
+
+C29 planning candidate changes exactly requirements／technical-spec／topic plan／spec／step. Prior C28 actions are completed
+live facts, not contents of preceding tracking commit `2d204b070cc9701cfdce31940cbfe377403f1894`; eight resolved replies are
+`lfYsH`→`4140433910`, `lfYsK`→`4140435052`, `m8u04`→`4140436064`, `m8u09`→`4140436858`,
+`m82WL`→`4140437667`, `m82WS`→`4140438539`, `m9eUV`→`4140439397`, `m9eUY`→`4140440128`.
+
+Full dev parent is exactly `d6ff74ddf65c615f65eeba252e648784252a2bfd`; already-integrated base is
+`1501f380f20492c71275474f800fdaaffbf0a76a`. Subject is a feature-worktree integration merge: actual preintegration feature
+HEAD is recorded as first parent full SHA, fixed dev SHA as second parent. All other dev committed tree changes enter
+automatically. Manual edits are limited exactly to `docs/architecture/business-capability/architecture-brief.md`,
+`docs/architecture/business-capability/index.html`, `docs/architecture/business-capability/scene.js`. Compare manual delta
+against automatic merge results; three-file restriction is not a restriction on automatic dev-parent tree changes.
+
+Preserve committed Loaded Runtime Cache protocol-only and Model Execution provider-neutral coordination facts alongside
+dev Response Reuse fixed-codec／bytes-envelope facts. Preserve BC independence, no concrete runtime backend／DI／mapper／
+lifecycle or implemented BC wiring. Document and scene representations agree. No new architecture decision, dataflow
+delivery, source/test change or extra manual edit; conflicting facts requiring a new decision return human-check.
+
+Independent Plan-Reviewer writes only
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c29-candidate-40-hex-sha>.json` with standard exact
+`verdict`, `blocking_issues`, `copilot_feedback_triage` keys and triage `ADDRESS`, `DISCUSS`, `SKIP`. Implementer commits
+approved receipt unchanged alone before creating integration subject. No future SHA／verdict／result is prefilled.
+
+Tester alone writes `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c29-integration-subject-40-hex-sha>.json`
+only after subject commit. Exact keys: `schema_version` integer `1`, `topic` string `loaded-runtime-cache`,
+`implementation_subject_commit` full subject SHA, `status` enum `passing|failing`, `commands` nonempty array of objects
+with exactly nonempty string `command` and integer `exit_code`, `recorded_by` string `Tester`. Passing requires every
+exit code zero; failing requires at least one nonzero. Commands factually verify topology, manual scope, no markers,
+committed facts, document/scene consistency and relevant regressions. Implementer unchanged-sole-commits evidence.
+
+Independent Reviewer only after committed same-subject passing Tester evidence writes
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c29-integration-subject-40-hex-sha>.json`.
+Exact keys: `schema_version` integer `1`, `topic` string `loaded-runtime-cache`, `implementation_subject_commit` same full
+subject SHA, `tester_evidence_commit` full sole Tester commit SHA, `verdict` enum `approved|needs-rework`, `blocking_issues`
+string array (approved empty, needs-rework nonempty), `recorded_by` string `Independent Reviewer`. Verify scope, facts,
+actual parents and ordering. Implementer commits unchanged alone in a later separate evidence-only commit. Neither
+record shares a commit with planning／implementation／other evidence; versioned full lowercase 40-hex paths are immutable.
+
+Approved committed review → Planner Phase 4.5 factual plan/step alignment → bounded existing PR push → actual head／
+mergeability／thread audit. Failure in writer/path/schema/SHA/topology/scope/facts/order fails closed; needs-rework creates
+new subject and repeats Tester／Reviewer. C29 grants no thread classification／reply／resolve or Human PR merge／approval.
+Original mission／protocol／outcomes／visualization／follow-ups unchanged; no README／VERSION／release／post-merge action.
+
+Human-only/open `jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561`, `lAR8T`/`4078761998`,
+`lfQmF`/`4091213944`; unclassified/open `m-94E`/`4130289778`, `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
+`nXrAw`/`4140406331`, `nXrA0`/`4140406337`. No disposition supplied; all predecessor evidence stays ReadOnly.

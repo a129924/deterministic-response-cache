@@ -681,17 +681,20 @@ C25 and C26 tracker states above are aligned to their committed receipts and rou
 - [x] C28 independent eight-pair classification receipt
 - [x] C28 classification-receipt-only commit
 - [x] C28 Planner routing for exact classified pairs
-- [ ] C28 exact eight-pair reply and resolution
+- [x] C28 exact eight-pair reply and resolution
 
 ### C28 actionable steps
 
-**Current C28 state:** `pr-open / exact reply-and-resolve pending`。已提交 final green subject
+**Historical C28 state:** `pr-open / exact eight-pair reply-and-resolve completed`。已提交 final green subject
 `e4734aaa7d630542e13c37920593602fe8eb64cd`、passing Tester evidence
 `b310dd12666aba754b55b0e1d6af5d9520696582` 與 approved Independent Reviewer evidence
 `79b8095864ec8ed54db4ef107dbd06a33cdfab87`；Planner 已完成 Phase 4.5 alignment、bounded push 及 actual-current-head
 `d9d851df9d5a17503f5503bb8f400f7fbc3137f4` verification。Independent Reviewer 的 exact eight-pair
 `REPLY_AND_RESOLVE` receipt 已原樣以 sole evidence-only commit
-`e41235af9eee729b151a06dfeaa36137c58e156b` 提交並推送，Planner 已據此 routing；八個 reply／resolve actions 仍 pending。
+`e41235af9eee729b151a06dfeaa36137c58e156b` 提交並推送，Planner 已據此 routing。preceding tracking commit
+`2d204b070cc9701cfdce31940cbfe377403f1894` 非 PR action evidence；其後 Implementer／Planner live 核實 exact receipt
+replies：`lfYsH`→`4140433910`、`lfYsK`→`4140435052`、`m8u04`→`4140436064`、`m8u09`→`4140436858`、
+`m82WL`→`4140437667`、`m82WS`→`4140438539`、`m9eUV`→`4140439397`、`m9eUY`→`4140440128`，八個均 `isResolved: true`。
 
 - [x] **Actor: Implementer.** Commit exactly the five C28 planning artifacts; do not prefill future SHA, verdict,
   test result, classification outcome, reply or resolution.
@@ -705,7 +708,39 @@ C25 and C26 tracker states above are aligned to their committed receipts and rou
 - [x] **Actor: Planner / Independent Reviewer / Implementer.** After actual-current-head verification, Independent
   Reviewer writes only the SHA-bound C28 eight-pair classification receipt. Implementer commits it unchanged alone;
   only exact committed `REPLY_AND_RESOLVE` entries may later receive their factual reply and resolution.
-- [ ] **Actor: Implementer.** Leave the exact committed receipt reply and resolve each of the eight C28 pairs only;
+- [x] **Actor: Implementer.** Leave the exact committed receipt reply and resolve each of the eight C28 pairs only;
   receipt commit `e41235af9eee729b151a06dfeaa36137c58e156b` records their classification, not completed PR actions.
-- [ ] **Actor: Planner.** Keep `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, and `lfQmF` Human-only/open; all unlisted threads
+- [x] **Actor: Planner.** Keep `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, and `lfQmF` Human-only/open; all unlisted threads
   and paths remain ReadOnly.
+
+## C29 Three-File Architecture Conflict Integration Stages (authoritative current routing)
+
+Current: `planned / planning-candidate pending`。dev `d6ff74ddf65c615f65eeba252e648784252a2bfd`，已整合 base
+`1501f380f20492c71275474f800fdaaffbf0a76a`。完整 committed dev tree 自動整合，手動解衝僅
+`docs/architecture/business-capability/architecture-brief.md`、`docs/architecture/business-capability/index.html`、
+`docs/architecture/business-capability/scene.js`；保留 Runtime protocol／Model Execution 與 fixed-codec／bytes-envelope
+committed facts，不作新決策。三檔外不可手動修改；dev worktree 不寫入。
+
+- [x] **Actor: Plan-Creator.** 五份 C29 planning artifacts drafting；不預填未來 SHA／result／verdict。
+- [ ] **Actor: Implementer.** 五份 artifacts candidate-only commit。
+- [ ] **Actor: Independent Plan-Reviewer.** standard three-key verdict receipt 寫入
+  `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c29-candidate-40-hex-sha>.json`。
+- [ ] **Actor: Implementer.** approved receipt 原樣 sole evidence-only commit。
+- [ ] **Actor: Implementer.** fixed-dev full-tree immutable integration merge subject，記錄實際 first parent feature HEAD
+  full SHA，second parent 為固定 dev SHA；僅三檔手動解衝，no marker／extra manual delta／new architecture decision。
+- [ ] **Actor: Tester.** 實際 subject topology、manual bounds、facts、document/scene consistency／regressions evidence；
+  唯一寫入 `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c29-integration-subject-40-hex-sha>.json`。
+  exact six-key schema／actual exit-code／passing-failing semantics 依 technical-spec C29。
+- [ ] **Actor: Implementer.** 原樣 Tester evidence sole commit，不混 planning／source／另一 evidence。
+- [ ] **Actor: Independent Reviewer.** 僅消費 committed passing same-subject Tester；唯一寫入
+  `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c29-integration-subject-40-hex-sha>.json`，
+  exact seven-key schema／same subject／Tester sole commit binding 依 technical-spec C29。
+- [ ] **Actor: Implementer.** 原樣 review evidence later separate sole commit；needs-rework 回新 subject 完整 sequence。
+- [ ] **Actor: Planner / Plan-Creator.** committed approved evidence 後 Phase 4.5 factual plan／step alignment。
+- [ ] **Actor: Implementer.** bounded push 更新既有 PR。
+- [ ] **Actor: Planner.** actual head／mergeability／thread audit；C29 無 thread actions。
+
+Human-only `jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561`, `lAR8T`/`4078761998`,
+`lfQmF`/`4091213944` 維持 open。未分類/open `m-94E`/`4130289778`, `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
+`nXrAw`/`4140406331`, `nXrA0`/`4140406337` 無 disposition。C29 不授權 classification／reply／resolve、Human PR
+approval／merge、release／post-merge。
