@@ -811,6 +811,84 @@ def test_c31_accepts_benign_paired_bindings_defaults_and_arguments(
     assert not _uses_dynamic_import_substitution(source_directory)
 
 
+@pytest.mark.parametrize(
+    "target",
+    [
+        ("import builtins", "builtins", "__import__", "('identity')"),
+        ("import importlib", "importlib", "import_module", "('identity')"),
+        ("import sys", "sys", "modules", "['identity'] = object()"),
+    ],
+    ids=["builtin-import", "importlib-import", "module-cache"],
+)
+@pytest.mark.parametrize(
+    "getter",
+    [
+        ("import builtins", "builtins", False),
+        ("import builtins as bi", "bi", False),
+        ("import builtins as bi\ngetter_module = bi", "getter_module", False),
+        ("import builtins as bi", "bi", True),
+    ],
+    ids=["direct", "import-alias", "module-assignment-alias", "retained-value"],
+)
+def test_c33_rejects_qualified_known_builtins_getattr(
+    tmp_path: Path,
+    target: tuple[str, str, str, str],
+    getter: tuple[str, str, bool],
+) -> None:
+    """Known builtins receivers cannot hide forbidden callable/cache lookup."""
+    target_import, target_name, attribute, use = target
+    getter_import, getter_name, retain = getter
+    lookup = f"{getter_name}.getattr({target_name}, {attribute!r})"
+    operation = f"retained = {lookup}\nretained{use}" if retain else f"{lookup}{use}"
+    source_directory = tmp_path / "loaded_runtime_cache"
+    source_directory.mkdir()
+    (source_directory / "bypass.py").write_text(
+        f"{getter_import}\n{target_import}\n{operation}\n",
+        encoding="utf-8",
+    )
+
+    assert _uses_dynamic_import_substitution(source_directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import builtins\nbuiltins.getattr(builtins, 'len')('identity')\n",
+        "import builtins as bi\nordinary = bi.getattr(bi, 'len')\nordinary('identity')\n",
+        "import builtins as bi\ngetter_module = bi\ngetter_module.getattr(bi, 'len')('identity')\n",
+        "import importlib\nunknown.getattr(importlib, 'import_module')('identity')\n",
+        "import sys\nunknown.getattr(sys, 'modules')['identity'] = object()\n",
+    ],
+)
+def test_c33_preserves_benign_and_unknown_getattr_receivers(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Qualified lookup recognition is limited to known builtins receivers."""
+    source_directory = tmp_path / "loaded_runtime_cache"
+    source_directory.mkdir()
+    (source_directory / "benign.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(source_directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import builtins\ngetattr(builtins, '__import__')('identity')\n",
+        "import importlib\nload = getattr(importlib, 'import_module')\nload('identity')\n",
+        "import sys\ngetattr(sys, 'modules')['identity'] = object()\n",
+    ],
+)
+def test_c33_preserves_bare_getattr_detection(tmp_path: Path, source: str) -> None:
+    """Existing bare getattr behavior remains part of the bounded contract."""
+    source_directory = tmp_path / "loaded_runtime_cache"
+    source_directory.mkdir()
+    (source_directory / "bypass.py").write_text(source, encoding="utf-8")
+
+    assert _uses_dynamic_import_substitution(source_directory)
+
+
 def test_c31_paired_destructuring_preserves_alignment_and_ignores_attributes() -> None:
     """Nested literal pairing retains only corresponding simple-name aliases."""
     modules, callables = _import_aliases(
