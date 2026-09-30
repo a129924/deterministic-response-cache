@@ -2052,17 +2052,21 @@ No release/post-merge actions。
 
 ## C37 Static BC Independence Scanner Repair（authoritative current routing）
 
-### C37 Committed Implementation Facts / Review Pending
+### C37 Committed Approval Facts / Phase 4.5 Alignment
 
-Current：`c37-review-ready`。Actual Git facts：
+Current：`c37-publish-in-progress`。Actual Git facts：
 candidate `a8cb80d6fdcfe0adef0e63d9bfb1c42df78d0d52`；
 approved planning receipt commit `337a31a35427b1221dd2e64d8d1c9ad3a006c78a`；
 RED subject `622a67473c9db74b586e8171bcf0b7dab3489941`；
 failing Tester sole commit `9b985c4ac7f3faf17fe6405e5d4602cb7453a78d`；
 green subject `6bb8ee90895b566c3def0eb161cce51c14b0e601`；
 passing Tester sole commit `437f40788fe1b37b2bcd4698624a478d8e959a13`。
-Independent Reviewer evidence 尚待建立／提交；publish、actual-head classification、
-reply/resolve 尚待對應 gates。不因 implementation completion 虛勾舊 C14 classification。
+approved Independent Reviewer sole evidence commit
+`6328c5a585eb9f4c884b80f8a526a4c09dd68d62` 已提交，綁定同 green S 與 passing T。
+Planner 已核 same-subject approval gate，Phase 4.5 factual alignment 完成。
+Separate alignment commit／bounded push、actual PR-head audit、new three-pair classification、
+classification sole commit／push、exact reply／resolve 均 pending；不預填其 head/outcome。
+不因 approval／alignment 虛勾舊 C14 classification。
 本兩檔 alignment 僅記 actual committed facts，未變更 approved scope/schema/contract，
 不建立新 candidate chain。舊 provenance/receipts／六 Human／For locks 保留。
 
