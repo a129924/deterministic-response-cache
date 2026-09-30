@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "4448c9d144db74787f8c1947b51064e291552a6a",
+  "status": "passing",
+  "commands": [
+    {
+      "command": ".venv/bin/python -m pytest tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py -q --no-cov -p no:cacheprovider -p no:tach",
+      "exit_code": 0
+    },
+    {
+      "command": "node --check docs/architecture/business-capability/scene.js",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/python -c 'import subprocess; s=\"4448c9d144db74787f8c1947b51064e291552a6a\"; assert subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip()==s; paths=set(subprocess.check_output([\"git\",\"diff-tree\",\"--no-commit-id\",\"--name-only\",\"-r\",s],text=True).splitlines()); assert paths=={\"tests/test_loaded_runtime_cache_bc_independence.py\",\"docs/architecture/business-capability/scene.js\",\"docs/architecture/business-capability/index.html\"}; print(\"C31 full subject and exact three-path bounds verified\")'",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --exit-code 4448c9d^ 4448c9d -- docs/architecture/business-capability/architecture-brief.md src uv.lock tests/test_loaded_runtime_cache_contracts.py",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check 4448c9d^ 4448c9d",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
