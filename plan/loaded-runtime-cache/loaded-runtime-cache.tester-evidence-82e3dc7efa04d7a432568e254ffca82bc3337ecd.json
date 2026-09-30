@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "82e3dc7efa04d7a432568e254ffca82bc3337ecd",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py -q",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen ruff check tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen pyright tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/python -c 'import ast, pathlib, subprocess; p=\"tests/test_loaded_runtime_cache_bc_independence.py\"; changed=subprocess.check_output([\"git\",\"diff-tree\",\"--no-commit-id\",\"--name-only\",\"-r\",\"HEAD\"],text=True).splitlines(); assert changed==[p],changed; tree=ast.parse(pathlib.Path(p).read_text()); f=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==\"_resolve_getattr_alias\"); assert f.end_lineno-f.lineno+1<=50; print(\"one-file subject and getattr helper bounds passed\")'",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}
