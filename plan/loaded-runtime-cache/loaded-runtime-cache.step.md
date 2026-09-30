@@ -753,23 +753,56 @@ approval／merge、release／post-merge。
 
 ## C30 Current-Head Seven-Pair Classification Stages (authoritative current routing)
 
-Current：`planning-draft / candidate commit pending`。Fixed C29 S `9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa`、
+Historical C30：`classification committed / exact permitted replies completed`。Fixed C29 S `9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa`、
 T `31e727d96d4e0843714dca1c7898ac93da9c33ef`、V `fc12dea6be989aaecfdfc71a86fa1b330256fffe`、
 audited head `ee2825c785aad152e5785a021acdb68e3056e84d`。Pairs 恰為 `m-94E`/`4130289778`、
 `m-94K`/`4130289786`、`nXkrM`/`4140364926`、`nXrAw`/`4140406331`、`nXrA0`/`4140406337`、
 `nXzEu`/`4140459575`、`nXzE1`/`4140459585`。No new implementation／RED／green。
 
 - [x] **Actor: Plan-Creator.** Five-artifact C30 draft, C29 factual publish／audit alignment only.
-- [ ] **Actor: Implementer.** Exact-five non-merge planning-candidate-only commit, no prefilled future SHA／outcome.
-- [ ] **Actor: Independent Plan-Reviewer.** Standard three-key SHA-bound C30 candidate receipt.
-- [ ] **Actor: Implementer.** Approved receipt unchanged sole evidence-only commit.
-- [ ] **Actor: Planner.** Verify committed C29 S/T/V and fixed actual PR head.
-- [ ] **Actor: Independent Reviewer.** Write only fixed immutable C30 seven-pair classification receipt:
+- [x] **Actor: Implementer.** Exact-five non-merge planning-candidate-only commit `1293b6ed80c0a5018b4eb6a2cbb2099c04415ac0`.
+- [x] **Actor: Independent Plan-Reviewer.** Standard three-key SHA-bound C30 candidate receipt.
+- [x] **Actor: Implementer.** Approved receipt unchanged sole evidence-only commit `4c313fbdbd819dcddcf5bc880c3cb5d2e419fdaf`.
+- [x] **Actor: Planner.** Verify committed C29 S/T/V and fixed actual PR head.
+- [x] **Actor: Independent Reviewer.** Write only fixed immutable C30 seven-pair classification receipt:
   `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa-ee2825c785aad152e5785a021acdb68e3056e84d.json`;
   exact eight-key／four-key entries／writer／enums／nullability per technical-spec C30, no preclassified disposition.
-- [ ] **Actor: Implementer.** Receipt unchanged separate sole evidence-only commit.
-- [ ] **Actor: Planner.** Route individually from committed receipt; ADDRESS repair／HUMAN_CHECK open.
-- [ ] **Actor: Implementer.** Only exact authorized REPLY_AND_RESOLVE replies／resolutions, bounded push, factual audit.
+- [x] **Actor: Implementer.** Receipt unchanged separate sole evidence-only commit `005ec865f216de9f63f7dbfdd8df424d78a03afa`.
+- [x] **Actor: Planner.** Route individually from committed receipt; five ADDRESS pairs passed to C31 repair.
+- [x] **Actor: Implementer.** Exact replies `m-94E`→`4140750473`, `nXrAw`→`4140753564`; both live resolved.
 
 Five Human-only locks `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, `lfQmF` excluded/open. All unlisted paths／threads
 ReadOnly; no Human approval／merge／release／post-merge. Invalid head／pair／schema／writer／SHA／sole ordering fails closed.
+
+## C31 Five-ADDRESS Bounded Repair Stages（authoritative current routing）
+
+Current：`planning-draft / candidate commit pending`。Exact pairs: `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
+`nXrA0`/`4140406337`, `nXzEu`/`4140459575`, `nXzE1`/`4140459585`. RED only independence test file;
+green only that file and business-capability `scene.js`, `index.html`. Detailed locked cases/path/schema authority is
+technical-spec C31. No future subject/head/result/verdict/classification/reply/resolution is prefilled.
+
+- [x] **Actor: Plan-Creator.** Five standard planning artifacts draft and verified C30 historical alignment only.
+- [ ] **Actor: Implementer.** Non-merge exact-five candidate-only commit.
+- [ ] **Actor: Independent Plan-Reviewer.** Write standard three-key candidate-SHA-bound approved/needs-rework receipt.
+- [ ] **Actor: Implementer.** Approved receipt unchanged sole evidence-only commit.
+- [ ] **Actor: Implementer.** Test-only immutable RED subject covering all declared cases, including bounded scene assertions.
+- [ ] **Actor: Tester.** Write subject-SHA-bound factual failing six-key evidence after actual collect/failure checks.
+- [ ] **Actor: Implementer.** RED Tester evidence unchanged sole commit; do not create RED approval.
+- [ ] **Actor: Implementer.** Distinct bounded three-path green subject; paired aliases/defaults/arguments and truthful Miss endpoint.
+- [ ] **Actor: Tester.** Actual scoped pytest/regressions, JS syntax, scene/inline agreement, endpoint and diff-bound checks;
+  write only `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c31-green-subject-40-hex-sha>.json`.
+- [ ] **Actor: Implementer.** Passing Tester evidence unchanged sole commit.
+- [ ] **Actor: Independent Reviewer.** Consume committed passing same-subject evidence; write only
+  `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c31-green-subject-40-hex-sha>.json`.
+- [ ] **Actor: Implementer.** Review evidence unchanged separate sole commit; needs-rework returns new green/full evidence.
+- [ ] **Actor: Planner / Plan-Creator.** Phase 4.5 factual plan/step alignment after committed approved review.
+- [ ] **Actor: Implementer / Planner.** Separate tracking commit, bounded push, actual PR head/mergeability/thread audit.
+- [ ] **Actor: Independent Reviewer.** Write immutable eight-key exact-five-pair classification only at
+  `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c31-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`.
+- [ ] **Actor: Implementer.** Classification unchanged sole commit.
+- [ ] **Actor: Planner / Implementer.** Route each committed REPLY_AND_RESOLVE entry; leave exact factual reply and resolve
+  only that pair. ADDRESS returns bounded repair; HUMAN_CHECK stays open. Push/audit actual actions.
+
+`nYQqw`/`4140648790` unclassified/open; five Human-only pairs `jnBpk`/`4043480108`, `kQ95O`/`4060023123`,
+`kqiZ5`/`4070096561`, `lAR8T`/`4078761998`, `lfQmF`/`4091213944` excluded/open. Other paths, dev worktree and
+predecessor evidence ReadOnly; Deleted none. No PR approval/Human merge/release/post-merge. Invalid scope/evidence fails closed.

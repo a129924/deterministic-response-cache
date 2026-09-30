@@ -647,3 +647,39 @@ V `fc12dea6be989aaecfdfc71a86fa1b330256fffe`；exact receipt path/schema/writer 
 TestCase：拒絕 stale head／extra pair／wrong SHA／writer／schema／enum／reply nullability／non-sole／overwrite；
 僅 committed `REPLY_AND_RESOLVE` 可 route exact factual reply／resolve，ADDRESS／HUMAN_CHECK 不 resolve。
 五個 Human-only locks 與其餘未列 threads 保持 open／ReadOnly，無 implementation／test／architecture 新修改。
+
+## C31 Five-ADDRESS Bounded Repair Acceptance（current route）
+
+### Scenario 52 — paired destructuring, builtin getattr and default bindings
+
+Given approved committed C31 candidate receipt, RED cases in `tests/test_loaded_runtime_cache_bc_independence.py`
+collect and fail for missing static behavior. Green binds each simple-name tuple/list destructuring target only to its
+matching RHS element, including nested paired forms; ignores attribute targets while retaining sibling local names.
+It resolves known builtins alias `getattr(..., '__import__')` for assigned/direct calls and forbidden callable defaults
+to the correct positional/keyword-only function parameters. Existing chained/mixed/walrus/conditional/getattr/import
+regressions remain intact. Benign callable controls pass. No source execution or starred/arbitrary iterable inference.
+
+### Scenario 53 — callable arguments and truthful future Miss endpoint
+
+Given static forbidden import callable expressions or retained aliases passed as positional/keyword call arguments
+(including executor.submit/map), scanner rejects them without executing source. Ordinary callable arguments remain
+accepted. Given architecture-brief point 6, scene Miss edge ends at labelled future integration boundary; no edge falsely
+lands on Loaded Runtime Cache. Scene and index inline scene agree, preserving independent Runtime/Execution contracts
+and future wiring facts without new architecture, mapper or implemented cross-BC handoff.
+
+### Scenario 54 — immutable C31 evidence sequence and five-pair classification
+
+Five-file candidate → independent SHA-bound approved receipt sole commit → test-only RED subject → Tester factual
+failing evidence sole commit → distinct three-path green subject → Tester passing evidence sole commit → independent
+same-subject approved review sole commit → Planner Phase 4.5 alignment → bounded push/live-head audit → Independent
+Reviewer current-head classification → separate sole receipt commit → Planner per-pair routing → Implementer exact
+permitted reply/resolve. Full paths, exact three/six/seven/eight-key schemas, actors and no-prefill rules are in
+technical-spec C31. Classification covers exactly `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
+`nXrA0`/`4140406337`, `nXzEu`/`4140459575`, `nXzE1`/`4140459585`; no future disposition is assumed.
+REPLY_AND_RESOLVE requires factual nonempty string reply; ADDRESS/HUMAN_CHECK require null and cannot be resolved.
+
+## C31 Error / Edge Cases
+
+Wrong element-to-target aliasing, attribute binding, lost prior behavior, source execution, extra implementation path,
+false cross-BC wiring, stale head, wrong SHA/schema/writer/pair, overwritten/non-sole evidence or actor reordering fail
+closed. `nYQqw`/`4140648790` and five Human-only locks excluded/open. No dev writes or Human approval/merge/release.

@@ -1410,7 +1410,7 @@ Human-only/open: `jnBpk`/`4043480108`, `kQ95O`/`4060023123`, `kqiZ5`/`4070096561
 
 ## C30 Current-Head Seven-Pair Classification Successor (authoritative current routing)
 
-Current：`planning-draft / candidate commit pending`。C30 只分類 exact seven pairs；承接 completed C29 factual
+Historical C30：`classification committed / exact permitted replies completed`。C30 只分類 exact seven pairs；承接 completed C29 factual
 publish／audit 與固定 S `9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa`、T `31e727d96d4e0843714dca1c7898ac93da9c33ef`、
 V `fc12dea6be989aaecfdfc71a86fa1b330256fffe`、audited head `ee2825c785aad152e5785a021acdb68e3056e84d`。
 
@@ -1449,3 +1449,88 @@ HUMAN_CHECK remains open. Wrong／stale head, pair, writer, schema, SHA, orderin
 `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、
 `lfQmF`/`4091213944` remain Human-only/open. C30 classification does not authorize their actions or Human approval／
 merge／release／post-merge. Original mission／protocol／outcomes／visualization／follow-ups remain unchanged.
+
+## C31 Five-ADDRESS Bounded Repair Successor（authoritative current routing）
+
+### Goal / Outcome / Scope
+
+Current：`planning-draft / candidate commit pending`。C30 classification sole commit
+`005ec865f216de9f63f7dbfdd8df424d78a03afa` is completed predecessor evidence. Live completed replies:
+`m-94E`/`4130289778`→`4140750473`、`nXrAw`/`4140406331`→`4140753564`; both resolved.
+C31 addresses only `m-94K`/`4130289786`, `nXkrM`/`4140364926`, `nXrA0`/`4140406337`,
+`nXzEu`/`4140459575`, `nXzE1`/`4140459585`; outcomes/replies/resolutions remain unchosen until independent classification.
+
+| Field | Contract |
+| --- | --- |
+| Goal / In-Scope | Complete the existing static independence scanner cases and terminate the Miss edge at future integration, consistent with committed architecture-brief point 6. |
+| Modify | Plan-Creator only five standard planning files. RED Implementer only `tests/test_loaded_runtime_cache_bc_independence.py`; green Implementer only that file, `docs/architecture/business-capability/scene.js`, `docs/architecture/business-capability/index.html`. |
+| Written | Independent Plan-Reviewer, Tester, Independent Reviewer evidence at immutable full-SHA paths below; only Implementer commits each unchanged alone. |
+| ReadOnly | dev worktree, predecessor evidence, architecture-brief, unlisted paths and threads. |
+| Deleted | None. |
+| Out-Of-Scope / Non-Goal | Runtime/library source/API changes; executing imports/source; arbitrary Python evaluation; new architecture/ACL/wiring/backend/DI/lifecycle; Human PR approval/merge/release/post-merge. |
+| TestCase | Paired tuple/list simple-name aliases with attribute exclusion; builtins getattr assigned/direct import callable; positional/kw-only default bindings; forbidden callable in positional/keyword call arguments; benign controls; Miss endpoint and scene/inline agreement; exact evidence bounds. |
+
+### Locked Decisions / Boundaries
+
+The technical-spec C31 is execution authority. Destructuring pairs matching RHS elements with corresponding simple-name
+targets, including nested paired tuple/list literals; ignore attributes without losing sibling names. No star/iterable
+inference. `getattr` on known builtins aliases with literal `__import__` covers assigned/direct calls. Actual positional
+and keyword-only function defaults bind forbidden callables to corresponding parameters. Call argument and keyword
+values cover static forbidden callable passing to executor.submit/map, including direct expressions and retained aliases;
+ordinary callables remain allowed. Prior direct imports, fixtures, mocks, assertions and scanner behavior persist.
+Scene Miss stops at labelled future integration boundary per architecture-brief point 6. Minimal endpoint-related node,
+edge, label/geometric changes and inline scene synchronization only; independent Runtime/Execution contract facts stay
+intact. No new implemented handoff or architecture decision. No stable-library surface, README/VERSION or release changes.
+
+### Artifact Paths / Status / Implementation Steps
+
+Planning paths (Plan-Creator only): `analysis/loaded-runtime-cache/requirements.md`,
+`analysis/loaded-runtime-cache/technical-spec.md`, `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`,
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`, `plan/loaded-runtime-cache/loaded-runtime-cache.step.md`.
+Implementer commits these alone as non-merge candidate; Independent Plan-Reviewer writes only
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c31-candidate-40-hex-sha>.json`.
+Standard three-key handoff below, approved empty blockers／needs-rework nonempty. Implementer sole-commits approved receipt.
+
+After Planner routing, Implementer commits RED only in declared test file. Tester writes factual failing evidence only
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c31-red-subject-40-hex-sha>.json`; Implementer
+unchanged-sole-commits it. Distinct green subject only uses three declared paths. Tester writes factual passing evidence
+only `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c31-green-subject-40-hex-sha>.json`;
+Implementer unchanged-sole-commits it. Both use exact six-key schema in technical-spec C31, actual command exit codes.
+Only committed passing same-subject evidence permits Independent Reviewer to write
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c31-green-subject-40-hex-sha>.json`, exact
+seven-key schema binding green subject and sole Tester commit. Implementer later sole-commits review unchanged.
+Needs-rework requires new green subject, Tester, independent review. No future SHA/results/verdict/head are prefilled.
+Approved review → Planner Phase 4.5 factual plan/step alignment → separate tracking commit → bounded push → live audit.
+Implementation remains creator-in-progress → tester-in-progress → review-ready → reviewer-in-progress → approved or
+needs-rework; approved → publish-in-progress → pr-open. Human alone approves/merges PR; no release/post-merge action.
+
+Independent Reviewer then writes only
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c31-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`.
+Exact eight keys `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; bind integer 1, this topic,
+actual S/T/V/head full SHAs, five entries and Independent Reviewer. Entries exactly `thread`, `comment`, `outcome`, `reply`
+for five listed pairs; enum `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`; nonempty factual reply only for REPLY_AND_RESOLVE,
+otherwise null. Implementer unchanged-sole-commits receipt. Planner routes each permitted exact reply/resolve thereafter;
+ADDRESS needs bounded repair, HUMAN_CHECK stays open. Wrong/stale head, scope, writer, schema, SHA, pair, ordering,
+non-sole commit or overwritten evidence fails closed. Full deterministic schema authority: technical-spec C31.
+
+### Validation / Acceptance / Reviewer Handoff
+
+RED cases collect and fail for declared behavior. Green scoped pytest plus existing runtime contract regressions pass;
+paired target alignment, attribute exclusion, benign controls, JS syntax, scene/inline equality and endpoint semantics
+are verified. Independent review checks actual subject bounds, no source execution/new wiring and same-subject evidence.
+
+```json
+{
+  "verdict": "approved|needs-rework",
+  "blocking_issues": [],
+  "copilot_feedback_triage": {"ADDRESS": [], "DISCUSS": [], "SKIP": []}
+}
+```
+
+### Post-merge / Open Questions / Unresolved Items
+
+No release/post-merge action. `nYQqw`/`4140648790` unclassified/open, five Human-only pairs `jnBpk`/`4043480108`,
+`kQ95O`/`4060023123`, `kqiZ5`/`4070096561`, `lAR8T`/`4078761998`, `lfQmF`/`4091213944` excluded/open.
+New decisions or out-of-scope requirements return Planner/human boundary. Original mission, scope, protocol, outcomes,
+testing strategy, Architecture Visualization and follow-up missions persist.

@@ -619,3 +619,30 @@ Deleted：無。ReadOnly：其餘 paths、predecessor evidence、dev worktree、
 Non-Goal／Out-Of-Scope：新實作、RED／green、source／tests／architecture 修改、PR approval／merge／release。
 TestCase：exact pairs、writer／schema／SHA binding、sole evidence-only ordering 與 stale-head fail-closed。
 原 mission、scope、protocol、outcomes、測試策略、Architecture Visualization 與 follow-up missions 不變。
+
+## C31 Five-ADDRESS Bounded Repair Intent（current route）
+
+C30 classification sole commit `005ec865f216de9f63f7dbfdd8df424d78a03afa` 已提交。C30 live actions 已完成：
+`m-94E`/`4130289778` reply `4140750473`、`nXrAw`/`4140406331` reply `4140753564`，兩個 threads 已 resolved。
+C31 只處理其五個 ADDRESS pairs：`m-94K`/`4130289786`、`nXkrM`/`4140364926`、`nXrA0`/`4140406337`、
+`nXzEu`/`4140459575`、`nXzE1`/`4140459585`；不預填修正結果或新的 classification disposition。
+
+- Goal／In-Scope：補齊既有 static BC-independence scanner 的 paired tuple/list destructuring、builtins getattr、
+  positional／keyword-only default callable bindings，以及 call args／kwargs 傳遞 forbidden callable 偵測；將既有圖
+  Response Reuse Miss edge 終點改為 future integration boundary，遵守 architecture-brief 第 6 點。
+- Modify：Plan-Creator 僅五份 standard planning artifacts；Implementer RED／green 僅
+  `tests/test_loaded_runtime_cache_bc_independence.py`、`docs/architecture/business-capability/scene.js`、
+  `docs/architecture/business-capability/index.html`（RED 僅測試檔）。Written：SHA-bound Plan-Reviewer、Tester、
+  Independent Reviewer 與 current-head classification receipts，exact contracts 見 technical-spec C31。
+- TestCase：成對 destructuring 只保留 matching simple-name targets、忽略 attribute targets；builtins
+  `getattr(..., '__import__')` assigned／direct invocation；function positional／kw-only defaults 的 callable alias；
+  `executor.submit`／`map` 等 call positional／keyword arguments 傳遞 forbidden import callable；正常 callable
+  與 attribute-only targets 不誤判。Miss route 不落在 Runtime Cache，scene 與 inline scene 相同。
+- Out-Of-Scope／Non-Goal：runtime source／API／outcomes 修改、執行 source 或 imports、general-purpose Python
+  interpreter／call-graph inference、新 architecture／ACL mapper／BC wiring／backend／DI／lifecycle。
+- ReadOnly：dev worktree、predecessor evidence、architecture-brief 與所有未列 paths／threads。Deleted：無。
+  `nYQqw`/`4140648790` 未分類/open；五個 Human-only locks `jnBpk`、`kQ95O`、`kqiZ5`、`lAR8T`、`lfQmF`
+  排除/open。PR approval／Human merge／release／post-merge 未授權。
+- candidate → independent approved receipt → RED／failing evidence → green／passing evidence → independent review →
+  Phase 4.5／push → actual-head-bound five-pair classification → exact permitted replies／resolve，所有 evidence sole commits。
+  原 mission、protocol、outcomes、Architecture Visualization 與 follow-up missions 不變。

@@ -785,3 +785,86 @@ Wrong／stale head、extra／missing pair、malformed keys／enum／nullability�
 或跨 topic evidence 均 fail closed。五個 Human-only/open exclusions：`jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
 `kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944`。未列 paths／threads 全部 ReadOnly。
 C30 不作新 architecture／source／test／dataflow 修改，不授權 Human approval／merge／release／post-merge。
+
+## C31 Five-ADDRESS Bounded Repair Technical Contract（current route）
+
+C30 已提交 classification `005ec865f216de9f63f7dbfdd8df424d78a03afa`；兩個 REPLY_AND_RESOLVE live completed：
+`m-94E` reply `4140750473`、`nXrAw` reply `4140753564`。C31 exact ADDRESS pairs 僅
+`m-94K`/`4130289786`、`nXkrM`/`4140364926`、`nXrA0`/`4140406337`、`nXzEu`/`4140459575`、`nXzE1`/`4140459585`。
+
+### Scope／locked static contracts
+
+Plan-Creator only modifies the five standard planning artifacts. RED Implementer only changes
+`tests/test_loaded_runtime_cache_bc_independence.py`; green Implementer only changes that file and
+`docs/architecture/business-capability/scene.js`, `docs/architecture/business-capability/index.html`.
+No runtime/library source, extra tests, architecture-brief, renderer, dataflow or uv.lock delta is authorized.
+The existing direct imports, fixtures, mocks, assertions and prior scanner behaviors remain regression requirements.
+
+1. Paired literal tuple/list assignment destructuring binds each matching RHS element to its corresponding simple-name
+   target (including nested paired tuple/list shapes). Never flatten all RHS values onto all targets. Attribute targets
+   are ignored; retain a simple target beside an attribute. Existing chained-assignment simple-name handling survives.
+   Starred/unpacking inference and arbitrary iterable evaluation are outside this bounded static repair.
+2. Static `getattr` on known builtins module aliases with literal `__import__` resolves the forbidden callable, whether
+   assigned then called or called directly; existing importlib/sys getattr handling survives. No source is executed.
+3. For positional and keyword-only function defaults, align AST defaults with their actual parameter names and retain
+   a statically resolvable forbidden callable binding. Detect invocation through that parameter, preserving existing
+   assignment/conditional/walrus aliases. Do not add runtime scope evaluation or arbitrary interprocedural inference.
+4. Reject a statically recognized forbidden import callable passed as a call positional argument or keyword value,
+   covering executor.submit and map invocation shapes, direct expressions and retained aliases. Ordinary callables
+   remain accepted; inspect expressions statically without executing executor/map or imported source.
+5. Per committed `architecture-brief.md` point 6, the Response Reuse Miss edge terminates at a clearly labelled future
+   integration boundary, not Loaded Runtime Cache. Preserve existing independent Runtime/Execution contracts and future
+   wiring facts. Scene and index inline scene must match; only bounded node/edge/label/geometric adjustments necessary
+   for that endpoint are allowed. No implemented cross-BC handoff, mapper or new architecture decision is claimed.
+
+### Candidate／RED／green／same-subject evidence
+
+Implementer commits exactly five planning files in one non-merge candidate-only commit. Independent Plan-Reviewer alone
+writes `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c31-candidate-40-hex-sha>.json`, exact keys
+`verdict`, `blocking_issues`, `copilot_feedback_triage`; verdict `approved|needs-rework`, blockers string array empty only
+for approved, triage exact `ADDRESS`, `DISCUSS`, `SKIP` arrays. Implementer commits approved receipt unchanged alone.
+No candidate/subject SHA, future result, verdict, PR head, reply or classification outcome is prefilled.
+
+After committed approval and Planner routing, Implementer commits a distinct non-merge RED test subject in the one
+allowed test file. Tester factually verifies new cases collect and fail for the declared missing behaviors (not syntax,
+dependency or unrelated failures), writing only
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c31-red-subject-40-hex-sha>.json`.
+Implementer unchanged-sole-commits failing evidence before green; no independent approval is made for RED.
+Implementer then commits a distinct bounded green subject in the three allowed files. Tester alone writes
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c31-green-subject-40-hex-sha>.json`.
+Both Tester JSON records have exact keys `schema_version`, `topic`, `implementation_subject_commit`, `status`,
+`commands`, `recorded_by`: integer `1`, string `loaded-runtime-cache`, actual corresponding full SHA,
+`passing|failing`, nonempty array of exact `command` nonempty string／`exit_code` integer objects, `Tester`.
+Passing requires every command exit 0; failing requires a nonzero exit. No claimed results substitute for actual runs.
+Green checks cover the scoped pytest file and existing runtime contract regressions, JS syntax, scene/inline consistency
+and Miss endpoint, three-path diff bounds, and preservation of prior contracts. Verification may read existing tools
+and tests but cannot modify them. Implementer unchanged-sole-commits green Tester evidence.
+
+Only then Independent Reviewer consumes committed passing same-green-subject Tester evidence and writes
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c31-green-subject-40-hex-sha>.json`.
+Exact keys: `schema_version` integer `1`, `topic` string `loaded-runtime-cache`, `implementation_subject_commit`
+same full green SHA, `tester_evidence_commit` actual full sole passing Tester commit SHA, `verdict`
+`approved|needs-rework`, `blocking_issues` string array (approved empty; needs-rework nonempty), `recorded_by`
+`Independent Reviewer`. Implementer unchanged-sole-commits it separately. Needs-rework requires new green subject and
+new full Tester/review sequence. Every evidence path is immutable, full lowercase 40-hex SHA-bound; no evidence shares
+a commit with planning, implementation or another evidence. Approved committed review permits Planner Phase 4.5 factual
+plan/step alignment, separate tracking commit, bounded push and live actual PR head/mergeability/thread audit.
+
+### Current-head classification／actions
+
+After approved committed green evidence and live-head audit, Independent Reviewer alone writes
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c31-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`.
+Exact top-level keys: `schema_version`, `topic`, `implementation_subject_commit`, `tester_evidence_commit`,
+`implementation_review_evidence_commit`, `pr_head_commit`, `classifications`, `recorded_by`; bind integer `1`, this
+topic, actual green subject／sole passing Tester commit／sole approved review commit／audited current PR head full SHAs,
+exactly five entries, `Independent Reviewer`. Each entry exactly `thread`, `comment`, `outcome`, `reply` with the five
+pairs above (string IDs), outcome `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`. Only REPLY_AND_RESOLVE has nonempty factual
+string reply; otherwise reply null. Implementer unchanged-sole-commits classification separately; Planner then routes
+individual committed REPLY_AND_RESOLVE entries for Implementer exact reply/resolve. ADDRESS requires new bounded route;
+HUMAN_CHECK remains open. No pending approval or implementation result authorizes thread actions.
+
+Wrong/stale head, wrong writer/path/key/enum/nullability/SHA/pair, overwritten or non-sole evidence, widening scope or
+skipping actor order fails closed. Predecessor evidence/dev worktree/all other paths remain ReadOnly; Deleted none.
+`nYQqw`/`4140648790` unclassified/open and five Human-only pairs `jnBpk`/`4043480108`, `kQ95O`/`4060023123`,
+`kqiZ5`/`4070096561`, `lAR8T`/`4078761998`, `lfQmF`/`4091213944` are excluded/open. No PR approval, Human merge,
+release, post-merge, README/VERSION changes. Original mission/protocol/outcomes/visualization/follow-ups persist.
