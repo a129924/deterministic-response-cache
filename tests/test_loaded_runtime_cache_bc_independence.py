@@ -4,6 +4,7 @@
 
 import ast
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -698,3 +699,127 @@ def test_bc_independence_accepts_current_sources_only_when_no_boundary_bypass_ex
     assert not _uses_dynamic_import_substitution(identity)
     assert not _declares_forbidden_semantic_type(loaded_runtime_cache, "ModelIdentity")
     assert not _declares_forbidden_semantic_type(identity, "RuntimeReuseKey")
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import importlib\nload, other = importlib.import_module, len\nload('identity')\n",
+        "import importlib\n[other, load] = [len, importlib.import_module]\nload('identity')\n",
+        (
+            "import importlib\n[other, (load, tail)] = [len, (importlib.import_module, str)]\n"
+            "load('identity')\n"
+        ),
+        "import importlib\nholder.loader, load = len, importlib.import_module\nload('identity')\n",
+        "import builtins as bi\nload = getattr(bi, '__import__')\nload('identity')\n",
+        "import builtins as bi\ngetattr(bi, '__import__')('identity')\n",
+        "import importlib\ndef run(first, load=importlib.import_module):\n    load('identity')\n",
+        "def run(first, *, ordinary, load=__import__):\n    load('identity')\n",
+        (
+            "import importlib\ndef run(first=len, load=importlib.import_module):\n"
+            "    load('identity')\n"
+        ),
+        "import importlib\nexecutor.submit(importlib.import_module, 'identity')\n",
+        (
+            "import importlib\nload = importlib.import_module\n"
+            "executor.submit(fn=load, name='identity')\n"
+        ),
+        "map(__import__, ['identity'])\n",
+        "import importlib\nload = importlib.import_module\nmap(load, ['identity'])\n",
+    ],
+)
+def test_c31_rejects_static_forbidden_callable_bindings_and_arguments(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Declared static alias/default/argument forms cannot bypass the BC scanner."""
+    source_directory = tmp_path / "loaded_runtime_cache"
+    source_directory.mkdir()
+    (source_directory / "bypass.py").write_text(source, encoding="utf-8")
+
+    assert _uses_dynamic_import_substitution(source_directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import importlib\nload, ordinary = importlib.import_module, len\nordinary('identity')\n",
+        (
+            "import importlib\n[ordinary, load] = [len, importlib.import_module]\n"
+            "ordinary('identity')\n"
+        ),
+        (
+            "import importlib\nholder.loader, ordinary = importlib.import_module, len\n"
+            "ordinary('identity')\n"
+        ),
+        "import builtins as bi\ngetattr(bi, 'len')('identity')\n",
+        (
+            "import importlib\ndef run(load=importlib.import_module, ordinary=len):\n"
+            "    ordinary('identity')\n"
+        ),
+        "def run(*, ordinary=len):\n    ordinary('identity')\n",
+        "executor.submit(len, 'identity')\n",
+        "executor.submit(fn=len, value='identity')\n",
+        "map(len, ['identity'])\n",
+    ],
+)
+def test_c31_accepts_benign_paired_bindings_defaults_and_arguments(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Recognizing forbidden callables must not reject ordinary sibling callables."""
+    source_directory = tmp_path / "loaded_runtime_cache"
+    source_directory.mkdir()
+    (source_directory / "benign.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(source_directory)
+
+
+def test_c31_paired_destructuring_preserves_alignment_and_ignores_attributes() -> None:
+    """Nested literal pairing retains only corresponding simple-name aliases."""
+    modules, callables = _import_aliases(
+        ast.parse(
+            "import importlib\nimport builtins\n"
+            "[ordinary, (load, module)] = [len, (importlib.import_module, builtins)]\n"
+            "holder.loader, sibling = len, importlib.import_module\n"
+            "ignored, holder.other = len, importlib.import_module\n",
+        ),
+    )
+
+    assert callables.get("load") == "importlib.import_module"
+    assert callables.get("sibling") == "importlib.import_module"
+    assert modules.get("module") == "builtins"
+    assert not {"ordinary", "ignored", "holder"} & (modules.keys() | callables.keys())
+
+
+def test_c31_miss_terminates_at_labelled_future_integration_boundary() -> None:
+    """Miss points to an external future integration boundary, not a runtime BC."""
+    architecture = Path(__file__).parents[1] / "docs" / "architecture" / "business-capability"
+    scene = (architecture / "scene.js").read_text(encoding="utf-8")
+    miss_edges = re.findall(
+        r"\{ from: 'reuse-decision', to: '([^']+)',[^\n]*t: '([^']*miss[^']*)'[^\n]*\}",
+        scene,
+        flags=re.IGNORECASE,
+    )
+
+    assert len(miss_edges) == 1
+    target, label = miss_edges[0]
+    assert target not in {"runtime-cache", "runtime-registry", "execution", "runtime-preparation"}
+    assert "future integration" in label.casefold()
+    boxes = scene.split("const BOXES = [", 1)[1].split("\n];", 1)[0]
+    target_box = re.search(
+        r"\{ id: '" + re.escape(target) + r"',.*?(?=\n  \{ id:|\Z)",
+        boxes,
+        re.DOTALL,
+    )
+    assert target_box is not None
+    assert "future integration" in target_box.group().casefold()
+
+
+def test_c31_architecture_inline_scene_matches_source() -> None:
+    """The standalone viewer embeds exactly the committed scene recipe."""
+    architecture = Path(__file__).parents[1] / "docs" / "architecture" / "business-capability"
+    scene = (architecture / "scene.js").read_text(encoding="utf-8")
+    viewer = (architecture / "index.html").read_text(encoding="utf-8")
+
+    assert scene.strip() in viewer
