@@ -774,9 +774,9 @@ audited head `ee2825c785aad152e5785a021acdb68e3056e84d`。Pairs 恰為 `m-94E`/`
 Five Human-only locks `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, `lfQmF` excluded/open. All unlisted paths／threads
 ReadOnly; no Human approval／merge／release／post-merge. Invalid head／pair／schema／writer／SHA／sole ordering fails closed.
 
-## C31 Five-ADDRESS Bounded Repair Stages（authoritative current routing）
+## C31 Five-ADDRESS Bounded Repair Stages（completed predecessor routing）
 
-Current：`publish-in-progress / bounded push pending`。Exact pairs: `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
+Historical C31：`pr-open / five exact thread actions completed`。Exact pairs: `m-94K`/`4130289786`, `nXkrM`/`4140364926`,
 `nXrA0`/`4140406337`, `nXzEu`/`4140459575`, `nXzE1`/`4140459585`. RED only independence test file;
 green only that file and business-capability `scene.js`, `index.html`. Detailed locked cases/path/schema authority is
 technical-spec C31. No future subject/head/result/verdict/classification/reply/resolution is prefilled.
@@ -796,13 +796,52 @@ technical-spec C31. No future subject/head/result/verdict/classification/reply/r
   `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c31-green-subject-40-hex-sha>.json`.
 - [x] **Actor: Implementer.** Approved review evidence unchanged separate sole commit `b75242afc8fcf211c4b0e1aebe20fc410f567d6f`.
 - [x] **Actor: Planner / Plan-Creator.** Phase 4.5 factual plan/step alignment after committed approved review.
-- [ ] **Actor: Implementer / Planner.** Separate tracking commit, bounded push, actual PR head/mergeability/thread audit.
-- [ ] **Actor: Independent Reviewer.** Write immutable eight-key exact-five-pair classification only at
+- [x] **Actor: Implementer / Planner.** Tracking commit `851dedef3aa4e0f1bdfdb34ed39f2c6518fd8892`, bounded push, live audit。
+- [x] **Actor: Independent Reviewer.** Write immutable eight-key exact-five-pair classification only at
   `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c31-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`.
-- [ ] **Actor: Implementer.** Classification unchanged sole commit.
-- [ ] **Actor: Planner / Implementer.** Route each committed REPLY_AND_RESOLVE entry; leave exact factual reply and resolve
+- [x] **Actor: Implementer.** Classification unchanged sole commit `9bdea139d9c3d79a8ae413333c9e15e877c42a30`。
+- [x] **Actor: Planner / Implementer.** Route each committed REPLY_AND_RESOLVE entry; leave exact factual reply and resolve
   only that pair. ADDRESS returns bounded repair; HUMAN_CHECK stays open. Push/audit actual actions.
 
 `nYQqw`/`4140648790` unclassified/open; five Human-only pairs `jnBpk`/`4043480108`, `kQ95O`/`4060023123`,
 `kqiZ5`/`4070096561`, `lAR8T`/`4078761998`, `lfQmF`/`4091213944` excluded/open. Other paths, dev worktree and
 predecessor evidence ReadOnly; Deleted none. No PR approval/Human merge/release/post-merge. Invalid scope/evidence fails closed.
+
+## C32 Current-Head Three-Pair Classification Successor（authoritative current routing）
+
+C31 已完成 committed S `4448c9d144db74787f8c1947b51064e291552a6a`、
+passing T `7787c8b8edb760df6f81f44182bb146f8730c69d`、
+approved V `b75242afc8fcf211c4b0e1aebe20fc410f567d6f`；C31 classification sole commit／audited PR head
+`9bdea139d9c3d79a8ae413333c9e15e877c42a30`。C31 五個已回覆且 resolved 的事實：
+`m-94K`→`4141037841`、`nXkrM`→`4141038098`、`nXrA0`→`4141038268`、
+`nXzEu`→`4141038483`、`nXzE1`→`4141038696`。
+
+C32 exact pairs 僅 `nYQqw`/`4140648790`、`nZI5l`/`4141010658`、
+`nZI5n`/`4141010661`，均待 independent classification，不預填 outcome／reply／resolution。
+五個 Human-only pairs `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944` 排除/open。
+舊 rejected receipt `loaded-runtime-cache.plan-review-receipt-a46241e4245957cd820eae13fd2bf22ab0a9226d.json`
+是 frozen nonrouting provenance，不能覆寫、提交作本輪 approval 或重新使用。
+### Goal／Scope／Boundaries／Acceptance
+
+Goal／In-Scope：僅依 C31 verified facts 分類三個新 pairs，再執行 individually authorized exact actions。
+Modify：Plan-Creator 僅上述五份 planning artifacts。Written：獨立 Plan-Reviewer standard receipt 與
+Independent Reviewer fixed classification receipt；只有 Implementer 可原樣分別 sole-commit。
+ReadOnly：dev worktree、predecessor evidence、其他 paths／threads、Human-only locks。
+Deleted：無。Out-Of-Scope／Non-Goal：新 implementation、RED/green、source/tests/diagram/runtime/API、
+architecture/ACL/backend/DI/lifecycle 決策、README/VERSION、PR approval／Human merge／release／post-merge。
+TestCase：full SHA/committed evidence/live head/exact pair/schema/writer/order/sole commit/immutability checks；
+invalid evidence fails closed。No stable-library surface or release changes。原 mission、scope、outcomes、
+Runtime Registry protocol、測試策略、Architecture Visualization 與 follow-up missions 全部保留。
+
+Current：`c32-plan-authoring`。Schema/path authority：technical-spec C32。
+
+- [x] **Actor: Plan-Creator.** C32 五份標準 planning artifacts draft、C31 completed factual alignment。
+- [ ] **Actor: Implementer.** Exact-five non-merge planning candidate-only commit。
+- [ ] **Actor: Independent Plan-Reviewer.** Candidate-SHA-bound standard approved receipt。
+- [ ] **Actor: Implementer.** Approved receipt unchanged separate sole evidence-only commit。
+- [ ] **Actor: Planner.** Verify fixed committed C31 S/T/V and actual live fixed PR head。
+- [ ] **Actor: Independent Reviewer.** Exact immutable eight-key three-pair classification receipt per technical-spec C32。
+- [ ] **Actor: Implementer.** Classification unchanged separate sole evidence-only commit；bounded push。
+- [ ] **Actor: Planner / Implementer.** Route exact committed REPLY_AND_RESOLVE entries；factual reply/resolve/live audit。
+- [ ] **Actor: Planner.** Recheck PR head/mergeability/remaining threads；ADDRESS repair or HUMAN_CHECK boundary。

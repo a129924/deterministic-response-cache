@@ -869,3 +869,60 @@ skipping actor order fails closed. Predecessor evidence/dev worktree/all other p
 `nYQqw`/`4140648790` unclassified/open and five Human-only pairs `jnBpk`/`4043480108`, `kQ95O`/`4060023123`,
 `kqiZ5`/`4070096561`, `lAR8T`/`4078761998`, `lfQmF`/`4091213944` are excluded/open. No PR approval, Human merge,
 release, post-merge, README/VERSION changes. Original mission/protocol/outcomes/visualization/follow-ups persist.
+
+## C32 Current-Head Three-Pair Classification Successor（authoritative current routing）
+
+C31 已完成 committed S `4448c9d144db74787f8c1947b51064e291552a6a`、
+passing T `7787c8b8edb760df6f81f44182bb146f8730c69d`、
+approved V `b75242afc8fcf211c4b0e1aebe20fc410f567d6f`；C31 classification sole commit／audited PR head
+`9bdea139d9c3d79a8ae413333c9e15e877c42a30`。C31 五個已回覆且 resolved 的事實：
+`m-94K`→`4141037841`、`nXkrM`→`4141038098`、`nXrA0`→`4141038268`、
+`nXzEu`→`4141038483`、`nXzE1`→`4141038696`。
+
+C32 exact pairs 僅 `nYQqw`/`4140648790`、`nZI5l`/`4141010658`、
+`nZI5n`/`4141010661`，均待 independent classification，不預填 outcome／reply／resolution。
+五個 Human-only pairs `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944` 排除/open。
+舊 rejected receipt `loaded-runtime-cache.plan-review-receipt-a46241e4245957cd820eae13fd2bf22ab0a9226d.json`
+是 frozen nonrouting provenance，不能覆寫、提交作本輪 approval 或重新使用。
+### Goal／Scope／Boundaries／Acceptance
+
+Goal／In-Scope：僅依 C31 verified facts 分類三個新 pairs，再執行 individually authorized exact actions。
+Modify：Plan-Creator 僅上述五份 planning artifacts。Written：獨立 Plan-Reviewer standard receipt 與
+Independent Reviewer fixed classification receipt；只有 Implementer 可原樣分別 sole-commit。
+ReadOnly：dev worktree、predecessor evidence、其他 paths／threads、Human-only locks。
+Deleted：無。Out-Of-Scope／Non-Goal：新 implementation、RED/green、source/tests/diagram/runtime/API、
+architecture/ACL/backend/DI/lifecycle 決策、README/VERSION、PR approval／Human merge／release／post-merge。
+TestCase：full SHA/committed evidence/live head/exact pair/schema/writer/order/sole commit/immutability checks；
+invalid evidence fails closed。No stable-library surface or release changes。原 mission、scope、outcomes、
+Runtime Registry protocol、測試策略、Architecture Visualization 與 follow-up missions 全部保留。
+### Exact artifact／schema／writer／sole-commit contract
+
+Plan-Creator 僅修改 `analysis/loaded-runtime-cache/requirements.md`、
+`analysis/loaded-runtime-cache/technical-spec.md`、`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`。Implementer 將這五檔以獨立 non-merge candidate-only commit 提交。
+Independent Plan-Reviewer 唯一可寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c32-candidate-40-hex-sha>.json`；
+exact keys `verdict`、`blocking_issues`、`copilot_feedback_triage`；verdict `approved|needs-rework`。
+Blockers 是 exact `issue`、`file`、`fix` nonempty string objects array；approved 必為空，
+needs-rework 必非空。Triage exact `ADDRESS`、`DISCUSS`、`SKIP` arrays。
+Implementer 原樣 separate sole evidence-only commit approved receipt；Planner 核對 committed C31 S/T/V
+與 live audited fixed PR head 後，Independent Reviewer 唯一可寫 immutable path：
+
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-4448c9d144db74787f8c1947b51064e291552a6a-9bdea139d9c3d79a8ae413333c9e15e877c42a30.json`
+
+JSON 為單一 object，top-level keys 恰為 `schema_version`、`topic`、
+`implementation_subject_commit`、`tester_evidence_commit`、`implementation_review_evidence_commit`、
+`pr_head_commit`、`classifications`、`recorded_by`。分別為 integer `1`、
+string `loaded-runtime-cache`、上述固定 S/T/V/head 完整 lowercase 40-hex SHA、
+exact three-entry array、string `Independent Reviewer`。Entry keys 恰為 `thread`、`comment`、
+`outcome`、`reply`；thread/comment 為上述 exact pairs string IDs、每 pair 各一次。
+Outcome enum `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`；僅 REPLY_AND_RESOLVE reply 為 nonempty factual string，
+其餘 reply 必為 JSON null。Implementer 原樣以 separate sole evidence-only commit 提交 classification receipt。
+Planner 才能依 committed entries 派 Implementer 對 exact REPLY_AND_RESOLVE 留指定 factual reply 並 resolve；
+ADDRESS 回 bounded repair route，HUMAN_CHECK 保持 open。Planning approval 本身不授權 thread actions。
+
+Wrong/stale live PR head、wrong S/T/V binding、extra/missing pair/key、wrong writer/schema/enum/nullability、
+overwrite、非 sole evidence commit、跨 topic evidence 或跳過 actor ordering 一律 fail closed。
+Planning candidate commits 留在 local 到 classification 完成後 bounded push，不以未分類的新 PR head 取代 fixed head。

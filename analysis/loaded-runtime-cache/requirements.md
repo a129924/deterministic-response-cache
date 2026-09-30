@@ -646,3 +646,32 @@ C31 只處理其五個 ADDRESS pairs：`m-94K`/`4130289786`、`nXkrM`/`414036492
 - candidate → independent approved receipt → RED／failing evidence → green／passing evidence → independent review →
   Phase 4.5／push → actual-head-bound five-pair classification → exact permitted replies／resolve，所有 evidence sole commits。
   原 mission、protocol、outcomes、Architecture Visualization 與 follow-up missions 不變。
+
+## C32 Current-Head Three-Pair Classification Successor（authoritative current routing）
+
+C31 已完成 committed S `4448c9d144db74787f8c1947b51064e291552a6a`、
+passing T `7787c8b8edb760df6f81f44182bb146f8730c69d`、
+approved V `b75242afc8fcf211c4b0e1aebe20fc410f567d6f`；C31 classification sole commit／audited PR head
+`9bdea139d9c3d79a8ae413333c9e15e877c42a30`。C31 五個已回覆且 resolved 的事實：
+`m-94K`→`4141037841`、`nXkrM`→`4141038098`、`nXrA0`→`4141038268`、
+`nXzEu`→`4141038483`、`nXzE1`→`4141038696`。
+
+C32 exact pairs 僅 `nYQqw`/`4140648790`、`nZI5l`/`4141010658`、
+`nZI5n`/`4141010661`，均待 independent classification，不預填 outcome／reply／resolution。
+五個 Human-only pairs `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944` 排除/open。
+舊 rejected receipt `loaded-runtime-cache.plan-review-receipt-a46241e4245957cd820eae13fd2bf22ab0a9226d.json`
+是 frozen nonrouting provenance，不能覆寫、提交作本輪 approval 或重新使用。
+### Goal／Scope／Boundaries／Acceptance
+
+Goal／In-Scope：僅依 C31 verified facts 分類三個新 pairs，再執行 individually authorized exact actions。
+Modify：Plan-Creator 僅上述五份 planning artifacts。Written：獨立 Plan-Reviewer standard receipt 與
+Independent Reviewer fixed classification receipt；只有 Implementer 可原樣分別 sole-commit。
+ReadOnly：dev worktree、predecessor evidence、其他 paths／threads、Human-only locks。
+Deleted：無。Out-Of-Scope／Non-Goal：新 implementation、RED/green、source/tests/diagram/runtime/API、
+architecture/ACL/backend/DI/lifecycle 決策、README/VERSION、PR approval／Human merge／release／post-merge。
+TestCase：full SHA/committed evidence/live head/exact pair/schema/writer/order/sole commit/immutability checks；
+invalid evidence fails closed。No stable-library surface or release changes。原 mission、scope、outcomes、
+Runtime Registry protocol、測試策略、Architecture Visualization 與 follow-up missions 全部保留。
+
+C32 classification-only，不建立新的 implementation subject／Tester／implementation review chain；消費固定 C31 triple。
