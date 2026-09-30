@@ -271,7 +271,13 @@ def _is_forbidden_import_callable_expression(
     if resolved in {
         ("callable", "builtins.__import__"),
         ("callable", "importlib.import_module"),
-    }:
+    } or (
+        isinstance(expression, ast.IfExp)
+        and (
+            _is_forbidden_import_callable_expression(expression.body, modules, callables)
+            or _is_forbidden_import_callable_expression(expression.orelse, modules, callables)
+        )
+    ):
         return True
     if isinstance(expression, ast.NamedExpr):
         resolved = _resolve_forbidden_alias(expression.value, modules, callables)
@@ -490,6 +496,14 @@ def test_identity_bc_does_not_directly_import_loaded_runtime_cache() -> None:
         (
             "if-expression-forbidden-callable-before-module",
             ("import importlib\nload = __import__ if enabled else importlib\nload('identity')\n"),
+        ),
+        (
+            "if-expression-direct-named-expression-in-body",
+            "((load := __import__) if enabled else fallback)('identity')\n",
+        ),
+        (
+            "if-expression-direct-named-expression-in-else-branch",
+            "(fallback if enabled else (load := __import__))('identity')\n",
         ),
         (
             "attribute-base-named-expression-importlib-alias",
