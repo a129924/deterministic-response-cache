@@ -996,11 +996,11 @@ starred `nZI5n` 與上述 Human-only five 留在 human-check/open，unlisted thr
 - [x] **Actor: Implementer.** Classification unchanged sole commit／bounded push。
 - [x] **Actor: Planner / Implementer.** Route exact permitted reply／resolve and verify live state。
 
-## C34 Current-Head Three-Pair Classification Successor（authoritative current routing）
+## C34 Current-Head Three-Pair Classification Successor（completed predecessor routing）
 
 ### Goal / Outcome / Scope
 
-Current：`c34-planning-draft`。Goal／In-Scope：僅獨立分類三個新 pairs
+Historical state：`c34-completed`。Goal／In-Scope：僅獨立分類三個新 pairs
 `nZm9b`/`4141203131`、`nZm9d`/`4141203134`、`nZm9h`/`4141203139`；
 不預填分類結果、reply 或 resolution。本輪固定使用同 topic committed C33
 S `82e3dc7efa04d7a432568e254ffca82bc3337ecd`、
@@ -1097,10 +1097,127 @@ unlisted threads 不可回覆／resolve。No release／post-merge actions。
 ### C34 Step Tracker
 
 - [x] **Actor: Plan-Creator.** Five-artifact bounded classification draft／C32-C33 factual alignment。
+- [x] **Actor: Implementer.** Exact-five non-merge candidate-only commit。
+- [x] **Actor: Independent Plan-Reviewer.** Candidate-SHA-bound standard receipt。
+- [x] **Actor: Implementer.** Approved receipt unchanged sole evidence-only commit。
+- [x] **Actor: Planner.** Committed fixed S/T/V／live fixed PR-head verification。
+- [x] **Actor: Independent Reviewer.** Immutable exact-three-pair classification receipt。
+- [x] **Actor: Implementer.** Classification unchanged sole evidence-only commit／bounded push。
+- [x] **Actor: Planner / Implementer.** Route exact permitted actions／reply／resolve／live audit。
+
+## C35 Current-Head Five-Pair Classification Successor（authoritative current routing）
+
+### Goal / Outcome / Scope
+
+Current：`c35-planning-draft`。Goal／In-Scope：僅獨立分類五個新 pairs
+`naZCW`/`4141524912`、`naZCY`/`4141524919`、`na5mB`/`4141737461`、
+`na5mE`/`4141737466`、`na5mM`/`4141737476`；
+不預填分類結果、reply 或 resolution。本輪固定使用同 topic committed C33
+S `82e3dc7efa04d7a432568e254ffca82bc3337ecd`、
+passing T commit `eff8eb2f5f554d6eb01f57fcf5755cddcab4adfe`、
+approved V commit `d29da7b8a855b3887c9bcbb7183b1db0cd744043`，
+與 audited PR head `71545af8c0d6f87ea4f43bf28d380edfed75aa82`。
+
+C33 已提交 verification chain；其 classification sole commit 為
+`e17956b4d83ba81129cc7787d145436e7f73fd95`；`nZI5l`/`4141010658`
+已留 reply `4141461698` 並 resolved。C32 committed candidate
+`42ec2293d306546df06529996bc63adb058b3eee`、approved receipt commit
+`6a3271af13443c1b794c28038a68d4c158163071`、classification sole commit
+`83ffddf831da3f4ecb26656a96bc6aeb28ef98d5` 為 completed predecessor facts；
+`nYQqw` 已留 reply `4141149003` 並 resolved。C32／C33 皆為 completed
+predecessor routing。C34 candidate `8ef5a690669b654a16343c091ccb7617eeb04011`、
+approved planning receipt commit `2ecd41b08fe91d875b3607bda45f52b1386eff85`、
+classification sole commit `71545af8c0d6f87ea4f43bf28d380edfed75aa82` 已提交。
+`nZm9b`/`4141203131` 已留 reply `4141853147` 並 resolved；
+`nZm9d`/`4141203134`、`nZm9h`/`4141203139` 為 ADDRESS，尚未修復，
+本輪不授權其 implementation 或 resolution。C34 是 completed predecessor routing。
+既有 For lock 保留，不新增 For handling、alias inference 或相關 implementation。
+本 C35 section 取代其未完成 tracking 敘述作 current routing。
+
+### Locked Decisions / Boundaries / Exclusions
+
+六個 Human-only pairs `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、
+`lfQmF`/`4091213944`、starred-argument `nZI5n`/`4141010661`
+均排除，保持 human-check/open。舊 rejected receipt
+`loaded-runtime-cache.plan-review-receipt-a46241e4245957cd820eae13fd2bf22ab0a9226d.json`
+是 frozen nonrouting provenance，不覆寫、不提交為本輪 approval、不重新使用。
+
+Modify：Plan-Creator 僅五份 standard planning artifacts。Written：獨立
+Plan-Reviewer candidate-bound receipt 與 Independent Reviewer fixed classification receipt。
+Deleted：無。ReadOnly：dev worktree、既有 source/tests/diagram、predecessor evidence、
+所有未列 pairs 與六個 Human locks。Out-Of-Scope／Non-Goal：新 implementation、
+RED/green、runtime/API/backend/DI/lifecycle、architecture/ACL 決策、README/VERSION、
+PR approval／Human merge／release／post-merge。原 mission、scope、outcomes、
+Runtime Registry protocol、測試策略、Architecture Visualization、follow-up missions
+全部維持；無 stable-library surface 或 release 變更。
+
+### Status / Allowed Transitions / Artifact Paths / Implementation Steps
+
+Plan-Creator 僅於 feature worktree 修改：
+`analysis/loaded-runtime-cache/requirements.md`、
+`analysis/loaded-runtime-cache/technical-spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`。
+Implementer 建立 exact-five non-merge candidate-only commit；Independent Plan-Reviewer
+只審該 committed candidate，唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c35-candidate-40-hex-sha>.json`。
+單一 JSON object exact keys `verdict`、`blocking_issues`、`copilot_feedback_triage`；
+verdict `approved|needs-rework`；blockers 為 exact `issue`／`file`／`fix`
+nonempty string objects array，approved 空、needs-rework 非空；triage 為 exact
+`ADDRESS`／`DISCUSS`／`SKIP` arrays。Implementer 原樣 separate sole
+evidence-only commit approved receipt。未 approved 不可分類。
+
+Planner 核對 committed fixed S/T/V 與 live fixed PR head 後，Independent Reviewer
+唯一可寫 immutable path：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-82e3dc7efa04d7a432568e254ffca82bc3337ecd-71545af8c0d6f87ea4f43bf28d380edfed75aa82.json`。
+
+JSON object top-level keys 恰為 `schema_version`、`topic`、
+`implementation_subject_commit`、`tester_evidence_commit`、
+`implementation_review_evidence_commit`、`pr_head_commit`、
+`classifications`、`recorded_by`。Values 分別是 integer `1`、
+string `loaded-runtime-cache`、上述固定 S/T/V/head 完整 lowercase 40-hex SHA、
+exact five-entry array、string `Independent Reviewer`。
+Each entry exact keys `thread`、`comment`、`outcome`、`reply`；
+thread/comment 是上述五個 exact pairs 的 string IDs，每 pair 恰一次。
+Outcome enum `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`；只有
+REPLY_AND_RESOLVE reply 是 nonempty factual string，其餘 reply 必為 JSON null。
+Reviewer 不 commit；Implementer 原樣 separate sole evidence-only commit classification，
+再 bounded push。Planning commits 保持 local 到分類完成，不先改變 fixed live PR head。
+
+Planner 才可依 committed classification route exact REPLY_AND_RESOLVE entry；
+Implementer 留該指定 factual reply 並 resolve exact thread，之後 live audit。
+ADDRESS 回 bounded repair route；HUMAN_CHECK 保持 open。Planning approval 不授權
+reply/resolve。Sequence：candidate → independent approved planning receipt →
+sole receipt commit → fixed-triple/live-head verification → independent classification →
+sole classification commit → bounded push → exact per-pair actions → human-check。
+publish-in-progress 只可進 pr-open；Human alone PR approval／merge／release／post-merge。
+
+### Validation / Acceptance / TestCase
+
+Verify committed same-topic S/T/V、passing Tester／approved Reviewer、full SHA、live head、
+exact paths/pairs/key sets/schema/writers/enum/nullability/ordering/sole commits/immutability。
+Wrong/stale head、wrong binding、extra/missing key/pair、wrong writer、overwrite、非 sole commit、
+跳過 actor order 或跨 topic evidence 一律 fail closed。No new implementation or RED/green；
+不預填 future candidate SHA、verdict、classification outcome、reply 或 resolution。
+
+### Reviewer Handoff / Post-merge / Unresolved Items
+
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+
+本輪五個 pairs 尚待獨立分類。六個 Human-only pairs 保持 open；
+unlisted threads 不可回覆／resolve。No release／post-merge actions。
+
+### C35 Step Tracker
+
+- [x] **Actor: Plan-Creator.** Five-artifact bounded classification draft／C34 factual alignment。
 - [ ] **Actor: Implementer.** Exact-five non-merge candidate-only commit。
 - [ ] **Actor: Independent Plan-Reviewer.** Candidate-SHA-bound standard receipt。
 - [ ] **Actor: Implementer.** Approved receipt unchanged sole evidence-only commit。
 - [ ] **Actor: Planner.** Committed fixed S/T/V／live fixed PR-head verification。
-- [ ] **Actor: Independent Reviewer.** Immutable exact-three-pair classification receipt。
+- [ ] **Actor: Independent Reviewer.** Immutable exact-five-pair classification receipt。
 - [ ] **Actor: Implementer.** Classification unchanged sole evidence-only commit／bounded push。
 - [ ] **Actor: Planner / Implementer.** Route exact permitted actions／reply／resolve／live audit。
