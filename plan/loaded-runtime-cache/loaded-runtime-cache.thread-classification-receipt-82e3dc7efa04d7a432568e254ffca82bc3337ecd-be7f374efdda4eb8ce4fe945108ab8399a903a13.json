@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "82e3dc7efa04d7a432568e254ffca82bc3337ecd",
+  "tester_evidence_commit": "eff8eb2f5f554d6eb01f57fcf5755cddcab4adfe",
+  "implementation_review_evidence_commit": "d29da7b8a855b3887c9bcbb7183b1db0cd744043",
+  "pr_head_commit": "be7f374efdda4eb8ce4fe945108ab8399a903a13",
+  "classifications": [
+    {
+      "thread": "nZI5l",
+      "comment": "4141010658",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 82e3dc7efa04d7a432568e254ffca82bc3337ecd 修正：scanner 現在解析已知 builtins module 及其 alias 上的 qualified getattr，攔截直接呼叫與 assignment 保留的 forbidden callable。新增 regressions 覆蓋 builtins.__import__、importlib.import_module、sys.modules，以及 benign len／unknown receiver controls；既有 bare getattr 行為保留。passing Tester evidence 已提交於 eff8eb2f5f554d6eb01f57fcf5755cddcab4adfe，獨立 Reviewer approval 已提交於 d29da7b8a855b3887c9bcbb7183b1db0cd744043；修正已包含於目前 PR head be7f374efdda4eb8ce4fe945108ab8399a903a13。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}
