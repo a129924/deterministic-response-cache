@@ -676,19 +676,22 @@ C25 and C26 tracker states above are aligned to their committed receipts and rou
 - [x] C28 independent green review evidence
 - [x] C28 green review-evidence-only commit
 - [x] C28 Planner Phase 4.5 alignment
-- [ ] C28 bounded push update
-- [ ] C28 Planner actual-current-head verification
-- [ ] C28 independent eight-pair classification receipt
-- [ ] C28 classification-receipt-only commit
-- [ ] C28 Planner routing for exact classified pairs
+- [x] C28 bounded push update
+- [x] C28 Planner actual-current-head verification
+- [x] C28 independent eight-pair classification receipt
+- [x] C28 classification-receipt-only commit
+- [x] C28 Planner routing for exact classified pairs
+- [ ] C28 exact eight-pair reply and resolution
 
 ### C28 actionable steps
 
-**Current C28 state:** `publish-in-progress`。已提交 final green subject
+**Current C28 state:** `pr-open / exact reply-and-resolve pending`。已提交 final green subject
 `e4734aaa7d630542e13c37920593602fe8eb64cd`、passing Tester evidence
 `b310dd12666aba754b55b0e1d6af5d9520696582` 與 approved Independent Reviewer evidence
-`79b8095864ec8ed54db4ef107dbd06a33cdfab87`；Planner 已完成 Phase 4.5 alignment。actual-current-head
-classification 與 reply／resolve 尚未完成。
+`79b8095864ec8ed54db4ef107dbd06a33cdfab87`；Planner 已完成 Phase 4.5 alignment、bounded push 及 actual-current-head
+`d9d851df9d5a17503f5503bb8f400f7fbc3137f4` verification。Independent Reviewer 的 exact eight-pair
+`REPLY_AND_RESOLVE` receipt 已原樣以 sole evidence-only commit
+`e41235af9eee729b151a06dfeaa36137c58e156b` 提交並推送，Planner 已據此 routing；八個 reply／resolve actions 仍 pending。
 
 - [x] **Actor: Implementer.** Commit exactly the five C28 planning artifacts; do not prefill future SHA, verdict,
   test result, classification outcome, reply or resolution.
@@ -699,8 +702,10 @@ classification 與 reply／resolve 尚未完成。
 - [x] **Actor: Implementer / Tester / Independent Reviewer.** Create distinct green only in those tests,
   `runtime_reuse_key.py`, and the truthful changed subset of the ten existing dataflow artifacts. Record passing Tester
   and approved same-subject Independent Reviewer evidence in separate sole commits.
-- [ ] **Actor: Planner / Independent Reviewer / Implementer.** After actual-current-head verification, Independent
+- [x] **Actor: Planner / Independent Reviewer / Implementer.** After actual-current-head verification, Independent
   Reviewer writes only the SHA-bound C28 eight-pair classification receipt. Implementer commits it unchanged alone;
   only exact committed `REPLY_AND_RESOLVE` entries may later receive their factual reply and resolution.
+- [ ] **Actor: Implementer.** Leave the exact committed receipt reply and resolve each of the eight C28 pairs only;
+  receipt commit `e41235af9eee729b151a06dfeaa36137c58e156b` records their classification, not completed PR actions.
 - [ ] **Actor: Planner.** Keep `jnBpk`, `kQ95O`, `kqiZ5`, `lAR8T`, and `lfQmF` Human-only/open; all unlisted threads
   and paths remain ReadOnly.
