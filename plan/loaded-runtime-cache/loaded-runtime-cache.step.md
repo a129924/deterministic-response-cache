@@ -849,7 +849,7 @@ Historical state：`c32-completed`。Schema/path authority：technical-spec C32�
 - [x] **Actor: Planner / Implementer.** Route exact committed REPLY_AND_RESOLVE entry；nYQqw reply 4141149003／resolved。
 - [x] **Actor: Planner.** ADDRESS qualified getattr to C33；starred argument and Human-only five human-check/open。
 
-## C33 Qualified Builtins getattr Repair Successor（authoritative current routing）
+## C33 Qualified Builtins getattr Repair Successor（completed predecessor routing）
 
 C32 classification 已由 committed receipt 將 `nZI5l`/`4141010658` 分為 ADDRESS；
 `nYQqw`/`4140648790` 已回覆 `4141149003` 並 resolved。C32 為 completed predecessor routing。
@@ -864,7 +864,7 @@ C33 僅修正 `nZI5l`/`4141010658`；`nZI5n`/`4141010661` 的 starred argument
 
 Goal／In-Scope：既有 static BC-independence scanner 識別 known builtins module 的 qualified
 `getattr` 與其 module alias，在既有 forbidden attribute lookup 範圍內拒絕 direct invocation
-及 assignment-retained callable bypass。Current：`c33-publish-in-progress`。
+及 assignment-retained callable bypass。Historical state：`c33-completed`。
 Modify：Plan-Creator 僅五份標準 planning artifacts；Implementer RED 與 green 均僅
 `tests/test_loaded_runtime_cache_bc_independence.py`。Written：獨立 Plan-Reviewer／Tester／
 Independent Reviewer evidence at C33 immutable SHA-bound paths below，僅 Implementer 原樣 sole-commit。
@@ -970,8 +970,9 @@ green subject `82e3dc7efa04d7a432568e254ffca82bc3337ecd`；
 passing Tester evidence commit `eff8eb2f5f554d6eb01f57fcf5755cddcab4adfe`；
 approved Independent Reviewer evidence commit `d29da7b8a855b3887c9bcbb7183b1db0cd744043`。
 Planner 已 route Phase 4.5；本次 Plan-Creator factual plan／step alignment 完成。
-Separate tracking commit、bounded push、actual PR-head audit、single-pair classification、
-classification sole commit／push 與 exact reply／resolve 均 pending，尚未記錄其 outcome。
+Separate tracking commit `be7f374efdda4eb8ce4fe945108ab8399a903a13`、bounded push／actual PR-head audit、single-pair classification
+與 sole commit `e17956b4d83ba81129cc7787d145436e7f73fd95`／push 已完成；
+`nZI5l` 已留 reply `4141461698` 並 resolved。
 starred `nZI5n` 與上述 Human-only five 留在 human-check/open，unlisted threads 不可回覆／resolve。
 
 ### C33 Step Tracker
@@ -989,8 +990,117 @@ starred `nZI5n` 與上述 Human-only five 留在 human-check/open，unlisted thr
 - [x] **Actor: Independent Reviewer.** Same-subject committed passing evidence review。
 - [x] **Actor: Implementer.** Approved review unchanged sole commit。
 - [x] **Actor: Planner / Plan-Creator.** Phase 4.5 factual plan／step alignment。
-- [ ] **Actor: Implementer.** Separate tracking commit／bounded push。
-- [ ] **Actor: Planner.** Actual PR head／mergeability／threads audit。
-- [ ] **Actor: Independent Reviewer.** Immutable actual-head-bound single-pair classification。
-- [ ] **Actor: Implementer.** Classification unchanged sole commit／bounded push。
-- [ ] **Actor: Planner / Implementer.** Route exact permitted reply／resolve and verify live state。
+- [x] **Actor: Implementer.** Separate tracking commit／bounded push。
+- [x] **Actor: Planner.** Actual PR head／mergeability／threads audit。
+- [x] **Actor: Independent Reviewer.** Immutable actual-head-bound single-pair classification。
+- [x] **Actor: Implementer.** Classification unchanged sole commit／bounded push。
+- [x] **Actor: Planner / Implementer.** Route exact permitted reply／resolve and verify live state。
+
+## C34 Current-Head Three-Pair Classification Successor（authoritative current routing）
+
+### Goal / Outcome / Scope
+
+Current：`c34-planning-draft`。Goal／In-Scope：僅獨立分類三個新 pairs
+`nZm9b`/`4141203131`、`nZm9d`/`4141203134`、`nZm9h`/`4141203139`；
+不預填分類結果、reply 或 resolution。本輪固定使用同 topic committed C33
+S `82e3dc7efa04d7a432568e254ffca82bc3337ecd`、
+passing T commit `eff8eb2f5f554d6eb01f57fcf5755cddcab4adfe`、
+approved V commit `d29da7b8a855b3887c9bcbb7183b1db0cd744043`，
+與 audited PR head `e17956b4d83ba81129cc7787d145436e7f73fd95`。
+
+C33 已提交 verification chain；其 classification sole commit 為
+`e17956b4d83ba81129cc7787d145436e7f73fd95`；`nZI5l`/`4141010658`
+已留 reply `4141461698` 並 resolved。C32 committed candidate
+`42ec2293d306546df06529996bc63adb058b3eee`、approved receipt commit
+`6a3271af13443c1b794c28038a68d4c158163071`、classification sole commit
+`83ffddf831da3f4ecb26656a96bc6aeb28ef98d5` 為 completed predecessor facts；
+`nYQqw` 已留 reply `4141149003` 並 resolved。C32／C33 皆為 completed
+predecessor routing，本 C34 section 取代其未完成 tracking 敘述作 current routing。
+
+### Locked Decisions / Boundaries / Exclusions
+
+六個 Human-only pairs `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、
+`lfQmF`/`4091213944`、starred-argument `nZI5n`/`4141010661`
+均排除，保持 human-check/open。舊 rejected receipt
+`loaded-runtime-cache.plan-review-receipt-a46241e4245957cd820eae13fd2bf22ab0a9226d.json`
+是 frozen nonrouting provenance，不覆寫、不提交為本輪 approval、不重新使用。
+
+Modify：Plan-Creator 僅五份 standard planning artifacts。Written：獨立
+Plan-Reviewer candidate-bound receipt 與 Independent Reviewer fixed classification receipt。
+Deleted：無。ReadOnly：dev worktree、既有 source/tests/diagram、predecessor evidence、
+所有未列 pairs 與六個 Human locks。Out-Of-Scope／Non-Goal：新 implementation、
+RED/green、runtime/API/backend/DI/lifecycle、architecture/ACL 決策、README/VERSION、
+PR approval／Human merge／release／post-merge。原 mission、scope、outcomes、
+Runtime Registry protocol、測試策略、Architecture Visualization、follow-up missions
+全部維持；無 stable-library surface 或 release 變更。
+
+### Status / Allowed Transitions / Artifact Paths / Implementation Steps
+
+Plan-Creator 僅於 feature worktree 修改：
+`analysis/loaded-runtime-cache/requirements.md`、
+`analysis/loaded-runtime-cache/technical-spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`。
+Implementer 建立 exact-five non-merge candidate-only commit；Independent Plan-Reviewer
+只審該 committed candidate，唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c34-candidate-40-hex-sha>.json`。
+單一 JSON object exact keys `verdict`、`blocking_issues`、`copilot_feedback_triage`；
+verdict `approved|needs-rework`；blockers 為 exact `issue`／`file`／`fix`
+nonempty string objects array，approved 空、needs-rework 非空；triage 為 exact
+`ADDRESS`／`DISCUSS`／`SKIP` arrays。Implementer 原樣 separate sole
+evidence-only commit approved receipt。未 approved 不可分類。
+
+Planner 核對 committed fixed S/T/V 與 live fixed PR head 後，Independent Reviewer
+唯一可寫 immutable path：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-82e3dc7efa04d7a432568e254ffca82bc3337ecd-e17956b4d83ba81129cc7787d145436e7f73fd95.json`。
+
+JSON object top-level keys 恰為 `schema_version`、`topic`、
+`implementation_subject_commit`、`tester_evidence_commit`、
+`implementation_review_evidence_commit`、`pr_head_commit`、
+`classifications`、`recorded_by`。Values 分別是 integer `1`、
+string `loaded-runtime-cache`、上述固定 S/T/V/head 完整 lowercase 40-hex SHA、
+exact three-entry array、string `Independent Reviewer`。
+Each entry exact keys `thread`、`comment`、`outcome`、`reply`；
+thread/comment 是上述三個 exact pairs 的 string IDs，每 pair 恰一次。
+Outcome enum `REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK`；只有
+REPLY_AND_RESOLVE reply 是 nonempty factual string，其餘 reply 必為 JSON null。
+Reviewer 不 commit；Implementer 原樣 separate sole evidence-only commit classification，
+再 bounded push。Planning commits 保持 local 到分類完成，不先改變 fixed live PR head。
+
+Planner 才可依 committed classification route exact REPLY_AND_RESOLVE entry；
+Implementer 留該指定 factual reply 並 resolve exact thread，之後 live audit。
+ADDRESS 回 bounded repair route；HUMAN_CHECK 保持 open。Planning approval 不授權
+reply/resolve。Sequence：candidate → independent approved planning receipt →
+sole receipt commit → fixed-triple/live-head verification → independent classification →
+sole classification commit → bounded push → exact per-pair actions → human-check。
+publish-in-progress 只可進 pr-open；Human alone PR approval／merge／release／post-merge。
+
+### Validation / Acceptance / TestCase
+
+Verify committed same-topic S/T/V、passing Tester／approved Reviewer、full SHA、live head、
+exact paths/pairs/key sets/schema/writers/enum/nullability/ordering/sole commits/immutability。
+Wrong/stale head、wrong binding、extra/missing key/pair、wrong writer、overwrite、非 sole commit、
+跳過 actor order 或跨 topic evidence 一律 fail closed。No new implementation or RED/green；
+不預填 future candidate SHA、verdict、classification outcome、reply 或 resolution。
+
+### Reviewer Handoff / Post-merge / Unresolved Items
+
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+
+本輪三個 pairs 尚待獨立分類。六個 Human-only pairs 保持 open；
+unlisted threads 不可回覆／resolve。No release／post-merge actions。
+
+### C34 Step Tracker
+
+- [x] **Actor: Plan-Creator.** Five-artifact bounded classification draft／C32-C33 factual alignment。
+- [ ] **Actor: Implementer.** Exact-five non-merge candidate-only commit。
+- [ ] **Actor: Independent Plan-Reviewer.** Candidate-SHA-bound standard receipt。
+- [ ] **Actor: Implementer.** Approved receipt unchanged sole evidence-only commit。
+- [ ] **Actor: Planner.** Committed fixed S/T/V／live fixed PR-head verification。
+- [ ] **Actor: Independent Reviewer.** Immutable exact-three-pair classification receipt。
+- [ ] **Actor: Implementer.** Classification unchanged sole evidence-only commit／bounded push。
+- [ ] **Actor: Planner / Implementer.** Route exact permitted actions／reply／resolve／live audit。
