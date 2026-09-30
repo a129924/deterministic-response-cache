@@ -715,28 +715,33 @@ replies：`lfYsH`→`4140433910`、`lfYsK`→`4140435052`、`m8u04`→`414043606
 
 ## C29 Three-File Architecture Conflict Integration Stages (authoritative current routing)
 
-Current: `planned / planning-candidate pending`。dev `d6ff74ddf65c615f65eeba252e648784252a2bfd`，已整合 base
+Current: `phase4.5-aligned / publish-in-progress`。candidate `bd465e53614594ce2d4739cac19d28d17927986c`；
+approved plan receipt sole commit `b3e9b0f242632be4280553f0bed64214020e167f`；integration subject
+`9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa`；passing Tester sole commit
+`31e727d96d4e0843714dca1c7898ac93da9c33ef`；approved independent review sole commit
+`fc12dea6be989aaecfdfc71a86fa1b330256fffe`。bounded push／PR audit pending。
+dev `d6ff74ddf65c615f65eeba252e648784252a2bfd`，已整合 base
 `1501f380f20492c71275474f800fdaaffbf0a76a`。完整 committed dev tree 自動整合，手動解衝僅
 `docs/architecture/business-capability/architecture-brief.md`、`docs/architecture/business-capability/index.html`、
 `docs/architecture/business-capability/scene.js`；保留 Runtime protocol／Model Execution 與 fixed-codec／bytes-envelope
 committed facts，不作新決策。三檔外不可手動修改；dev worktree 不寫入。
 
 - [x] **Actor: Plan-Creator.** 五份 C29 planning artifacts drafting；不預填未來 SHA／result／verdict。
-- [ ] **Actor: Implementer.** 五份 artifacts candidate-only commit。
-- [ ] **Actor: Independent Plan-Reviewer.** standard three-key verdict receipt 寫入
+- [x] **Actor: Implementer.** 五份 artifacts candidate-only commit。
+- [x] **Actor: Independent Plan-Reviewer.** standard three-key verdict receipt 寫入
   `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c29-candidate-40-hex-sha>.json`。
-- [ ] **Actor: Implementer.** approved receipt 原樣 sole evidence-only commit。
-- [ ] **Actor: Implementer.** fixed-dev full-tree immutable integration merge subject，記錄實際 first parent feature HEAD
+- [x] **Actor: Implementer.** approved receipt 原樣 sole evidence-only commit。
+- [x] **Actor: Implementer.** fixed-dev full-tree immutable integration merge subject，記錄實際 first parent feature HEAD
   full SHA，second parent 為固定 dev SHA；僅三檔手動解衝，no marker／extra manual delta／new architecture decision。
-- [ ] **Actor: Tester.** 實際 subject topology、manual bounds、facts、document/scene consistency／regressions evidence；
+- [x] **Actor: Tester.** 實際 subject topology、manual bounds、facts、document/scene consistency／regressions evidence；
   唯一寫入 `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c29-integration-subject-40-hex-sha>.json`。
   exact six-key schema／actual exit-code／passing-failing semantics 依 technical-spec C29。
-- [ ] **Actor: Implementer.** 原樣 Tester evidence sole commit，不混 planning／source／另一 evidence。
-- [ ] **Actor: Independent Reviewer.** 僅消費 committed passing same-subject Tester；唯一寫入
+- [x] **Actor: Implementer.** 原樣 Tester evidence sole commit，不混 planning／source／另一 evidence。
+- [x] **Actor: Independent Reviewer.** 僅消費 committed passing same-subject Tester；唯一寫入
   `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c29-integration-subject-40-hex-sha>.json`，
   exact seven-key schema／same subject／Tester sole commit binding 依 technical-spec C29。
-- [ ] **Actor: Implementer.** 原樣 review evidence later separate sole commit；needs-rework 回新 subject 完整 sequence。
-- [ ] **Actor: Planner / Plan-Creator.** committed approved evidence 後 Phase 4.5 factual plan／step alignment。
+- [x] **Actor: Implementer.** 原樣 review evidence later separate sole commit；needs-rework 回新 subject 完整 sequence。
+- [x] **Actor: Planner / Plan-Creator.** committed approved evidence 後 Phase 4.5 factual plan／step alignment。
 - [ ] **Actor: Implementer.** bounded push 更新既有 PR。
 - [ ] **Actor: Planner.** actual head／mergeability／thread audit；C29 無 thread actions。
 

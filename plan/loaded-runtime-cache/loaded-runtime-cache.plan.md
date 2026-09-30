@@ -1347,7 +1347,13 @@ mapper／lifecycle 與未實作 BC wiring 等邊界。不創造跨 BC 關係；�
 
 ### Status / Allowed Transitions / Artifact Paths
 
-**Current C29 state:** `planned / planning-candidate pending`。candidate-only commit → independent approved
+**Current C29 state:** `phase4.5-aligned / publish-in-progress`。已提交 candidate
+`bd465e53614594ce2d4739cac19d28d17927986c`，approved Plan-Reviewer receipt sole commit
+`b3e9b0f242632be4280553f0bed64214020e167f`，integration subject
+`9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa`，passing Tester evidence sole commit
+`31e727d96d4e0843714dca1c7898ac93da9c33ef`，approved independent review sole commit
+`fc12dea6be989aaecfdfc71a86fa1b330256fffe`。Phase 4.5 factual plan／step alignment 已完成；bounded push 與
+actual PR head／mergeability／thread audit 尚待執行。既定順序：candidate-only commit → independent approved
 Plan-Reviewer receipt → receipt-only commit → `creator-in-progress` integration subject → `tester-in-progress` →
 committed passing evidence → `review-ready`／independent review → committed approved evidence → Planner Phase 4.5 →
 `publish-in-progress` bounded push → `pr-open` audit。`needs-rework` 回 Implementer，以新 subject 重走 Tester／Reviewer。
