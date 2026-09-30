@@ -308,6 +308,19 @@ paths, source contracts, configuration, and adjacent BCs untouched.
 
 ## Implementation Steps
 
+C37 為唯一 active implementation；完成事實由 immutable green subject 與 committed passing Tester evidence 綁定。
+1. C37 semantic-name target checks recursively inspect syntactic tuple/list/nested/starred targets only，
+   excluding attribute targets and RHS/alias/iterable inference。
+2. C37 direct-name NamedExpr semantic checks retain all existing declared detectors。
+3. C37 direct known-builtins imported getattr local/asname detection retains exact-two-positional/no-keyword/
+   known-module/literal-attribute bounds and existing forbidden set, without arbitrary callable alias inference。
+4. C37 isolated foreign/benign/attribute/non-builtins regressions preserve direct imports, fixtures/assertions,
+   bare/qualified getattr and no-star alias behavior; actual scoped tests/Ruff/strict Pyright pass。
+
+Reviewer／publish／classification／thread actions 屬後續 workflow，尚未宣稱完成。
+
+## Historical Implementation Steps — C11–C14（frozen nonrouting provenance）
+
 1. Preserve C5→V3, C11→V11, C12→R12, C13 `a623981989f3363a4b225319a432c3a9d8e28b96`→`ade584e7eb63a7846a23c073c06a802ff99ff6cf`, and `9aa656b13fdc36492273c97a62eb9d422a1b64b5` solely as frozen provenance.
 2. Implementer commits C14 as exactly the five planning artifacts; it predeclares no candidate SHA, receipt, subject,
    evidence, test result, or verdict.
@@ -2039,6 +2052,21 @@ No release/post-merge actions。
 
 ## C37 Static BC Independence Scanner Repair（authoritative current routing）
 
+### C37 Committed Implementation Facts / Review Pending
+
+Current：`c37-review-ready`。Actual Git facts：
+candidate `a8cb80d6fdcfe0adef0e63d9bfb1c42df78d0d52`；
+approved planning receipt commit `337a31a35427b1221dd2e64d8d1c9ad3a006c78a`；
+RED subject `622a67473c9db74b586e8171bcf0b7dab3489941`；
+failing Tester sole commit `9b985c4ac7f3faf17fe6405e5d4602cb7453a78d`；
+green subject `6bb8ee90895b566c3def0eb161cce51c14b0e601`；
+passing Tester sole commit `437f40788fe1b37b2bcd4698624a478d8e959a13`。
+Independent Reviewer evidence 尚待建立／提交；publish、actual-head classification、
+reply/resolve 尚待對應 gates。不因 implementation completion 虛勾舊 C14 classification。
+本兩檔 alignment 僅記 actual committed facts，未變更 approved scope/schema/contract，
+不建立新 candidate chain。舊 provenance/receipts／六 Human／For locks 保留。
+
+
 ### C37 Risks / Rollback
 
 Risks：recursive semantic-target traversal 可能誤擴張 existing alias inference；
@@ -2110,7 +2138,7 @@ RED failing evidence 需 actual declared assertion nonzero。
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c37-planning-draft`。本輪同 static BC independence scanner mission，
+Historical draft state：`c37-planning-draft`。本輪同 static BC independence scanner mission，
 僅修正三個 ADDRESS pairs：`nZm9h`/`4141203139`、
 `naZCY`/`4141524919`、`na5mM`/`4141737476`。
 C36 candidate `8a35890310d788d7834be035e891bb0b53baa96d`、

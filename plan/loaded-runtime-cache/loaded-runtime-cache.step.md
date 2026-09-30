@@ -70,6 +70,17 @@ C11/C12/C13/C14 stages below are frozen provenance. C15 is the active successor 
 
 ## Implementation Steps
 
+C37 sole active implementation completion；每項由 actual green subject/pass evidence 證明。
+- [X] 1. C37 semantic-name target checks recursively inspect syntactic tuple/list/nested/starred targets only，
+   excluding attribute targets and RHS/alias/iterable inference。
+- [X] 2. C37 direct-name NamedExpr semantic checks retain all existing declared detectors。
+- [X] 3. C37 direct known-builtins imported getattr local/asname detection retains exact-two-positional/no-keyword/
+   known-module/literal-attribute bounds and existing forbidden set, without arbitrary callable alias inference。
+- [X] 4. C37 isolated foreign/benign/attribute/non-builtins regressions preserve direct imports, fixtures/assertions,
+   bare/qualified getattr and no-star alias behavior; actual scoped tests/Ruff/strict Pyright pass。
+
+## Historical Implementation Steps — C11–C14（frozen nonrouting provenance）
+
 - [x] 1. **Completed C11 route:** Preserve C11/R11/S11/T11/V11 and C5→V3 as ReadOnly frozen provenance. Do not modify,
   regenerate or reclassify them as C12 evidence.
 - [x] 2. **C12 planning candidate:** Modified exactly the five declared planning artifacts to state C12 as sole active
@@ -1322,6 +1333,21 @@ No release/post-merge actions。
 
 ## C37 Static BC Independence Scanner Repair（authoritative current routing）
 
+### C37 Committed Implementation Facts / Review Pending
+
+Current：`c37-review-ready`。Actual Git facts：
+candidate `a8cb80d6fdcfe0adef0e63d9bfb1c42df78d0d52`；
+approved planning receipt commit `337a31a35427b1221dd2e64d8d1c9ad3a006c78a`；
+RED subject `622a67473c9db74b586e8171bcf0b7dab3489941`；
+failing Tester sole commit `9b985c4ac7f3faf17fe6405e5d4602cb7453a78d`；
+green subject `6bb8ee90895b566c3def0eb161cce51c14b0e601`；
+passing Tester sole commit `437f40788fe1b37b2bcd4698624a478d8e959a13`。
+Independent Reviewer evidence 尚待建立／提交；publish、actual-head classification、
+reply/resolve 尚待對應 gates。不因 implementation completion 虛勾舊 C14 classification。
+本兩檔 alignment 僅記 actual committed facts，未變更 approved scope/schema/contract，
+不建立新 candidate chain。舊 provenance/receipts／六 Human／For locks 保留。
+
+
 ### C37 Risks / Rollback
 
 Risks：recursive semantic-target traversal 可能誤擴張 existing alias inference；
@@ -1393,7 +1419,7 @@ RED failing evidence 需 actual declared assertion nonzero。
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c37-planning-draft`。本輪同 static BC independence scanner mission，
+Historical draft state：`c37-planning-draft`。本輪同 static BC independence scanner mission，
 僅修正三個 ADDRESS pairs：`nZm9h`/`4141203139`、
 `naZCY`/`4141524919`、`na5mM`/`4141737476`。
 C36 candidate `8a35890310d788d7834be035e891bb0b53baa96d`、
@@ -1514,16 +1540,16 @@ No release/post-merge actions。
 
 ### C37 Step Tracker
 
-- [x] **Actor: Plan-Creator.** Five-artifact bounded three-pair repair draft／C36 facts。
-- [ ] **Actor: Implementer.** Exact-five candidate-only commit。
-- [ ] **Actor: Independent Plan-Reviewer.** New candidate-bound receipt。
-- [ ] **Actor: Implementer.** Approved planning receipt sole commit。
-- [ ] **Actor: Implementer.** Sole-test-path RED subject。
-- [ ] **Actor: Tester.** Actual declared RED failure evidence。
-- [ ] **Actor: Implementer.** Failing evidence sole commit。
-- [ ] **Actor: Implementer.** Distinct sole-test-path green subject。
-- [ ] **Actor: Tester.** Actual scoped passing evidence。
-- [ ] **Actor: Implementer.** Passing evidence sole commit。
+- [X] **Actor: Plan-Creator.** Five-artifact bounded three-pair repair draft／C36 facts。
+- [X] **Actor: Implementer.** Exact-five candidate-only commit。
+- [X] **Actor: Independent Plan-Reviewer.** New candidate-bound receipt。
+- [X] **Actor: Implementer.** Approved planning receipt sole commit。
+- [X] **Actor: Implementer.** Sole-test-path RED subject。
+- [X] **Actor: Tester.** Actual declared RED failure evidence。
+- [X] **Actor: Implementer.** Failing evidence sole commit。
+- [X] **Actor: Implementer.** Distinct sole-test-path green subject。
+- [X] **Actor: Tester.** Actual scoped passing evidence。
+- [X] **Actor: Implementer.** Passing evidence sole commit。
 - [ ] **Actor: Independent Reviewer.** Same-subject review evidence。
 - [ ] **Actor: Implementer.** Approved review sole commit。
 - [ ] **Actor: Planner / Plan-Creator.** Phase 4.5 factual alignment。
