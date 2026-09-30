@@ -1277,11 +1277,11 @@ All paths immutable/fresh；wrong/stale SHA/head/binding/schema/pair/writer/orde
 三 pairs 待 bounded repair/verification；六 Human-only 與 For lock 保持 open。
 No release/post-merge actions。
 
-## C38 Current-Head Single-Pair Classification（authoritative current routing）
+## C38 Current-Head Single-Pair Classification（completed predecessor routing）
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c38-planning-draft`。僅獨立分類 `nb1DH`/`4142124006`，
+Historical state：`c38-completed`。僅獨立分類 `nb1DH`/`4142124006`，
 不預填 outcome/reply/resolution，不重走 implementation evidence chain。
 固定 committed S `6bb8ee90895b566c3def0eb161cce51c14b0e601`、
 passing T commit `437f40788fe1b37b2bcd4698624a478d8e959a13`、
@@ -1364,4 +1364,100 @@ Wrong/stale binding、full PRRT ID、extra/missing keys/pairs、overwrite、非 
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
-僅 `nb1DH` 待獨立分類；七 Human-only threads 保持 open。No release/post-merge actions。
+`nb1DH` 已 reply `4142548955`／resolved；七 Human-only threads 保持 open。No release/post-merge actions。
+
+## C39 Current-Head Single-Pair Classification（authoritative current routing）
+
+### Goal / Outcome / Scope / Locked Decisions
+
+Current：`c39-planning-draft`。僅獨立分類 `ncxdC`/`4142518115`，
+不預填 outcome/reply/resolution，不重走 implementation evidence chain。
+固定 committed S `6bb8ee90895b566c3def0eb161cce51c14b0e601`、
+passing T commit `437f40788fe1b37b2bcd4698624a478d8e959a13`、
+approved V commit `6328c5a585eb9f4c884b80f8a526a4c09dd68d62`、
+audited live PR head `e8c9c6d94b90e79d92a20c20dee7f23cf4035b17`。
+
+C36 committed candidate `8a35890310d788d7834be035e891bb0b53baa96d`、
+approved planning receipt commit `55a65a036b20ad566d8a9a9fa410f33f5393fc2c`、
+classification sole commit `8306cf004eb86ac26da016a009d73da0582bc0be`；
+已 reply/resolved：`naZCW`→`4142061895`、`na5mB`→`4142062611`、
+`na5mE`→`4142063556`。C36 分出的 remaining ADDRESS 修復權限已交 C37，
+故其 exact permitted actions/route completed，不代表當時所有 ADDRESS 已修復。
+C37 committed review approval／Phase 4.5 alignment、separate alignment commit
+`84a3b0e5220d8efeaffa6e7a887797c5edc248aa`／push、actual-head audit、
+classification sole commit `8e881573d497f4489a760acc4adbb0b221141721`／push 與三個
+exact replies/resolutions 均完成：`nZm9h`→`4142431864`、
+`naZCY`→`4142432793`、`na5mM`→`4142433541`。
+C36/C37 completed predecessor routing；其早期 pending statements 僅當時 frozen provenance，
+本節 committed facts 與 trackers 是目前狀態，不能沿用過時 pending 作 current routing。
+
+
+C38 completed candidate `e1e331f21c478ccdbdaa2cfb51c6d209c69c9f6e`、
+approved receipt commit `774d03c4ccbca1f402905844c16d11424b41bdd3`、
+classification sole commit／pushed head `e8c9c6d94b90e79d92a20c20dee7f23cf4035b17`；
+`nb1DH`/`4142124006` 已 reply `4142548955`／resolved。
+C38 是 completed predecessor routing，本 C39 為唯一 current route。
+
+### Boundaries / Exclusions / Risks / Rollback
+
+Goal／In-Scope：一個 suffix thread/comment pair 的 independent classification。
+Modify：五份 standard planning artifacts。Written：independent review/classification receipts。
+ReadOnly：dev、source/tests/docs/diagram/governance、舊 evidence、unlisted threads。
+Deleted：無。Out-Of-Scope／Non-Goal：implementation、RED/green、新 API/runtime/backend/DI/lifecycle/
+architecture/ACL 決策、README/VERSION、PR approval／Human merge／release／post-merge。
+七個 Human-only pairs `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、
+`lfQmF`/`4091213944`、`nZI5n`/`4141010661`、
+For `nZm9d`/`4141203134` excluded/open。三份 untracked rejected receipts 保留原樣
+nonrouting provenance，不提交為本輪 evidence、不覆寫。原 mission/scope/outcomes/
+Runtime Registry protocol/測試策略/Architecture Visualization/follow-up missions 維持，
+无 stable-library/release 變更。
+Risks：過時 tracking、full PRRT IDs／suffix mismatch、stale head 或 reused receipt。
+Rollback：bounded planning repair 或新 immutable replacement receipt route，保留已提交／rejected
+evidence，不 broad reset、不覆寫 evidence、不虛勾歷史 classification。
+
+### Status / Allowed Transitions / Artifact Paths / Implementation Steps
+
+Plan-Creator 只在 feature worktree 修改
+`analysis/loaded-runtime-cache/requirements.md`、
+`analysis/loaded-runtime-cache/technical-spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`。
+Implementer exact-five non-merge candidate-only commit；Independent Plan-Reviewer 唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c39-candidate-40-hex-sha>.json`。
+Exact three keys `verdict`/`blocking_issues`/`copilot_feedback_triage`；
+verdict approved|needs-rework；blockers exact issue/file/fix nonempty string objects array，
+approved 空／needs-rework 非空；triage exact ADDRESS/DISCUSS/SKIP arrays。
+Implementer 原樣 separate sole evidence-only commit approved receipt；
+Planner 核 committed fixed S/T/V/live head 後 Independent Reviewer 唯一寫全新 immutable path：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-6bb8ee90895b566c3def0eb161cce51c14b0e601-e8c9c6d94b90e79d92a20c20dee7f23cf4035b17.json`。
+
+Single JSON exact eight keys `schema_version`、`topic`、
+`implementation_subject_commit`、`tester_evidence_commit`、
+`implementation_review_evidence_commit`、`pr_head_commit`、
+`classifications`、`recorded_by`；values integer 1、string loaded-runtime-cache、
+上述 fixed full lowercase 40-hex S/T/V/head、exact one-entry array、Independent Reviewer。
+Entry exact thread/comment/outcome/reply；thread string suffix `ncxdC`，comment string
+`4142518115`；outcome REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK；
+僅 REPLY_AND_RESOLVE reply 為 nonempty factual string，其餘 JSON null。
+Reviewer 不 commit；Implementer 原樣 separate sole evidence-only commit classification，
+bounded push，Planner 方可 route exact committed REPLY_AND_RESOLVE factual reply/resolve/live audit。
+ADDRESS 回 bounded repair；HUMAN_CHECK 保持 open。Planning approval 不授權 thread actions。
+
+Sequence：candidate → independent approved receipt → sole receipt commit →
+fixed-triple/live-head verification → independent single-pair classification →
+sole classification commit → bounded push → Planner exact permitted actions → live audit/human-check。
+Planning commits 留 local 至 fixed live-head classification 完成，不提前改 live head。
+publish-in-progress 僅進 pr-open；Human alone approval/merge/release/post-merge。
+
+### Validation / Acceptance / TestCase / Reviewer Handoff / Unresolved Items
+
+Actual committed S/T/V/passing/approved/full-SHA/live-head verification、fresh path、
+exact suffix pair/eight-key schema/writers/enum/nullability/actor order/sole commits/immutability。
+Wrong/stale binding、full PRRT ID、extra/missing keys/pairs、overwrite、非 sole commit
+一律 fail closed。不預填 future candidate SHA/verdict/classification/reply/resolution。
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+僅 `ncxdC` 待獨立分類；七 Human-only threads 保持 open。No release/post-merge actions。
