@@ -118,40 +118,68 @@ def _add_assignment_aliases(
     callables: dict[str, str],
 ) -> None:
     """Resolve fixed-point local aliases for forbidden modules and callables."""
-    assignments = [
-        statement
-        for statement in ast.walk(tree)
-        if isinstance(statement, (ast.Assign, ast.AnnAssign, ast.NamedExpr))
-    ]
+    assignments = _static_alias_bindings(tree)
     for _ in range(len(assignments) + 1):
         changed = False
-        for statement in assignments:
-            value = statement.value
-            targets = _assignment_target_names(statement)
-            if not targets or value is None:
-                continue
+        for target, value in assignments:
             resolved = _resolve_forbidden_alias(value, modules, callables)
             if resolved is None:
                 continue
             kind, imported_name = resolved
             aliases = modules if kind == "module" else callables
-            for target in targets:
-                if aliases.get(target) != imported_name:
-                    aliases[target] = imported_name
-                    changed = True
+            if aliases.get(target) != imported_name:
+                aliases[target] = imported_name
+                changed = True
         if not changed:
             break
 
 
-def _assignment_target_names(
-    statement: ast.Assign | ast.AnnAssign | ast.NamedExpr,
-) -> tuple[str, ...]:
-    """Return direct local-name targets while ignoring non-simple assignment targets."""
-    if isinstance(statement, ast.NamedExpr):
-        return (statement.target.id,)
-    if isinstance(statement, ast.AnnAssign):
-        return (statement.target.id,) if isinstance(statement.target, ast.Name) else ()
-    return tuple(target.id for target in statement.targets if isinstance(target, ast.Name))
+def _paired_literal_bindings(target: ast.expr, value: ast.expr) -> list[tuple[str, ast.expr]]:
+    """Pair literal elements without inferring unpacked or arbitrary iterable values."""
+    if isinstance(target, ast.Name):
+        return [(target.id, value)]
+    if (
+        isinstance(target, (ast.Tuple, ast.List))
+        and isinstance(value, (ast.Tuple, ast.List))
+        and len(target.elts) == len(value.elts)
+        and not any(isinstance(item, ast.Starred) for item in (*target.elts, *value.elts))
+    ):
+        return [
+            binding
+            for child_target, child_value in zip(target.elts, value.elts, strict=True)
+            for binding in _paired_literal_bindings(child_target, child_value)
+        ]
+    return []
+
+
+def _static_alias_bindings(tree: ast.AST) -> list[tuple[str, ast.expr]]:
+    """Collect literal assignment pairs and actual parameter/default pairs."""
+    bindings: list[tuple[str, ast.expr]] = []
+    for statement in ast.walk(tree):
+        if isinstance(statement, ast.Assign):
+            for target in statement.targets:
+                bindings.extend(_paired_literal_bindings(target, statement.value))
+        elif isinstance(statement, (ast.AnnAssign, ast.NamedExpr)):
+            if statement.value is not None:
+                bindings.extend(_paired_literal_bindings(statement.target, statement.value))
+        elif isinstance(statement, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+            arguments = statement.args
+            positional = [*arguments.posonlyargs, *arguments.args]
+            default_parameters = positional[len(positional) - len(arguments.defaults) :]
+            bindings.extend(
+                (parameter.arg, value)
+                for parameter, value in zip(default_parameters, arguments.defaults, strict=True)
+            )
+            bindings.extend(
+                (parameter.arg, value)
+                for parameter, value in zip(
+                    arguments.kwonlyargs,
+                    arguments.kw_defaults,
+                    strict=True,
+                )
+                if value is not None
+            )
+    return bindings
 
 
 def _resolve_forbidden_alias(
@@ -194,6 +222,7 @@ def _resolve_getattr_alias(
     module = modules.get(value.args[0].id)
     attribute = value.args[1].value
     if (module, attribute) in {
+        ("builtins", "__import__"),
         ("importlib", "import_module"),
         ("sys", "modules"),
     }:
@@ -259,7 +288,14 @@ def _is_forbidden_dynamic_import_call(
     """Return whether one call reaches ``importlib`` or ``builtins`` import machinery."""
     if not isinstance(statement, ast.Call):
         return False
-    return _is_forbidden_import_callable_expression(statement.func, modules, callables)
+    return any(
+        _is_forbidden_import_callable_expression(expression, modules, callables)
+        for expression in (
+            statement.func,
+            *statement.args,
+            *(keyword.value for keyword in statement.keywords),
+        )
+    )
 
 
 def _is_forbidden_import_callable_expression(

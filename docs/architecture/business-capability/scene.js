@@ -67,6 +67,9 @@ const BOXES = [
     name: 'Retention result', about: 'record 編碼並保存 bytes，回傳 Cached 或保留原 response 的 NotCached outcome。',
     texts: [ ['bl', 1164, 1008, 'Retention result'], ['bs', 1164, 1024, 'Cached / NotCached'] ] },
 
+  { id: 'future-integration', plane: 'consumer', x: 300, y: 1078, w: 480, h: 60, r: 10, dash: true,
+    name: 'Future integration boundary', about: 'Miss 停在外部 future integration boundary；跨 BC 組裝尚未實作。',
+    texts: [ ['bl', 324, 1104, 'Future integration boundary'], ['bs', 324, 1124, '外部組裝待後續 topic；不直接交給 runtime BC'] ] },
   { id: 'runtime-cache', plane: 'runtime', band: 'band-future-core', x: 200, y: 1240, w: 270, h: 104, r: 10, dash: true,
     name: 'Loaded Runtime Cache', about: '已交付 protocol-only runtime reuse contracts；外部 ACL 提供 local key，無 lifecycle。',
     texts: [ ['bl', 224, 1268, 'Loaded Runtime Cache'], ['bs', 224, 1290, 'protocol-only reuse contracts'], ['bs', 224, 1306, 'external ACL → local RuntimeReuseKey'], ['bn', 224, 1328, 'no backend / lifecycle'] ] },
@@ -106,7 +109,7 @@ const EDGES = [
   { from: 'reuse-decision', to: 'reuse-return', pts: [[885,946],[885,970],[695,970],[695,974]], label: { s: 'al', x: 800, y: 962, t: '安全 hit', anchor: 'center' } },
   { from: 'reuse-return', to: 'receiver', pts: [[856,1006],[1436,1006],[1436,300],[1386,300]], label: { s: 'al', x: 1452, y: 660, t: '回傳重用 response', rot: -90, anchor: 'center' } },
   { from: 'cache-store', to: 'unavailable-stop', pts: [[1215,946],[1215,962],[995,962],[995,974]], label: { s: 'al', x: 1105, y: 960, t: '讀取／解碼失敗', anchor: 'center' } },
-  { from: 'reuse-decision', to: 'runtime-cache', pts: [[885,946],[885,1100],[335,1100],[335,1234]], label: { s: 'al', x: 610, y: 1088, t: 'miss — future integration', anchor: 'center' } },
+  { from: 'reuse-decision', to: 'future-integration', pts: [[885,946],[885,1058],[540,1058],[540,1072]], label: { s: 'al', x: 690, y: 1050, t: 'miss — future integration', anchor: 'center' } },
   { from: 'runtime-cache', to: 'runtime-registry', pts: [[472,1292],[494,1292]], label: { s: 'al', x: 483, y: 1280, t: 'lookup / retain', anchor: 'center' } },
   { from: 'runtime-registry', to: 'runtime-preparation', pts: [[635,1346],[635,1358],[485,1358],[485,1364]], label: { s: 'al', x: 560, y: 1350, t: 'future lifecycle only', anchor: 'center' } },
   { from: 'runtime-preparation', to: 'execution', pts: [[642,1410],[800,1410],[800,1292],[864,1292]], label: { s: 'al', x: 814, y: 1360, t: 'runtime' } },
