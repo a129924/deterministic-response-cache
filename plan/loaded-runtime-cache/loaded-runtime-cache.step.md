@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: c42-review-ready
+phase: c42-publish-in-progress
 created: 2026-09-17
 ---
 
@@ -2122,9 +2122,9 @@ status=COMPLETE（historical draft handoff only，非 topic-complete）。
 
 ## C42 Bounded Scanner Repair（authoritative current routing）
 
-### C42 Committed Implementation Facts / Review-Ready Alignment
+### C42 Committed Approval Facts / Phase 4.5 Alignment
 
-Current：`c42-review-ready`。Actual committed candidate
+Current：`c42-publish-in-progress`。Actual committed candidate
 `b24291c8b2e9fba9faecf202617cee04165030d0`；
 approved Plan-Reviewer sole receipt commit `6d5937edfbe9b5f82e359e939860c2c0c356ec4c`；
 RED subject `c9f1a21e84c9c8a19010cdeace24a16075e459c3`；
@@ -2135,9 +2135,13 @@ RED collection／benign controls actual exit0，declared RED regression command 
 same-green-subject passing Tester 已提交，scoped pytest／Ruff／strict Pyright 三項 actual exit0。
 已核 immutable RED fixtures、green sole-test-path changes 與上述 committed evidence，
 canonical 四項 implementation steps 已完成，僅用 C42 facts，不借 C40 evidence。
-本 plan／step alignment 只同步已提交的 implementation／Tester 事實；
-Independent Reviewer verdict／review evidence、Phase4.5、publish／push、
-actual-head classification、reply／resolve 均仍 pending，不預填未來結果／SHA。
+Committed review-ready alignment `ea40c746b960830c6d90dacdf9bf6c0d76611838` 後，
+Independent Reviewer 已 approved，blocking_issues 空；
+unchanged sole review evidence commit `307361d621fbad9f9eabd8373b6e38816a3a3cc4`，
+綁定上述 same green S／committed passing T。Planner 已核 same-subject verification gate，
+本 plan／step Phase4.5 factual alignment 完成。
+Separate alignment commit／bounded push、actual-head audit／classification、sole classification
+commit／push、reply／resolve 均仍 pending，不預填未來 SHA／head／outcomes。
 Scope、schemas、兩新增與五舊 Human-only locks 及三份 rejected untracked provenance 不變。
 
 
@@ -2365,9 +2369,9 @@ Three pairs待完整repair/verification；兩新增與五舊Human-only保持open
 - [X] **Actor: Implementer.** Distinct sole-test-path green subject。
 - [X] **Actor: Tester.** Actual scoped passing evidence。
 - [X] **Actor: Implementer.** Passing evidence sole commit。
-- [ ] **Actor: Independent Reviewer.** Same-S committed passing implementation review。
-- [ ] **Actor: Implementer.** Approved review unchanged sole commit。
-- [ ] **Actor: Planner / Plan-Creator.** Phase4.5 factual alignment。
+- [X] **Actor: Independent Reviewer.** Same-S committed passing implementation review。
+- [X] **Actor: Implementer.** Approved review unchanged sole commit。
+- [X] **Actor: Planner / Plan-Creator.** Phase4.5 factual alignment。
 - [ ] **Actor: Implementer.** Separate alignment commit／bounded push。
 - [ ] **Actor: Planner / Independent Reviewer.** Actualhead audit／exact-three classification。
 - [ ] **Actor: Implementer.** Classification unchanged sole commit／bounded push。
