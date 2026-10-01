@@ -70,6 +70,18 @@ C11/C12/C13/C14 stages below are frozen provenance. C15 is the active successor 
 
 ## Implementation Steps
 
+C40 sole active implementation，等待本輪 approved candidate/RED/green route。
+- [ ] 1. C40 建立 isolated RED fixtures，涵蓋原兩個 comments、tuple/list prefix/suffix/star positions、
+   attribute siblings、For literal/post-use 與 unused/unknown/async controls，不執行 source。
+- [ ] 2. C40 starred assignment 僅建立 direct literal RHS 的確定 simple-name prefix/suffix aliases；
+   不推論 starred container、不展開 RHS starred、不建立 attribute alias。
+- [ ] 3. C40 synchronous For 僅對 simple-name target/direct tuple-list literal 明列 elements，
+   使用既有 known-forbidden resolver 建立 alias，後續 use 依既有 detector 判定。
+- [ ] 4. C40 保留所有 existing non-star/default/walrus/getattr/semantic/direct-import regressions，
+   green 完整 scoped tests/Ruff/strict Pyright passing，不新增 unused-callable binding 拒絕。
+
+## Historical Implementation Steps — C37（completed nonrouting provenance）
+
 C37 sole active implementation completion；每項由 actual green subject/pass evidence 證明。
 - [X] 1. C37 semantic-name target checks recursively inspect syntactic tuple/list/nested/starred targets only，
    excluding attribute targets and RHS/alias/iterable inference。
@@ -1664,11 +1676,11 @@ Wrong/stale binding、full PRRT ID、extra/missing keys/pairs、overwrite、非 
 - [X] **Actor: Implementer.** Classification sole commit／bounded push。
 - [X] **Actor: Planner / Implementer.** Exact permitted action／live audit。
 
-## C39 Current-Head Single-Pair Classification（authoritative current routing）
+## C39 Current-Head Single-Pair Classification（completed predecessor routing）
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c39-planning-draft`。僅獨立分類 `ncxdC`/`4142518115`，
+Historical state：`c39-completed`。僅獨立分類 `ncxdC`/`4142518115`，
 不預填 outcome/reply/resolution，不重走 implementation evidence chain。
 固定 committed S `6bb8ee90895b566c3def0eb161cce51c14b0e601`、
 passing T commit `437f40788fe1b37b2bcd4698624a478d8e959a13`、
@@ -1758,15 +1770,202 @@ Wrong/stale binding、full PRRT ID、extra/missing keys/pairs、overwrite、非 
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
-僅 `ncxdC` 待獨立分類；七 Human-only threads 保持 open。No release/post-merge actions。
+`ncxdC` 已 reply `4142682597`／resolved；當時七 Human-only locks 為 historical boundary。
+其中兩 binding locks 的解除僅見 C40 explicit contract；其餘五 locks 保持open。
 
 ### C39 Step Tracker
 
 - [X] **Actor: Plan-Creator.** Five-artifact draft／C38 factual alignment。
+- [X] **Actor: Implementer.** Exact-five candidate-only commit。
+- [X] **Actor: Independent Plan-Reviewer.** Candidate-bound standard receipt。
+- [X] **Actor: Implementer.** Approved receipt unchanged sole commit。
+- [X] **Actor: Planner.** Fixed S/T/V/live-head verification。
+- [X] **Actor: Independent Reviewer.** Immutable exact-single-pair classification。
+- [X] **Actor: Implementer.** Classification sole commit／bounded push。
+- [X] **Actor: Planner / Implementer.** Exact permitted action／live audit。
+
+
+## C40 Literal-Only Starred Assignment / For Binding Repair（authoritative current routing）
+
+### Goal / Outcome / Scope / Locked Decisions
+
+Current：`c40-planning-draft`。Human 授權 bounded contract exceptions，採 literal-only
+binding，exact two pairs `nZI5n`/`4141010661`、`nZm9d`/`4141203134`。
+Implementation sole path `tests/test_loaded_runtime_cache_bc_independence.py`；
+只擴張下列兩項 static alias-binding contract，後續 use 的 forbidden detection 沿既有規則。
+C39 completed candidate `880e6c1e5ffcd4b707b46431975f0459c645e09a`、
+approved receipt commit `358394d8f3feaf89ba430acb5c968f0398f328f0`、
+classification sole commit `238fb87654507b7f44d230493e2e8e068166da5d`；
+`ncxdC`/`4142518115` 已 reply `4142682597`／resolved。
+C39 completed predecessor routing；C40 是唯一 current route，未預填本輪 future SHA/verdict/outcomes。
+
+### Boundaries / In-Scope / Out-Of-Scope / Semantic Contract
+
+1. Starred assignment：direct tuple/list target，恰一個 starred target，RHS 是 direct
+   tuple/list literal 且不含 RHS starred expansion。當 literal 元素數 >= non-star target 數，
+   只配對確定位置的 prefix/suffix direct simple-name targets 至對應 RHS expressions，
+   prefix 從前、suffix 從尾；starred target 在前／中／後皆同規則。
+   Attribute sibling 不建立 local alias，但保留其他確定 simple-name siblings。
+   不推論 starred-container 內容/alias、不推論 arbitrary iterable、不展開 RHS starred；
+   非配對／不足元素不建立此新增 binding。既有 non-star nested literal pairing 維持。
+2. Synchronous `ast.For`：target 為 direct `ast.Name`，iter 為 direct tuple/list literal，
+   明列各 non-star element 用 existing known-forbidden resolver resolve 成 target 的 alias。
+   只記已知 forbidden module/callable binding；不 execute loop、不 general-evaluate elements、
+   不推論 unknown/arbitrary iterable，不擴張 AsyncFor/comprehension/generator expression。
+   literal 內 RHS starred 不展開，相關未知 branch 不建立新增 binding。
+
+只解除這兩個 literal-only exceptions 的既有 no-star/iterable binding 限制；
+其餘 prohibition 保留。Alias acquisition 本身不新增拒絕：
+unused callable bindings、ordinary/empty/nonpaired bindings 應接受；
+後續已知 forbidden callable/module use 依既有 detector 拒絕。
+`sys.modules` access 等 independently forbidden rules 保留，不能以 unused-binding
+control 壓制。既有 non-star paired/default/walrus/getattr/semantic checks、direct imports、
+fixtures/mocks/assertions 全部保留，fixtures 僅 AST static parsing 不 execution。
+
+Goal／In-Scope：這兩項 binding bypass 與對應 meaningful RED/green controls。
+Modify：五份 planning artifacts；RED/green sole test file。Written：declared actor evidence。
+Deleted：無。ReadOnly：dev/source/docs/architecture/diagram/governance/README/VERSION/
+舊 evidence與unlisted threads。Out-Of-Scope／Non-Goal：general interpreter/control flow/
+iterable expansion、starred container alias、其他 callable inference、production runtime/API/backend/DI/
+lifecycle、architecture/ACL、PR approval/merge/release/post-merge。
+剩餘五 Human-only locks `jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944`
+保持 excluded/open。此前兩個 binding locks 僅依本 C40 exact scope 解除，不影響其他決策。
+舊 rejected receipts 原樣 nonrouting，不覆寫／提交為本輪 evidence。
+原 mission/scope/outcomes/Runtime Registry protocol/Architecture Visualization/follow-up missions 維持。
+
+### Python implementation metadata（canonical python-implementation-plan profile）
+
+- Async-planning status：exempt — synchronous static AST analysis；AsyncFor 不是新增 inference target，
+  無 async runtime boundary、I/O/lifecycle/concurrency/timeout/retry/cancellation。
+- Module/package placement：sole `tests/test_loaded_runtime_cache_bc_independence.py`。
+- New public API：no。
+- Interface changes：no，production Protocol contracts 不變。
+- Breaking changes allowed：no，preserve既有 regression behaviors。
+- New dependencies：no，existing ast/pytest/tooling only。
+- Error-handling strategy：actual assertion failures交Tester，不改 production errors。
+- Typing strategy：existing Python 3.12 strict test typing，不用 Any/cast/dynamic import/runtime inspection。
+- Non-goals：no execution／general iterable inference；no starred-container alias；
+  no AsyncFor/comprehension/generator inference；no source/API/architecture changes。
+- Test categories：happy path（確定 literal bindings 的後續 forbidden use）；
+  edge cases（tuple/list、star 前中後、prefix/suffix/attribute siblings）；
+  failure paths（original two comment fixtures獨立 declared RED assertion failure）；
+  forbidden behaviors（no fixture execution、no RHS-starred/unknown iterable inference、
+  no rejection solely from unused callable）；
+  regression preservation（non-star/default/walrus/getattr/semantic/direct imports/assertions）。
+
+### Risks / Rollback
+
+Risks：prefix/suffix indexing 錯誤、attribute sibling污染local map、starred-container/
+RHS expansion誤推論、For binding 被當成即時 violation、unknown/async iterables被誤拒絕。
+以 positional edge/unused/ordinary/empty/unpaired/unknown controls 與舊 regressions驗證；
+independent review 檢查 literal-only bounds、existing resolver reuse與use-based detection。
+Rollback：僅本五檔planning bounded repair，或 sole test path 新 immutable repair subject；
+不得 broad reset、改 frozen predecessor原文scope或覆寫 evidence。Green needs-rework 須新
+immutable S 重走 Tester/passing sole evidence/Independent Reviewer/sole review/alignment/classification。
+舊 evidence與五Human locks保留。
+
+### Artifact Paths / Status / Allowed Transitions / Implementation Steps
+
+Plan-Creator feature worktree exact-five only：
+`analysis/loaded-runtime-cache/requirements.md`、
+`analysis/loaded-runtime-cache/technical-spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`。
+Implementer exact-five non-merge candidate-only commit → Independent Plan-Reviewer 唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c40-candidate-40-hex-sha>.json`。
+Single object exact verdict/blocking_issues/copilot_feedback_triage；
+verdict approved|needs-rework，blockers exact issue/file/fix nonempty string objects array
+(approved空／needs-rework非空)，triage exact ADDRESS/DISCUSS/SKIP arrays。
+Implementer 原樣 separate sole evidence-only approved receipt commit，Planner 才可route RED。
+
+Implementer sole-test-path RED subject（new isolated assertions，未修detector）→
+Tester collection/control/declared-failure evidence → Implementer sole failing evidence commit →
+distinct sole-test-path green S → Tester actual scoped passing evidence →
+Implementer sole passing evidence commit → Independent Reviewer same-S committed passing review →
+Implementer sole approved review commit → Planner Phase4.5 → Plan-Creator factual plan/step alignment →
+Implementer separate alignment commit/push → actual PR-head audit → Independent Reviewer exact-two
+classification → Implementer sole classification commit/push → Planner exact actions →
+Implementer specified replies/resolutions/live audit。
+creator-in-progress→tester-in-progress→review-ready→reviewer-in-progress→approved|needs-rework；
+approved→publish-in-progress→pr-open；needs-rework 要新S与完整 chain。
+Human alone PR approval/merge/release/post-merge。
+
+Tester 唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c40-red-subject-40-hex-sha>.json`
+或 `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<c40-green-subject-40-hex-sha>.json`。
+Exact six keys schema_version/topic/implementation_subject_commit/status/commands/recorded_by；
+integer1、loaded-runtime-cache、actual full lowercase40hex subject SHA、passing|failing、
+nonempty array of exact command(nonempty string)/exit_code(integer) objects、Tester。
+Passing 要全部actual0；failing至少一nonzero，RED需指定新增 assertion failure，
+不可syntax/dependency/無關錯誤。Tester不commit；Implementer各自原樣separate sole commit。
+
+Independent Reviewer僅消費committed passing same-greenS，唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<c40-green-subject-40-hex-sha>.json`。
+Exact seven keys schema_version/topic/implementation_subject_commit/tester_evidence_commit/
+verdict/blocking_issues/recorded_by：integer1、loaded-runtime-cache、same fullgreenS、
+actual full sole passingTcommit、approved|needs-rework、stringarray(approved空／needs-rework非空)、
+Independent Reviewer。Reviewer不commit；Implementer原樣separate sole commit。
+
+### Validation / Acceptance / TestCase / Executable Commands
+
+RED含兩 original comment fixtures各自 isolated source；
+assignment tuple/list、star前中後、確定 prefix/suffix simple-name與attribute siblings；
+For directtuple/list明列known forbidden elements及後續use。Controls：
+unused callable bindings、ordinary/empty/unpaired targets、RHSstarred／unknown iterable、
+AsyncFor/comprehension/generator 不新增inference拒絕；sys.modules獨立禁則仍測。
+New tests names含 `c40`，forbidden cases另含 `rejects`，benign controls不含rejects。
+在對應immutable subject實際執行：
+- RED collection：`uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c40 --collect-only -q`。
+- RED controls：`uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k 'c40 and not rejects' -q`。
+- RED declaredfailure：`uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c40 -q`。
+- Green scanner/runtime regressions：
+  `uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py -q`。
+- Ruff：`uv run --frozen ruff check tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py`。
+- Strict Pyright：`uv run --frozen pyright tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py`。
+No:tach 保證明列tests真正執行；config reference `pyproject.toml` [tool.pytest.ini_options]、
+[tool.pyright](Python3.12 strict)、[tool.ruff]/[tool.ruff.lint](py312/ALL)/testS101ignore。
+Collection/control成功；RED actual declaredfailure；green全部actual0，
+不預填results或擴config。
+
+### Current-Head Classification / Reviewer Handoff / Unresolved Items
+
+完整review/alignment/push與audit後 Independent Reviewer唯一寫fresh immutable
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<c40-green-subject-40-hex-sha>-<actual-current-pr-head-40-hex-sha>.json`。
+Exact eight keys schema_version/topic/implementation_subject_commit/tester_evidence_commit/
+implementation_review_evidence_commit/pr_head_commit/classifications/recorded_by；
+integer1、loaded-runtime-cache、actualfullsameS/solepassingT/soleapprovedV/auditedhead、
+exacttwo-entryarray、Independent Reviewer。Entry exactthread/comment/outcome/reply，
+string suffixIDs `nZI5n`/`4141010661`、`nZm9d`/`4141203134` 各一次，
+outcome REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK；只有REPLY_AND_RESOLVE reply
+nonempty factualstring，其餘JSONnull。Reviewer不commit，Implementer unchangedseparate sole
+classification commit/push，Planner才routeexactpermitted replies/resolutions；ADDRESSboundedrepair、
+HUMAN_CHECKopen。Planning approval不是threadactionauthority。
+Wrong/staleSHA/head/binding/schema/pair/writer/order/nonsole/overwrite一律failclosed，
+不得預填futureSHA/verdict/outcome/reply/resolution。
+
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+兩 pairs待本輪完整repair/verification；五Human-only保持open。No release/post-merge actions。
+
+### C40 Step Tracker
+
+- [X] **Actor: Plan-Creator.** Exact-five bounded literal-only draft／C39 factual alignment。
 - [ ] **Actor: Implementer.** Exact-five candidate-only commit。
-- [ ] **Actor: Independent Plan-Reviewer.** Candidate-bound standard receipt。
+- [ ] **Actor: Independent Plan-Reviewer.** Candidate-bound receipt。
 - [ ] **Actor: Implementer.** Approved receipt unchanged sole commit。
-- [ ] **Actor: Planner.** Fixed S/T/V/live-head verification。
-- [ ] **Actor: Independent Reviewer.** Immutable exact-single-pair classification。
-- [ ] **Actor: Implementer.** Classification sole commit／bounded push。
-- [ ] **Actor: Planner / Implementer.** Exact permitted action／live audit。
+- [ ] **Actor: Implementer.** Sole-test-path RED subject。
+- [ ] **Actor: Tester.** Actual RED collection/controls/failure evidence。
+- [ ] **Actor: Implementer.** Failing evidence sole commit。
+- [ ] **Actor: Implementer.** Distinct sole-test-path green subject。
+- [ ] **Actor: Tester.** Actual scoped passing evidence。
+- [ ] **Actor: Implementer.** Passing evidence sole commit。
+- [ ] **Actor: Independent Reviewer.** Same-S committed passing review。
+- [ ] **Actor: Implementer.** Approved review sole commit。
+- [ ] **Actor: Planner / Plan-Creator.** Phase4.5 factual alignment。
+- [ ] **Actor: Implementer.** Separate alignment commit/push。
+- [ ] **Actor: Planner / Independent Reviewer.** Actualhead audit/exact-two classification。
+- [ ] **Actor: Implementer.** Classification sole commit/push。
+- [ ] **Actor: Planner / Implementer.** Exact permitted actions/live audit。
