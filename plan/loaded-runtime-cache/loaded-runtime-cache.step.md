@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: c42-plan-authoring
+phase: c42-review-ready
 created: 2026-09-17
 ---
 
@@ -70,11 +70,11 @@ C11/C12/C13/C14 stages below are frozen provenance. C15 is the active successor 
 
 ## Implementation Steps
 
-C42 sole active bounded implementation；四項pending，不沿用C40 evidence宣稱完成。
-- [ ] 1. C42 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增 isolated RED fixtures，涵蓋三個 original comments、module-order／tuple-list／single-multi alternatives、兩BC sync-async definition names及benign controls；不修scanner、不執行fixturesource。
-- [ ] 2. C42 在 `tests/test_loaded_runtime_cache_bc_independence.py` 將 importlib.__import__ direct/imported/assigned aliases 的後續使用纳入既有forbidden-callable detection；保留getter bounds及unused-callable controls。
-- [ ] 3. C42 在 `tests/test_loaded_runtime_cache_bc_independence.py` 的 semantic declaration check 納入 FunctionDef/AsyncFunctionDef definition NAME，兩BC foreign names受既有ownership assertion約束，普通names/string/attribute不誤判。
-- [ ] 4. C42 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保存既有syncFor/simpletarget/directtuple-list/nonstar elements的全部knownmodule alternatives，依任一alternative與後續use構成既有forbidden surface判定；保留既有regressions与controls，scopedpytest/Ruff/strictPyright須actualpassing。
+C42 sole active bounded implementation；四項已由 C42 same-subject committed passing Tester evidence 完成，不沿用C40 evidence。
+- [X] 1. C42 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增 isolated RED fixtures，涵蓋三個 original comments、module-order／tuple-list／single-multi alternatives、兩BC sync-async definition names及benign controls；不修scanner、不執行fixturesource。
+- [X] 2. C42 在 `tests/test_loaded_runtime_cache_bc_independence.py` 將 importlib.__import__ direct/imported/assigned aliases 的後續使用纳入既有forbidden-callable detection；保留getter bounds及unused-callable controls。
+- [X] 3. C42 在 `tests/test_loaded_runtime_cache_bc_independence.py` 的 semantic declaration check 納入 FunctionDef/AsyncFunctionDef definition NAME，兩BC foreign names受既有ownership assertion約束，普通names/string/attribute不誤判。
+- [X] 4. C42 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保存既有syncFor/simpletarget/directtuple-list/nonstar elements的全部knownmodule alternatives，依任一alternative與後續use構成既有forbidden surface判定；保留既有regressions与controls，scopedpytest/Ruff/strictPyright須actualpassing。
 
 ## Historical Implementation Steps — C40（completed nonrouting provenance）
 
@@ -2122,9 +2122,28 @@ status=COMPLETE（historical draft handoff only，非 topic-complete）。
 
 ## C42 Bounded Scanner Repair（authoritative current routing）
 
+### C42 Committed Implementation Facts / Review-Ready Alignment
+
+Current：`c42-review-ready`。Actual committed candidate
+`b24291c8b2e9fba9faecf202617cee04165030d0`；
+approved Plan-Reviewer sole receipt commit `6d5937edfbe9b5f82e359e939860c2c0c356ec4c`；
+RED subject `c9f1a21e84c9c8a19010cdeace24a16075e459c3`；
+failing Tester sole commit `84cd02121104d1f8d44a100670d87918ae7b934d`；
+green implementation subject `528de65144f0bdaf7a38831562b37f75fe8057ff`；
+passing Tester sole commit `6eafc4b60f727f36539a9c17d32b3e4162b1d868`。
+RED collection／benign controls actual exit0，declared RED regression command actual exit1；
+same-green-subject passing Tester 已提交，scoped pytest／Ruff／strict Pyright 三項 actual exit0。
+已核 immutable RED fixtures、green sole-test-path changes 與上述 committed evidence，
+canonical 四項 implementation steps 已完成，僅用 C42 facts，不借 C40 evidence。
+本 plan／step alignment 只同步已提交的 implementation／Tester 事實；
+Independent Reviewer verdict／review evidence、Phase4.5、publish／push、
+actual-head classification、reply／resolve 均仍 pending，不預填未來結果／SHA。
+Scope、schemas、兩新增與五舊 Human-only locks 及三份 rejected untracked provenance 不變。
+
+
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c42-planning-draft`。同一 static BC-independence scanner repair mission，
+Historical draft state：`c42-planning-draft`。同一 static BC-independence scanner repair mission，
 exact three pairs `ndeMo`/`4142807482`、`n2sm8`/`4153137682`、
 `n2sm-`/`4153137690`。RED／green implementation sole path
 `tests/test_loaded_runtime_cache_bc_independence.py`；不改 production source。
@@ -2337,15 +2356,15 @@ Three pairs待完整repair/verification；兩新增與五舊Human-only保持open
 ### C42 Step Tracker
 
 - [X] **Actor: Plan-Creator.** Exact-five three-finding bounded repair draft／C41 factual alignment。
-- [ ] **Actor: Implementer.** Exact-five candidate-only commit。
-- [ ] **Actor: Independent Plan-Reviewer.** Candidate-bound receipt。
-- [ ] **Actor: Implementer.** Approved receipt unchanged sole commit。
-- [ ] **Actor: Implementer.** Sole-test-path RED subject。
-- [ ] **Actor: Tester.** Actual RED collection／controls／failure evidence。
-- [ ] **Actor: Implementer.** Failing evidence sole commit。
-- [ ] **Actor: Implementer.** Distinct sole-test-path green subject。
-- [ ] **Actor: Tester.** Actual scoped passing evidence。
-- [ ] **Actor: Implementer.** Passing evidence sole commit。
+- [X] **Actor: Implementer.** Exact-five candidate-only commit。
+- [X] **Actor: Independent Plan-Reviewer.** Candidate-bound receipt。
+- [X] **Actor: Implementer.** Approved receipt unchanged sole commit。
+- [X] **Actor: Implementer.** Sole-test-path RED subject。
+- [X] **Actor: Tester.** Actual RED collection／controls／failure evidence。
+- [X] **Actor: Implementer.** Failing evidence sole commit。
+- [X] **Actor: Implementer.** Distinct sole-test-path green subject。
+- [X] **Actor: Tester.** Actual scoped passing evidence。
+- [X] **Actor: Implementer.** Passing evidence sole commit。
 - [ ] **Actor: Independent Reviewer.** Same-S committed passing implementation review。
 - [ ] **Actor: Implementer.** Approved review unchanged sole commit。
 - [ ] **Actor: Planner / Plan-Creator.** Phase4.5 factual alignment。

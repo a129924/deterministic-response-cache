@@ -308,7 +308,7 @@ paths, source contracts, configuration, and adjacent BCs untouched.
 
 ## Implementation Steps
 
-C42 sole active bounded implementation；以下四項尚未實作，禁止由 C40 passing evidence 推論完成。
+C42 sole active bounded implementation；以下四項已有同 subject committed passing Tester evidence，完成事實見 C42 review-ready alignment。
 1. C42 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增 isolated RED fixtures，涵蓋三個 original comments、module-order／tuple-list／single-multi alternatives、兩BC sync-async definition names及benign controls；不修scanner、不執行fixturesource。
 2. C42 在 `tests/test_loaded_runtime_cache_bc_independence.py` 將 importlib.__import__ direct/imported/assigned aliases 的後續使用纳入既有forbidden-callable detection；保留getter bounds及unused-callable controls。
 3. C42 在 `tests/test_loaded_runtime_cache_bc_independence.py` 的 semantic declaration check 納入 FunctionDef/AsyncFunctionDef definition NAME，兩BC foreign names受既有ownership assertion約束，普通names/string/attribute不誤判。
@@ -2771,9 +2771,28 @@ status=COMPLETE（historical draft handoff only，非 topic-complete）。
 
 ## C42 Bounded Scanner Repair（authoritative current routing）
 
+### C42 Committed Implementation Facts / Review-Ready Alignment
+
+Current：`c42-review-ready`。Actual committed candidate
+`b24291c8b2e9fba9faecf202617cee04165030d0`；
+approved Plan-Reviewer sole receipt commit `6d5937edfbe9b5f82e359e939860c2c0c356ec4c`；
+RED subject `c9f1a21e84c9c8a19010cdeace24a16075e459c3`；
+failing Tester sole commit `84cd02121104d1f8d44a100670d87918ae7b934d`；
+green implementation subject `528de65144f0bdaf7a38831562b37f75fe8057ff`；
+passing Tester sole commit `6eafc4b60f727f36539a9c17d32b3e4162b1d868`。
+RED collection／benign controls actual exit0，declared RED regression command actual exit1；
+same-green-subject passing Tester 已提交，scoped pytest／Ruff／strict Pyright 三項 actual exit0。
+已核 immutable RED fixtures、green sole-test-path changes 與上述 committed evidence，
+canonical 四項 implementation steps 已完成，僅用 C42 facts，不借 C40 evidence。
+本 plan／step alignment 只同步已提交的 implementation／Tester 事實；
+Independent Reviewer verdict／review evidence、Phase4.5、publish／push、
+actual-head classification、reply／resolve 均仍 pending，不預填未來結果／SHA。
+Scope、schemas、兩新增與五舊 Human-only locks 及三份 rejected untracked provenance 不變。
+
+
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c42-planning-draft`。同一 static BC-independence scanner repair mission，
+Historical draft state：`c42-planning-draft`。同一 static BC-independence scanner repair mission，
 exact three pairs `ndeMo`/`4142807482`、`n2sm8`/`4153137682`、
 `n2sm-`/`4153137690`。RED／green implementation sole path
 `tests/test_loaded_runtime_cache_bc_independence.py`；不改 production source。
