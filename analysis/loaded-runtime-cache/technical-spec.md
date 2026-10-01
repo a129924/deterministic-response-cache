@@ -1992,11 +1992,11 @@ canonical C40 completed implementation 及既有 direct imports／fixtures／moc
 Workflow state：current_step=c41-plan-authoring；next_step=bounded-candidate-commit；
 status=COMPLETE（historical draft handoff only，非 topic-complete）。
 
-## C42 Bounded Scanner Repair（authoritative current routing）
+## C42 Bounded Scanner Repair（completed predecessor routing）
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c42-planning-draft`。同一 static BC-independence scanner repair mission，
+Historical draft state：`c42-planning-draft`。同一 static BC-independence scanner repair mission，
 exact three pairs `ndeMo`/`4142807482`、`n2sm8`/`4153137682`、
 `n2sm-`/`4153137690`。RED／green implementation sole path
 `tests/test_loaded_runtime_cache_bc_independence.py`；不改 production source。
@@ -2046,7 +2046,7 @@ Actual classifications：`ndeMj` REPLY_AND_RESOLVE，
 MERGEABLE／CLEAN。C41 permitted action已完成、三ADDRESS交本C42、兩Human-check維持open，
 故 C41 是 completed predecessor routing，不表示其 ADDRESS 已修復。
 C39/C40 facts、evidence 與原 literal-only contract 保留；不重建或覆寫其 evidence chain。
-C42 是唯一 current route；舊 current／pending statements 是當時 frozen provenance。
+C42 completed predecessor routing；current route見C43，舊 current／pending statements 是當時 frozen provenance。
 
 ### Boundaries / In-Scope / Out-Of-Scope / ReadOnly / Written / Deleted / Modify / Goal / Non-Goal
 
@@ -2180,7 +2180,7 @@ Reviewer不commit；Implementerunchangedseparate soleclassification commit/push�
 Planner才routeexactcommittedpermittedreply/resolve，ADDRESSboundedrepair、HUMAN_CHECKopen。
 Planning approval不授權thread actions。Wrong/stale SHA/head/topic/subject/pair/schema/writer/order/
 nonsole/overwrite全部failclosed，不覆寫receipt，不跨topic借evidence。
-Three pairs待完整repair/verification；兩新增與五舊Human-only保持open。No release/post-merge actions。
+Three pairs的C42 repair/verification與exactactions已完成，actualfacts見C43；七Human-only保持open。
 所有 subject／evidence／candidate／PR-head bindings 均須 actual full lowercase 40-hex SHA，
 禁止 abbreviated／symbolic／nonexistent／cross-subject bindings。
 
@@ -2204,3 +2204,139 @@ Three pairs待完整repair/verification；兩新增與五舊Human-only保持open
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
+
+## C43 Current-Head Six-Pair Classification（authoritative current routing）
+
+### Goal / Outcome / Scope / Locked Decisions
+
+Current：`c43-planning-draft`。僅對下列六個 exact suffix thread/comment pairs 建立
+independent current-head classification；不新增 scanner grammar／code／architecture decisions，
+不預填 outcome／reply／resolution。
+固定 same-topic implementation subject `528de65144f0bdaf7a38831562b37f75fe8057ff`、
+passing Tester sole commit `6eafc4b60f727f36539a9c17d32b3e4162b1d868`、
+approved Independent Reviewer sole commit `307361d621fbad9f9eabd8373b6e38816a3a3cc4`、
+audited live PR head `39e689ee482aa2277d158bf2dc9952369b0c03b1`。
+
+| Thread suffix | Comment ID | Classification input（非預定 outcome／修復要求） |
+| --- | --- | --- |
+| `n23dL` | `4153205657` | C40 tracker 與 committed classification facts。 |
+| `n23dS` | `4153205667` | C40 evidence ancestor-chain comment／current Git facts。 |
+| `n23da` | `4153205676` | Known module __dict__ literal-lookup grammar 建議。 |
+| `n23df` | `4153205681` | Registry／future runtime preparation integration boundary 建議。 |
+| `n3P7r` | `4153360172` | C41 tracker 與 committed classification facts。 |
+| `n3P71` | `4153360189` | Forbidden callable __call__ grammar 建議。 |
+
+本輪分類不授權 __dict__ lookup／__call__ grammar 或 Registry preparation architecture實作；
+ADDRESS 仍須 Planner bounded repair 判定，不解除 locked scope／ownership。
+七個 Human-only pairs `ndeMt`/`4142807492`、`n2sm3`/`4153137673`、
+`jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944`
+excluded/open；不因分類或一般 Execution Authorized 擴其權限。
+
+### C40 / C41 / C42 Committed Facts / Tracking Alignment
+
+C40 candidate `077884842c5e97e27ea3ece914764096ff42afff`、
+approved planning receipt sole commit `e030601e8cffdbb8a550d456caad61b3c06f327f`、
+RED `a11f4b6f2ad364b2bc255397931657cce4eb568f`、
+failing T `f3aeb5317f829f182c595967d491c666c2e5e92b`、
+green S `29db32481975381ef71c03ce616a32559963f323`、
+passing T `020777486cf6b4acd6981e5d7ac542315ff19984`、
+approved V `25d2f96286b0f0b36432a1452cb3823bddf4cb9d`、
+alignment／push `27cbddf7cff89f19fee5f8a5a4b4b06da133d84f`、
+classification sole commit／push `36d7c96b19efded4b177dfd943647a05afcc872f`；
+`nZI5n`→reply`4153169815`、`nZm9d`→reply`4153172943` 均resolved。
+C41 candidate `8af6b530ca750cff9a29522b04868db20eeac9bf`、
+approved planning receipt sole commit `eb884726c9b1ae7fbc392517940914780b4b7a73`、
+classification sole commit／push `fa1ebe9a55cb8e2d3244ff488a2d4b48b865f6c7`；
+`ndeMj`→reply`4153327923` resolved，三 ADDRESS 修復交 C42、兩 HUMAN_CHECK 保持open；
+C41 completed 只表示其 permitted actions／handoff 已完成，不虛勾 ADDRESS／HUMAN 需求。
+
+C42 candidate `b24291c8b2e9fba9faecf202617cee04165030d0`、
+approved planning receipt sole commit `6d5937edfbe9b5f82e359e939860c2c0c356ec4c`、
+RED `c9f1a21e84c9c8a19010cdeace24a16075e459c3`、
+failing T `84cd02121104d1f8d44a100670d87918ae7b934d`；
+same green S／passing T／approved V 如上，
+review-ready alignment `ea40c746b960830c6d90dacdf9bf6c0d76611838`，
+Phase4.5 alignment／push `0e5d804777827122ebff2e3d757f572ceb028b83`，
+actual-head audit／exact-three classification sole commit／push
+`39e689ee482aa2277d158bf2dc9952369b0c03b1`。
+`ndeMo`/`4142807482`→reply`4153739445`、
+`n2sm8`/`4153137682`→reply`4153741053`、
+`n2sm-`/`4153137690`→reply`4153743070`，均remote isResolved=true。
+C42 verification與exact permitted actions已完成；C40/C41/C42 completed predecessor routing，
+early pending/current 字樣是當時 frozen provenance，C43 是唯一 current route。
+核對時 PR #7 head為上述 audited head、MERGEABLE／CLEAN。
+
+針對 `n23dS`，本輪 current Git 唯讀查證 C40 full S/T/V 均為上述 audited head ancestor：
+三次 `git merge-base --is-ancestor <C40-full-S-or-T-or-V> 39e689ee482aa2277d158bf2dc9952369b0c03b1`
+各 exit0。留言提及 `30b1e898…` 在 local 無可解析 commit，未取得完整 SHA／歷史 tree；
+不猜 full SHA、parent、合法性或歷史結論。此為分類輸入，非預判 Reviewer outcome。
+不得以 current ancestry 推論 unavailable historic revision 合法，也不重寫任何 evidence chain。
+
+### Boundaries / Exclusions / Risks / Rollback
+
+Goal／In-Scope：six-pair current-head classification 及上述 factual tracking alignment。
+Modify：五份 standard planning artifacts。Written：declared independent planning／classification receipts。
+ReadOnly：dev、source/tests/docs/diagram/governance、README/VERSION/configuration、
+舊 evidence 與 unlisted threads。Deleted：無。
+Out-Of-Scope／Non-Goal：implementation／RED／green、任何新 scanner grammar、runtime/API/backend/
+DI/lifecycle、architecture/ACL、PR approval／merge／release／post-merge。
+三份 rejected untracked receipts 保留原樣 nonrouting，不覆寫、不提交為本輪 evidence。
+原 mission/scope/outcomes/Runtime Registry protocol/測試策略/Architecture Visualization/
+follow-up missions 不變；無 stable-library／release 變更。
+Risks：過時 tracking、stale head、錯誤 suffix binding、用 unavailable history 猜 verdict、
+將 ADDRESS 誤認新 code／architecture 權限。
+Rollback：bounded planning repair 或新 immutable successor route，不 broad reset、
+不覆寫 evidence、不虛勾未執行的六筆分類／reply／resolve。
+
+### Artifact Paths / Status / Allowed Transitions / Actor Sequence
+
+Plan-Creator feature worktree exact-five：
+`analysis/loaded-runtime-cache/requirements.md`、
+`analysis/loaded-runtime-cache/technical-spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`。
+Implementer exact-five non-merge candidate-only commit → Independent Plan-Reviewer 唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c43-candidate-40-hex-sha>.json`。
+Single object exact verdict/blocking_issues/copilot_feedback_triage；
+verdict approved|needs-rework；blockers exact issue/file/fix nonempty string objects array，
+approved空／needs-rework非空；triage exact ADDRESS/DISCUSS/SKIP arrays。
+Implementer unchanged separate sole evidence-only approved receipt commit；
+candidate／approved receipt 留 LOCAL，直到 fixed-head classification 寫完，不提前 push 改 remote head。
+Planner 核 committed fixed S/T/V same-subject passing／approved及actual live head，
+Independent Reviewer 唯一寫 fresh immutable exact path：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-528de65144f0bdaf7a38831562b37f75fe8057ff-39e689ee482aa2277d158bf2dc9952369b0c03b1.json`。
+
+Classification single JSON object，exact eight keys schema_version/topic/
+implementation_subject_commit/tester_evidence_commit/implementation_review_evidence_commit/
+pr_head_commit/classifications/recorded_by；
+integer1、loaded-runtime-cache、上述fixedfull S/T/V/head、exactsixentryarray、Independent Reviewer。
+所有candidate／subject／evidence／head bindings均actualfull lowercase40hex SHA，
+禁止symbolic／abbreviated／nonexistent／cross-subject。
+Entries exactthread/comment/outcome/reply；thread/comment string為上述suffix/comment各一次，
+不用fullPRRT IDs；outcome REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK，
+僅REPLY_AND_RESOLVE reply是nonemptyfactualstring，其餘JSONnull。
+Reviewer不commit；Implementer unchangedseparate soleclassification commit／normalboundedpush，
+Planner才可routeexactcommittedREPLY_AND_RESOLVE原樣factualreply／resolve／liveaudit。
+ADDRESS返Planner boundedrepair判定；HUMAN_CHECK保持open。
+Planning approval不是thread actionauthority；classification與reply／resolve是分離routes。
+Push後僅planning／receipt descendants不改reviewedsource；actualhead或binding不符一律停Planner，
+不可偷換fixedhead、覆寫receipt或推論newscope。
+publish-in-progress只進pr-open；Human alone PRapproval／merge／release／post-merge。
+
+### Validation / Acceptance / TestCase / Reviewer Handoff / Unresolved Items
+
+核actualcommittedfixed S/T/V／same-subject passing／approved、freshpath不存在、
+liveheadexact一致、sixpair/schema/writers/enum/nullability/solecommits/immutability/actororder。
+Wrong/stalebinding、extra/missingkeys/pairs、wrongwriter、overwrite、nonsolecommit全部failclosed。
+不新增implementationsteps／tests／T或V，不預填futurecandidateSHA／verdict／sixoutcomes/replies/resolutions。
+canonicalC42四項completedimplementation與oldregressions/directimports/fixtures/mocks/assertions保留。
+本六筆待Independent Reviewer分類，七Human-only保持open；no release／post-mergeaction。
+
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+
+Workflow state：current_step=c43-plan-authoring；next_step=bounded-candidate-commit；
+status=COMPLETE（draft handoff only，非approval／classification／topic-complete）。
