@@ -70,14 +70,14 @@ C11/C12/C13/C14 stages below are frozen provenance. C15 is the active successor 
 
 ## Implementation Steps
 
-C40 sole active implementation，等待本輪 approved candidate/RED/green route。
-- [ ] 1. C40 建立 isolated RED fixtures，涵蓋原兩個 comments、tuple/list prefix/suffix/star positions、
+C40 sole active implementation，四項已有 committed same-green-subject passing Tester evidence。
+- [X] 1. C40 建立 isolated RED fixtures，涵蓋原兩個 comments、tuple/list prefix/suffix/star positions、
    attribute siblings、For literal/post-use 與 unused/unknown/async controls，不執行 source。
-- [ ] 2. C40 starred assignment 僅建立 direct literal RHS 的確定 simple-name prefix/suffix aliases；
+- [X] 2. C40 starred assignment 僅建立 direct literal RHS 的確定 simple-name prefix/suffix aliases；
    不推論 starred container、不展開 RHS starred、不建立 attribute alias。
-- [ ] 3. C40 synchronous For 僅對 simple-name target/direct tuple-list literal 明列 elements，
+- [X] 3. C40 synchronous For 僅對 simple-name target/direct tuple-list literal 明列 elements，
    使用既有 known-forbidden resolver 建立 alias，後續 use 依既有 detector 判定。
-- [ ] 4. C40 保留所有 existing non-star/default/walrus/getattr/semantic/direct-import regressions，
+- [X] 4. C40 保留所有 existing non-star/default/walrus/getattr/semantic/direct-import regressions，
    green 完整 scoped tests/Ruff/strict Pyright passing，不新增 unused-callable binding 拒絕。
 
 ## Historical Implementation Steps — C37（completed nonrouting provenance）
@@ -1787,9 +1787,24 @@ Wrong/stale binding、full PRRT ID、extra/missing keys/pairs、overwrite、非 
 
 ## C40 Literal-Only Starred Assignment / For Binding Repair（authoritative current routing）
 
+### C40 Committed Implementation Facts / Independent Review Pending
+
+Current：`c40-review-ready`。Actual committed candidate
+`077884842c5e97e27ea3ece914764096ff42afff`；
+approved Plan-Reviewer receipt commit `e030601e8cffdbb8a550d456caad61b3c06f327f`；
+RED subject `a11f4b6f2ad364b2bc255397931657cce4eb568f`；
+failing Tester sole commit `f3aeb5317f829f182c595967d491c666c2e5e92b`；
+green subject `29db32481975381ef71c03ce616a32559963f323`；
+passing Tester sole commit `020777486cf6b4acd6981e5d7ac542315ff19984`。
+本兩檔 state alignment 只記 committed facts，canonical 四項 implementation 已完成。
+Independent Reviewer、review commit、Phase4.5、publish、actual-head classification、
+reply/resolve 均 pending，不預填 future SHA/verdict/head/outcome。
+Scope/schema/five Human locks/old provenance 不變，不建立新 candidate chain。
+
+
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c40-planning-draft`。Human 授權 bounded contract exceptions，採 literal-only
+Historical draft state：`c40-planning-draft`。Human 授權 bounded contract exceptions，採 literal-only
 binding，exact two pairs `nZI5n`/`4141010661`、`nZm9d`/`4141203134`。
 Implementation sole path `tests/test_loaded_runtime_cache_bc_independence.py`；
 只擴張下列兩項 static alias-binding contract，後續 use 的 forbidden detection 沿既有規則。
@@ -1953,15 +1968,15 @@ Wrong/staleSHA/head/binding/schema/pair/writer/order/nonsole/overwrite一律fail
 ### C40 Step Tracker
 
 - [X] **Actor: Plan-Creator.** Exact-five bounded literal-only draft／C39 factual alignment。
-- [ ] **Actor: Implementer.** Exact-five candidate-only commit。
-- [ ] **Actor: Independent Plan-Reviewer.** Candidate-bound receipt。
-- [ ] **Actor: Implementer.** Approved receipt unchanged sole commit。
-- [ ] **Actor: Implementer.** Sole-test-path RED subject。
-- [ ] **Actor: Tester.** Actual RED collection/controls/failure evidence。
-- [ ] **Actor: Implementer.** Failing evidence sole commit。
-- [ ] **Actor: Implementer.** Distinct sole-test-path green subject。
-- [ ] **Actor: Tester.** Actual scoped passing evidence。
-- [ ] **Actor: Implementer.** Passing evidence sole commit。
+- [X] **Actor: Implementer.** Exact-five candidate-only commit。
+- [X] **Actor: Independent Plan-Reviewer.** Candidate-bound receipt。
+- [X] **Actor: Implementer.** Approved receipt unchanged sole commit。
+- [X] **Actor: Implementer.** Sole-test-path RED subject。
+- [X] **Actor: Tester.** Actual RED collection/controls/failure evidence。
+- [X] **Actor: Implementer.** Failing evidence sole commit。
+- [X] **Actor: Implementer.** Distinct sole-test-path green subject。
+- [X] **Actor: Tester.** Actual scoped passing evidence。
+- [X] **Actor: Implementer.** Passing evidence sole commit。
 - [ ] **Actor: Independent Reviewer.** Same-S committed passing review。
 - [ ] **Actor: Implementer.** Approved review sole commit。
 - [ ] **Actor: Planner / Plan-Creator.** Phase4.5 factual alignment。

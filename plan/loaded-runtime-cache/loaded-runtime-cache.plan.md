@@ -308,7 +308,7 @@ paths, source contracts, configuration, and adjacent BCs untouched.
 
 ## Implementation Steps
 
-C40 為 sole active implementation，以下四項 pending，尚無本輪 implementation subject/evidence。
+C40 為 sole active implementation，以下四項已由 committed green subject／passing Tester evidence 完成。
 1. C40 建立 isolated RED fixtures，涵蓋原兩個 comments、tuple/list prefix/suffix/star positions、
    attribute siblings、For literal/post-use 與 unused/unknown/async controls，不執行 source。
 2. C40 starred assignment 僅建立 direct literal RHS 的確定 simple-name prefix/suffix aliases；
@@ -2466,9 +2466,24 @@ Wrong/stale binding、full PRRT ID、extra/missing keys/pairs、overwrite、非 
 
 ## C40 Literal-Only Starred Assignment / For Binding Repair（authoritative current routing）
 
+### C40 Committed Implementation Facts / Independent Review Pending
+
+Current：`c40-review-ready`。Actual committed candidate
+`077884842c5e97e27ea3ece914764096ff42afff`；
+approved Plan-Reviewer receipt commit `e030601e8cffdbb8a550d456caad61b3c06f327f`；
+RED subject `a11f4b6f2ad364b2bc255397931657cce4eb568f`；
+failing Tester sole commit `f3aeb5317f829f182c595967d491c666c2e5e92b`；
+green subject `29db32481975381ef71c03ce616a32559963f323`；
+passing Tester sole commit `020777486cf6b4acd6981e5d7ac542315ff19984`。
+本兩檔 state alignment 只記 committed facts，canonical 四項 implementation 已完成。
+Independent Reviewer、review commit、Phase4.5、publish、actual-head classification、
+reply/resolve 均 pending，不預填 future SHA/verdict/head/outcome。
+Scope/schema/five Human locks/old provenance 不變，不建立新 candidate chain。
+
+
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c40-planning-draft`。Human 授權 bounded contract exceptions，採 literal-only
+Historical draft state：`c40-planning-draft`。Human 授權 bounded contract exceptions，採 literal-only
 binding，exact two pairs `nZI5n`/`4141010661`、`nZm9d`/`4141203134`。
 Implementation sole path `tests/test_loaded_runtime_cache_bc_independence.py`；
 只擴張下列兩項 static alias-binding contract，後續 use 的 forbidden detection 沿既有規則。
