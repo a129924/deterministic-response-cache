@@ -3005,11 +3005,11 @@ Three pairs的C42 repair/verification與exactactions已完成，actualfacts見C4
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 
-## C43 Current-Head Six-Pair Classification（authoritative current routing）
+## C43 Current-Head Six-Pair Classification（completed predecessor routing）
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c43-planning-draft`。僅對下列六個 exact suffix thread/comment pairs 建立
+Historical draft state：`c43-planning-draft`。僅對下列六個 exact suffix thread/comment pairs 建立
 independent current-head classification；不新增 scanner grammar／code／architecture decisions，
 不預填 outcome／reply／resolution。
 固定 same-topic implementation subject `528de65144f0bdaf7a38831562b37f75fe8057ff`、
@@ -3064,7 +3064,7 @@ actual-head audit／exact-three classification sole commit／push
 `n2sm8`/`4153137682`→reply`4153741053`、
 `n2sm-`/`4153137690`→reply`4153743070`，均remote isResolved=true。
 C42 verification與exact permitted actions已完成；C40/C41/C42 completed predecessor routing，
-early pending/current 字樣是當時 frozen provenance，C43 是唯一 current route。
+early pending/current 字樣是當時 frozen provenance，C43 completed，current route見C44。
 核對時 PR #7 head為上述 audited head、MERGEABLE／CLEAN。
 
 針對 `n23dS`，本輪 current Git 唯讀查證 C40 full S/T/V 均為上述 audited head ancestor：
@@ -3132,11 +3132,130 @@ liveheadexact一致、sixpair/schema/writers/enum/nullability/solecommits/immuta
 Wrong/stalebinding、extra/missingkeys/pairs、wrongwriter、overwrite、nonsolecommit全部failclosed。
 不新增implementationsteps／tests／T或V，不預填futurecandidateSHA／verdict／sixoutcomes/replies/resolutions。
 canonicalC42四項completedimplementation與oldregressions/directimports/fixtures/mocks/assertions保留。
-本六筆待Independent Reviewer分類，七Human-only保持open；no release／post-mergeaction。
+本六筆已分類且permittedactions完成，outcomes／openADDRESS及Humanfacts見C44；no release／post-mergeaction。
 
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 
 Workflow state：current_step=c43-plan-authoring；next_step=bounded-candidate-commit；
-status=COMPLETE（draft handoff only，非approval／classification／topic-complete）。
+status=COMPLETE（historical draft handoff only，非topic-complete）。
+
+## C44 Current-Head Two-Pair Classification（authoritative current routing）
+
+### Goal / Outcome / Scope / Locked Decisions
+
+Current：`c44-planning-draft`。只分類 exact suffix pairs
+`n4SJW`/`4153779058`（current C42 S/T/V ancestry facts，不追認 unavailable history）及
+`n4SJg`/`4153779072`（current C42 tracker／committed classification／actions facts）。
+不新增 implementation／grammar／architecture，未預填 outcomes／replies／resolutions。
+固定 same-topic C42 implementation subject `528de65144f0bdaf7a38831562b37f75fe8057ff`、
+passing Tester sole commit `6eafc4b60f727f36539a9c17d32b3e4162b1d868`、
+approved Independent Reviewer sole commit `307361d621fbad9f9eabd8373b6e38816a3a3cc4`、
+audited live PR head `46406ee3451fc354565611640a542affae60c5ba`。
+不建立新 code／tests／Tester／implementation Reviewer subject。
+
+### Committed Predecessor Facts / Tracking Alignment
+
+C43 candidate `369dd7e3c48b1eeb49f71e0fcded338a54ac69e6`、
+approved planning receipt sole commit `619b6260bb3c03a6f3ce532fbec314b2fb4a2987`、
+six-pair classification sole commit／push `46406ee3451fc354565611640a542affae60c5ba`。
+已執行 exact REPLY_AND_RESOLVE：
+`n23dL`/`4153205657`→reply`4153895957`、
+`n23dS`/`4153205667`→reply`4153897570`、
+`n3P7r`/`4153360172`→reply`4153899337`，均 remote isResolved=true。
+兩 ADDRESS `n23da`/`4153205676`（__dict__ lookup）、
+`n3P71`/`4153360189`（__call__）仍待 bounded scope／grammar 處置；
+`n23df`/`4153205681` Registry preparation architecture 為 HUMAN_CHECK/open。
+C43 completed只表示classification／permittedactions／handoff完成，不把ADDRESS/HUMAN需求標完成。
+C42 actual classification commit `39e689ee482aa2277d158bf2dc9952369b0c03b1`，
+three replies/resolutions及completedtracker facts見C43，原C40/C41/C42 evidence／contract保留。
+C43是completedpredecessor；C44唯一currentroute。Early pending/current字樣是frozenprovenance。
+本輪核對PR #7 head為上述auditedhead、MERGEABLE／CLEAN。
+
+C42上述full S/T/V各自對auditedhead的
+`git merge-base --is-ancestor <C42-full-S-or-T-or-V> 46406ee3451fc354565611640a542affae60c5ba`
+actual exit0。留言的 `0cb9d842…` local無可解析commit，未取得fullSHA／historic tree，
+不猜fullSHA／parent／合法性；currentancestry不能追認unavailablehistoricrevision。
+此facts僅分類輸入，不是Reviewer outcome預填。
+
+### Boundaries / Exclusions / Risks / Rollback
+
+Goal／In-Scope：exact-two independent classification與已提交facts alignment。
+Modify：五份standardplanningartifacts；分類／actions後的statealignment僅plan/step。
+Written：declaredindependentplanning／classificationreceipts。Deleted：無。
+ReadOnly：dev、source/tests/docs/diagram/governance、README/VERSION/configuration、
+oldevidence與unlistedthreads。Out-Of-Scope／Non-Goal：任何newgrammar/code/architecture/runtime/
+backend/DI/lifecycle/API、PRapproval/merge/release/post-merge。
+八Human-only：`ndeMt`/`4142807492`、`n2sm3`/`4153137673`、
+`n23df`/`4153205681`、`jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+`kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944`
+及上述兩grammarADDRESS均保持open，不因分類或generalexecution解除。
+原mission/scope/outcomes/Registryprotocol/測試策略/ArchitectureVisualization/follow-ups不變，
+無stable-library／release變更；三份rejecteduntrackedreceipts原樣nonrouting。
+Risks：stalehead、錯pair、historicrevision猜測、tracking追逐新candidate、虛勾locked需求。
+Rollback：boundedplanningrepair或必要newimmutableclassificationroute，不broadreset／覆寫evidence。
+
+### Artifact Paths / Status / Allowed Transitions / Actor Sequence
+
+Plan-Creator僅featureworktree exact-five：
+`analysis/loaded-runtime-cache/requirements.md`、
+`analysis/loaded-runtime-cache/technical-spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`。
+Implementerexact-five non-mergecandidate-onlycommit →
+IndependentPlan-Reviewer唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c44-candidate-40-hex-sha>.json`。
+Singleobjectexact verdict/blocking_issues/copilot_feedback_triage；approved|needs-rework；
+blockers exactissue/file/fix nonemptystringobjectsarray(approved空/needs-rework非空)，
+triageexactADDRESS/DISCUSS/SKIParrays。
+Implementerunchangedseparate soleapprovedreceiptcommit；candidate／approvedreceipt留LOCAL，
+直到fixedheadclassification寫完，不提前push改remotehead。
+Planner核actualcommittedfixedsameS/T/V/passing/approved/livehead；
+IndependentReviewer唯一寫freshimmutableexactpath：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-528de65144f0bdaf7a38831562b37f75fe8057ff-46406ee3451fc354565611640a542affae60c5ba.json`。
+
+SingleJSONobjectexacteightkeys schema_version/topic/implementation_subject_commit/
+tester_evidence_commit/implementation_review_evidence_commit/pr_head_commit/classifications/recorded_by；
+integer1、loaded-runtime-cache、上述fixedfull S/T/V/head、exacttwoentryarray、Independent Reviewer。
+AllSHAactualfull lowercase40hex，不接受abbreviated/symbolic/nonexistent/crosssubject。
+Entryexactthread/comment/outcome/reply，suffix/comment strings上述兩pair各一次，
+不用fullPRRTIDs；outcomeREPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK，
+只有REPLY_AND_RESOLVE reply為nonemptyfactualstring，其餘JSONnull。
+Reviewer不commit；Implementerunchangedseparate soleclassificationcommit／normalboundedpush；
+Planner才routeexactcommittedREPLY_AND_RESOLVE原樣reply／resolve／liveaudit。
+ADDRESS回Plannerboundedscope判定；HUMAN_CHECK保持open。
+Planningapproval不是threadactionauthority；分類與reply／resolve是不同routes。
+Livehead／fixedbinding不符則停Planner，不偷換head或覆寫receipt。
+Publish-in-progress僅進pr-open；Humanaloneapproval／merge／release／post-merge。
+
+### Post-Classification Factual State Alignment / Human Boundary
+
+沿Human既有「committedcandidate／receipt Gitfacts為routingauthority」與receipt後statealignment授權，
+C44 classification solecommit／push及exactpermittedactions實際完成後，
+Planner可routePlan-Creator僅改
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`／
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`，
+記actualclassificationcommit、outcomes、實際reply／resolve／auditfacts，
+僅將真正完成actions標[X]；Implementer可separate statealignmentcommit／boundedpush。
+該factualalignment不建立新candidate／Plan-Reviewerreceiptchain、不新增分類或scope權限。
+沒有C44committedclassification及actualactionsfacts之前不得預勾。
+完成後以Gitfacts進human-check，八locks與兩grammarADDRESS仍open；
+若audit發現futureunclassifiedpairs，只如實列未分類，不冒稱已處理，
+不為puretracking另外建立candidatechain，不推翻lockeddecision。
+Human需要決定的remainingitems一次彙整，非自動mergeapproval。
+
+### Validation / Acceptance / TestCase / Reviewer Handoff / Unresolved Items
+
+核actualfixedsameS/T/V、passing／approved、freshpath、liveheadexact、
+two pair/schema/writer/enum/nullability/immutable/solecommit/order。
+Wrong/stalebinding、extra/missingkeys/pairs、overwrite、nonsolecommit全部failclosed。
+CanonicalC42implementation與既有tests/directimports/fixtures/mocks/assertions保留，
+本輪不新增implementationsteps／T/V，不預填futurecandidateSHA/verdict/outcomes/replies/resolutions。
+兩pair待IndependentReviewer分類；所有remaininglocked／grammaritems保持open。
+No release／post-mergeactions。
+
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
