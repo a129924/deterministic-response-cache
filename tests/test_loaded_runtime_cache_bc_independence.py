@@ -26,6 +26,171 @@ _RUNTIME_CACHE_BC = "deterministic_response_cache.loaded_runtime_cache"
 @pytest.mark.parametrize(
     "source",
     [
+        "import importlib\nimportlib.__import__('identity')\n",
+        "import importlib as il\nil.__import__('identity')\n",
+        "from importlib import __import__ as load\nload('identity')\n",
+        "import importlib\nload = importlib.__import__\nload('identity')\n",
+        "import importlib\nil = importlib\nload = il.__import__\nload('identity')\n",
+        "from importlib import __import__ as first\nload = first\nload('identity')\n",
+        "import importlib\nexecutor.submit(importlib.__import__, 'identity')\n",
+    ],
+)
+def test_c42_rejects_importlib_builtin_import_callable_use(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """The importlib import surface remains forbidden through known aliases and uses."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "import_use.py").write_text(source, encoding="utf-8")
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import importlib\nload = importlib.__import__\n",
+        "from importlib import __import__ as load\n",
+        "import importlib\nload = importlib.__import__\nlen('identity')\n",
+        "import importlib\nordinary = len\nordinary('identity')\n",
+        "unknown.__import__('identity')\n",
+    ],
+)
+def test_c42_preserves_unused_and_ordinary_import_callables(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Possession of an unused callable is not a new forbidden-use rule."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "unused.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize("definition", ["def", "async def"])
+def test_c42_rejects_foreign_semantic_function_definition_names(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    definition: str,
+) -> None:
+    """Sync and async definition names establish the same foreign local binding."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "definition.py").write_text(
+        f"{definition} {foreign_name}():\n    return object()\n",
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "source",
+    [
+        "def ordinary():\n    return object()\n",
+        "async def ordinary():\n    return object()\n",
+        "def ordinary():\n    return '{name}'\n",
+        "async def ordinary():\n    return holder.{name}\n",
+    ],
+)
+def test_c42_preserves_benign_definition_names_strings_and_attributes(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    source: str,
+) -> None:
+    """Only definition names, not strings or attribute labels, establish ownership."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "definition.py").write_text(
+        source.format(name=foreign_name),
+        encoding="utf-8",
+    )
+
+    assert not _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize("literal", ["({elements},)", "[{elements}]"])
+@pytest.mark.parametrize(
+    ("elements", "condition", "operation"),
+    [
+        ("importlib, builtins", "importlib", "loader.import_module('identity')"),
+        ("builtins, importlib", "importlib", "loader.import_module('identity')"),
+        ("builtins, importlib", "builtins", "loader.__import__('identity')"),
+        ("importlib, builtins", "builtins", "loader.__import__('identity')"),
+        ("sys, importlib", "sys", "loader.modules['identity'] = object()"),
+        ("importlib, sys", "sys", "loader.modules['identity'] = object()"),
+        ("importlib", "importlib", "loader.import_module('identity')"),
+        ("builtins", "builtins", "loader.__import__('identity')"),
+        ("sys", "sys", "loader.modules['identity'] = object()"),
+        ("importlib, ordinary, unknown", "importlib", "loader.import_module('identity')"),
+    ],
+)
+def test_c42_rejects_forbidden_use_of_any_known_for_module_alternative(
+    tmp_path: Path,
+    literal: str,
+    elements: str,
+    condition: str,
+    operation: str,
+) -> None:
+    """Finite literal module alternatives must not be overwritten by the last element."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "alternatives.py").write_text(
+        "import importlib\nimport builtins\nimport sys\n"
+        f"for loader in {literal.format(elements=elements)}:\n"
+        f"    if loader is {condition}:\n        {operation}\n",
+        encoding="utf-8",
+    )
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import importlib\nimport builtins\nfor loader in (importlib, builtins):\n    pass\n",
+        "import importlib\nimport builtins\nfor loader in [builtins, importlib]:\n    pass\n",
+        "for loader in [ordinary, unknown]:\n    loader.import_module('identity')\n",
+        "for loader in unknown_values:\n    loader.import_module('identity')\n",
+        (
+            "import importlib\nfor loader in [*unknown_values]:\n"
+            "    loader.import_module('identity')\n"
+        ),
+        (
+            "import importlib\nasync def run():\n"
+            "    async for loader in (importlib,):\n        loader.import_module('identity')\n"
+        ),
+        "import builtins\nfor loader in [builtins]:\n    loader.len('identity')\n",
+        "import importlib\nfor loader in []:\n    loader.import_module('identity')\n",
+    ],
+)
+def test_c42_preserves_unused_and_out_of_scope_for_module_bindings(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Unknown iterables and async syntax cannot acquire new module alternatives."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "controls.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
         "load, *rest = (__import__, len)\nload('identity')\n",
         "import importlib\nfor load in (importlib.import_module,):\n    load('identity')\n",
         "*rest, load = (len, str, __import__)\nload('identity')\n",
