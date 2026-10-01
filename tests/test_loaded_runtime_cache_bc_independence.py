@@ -393,6 +393,29 @@ def _paired_literal_bindings(target: ast.expr, value: ast.expr) -> list[tuple[st
     """Pair literal elements without inferring unpacked or arbitrary iterable values."""
     if isinstance(target, ast.Name):
         return [(target.id, value)]
+    if isinstance(target, (ast.Tuple, ast.List)) and isinstance(value, (ast.Tuple, ast.List)):
+        starred_positions = [
+            index for index, element in enumerate(target.elts) if isinstance(element, ast.Starred)
+        ]
+        if (
+            len(starred_positions) == 1
+            and len(value.elts) >= len(target.elts) - 1
+            and not any(isinstance(element, ast.Starred) for element in value.elts)
+        ):
+            star_index = starred_positions[0]
+            suffix_count = len(target.elts) - star_index - 1
+            definite_pairs = list(
+                zip(target.elts[:star_index], value.elts[:star_index], strict=True),
+            )
+            if suffix_count:
+                definite_pairs.extend(
+                    zip(target.elts[-suffix_count:], value.elts[-suffix_count:], strict=True),
+                )
+            return [
+                (child_target.id, child_value)
+                for child_target, child_value in definite_pairs
+                if isinstance(child_target, ast.Name)
+            ]
     if (
         isinstance(target, (ast.Tuple, ast.List))
         and isinstance(value, (ast.Tuple, ast.List))
@@ -417,6 +440,16 @@ def _static_alias_bindings(tree: ast.AST) -> list[tuple[str, ast.expr]]:
         elif isinstance(statement, (ast.AnnAssign, ast.NamedExpr)):
             if statement.value is not None:
                 bindings.extend(_paired_literal_bindings(statement.target, statement.value))
+        elif (
+            isinstance(statement, ast.For)
+            and isinstance(statement.target, ast.Name)
+            and isinstance(statement.iter, (ast.Tuple, ast.List))
+        ):
+            bindings.extend(
+                (statement.target.id, element)
+                for element in statement.iter.elts
+                if not isinstance(element, ast.Starred)
+            )
         elif isinstance(statement, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
             arguments = statement.args
             positional = [*arguments.posonlyargs, *arguments.args]
