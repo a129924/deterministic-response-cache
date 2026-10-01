@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "c9f1a21e84c9c8a19010cdeace24a16075e459c3",
+  "status": "failing",
+  "commands": [
+    {
+      "command": "uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c42 --collect-only -q",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k 'c42 and not rejects' -q",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c42 -q",
+      "exit_code": 1
+    }
+  ],
+  "recorded_by": "Tester"
+}
