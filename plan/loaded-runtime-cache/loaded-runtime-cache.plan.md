@@ -2466,9 +2466,9 @@ Wrong/stale binding、full PRRT ID、extra/missing keys/pairs、overwrite、非 
 
 ## C40 Literal-Only Starred Assignment / For Binding Repair（authoritative current routing）
 
-### C40 Committed Implementation Facts / Independent Review Pending
+### C40 Committed Approval Facts / Phase 4.5 Alignment
 
-Current：`c40-review-ready`。Actual committed candidate
+Current：`c40-publish-in-progress`。Actual committed candidate
 `077884842c5e97e27ea3ece914764096ff42afff`；
 approved Plan-Reviewer receipt commit `e030601e8cffdbb8a550d456caad61b3c06f327f`；
 RED subject `a11f4b6f2ad364b2bc255397931657cce4eb568f`；
@@ -2476,8 +2476,11 @@ failing Tester sole commit `f3aeb5317f829f182c595967d491c666c2e5e92b`；
 green subject `29db32481975381ef71c03ce616a32559963f323`；
 passing Tester sole commit `020777486cf6b4acd6981e5d7ac542315ff19984`。
 本兩檔 state alignment 只記 committed facts，canonical 四項 implementation 已完成。
-Independent Reviewer、review commit、Phase4.5、publish、actual-head classification、
-reply/resolve 均 pending，不預填 future SHA/verdict/head/outcome。
+Independent Reviewer approved sole evidence commit
+`25d2f96286b0f0b36432a1452cb3823bddf4cb9d` 已提交，綁定上述同 green S／passing T。
+Planner 已核 verification gate，Phase 4.5 factual alignment 完成。
+Separate alignment commit／bounded push、actual-head audit／classification、classification sole
+commit／push、exact reply／resolve 仍 pending，不預填 future SHA/head/outcome。
 Scope/schema/five Human locks/old provenance 不變，不建立新 candidate chain。
 
 
