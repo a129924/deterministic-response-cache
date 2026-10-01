@@ -3143,9 +3143,50 @@ status=COMPLETE（historical draft handoff only，非topic-complete）。
 
 ## C44 Current-Head Two-Pair Classification（authoritative current routing）
 
+### C44 Committed Completion Facts / Final Human-Check Alignment
+
+Current：`human-check`。C44 candidate `3a4adef853bd7ebb3561e0b4eeecfe25e8fc8d3f`、
+approved Plan-Reviewer sole receipt commit `83257c3c5e0540d6808cdcecd76c1410a0828b5d`、
+exact-two classification sole commit／push `d824243e255da5522c05685346ee35405d7af9cb` 已完成。
+`n4SJW`/`4153779058`→reply`4154037586`、
+`n4SJg`/`4153779072`→reply`4154039479`，均remote isResolved=true。
+C43 classification sole commit `46406ee3451fc354565611640a542affae60c5ba` 與
+`n23dL`→reply`4153895957`、`n23dS`→reply`4153897570`、
+`n3P7r`→reply`4153899337` 的resolved facts再核一致。
+本兩檔finalfactualalignment沿既有statealignment授權，不新candidate／receiptchain，
+不改scope／grammar／architecture／source／tests／evidence。下方分類時fixedhead契約是frozen provenance；
+current facts以本節actualcommittedrecords／liveaudit為準，非要求再做一輪classification。
+
+As-of audit：`2026-10-01 09:49:52 UTC`（Asia/Taipei `2026-10-01 17:49:52`）。
+PR #7 head `d824243e255da5522c05685346ee35405d7af9cb`，MERGEABLE／CLEAN。
+Complete pagination取得100＋13 threads，末頁hasNextPage=false，latesttotalCount=113；
+97 resolved／16 open。Audit開始時totalCount=112／15open，期間新增下列`n4_wT`；
+如實記latestfacts，不把舊112snapshot當current。
+剩餘16open為8Human-only＋2grammarADDRESS＋6尚未分類：
+- Human-only：`jnBpk`/`4043480108`、`kQ95O`/`4060023123`、
+  `kqiZ5`/`4070096561`、`lAR8T`/`4078761998`、`lfQmF`/`4091213944`、
+  `ndeMt`/`4142807492`、`n2sm3`/`4153137673`、`n23df`/`4153205681`。
+- Grammar ADDRESS：`n23da`/`4153205676` (__dict__ lookup)、
+  `n3P71`/`4153360189` (__call__)；未實作，不虛勾完成或解除lockedscope。
+- UNCLASSIFIED `n4uld`/`4153959185`：留言提出 `58ccea6d…` historic ancestry，
+  未取得可核fullrevision／historicfacts，不猜合法性。
+- UNCLASSIFIED `n4ulj`/`4153959197`：C43 tracker pending建議。
+- UNCLASSIFIED `n4uln`/`4153959205`：IfExp finite branch module alternatives建議。
+- UNCLASSIFIED `n4ulr`/`4153959210`：For/AsyncFor foreign semantic-name targets建議。
+- UNCLASSIFIED `n4uly`/`4153959219`：reassignment stale alias／binding order建議。
+- UNCLASSIFIED `n4_wT`/`4154067364`：audit期間新增C44 tracker alignment建議。
+
+上述UNCLASSIFIED只是actualcomment inventory，沒有IndependentReviewer outcome，
+不等同ADDRESS／HUMAN_CHECK／REPLY_AND_RESOLVE，不給reply／resolve或新grammar權限。
+未因tracker已同步而resolve未分類thread，不追puretrackingcandidatechain、不推翻lockeddecision。
+七先前locks與新增Registryarchitecturelock保持open；PR未merge，Humanreview／merge／release未完成。
+Plan-Creator factualalignment已寫入，尚待Implementer exact-two separatecommit／boundedpush，
+不得將該未發生commit／push虛勾完成。三份rejecteduntrackedprovenance原樣保留。
+
+
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c44-planning-draft`。只分類 exact suffix pairs
+Historical draft state：`c44-planning-draft`。只分類 exact suffix pairs
 `n4SJW`/`4153779058`（current C42 S/T/V ancestry facts，不追認 unavailable history）及
 `n4SJg`/`4153779072`（current C42 tracker／committed classification／actions facts）。
 不新增 implementation／grammar／architecture，未預填 outcomes／replies／resolutions。
@@ -3253,7 +3294,7 @@ two pair/schema/writer/enum/nullability/immutable/solecommit/order。
 Wrong/stalebinding、extra/missingkeys/pairs、overwrite、nonsolecommit全部failclosed。
 CanonicalC42implementation與既有tests/directimports/fixtures/mocks/assertions保留，
 本輪不新增implementationsteps／T/V，不預填futurecandidateSHA/verdict/outcomes/replies/resolutions。
-兩pair待IndependentReviewer分類；所有remaininglocked／grammaritems保持open。
+兩pair的IndependentReviewer分類及exactactions已完成，actualfacts見本節finalalignment；所有remaininglocked／grammaritems保持open。
 No release／post-mergeactions。
 
 ```json
