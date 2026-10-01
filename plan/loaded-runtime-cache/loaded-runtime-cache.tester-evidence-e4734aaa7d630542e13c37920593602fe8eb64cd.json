@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "e4734aaa7d630542e13c37920593602fe8eb64cd",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "uv run --frozen pytest --no-cov tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen ruff check tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py src/deterministic_response_cache/loaded_runtime_cache/runtime_reuse/registry/runtime_reuse_key.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen pyright src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs validate dataflow docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json --quality showcase --json",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs deliver dataflow docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json /tmp/c28-tester-archify.ZRDd7C/loaded-runtime-cache.dataflow.html --quality showcase --json",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs visual-check /tmp/c28-tester-archify.ZRDd7C/loaded-runtime-cache.dataflow.html --repo-root /tmp/c28-tester-archify.ZRDd7C --json",
+      "exit_code": 0
+    },
+    {
+      "command": "node -e 'const fs=require(\"fs\"),crypto=require(\"crypto\"),cp=require(\"child_process\");const p=\"docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.\";const d=JSON.parse(fs.readFileSync(p+\"delivery.json\")),v=JSON.parse(fs.readFileSync(p+\"visual-check.json\")),a=JSON.parse(fs.readFileSync(p+\"validation.json\"));const hash=b=>crypto.createHash(\"sha256\").update(b).digest(\"hex\");for(const [suffix,r] of [[\"json\",d.specification],[\"html\",d.artifact]]){const b=fs.readFileSync(p+suffix);if(hash(b)!==r.sha256||b.length!==r.bytes)throw Error(\"delivery binding mismatch\");if(!b.equals(cp.execFileSync(\"git\",[\"show\",\"e4734aaa7d630542e13c37920593602fe8eb64cd:\"+p+suffix],{maxBuffer:2000000})))throw Error(\"subject mismatch\");}if(v.artifact.sha256!==d.artifact.sha256||v.artifact.bytes!==d.artifact.bytes||v.status!==\"pass\"||!v.ok)throw Error(\"visual binding mismatch\");if(!a.ok||a.checks.length!==9||a.checks.some(x=>!x.ok)||a.composition.summary.errors||a.composition.summary.warnings)throw Error(\"validation mismatch\");if(v.containment.viewports.length!==4||v.containment.viewports.some(x=>!x.ok||x.overflowX||x.overflowY))throw Error(\"viewport failure\");if(hash(fs.readFileSync(\"/tmp/c28-tester-archify.ZRDd7C/loaded-runtime-cache.dataflow.html\"))!==d.artifact.sha256)throw Error(\"fresh delivery differs\");console.log(\"C28 subject, committed specification/HTML, delivery/validation/visual receipt hashes and all four viewport facts verified\");'",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}

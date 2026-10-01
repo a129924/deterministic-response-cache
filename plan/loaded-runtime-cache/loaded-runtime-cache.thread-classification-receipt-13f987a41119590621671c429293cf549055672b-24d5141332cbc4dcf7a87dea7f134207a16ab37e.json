@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "13f987a41119590621671c429293cf549055672b",
+  "tester_evidence_commit": "e85f936505a323e6c84c02e90f4c4114e39b6505",
+  "implementation_review_evidence_commit": "24d5141332cbc4dcf7a87dea7f134207a16ab37e",
+  "pr_head_commit": "24d5141332cbc4dcf7a87dea7f134207a16ab37e",
+  "classifications": [
+    {
+      "thread": "PRRT_kwDOUJTij86lfQl9",
+      "comment": 4091213935,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C25 green subject `13f987a41119590621671c429293cf549055672b` 處理：scanner 現會靜態辨識以 direct-name walrus module alias 為 base 的 `import_module` attribute call，且參數化 regression 已涵蓋 `(loader := importlib).import_module(...)`。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

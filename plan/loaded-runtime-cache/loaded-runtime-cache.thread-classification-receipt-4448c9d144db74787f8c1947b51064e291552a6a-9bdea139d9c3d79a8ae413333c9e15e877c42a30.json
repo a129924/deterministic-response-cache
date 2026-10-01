@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "4448c9d144db74787f8c1947b51064e291552a6a",
+  "tester_evidence_commit": "7787c8b8edb760df6f81f44182bb146f8730c69d",
+  "implementation_review_evidence_commit": "b75242afc8fcf211c4b0e1aebe20fc410f567d6f",
+  "pr_head_commit": "9bdea139d9c3d79a8ae413333c9e15e877c42a30",
+  "classifications": [
+    {
+      "thread": "nYQqw",
+      "comment": "4140648790",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已核對目前 PR head 9bdea139d9c3d79a8ae413333c9e15e877c42a30：C29 subject 9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa、Tester evidence-only commit 31e727d96d4e0843714dca1c7898ac93da9c33ef、Reviewer evidence-only commit fc12dea6be989aaecfdfc71a86fa1b330256fffe 均為目前 head 的 ancestors；Tester commit 的唯一 parent 是該 subject，Reviewer commit 的唯一 parent 是該 Tester commit。原始 subject → Tester → Reviewer 祖先鏈目前完整保留，沒有壓成單一 commit；此留言引用的舊被審 commit 狀況不再代表目前待合併歷史。"
+    },
+    {
+      "thread": "nZI5l",
+      "comment": "4141010658",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "nZI5n",
+      "comment": "4141010661",
+      "outcome": "ADDRESS",
+      "reply": null
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

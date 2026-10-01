@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "240c694fa5078dc1d35f154f7a85b06381db2e47",
+  "tester_evidence_commit": "dabce082058805281990c52b12352b87c2b46801",
+  "implementation_review_evidence_commit": "489752c727aa86cfaf49038cc2ed6dfddf33ba2d",
+  "pr_head_commit": "489752c727aa86cfaf49038cc2ed6dfddf33ba2d",
+  "classifications": [
+    {
+      "thread": "PRRT_kwDOUJTij86ldeVI",
+      "comment": 4090495760,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "C23 的 dataflow 現已明確呈現 RuntimeRegistry → RuntimeRegistryLookupUnavailable 的預期 lookup failure signal；它仍與 RuntimeT | None 分離，且未連至 Unavailable、Missing 或 mapper。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86ldeVO",
+      "comment": 4090495770,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "C23 的 AST scanner 現已將 ast.NamedExpr 納入 alias collection，並在 callable expression 直接辨識其 value；回歸測試確認 `(load := importlib.import_module)(...)` 會被拒絕且 fixture source 未執行。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "7dab2b9742bd19f962bef99be83b40b978f87f0f",
+  "tester_evidence_commit": "475e3c953f6551bef5834d0bf350d5c79449a43e",
+  "implementation_review_evidence_commit": "cee5097c176b4321a0d9bc2e810caf7d3425d0f1",
+  "pr_head_commit": "7e525b1ad8dc77c25b0b11a467f6b1f24884ecd3",
+  "classifications": [
+    {
+      "thread": "PRRT_kwDOUJTij86kQ95O",
+      "comment": "4060023123",
+      "outcome": "HUMAN_CHECK",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86kqiZu",
+      "comment": "4070096548",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "C15 已針對 mixed assignment 修正 alias 蒐集：`_assignment_target_names` 現保留所有 `ast.Name` target 並忽略 attribute target。回歸案例 `load = holder.loader = importlib.import_module` 已驗證 `load` 仍會解析為禁止的 `importlib.import_module` alias。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86kqiZ5",
+      "comment": "4070096561",
+      "outcome": "HUMAN_CHECK",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lAR8J",
+      "comment": "4078761983",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前 C15 保留不可變的獨立 evidence chain：subject `7dab2b9742bd19f962bef99be83b40b978f87f0f` → sole Tester-evidence commit `475e3c953f6551bef5834d0bf350d5c79449a43e` → sole implementation-review-evidence commit `cee5097c176b4321a0d9bc2e810caf7d3425d0f1`；每個 evidence commit 僅包含其指定 receipt，未 squash。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lAR8P",
+      "comment": "4078761993",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lAR8T",
+      "comment": "4078761998",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lAR8Y",
+      "comment": "4078762005",
+      "outcome": "ADDRESS",
+      "reply": null
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "4448c9d144db74787f8c1947b51064e291552a6a",
+  "tester_evidence_commit": "7787c8b8edb760df6f81f44182bb146f8730c69d",
+  "implementation_review_evidence_commit": "b75242afc8fcf211c4b0e1aebe20fc410f567d6f",
+  "pr_head_commit": "851dedef3aa4e0f1bdfdb34ed39f2c6518fd8892",
+  "classifications": [
+    {
+      "thread": "m-94K",
+      "comment": "4130289786",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C31 subject 4448c9d144db74787f8c1947b51064e291552a6a 加入 tuple／list literal 的 target/value 逐項配對，包含巢狀配對；保留 simple-name alias 並忽略 attribute target，且不將所有 RHS 值平鋪套用至全部 targets。獨立 regression 覆蓋解構 dynamic-import alias 與配對／attribute 排除行為。該 subject 已有 passing Tester evidence 7787c8b8edb760df6f81f44182bb146f8730c69d 與 approved independent review b75242afc8fcf211c4b0e1aebe20fc410f567d6f；current head 的 scoped regression 為 68 passed。"
+    },
+    {
+      "thread": "nXkrM",
+      "comment": "4140364926",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C31 subject 4448c9d144db74787f8c1947b51064e291552a6a 將 known builtins module alias 的 getattr(..., '__import__') 辨識為禁止 callable，涵蓋先賦值再呼叫與直接呼叫 getattr 結果的兩種 regression；一般 getattr(..., 'len') 仍通過 benign control。該 subject 已有 passing Tester evidence 7787c8b8edb760df6f81f44182bb146f8730c69d 與 approved independent review b75242afc8fcf211c4b0e1aebe20fc410f567d6f；current head 的 scoped regression 為 68 passed。"
+    },
+    {
+      "thread": "nXrA0",
+      "comment": "4140406337",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C31 subject 4448c9d144db74787f8c1947b51064e291552a6a 將 positional 與 keyword-only defaults 配對至實際參數名稱，保留可靜態解析的 forbidden callable alias，並加入透過參數呼叫的 regression 與 benign defaults controls。scanner 僅解析 AST，不執行來源。該 subject 已有 passing Tester evidence 7787c8b8edb760df6f81f44182bb146f8730c69d 與 approved independent review b75242afc8fcf211c4b0e1aebe20fc410f567d6f；current head 的 scoped regression 為 68 passed。"
+    },
+    {
+      "thread": "nXzEu",
+      "comment": "4140459575",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C31 subject 4448c9d144db74787f8c1947b51064e291552a6a 檢查 call positional arguments 與 keyword values 中的已知 forbidden import callable，涵蓋 executor.submit(importlib.import_module, ...)、keyword alias 與 map(__import__, ...)／retained alias 的 regression；len 等一般 callable 的 controls 仍通過。該 subject 已有 passing Tester evidence 7787c8b8edb760df6f81f44182bb146f8730c69d 與 approved independent review b75242afc8fcf211c4b0e1aebe20fc410f567d6f；current head 的 scoped regression 為 68 passed。"
+    },
+    {
+      "thread": "nXzE1",
+      "comment": "4140459585",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C31 subject 4448c9d144db74787f8c1947b51064e291552a6a 新增 consumer plane 的 Future integration boundary，並將 Response Reuse Miss edge 終點由 Loaded Runtime Cache 改為該 boundary；節點明示外部組裝尚待後續 topic，未新增跨 BC handoff。scene.js 與 index.html inline scene 已同步，regression 驗證 Miss endpoint、future boundary label 與 inline 一致性。該 subject 已有 passing Tester evidence 7787c8b8edb760df6f81f44182bb146f8730c69d 與 approved independent review b75242afc8fcf211c4b0e1aebe20fc410f567d6f；current head 的 scoped regression 為 68 passed。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

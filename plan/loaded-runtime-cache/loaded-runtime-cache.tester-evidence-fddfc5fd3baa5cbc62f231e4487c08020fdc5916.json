@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "fddfc5fd3baa5cbc62f231e4487c08020fdc5916",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "uv run --no-sync pytest -q tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --no-sync ruff check tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py src/deterministic_response_cache/loaded_runtime_cache",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --no-sync pyright src/deterministic_response_cache/loaded_runtime_cache tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs validate dataflow docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.json --quality showcase --json",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs deliver dataflow /private/tmp/c28-tester-tOBvFF/loaded-runtime-cache.dataflow.json /private/tmp/c28-tester-tOBvFF/rebuilt.html --quality showcase --json",
+      "exit_code": 0
+    },
+    {
+      "command": "node -e 'const fs=require(\"fs\"),crypto=require(\"crypto\"),cp=require(\"child_process\"); const root=\"docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow\"; const receipt=JSON.parse(fs.readFileSync(root+\".delivery.json\")); for (const [key,suffix] of [[\"specification\",\".json\"],[\"artifact\",\".html\"]]) {const bytes=cp.execFileSync(\"git\",[\"show\",\"fddfc5fd3baa5cbc62f231e4487c08020fdc5916:\"+root+suffix]); if(bytes.length!==receipt[key].bytes||crypto.createHash(\"sha256\").update(bytes).digest(\"hex\")!==receipt[key].sha256) throw new Error(key+\" receipt mismatch\");} console.log(\"Committed JSON/HTML SHA-256 and bytes match delivery receipt\");'",
+      "exit_code": 0
+    },
+    {
+      "command": "cmp docs/architecture/loaded-runtime-cache/loaded-runtime-cache.dataflow.html /private/tmp/c28-tester-tOBvFF/rebuilt.html",
+      "exit_code": 0
+    },
+    {
+      "command": "node /Users/andrew/.codex/skills/archify/bin/archify.mjs visual-check /private/tmp/c28-tester-tOBvFF/loaded-runtime-cache.dataflow.html --repo-root /private/tmp/c28-tester-tOBvFF --json",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}

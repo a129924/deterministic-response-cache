@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "13f987a41119590621671c429293cf549055672b",
+  "tester_evidence_commit": "e85f936505a323e6c84c02e90f4c4114e39b6505",
+  "implementation_review_evidence_commit": "24d5141332cbc4dcf7a87dea7f134207a16ab37e",
+  "pr_head_commit": "8bd9460950237c48c9befb73a1c5b80d084e88ae",
+  "classifications": [
+    {
+      "thread": "PRRT_kwDOUJTij86ld9Ai",
+      "comment": 4090688118,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前 PR head `8bd9460950237c48c9befb73a1c5b80d084e88ae` 保留 C20 的原始祖先鏈：subject `fa1468301af1906a05ee31ba0d267d2270d7af5f`、Tester evidence `6423f55b6dbcde5bee190ef86dc8c31f5c27c94e`、Reviewer evidence `3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e` 與 C20 classification receipt `a1aae44897c0f0b0ac52f1ca1697554c2f79cdb5` 均已以 `git merge-base --is-ancestor` 驗證為其 ancestors；被引用的 squashed proposed commit 不屬於 current routing evidence。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lfYsF",
+      "comment": 4091265104,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前 PR head `8bd9460950237c48c9befb73a1c5b80d084e88ae` 保留 C23 的原始祖先鏈：subject `240c694fa5078dc1d35f154f7a85b06381db2e47`、Tester evidence `dabce082058805281990c52b12352b87c2b46801` 與 Reviewer evidence `489752c727aa86cfaf49038cc2ed6dfddf33ba2d` 均已以 `git merge-base --is-ancestor` 驗證為其 ancestors；被引用的 squashed proposed commit 不屬於 current routing evidence。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lfYsH",
+      "comment": 4091265108,
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lfYsK",
+      "comment": 4091265115,
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86m8u00",
+      "comment": 4129370918,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前 PR head `8bd9460950237c48c9befb73a1c5b80d084e88ae` 保留 C25 的原始祖先鏈：subject `13f987a41119590621671c429293cf549055672b`、Tester evidence `e85f936505a323e6c84c02e90f4c4114e39b6505` 與 Reviewer evidence `24d5141332cbc4dcf7a87dea7f134207a16ab37e` 均已以 `git merge-base --is-ancestor` 驗證為其 ancestors；被引用的 squashed proposed commit 不屬於 current routing evidence。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86m8u04",
+      "comment": 4129370926,
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86m8u09",
+      "comment": 4129370931,
+      "outcome": "ADDRESS",
+      "reply": null
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}
