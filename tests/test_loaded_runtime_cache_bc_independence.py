@@ -24,6 +24,82 @@ _RUNTIME_CACHE_BC = "deterministic_response_cache.loaded_runtime_cache"
 
 
 @pytest.mark.parametrize(
+    "source",
+    [
+        "load, *rest = (__import__, len)\nload('identity')\n",
+        "import importlib\nfor load in (importlib.import_module,):\n    load('identity')\n",
+        "*rest, load = (len, str, __import__)\nload('identity')\n",
+        "*rest, load = [len, str, __import__]\nload('identity')\n",
+        "[load, *rest] = [__import__, len, str]\nload('identity')\n",
+        "first, *rest, load = (len, str, __import__)\nload('identity')\n",
+        "[load, *rest, last] = [__import__, len, str]\nload('identity')\n",
+        "holder.value, *rest, load = (len, str, __import__)\nload('identity')\n",
+        "[load, *rest, holder.value] = [__import__, len, str]\nload('identity')\n",
+        ("import importlib\nloader, *rest = (importlib, None)\nloader.import_module('identity')\n"),
+        "import builtins\n*rest, loader = [None, builtins]\nloader.__import__('identity')\n",
+        ("import importlib\nfor load in [len, importlib.import_module]:\n    load('identity')\n"),
+        "for load in (__import__, len):\n    load('identity')\n",
+        (
+            "import importlib\nfor loader in [None, importlib]:\n"
+            "    loader.import_module('identity')\n"
+        ),
+        "import builtins\nfor loader in (builtins,):\n    loader.__import__('identity')\n",
+        (
+            "import sys\n*rest, module_cache = [None, sys.modules]\n"
+            "module_cache['identity'] = object()\n"
+        ),
+        (
+            "import sys\nfor module_cache in [sys.modules]:\n"
+            "    module_cache['identity'] = object()\n"
+        ),
+    ],
+)
+def test_c40_rejects_forbidden_uses_after_literal_only_bindings(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Known literal prefix/suffix and For aliases retain use-based import restrictions."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "binding.py").write_text(source, encoding="utf-8")
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "load, *rest = (__import__, len)\n",
+        "import importlib\nfor load in [importlib.import_module]:\n    pass\n",
+        "load, *rest = (len, str)\nload('identity')\n",
+        "for load in [len, str]:\n    load('identity')\n",
+        "for load in []:\n    load('identity')\n",
+        "first, *rest, load = [__import__]\nload('identity')\n",
+        "load, *rest = unknown_values\nload('identity')\n",
+        "load, *rest = (*unknown_values, __import__)\nload('identity')\n",
+        "*rest, load = (len, *unknown_values)\nload('identity')\n",
+        "*load, other = (__import__, len)\nload('identity')\n",
+        "holder.load, *rest = (__import__, len)\nholder.load('identity')\n",
+        "for load in unknown_values:\n    load('identity')\n",
+        "for load in [*unknown_values]:\n    load('identity')\n",
+        "async def run():\n    async for load in (__import__,):\n        load('identity')\n",
+        "[load('identity') for load in (__import__,)]\n",
+        "(load('identity') for load in [__import__])\n",
+    ],
+)
+def test_c40_preserves_unused_benign_and_out_of_scope_bindings(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Unknown, starred-container and non-synchronous iterables do not acquire aliases."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "binding.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
     ("bc", "foreign_name"),
     [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
 )
