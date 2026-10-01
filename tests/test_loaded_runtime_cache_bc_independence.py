@@ -5,6 +5,7 @@
 import ast
 import json
 import re
+from itertools import product
 from pathlib import Path
 
 import pytest
@@ -492,12 +493,50 @@ def _uses_dynamic_import_substitution(source_directory: Path) -> bool:
     for source_path in source_directory.rglob("*.py"):
         tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
         imported_modules, imported_callables = _import_aliases(tree)
-        for statement in ast.walk(tree):
-            if _is_forbidden_dynamic_import_call(statement, imported_modules, imported_callables):
-                return True
-            if _is_module_cache_access(statement, imported_modules, imported_callables):
-                return True
+        contexts, preserved_modules = _for_module_alias_contexts(
+            tree,
+            imported_modules,
+            imported_callables,
+        )
+        for modules in contexts:
+            callables = imported_callables.copy()
+            _add_assignment_aliases(tree, modules, callables, preserved_modules)
+            for statement in ast.walk(tree):
+                if _is_forbidden_dynamic_import_call(statement, modules, callables):
+                    return True
+                if _is_module_cache_access(statement, modules, callables):
+                    return True
     return False
+
+
+def _for_module_alias_contexts(
+    tree: ast.AST,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> tuple[list[dict[str, str]], frozenset[str]]:
+    """Retain finite known module alternatives from direct synchronous For literals."""
+    alternatives: dict[str, set[str]] = {}
+    for statement in ast.walk(tree):
+        if not (
+            isinstance(statement, ast.For)
+            and isinstance(statement.target, ast.Name)
+            and isinstance(statement.iter, (ast.Tuple, ast.List))
+        ):
+            continue
+        for element in statement.iter.elts:
+            if isinstance(element, ast.Starred):
+                continue
+            resolved = _resolve_forbidden_alias(element, modules, callables)
+            if resolved is not None and resolved[0] == "module":
+                alternatives.setdefault(statement.target.id, set()).add(resolved[1])
+    if not alternatives:
+        return [modules.copy()], frozenset()
+    names = list(alternatives)
+    contexts = [
+        modules | dict(zip(names, values, strict=True))
+        for values in product(*(sorted(alternatives[name]) for name in names))
+    ]
+    return contexts, frozenset(names)
 
 
 def _import_aliases(tree: ast.AST) -> tuple[dict[str, str], dict[str, str]]:
@@ -536,6 +575,7 @@ def _add_assignment_aliases(
     tree: ast.AST,
     modules: dict[str, str],
     callables: dict[str, str],
+    preserved_modules: frozenset[str] = frozenset(),
 ) -> None:
     """Resolve fixed-point local aliases for forbidden modules and callables."""
     assignments = _static_alias_bindings(tree)
@@ -546,6 +586,8 @@ def _add_assignment_aliases(
             if resolved is None:
                 continue
             kind, imported_name = resolved
+            if kind == "module" and target in preserved_modules:
+                continue
             aliases = modules if kind == "module" else callables
             if aliases.get(target) != imported_name:
                 aliases[target] = imported_name
@@ -686,6 +728,7 @@ def _resolve_getattr_alias(
     attribute = value.args[1].value
     if (module, attribute) in {
         ("builtins", "__import__"),
+        ("importlib", "__import__"),
         ("importlib", "import_module"),
         ("sys", "modules"),
     }:
@@ -718,6 +761,7 @@ def _resolve_attribute_alias(
         return None
     if qualified_name in {
         "builtins.__import__",
+        "importlib.__import__",
         "importlib.import_module",
         "sys.modules",
     } or qualified_name.startswith("sys.modules."):
@@ -770,6 +814,7 @@ def _is_forbidden_import_callable_expression(
     resolved = _resolve_forbidden_alias(expression, modules, callables)
     if resolved in {
         ("callable", "builtins.__import__"),
+        ("callable", "importlib.__import__"),
         ("callable", "importlib.import_module"),
     } or (
         isinstance(expression, ast.IfExp)
@@ -783,6 +828,7 @@ def _is_forbidden_import_callable_expression(
         resolved = _resolve_forbidden_alias(expression.value, modules, callables)
         return resolved in {
             ("callable", "builtins.__import__"),
+            ("callable", "importlib.__import__"),
             ("callable", "importlib.import_module"),
         }
     if isinstance(expression, ast.Attribute) and isinstance(expression.value, ast.NamedExpr):
@@ -791,18 +837,20 @@ def _is_forbidden_import_callable_expression(
         return (
             type(named_expression.target) is ast.Name
             and resolved == ("module", "importlib")
-            and expression.attr == "import_module"
+            and expression.attr in _FORBIDDEN_DYNAMIC_IMPORT_NAMES
         )
     if isinstance(expression, ast.Name):
         return expression.id == "__import__" or (
             expression.id in callables
-            and callables[expression.id] in {"builtins.__import__", "importlib.import_module"}
+            and callables[expression.id]
+            in {"builtins.__import__", "importlib.__import__", "importlib.import_module"}
         )
     if not isinstance(expression, ast.Attribute) or not isinstance(expression.value, ast.Name):
         return False
     module = modules.get(expression.value.id)
     return (module, expression.attr) in {
         ("builtins", "__import__"),
+        ("importlib", "__import__"),
         ("importlib", "import_module"),
     }
 
@@ -836,7 +884,10 @@ def _declares_forbidden_semantic_type(source_directory: Path, type_name: str) ->
     for source_path in source_directory.rglob("*.py"):
         tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
         for statement in ast.walk(tree):
-            if isinstance(statement, ast.ClassDef) and statement.name == type_name:
+            if (
+                isinstance(statement, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef))
+                and statement.name == type_name
+            ):
                 return True
             if isinstance(statement, ast.TypeAlias) and statement.name.id == type_name:
                 return True
