@@ -3642,8 +3642,8 @@ Current／step phase 為 human-check；其餘三份 planning artifacts 保留 co
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`review-ready`。Step4 alias-chain回修完成，新的 RED／failing T／green S／passing T 已提交；
-尚待 new-S Independent Reviewer／fresh V。舊 needs-rework S/T/V 保留，不進 publish／classification。
+Current：`publish-in-progress`。新 same-S passing T／approved independent V 已提交，Planner已核 Phase4.5；
+bounded alignment commit／normal push 尚 pending。舊 needs-rework S/T/V 原樣保留，classification／actions未完成。
 Human 授權此同-topic bounded repair successor；只修下列六 ADDRESS，
 RED／green sole implementation path `tests/test_loaded_runtime_cache_bc_independence.py`。
 不更動 production API／BC contract；修復後必須完整新的 immutable S／T／V chain，
@@ -3868,14 +3868,14 @@ o7gvv分類不代表新增parameter-detectorimplementation授權；十二Humanlo
 Final factual alignment ONLYplan／step記actualsubject／evidence／outcomes／reply／resolve與固定一次audit，
 只[X]真正完成，不虛勾remainingrequirements。Separatealignmentcommit／push由Gitfacts證明，
 不預填自我SHA或自指completioncheckbox、不新增trackingcandidate／receiptchain、不等bot追無限新snapshot。
-無release／postmergeaction。Unresolved：新 RED／green／same-S passing T已提交；fresh Independent Reviewer／V
-尚 pending，七 pairs 需在新完整驗證／publish 後獨立分類；
+無release／postmergeaction。Unresolved：新 RED／green／same-S passing T／approved V 已提交；
+bounded publish尚 pending，七 pairs 需在 actual published head 後獨立分類；
 十二Human仍open。Scope drift／contract conflict conservative交Planner／Human，不擴設計。
 
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
-Workflow state：current_step=review-ready-rework-factual-alignment；next_step=bounded-alignment-commit；
+Workflow state：current_step=phase-4.5-publish-factual-alignment；next_step=bounded-alignment-commit-normal-push；
 status=COMPLETE（factual draft handoff only，非自身 commit／review approval／publish／topic-complete）。
 
 ### C47 Committed RED / Green / Passing Tester Facts（historical review-ready snapshot）
@@ -3955,7 +3955,7 @@ Collection／controls須actual0，RED須新增指定assertionfailure；syntax／
 全部actual0才passing；step4完成後 canonical CLI須0，當前預期1／one pending。
 舊S/T/V frozen history、三rejecteduntracked、dev／其他三planning／source與receipts未改。
 
-### C47 Rework Committed RED / Green / Passing Tester Facts（current review-ready）
+### C47 Rework Committed RED / Green / Passing Tester Facts（completed review-ready snapshot）
 
 New RED sole-test subject `158671c9ff7931a831c4081447d445ff12af6706`；
 independent failing Tester unchanged sole commit `6dfe55e7b102934679c0ca8f945bdd7c1b364342`；
@@ -3975,3 +3975,21 @@ Next：Implementer separate exact-two review-ready factual-alignment commit；In
 No new candidate chain；六 repair scope／十二 Human locks／o7gvv ONLYclassify不變。
 本 draft onlyplan／step，沒有 source／tests／analysis／spec／evidence／dev 或三rejecteduntracked變更；
 不預填自身 commit／不宣稱已提交。
+
+### C47 Phase 4.5 Actual Approval Facts / Bounded Publish Alignment（current）
+
+Green S `76e80d368bbdec3223c626631bfcd0101ba67d75`／passing Tester sole commit
+`157887d31d7e1c819580c96335b2959507df69d4`／approved Independent Reviewer unchanged sole commit
+`82b09a1e949df5839ee1dd43edda3e4192b3b8d8` 為同-topic／same-subject actual committed triple。
+Independent review verdict=approved、blocking_issues=[]，未借舊 S/T/V；
+review-ready separate exact-two alignment `f0da9e23d87ef48a2ba6493fab767132bcb7ca43` 已提交。
+Planner 已核新 triple 通過 Phase4.5，本 exact-two factual publish-alignment draft 完成，
+canonical 七項[X]與 independent implementation review 完成；不是 Human PR approval／merge。
+Next pending：Implementer separate exact-two alignment commit＋normal bounded push，
+只更新既有 PR #7／origin feature branch，不新增 PR、不 force-push、不 merge。
+尚未 push 此 alignment，未預填自身 commit／future PR head／classification receipt concrete path／
+七筆 outcomes／reply／resolution；normal push 後唯讀取得 actual published head，
+再由獨立 Reviewer 按既有 fresh-path schema綁 new S／上述 T／approved V／actual head 作 exact-seven分類。
+十二 Human locks、六 repair scope、o7gvv ONLYclassify 與原 immutable needs-rework history保留。
+No new candidate chain／contract／source變更，only plan／step factual draft；三 rejected untracked／dev未動。
+Publish-in-progress 僅可成為既有 PR #7 的 pr-open；Human-only review／merge／release／post-merge不授權。
