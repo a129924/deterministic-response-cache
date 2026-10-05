@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: review-ready
+phase: needs-rework
 created: 2026-09-17
 ---
 
@@ -70,11 +70,11 @@ C11/C12/C13/C14 stages below are frozen provenance. C15 is the active successor 
 
 ## Implementation Steps
 
-C47 current implementation gate：七項已完成，依 committed same-green-S passing Tester facts；Reviewer／publish／classification 另依 lifecycle。
+C47 current implementation gate：step4 needs-rework／pending；其餘六項既有完成事實保留，舊 passing T 不作新 subject gate。
 - [X] 1. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增 isolated RED fixtures／benign controls，六個 authorized repair pairs 各有獨立 rejecting assertion；名稱含 c47，rejecting 名稱另含 rejects。保留 scanner、既有 fixtures／direct imports／assertions，不執行 fixture source。
 - [X] 2. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 納入 known module.__dict__[direct string literal] 的既有 forbidden import-callable lookup／alias 後續 USE，保留 unknown receiver／dynamic key／generic namespace／unused possession controls。
 - [X] 3. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 納入 known forbidden import-callable.__call__ 的既有 USE 判定，保留 ordinary callable／arbitrary attribute／unused possession controls。
-- [X] 4. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保留既有 IfExp 兩個 branch 的全部 finite known module alternatives，以任一 alternative＋後續 existing forbidden surface USE 作 existential 判定；不求值 branch condition，不作 ordered scope／CFG／iterable 推論。
+- [ ] 4. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保留既有 IfExp 兩個 branch 的全部 finite known module alternatives，以任一 alternative＋後續 existing forbidden surface USE 作 existential 判定；不求值 branch condition，不作 ordered scope／CFG／iterable 推論。
 - [X] 5. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 將 For／AsyncFor TARGET 交既有 Name／Tuple／List／Starred foreign semantic-name syntax traversal，忽略 attribute targets；不新增 AsyncFor／nested For alias inference，不解析 RHS iterable。
 - [X] 6. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 檢查 import LOCAL binding 的 foreign semantic name（asname 優先；無 alias 的 Import 使用 first segment）；保留既有 Identity semantic source-name 禁則與 benign source-name／attribute controls。
 - [X] 7. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 將 With／AsyncWith optional_vars 交相同 foreign semantic target-name traversal，忽略 attribute targets，不求值 context manager；保留所有舊 regression 並實際通過 scoped pytest／Ruff／strict Pyright。
@@ -3073,8 +3073,8 @@ C46 final alignment 已由 `c0175a8627550a9bc01cdd05c859df70cb819856` separate c
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`review-ready`。六 bounded repairs 與 same-subject passing Tester evidence 已提交；
-尚待 independent implementation Reviewer，沒有 review approval／publish／thread-action 完成主張。
+Current：`needs-rework`。Committed independent Reviewer 指出 step4 alias-chain alternative 漏檢；
+舊 same-S passing T／needs-rework V 保留，須新 RED／green／same-subject T／V，不能進 publish／classification。
 Human 授權此同-topic bounded repair successor；只修下列六 ADDRESS，
 RED／green sole implementation path `tests/test_loaded_runtime_cache_bc_independence.py`。
 不更動 production API／BC contract；修復後必須完整新的 immutable S／T／V chain，
@@ -3299,17 +3299,17 @@ o7gvv分類不代表新增parameter-detectorimplementation授權；十二Humanlo
 Final factual alignment ONLYplan／step記actualsubject／evidence／outcomes／reply／resolve與固定一次audit，
 只[X]真正完成，不虛勾remainingrequirements。Separatealignmentcommit／push由Gitfacts證明，
 不預填自我SHA或自指completioncheckbox、不新增trackingcandidate／receiptchain、不等bot追無限新snapshot。
-無release／postmergeaction。Unresolved：RED／green／same-S passing T 已提交；Independent Reviewer／V
-尚 pending，七 pairs 需在完整驗證／publish 後獨立分類；
+無release／postmergeaction。Unresolved：舊 S/T 與 needs-rework V 已提交；step4回修與新RED／green／T／V
+尚 pending，七 pairs 需在新完整驗證／publish 後獨立分類；
 十二Human仍open。Scope drift／contract conflict conservative交Planner／Human，不擴設計。
 
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
-Workflow state：current_step=review-ready-factual-alignment；next_step=bounded-alignment-commit；
+Workflow state：current_step=needs-rework-factual-alignment；next_step=bounded-alignment-commit；
 status=COMPLETE（factual draft handoff only，非自身 commit／review approval／publish／topic-complete）。
 
-### C47 Committed RED / Green / Passing Tester Facts（review-ready）
+### C47 Committed RED / Green / Passing Tester Facts（historical review-ready snapshot）
 
 Candidate `ff32214939ed1bdd5e15f67a01c2a7e981bb4eaa`；
 approved Plan-Reviewer unchanged sole commit `11172a4bdef8fe5b83ea3142434cacaf979d5cd9`；
@@ -3330,12 +3330,68 @@ Independent Reviewer／V verdict／Phase4.5／push／classification／thread act
 未預填 V／published head／自身 alignment SHA，不宣稱 review approval 或 publish 已完成。
 十二 Human locks 與 o7gvv ONLYclassify／parameter repair exclusion 保持不變。
 
+### C47 Committed Needs-Rework Facts / Existing-Scope Rework Route（current）
+
+Immutable green S `dda13fd64a4075f1cfb691fd3da0fa6230405918`、
+passing T `e584939e9c6101a1acf2fb40494673e96c10d2c9`、
+Independent Reviewer needs-rework unchanged sole V commit
+`e3a597767270b76edf7c258160ec894057bddd70` 均保留，不覆寫／刪除／重解其 verdict。
+Reviewer blocker：step 4 finite known IfExp module alternatives 經 existing simple-name aliases
+再進第二 conditional binding 時被 single-valued preserved context 丟失。
+Reproducer 只作 AST parse，絕不執行：
+```python
+import builtins
+import importlib
+
+a = builtins if enabled else importlib
+b = a
+loader = b if enabled else builtins
+loader.import_module("identity")
+```
+Reviewer 獨立 diagnostic detection assertion exit1；舊 prescribed pytest／Ruff／Pyright passing
+並不能證明新增 alias-chain regression 成立。Step 4 回 pending；其餘六項原已完成事實保留，
+不把舊 passing T 或 C42 evidence 當作新 subject gate。
+Scope 不變：只是既有 finite module alternatives 透過 existing simple-name aliases 保存，
+再作 existential forbidden USE；不新增 grammar／CFG／binding order／scope invalidation。
+六 authorized修復範圍／十二 Human locks／o7gvv ONLYclassify 保持不變，不新 candidate／planning receipt chain。
+
+Plan-Creator 僅此 exact-two factual rework-alignment draft，交 Implementer separate alignment commit；
+不預填自我 SHA、不宣稱已提交。之後 sole test path
+`tests/test_loaded_runtime_cache_bc_independence.py`：
+Implementer 新 isolated RED regression／benign controls（scanner unchanged）→ 新 immutable RED →
+independent Tester actual failing evidence → Implementer 原樣 sole failing evidence commit →
+Implementer bounded step4 green 新 immutable S → independent Tester same-S 新 passing T →
+Implementer 原樣 sole T → ONLYplanstep actual review-ready alignment／separate commit →
+Independent Reviewer 消費已提交 same-new-S passing T／fresh V →
+Implementer 原樣 sole V → approved 才 Planner Phase4.5／publish／classification。
+每 subject evidence 路徑仍為既有 full-SHA templates；新 S 具 fresh immutable
+tester-evidence-<new-red-or-green-subject-full-40-hex-sha>.json／
+implementation-review-log-<new-green-subject-full-40-hex-sha>.json，
+均位於 `plan/loaded-runtime-cache/` 並保留 `loaded-runtime-cache.` prefix。
+Tester 六 keys／Independent Reviewer 七 keys／writer／actual exit-code規則與 same-topic／same-S binding
+完全沿上述 C47 exact schemas；Tester／Reviewer不commit，Implementer每份原樣sole evidence-only commit。
+Wrong／extra key／writer／subject／sole path／ordering／overwrite fail closed；不以 old T/V 背書新 S。
+Actual fresh SHA／status／verdict 必等 commit／commands 後記錄，future S/T/V/head、
+approval／publish／classification／reply／resolve 全部 pending，不預填。
+
+New fixture marker `c47_rework`；rejecting name 另含 `rejects`，benign controls不含rejects，
+原始 alias-chain isolated rejecting regression、branch-order／ordinary／unused controls，
+不弱化既有fixtures／assertions／direct imports，source只staticparse。
+RED 三命令：
+- `uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c47_rework --collect-only -q`。
+- `uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k 'c47_rework and not rejects' -q`。
+- `uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c47_rework -q`。
+Collection／controls須actual0，RED須新增指定assertionfailure；syntax／dependencyfailure不是此 gate。
+新 green passing T 使用上述 C47 scoped two-file pytest／Ruff／strict Pyright 三完整命令，
+全部actual0才passing；step4完成後 canonical CLI須0，當前預期1／one pending。
+舊S/T/V frozen history、三rejecteduntracked、dev／其他三planning／source與receipts未改。
+
 ### C47 Workflow Stages（current route）
 
 - [X] plan-authoring — exact-five C47 bounded draft。
 - [X] plan-review — committed candidate independent approval。
 - [X] tdd-test-authoring — sole RED／independent failing evidence／sole evidence commit。
-- [X] implementation — sole green／independent passing evidence／sole evidence commit。
+- [ ] implementation — 舊 S/T 已完成但 step4回修 pending，須新 RED／green／same-subject passing T。
 - [ ] implementation-review — actual review-ready alignment／independent same-S review／sole V。
 - [ ] code-review — Phase4.5／publish／exact-seven independent classification／permitted actions。
 
@@ -3347,15 +3403,22 @@ Independent Reviewer／V verdict／Phase4.5／push／classification／thread act
 - [X] **Actor: Implementer.** Sole-test RED subject `1779e366cafefbc70ad065c9a629dd9dba3b7241`，scanner unchanged。
 - [X] **Actor: Tester.** Actual RED collection／controls exit0、declared assertion command exit1 evidence。
 - [X] **Actor: Implementer.** RED evidence unchanged sole commit `1be5970152584494ac50c7a585818e30303190e3`。
-- [X] **Actor: Implementer.** Sole-test green subject `dda13fd64a4075f1cfb691fd3da0fa6230405918`，seven implementation steps completed。
+- [X] **Actor: Implementer.** 舊 sole-test green subject `dda13fd64a4075f1cfb691fd3da0fa6230405918` 提交；原七項完成主張已被後續 step4 blocker supersede。
 - [X] **Actor: Tester.** Same-green-subject actual passing scoped pytest／Ruff／strict Pyright evidence。
 - [X] **Actor: Implementer.** Passing Tester evidence unchanged sole commit `e584939e9c6101a1acf2fb40494673e96c10d2c9`。
 - [X] **Actor: Plan-Creator.** ONLYplan／step actual review-ready factual draft；canonical steps [X]，交 CLI 驗證。
 
-Next pending action：Implementer separate exact-two review-ready alignment commit；未預填 SHA／未宣稱已提交。
+Historical review-ready alignment 已以 `62c277ad1bcd189d21a438dee0647ffab2dfc64b` separate exact-two commit 完成；
+Current pending action 為上方 needs-rework alignment／新 RED-green evidence sequence。
 
-- [ ] **Actor: Independent Reviewer.** Same-S committed passing T review，fresh immutable log。
-- [ ] **Actor: Implementer.** Approved independent Reviewer evidence unchanged sole commit。
+- [X] **Actor: Independent Reviewer.** 舊 same-S committed passing T review，needs-rework／step4 blocker。
+- [X] **Actor: Implementer.** Needs-rework Reviewer evidence unchanged sole commit `e3a597767270b76edf7c258160ec894057bddd70`。
+- [ ] **Actor: Implementer.** Separate exact-two rework-alignment commit；新 isolated c47_rework RED subject。
+- [ ] **Actor: Tester / Implementer.** 新 RED actual failing evidence／原樣 sole evidence commit。
+- [ ] **Actor: Implementer.** Existing step4 bounded repair 新 green S，不改既有 scope／locks。
+- [ ] **Actor: Tester / Implementer.** 同新 S passing T／原樣 sole evidence commit。
+- [ ] **Actor: Plan-Creator / Implementer.** ONLYplanstep actual review-ready alignment／separate commit，canonical CLI0。
+- [ ] **Actor: Independent Reviewer / Implementer.** 同新 S／passing T fresh V／原樣 sole evidence commit；approved才後續。
 - [ ] **Actor: Planner / Plan-Creator / Implementer.** Phase4.5 actual facts／ONLYplanstep alignment／separate commit／normal publish。
 - [ ] **Actor: Independent Reviewer.** Actual published head／new S/T/V exact-seven classification，o7gvv ONLYclassify。
 - [ ] **Actor: Implementer.** Classification unchanged sole commit／normal push。
