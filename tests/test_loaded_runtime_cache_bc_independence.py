@@ -1462,3 +1462,233 @@ def test_c31_architecture_inline_scene_matches_source() -> None:
     viewer = (architecture / "index.html").read_text(encoding="utf-8")
 
     assert scene.strip() in viewer
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import builtins\nbuiltins.__dict__['__import__']('identity')\n",
+        "import importlib\nimportlib.__dict__['import_module']('identity')\n",
+        "import importlib as il\nil.__dict__['__import__']('identity')\n",
+        "import builtins as bi\nmodule = bi\nmodule.__dict__['__import__']('identity')\n",
+        "import importlib\nload = importlib.__dict__['import_module']\nload('identity')\n",
+        "import builtins\nexecutor.submit(builtins.__dict__['__import__'], 'identity')\n",
+    ],
+)
+def test_c47_rejects_known_namespace_import_callable_use(tmp_path: Path, source: str) -> None:
+    """Direct literal namespace lookup retains known forbidden callable use."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "namespace.py").write_text(source, encoding="utf-8")
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import importlib\nimportlib.import_module.__call__('identity')\n",
+        "__import__.__call__('identity')\n",
+        "from importlib import import_module as load\nload.__call__('identity')\n",
+        "import builtins\nload = builtins.__import__\nload.__call__('identity')\n",
+        "import importlib\ninvoke = importlib.import_module.__call__\ninvoke('identity')\n",
+        "import importlib\nexecutor.submit(importlib.import_module.__call__, 'identity')\n",
+    ],
+)
+def test_c47_rejects_known_forbidden_callable_dunder_call_use(tmp_path: Path, source: str) -> None:
+    """Only known forbidden import callables confer forbidden __call__ use."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "call.py").write_text(source, encoding="utf-8")
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    ("branches", "operation"),
+    [
+        ("builtins if enabled else importlib", "loader.import_module('identity')"),
+        ("importlib if enabled else builtins", "loader.import_module('identity')"),
+        ("importlib if enabled else sys", "loader.modules['identity'] = object()"),
+        ("sys if enabled else importlib", "loader.modules['identity'] = object()"),
+        ("unknown if enabled else importlib", "loader.import_module('identity')"),
+        ("importlib if enabled else unknown", "loader.import_module('identity')"),
+        ("builtins if enabled else unknown", "loader.__import__('identity')"),
+        ("unknown if enabled else builtins", "loader.__import__('identity')"),
+    ],
+)
+def test_c47_rejects_use_of_any_known_if_expression_module_alternative(
+    tmp_path: Path,
+    branches: str,
+    operation: str,
+) -> None:
+    """Conditional module alternatives preserve existential forbidden use."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "conditional.py").write_text(
+        f"import builtins\nimport importlib\nimport sys\nloader = {branches}\n{operation}\n",
+        encoding="utf-8",
+    )
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize("loop", ["for", "async for"])
+@pytest.mark.parametrize(
+    "target",
+    ["{name}", "({name}, other)", "[other, {name}]", "(other, *{name})"],
+)
+def test_c47_rejects_foreign_semantic_loop_target_names(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    loop: str,
+    target: str,
+) -> None:
+    """Loop target syntax establishes local names without iterable inference."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "loop.py").write_text(
+        f"async def ordinary():\n    {loop} {target.format(name=foreign_name)} in values:\n"
+        "        pass\n",
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import helpers as {name}\n",
+        "from helpers import Factory as {name}\n",
+        "import {name}\n",
+        "import {name}.helpers\n",
+        "from helpers import {name}\n",
+    ],
+)
+def test_c47_rejects_foreign_semantic_local_import_binding(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    source: str,
+) -> None:
+    """Import ownership follows Python local binding rather than source provenance."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "local_import.py").write_text(source.format(name=foreign_name), encoding="utf-8")
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize("context", ["with", "async with"])
+@pytest.mark.parametrize(
+    "target",
+    ["{name}", "({name}, other)", "[other, {name}]", "(other, *{name})"],
+)
+def test_c47_rejects_foreign_semantic_context_target_names(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    context: str,
+    target: str,
+) -> None:
+    """Context-manager targets use syntactic ownership, never returned-value evaluation."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "context.py").write_text(
+        f"async def ordinary():\n    {context} factory() as {target.format(name=foreign_name)}:\n"
+        "        pass\n",
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import builtins\nload = builtins.__dict__['__import__']\n",
+        "import importlib\nload = importlib.import_module.__call__\n",
+        "import builtins\nbuiltins.__dict__['len']('identity')\n",
+        "unknown.__dict__['__import__']('identity')\n",
+        "import builtins\nbuiltins.__dict__[key]('identity')\n",
+        "ordinary.__call__('identity')\n",
+        "import importlib\nimportlib.ordinary.__call__('identity')\n",
+        "import builtins\nbuiltins.len.__call__('identity')\n",
+        "import importlib\nimport builtins\nloader = builtins if enabled else importlib\n",
+        "loader = ordinary if enabled else unknown\nloader.import_module('identity')\n",
+        "import builtins\nloader = builtins if enabled else unknown\nloader.len('identity')\n",
+        "import importlib\ngetattr(importlib, 'import_module', None)('identity')\n",
+        "[load('identity') for load in (__import__,)]\n",
+    ],
+)
+def test_c47_preserves_unused_ordinary_unknown_and_locked_callable_controls(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """New forms do not reject possession or expand locked alias grammar."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "controls.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "source",
+    [
+        "for holder.{name} in values:\n    pass\n",
+        "for ordinary in values:\n    pass\n",
+        "async def ordinary():\n    async for holder.{name} in values:\n        pass\n",
+        "with factory() as holder.{name}:\n    pass\n",
+        "with factory():\n    pass\n",
+        "with factory() as ordinary:\n    pass\n",
+        "async def ordinary():\n    async with factory() as holder.{name}:\n        pass\n",
+        "async def ordinary():\n    async with factory():\n        pass\n",
+        "import helpers.{name}\n",
+        "from helpers import Factory as ordinary\n",
+        "label = '{name}'\n",
+    ],
+)
+def test_c47_preserves_benign_semantic_targets_and_local_import_names(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    source: str,
+) -> None:
+    """Attribute labels, strings, and ordinary local bindings do not imply ownership."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "controls.py").write_text(source.format(name=foreign_name), encoding="utf-8")
+
+    assert not _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+def test_c47_preserves_identity_source_name_import_rejection_when_renamed(tmp_path: Path) -> None:
+    """Local import repair must not weaken the existing Identity source-name ban."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "renamed.py").write_text(
+        "from deterministic_response_cache.identity.model_identity "
+        "import ModelIdentity as ordinary\n",
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(directory, "ModelIdentity")
