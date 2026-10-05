@@ -539,16 +539,12 @@ def _add_conditional_module_alternatives(
     callables: dict[str, str],
     alternatives: dict[str, set[str]],
 ) -> None:
-    """Preserve finite known module branches for existing static conditional bindings."""
-    conditional_bindings = [
-        (target, value)
-        for target, value in _static_alias_bindings(tree)
-        if isinstance(value, ast.IfExp)
-    ]
-    for _ in range(len(conditional_bindings) + 1):
+    """Preserve finite module branches through existing static simple-name alias bindings."""
+    bindings = _static_alias_bindings(tree)
+    for _ in range(len(bindings) + 1):
         changed = False
         contexts = _module_alternative_contexts(modules, alternatives)
-        for target, value in conditional_bindings:
+        for target, value in bindings:
             known: set[str] = set()
             for context in contexts:
                 known.update(_conditional_module_alternatives(value, context, callables))
