@@ -3642,8 +3642,8 @@ Current／step phase 為 human-check；其餘三份 planning artifacts 保留 co
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`publish-in-progress`。新 same-S passing T／approved independent V 已提交，Planner已核 Phase4.5；
-bounded alignment commit／normal push 尚 pending。舊 needs-rework S/T/V 原樣保留，classification／actions未完成。
+Current：`human-check`。新 same-S approval／Phase4.5 normal publish／exact-seven classification
+與六 permitted reply／resolve已完成，既有 PR #7 pr-open；十二 Human locks＋o7gvv ADDRESS仍open，非merge approval。
 Human 授權此同-topic bounded repair successor；只修下列六 ADDRESS，
 RED／green sole implementation path `tests/test_loaded_runtime_cache_bc_independence.py`。
 不更動 production API／BC contract；修復後必須完整新的 immutable S／T／V chain，
@@ -3868,14 +3868,13 @@ o7gvv分類不代表新增parameter-detectorimplementation授權；十二Humanlo
 Final factual alignment ONLYplan／step記actualsubject／evidence／outcomes／reply／resolve與固定一次audit，
 只[X]真正完成，不虛勾remainingrequirements。Separatealignmentcommit／push由Gitfacts證明，
 不預填自我SHA或自指completioncheckbox、不新增trackingcandidate／receiptchain、不等bot追無限新snapshot。
-無release／postmergeaction。Unresolved：新 RED／green／same-S passing T／approved V 已提交；
-bounded publish尚 pending，七 pairs 需在 actual published head 後獨立分類；
-十二Human仍open。Scope drift／contract conflict conservative交Planner／Human，不擴設計。
+無release／postmergeaction。Unresolved：七pairs已獨立分類，六authorizedfixes／permittedactions完成；
+十二Human＋o7gvv ADDRESS仍open，parameterFIX未授權。Scope drift／contract conflict conservative交Planner／Human，不擴設計。
 
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
-Workflow state：current_step=phase-4.5-publish-factual-alignment；next_step=bounded-alignment-commit-normal-push；
+Workflow state：current_step=human-check-final-factual-alignment；next_step=bounded-alignment-commit-normal-push；
 status=COMPLETE（factual draft handoff only，非自身 commit／review approval／publish／topic-complete）。
 
 ### C47 Committed RED / Green / Passing Tester Facts（historical review-ready snapshot）
@@ -3976,7 +3975,7 @@ No new candidate chain；六 repair scope／十二 Human locks／o7gvv ONLYclass
 本 draft onlyplan／step，沒有 source／tests／analysis／spec／evidence／dev 或三rejecteduntracked變更；
 不預填自身 commit／不宣稱已提交。
 
-### C47 Phase 4.5 Actual Approval Facts / Bounded Publish Alignment（current）
+### C47 Phase 4.5 Actual Approval Facts / Bounded Publish Alignment（completed pre-publish snapshot）
 
 Green S `76e80d368bbdec3223c626631bfcd0101ba67d75`／passing Tester sole commit
 `157887d31d7e1c819580c96335b2959507df69d4`／approved Independent Reviewer unchanged sole commit
@@ -3993,3 +3992,38 @@ Next pending：Implementer separate exact-two alignment commit＋normal bounded 
 十二 Human locks、六 repair scope、o7gvv ONLYclassify 與原 immutable needs-rework history保留。
 No new candidate chain／contract／source變更，only plan／step factual draft；三 rejected untracked／dev未動。
 Publish-in-progress 僅可成為既有 PR #7 的 pr-open；Human-only review／merge／release／post-merge不授權。
+
+### C47 Final Committed Publish / Classification / Permitted Actions（current human-check）
+
+同 subject S `76e80d368bbdec3223c626631bfcd0101ba67d75`、
+passing T `157887d31d7e1c819580c96335b2959507df69d4`、
+approved V `82b09a1e949df5839ee1dd43edda3e4192b3b8d8` 保留 actual immutable chain。
+Phase4.5 exact-two alignment commit／normal push
+`27963d23c5423c338c7223833663a239d2404a5b` 已完成；existing PR #7 是 pr-open，
+不是 Human merge approval。獨立 exact-seven classification unchanged sole commit／push
+`6d5ef314dab83f62a41216aa2c04bac34a448911` 已完成，
+receipt binding 固定 new S／上述T/V／reviewed published head `27963d23c5423c338c7223833663a239d2404a5b`；
+後續 class commit head 不偷換 reviewed head，不重寫任何 receipt。
+
+| Classified pair | Committed outcome | Actual permitted action／remaining state |
+| --- | --- | --- |
+| `n23da/4153205676` | REPLY_AND_RESOLVE | Original receipt reply `4182235985`；resolved=true。 |
+| `n3P71/4153360189` | REPLY_AND_RESOLVE | Original receipt reply `4182236452`；resolved=true。 |
+| `n4uln/4153959205` | REPLY_AND_RESOLVE | Original receipt reply `4182236964`；resolved=true。 |
+| `n4ulr/4153959210` | REPLY_AND_RESOLVE | Original receipt reply `4182237511`；resolved=true。 |
+| `n5MVU/4154146529` | REPLY_AND_RESOLVE | Original receipt reply `4182238102`；resolved=true。 |
+| `o6M75/4180852193` | REPLY_AND_RESOLVE | Original receipt reply `4182238593`；resolved=true。 |
+| `o7gvv/4181373623` | ADDRESS | Classification 完成；parameter-name FIX 未授權／未實作／未resolve，仍open。 |
+
+Planner 已核 fixed full two-page audit snapshot `2026-10-05T08:53:36Z`：
+PR #7 head `6d5ef314dab83f62a41216aa2c04bac34a448911`，OPEN／MERGEABLE／CLEAN；
+120 threads／107 resolved／13 open = 十二 Human locks＋o7gvv ADDRESS，沒有新 unlisted。
+Completed workflow [X]僅表示已核實作驗證／分類／六 permitted actions；不虛勾十三open需求。
+Old needs-rework S/T/V frozen nonrouting history原樣保留；original mission／contracts／
+十二 locks／o7gvv ONLYclassify邊界不變。不新增 parameter tests／grammar／architecture權限。
+
+Current／phase human-check；本 only plan／step final factual draft尚待 Implementer separate commit／normalpush，
+未預填自身 alignment SHA／未宣稱此 draft已提交或push。不新增 candidate／receipt chain、
+自指 completion checkbox／alignment循環；此 commit／push是否完成只由 actual Git facts證明。
+固定一次 snapshot，不等 bot追新 audit；後續 unlisted inventory-only。
+Human-only PR review／merge／release／post-merge不授權；dev／其他paths／三rejecteduntracked未改。
