@@ -1808,3 +1808,62 @@ def test_c47_preserves_identity_source_name_import_rejection_when_renamed(tmp_pa
     )
 
     assert _declares_forbidden_semantic_type(directory, "ModelIdentity")
+
+
+@pytest.mark.parametrize(
+    ("first", "second"),
+    [
+        ("builtins if enabled else importlib", "b if enabled else builtins"),
+        ("importlib if enabled else builtins", "b if enabled else builtins"),
+        ("builtins if enabled else importlib", "builtins if enabled else b"),
+        ("importlib if enabled else builtins", "builtins if enabled else b"),
+    ],
+)
+def test_c47_rework_rejects_conditional_module_alternatives_through_plain_alias_chain(
+    tmp_path: Path,
+    first: str,
+    second: str,
+) -> None:
+    """A plain alias between conditional bindings cannot erase a known module alternative."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "alias_chain.py").write_text(
+        "import builtins\nimport importlib\n"
+        f"a = {first}\nb = a\nloader = {second}\nloader.import_module('identity')\n",
+        encoding="utf-8",
+    )
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        (
+            "import builtins\nimport importlib\na = builtins if enabled else importlib\n"
+            "b = a\nloader = b if enabled else builtins\n"
+        ),
+        (
+            "import builtins\nimport importlib\na = importlib if enabled else builtins\n"
+            "b = a\nloader = builtins if enabled else b\n"
+        ),
+        (
+            "a = ordinary if enabled else unknown\nb = a\n"
+            "loader = b if enabled else ordinary\nloader.import_module('identity')\n"
+        ),
+        (
+            "import builtins\na = builtins if enabled else unknown\nb = a\n"
+            "loader = b if enabled else builtins\nloader.len('identity')\n"
+        ),
+    ],
+)
+def test_c47_rework_preserves_unused_and_ordinary_conditional_alias_chains(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Conditional alias-chain possession and ordinary uses remain benign."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "controls.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(directory)
