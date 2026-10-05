@@ -308,7 +308,7 @@ paths, source contracts, configuration, and adjacent BCs untouched.
 
 ## Implementation Steps
 
-C47 current implementation gate：七項皆 pending；下列 steps 僅 Implementer-owned bounded source/tests work。
+C47 current implementation gate：七項已完成，依 committed same-green-S passing Tester facts；steps 僅 Implementer-owned source/tests work。
 1. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增 isolated RED fixtures／benign controls，六個 authorized repair pairs 各有獨立 rejecting assertion；名稱含 c47，rejecting 名稱另含 rejects。保留 scanner、既有 fixtures／direct imports／assertions，不執行 fixture source。
 2. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 納入 known module.__dict__[direct string literal] 的既有 forbidden import-callable lookup／alias 後續 USE，保留 unknown receiver／dynamic key／generic namespace／unused possession controls。
 3. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 納入 known forbidden import-callable.__call__ 的既有 USE 判定，保留 ordinary callable／arbitrary attribute／unused possession controls。
@@ -3642,7 +3642,9 @@ Current／step phase 為 human-check；其餘三份 planning artifacts 保留 co
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`planned`。Human 授權此同-topic bounded repair successor；只修下列六 ADDRESS，
+Current：`review-ready`。六 bounded repairs 與 same-subject passing Tester evidence 已提交；
+尚待 independent implementation Reviewer，沒有 review approval／publish／thread-action 完成主張。
+Human 授權此同-topic bounded repair successor；只修下列六 ADDRESS，
 RED／green sole implementation path `tests/test_loaded_runtime_cache_bc_independence.py`。
 不更動 production API／BC contract；修復後必須完整新的 immutable S／T／V chain，
 C42 passing evidence 只作 predecessor provenance，不為 C47 新 subject 背書。
@@ -3866,11 +3868,33 @@ o7gvv分類不代表新增parameter-detectorimplementation授權；十二Humanlo
 Final factual alignment ONLYplan／step記actualsubject／evidence／outcomes／reply／resolve與固定一次audit，
 只[X]真正完成，不虛勾remainingrequirements。Separatealignmentcommit／push由Gitfacts證明，
 不預填自我SHA或自指completioncheckbox、不新增trackingcandidate／receiptchain、不等bot追無限新snapshot。
-無release／postmergeaction。Unresolved：六fix尚未RED／green／T／V，七pairs待獨立分類；
+無release／postmergeaction。Unresolved：RED／green／same-S passing T 已提交；Independent Reviewer／V
+尚 pending，七 pairs 需在完整驗證／publish 後獨立分類；
 十二Human仍open。Scope drift／contract conflict conservative交Planner／Human，不擴設計。
 
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
-Workflow state：current_step=c47-plan-authoring；next_step=bounded-candidate-commit；
-status=COMPLETE（draft handoff only，非approval／implementation／gate／publish／topic-complete）。
+Workflow state：current_step=review-ready-factual-alignment；next_step=bounded-alignment-commit；
+status=COMPLETE（factual draft handoff only，非自身 commit／review approval／publish／topic-complete）。
+
+### C47 Committed RED / Green / Passing Tester Facts（review-ready）
+
+Candidate `ff32214939ed1bdd5e15f67a01c2a7e981bb4eaa`；
+approved Plan-Reviewer unchanged sole commit `11172a4bdef8fe5b83ea3142434cacaf979d5cd9`；
+RED sole-test subject `1779e366cafefbc70ad065c9a629dd9dba3b7241`；
+failing Tester unchanged sole commit `1be5970152584494ac50c7a585818e30303190e3`；
+distinct green sole-test subject `dda13fd64a4075f1cfb691fd3da0fa6230405918`；
+passing Tester unchanged sole commit `e584939e9c6101a1acf2fb40494673e96c10d2c9`。
+RED evidence 記 collection／controls exit0、declared new assertion command exit1；
+same-green-S passing evidence 的 scoped pytest／Ruff／strict Pyright 三 commands actual exit0，
+recorded_by=Tester。Planner 已核上述 committed facts，canonical 七項 implementation 依同 S evidence 標 [X]。
+舊 C42 T/V 只作 frozen predecessor，不是本 green S passing／review evidence。
+本 exact-two review-ready factual draft 不改 source／tests／其他三 planning artifacts／receipts，
+不新增 candidate chain；三 rejected untracked 原樣保留。
+Next：Implementer separate exact-two factual-alignment commit，之後 independent Reviewer 只能消費
+same `dda13fd64a4075f1cfb691fd3da0fa6230405918` 與 committed passing T
+`e584939e9c6101a1acf2fb40494673e96c10d2c9`。
+Independent Reviewer／V verdict／Phase4.5／push／classification／thread actions 尚 pending；
+未預填 V／published head／自身 alignment SHA，不宣稱 review approval 或 publish 已完成。
+十二 Human locks 與 o7gvv ONLYclassify／parameter repair exclusion 保持不變。
