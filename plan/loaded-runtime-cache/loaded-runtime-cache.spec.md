@@ -2252,7 +2252,10 @@ No release／post-mergeactions。
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 
-## C45 Current-Head Seven-Pair Classification（authoritative current routing）
+## C45 Current-Head Seven-Pair Classification（completed predecessor routing）
+
+C45 draft-time／pending／Current 字樣保留為 predecessor snapshot；已提交 final alignment
+`36431ed89757d17a1965fda018b2fb028625b905` 與下方 C46 為 actual current routing，非 C45 未完成證據。
 
 ### Goal / Outcome / Scope / Locked Decisions
 
@@ -2386,3 +2389,130 @@ No release／post-merge actions。
 
 Workflow state：current_step=c45-plan-authoring；next_step=bounded-candidate-commit；
 status=COMPLETE（draft handoff only，非 approved／classification／topic-complete）。
+
+## C46 Current-Head Five-Pair Classification（authoritative current routing）
+
+### Goal / Outcome / Scope / Locked Decisions
+
+Current：`planned`。Human 明確授權、Planner 選定 C46 classification-only successor，
+只建立以下 exact-five 的獨立 current-head classification contract；不預填 verdict／outcome／reply／resolve，
+不授權 code／grammar／architecture 修改。
+
+| Thread suffix（string） | Comment ID（string） | 分類輸入，非修復要求／預定 outcome |
+| --- | --- | --- |
+| `o6Apd` | `4180774145` | C45 tracker 與已提交分類狀態是否一致。 |
+| `o6Apj` | `4180774151` | 同步 comprehension 的 literal alias／既有 benign control 建議。 |
+| `o6M73` | `4180852189` | 巢狀 tuple/list For target 的 module alias 建議。 |
+| `o6M75` | `4180852193` | With／AsyncWith optional_vars foreign semantic-name 建議。 |
+| `o6M76` | `4180852196` | RuntimeRegistry backend semantic kind／architecture evidence 建議。 |
+
+Fixed C42 S `528de65144f0bdaf7a38831562b37f75fe8057ff`，
+passing Tester sole commit `6eafc4b60f727f36539a9c17d32b3e4162b1d868`，
+approved Independent Reviewer sole commit `307361d621fbad9f9eabd8373b6e38816a3a3cc4`，
+audited PR head `36431ed89757d17a1965fda018b2fb028625b905`。
+五筆目前 open、source unchanged、S/T/V ancestors 與 fresh receipt path 已由 Planner preflight 核實；
+不得偷換 reviewed head，也不得以 unavailable historic SHA 推測歷史合法性。
+
+### Predecessor Facts / Analysis Priority / Boundaries
+
+C45 candidate `9f0bd60c7d8dc43807771b1c93d9674f1c3da50e`、
+approved receipt sole commit `996e1a6b0d5363954a4b560f7bff2e84efc06b42`、
+classification sole commit／push `c45be35f8ef1d812e910c8726800a735a005a153`，
+三筆 replies `4180760739`／`4180761306`／`4180761812` 已 resolved。
+C45 exact-two final factual-alignment commit／push
+`36431ed89757d17a1965fda018b2fb028625b905` 已完成；C45 是 completed predecessor route，
+非所有 remaining requirements 完成。其 2026-10-05 04:45:47 UTC snapshot 保留為 as-of 歷史事實，
+不冒稱 C46 current thread total；old pending／draft labels 僅 provenance，C46 為唯一 current route。
+Existing requirements／technical-spec 均存在，採 strict analysis priority；五檔同步此 bounded contract，
+technical-spec 是 execution-facing authority，requirements 保留 original mission／business-intent guardrail。
+不改 original mission／scope／outcomes／Registry protocol／tests／Architecture Visualization／follow-ups。
+
+In-Scope／Goal：exact-five classification 契約與既有 C45 actual facts alignment。
+Modify：五份 standard planning artifacts；post-actions alignment 僅 plan／step。
+Written：下列各獨立 writer 專屬 immutable receipts。Deleted：無。
+ReadOnly：dev、production source／tests、docs／architecture／diagram／governance、
+README／VERSION／configuration、既有 receipts／evidence、未列 threads。
+Out-Of-Scope／Non-Goal：code／grammar／architecture 修改；新 implementation／Tester／V；
+backend／DI／runtime lifecycle／API／ACL；PR approval／merge／release／post-merge。
+原 9 HUMAN_CHECK（八 locks 加 `n4uly/4153959219`）與 5 ADDRESS（原
+`n23da/4153205676`、`n3P71/4153360189` 加 `n4uln/4153959205`、
+`n4ulr/4153959210`、`n5MVU/4154146529`）保持 open，不在本五筆重新分類／解除。
+ADDRESS 不擴張授權；grammar／statement-order／architecture locks 必須保守交 Planner／Human。
+三份 rejected untracked receipts 原樣保留，不覆寫／刪除／提交，不作 routing evidence。
+No stable-library surface／release timing change；README／VERSION 無變更。
+
+### Artifact Paths / Status / Actor Sequence / Receipt Contracts
+
+Plan-Creator 唯一 writer，只在 feature worktree 修改 exact-five：
+`analysis/loaded-runtime-cache/requirements.md`、
+`analysis/loaded-runtime-cache/technical-spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`、
+`plan/loaded-runtime-cache/loaded-runtime-cache.step.md`。
+Implementer exact-five non-merge candidate-only commit，candidate 保持 LOCAL；
+Independent Plan-Reviewer 唯一寫 candidate SHA-bound fresh immutable path
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<c46-candidate-full-40-hex-sha>.json`。
+Single object 恰 verdict／blocking_issues／copilot_feedback_triage；
+verdict approved|needs-rework；blocking_issues 為 exact issue/file/fix nonempty-string objects array，
+approved 空／needs-rework 非空；triage 恰 ADDRESS/DISCUSS/SKIP arrays。
+Candidate SHA 只能在 actual commit 後填入 path，不預填 future SHA／approval。
+Implementer 原樣 approved receipt separate sole evidence-only commit，保持 LOCAL；
+needs-rework 不能 route classification；回 Planner，不 self-close candidate。
+Planner 核 same-topic／same-S passing T／approved V 與 fixed live head 後，
+Independent Reviewer 唯一寫 fresh immutable path：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-528de65144f0bdaf7a38831562b37f75fe8057ff-36431ed89757d17a1965fda018b2fb028625b905.json`。
+
+Classification single JSON object，top-level 恰八 keys：
+schema_version／topic／implementation_subject_commit／tester_evidence_commit／
+implementation_review_evidence_commit／pr_head_commit／classifications／recorded_by。
+Values 分別 integer 1、loaded-runtime-cache、上述 fixed S/T/V/head、
+exact-five array、`Independent Reviewer`。各 entry 恰 thread／comment／outcome／reply；
+thread／comment 恰上述 suffix／ID strings，各一次，不使用 full PRRT IDs；
+outcome REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK。僅 REPLY_AND_RESOLVE 的 reply
+為 nonempty factual string；ADDRESS／HUMAN_CHECK reply 必為 JSON null。
+全 SHA 為 actual lowercase 40-hex；missing／extra keys、pair／binding／head／writer／order／fresh path
+或 sole-commit 不符即 fail closed，不覆寫任何 receipt，不跨 topic 借 evidence。
+Reviewer 不 commit；Implementer 原樣 classification separate sole evidence-only commit，
+之後 normal bounded push（候選／approved receipt 不提前 push 改變 fixed live head）。
+Planner 才 route committed REPLY_AND_RESOLVE exact original reply／resolve／live audit；
+ADDRESS／HUMAN_CHECK 保持 open，需修復另經 bounded scope 判定，非本分類直接實作。
+Planning approval 非 thread-action authority；Q／classification 非 Human PR approval。
+Publish-in-progress 只能 pr-open；Human-only merge／release／post-merge 不授權。
+
+### Post-Actions Alignment / Validation / TestCase / Human Boundary
+
+Exact permitted actions 實際完成後，Plan-Creator ONLY plan／step 記 actual candidate／receipt
+commits、outcomes、reply IDs／resolved、固定一次 as-of full-pagination snapshot；
+只將真正完成項標 [X]。Implementer separate exact-two factual-alignment commit／bounded push，
+不新增 tracking candidate／receipt chain，不預填自我 SHA 或未完成 publish。
+Final alignment commit／push 以 actual Git facts 判定，不建立自指 checkbox／補 commit 循環。
+然後 human-check，一次彙整 remaining needs；new unlisted pairs 只 inventory／UNCLASSIFIED，
+不追加 classification／reply／resolve 權限，不等待新 bot comments 追無限 snapshot。
+
+Given same-S committed passing／approved evidence、fixed head、exact-five input，
+When Independent Reviewer classification，Then 只產生五筆符合 exact schema 的 factual outcomes。
+Given stale head／不明 historic facts／未列 thread，Then fail closed／如實未驗證／inventory-only，
+不得推測合法性或擴張 scope。無新 tests／RED／green／Tester／implementation review；
+canonical C42 four implementation steps 與 direct imports／fixtures／mocks／assertions 原樣保留。
+Validation commands：`git diff --check`；
+`python .agents/skills/plan-step-tracker/scripts/step_tracker.py check_impl_steps_succeeded loaded-runtime-cache`；
+各角色依 actual Git facts 核 candidate exact-five、sole receipts、full SHA ancestry／source unchanged，
+並以唯讀 PR head 與 thread pagination 核對 fixed head／exact actions。
+Async-planning status：exempt — classification／factual tracking-only，沒有 async code／lifecycle／concurrency 變更。
+七項 decisions 均 unchanged：不新增模組／public API／interface／breaking change／dependency；
+error handling 是 schema／binding／route fail closed，不改 Python exception boundary；
+typing 是固定 JSON string／integer／array／nullability，不改 Python annotations。
+TestCase categories：happy exact-five、invalid schema/binding、edge stale head／historic unknown、
+regression original locks／evidence unchanged、backward compatibility API／tests untouched。
+Risks：stale head、ADDRESS 被誤作修復授權、draft-time provenance 冒作 current state、tracking loop。
+Rollback：只 bounded planning repair 或必要 fresh immutable successor；不 broad reset、
+不覆寫 receipts，不修改既有實作／locked decisions。
+Unresolved：五筆待獨立分類；原 9 HUMAN_CHECK／5 ADDRESS open；
+其他未列新 pairs inventory-only。本輪無 release／post-merge actions。
+
+Reviewer Handoff：
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+Workflow state：current_step=c46-plan-authoring；next_step=bounded-candidate-commit；
+status=COMPLETE（draft handoff only，非 approval／classification／publish／topic-complete）。
