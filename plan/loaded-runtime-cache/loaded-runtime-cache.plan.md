@@ -3305,9 +3305,9 @@ No release／post-mergeactions。
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`c45-planning-draft`。Human 明確授權且 Planner 已選定此 classification-only successor；
-僅對以下七個 exact suffix thread/comment pairs 作獨立 current-head classification，
-不預填 outcomes／replies／resolutions，不授權任何 grammar／code／architecture 修改。
+Current：`human-check`。C45 七筆 independent classification／sole commit／push 與三筆
+permitted reply／resolve 已完成；remaining Human／ADDRESS／UNCLASSIFIED 保持 open。
+以下保留七筆 input 與原 bounded contract，不授權任何 grammar／code／architecture 修改。
 
 | Thread suffix（string） | Comment ID（string） | 分類輸入，非修復要求或預定 outcome |
 | --- | --- | --- |
@@ -3337,12 +3337,12 @@ C43 三筆 resolved facts 保留。C44 final plan／step factual alignment 已�
 `b3d372d0cc8ae90d3269f09ffc88546a6acc8bf7` 提交／推送，named diff 僅 plan／step。
 C44 是 completed predecessor route（非所有 remaining requirements 完成），
 其 `2026-10-01 09:49:52 UTC` audit snapshot 原樣作歷史事實，不冒稱本輪 current audit。
-C45 唯一 current route；未分類七筆現由此 bounded successor 授權獨立分類，不自定 outcome。
+C45 唯一 current route；本七筆已由 immutable committed classification 分類，見下方 actual facts。
 
 已存在 requirements／technical-spec，採 strict analysis priority；
 本五檔同步同一 C45 contract，technical-spec 為 execution-facing authority，
 requirements 保留 original mission／business intent guardrail，非新 topic。
-本輪唯讀核 PR head 為上述 fixed head、MERGEABLE／CLEAN；七筆 suffix/comment 對應且仍 open；
+Planning 時唯讀核 PR head 為上述 fixed head、MERGEABLE／CLEAN；七筆當時仍 open；
 same-S passing Tester 三 commands exit0 與 approved independent review／空 blockers records 存在。
 不以 current facts 追認 unavailable historic revision；無可核 full SHA／tree 時如實記未驗證交 Reviewer，
 不猜 parent／ancestry／合法性，也不重寫其歷史或 evidence chain。
@@ -3426,12 +3426,40 @@ Stale／unknown historical facts 只能如實未驗證，不猜歷史合法性�
 Risks：stale head／錯誤 pairs、historic facts 推測、ADDRESS 被視為 scope 擴張、
 tracking loop。Rollback：只 bounded planning repair 或必要 fresh immutable successor route；
 不 broad reset、不覆寫／刪除 receipts，不更改既有實作與 locked decisions。
-本七筆待 Independent Reviewer；八 Human-only／兩 grammar ADDRESS 保持 open。
+本七筆 independent classification 已完成；原八 Human-only／兩 grammar ADDRESS 保持 open，
+另有三 ADDRESS／一 HUMAN_CHECK 與兩筆 unlisted inventory，均不授權修復或 resolve。
 No release／post-merge actions。
 
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 
-Workflow state：current_step=c45-plan-authoring；next_step=bounded-candidate-commit；
-status=COMPLETE（draft handoff only，非 approved／classification／topic-complete）。
+Workflow state：current_step=human-check；next_step=bounded-alignment-commit-push；
+status=COMPLETE（factual draft handoff only，非 alignment commit／push 或 topic-complete）。
+
+### C45 Committed Classification / Post-Actions Facts（as-of snapshot）
+
+Candidate `9f0bd60c7d8dc43807771b1c93d9674f1c3da50e` exact-five；approved planning receipt
+sole commit `996e1a6b0d5363954a4b560f7bff2e84efc06b42`；classification sole commit／push
+`c45be35f8ef1d812e910c8726800a735a005a153`。Receipt 保留原 fixed S/T/V/head bindings；
+C42 source／same-subject passing Tester／approved Independent Reviewer 未改，未新增 implementation chain。
+
+| Pair | Committed outcome | Actual action／remaining state |
+| --- | --- | --- |
+| `n4uld/4153959185` | REPLY_AND_RESOLVE | Reply `4180760739` exists；resolved=true。 |
+| `n4ulj/4153959197` | REPLY_AND_RESOLVE | Reply `4180761306` exists；resolved=true。 |
+| `n4uln/4153959205` | ADDRESS | IfExp module alternatives，open；未授權 grammar 修復。 |
+| `n4ulr/4153959210` | ADDRESS | For／AsyncFor foreign-name target syntax，open；未授權修復。 |
+| `n4uly/4153959219` | HUMAN_CHECK | Ordered binding／scope invalidation，open；locked scope 未解除。 |
+| `n4_wT/4154067364` | REPLY_AND_RESOLVE | Reply `4180761812` exists；resolved=true。 |
+| `n5MVU/4154146529` | ADDRESS | Local import binding semantic name，open；未授權修復。 |
+
+唯讀 live snapshot `2026-10-05 04:45:47 UTC`：PR head
+`c45be35f8ef1d812e910c8726800a735a005a153`，MERGEABLE／CLEAN；完整 pagination 共 116 threads，
+100 resolved／16 open = 9 HUMAN_CHECK（原八項加 n4uly）／5 ADDRESS（原兩項加本三項）／2 UNCLASSIFIED。
+Unlisted `o6Apd/4180774145`、`o6Apj/4180774151` 僅 inventory，未分類／未回覆／未 resolve。
+此 snapshot 固定 as-of，非未來零 open 保證；三份 rejected untracked receipts 原樣保留。
+本次只對 plan／step 作 factual state alignment；其餘三份 planning artifacts 的 draft-time state
+屬 committed candidate snapshot，不取代此欄 actual Git facts。不新增 tracking candidate／receipt chain。
+Alignment separate commit／bounded push 尚交 Implementer，未預填自身 SHA 或宣稱已完成；
+其完成由 actual Git facts 判定，不新增自指 checkbox／追補 alignment loop。
