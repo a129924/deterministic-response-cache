@@ -308,7 +308,7 @@ paths, source contracts, configuration, and adjacent BCs untouched.
 
 ## Implementation Steps
 
-C47 current implementation gate：step4 needs-rework／pending；其餘六項既有完成事實保留，舊 passing T 不作新 subject gate。
+C47 current implementation gate：step4回修完成，七項[X]依 new-green-S committed passing T；舊 S/T/V只是 frozen history。
 1. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增 isolated RED fixtures／benign controls，六個 authorized repair pairs 各有獨立 rejecting assertion；名稱含 c47，rejecting 名稱另含 rejects。保留 scanner、既有 fixtures／direct imports／assertions，不執行 fixture source。
 2. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 納入 known module.__dict__[direct string literal] 的既有 forbidden import-callable lookup／alias 後續 USE，保留 unknown receiver／dynamic key／generic namespace／unused possession controls。
 3. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 納入 known forbidden import-callable.__call__ 的既有 USE 判定，保留 ordinary callable／arbitrary attribute／unused possession controls。
@@ -3642,8 +3642,8 @@ Current／step phase 為 human-check；其餘三份 planning artifacts 保留 co
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`needs-rework`。Committed independent Reviewer 指出 step4 alias-chain alternative 漏檢；
-舊 same-S passing T／needs-rework V 保留，須新 RED／green／same-subject T／V，不能進 publish／classification。
+Current：`review-ready`。Step4 alias-chain回修完成，新的 RED／failing T／green S／passing T 已提交；
+尚待 new-S Independent Reviewer／fresh V。舊 needs-rework S/T/V 保留，不進 publish／classification。
 Human 授權此同-topic bounded repair successor；只修下列六 ADDRESS，
 RED／green sole implementation path `tests/test_loaded_runtime_cache_bc_independence.py`。
 不更動 production API／BC contract；修復後必須完整新的 immutable S／T／V chain，
@@ -3868,14 +3868,14 @@ o7gvv分類不代表新增parameter-detectorimplementation授權；十二Humanlo
 Final factual alignment ONLYplan／step記actualsubject／evidence／outcomes／reply／resolve與固定一次audit，
 只[X]真正完成，不虛勾remainingrequirements。Separatealignmentcommit／push由Gitfacts證明，
 不預填自我SHA或自指completioncheckbox、不新增trackingcandidate／receiptchain、不等bot追無限新snapshot。
-無release／postmergeaction。Unresolved：舊 S/T 與 needs-rework V 已提交；step4回修與新RED／green／T／V
+無release／postmergeaction。Unresolved：新 RED／green／same-S passing T已提交；fresh Independent Reviewer／V
 尚 pending，七 pairs 需在新完整驗證／publish 後獨立分類；
 十二Human仍open。Scope drift／contract conflict conservative交Planner／Human，不擴設計。
 
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
-Workflow state：current_step=needs-rework-factual-alignment；next_step=bounded-alignment-commit；
+Workflow state：current_step=review-ready-rework-factual-alignment；next_step=bounded-alignment-commit；
 status=COMPLETE（factual draft handoff only，非自身 commit／review approval／publish／topic-complete）。
 
 ### C47 Committed RED / Green / Passing Tester Facts（historical review-ready snapshot）
@@ -3899,7 +3899,7 @@ Independent Reviewer／V verdict／Phase4.5／push／classification／thread act
 未預填 V／published head／自身 alignment SHA，不宣稱 review approval 或 publish 已完成。
 十二 Human locks 與 o7gvv ONLYclassify／parameter repair exclusion 保持不變。
 
-### C47 Committed Needs-Rework Facts / Existing-Scope Rework Route（current）
+### C47 Committed Needs-Rework Facts / Existing-Scope Rework Route（frozen predecessor snapshot）
 
 Immutable green S `dda13fd64a4075f1cfb691fd3da0fa6230405918`、
 passing T `e584939e9c6101a1acf2fb40494673e96c10d2c9`、
@@ -3954,3 +3954,24 @@ Collection／controls須actual0，RED須新增指定assertionfailure；syntax／
 新 green passing T 使用上述 C47 scoped two-file pytest／Ruff／strict Pyright 三完整命令，
 全部actual0才passing；step4完成後 canonical CLI須0，當前預期1／one pending。
 舊S/T/V frozen history、三rejecteduntracked、dev／其他三planning／source與receipts未改。
+
+### C47 Rework Committed RED / Green / Passing Tester Facts（current review-ready）
+
+New RED sole-test subject `158671c9ff7931a831c4081447d445ff12af6706`；
+independent failing Tester unchanged sole commit `6dfe55e7b102934679c0ca8f945bdd7c1b364342`；
+distinct green sole-test subject `76e80d368bbdec3223c626631bfcd0101ba67d75`；
+independent passing Tester unchanged sole commit `157887d31d7e1c819580c96335b2959507df69d4`。
+RED c47_rework collection／controls actual exit0、declared assertion command exit1；
+同 new-green-S scoped two-file pytest／Ruff／strict Pyright 三命令 actual exit0。
+Planner 已核 committed same-S passing T；step4回修完成，canonical七steps[X]，應以 CLI確認0。
+此為 review-ready／非 Independent Reviewer approval；新 V／Phase4.5／publish／七筆 classification／
+reply／resolve 尚 pending，不預填其 SHA、verdict／outcomes／published head 或自身 alignment commit。
+Old S `dda13fd64a4075f1cfb691fd3da0fa6230405918`／T
+`e584939e9c6101a1acf2fb40494673e96c10d2c9`／needs-rework V sole commit
+`e3a597767270b76edf7c258160ec894057bddd70` 保留 frozen nonrouting history，不覆寫，也不為 new S背書。
+Next：Implementer separate exact-two review-ready factual-alignment commit；Independent Reviewer
+只可消費同 new S `76e80d368bbdec3223c626631bfcd0101ba67d75` 與 committed passing T
+`157887d31d7e1c819580c96335b2959507df69d4`，寫該 new-S fresh immutable review log。
+No new candidate chain；六 repair scope／十二 Human locks／o7gvv ONLYclassify不變。
+本 draft onlyplan／step，沒有 source／tests／analysis／spec／evidence／dev 或三rejecteduntracked變更；
+不預填自身 commit／不宣稱已提交。
