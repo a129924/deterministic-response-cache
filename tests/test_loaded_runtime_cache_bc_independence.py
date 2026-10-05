@@ -514,7 +514,7 @@ def _for_module_alias_contexts(
     modules: dict[str, str],
     callables: dict[str, str],
 ) -> tuple[list[dict[str, str]], frozenset[str]]:
-    """Retain finite known module alternatives from direct synchronous For literals."""
+    """Retain finite known module alternatives from For literals and conditional bindings."""
     alternatives: dict[str, set[str]] = {}
     for statement in ast.walk(tree):
         if not (
@@ -529,14 +529,64 @@ def _for_module_alias_contexts(
             resolved = _resolve_forbidden_alias(element, modules, callables)
             if resolved is not None and resolved[0] == "module":
                 alternatives.setdefault(statement.target.id, set()).add(resolved[1])
+    _add_conditional_module_alternatives(tree, modules, callables, alternatives)
+    return _module_alternative_contexts(modules, alternatives), frozenset(alternatives)
+
+
+def _add_conditional_module_alternatives(
+    tree: ast.AST,
+    modules: dict[str, str],
+    callables: dict[str, str],
+    alternatives: dict[str, set[str]],
+) -> None:
+    """Preserve finite known module branches for existing static conditional bindings."""
+    conditional_bindings = [
+        (target, value)
+        for target, value in _static_alias_bindings(tree)
+        if isinstance(value, ast.IfExp)
+    ]
+    for _ in range(len(conditional_bindings) + 1):
+        changed = False
+        contexts = _module_alternative_contexts(modules, alternatives)
+        for target, value in conditional_bindings:
+            known: set[str] = set()
+            for context in contexts:
+                known.update(_conditional_module_alternatives(value, context, callables))
+            if known and not known <= alternatives.get(target, set()):
+                alternatives.setdefault(target, set()).update(known)
+                changed = True
+        if not changed:
+            break
+
+
+def _conditional_module_alternatives(
+    value: ast.expr,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> set[str]:
+    """Collect only finite known conditional module branches without evaluating conditions."""
+    if isinstance(value, ast.IfExp):
+        return _conditional_module_alternatives(
+            value.body,
+            modules,
+            callables,
+        ) | _conditional_module_alternatives(value.orelse, modules, callables)
+    resolved = _resolve_forbidden_alias(value, modules, callables)
+    return {resolved[1]} if resolved is not None and resolved[0] == "module" else set()
+
+
+def _module_alternative_contexts(
+    modules: dict[str, str],
+    alternatives: dict[str, set[str]],
+) -> list[dict[str, str]]:
+    """Enumerate the bounded known module alternatives used by the existing USE checks."""
     if not alternatives:
-        return [modules.copy()], frozenset()
+        return [modules.copy()]
     names = list(alternatives)
-    contexts = [
+    return [
         modules | dict(zip(names, values, strict=True))
         for values in product(*(sorted(alternatives[name]) for name in names))
     ]
-    return contexts, frozenset(names)
 
 
 def _import_aliases(tree: ast.AST) -> tuple[dict[str, str], dict[str, str]]:
@@ -686,7 +736,7 @@ def _resolve_forbidden_alias(
     if isinstance(value, ast.Name):
         return _resolve_name_alias(value.id, modules, callables)
     if isinstance(value, ast.Attribute):
-        return _resolve_attribute_alias(value, modules)
+        return _resolve_import_callable_attribute(value, modules, callables)
     if isinstance(value, ast.IfExp):
         body = _resolve_forbidden_alias(value.body, modules, callables)
         alternative = _resolve_forbidden_alias(value.orelse, modules, callables)
@@ -696,6 +746,52 @@ def _resolve_forbidden_alias(
         return body or alternative
     if isinstance(value, ast.Call):
         return _resolve_getattr_alias(value, modules, callables)
+    return (
+        _resolve_namespace_import_callable(value, modules)
+        if isinstance(value, ast.Subscript)
+        else None
+    )
+
+
+def _resolve_import_callable_attribute(
+    value: ast.Attribute,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> tuple[str, str] | None:
+    """Recognize __call__ only on a known forbidden import callable receiver."""
+    if value.attr == "__call__":
+        resolved = _resolve_forbidden_alias(value.value, modules, callables)
+        if resolved in {
+            ("callable", "builtins.__import__"),
+            ("callable", "importlib.__import__"),
+            ("callable", "importlib.import_module"),
+        }:
+            return resolved
+    return _resolve_attribute_alias(value, modules)
+
+
+def _resolve_namespace_import_callable(
+    value: ast.Subscript,
+    modules: dict[str, str],
+) -> tuple[str, str] | None:
+    """Resolve direct literal __dict__ import entries on known module receivers only."""
+    namespace = value.value
+    key = value.slice
+    if not (
+        isinstance(namespace, ast.Attribute)
+        and namespace.attr == "__dict__"
+        and isinstance(namespace.value, ast.Name)
+        and isinstance(key, ast.Constant)
+        and isinstance(key.value, str)
+    ):
+        return None
+    module = modules.get(namespace.value.id)
+    if (module, key.value) in {
+        ("builtins", "__import__"),
+        ("importlib", "__import__"),
+        ("importlib", "import_module"),
+    }:
+        return "callable", f"{module}.{key.value}"
     return None
 
 
@@ -893,11 +989,31 @@ def _declares_forbidden_semantic_type(source_directory: Path, type_name: str) ->
                 return True
             if _imports_identity_semantic_type(statement, type_name):
                 return True
+            if _binds_foreign_semantic_name(statement, type_name):
+                return True
             if isinstance(
                 statement,
                 (ast.Assign, ast.AnnAssign, ast.NamedExpr),
             ) and _assignment_names(statement, type_name):
                 return True
+    return False
+
+
+def _binds_foreign_semantic_name(statement: ast.AST, type_name: str) -> bool:
+    """Inspect authorized import, loop, and context-manager local binding syntax."""
+    if isinstance(statement, ast.Import):
+        return any(
+            (alias.asname or alias.name.split(".", 1)[0]) == type_name for alias in statement.names
+        )
+    if isinstance(statement, ast.ImportFrom):
+        return any((alias.asname or alias.name) == type_name for alias in statement.names)
+    if isinstance(statement, (ast.For, ast.AsyncFor)):
+        return _semantic_target_names(statement.target, type_name)
+    if isinstance(statement, (ast.With, ast.AsyncWith)):
+        return any(
+            item.optional_vars is not None and _semantic_target_names(item.optional_vars, type_name)
+            for item in statement.items
+        )
     return False
 
 
