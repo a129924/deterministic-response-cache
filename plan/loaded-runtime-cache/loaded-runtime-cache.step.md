@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: plan-authoring
+phase: human-check
 created: 2026-09-17
 ---
 
@@ -2887,9 +2887,9 @@ Historical C45 boundary：9 HUMAN_CHECK／5 ADDRESS 保持 open；兩 inventory 
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`planned`。Human 明確授權、Planner 選定 C46 classification-only successor，
-只建立以下 exact-five 的獨立 current-head classification contract；不預填 verdict／outcome／reply／resolve，
-不授權 code／grammar／architecture 修改。
+Current：`human-check`。C46 exact-five 獨立分類／sole commit／push 與唯一 permitted
+reply／resolve 已完成；下列保留原分類 input／bounded contract，actual outcomes 見本節末。
+Remaining HUMAN_CHECK／ADDRESS 保持 open，不授權 code／grammar／architecture 修改。
 
 | Thread suffix（string） | Comment ID（string） | 分類輸入，非修復要求／預定 outcome |
 | --- | --- | --- |
@@ -2903,7 +2903,7 @@ Fixed C42 S `528de65144f0bdaf7a38831562b37f75fe8057ff`，
 passing Tester sole commit `6eafc4b60f727f36539a9c17d32b3e4162b1d868`，
 approved Independent Reviewer sole commit `307361d621fbad9f9eabd8373b6e38816a3a3cc4`，
 audited PR head `36431ed89757d17a1965fda018b2fb028625b905`。
-五筆目前 open、source unchanged、S/T/V ancestors 與 fresh receipt path 已由 Planner preflight 核實；
+Planning 時五筆 open、source unchanged、S/T/V ancestors 與 fresh receipt path 已由 Planner preflight 核實；
 不得偷換 reviewed head，也不得以 unavailable historic SHA 推測歷史合法性。
 
 ### Predecessor Facts / Analysis Priority / Boundaries
@@ -3000,27 +3000,54 @@ regression original locks／evidence unchanged、backward compatibility API／te
 Risks：stale head、ADDRESS 被誤作修復授權、draft-time provenance 冒作 current state、tracking loop。
 Rollback：只 bounded planning repair 或必要 fresh immutable successor；不 broad reset、
 不覆寫 receipts，不修改既有實作／locked decisions。
-Unresolved：五筆待獨立分類；原 9 HUMAN_CHECK／5 ADDRESS open；
-其他未列新 pairs inventory-only。本輪無 release／post-merge actions。
+Unresolved：五筆分類已完成；原 9 HUMAN_CHECK／5 ADDRESS，加本三 HUMAN_CHECK／一 ADDRESS，
+均 open。未列新 pairs inventory-only；本 fixed snapshot 無新增 unlisted。本輪無 release／post-merge actions。
 
 Reviewer Handoff：
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
-Workflow state：current_step=c46-plan-authoring；next_step=bounded-candidate-commit；
-status=COMPLETE（draft handoff only，非 approval／classification／publish／topic-complete）。
+Workflow state：current_step=human-check；next_step=bounded-alignment-commit-push；
+status=COMPLETE（factual-alignment draft handoff only，非自身 commit／push／topic-complete）。
+
+### C46 Committed Classification / Post-Actions Facts（fixed as-of snapshot）
+
+Actual exact-five candidate `dd1d78f6be0903aa1576d1350ac88311da836148`；
+approved planning receipt sole commit `40d7cc3d144be466acc914171dc817670b7ebb6f`；
+classification unchanged sole commit／normal push `296232ccb70b8346c392894e58aa07722c8bccd8`。
+Receipt 原 fixed C42 S/T/V 與 reviewed head `36431ed89757d17a1965fda018b2fb028625b905`
+保持不變；不以後續 publish head 偷換 reviewed head，source／tests／implementation evidence 未改。
+
+| Pair | Committed outcome | Actual action／remaining state |
+| --- | --- | --- |
+| `o6Apd/4180774145` | REPLY_AND_RESOLVE | 原 receipt reply 已發布，reply ID `4181279778`，resolved=true。 |
+| `o6Apj/4180774151` | HUMAN_CHECK | Comprehension literal alias scope，open；既有 grammar lock 未解除。 |
+| `o6M73/4180852189` | HUMAN_CHECK | Nested For target inference，open；direct simple-name target lock 未解除。 |
+| `o6M75/4180852193` | ADDRESS | With／AsyncWith foreign semantic-name syntax，open；本輪不授權修復。 |
+| `o6M76/4180852196` | HUMAN_CHECK | RuntimeRegistry architecture semantic kind，open；architecture ownership／locked decision 未解除。 |
+
+Planner 已核固定 audit snapshot `2026-10-05T06:31:52Z`：119 threads，
+101 resolved／18 open = 12 HUMAN_CHECK（原九項＋o6Apj／o6M73／o6M76）
+／6 ADDRESS（原五項＋o6M75），沒有新增 unlisted pairs。
+本 snapshot 固定 as-of，非未來零 open 保證；不等待 bot 追新 audit。
+Completed classification／permitted action 不代表 open requirements／Human PR review／merge 已完成。
+Current／step phase 為 human-check；其餘三份 planning artifacts 保留 committed candidate snapshot，
+本 plan／step actual facts 不改其契約，不建立新 tracking candidate／receipt chain。
+本次僅 exact-two factual-alignment draft；尚由 Implementer separate commit／bounded push，
+不預填自身 alignment SHA／不宣稱已提交，不新增自指 completion checkbox。
+三份 rejected untracked receipts 原樣保留，無新 code／grammar／architecture／contract 變更。
 
 ### C46 Step Tracker
 
 - [X] **Actor: Plan-Creator.** Exact-five classification-only draft／C45 actual facts alignment。
-- [ ] **Actor: Implementer.** Exact-five candidate-only non-merge commit；保持 LOCAL。
-- [ ] **Actor: Independent Plan-Reviewer.** Fresh candidate SHA-bound standard receipt。
-- [ ] **Actor: Implementer.** Approved receipt unchanged sole evidence-only commit；保持 LOCAL。
-- [ ] **Actor: Planner.** Fixed S/T/V/live-head verification。
-- [ ] **Actor: Independent Reviewer.** Fresh immutable exact-five classification receipt。
-- [ ] **Actor: Implementer.** Classification unchanged sole evidence-only commit／normal bounded push。
-- [ ] **Actor: Planner / Implementer.** Exact permitted original replies／resolve／fixed-once live audit。
-- [ ] **Actor: Plan-Creator.** ONLY plan／step post-actions actual factual alignment，無新 tracking chain。
+- [X] **Actor: Implementer.** Exact-five candidate-only non-merge commit `dd1d78f6be0903aa1576d1350ac88311da836148`；分類前保持 LOCAL。
+- [X] **Actor: Independent Plan-Reviewer.** Fresh candidate SHA-bound approved standard receipt。
+- [X] **Actor: Implementer.** Approved receipt unchanged sole commit `40d7cc3d144be466acc914171dc817670b7ebb6f`；分類前保持 LOCAL。
+- [X] **Actor: Planner.** Fixed S/T/V/live-head verification，保留原 reviewed head binding。
+- [X] **Actor: Independent Reviewer.** Fresh immutable exact-five classification，一 R&R／三 HUMAN_CHECK／一 ADDRESS。
+- [X] **Actor: Implementer.** Classification unchanged sole commit／normal push `296232ccb70b8346c392894e58aa07722c8bccd8`。
+- [X] **Actor: Planner / Implementer.** 唯一 permitted original reply `4181279778`／resolved=true／固定 snapshot 119／101／18。
+- [X] **Actor: Plan-Creator.** ONLY plan／step post-actions actual factual alignment draft，無新 tracking chain。
 
 Next separate alignment commit／bounded push 完成由 actual Git facts 判定，不設自指 checkbox。
 Human-only／ADDRESS 尚未解決需求不因上述 workflow [X] 而完成。
