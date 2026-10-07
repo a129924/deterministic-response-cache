@@ -4972,7 +4972,7 @@ boundedclassificationcompletion不等於HumanPRapproval／merge／workflowclose�
 
 ### Goal / Outcome / Scope
 
-Current：`publish-in-progress`；phase：`publish-in-progress`；existing PR #7 pr-open。
+Current：`human-check`；phase：`human-check`；existing PR #7 pr-open。
 C52是唯一current repair route，Human明確授權下列三必要finding的bounded修復；
 C51及更早Current／pending字樣是frozen nonrouting provenance，不建立C52 execution approval。
 原Loaded Runtime Cache mission／scope／outcomes／Registry protocol／API／Architecture Visualization／follow-up missions不變。
@@ -5221,8 +5221,8 @@ Post-merge／releaseactionsnone；HumanalonePRreview／merge／release／postmer
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 Independenthandoffschema非Creator預填receipt。
-Workflowstate：current_step=c52-phase4.5-factual-alignment；next_step=bounded-alignment-normal-commit-push；
-status=COMPLETE（Phase4.5factualdraftonly，publish未完成／非Humanapproval／topiccomplete）。
+Workflowstate：current_step=c52-human-check-final-factual-alignment；next_step=bounded-alignment-normal-commit-push；
+status=COMPLETE（finalfactualdraftonly，非Humanapproval／topiccomplete）。
 
 ### C52 Committed RED / Same-New-S Passing Evidence（review-ready facts）
 
@@ -5249,6 +5249,8 @@ analysis／spec保留committedcandidate snapshots，早前C52pending／draft-tim
 
 ### C52 Phase4.5 Committed Independent Approval（publish-in-progress facts）
 
+下方publish-in-progress／pending字樣保留當時snapshot；已完成publish及currentphase見末尾finalfacts。
+
 Actual review-ready exact-two LOCAL alignmentcommit：
 `91e69c5cabf3b3f62799ebf1be4a7ba3b919705f`。
 Same new S `2bb82f062657d8c9dd0686743c8ee46e247926d4`；
@@ -5268,3 +5270,46 @@ Current／phase publish-in-progress；next為Implementer separateexact-two norma
 不得把implementationapproval當直接resolveauthorization或HumanPRapproval。
 七inventory-only／十二locks／sourcecontracts／ArchitectureVisualization／API保持不變；
 analysis／spec保留candidate snapshots，先前review-ready／pending字樣為當時provenance。
+
+### C52 Final Committed Publish / Classification / Actions（human-check facts）
+
+Actual exact-five candidate `8f9c26567d4ba6528b515d95c9613296314ed4f0`；
+approved planning receipt sole `b610743be6905464c71ccf7af6a10b4bace1448c`；
+test-only RED `ce89d2a5ede7a06b915f3e19dd371a1152cbbed4`；
+factual failing Tester evidence sole `bbfcee15ca8e6614918c068c219d09b7dde91250`。
+New green S `2bb82f062657d8c9dd0686743c8ee46e247926d4`；
+same-S passing T sole `ff0a3bf6c52facc266682eea2068c305791ad257`；
+same-S approved independent V sole `2047839048bcd1ac6b2af915f78f38ff294f0013`。
+Phase4.5 exact-two factual alignment normal commit／push：
+`fb9a88b80102cbc6bf86be5e42bf85dd2e88d831`，亦為actualindependentlyreviewedfixedpublishedhead。
+Exact-three independent classification receipt：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-2bb82f062657d8c9dd0686743c8ee46e247926d4-fb9a88b80102cbc6bf86be5e42bf85dd2e88d831.json`；
+unchanged sole commit／normal push `9c5534b53003de66adf1569659d17fe755442fd9`，
+blob `e31591208ec94d0c247bb6ec7497cf71b2236355`。
+Independent Reviewer actualoutcomes全REPLY_AND_RESOLVE，非預定；Planner核committedreceipt exactactionsgate後，
+Implementeronlyexact-threeoriginalreplies／resolve完成：
+
+| Exact pair | Actual reply ID | Verified disposition |
+| --- | --- | --- |
+| `pu_ja/4202486092` | `4202999042` | receiptbody原樣、resolved=true；boundedmatchcapture修復完成。 |
+| `pu_jo/4202486109` | `4203000717` | receiptbody原樣、resolved=true；boundedselectedliteralcontainer修復完成。 |
+| `pu_j0/4202486122` | `4203002400` | receiptbody原樣、resolved=true；三scanner.py/.pyidiscovery修復完成。 |
+
+Complete two-page threads／all-comments audit as-of `2026-10-07T04:17:26Z`：
+134 threads／127 resolved／7 open、沒有newunlisted；
+當時local／origin／PR head `9c5534b53003de66adf1569659d17fe755442fd9`，
+PR #7 OPEN／MERGEABLE／CLEAN，無mergeconflict。
+Remaining7 onlyinventory／UNCLASSIFIED／open：
+`pvzDA/4202824859`、`pvzDF/4202824865`、`pvzDH/4202824868`、
+`pv59N/4202868919`、`pv59R/4202868923`、`pv59T/4202868925`、`pv59V/4202868928`。
+七筆未分類／未修復／未留言／未resolve，非C52completedrequirements／actions；
+scope需求一次交Human，不自行加進classification、修復或追bot新增留言。
+
+Current／phase human-check，既有PR7pr-open；五implementationsteps與本輪已授權review／publish／
+classification／exact-actions實際完成，code-review勾選僅此boundedcomment-reviewsequence，
+非HumanPRapproval／merge／workflowclosure。
+十二locks、productionAPI／Registryprotocol／mission／Archify／allimmutableevidence不變。
+本ONLYplan／stepfinalactualfactsdraft尚待Implementer separate normal commit／push；
+完成由actualGitfacts證，不預填自身SHA／commitpush、不新增selfcheckbox／candidatechain。
+analysis／spec保留committedcandidate snapshots；先前review-ready／publishpending字樣為時點provenance，
+currentphase／remainingitems以本finalfacts為準。
