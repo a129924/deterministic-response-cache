@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "4aff14e3009f46ba82ee5fe78a11ca05a635db37",
+  "tester_evidence_commit": "6da6292e8a7a2aac726fcca90bfc559cc8ae9928",
+  "implementation_review_evidence_commit": "7281f494597e3253de0170b0257a3302c2fcde8c",
+  "pr_head_commit": "a27c84ee070171dffb9801a092960d46b08a1b5e",
+  "classifications": [
+    {
+      "thread": "o7gvv",
+      "comment": "4181373623",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C50 subject 4aff14e3009f46ba82ee5fe78a11ca05a635db37 修復：foreign semantic-name 檢查遍歷 FunctionDef、AsyncFunctionDef、Lambda 的 ast.arguments，涵蓋 positional-only、positional、vararg、keyword-only、kwarg，並新增兩個 BC 的隔離 regression。僅檢查參數 binding 名稱，不求值 annotation/default 或執行 fixture source；既有 locks 保留。已完成獨立 planning review、RED，以及同 subject passing Tester evidence 6da6292e8a7a2aac726fcca90bfc559cc8ae9928／approved Independent Reviewer evidence 7281f494597e3253de0170b0257a3302c2fcde8c；scoped 488 tests、Ruff、strict Pyright 均通過。本留言僅處置此 finding，不表示其他新增留言已修復。"
+    },
+    {
+      "thread": "o93-F",
+      "comment": "4182313675",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C50 subject 4aff14e3009f46ba82ee5fe78a11ca05a635db37 修復：known directly imported builtins.getattr 的 getter identity 沿 simple-name assignment fixed point 傳遞，包含 chained aliases；原留言的 lookup = resolve 後續禁止 callable 使用現在可攔截。新增不執行 fixture source 的 rejecting regressions 與 possession、unknown getter、dynamic key、three-positional、keywords、starred controls，維持 exact-two positional／no-keywords lookup 與既有 USE 語意，不擴 arbitrary getter 或 comprehension alias inference。已完成獨立 planning review、RED，以及同 subject passing Tester evidence 6da6292e8a7a2aac726fcca90bfc559cc8ae9928／approved Independent Reviewer evidence 7281f494597e3253de0170b0257a3302c2fcde8c；scoped 488 tests、Ruff、strict Pyright 均通過。本留言僅處置此 finding，既有 locks 不變。"
+    },
+    {
+      "thread": "o-rDd",
+      "comment": "4182633560",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C50 subject 4aff14e3009f46ba82ee5fe78a11ca05a635db37 修復：namespace resolver 現在解析 known module Name／既有 module alias 的直接 __dict__.get lookup；限 exact-one positional、no keywords/default、direct string literal，僅辨識 builtins.__import__、importlib.__import__、importlib.import_module，再依既有後續 USE 規則拒絕。已加入三個 forbidden surfaces、module alias 與 callable alias 的隔離 regressions，並保留 unused possession、unknown receiver、dynamic key、ordinary/missing entry、namespace alias 與 arbitrary mapping controls；不執行 fixture source。已完成獨立 planning review、RED，以及同 subject passing Tester evidence 6da6292e8a7a2aac726fcca90bfc559cc8ae9928／approved Independent Reviewer evidence 7281f494597e3253de0170b0257a3302c2fcde8c；scoped 488 tests、Ruff、strict Pyright 均通過。此修復不包含其他新增 container-lookup finding，既有 locks 不變。"
+    },
+    {
+      "thread": "o-rDg",
+      "comment": "4182633565",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C50 subject 4aff14e3009f46ba82ee5fe78a11ca05a635db37 修復：ast.comprehension.target 現在交由既有 Name／Tuple／List／Starred semantic-target traversal，忽略 Attribute，涵蓋 list、set、dict、generator 及 async target syntax；兩個 BC 均有隔離 regressions。這是本地 semantic-name target syntax 檢查，不新增 comprehension dynamic-import alias inference、RHS iterable 推論、ordered scope 或 fixture execution，既有 locks 保留。已完成獨立 planning review、RED，以及同 subject passing Tester evidence 6da6292e8a7a2aac726fcca90bfc559cc8ae9928／approved Independent Reviewer evidence 7281f494597e3253de0170b0257a3302c2fcde8c；scoped 488 tests、Ruff、strict Pyright 均通過。本留言僅處置此 finding，不表示新增 match-pattern 等 scope 外 finding 已修復。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}
