@@ -2,7 +2,7 @@
 
 C52 is the sole current bounded repair route；original mission及舊records不變。
 Current Pythonmetadata／paths／schemas／ordered gates以文末C52契約為準；不另開Pythonplan。
-canonical Implementation Steps只有C52五pending；C50六completed完整保留historicalsection。
+canonical Implementation Steps為C52五completed，由new-ScommittedpassingT支持；C50六completed完整保留historicalsection。
 
 ## Goal / Outcome
 
@@ -315,7 +315,7 @@ paths, source contracts, configuration, and adjacent BCs untouched.
 
 ## Implementation Steps
 
-C52currentimplementationgate，五pending初始化，不繼承C50completed或舊subjectevidence。
+C52currentimplementationgate，五步依new-ScommittedpassingT實際完成，不繼承C50completed或舊subjectevidence。
 1. C52 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增三原finding的isolated RED/control fixtures（兩BCmatchcapture、selectedliteralcallable、兩BC三scanner .pyi），testnames含c52、rejecting另含rejects、controls不含rejects；只新增fixtures，不修scanner、不執行source，collection/controls0且三類genuineassertionfail。
 2. C52 在 `tests/test_loaded_runtime_cache_bc_independence.py` 遍歷nestedmatchpatterns的MatchAs.name／MatchStar.name／MatchMapping.rest genuinebinding，依兩BCforeignsemanticownership；排除class／keyword／value refs，不求值pattern或subject/guard，不改旧assertions。
 3. C52 在 `tests/test_loaded_runtime_cache_bc_independence.py` 對directtuple/list確定integerindex／directdict確定literalkey取selectedelement後遞迴existingforbiddenaliasresolver與USE；未選／unusednegative保持，不推dynamic/slice/unpack/alias/arbitraryeval或duplicatekey／uncertaincollision／position，不新增lastwins／failclosed。
@@ -4972,7 +4972,7 @@ boundedclassificationcompletion不等於HumanPRapproval／merge／workflowclose�
 
 ### Goal / Outcome / Scope
 
-Current：`planned`；phase：`plan-authoring`；existing PR #7 pr-open。
+Current：`review-ready`；phase：`review-ready`；existing PR #7 pr-open。
 C52是唯一current repair route，Human明確授權下列三必要finding的bounded修復；
 C51及更早Current／pending字樣是frozen nonrouting provenance，不建立C52 execution approval。
 原Loaded Runtime Cache mission／scope／outcomes／Registry protocol／API／Architecture Visualization／follow-up missions不變。
@@ -5221,5 +5221,26 @@ Post-merge／releaseactionsnone；HumanalonePRreview／merge／release／postmer
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 Independenthandoffschema非Creator預填receipt。
-Workflowstate：current_step=c52-plan-authoring；next_step=bounded-candidate-commit；
-status=COMPLETE（draftonly，非executionapproval／evidencegate／topiccomplete）。
+Workflowstate：current_step=c52-review-ready-factual-alignment；next_step=bounded-local-alignment-commit；
+status=COMPLETE（factualdraftonly，非IndependentReviewerapproval／publish／topiccomplete）。
+
+### C52 Committed RED / Same-New-S Passing Evidence（review-ready facts）
+
+Actual exact-five candidate `8f9c26567d4ba6528b515d95c9613296314ed4f0`；
+approved planning receipt unchanged sole commit `b610743be6905464c71ccf7af6a10b4bace1448c`。
+Test-only RED subject `ce89d2a5ede7a06b915f3e19dd371a1152cbbed4`；
+factual failing Tester evidence unchanged sole commit `bbfcee15ca8e6614918c068c219d09b7dde91250`。
+New immutable green S `2bb82f062657d8c9dd0686743c8ee46e247926d4`；
+same-S passing Tester evidence unchanged sole commit `ff0a3bf6c52facc266682eea2068c305791ad257`，
+blob `9c6fa4313356c0586888db5eeb39a6bb1eb86494`。
+IndependentTesteractual567scopedpytest／Ruff／strictPyright均exit0，passingrecord綁精確newS，
+writer Tester；不是C50／其他subject的舊T/V。
+Planner核same-SpassingT與實作facts，五canonicalimplementationsteps實際完成[X]，
+Current／phase review-ready。十二locks、七inventory-only、API／Archify／contracts不變。
+
+本ONLYplan／step factual draft需Implementer separateLOCALalignmentcommit，
+Planner核canonicalCLI0才交Independent Reviewer；
+不預填自身alignmentSHA／commit結果，不新candidatechain。
+Independent V verdict／approvedVcommit、Phase4.5 publish、classificationoutcome與threadreply／resolve仍pending，
+不得由本稿宣稱reviewapproval／threadsresolved或HumanPRapproval。
+analysis／spec保留committedcandidate snapshots，早前C52pending／draft-time字樣為時點provenance。
