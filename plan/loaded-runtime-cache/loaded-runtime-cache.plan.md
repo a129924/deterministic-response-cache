@@ -6244,3 +6244,21 @@ V approval／Phase4.5 publish／fixed-head classification／originalreply-resolv
 十二locks及原boundedgrammar/API/Archify/uv.lock／歷史records／三rejected均保留。
 Workflowstate：current_step=c57-review-ready；next_step=independent-implementation-review；
 status=COMPLETE（only factualalignmentdraft，非V或publish approval）。
+
+## C57 Phase4.5 Factual Publish Alignment（current state）
+
+Current／phase：publish-in-progress；existing PR #7 pr-open。
+New S `879f11dc17e2bc3723f5a8764f601a7a6dce16dc`；
+same-S passing T sole `c568a07306096d69f5435f329f2b1202c3b60d6b`；
+independent approved V sole `d1e12cca941dcfff72311658e61889a2c44bd58a`；
+review-ready alignment已提交 `5ad8e9aff6beabb2cc58f457e391ff996c1394c8`。
+Independent Reviewer actual759tests及12ASTprobes exit0，blockingissues空；
+Planner已核same-S/T/V，三canonicalsteps與implementation-review完成。
+Next：Implementer對本exact-two factualdraft獨立normalcommit／push目前origin，更新既有PR #7；
+既有Human normalpublish授權保持，不開新PR、不merge。
+Actualpublishedhead／freshfixed-head exact-oneclassification／soleclasspush／originalreply-resolve仍pending。
+不得預填自己alignmentSHA或futurepublish/actions，不啟動新candidate chain。
+两inventory-only pairs pzqsL/4204404462、pzqsO/4204404469保持open/unclassified/unfixed；
+十二locks／API／Archify／uv.lock／frozenhistory／三rejected保留。
+Workflowstate：current_step=c57-publish-in-progress；next_step=bounded-normal-commit-push；
+status=COMPLETE（onlyalignmentdraft，非publish/classification/actions完成）。
