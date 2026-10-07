@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: plan-authoring
+phase: review-ready
 created: 2026-09-17
 ---
 
@@ -10,9 +10,9 @@ created: 2026-09-17
 
 C57 current six stages：
 - [X] C57 plan-authoring
-- [ ] C57 plan-review
-- [ ] C57 tdd-test-authoring
-- [ ] C57 implementation
+- [X] C57 plan-review
+- [X] C57 tdd-test-authoring
+- [X] C57 implementation
 - [ ] C57 implementation-review
 - [ ] C57 code-review
 
@@ -145,10 +145,10 @@ C50 current ordered actionable work依文末 C50 contract；下方 C11–C14 onl
 
 ## Implementation Steps
 
-C57 current implementation gate：三pending，不繼承舊completed/S/T/V。
-- [ ] 1. C57 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增兩BC originalfinding isolated test-only RED與benign/dead/unknown/unusedcontrols；c57/rejects names、collection/controls0且selected forbiddenUSE genuineassertionfail，不修scanner、不execute source。
-- [ ] 2. C57 在 `tests/test_loaded_runtime_cache_bc_independence.py` 只解析direct Tuple/List/Set/Dict確定empty/nonempty shape，排除Starred/dictunpack/unknown cardinality與set()推論，沿existingBoolOp short-circuit/forbiddenUSE，不evalelements/usertruthiness/source。
-- [ ] 3. C57 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保留所有old directimports/fixtures/mocks/assertions/deadunusedunknowncontrols/十二locks，sameimmutablegreenS通過兩檔pytest/Ruff/strictPyright，完成須sameS committedpassingT；review/publish/class/actions非此completiongate。
+C57 current implementation gate：三completed，以C57新S／same-S committedpassingT證明，不繼承舊S/T/V。
+- [X] 1. C57 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增兩BC originalfinding isolated test-only RED與benign/dead/unknown/unusedcontrols；c57/rejects names、collection/controls0且selected forbiddenUSE genuineassertionfail，不修scanner、不execute source。
+- [X] 2. C57 在 `tests/test_loaded_runtime_cache_bc_independence.py` 只解析direct Tuple/List/Set/Dict確定empty/nonempty shape，排除Starred/dictunpack/unknown cardinality與set()推論，沿existingBoolOp short-circuit/forbiddenUSE，不evalelements/usertruthiness/source。
+- [X] 3. C57 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保留所有old directimports/fixtures/mocks/assertions/deadunusedunknowncontrols/十二locks，sameimmutablegreenS通過兩檔pytest/Ruff/strictPyright，完成須sameS committedpassingT；review/publish/class/actions非此completiongate。
 
 Reviewer/publish/classification/actions另依C57workflow，非此completiongate。
 
@@ -5934,3 +5934,23 @@ Head/evidence/topic/scope drift或needs-rework停Planner，真正Humandecisions�
 不改repositorycontract/locks、不selfSHA或checkboxloop。HumanonlyPRapproval/merge/release/postmerge/tag。
 Workflowstate：current_step=c57-plan-authoring；next_step=bounded-candidate-commit；
 status=COMPLETE（draftonly，非executionapproval或implementation gate）。
+
+## C57 Review-Ready Factual Alignment（current state）
+
+Current／phase：review-ready；existing PR #7 pr-open。
+Actual candidate `f121946c9f2602ea9b85f45b887a636b2cb6d27f`；
+approved receipt sole `11db3910853e1a1dd79a3904d334c7847eb7bb59`；
+test-only RED `a62ae1c4ad3c602418ef20632556ac0ebf7dde86`；
+independent failing T sole `0dd779ebbd9c6f98bf53f0851445fb6de6100124`；
+new green S `879f11dc17e2bc3723f5a8764f601a7a6dce16dc`；
+same-S independent passing T sole `c568a07306096d69f5435f329f2b1202c3b60d6b`。
+Actual passing T：兩檔scopedpytest759passing，Ruff／strictPyright exit0；
+C57三canonical implementation steps完成，不借舊subject evidence。
+Next：本exact-two draft交Implementer獨立normal local alignmentcommit，
+然後Independent Reviewer消費上述sameS committedpassingT。
+V approval／Phase4.5 publish／fixed-head classification／originalreply-resolve仍pending，
+不預填selfalignment SHA/futuregate結果，不建立新candidate chain。
+兩inventory-only pairs pzqsL/4204404462、pzqsO/4204404469保持open/unclassified/unfixed；
+十二locks及原boundedgrammar/API/Archify/uv.lock／歷史records／三rejected均保留。
+Workflowstate：current_step=c57-review-ready；next_step=independent-implementation-review；
+status=COMPLETE（only factualalignmentdraft，非V或publish approval）。
