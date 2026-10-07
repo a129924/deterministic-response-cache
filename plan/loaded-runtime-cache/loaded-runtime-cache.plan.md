@@ -1,8 +1,8 @@
 # loaded-runtime-cache
 
-C50 is the sole current bounded repair route；original mission及舊records不變。
-Current implementation metadata、path／schema／ordered gates 以文末 C50 契約為準；
-canonical Implementation Steps 只有 C50 六項，舊 C47 七項移入 completed historical section。
+C51 is the sole current classification-only route；original mission及舊records不變。
+Current paths／schemas／ordered gates以文末C51契約為準；不新增implementation或Pythonplan。
+canonical Implementation Steps保留C50六completed歷史completion，C51不新增fakecodepending。
 
 ## Goal / Outcome
 
@@ -315,7 +315,7 @@ paths, source contracts, configuration, and adjacent BCs untouched.
 
 ## Implementation Steps
 
-C50 current implementation completion gate；下列六項依 new-S committed passing T 實際完成，不繼承舊 C47 completed。
+C50 completed implementation history；下列六項依 same-S committed passing T 實際完成，C51classification-only不新增codepending。
 1. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增四 original findings 的 isolated RED fixtures及benign controls；新測試名稱含 c50，rejecting 名稱另含 rejects、controls不含 rejects。只新增tests，不修scanner、不執行fixture source，collection／controls須pass、四類genuineassertionfail。
 2. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 補 FunctionDef／AsyncFunctionDef／Lambda 的全部 ast.arguments local-name semantic syntax，兩BC ownership適用；不判annotation／default／scope，不改既有assertions。
 3. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 沿existing simple-name assignment固定點保留known directly imported builtins.getattr getter identity；lookup仍exact-two-pos/no-keywords／knownmodule／literalattribute／existingUSE，不新增持有拒絕或arbitrary getter。
@@ -4403,7 +4403,10 @@ Current／step phase 為 human-check，既有 PR #7 保持 pr-open；本 ONLY pl
 不預填自身 alignment SHA／commit／push，不新增自指 checkbox 或 candidate／receipt chain。
 analysis／spec 保留 committed C49 candidate snapshot；舊 draft-time／pending 字樣只作 nonrouting provenance。
 
-## C50 Bounded Four-ADDRESS Repair（authoritative current routing）
+## C50 Bounded Four-ADDRESS Repair（completed predecessor routing）
+
+C50finalalignment `9a8b46fa72a9800622349b049cc03d06b57e5f9f` 已normalcommit／push；
+C51是唯一currentclassificationroute，C50pending／Current字樣onlyhistoricalsnapshot。
 
 ### Goal / Outcome / Scope
 
@@ -4765,3 +4768,147 @@ classification／exact-action workflow實際完成；code-review勾選只代表�
 完成由actualGitfacts證，不預填自身SHA／commitpush、不新增selfcheckbox／candidatechain。
 analysis／spec保留committedcandidate snapshots；earlierC50review-ready／publishpending字樣只作時點provenance，
 currentphase與remainingitems以本finalfacts為準。
+
+## C51 Current-Head Three-Pair Classification（authoritative current routing）
+
+### Goal / Outcome / Scope / Locked Decisions
+
+Current：`planned`；phase：`plan-authoring`；existing PR #7 保持 pr-open。
+C51 是唯一 current classification-only route；C50 及較早 Current／pending 字樣是 frozen nonrouting provenance。
+Goal／In-Scope：以固定已發布 head 與同 subject passing Tester／approved Independent Reviewer evidence，
+獨立分類下列三筆 actual original comments，再只處置 committed REPLY_AND_RESOLVE 的 exact pairs。
+本輪不授權修復，不預判 addressed／非必要；需要新增 semantics／code scope 時一次交 Human 決定。
+原 mission／scope／outcomes／Registry protocol／API／Architecture Visualization／follow-up missions 不變。
+Analysis strict mode：technical-spec 為 execution-facing truth，requirements 為 intent guardrail；
+本 C51 共同契約逐字同步 standard-five，後續 ONLYplan／step factual alignment 不重開 candidate chain。
+
+Out-Of-Scope／Non-Goal：code／grammar／match-pattern／container resolver／pyi scanner 修復或新增 RED／green／T／V；
+architecture／README／public API／dependencies／typing contract／shared governance contract 變更；
+解除十二 locks、merge／release／post-merge／tag／重寫歷史／新 PR。
+ReadOnly：src／tests／uv.lock／pyproject／architecture／Archify／README／VERSION／contracts／原 S/T/V／old receipts；
+不得執行 source／fixture、不以 importlib／__import__／sys.modules substitution 取代 direct imports。
+Written／Modify：candidate只有如下五份 planning artifacts，由 Plan-Creator 唯一 author；
+後續 final alignment 只有 plan／step。Deleted：none。
+- `analysis/loaded-runtime-cache/requirements.md`
+- `analysis/loaded-runtime-cache/technical-spec.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.step.md`
+
+dev worktree／其他paths不動；非唯一agent，不revert他人成果。
+三 rejected untracked immutable receipts保留、不stage／改寫／刪除／當routingauthority；
+fresh receipts不可覆寫任何已存在path，即使uncommitted或rejected。
+原十二 semantic／grammar／architecture／README locks全部保持；C48不修改處置非解除requirements。
+C50 canonical六completed implementationsteps保留歷史completion，不新增fake codepending，不借其subject建立新code結果。
+Stable-library intent absent；README／VERSION／release metadata不改。
+Python metadata保留；Async-planning status: exempt — cite exemption evidence: classification／tracking-only，
+不引入asynccode／I/O／lifecycle／concurrency／timeout；無newpublic API、interface、breakingchange、
+dependency、error-policy或typing策略變更。既有七decisions／directimports／fixtures／mock／assertions不變。
+
+### Actual Fixed Facts / Exact Three Inputs
+
+C50 final factual alignment commit／normal push：
+`9a8b46fa72a9800622349b049cc03d06b57e5f9f`。
+固定 actual reviewed PR head 即該full40SHA；authoring時local／origin／PR一致、
+OPEN／MERGEABLE／CLEAN，tracked/indexclean、三 rejected preserved。
+Fixed same S：`4aff14e3009f46ba82ee5fe78a11ca05a635db37`；
+passing T sole：`6da6292e8a7a2aac726fcca90bfc559cc8ae9928`；
+approved V sole：`7281f494597e3253de0170b0257a3302c2fcde8c`。
+Planner已核實上述同-S evidence、ancestry／source unchanged；
+此為無code變更C51 classification可消費sameS authority，不授權新implementation或跨subjectreuse。
+C50四authorizedfindings修復／replyresolve完成，existingimmutable evidence與actions不重做。
+以下輸入已唯讀核 actual original body／IDs／path；三筆目前open，outcome尚未判定：
+
+| Thread suffix | Comment string | Actual original input（非修復授權／預定outcome） |
+| --- | --- | --- |
+| `pu_ja` | `4202486092` | P2：match mapping capture如 case {"factory": ModelIdentity}: ModelIdentity()（Identity對称RuntimeReuseKey）可建立foreign semantic binding；建議遍歷ast.Match* capture names與兩BC regression。原target commit 5afaf53d264466deca22b4858c09177ca112d922，path tests/test_loaded_runtime_cache_bc_independence.py。 |
+| `pu_jo` | `4202486109` | P2：(__import__,)[0]("identity")、[importlib.import_module][0]("identity")或constant-keydictlookup漏forbiddencallable；建議靜態tuple/listindex／dictkeyelement後遞迴existingresolver並排除dynamicindex/key。原target commit 5afaf53d264466deca22b4858c09177ca112d922，path同test；不得偷換成C50已修namespace.get。 |
+| `pu_j0` | `4202486122` | P2：三current-source checks _direct_imports_from／_uses_dynamic_import_substitution／_declares_forbidden_semantic_type目前rglob("*.py")可能忽略.pyi跨BCimport／declaration；建議同掃.py/.pyi與兩BC regression。原target commit 5afaf53d264466deca22b4858c09177ca112d922，path同test；本輪不改scanningsuffix。 |
+
+Reviewer independently查current committedfacts，不把原留言或historicaltarget當通過evidence，
+不以「topic已久」預設R&R；新unlistedpairs inventory-only，不分類／留言／resolve。
+C50修復能力不覆蓋新增semantics時只能ADDRESS／HUMAN_CHECK、reply null/open；實際判定由獨立Reviewer。
+
+### Artifact Paths / SHA-Bound Immutable Schemas / Sole Writers
+
+Independent Plan-Reviewer唯一writer：
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<actual-C51-candidate-full40SHA>.json`。
+actualexact-fivecandidateLOCALcommit後才展開freshpath，不預fillcandidate SHA/verdict。
+exact 3 keys verdict／blocking_issues／copilot_feedback_triage；
+verdict approved|needs-rework；blocking_issues object array，entry恰non-emptystringissue／file／fix，
+approved []、needs-rework至少一項；triage恰ADDRESS／DISCUSS／SKIP arrays。
+Plan-Reviewer只審committedcandidate、寫receipt不commit；approved才Implementer unchangedsoleLOCALreceiptcommit。
+candidate／approvedreceipt分類前均LOCAL，不push改fixed remotehead。
+
+Independent Reviewer唯一classificationwriter：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-4aff14e3009f46ba82ee5fe78a11ca05a635db37-9a8b46fa72a9800622349b049cc03d06b57e5f9f.json`。
+fresh immutablepath；exact8top-levelkeys：schema_version／topic／implementation_subject_commit／
+tester_evidence_commit／implementation_review_evidence_commit／pr_head_commit／classifications／recorded_by。
+schema_version integer1；topic loaded-runtime-cache；
+fourSHAs必各精確fixedS／passingT／approvedV／reviewedPRheadfull40lowercasehex；
+recorded_by Independent Reviewer。
+classifications恰三entries，exact-three上述pairs各一次；每entry恰thread／comment／outcome／reply。
+thread suffixstring（不要fullPRRTID），commentstring；
+outcome REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK，非預填。
+REPLY_AND_RESOLVE必non-emptyoriginalfactualreply，有currentcommittedfacts支持；
+ADDRESS／HUMAN_CHECK必null、open。沒有codefixauthority不得以回覆補成已修。
+Reviewer只寫freshreceipt，不commit／留言；Implementer原樣soleclassificationevidence-onlycommit／normalpush，
+不混planning／code／other evidence。正常hooks，C28noverify等subject-local歷史授權不可沿用。
+所有candidate／receipt commits non-merge、sole named diff與schema／writer由actualGitfacts驗；
+wrongSHA／topic／writer／schema／extraentry／overwrite／nonsolecommit failclosed，回Planner不自改contract。
+
+### Ordered Route / TestCase / Validation / Stop Conditions
+
+1. Plan-Creatorexact-five draft → Plannerpreflight → Implementerexact-fiveLOCALcandidate-onlycommit。
+2. IndependentPlan-ReviewerfreshSHAreceipt → approved才ImplementerunchangedsoleLOCALreceiptcommit。
+3. Planner核fixedPRhead、same-ScommittedpassingT／approvedV、ancestry／sourceunchanged、freshpath，
+   head drift不改選新head，不推定gate。
+4. IndependentReviewerexact-threeimmutableclassification → Implementerunchangedsoleclasscommit／normalpush。
+5. Planner核committedclassification及descendantssourceunchanged後只routeexactR&Rpairs；
+   Implementer原文reply／resolve前重新核現況防duplicate，記actualreplyID／resolvedfact。
+   ADDRESS／HUMAN_CHECKopen，不擴scope；Human-requiredchoices一次彙整。
+6. Plan-CreatorONLYplan／stepfinalactualfacts／已完成workflow才[X] →
+   Implementerseparatenormalcommit／push → 一次full-paginationaudit → human-check；PR7pr-open。
+   finalalignment完成由actualGitfacts證，不預fill自己commit／push／SHA或新增selfcheckbox／candidate-loop。
+   newunlistedinventory-only，不無限追bot新留言。
+
+TestCase／Acceptance Criteria：
+- Happy path：approvedcandidate＋same-STV＋fixedhead＋exact-threeindependentreceipt，只有actualR&Ractions。
+- Invalid input：wrongkeys／types／shortSHA／uncommittedevidence／wrongpair／solepath／writer failclosed。
+- Edge case：historicaltarget／stub／literalcontainer／matchcapture建議不等於既有修復，classification不得偷換語意。
+- Regression：C50 sameS/T/V／六completedcanonicalsteps／sourceblobs／十二locks／oldreceipts不變。
+- Backward compatibility：API／protocol／outcomes／directimports／Archify／Pythonmetadata不變，沒有新codebehavior。
+Given actualthreecomments及approvedplanningreceipt，Whenindependentreviewer核fixedfacts，
+Thenexact3classifications由evidence決定，非按想收束預定。
+GivenADDRESS／HUMAN_CHECK，Thenreplynull／threadopen；GivenfactualR&R且committedreceipt，Then才能originalreplyresolve。
+Givenhead/source/evidencedrift，Then停相應gate交Planner，不自改head／schema／scope。
+上述兼specBehavioralScenarios／ErrorEdgeCases，C51不添加REDtests或解決尚未授權codefinding。
+
+Planningvalidation：
+`git diff --check`；
+`python .agents/skills/plan-step-tracker/scripts/step_tracker.py check_impl_steps_succeeded loaded-runtime-cache`
+應exit0＝C50既有六completed，非C51codegate。
+Actualread-onlychecks：
+`git rev-parse HEAD`、`git status --short`；
+`git merge-base --is-ancestor 4aff14e3009f46ba82ee5fe78a11ca05a635db37 9a8b46fa72a9800622349b049cc03d06b57e5f9f`，
+同核fixedT／V ancestry；
+`git diff 4aff14e3009f46ba82ee5fe78a11ca05a635db37 9a8b46fa72a9800622349b049cc03d06b57e5f9f -- src tests`，
+`git show --format=fuller --stat <actual-evidence-commit>`、actualnamedsolepath與JSONschemachecks。
+分類前read-onlyPRhead／fullpaginationthreads核actualfixedstate，不將分支或chat當routingauthority。
+缺required evidence／source或headdrift／scope或contractconflict回Planner，禁止偷修contract或擴code。
+
+### Risks / Rollback / Open Questions / Reviewer Handoff
+
+Risks：把match／container／pyi新semantics當既有fix、預設outcome、oldhead／跨subjectevidence、
+replyduplicate／solecommit污染、自指state loop。
+Rollback：onlyboundedstandard-fiveplanningrework或必要freshimmutableplanning successor，
+保留submittedcandidate／receipt／sameSTV；不broadreset、overwriteevidence、codefix或清三rejected。
+OpenQuestions：design none；threeindependentoutcomes尚未產生，若需修復則Human一次明確scope選擇。
+Post-merge／releaseactions：none；HumanalonePRreview／merge／release／postmerge／tag；
+boundedclassification／threadresolution不等於Humanapproval／workflowclose。
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+此為IndependentPlanReviewerhandoffschema，不是Creatorreceipt／approval。
+Workflowstate：current_step=c51-plan-authoring；next_step=bounded-candidate-commit；
+status=COMPLETE（draftonly，非approval／classification／actions／topic-complete）。
