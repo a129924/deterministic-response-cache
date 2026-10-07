@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: review-ready
+phase: publish-in-progress
 created: 2026-09-17
 ---
 
@@ -13,7 +13,7 @@ C50 current six stages（下方 old stages only frozen provenance）：
 - [X] C50 plan-review
 - [X] C50 tdd-test-authoring
 - [X] C50 implementation
-- [ ] C50 implementation-review
+- [X] C50 implementation-review
 - [ ] C50 code-review
 
 C11/C12/C13/C14 stages below are frozen provenance. C15 is the active successor and must not inherit them.
@@ -173,7 +173,7 @@ exact-four classification／Planner exact permitted action routing／Implementer
 
 ## Handoff / Gate Notes
 
-C50 active routing only；candidate／approval／RED／newS／passingT已committed，V／publish／classification尚pending。
+C50 active routing only；candidate／approval／RED／newS／passingT／approvedV已committed，publish／classification尚pending。
 C50 canonical六步依同newS passing T完成；Tester→Independent Reviewer實際分離，不用舊S/T/V代替。
 
 - This tracker and plan name one `loaded-runtime-cache` topic. The feature branch is lineage only, not routing
@@ -3931,7 +3931,7 @@ analysis／spec 保留 committed C49 candidate snapshot；舊 draft-time／pendi
 
 ### Goal / Outcome / Scope
 
-Current：`review-ready`；phase：`review-ready`。C50 是本 topic 唯一 current repair route；
+Current：`publish-in-progress`；phase：`publish-in-progress`。C50 是本 topic 唯一 current repair route；
 C49 及更早 draft-time／pending／Current 字樣是 frozen nonrouting provenance，不授權 C50 implementation。
 Human 已明確授權下表四修復；本修正不取代 original Loaded Runtime Cache mission。
 原 mission／scope／outcomes／Runtime Registry reuse protocol／Architecture Visualization／follow-up missions 不變。
@@ -4195,8 +4195,8 @@ Post-merge／release actions：none；Humanalone PRreview／merge／release／po
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 此為independenthandoffschema、非Creator預填receipt。
-Workflow state：current_step=c50-review-ready-factual-alignment；next_step=bounded-local-alignment-commit；
-status=COMPLETE（review-ready factual draft handoff only，非Independent Reviewer approval／publish／topiccomplete）。
+Workflow state：current_step=c50-phase4.5-factual-alignment；next_step=bounded-alignment-normal-commit-push；
+status=COMPLETE（Phase4.5 factual draft handoff only，publish未完成／非Human approval／topiccomplete）。
 
 ### C50 Actionable Evidence / Publish Stages（非 implementation completion gate）
 
@@ -4209,9 +4209,9 @@ status=COMPLETE（review-ready factual draft handoff only，非Independent Revie
 - [X] **Actor: Implementer.** Bounded green new immutable S，only declared test path。
 - [X] **Actor: Tester.** Same-new-S actual pytest／Ruff／strict Pyright passing factual record。
 - [X] **Actor: Implementer.** Green passing T unchanged sole evidence-only commit。
-- [ ] **Actor: Plan-Creator / Implementer.** ONLYplanstep actual review-ready alignment separatecommit，canonicalCLI real0。
-- [ ] **Actor: Independent Reviewer.** Consume committed same-new-S passing T，fresh independent implementation V。
-- [ ] **Actor: Implementer.** Approved V unchanged sole evidence-only commit。
+- [X] **Actor: Plan-Creator / Implementer.** ONLYplanstep actual review-ready alignment separatecommit，canonicalCLI real0。
+- [X] **Actor: Independent Reviewer.** Consume committed same-new-S passing T，fresh independent implementation V。
+- [X] **Actor: Implementer.** Approved V unchanged sole evidence-only commit。
 - [ ] **Actor: Planner / Plan-Creator / Implementer.** Phase4.5 ONLYplanstep factual alignment separate normalcommit／push PR7。
 - [ ] **Actor: Independent Reviewer.** Actual fixed published-head／new-S/T/V exact-four immutable classification。
 - [ ] **Actor: Implementer.** Classification unchanged sole commit／normal push。
@@ -4222,6 +4222,8 @@ Final alignment separate normal commit／push只由actualGitfacts證；singleaud
 不預填自身SHA／新增自指completioncheckbox，不把currentunlisted三筆加入repair或classification。
 
 ### C50 Committed RED / New-S Passing Evidence（current review-ready facts）
+
+以下review-ready facts與pending字樣保留當時snapshot；current approval／phase以末尾Phase4.5 facts為準。
 
 C50 exact-five candidate：`579e480c7d2180a235120e0034b5adcffc1642f0`；
 approved planning receipt unchanged sole commit：`b1eb6a315664f9bd2ce1bdec0eaf78af9a21612b`。
@@ -4244,3 +4246,23 @@ Planner再核canonicalCLI0並routeIndependent Reviewer。
 Independent V verdict／V commit、Phase4.5 publish、classification outcome與threadreply／resolve仍pending；
 不可由本draft宣告approval或已resolve四threads。原十二locks／新unlisted三筆inventory-only保持。
 其餘analysis／spec保留committedcandidate snapshot；先前C50draft-time／pending字樣onlynonroutingprovenance。
+
+### C50 Phase4.5 Alignment / Committed Independent Approval（current publish-in-progress）
+
+Actual review-ready exact-two LOCAL alignment commit：
+`f082fab0f47e54d24787122360dfee754ccd6490`。
+New S：`4aff14e3009f46ba82ee5fe78a11ca05a635db37`；
+same-S passing T sole：`6da6292e8a7a2aac726fcca90bfc559cc8ae9928`；
+same-S approved Independent Reviewer V unchanged sole commit：
+`7281f494597e3253de0170b0257a3302c2fcde8c`。
+V verdict approved／blocking_issues []，writer Independent Reviewer，精確綁同newS與committedpassingT；
+不是Human PR approval或merge authorization。六canonicalimplementationsteps完成不變。
+Planner核 committed same-S/T/V gate 後route本ONLYplan／step Phase4.5 factual draft。
+
+Current／phase publish-in-progress；本draft需Implementer separate normal alignment commit／push
+更新既有PR7，其發布尚未完成，不預填本身SHA／commitpush成功／actualpublishedhead。
+發布後由Planner核實actualfixedpublishedhead，IndependentReviewer才依既有C50exact-four分類契約
+展開fresh new-S／actual-head classificationpath並獨立判outcomes；不在此預填reply／resolve IDs。
+classificationreceipt／solecommit／normalpush／threads actions皆pending。
+十二semanticlocks／newunlisted三筆inventory-only保留，production／ArchitectureVisualization／contracts不變。
+不新candidate／receiptchain；analysis／spec保留candidate snapshots，earlierpendingfacts為時點provenance。
