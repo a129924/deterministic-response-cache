@@ -4329,3 +4329,116 @@ IndependentReviewerapproval非Humanapproval。
 Independenthandoffschema非Creatorreceipt。
 Workflowstate：current_step=c54-plan-authoring；next_step=bounded-candidate-commit；
 status=COMPLETE（draftonly，非executionapproval/evidencegate/topiccomplete）。
+
+## C55 Minimal Corrected-RED Successor（authoritative current routing）
+
+Current：planned；phase：plan-authoring；existing PR #7 pr-open。
+本C55僅消除C54一個新control與已核定sys.modules surface contract的矛盾；
+同一topic／mission／scope／outcomes／Runtime Registry protocol／Architecture Visualization／follow-ups不變。
+下列唯一named test-preservation exception優先於C54「所有fixtures/assertions不變」；
+其餘C54七項behavior、十二locks及exact-seven pairs全部原樣沿用，不增加grammar或case。
+
+### 唯一更正 / TestCase
+
+在 `tests/test_loaded_runtime_cache_bc_independence.py` 中，將C54新增的
+`"import sys\ncache = sys.__dict__['modules']\n"`
+從 `test_c54_preserves_dead_unused_unknown_and_excluded_resolution_controls` 的source controls
+移至 `test_c54_rejects_bounded_forbidden_callable_and_module_cache_uses` 的source reject cases。
+保留同一fixture source bytes及兩BC參數 `["loaded_runtime_cache", "identity"]`；
+不改其他assertions、fixtures、mocks、helpers或testnames，亦不新增case。
+此namespace extraction沿既有sys.modules cache-access／surface equivalence，
+不建立「只extract但未indexed即合法」的特例、不把一般unused callable改為possession違規。
+此處只授權後續Implementer的corrected test-only RED；Plan-Creator不修改tests。
+
+### Scope / Python Metadata
+
+In-Scope／Goal：上列單control移組，及既有C54七項bounded repair的fresh correctedRED→green evidence chain。
+Out-Of-Scope／Non-Goal：新grammar/architecture/API／任意eval/CFG/callgraph／其他test修復、
+其他fixture/assertion變更／backend/DI/lifecycle／production/stubs/Archify/uv.lock/contract、
+十二locks解除／新未列留言修復、merge/release/postmerge/tag或historyrewrite。
+ReadOnly：production、其他tests、architecture/Archify、config/dependencies、repositorycontracts、
+已提交receipts/history與三份rejected untracked artifacts（不得stage/overwrite/delete）。
+Written／Modify：candidate only standard-five planning artifacts；
+後續Implementer唯一implementation path為 `tests/test_loaded_runtime_cache_bc_independence.py`；
+fresh evidence依下列immutable paths與既有sole-writer規則。Deleted：none。
+不得在dev寫檔；非唯一agent，保留其他人變更。
+
+Python七決策沿C54既定metadata：domain責任/七項behavior不變；唯一test module path不變；
+無新增public surface/re-export；無API型別/runtime typing改動；無dependency/config變更；
+error/outcome boundary不變；同步AST scanner不執行source。
+Async豁免沿C54：AsyncFunctionDef.type_params僅語法slot、except*僅handler syntax；
+不新增async factory、generator、await或async執行。
+TestPlan五類沿C54：七finding正向、既有benign/unused/dead controls、
+兩BC對稱contract、direct-import regression、scoped Ruff/strict Pyright。
+唯一control改分類後既有同source於兩BC必拒絕；其餘negative與全部既有fixtures/assertions照原規則。
+Risk：control誤留negative或錯用-k c55導致假RED；對策保留c54 marker與真collection/controls/七類assertionfail。
+Rollback：停止publish，回Implementer保留歷史建立新subject/fullchain；不改寫舊receipts或自行reset/historyrewrite。
+
+### 已提交C54 Facts（frozen，不能背書C55）
+
+Local HEAD／C54 failing Tester sole commit：
+`8748ae531afb576f87854c331adf69c411926eda`。
+C54 candidate `708e06e61e32e8d933a4d905f3f3440bb9a497db`；
+approved receipt sole `f9d96c8550939822aba6c3009f2840dfdd92a012`；
+RED `0aa8fd2f8f2495b40c19f590da6abec798e4a594`。
+這些是historical facts，沒有green subject；不得讓舊approval/T或C52 STV背書新correctedRED／green。
+Origin／PR head仍 `d8e723985791665583444d2ea1d1c18237d3246c`，OPEN／MERGEABLE／CLEAN。
+C54原文保留為historical provenance；C55 canonical九steps全pending，不虛勾C54完成。
+
+### Fresh Immutable Evidence / Writers / Sole Commits
+
+所有SHA待actualGitfacts，須完整40hex，不預填future SHA/outcomes，existingschemas不變。
+1. Independent Plan-Reviewer唯一寫
+   `plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<actual-C55-candidate-full40SHA>.json`。
+   Exact3 top-level keys：verdict、blocking_issues、copilot_feedback_triage；
+   approved|needs-rework，blockers沿既有issue/file/fix object schema，approved[]；
+   triage exact ADDRESS/DISCUSS/SKIP arrays。Reviewer不commit；Implementer原樣sole evidence-only LOCAL commit。
+2. Independent Tester唯一寫
+   `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<actual-C55-corrected-RED-full40SHA>.json`
+   與後續 `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<actual-C55-green-S-full40SHA>.json`。
+   Exact6keys：schema_version、topic、implementation_subject_commit、status、commands、recorded_by；
+   integer1／loaded-runtime-cache／actualfullSHA／passing|failing／nonemptycommands／Tester。
+   每command exact nonemptystring command＋integer exit_code；passing全0，failing至少一nonzero。
+   RED collection/controls必0且七類original genuineassertionfail；Tester不commit，
+   Implementer各自原樣sole evidence-only commit，不能與implementation/candidate/另一receipt共用。
+3. Independent Reviewer唯一寫
+   `plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<actual-C55-green-S-full40SHA>.json`。
+   Exact7keys：schema_version、topic、implementation_subject_commit、tester_evidence_commit、
+   verdict、blocking_issues、recorded_by；integer1／topic／sameS／committedsolepassingT fullSHA，
+   approved|needs-rework／stringarray（approved空）／Independent Reviewer。
+   缺sameS committedpassingT failclosed不產V；Implementer原樣sole evidence-only commit。
+4. Independent Reviewer唯一寫
+   `plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<actual-C55-green-S-full40SHA>-<actual-reviewed-published-PR-head-full40SHA>.json`。
+   Exact8keys：schema_version、topic、implementation_subject_commit、tester_evidence_commit、
+   implementation_review_evidence_commit、pr_head_commit、classifications、recorded_by；
+   integer1／topic／newS／sameT／sameV／actualfixedpublishedhead／exact-seven／Independent Reviewer。
+   每entry exact thread/comment/outcome/reply；thread suffix及comment為strings；
+   exactpairs：pvzDA/4202824859、pvzDF/4202824865、pvzDH/4202824868、
+   pv59N/4202868919、pv59R/4202868923、pv59T/4202868925、pv59V/4202868928。
+   Outcome獨立判定，不預設：REPLY_AND_RESOLVE須nonempty factual reply，
+   ADDRESS／HUMAN_CHECK必null/open。Reviewer不留言/resolve/commit；
+   Implementer原樣sole class commit normalpush後，Planner僅route committed R&R的original reply/resolve。
+
+### Commands / Gate Route / Stop
+
+保留既有c54 testnames，corrected RED不得-k c55：
+```sh
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c54 --collect-only -q
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k 'c54 and not rejects' -q
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c54 -q
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py -q
+uv run --frozen ruff check tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py
+uv run --frozen pyright tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py
+```
+Strict Pyright沿existingpyproject；不修改uv.lock，不新增C28 --no-verify exception。
+Fresh local exact-five candidate→independent approved SHA-bound receipt sole→corrected sole test-only RED
+→independent failingT sole→bounded green newS→sameS independent passingT sole
+→Plan-Creator exact-two review-ready factualalignment/CLI0→independent V sole
+→Planner Phase4.5 exact-two factualalignment／normalcommitpush existingPR7
+→actualfixedhead exact-seven independentclassification→soleclass normalpush
+→僅permitted originalreply/resolve→finalexact-two facts normalpush／single complete audit／Human check。
+C54未修正RED不得作C55 RED；未通gate停相應phase，不預填成功/自己alignmentSHA或產生checkboxloop。
+新unlisted僅inventory/open，不分類/修復/resolve；head drift、scope conflict或needs-rework交Planner，
+真正Human選擇一次彙整。Humanalone PRapproval/merge/release/postmerge/tag。
+Workflowstate：current_step=c55-plan-authoring；next_step=bounded-candidate-commit；
+status=COMPLETE（onlydraft，非executionapproval/evidencegate/topiccomplete）。
