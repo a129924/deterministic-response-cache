@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "c3f81c1b9814e2b2a16eb914006e7a97f2b74489",
+  "tester_evidence_commit": "7be330e1c6569b992c0b18dbdc6697064dd9c0b5",
+  "implementation_review_evidence_commit": "12afae27b6cde8d558360ecc87f1c5222f0d8368",
+  "pr_head_commit": "ca3969f30b7f7dc1d93fa31df2ce4d4744a0d939",
+  "classifications": [
+    {
+      "thread": "pvzDA",
+      "comment": "4202824859",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C55 subject c3f81c1b9814e2b2a16eb914006e7a97f2b74489 修復：檢查 PEP 695 TypeVar／TypeVarTuple／ParamSpec 的 genuine name bindings，涵蓋 class、function、async function、type alias 的 type_params，兩個 BC 均有 isolated regression。Bounds／constraints／references 不被當成本地 binding，fixture source 僅 AST parse。已完成 corrected RED → green、same-subject passing Tester 與 approved Independent Reviewer evidence；705 scoped tests、Ruff、strict Pyright 通過，十二 locks 不變。"
+    },
+    {
+      "thread": "pvzDF",
+      "comment": "4202824865",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C55 subject c3f81c1b9814e2b2a16eb914006e7a97f2b74489 修復：known sys receiver／module alias 的 __dict__ literal modules subscript 與既有 exact-one-positional、no-keywords/default 的 get，正規化為原 sys.modules surface 並沿既有 cache-access 規則。兩個 BC 均覆蓋 subscript、get 與 alias；dynamic key／unknown receiver／ordinary entry 不新增推論。已完成獨立 corrected RED → green 及 same-subject Tester／Reviewer evidence；705 scoped tests、Ruff、strict Pyright 通過，未更改既有 locks。"
+    },
+    {
+      "thread": "pvzDH",
+      "comment": "4202824868",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C55 subject c3f81c1b9814e2b2a16eb914006e7a97f2b74489 修復：BoolOp 僅依明確 builtin literal truth 或 known import-callable truth 決定短路選取，再沿既有 forbidden USE，包括直接呼叫與 higher-order use。兩個 BC 均有 selected-callable regression；True or／False and 的 dead operands、unused callable 與 unknown truth 保持 negative，不求值 source-defined truthiness 或建立 CFG。完整 corrected RED → green、same-subject Tester／Reviewer evidence 已提交；705 scoped tests、Ruff、strict Pyright 通過。"
+    },
+    {
+      "thread": "pv59N",
+      "comment": "4202868919",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C55 subject c3f81c1b9814e2b2a16eb914006e7a97f2b74489 修復：bare builtin vars(known module／既有 alias) 的 exact-one-positional、no-keywords 形狀，只正規化 direct literal namespace lookup，再沿原 forbidden surfaces／USE。兩個 BC 覆蓋 importlib、builtins 與 sys namespace；unknown receiver、call result、dynamic key、wrong arity、namespace alias 與 unused callable 不新增推論。獨立 corrected RED → green 及 same-subject Tester／Reviewer evidence 完整；705 scoped tests、Ruff、strict Pyright 通過，getattr arity 與其他 locks 保留。"
+    },
+    {
+      "thread": "pv59R",
+      "comment": "4202868923",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C55 subject c3f81c1b9814e2b2a16eb914006e7a97f2b74489 修復：檢查 ExceptHandler.name 的 genuine local binding，涵蓋 except／except* 且兩個 BC 對稱測試。Exception type／tuple references 與 ordinary handler names 不被誤認為 foreign binding，不執行 handler source。已完成獨立 corrected RED → green、same-subject passing Tester 與 approved Independent Reviewer evidence；705 scoped tests、Ruff、strict Pyright 通過，原 locks 保留。"
+    },
+    {
+      "thread": "pv59T",
+      "comment": "4202868925",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C55 subject c3f81c1b9814e2b2a16eb914006e7a97f2b74489 修復：同一 simple local import binding 保留有限 known-module alternatives，逐一套用既有 forbidden USE，而非以最後 AST import 覆寫先前 alternative。兩個 BC regression 覆蓋 importlib／builtins 與 sys／builtins 的分支順序交換，unused imports 與 ordinary surface 保持 negative。不建立 CFG、branch feasibility 或 ordered-scope／stale-binding 推論。完整獨立 corrected RED → green 與 same-subject Tester／Reviewer evidence 已提交；705 scoped tests、Ruff、strict Pyright 通過。"
+    },
+    {
+      "thread": "pv59V",
+      "comment": "4202868928",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C55 subject c3f81c1b9814e2b2a16eb914006e7a97f2b74489 修復：僅解析 direct、undecorated、zero-argument FunctionDef，body 必為單一 direct Return known forbidden callable，再由 direct local-name factory call 的 immediate existing USE 判斷。兩個 BC 覆蓋 import_module／builtin importer；只定義、只取得 returned callable、ordinary return、decorator、async／generator、parameters、multiple statements／returns、recursion 均保持排除，不建立 arbitrary call graph 或執行 source。独立 corrected RED → green、same-subject Tester／Reviewer evidence 完整；705 scoped tests、Ruff、strict Pyright 通過，十二 locks 不變。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}
