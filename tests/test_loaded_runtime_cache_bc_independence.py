@@ -2897,3 +2897,74 @@ def test_c54_preserves_dead_unused_unknown_and_excluded_resolution_controls(
     (directory / "resolution_controls.py").write_text(source, encoding="utf-8")
 
     assert not _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize("bc", ["loaded_runtime_cache", "identity"])
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "() or importlib.import_module",
+        "[] or importlib.import_module",
+        "{} or importlib.import_module",
+        "(ordinary,) and importlib.import_module",
+        "[ordinary()] and importlib.import_module",
+        "{ordinary} and importlib.import_module",
+        "{'key': ordinary} and importlib.import_module",
+    ],
+)
+def test_c57_rejects_forbidden_use_selected_by_direct_container_literal_shape(
+    tmp_path: Path,
+    bc: str,
+    expression: str,
+) -> None:
+    """Fixed AST cardinality selects the importer without evaluating literal elements."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "literal_truth.py").write_text(
+        f"import importlib\n({expression})('foreign_bc')\n",
+        encoding="utf-8",
+    )
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize("bc", ["loaded_runtime_cache", "identity"])
+@pytest.mark.parametrize(
+    "source",
+    [
+        "(() and importlib.import_module)('foreign_bc')\n",
+        "([] and importlib.import_module)('foreign_bc')\n",
+        "({} and importlib.import_module)('foreign_bc')\n",
+        "((ordinary,) or importlib.import_module)('foreign_bc')\n",
+        "([ordinary()] or importlib.import_module)('foreign_bc')\n",
+        "({ordinary} or importlib.import_module)('foreign_bc')\n",
+        "({'key': ordinary} or importlib.import_module)('foreign_bc')\n",
+        "load = [] or importlib.import_module\n",
+        "container = [importlib.import_module]\n",
+        "([] or len)('foreign_bc')\n",
+        "([ordinary] and len)('foreign_bc')\n",
+        "((*unknown,) or importlib.import_module)('foreign_bc')\n",
+        "([*unknown] or importlib.import_module)('foreign_bc')\n",
+        "([ordinary, *unknown] and importlib.import_module)('foreign_bc')\n",
+        "({*unknown} and importlib.import_module)('foreign_bc')\n",
+        "({**unknown} or importlib.import_module)('foreign_bc')\n",
+        "({'key': ordinary, **unknown} and importlib.import_module)('foreign_bc')\n",
+        "(set() or importlib.import_module)('foreign_bc')\n",
+        "(set() and importlib.import_module)('foreign_bc')\n",
+        "(unknown or importlib.import_module)('foreign_bc')\n",
+    ],
+)
+def test_c57_preserves_dead_unused_unknown_cardinality_and_constructor_controls(
+    tmp_path: Path,
+    bc: str,
+    source: str,
+) -> None:
+    """Dead operands, possession, unpacking and constructor calls confer no new USE."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "literal_truth_controls.py").write_text(
+        "import importlib\n" + source,
+        encoding="utf-8",
+    )
+
+    assert not _uses_dynamic_import_substitution(directory)
