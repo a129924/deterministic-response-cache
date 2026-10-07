@@ -4773,7 +4773,7 @@ currentphase與remainingitems以本finalfacts為準。
 
 ### Goal / Outcome / Scope / Locked Decisions
 
-Current：`planned`；phase：`plan-authoring`；existing PR #7 保持 pr-open。
+Current：`human-check`；phase：`human-check`；existing PR #7 保持 pr-open。
 C51 是唯一 current classification-only route；C50 及較早 Current／pending 字樣是 frozen nonrouting provenance。
 Goal／In-Scope：以固定已發布 head 與同 subject passing Tester／approved Independent Reviewer evidence，
 獨立分類下列三筆 actual original comments，再只處置 committed REPLY_AND_RESOLVE 的 exact pairs。
@@ -4903,12 +4903,53 @@ Risks：把match／container／pyi新semantics當既有fix、預設outcome、old
 replyduplicate／solecommit污染、自指state loop。
 Rollback：onlyboundedstandard-fiveplanningrework或必要freshimmutableplanning successor，
 保留submittedcandidate／receipt／sameSTV；不broadreset、overwriteevidence、codefix或清三rejected。
-OpenQuestions：design none；threeindependentoutcomes尚未產生，若需修復則Human一次明確scope選擇。
+OpenQuestions：三independentoutcomes已提交，全部ADDRESS／replynull，未修復／open；Human一次決定三bounded修復scope。
 Post-merge／releaseactions：none；HumanalonePRreview／merge／release／postmerge／tag；
 boundedclassification／threadresolution不等於Humanapproval／workflowclose。
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 此為IndependentPlanReviewerhandoffschema，不是Creatorreceipt／approval。
-Workflowstate：current_step=c51-plan-authoring；next_step=bounded-candidate-commit；
-status=COMPLETE（draftonly，非approval／classification／actions／topic-complete）。
+Workflowstate：current_step=c51-human-check-final-factual-alignment；next_step=bounded-alignment-normal-commit-push；
+status=COMPLETE（finalfactualdraftonly，非修復／Humanapproval／topic-complete）。
+
+### C51 Final Committed Classification Facts（current human-check）
+
+C51 exact-five candidate：`3f317223c880349e9071cfdc7d21daef044bd8a6`；
+approved Independent Plan-Reviewer receipt unchanged sole commit：
+`a1e8e95baa045ed2814d418fb3c3e92012f6ab86`。
+Fixed reviewed PR head：`9a8b46fa72a9800622349b049cc03d06b57e5f9f`；
+same S `4aff14e3009f46ba82ee5fe78a11ca05a635db37`；
+passing T `6da6292e8a7a2aac726fcca90bfc559cc8ae9928`；
+approved independent V `7281f494597e3253de0170b0257a3302c2fcde8c`。
+Fresh exact-three Independent Reviewer classification receipt：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-4aff14e3009f46ba82ee5fe78a11ca05a635db37-9a8b46fa72a9800622349b049cc03d06b57e5f9f.json`；
+unchanged sole classification commit／normal push：
+`9dc60be5877a4af00277f3238cff2b7e9ac9a04c`。
+Actualreceipt exact8schema／writer／sameSTV／fixedhead／solepath已由Planner核實，
+source／tests相對sameS不變；不是重新修復或新增codeevidence。
+
+| Exact pair | Committed independent outcome | Actual disposition |
+| --- | --- | --- |
+| `pu_ja/4202486092` | ADDRESS，reply null | match-pattern capture semantic-name 建議必要，但未修復／未留言／未resolve、open。 |
+| `pu_jo/4202486109` | ADDRESS，reply null | literal-container index/key callable lookup 建議必要，但未修復／未留言／未resolve、open。 |
+| `pu_j0/4202486122` | ADDRESS，reply null | .pyi boundary scan 建議必要，但未修復／未留言／未resolve、open。 |
+
+全部ADDRESS，沒有REPLY_AND_RESOLVE；per-pairactions不適用／無授權動作，
+不可宣稱replyresolve已完成或虛勾三requirementsfixed。
+分類workflow（candidate／approvedreceipt／independentclassification／solecommitnormalpush）實際完成，
+修復仍需Human一次決定scope；不新增match／container／pyi grammar或dictduplicate-key策略。
+
+C51 classification時點snapshot，綁reviewedhead
+`9a8b46fa72a9800622349b049cc03d06b57e5f9f`：
+127 threads／124 resolved／3 open；wall-clock UTC未記錄，不能由commit time推測audit timestamp。
+發布後Planner核local／origin／PR head `9dc60be5877a4af00277f3238cff2b7e9ac9a04c`，
+PR #7 OPEN／MERGEABLE／CLEAN、source unchanged；這不是finalalignment後的新fullaudit。
+本ONLYplan／stepfinaldraft需Implementer separate normal commit／push，再singlefull-paginationaudit
+記actual UTC／head／counts；不為補timestamp重開reviewchain或預填自身SHA／commitpush。
+
+Current／phase human-check，existing PR7 pr-open；
+C50六completedimplementationsteps／同STV／十二locks／mission／API／Archify保留。
+analysis／spec保留committedC51candidate snapshots；先前pending／尚未分類字樣為nonrouting時點provenance。
+未分類newunlisted只能inventory；不擴code／architecture／contract／paths，不新candidate／selfcheckbox-loop，
+boundedclassificationcompletion不等於HumanPRapproval／merge／workflowclose。
