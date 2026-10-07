@@ -8,6 +8,14 @@ created: 2026-09-17
 
 ## Workflow Stages
 
+C50 current six stages（下方 old stages only frozen provenance）：
+- [X] C50 plan-authoring
+- [ ] C50 plan-review
+- [ ] C50 tdd-test-authoring
+- [ ] C50 implementation
+- [ ] C50 implementation-review
+- [ ] C50 code-review
+
 C11/C12/C13/C14 stages below are frozen provenance. C15 is the active successor and must not inherit them.
 
 - [x] C14 plan-authoring
@@ -21,6 +29,9 @@ C11/C12/C13/C14 stages below are frozen provenance. C15 is the active successor 
 - [ ] C14 Phase 4.5 / thread classification (frozen historical state; nonrouting)
 
 ## Actionable Steps
+
+C50 current ordered actionable work依文末 C50 contract；下方 C11–C14 only historical snapshot，
+不得繼承 evidence 或把 pending old record當 current routing gate。
 
 - [x] **Actor:** Implementer — **Action:** C11/R11/S11/T11/V11 completed as immutable provenance:
   `55ad5d48c8e638bc5a81f3d0fecfc5a5f35e963c` →
@@ -69,6 +80,18 @@ C11/C12/C13/C14 stages below are frozen provenance. C15 is the active successor 
   thread.
 
 ## Implementation Steps
+
+C50 current implementation completion gate；下列六項初始化 pending，不繼承舊 C47 completed。
+- [ ] 1. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增四 original findings 的 isolated RED fixtures及benign controls；新測試名稱含 c50，rejecting 名稱另含 rejects、controls不含 rejects。只新增tests，不修scanner、不執行fixture source，collection／controls須pass、四類genuineassertionfail。
+- [ ] 2. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 補 FunctionDef／AsyncFunctionDef／Lambda 的全部 ast.arguments local-name semantic syntax，兩BC ownership適用；不判annotation／default／scope，不改既有assertions。
+- [ ] 3. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 沿existing simple-name assignment固定點保留known directly imported builtins.getattr getter identity；lookup仍exact-two-pos/no-keywords／knownmodule／literalattribute／existingUSE，不新增持有拒絕或arbitrary getter。
+- [ ] 4. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 補known module Name／existingalias.__dict__.get的directstringliteral／exact-one-pos/no-keywords/default解析，只三既有forbidden import-callables後續USE；unknown/dynamic/ordinary/missing/unused controls不誤拒，不推namespacealias或arbitrarymapping。
+- [ ] 5. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 將全部 ast.comprehension.target交existingName／Tuple／List／Starred semantic-name traversal，ignoreAttribute，含list/set/dict/generator及asyncTARGETSYNTAX；不擴comprehensionaliasinference／RHSiterable／orderedscope／fixtureexecution。
+- [ ] 6. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保留所有舊direct imports／fixtures／mocks／assertions與十二locks，對sameimmutablegreen S實際通過兩 scoped pytest檔／Ruff／strict Pyright；未完成前canonicalsteps保持pending，不將review／publish／classification算作implementationsteps。
+
+Reviewer／Tester evidence／publish／classification／thread actions另依C50 lifecycle，非implementation completion。
+
+## Historical Implementation Steps — C47（completed nonrouting provenance）
 
 C47 completed implementation provenance：七項[X]依 new-green-S committed passing T；C48 class-only不新增codepending，舊 S/T/V frozen history保留。
 - [X] 1. C47 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增 isolated RED fixtures／benign controls，六個 authorized repair pairs 各有獨立 rejecting assertion；名稱含 c47，rejecting 名稱另含 rejects。保留 scanner、既有 fixtures／direct imports／assertions，不執行 fixture source。
@@ -137,6 +160,10 @@ C37 sole active implementation completion；每項由 actual green subject/pass 
 
 ## Main Agent Actionable Steps — Fixed Tail
 
+C50 current fixed tail：Plan-Creator state alignment／Implementer bounded publish／Independent Reviewer
+exact-four classification／Planner exact permitted action routing／Implementer reply-resolve／final audit，
+順序與scope只依文末C50 contract；下方prior tail為frozen provenance，不授權Observer執行。
+
 - [x] **Actor:** Planner — **Action:** 已對 committed C12→R12 evidence chain 執行 Phase 4.5 alignment。其通過只可
   派遣獨立 Reviewer 分類 fixed-snapshot PR threads；不代表 thread reply／resolution、F／architecture-ACL human-check、
   publish 或 Human action 已完成。
@@ -145,6 +172,9 @@ C37 sole active implementation completion；每項由 actual green subject/pass 
   reply／resolve before a fresh independent classification permits that exact thread.
 
 ## Handoff / Gate Notes
+
+C50 active routing only；candidate／approval／RED／newS／passingT／V／publish／classification須各actualfacts。
+尚未完成的 C50 canonical六步 pending；Tester→Independent Reviewer實際分離，不用舊S/T/V代替。
 
 - This tracker and plan name one `loaded-runtime-cache` topic. The feature branch is lineage only, not routing
   authority.
@@ -3709,7 +3739,10 @@ Human-only PRreview／merge／release／postmerge不授權。
 Final separate alignmentcommit／normalpush由Gitfacts證，不設自身SHA／自指completioncheckbox。
 o7gvv ADDRESS排除保持open；十二原semantic／grammar／architecturelocks未撤除。
 
-## C49 Current-Head Four-Pair Classification（authoritative current routing）
+## C49 Current-Head Four-Pair Classification（completed predecessor routing）
+
+C49 final factual alignment commit／normal push `5afaf53d264466deca22b4858c09177ca112d922` 已完成；
+C50 是唯一 current route，C49 draft-time／pending 字樣為 frozen nonrouting provenance。
 
 C49 draft-time／pending 字樣為 nonrouting candidate snapshot；已完成事實以下方 final alignment 為準。
 
@@ -3893,3 +3926,297 @@ Current／step phase 為 human-check，既有 PR #7 保持 pr-open；本 ONLY pl
 待 Implementer separate normal commit／push，完成由 actual Git facts 證明，
 不預填自身 alignment SHA／commit／push，不新增自指 checkbox 或 candidate／receipt chain。
 analysis／spec 保留 committed C49 candidate snapshot；舊 draft-time／pending 字樣只作 nonrouting provenance。
+
+## C50 Bounded Four-ADDRESS Repair（authoritative current routing）
+
+### Goal / Outcome / Scope
+
+Current：`planned`；phase：`plan-authoring`。C50 是本 topic 唯一 current repair route；
+C49 及更早 draft-time／pending／Current 字樣是 frozen nonrouting provenance，不授權 C50 implementation。
+Human 已明確授權下表四修復；本修正不取代 original Loaded Runtime Cache mission。
+原 mission／scope／outcomes／Runtime Registry reuse protocol／Architecture Visualization／follow-up missions 不變。
+Analysis strict mode：technical-spec 為 execution-facing truth、requirements 為 intent guardrail；
+本 C50 共同契約逐字同步 standard five，後續只允許已授權 plan／step factual state alignment。
+既有 PR #7 pr-open；本輪不新開 PR、不 merge／release／post-merge／tag。
+
+| Exact thread/comment pair | Goal／In-Scope：bounded behavior |
+| --- | --- |
+| `o7gvv/4181373623` | FunctionDef／AsyncFunctionDef／Lambda 的 ast.arguments 全部本地參數 NAME，依兩 BC foreign semantic-name syntax ownership 判定。 |
+| `o93-F/4182313675` | known directly imported builtins.getattr 經 simple-name assignment fixed-point alias，保持 getter identity，依原 bounded lookup／後續 forbidden USE 判定。 |
+| `o-rDd/4182633560` | known module Name／existing module alias 的 .__dict__.get(direct string literal)，exact-one positional、no keywords/default；只解析原三 forbidden import-callables，依後續 USE 判定。 |
+| `o-rDg/4182633565` | ast.comprehension.target 的 Name／Tuple／List／Starred foreign semantic-name syntax；list／set／dict／generator，含 async target syntax，忽略 Attribute。 |
+
+In-Scope：single-test-path RED／green bounded修復、新 same-S independent Tester／Reviewer evidence、
+candidate／approved receipt／Phase4.5 alignment、exact-four independent classification及 permitted actions。
+Out-Of-Scope／Non-Goal：source API／grammar或 architecture之外的新需求、跨 BC import／mapper／backend／DI／
+runtime lifecycle／execution；comprehension dynamic-import alias inference、arbitrary iterable／CFG／ordered scope；
+README／VERSION／dependencies／config／shared contracts／Archify files／十二 semantic locks／新 unlisted 修復。
+Deleted：none。非唯一 agent，不 revert 他人成果；dev worktree 不得寫檔。
+三 rejected untracked receipts 保持原樣、不 stage／overwrite／delete／用作 routing authority。
+
+### Locked Decisions / Boundaries
+
+1. Parameter syntax：遍歷 FunctionDef／AsyncFunctionDef／Lambda.args 的 posonlyargs、args、vararg、
+   kwonlyargs、kwarg 的 ast.arg.arg；Loaded Runtime Cache 禁本地 ModelIdentity，
+   Identity 禁本地 RuntimeReuseKey。普通 parameter name／annotation／default 中名稱不是 parameter-name binding；
+   不新增 annotation／default 求值、scope modeling、runtime inspection。
+2. Getter alias：僅既知 directly imported builtins.getattr（含既有 import asname）沿 simple-name assignment
+   fixed-point 傳遞；不是 arbitrary getter alias、不是持有 callable 即違規。
+   Getter lookup 保持既有 exact-two positional／no keywords、known module Name／direct string literal／
+   existing forbidden surfaces／後續 USE 語意；three-positional／starred／unknown controls 與 locks 不變。
+3. Namespace.get：receiver 僅 known module Name／既有 module alias 的直接 .__dict__，
+   method 精確 get、exact-one positional、no keywords／default，key 必 direct ast.Constant string。
+   僅 `builtins.__import__`、`importlib.__import__`、`importlib.import_module`，
+   透過既有 alias／後續 USE 拒絕；unknown receiver／dynamic key／ordinary or missing entry／unused possession
+   不因本輪額外拒絕。不得 namespace alias、任意 mapping／default／iterable／call-result inference。
+4. Comprehension semantic target：使用既有 Name／Tuple／List／Starred target-name traversal，忽略 Attribute；
+   全部 ast.comprehension.target 包括 is_async 的純 AST target syntax。
+   這不授權 comprehension dynamic-import alias inference／RHS iterable／generator 執行／ordered scope。
+5. 十二原 semantic／grammar／architecture／README locks 維持，包括 exact-two getattr、comprehension alias
+   inference 等；C48 Human 不修改處置不代表修復完成或解除鎖。所有既有 direct imports／fixtures／mocks／
+   assertions 不變，不以 importlib／__import__／sys.modules substitution 取代 regression。
+6. 新 unlisted `pu_ja/4202486092`（match targets）、`pu_jo/4202486109`（container lookup）、
+   `pu_j0/4202486122`（pyi scan）只有 inventory、open；不得分類／修復／留言／resolve。
+7. implementation 是 scanner 所在唯一 test module 的 bounded repair；production protocols／outcomes／
+   taxonomy／public surface／Architecture Visualization 全部 ReadOnly，不新增架構決策。
+   不執行 fixture source，不新增跨 BC import；解析不等於執行。
+
+### Status / Allowed Transitions / Actual Predecessor Facts
+
+C49 final exact-two factual alignment 已 commit／normal push：
+`5afaf53d264466deca22b4858c09177ca112d922`，C50 authoring base 為該 full SHA。
+C49 candidate `bd27be3aa20a92829f31ad5bb483ae3a1c3de0c3`、
+approved receipt sole `86c6e2ec81bcd8ed16a79897a836207cbc65c2ae`、
+classification sole `f74a69376e51913d7287def98191738ce6222020` 為 immutable predecessor facts。
+C49 o93-C reply `4202433177`／resolved 保留；其他四 ADDRESS 現在由 Human 授權 C50 repair，
+尚未修復，不能預勾完成。原 S/T/V（S `76e80d368bbdec3223c626631bfcd0101ba67d75`、
+T `157887d31d7e1c819580c96335b2959507df69d4`、
+V `82b09a1e949df5839ee1dd43edda3e4192b3b8d8`）只作 predecessor provenance；
+不能當 C50 new subject passing evidence。
+Planner 已核 authoring base local／origin／PR 相同、OPEN／MERGEABLE／CLEAN、tracked/index clean、
+三 rejected untracked preserved；本記錄不預填 C50 candidate／subject／evidence SHA 或 outcome。
+
+planned → committed candidate／independent approved Plan-Reviewer sole receipt → creator-in-progress RED →
+independent Tester factual failing RED／sole evidence → distinct green creator-in-progress →
+tester-in-progress／same-new-S passing sole evidence → review-ready factual alignment／CLI →
+independent reviewer-in-progress → approved|needs-rework。
+needs-rework 只可 bounded rework，新的 immutable subject 重走同 subject T/V，不覆寫或借舊 evidence。
+approved → Planner Phase4.5 factual alignment → publish-in-progress → existing PR7 pr-open →
+new-S／actual-published-head classification → exact per-pair actions → final factual alignment／human-check。
+publish-in-progress 不可直接 merged；Human alone PR review／merge。
+Planning approval 不等於 implementation approval；Reviewer 非 Human PR reviewer。
+
+### Artifact Paths / ReadOnly / Written / Modify / Sole Writers
+
+Plan-Creator 唯一 planning writer（candidate exact-five，final alignment only plan／step）：
+- `analysis/loaded-runtime-cache/requirements.md`
+- `analysis/loaded-runtime-cache/technical-spec.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.step.md`
+
+Implementer 唯一 implementation Modify path：`tests/test_loaded_runtime_cache_bc_independence.py`。
+RED subject 必 only 此 path、test-only，green subject 也必 only 此 path。
+`tests/test_loaded_runtime_cache_contracts.py` 為 ReadOnly regression validation input。
+其他 src／tests／config／uv.lock／README／VERSION／architecture／Archify／shared contracts／old receipts ReadOnly；
+超出 path／scope 停在 Planner，不猜 path 或修改 repository contract。
+Written：以下 fresh immutable SHA-bound evidence，僅 designated independent writer 寫、不 commit；
+Implementer 原樣、各自 sole evidence-only commit，不與 planning／implementation／另一 evidence 混 commit。
+下列參數只有 actual committed full 40 lowercase hex SHA 已存在後才展開；不得 symbolic HEAD／short SHA／
+future SHA／結果預填／overwrite，包括 rejected uncommitted immutable receipts。
+同一 evidence commit 必 non-merge；驗實際 named diff 恰 sole path、JSON exact schema、topic／subject／writer。
+
+Plan-Reviewer path：
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<actual-C50-candidate-full40SHA>.json`。
+exact 3 keys verdict／blocking_issues／copilot_feedback_triage。
+verdict approved|needs-rework；blocking_issues object array，每 object 恰 issue／file／fix non-empty strings，
+approved 必 []、needs-rework 至少一項；triage 恰 ADDRESS／DISCUSS／SKIP arrays。
+Independent Plan-Reviewer 審 committed exact-five LOCAL candidate，不 commit；
+approved 才 Implementer unchanged sole LOCAL receipt commit，不先 push。
+
+Tester RED path：
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<actual-C50-RED-full40SHA>.json`；
+Tester green path：
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<actual-C50-green-S-full40SHA>.json`。
+exact 6 keys schema_version／topic／implementation_subject_commit／status／commands／recorded_by。
+schema_version integer 1；topic loaded-runtime-cache；subject 為該 actual RED 或 green S；
+recorded_by Tester；commands non-empty array，每 entry 恰 command non-empty string／exit_code integer。
+status passing|failing；passing 只在全部 actual exit_code=0，failing 至少一項 actual nonzero。
+RED collection／controls 必 exit0，四原 positive finding 的 rejecting tests 均 genuine assertion failure、
+不是 parse／import／collection failure；原樣 sole failing T 後才 green。Failing RED 不寫 Reviewer evidence。
+Independent Tester 實測 immutable subject、不 commit；Implementer unchanged sole commit。
+
+Independent Reviewer path：
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<actual-C50-green-S-full40SHA>.json`。
+exact 7 keys schema_version／topic／implementation_subject_commit／tester_evidence_commit／verdict／
+blocking_issues／recorded_by；integer1／loaded-runtime-cache／same actual green S／sole committed passing T fullSHA；
+verdict approved|needs-rework；blocking_issues string array，approved []、needs-rework 非空；
+recorded_by Independent Reviewer。只消費 committed same-topic／same-S passing T，
+missing／failing／uncommitted／cross-S／wrong schema fail closed、不得產生 Reviewer evidence。
+Reviewer 獨立審 implementation，不 commit；Implementer unchanged sole V commit。
+
+Independent classification path：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<actual-C50-green-S-full40SHA>-<actual-reviewed-published-PR-head-full40SHA>.json`。
+在新同-S passing T／approved V／Phase4.5 alignment normal push 已實際提交、PR head 固定後才展開；
+不是 authoring base／舊 C47 S，也不得追新 head 換 receipt。exact 8 keys：
+schema_version／topic／implementation_subject_commit／tester_evidence_commit／
+implementation_review_evidence_commit／pr_head_commit／classifications／recorded_by。
+integer1／loaded-runtime-cache／actual new S／same-S sole passing T／same-S sole approved V／
+actual reviewed published PR head；recorded_by Independent Reviewer。
+classifications exact-four entries，各上表 pair 恰一次；entry exact thread／comment／outcome／reply。
+thread suffix string（不用 full PRRT ID），comment string；outcome REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK。
+只有 factual REPLY_AND_RESOLVE 的 reply 為 non-empty original factual reply，
+ADDRESS／HUMAN_CHECK 必 null、open；不预定 outcome、不以 user希望收束宣稱修復。
+Reviewer only writes fresh classification、不留言／commit；Implementer unchanged sole class commit／normal push。
+receipt 後 descendants source unchanged／original head ancestry及 sole-path checks由 Planner 核後才 exact action。
+
+### Python implementation metadata（C50 bounded current profile）
+
+#### Non-goals
+- 不改 production runtime contracts／API／BC identity authority／Architecture Visualization。
+- 不解除十二 locks、不實作 comprehension dynamic-import alias inference／arbitrary mapping／scope／iterable analysis。
+- 不新增 dependency／config／README／VERSION／backend／DI／lifecycle／source execution。
+- 不處理新 unlisted／merge／release／重写历史；不修改他人或 dev worktree 檔案。
+
+#### Current Context / Requirements
+`tests/test_loaded_runtime_cache_bc_independence.py` 的 _binds_foreign_semantic_name 已涵蓋 import／For／With
+target syntax，尚未覆蓋 ast.arguments／ast.comprehension.target；
+_aliases_from_imports 已標 known builtins.getattr，但 _resolve_name_alias 排除它，plain assignment 可丟 getter identity；
+_resolve_namespace_import_callable 只涵蓋 direct subscript，尚未涵蓋 bounded .get。
+C50 僅補四可重現缺口，private resolver representation 由 Implementer bounded選擇，不變更 locked behavior。
+每四 original positive finding 都要 isolated genuine RED assertion，green 可判定且 benign controls 通過；
+保留舊 fixtures／direct imports／mock／assertions，不以放寬tests或動態載入隱藏 regression。
+
+#### Decisions
+- Async-planning status: exempt — cite exemption evidence: 本 module 只同步 ast.parse／ast.walk 檢查
+  AsyncFunctionDef／async comprehension TARGET syntax；不執行 fixture，沒有 async boundary、resource ownership、
+  I/O、concurrency、timeout／retry／cancellation／runtime lifecycle 改變。
+- Module/package placement: only `tests/test_loaded_runtime_cache_bc_independence.py` existing scanner／fixtures。
+- New public API: no；不增 package/module/public exports。
+- Interface changes: no production interface changes；只擴已宣告四 test-scanner behaviors。
+- Breaking changes allowed: no；preserve direct imports與existing authorized behavior／negative bounds。
+- New dependencies: no；使用既有 ast／pytest／Ruff／strict Pyright，uv.lock不改。
+- Error-handling strategy: 保留既有 assertion／parser exception 語意，真錯誤不吞、不改missing／Unavailable protocol。
+- Typing strategy: Python3.12 strict Pyright、既有精確 AST types／typed helpers；no Any／dynamic import／sys.modules substitution。
+
+#### Public Contract / API Changes / Affected Files
+No production API change；ReadOnly same protocol/outcomes。Likely affected implementation file only
+`tests/test_loaded_runtime_cache_bc_independence.py`；candidate files to inspect：
+同 test、ReadOnly `tests/test_loaded_runtime_cache_contracts.py`、`pyproject.toml`。
+Exact planning/evidence writer paths依前表；Deleted none。
+
+#### Test Plan / TestCase
+- Happy path：兩BC五種parameter位置×def／asyncdef／lambda；known directimport getter plain/chained aliases的後續
+  boundedlookup USE；三forbidden namespace.get後續USE；四種comprehension含async target syntax。
+- Invalid input：unknown／arbitrary getter，unknown namespace receiver、dynamic key、default／keywords、
+  ordinary/missing entry、三posgetattr與starred不擴；不把 source invalid syntax 當成功 RED。
+- Edge case：posonly／vararg／kwonly／kwarg；getter alias statement-order permutations用existing固定點，
+  不擴ordered-scope語意；unused callable合法；nested Tuple/List/Starred semantic targets，Attribute忽略。
+- Regression：舊 C47 及更早 direct imports／fixtures／mock／assertions／callable alternatives／sys.modules detector
+  與十二locks保持；scoped兩檔pytest、Ruff、strict Pyright realpass。
+- Backward compatibility：runtime direct-module APIs／Identity independence／protocol/outcomes／Archify不變。
+Given four original missed fixtures，When RED old scanner parses，Then collection／controls pass且四需求rejecting assertions實際fail。
+Given new bounded scanner，When same fixtures／controls在green驗證，Then正確reject四類、controls／全部scopedregression pass。
+Given annotation/default ordinarynames／unknown/unused possession，Then本輪不新增誤拒；
+Given target attribute或comprehension iterable，Then only authorizedtarget語法，不執行或推論RHS。
+Given same-S committed passing T／approved V與fixedpublishedhead，Then Independent Reviewer才能classify exactfour，
+不能由勾選implementation自行宣告threads addressed。
+上述即 spec Acceptance Criteria／Behavioral Scenarios／Error / Edge Cases C50 co-artifact契約。
+
+#### Risks / Rollback Plan
+Risks：getter identity誤當forbidden possession、namespace.get擴任意mapping/default、
+semantic target混同alias inference、REDparseerror、cross-subjectevidence／stalehead、
+放寬existingassertions、duplicate replies與self-state追蹤loop。
+Rollback：只在single test path bounded修回並建立新immutable S重走T/V；
+planning修正onlydeclaredfive且經Planner route。保留所有已提交receipt／RED／S／T／V與rejecteduntracked；
+不broadreset、覆寫證據、偷改contracts、production或dev。不使用歷史C28 no-verify授權。
+
+### Implementation Steps（source for canonical completion gate）
+
+1. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增四 original findings 的 isolated RED fixtures及benign controls；新測試名稱含 c50，rejecting 名稱另含 rejects、controls不含 rejects。只新增tests，不修scanner、不執行fixture source，collection／controls須pass、四類genuineassertionfail。
+2. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 補 FunctionDef／AsyncFunctionDef／Lambda 的全部 ast.arguments local-name semantic syntax，兩BC ownership適用；不判annotation／default／scope，不改既有assertions。
+3. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 沿existing simple-name assignment固定點保留known directly imported builtins.getattr getter identity；lookup仍exact-two-pos/no-keywords／knownmodule／literalattribute／existingUSE，不新增持有拒絕或arbitrary getter。
+4. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 補known module Name／existingalias.__dict__.get的directstringliteral／exact-one-pos/no-keywords/default解析，只三既有forbidden import-callables後續USE；unknown/dynamic/ordinary/missing/unused controls不誤拒，不推namespacealias或arbitrarymapping。
+5. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 將全部 ast.comprehension.target交existingName／Tuple／List／Starred semantic-name traversal，ignoreAttribute，含list/set/dict/generator及asyncTARGETSYNTAX；不擴comprehensionaliasinference／RHSiterable／orderedscope／fixtureexecution。
+6. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保留所有舊direct imports／fixtures／mocks／assertions與十二locks，對sameimmutablegreen S實際通過兩 scoped pytest檔／Ruff／strict Pyright；未完成前canonicalsteps保持pending，不將review／publish／classification算作implementationsteps。
+
+### Validation / Acceptance Checks / Ordered Evidence Chain
+
+RED actual commands（Independent Tester，不由 Creator偽造）：
+```bash
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c50 --collect-only -q
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k 'c50 and not rejects' -q
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c50 -q
+```
+Collection／controls exit0且原四 positive需求全部meaningfulassertionfail，則記actualfailing RED evidence；
+collectionerror／controlsnonzero／部分需求未紅不得假稱REDgate。
+Green actual commands：
+```bash
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py -q
+uv run --frozen ruff check tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py
+uv run --frozen pyright tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py
+```
+1. Plan-Creator exact-five draft → Plannerpreflight → Implementer exact-five LOCAL candidatecommit，
+   不code/evidence、不push改PRhead → IndependentPlanReviewerfreshSHAreceipt → approvedsoleLOCALcommit。
+2. Implementer one-test-path REDsubject → IndependentTesteractualfailingreceipt →
+   Implementer unchangedsolefailingT → boundedgreen newimmutableS（onlytestpath）。
+3. IndependentTesteractualallgreencommands／passingreceipt → Implementer unchangedsolepassingT。
+   不借C47 T/V、不以同角色合併Tester／Reviewer、不把expectedfail當pass。
+4. Plan-Creator onlyplan／step actualreviewreadyalignment，[X]只actualimplemented＋same-S passing證明；
+   Implementer separatealignmentcommit → Planner canonicalCLI實際0 →
+   IndependentReviewer只讀newS＋committedsameS passingT寫freshV → Implementer unchangedsoleV。
+5. PlannerPhase4.5 → Plan-Creatoronlyplanstepfactualalignment →
+   Implementer separatealignmentnormalcommit／push更新既有PR7（既有Humanpublish授權）。
+6. Planner核actualpublishedhead／newS/T/V ancestry／solecommits／sourceunchanged →
+   IndependentReviewerfixedheadexact-fourfreshclassification，不预定R&R →
+   Implementer unchangedsoleclasscommit／normalpush。
+7. Planner只routecommittedR&Rpair → Implementerexactoriginalreply／resolve，先核是否已完成防重覆，
+   實記replyID與resolved。ADDRESS／HUMAN_CHECK保持open，不偷偷擴implementation或直接resolve。
+8. Plan-CreatorONLYplan／stepfinalactualfacts，未修需求不虛勾 →
+   Implementerseparatenormalcommit／push → 一次full-paginationaudit → human-check。
+   不預填自己finalalignmentSHA／commitpush或新增selfcheckbox／trackingcandidatechain；
+   actualGitfacts證publish，不為bot新增留言无限續修。Unlisted只inventory。
+普通hooks／normalpush；新subject不沿用C28noverify，實際hookblocker交Planner不繞過。
+每階段以 `git diff --check`、actual40SHA／parent／namedsolepath／JSONschema／sourcebounds檢查；
+planning CLI `python .agents/skills/plan-step-tracker/scripts/step_tracker.py check_impl_steps_succeeded loaded-runtime-cache`
+draft應exit1（六pending），reviewready才actual0。
+Head drift／source drift／missing/invalid required evidence／scope或contractdrift即停相應gate交Planner；
+不自改candidate／receipt／head／contract、不自手算approval。
+
+### Reviewer Handoff / Open Questions / Post-merge
+
+C50 D1 verdict：non-trivial — 四ASTscanner行為、fixed-pointgetteridentity、semantic target syntax與完整subject-boundchain；
+required spec與step同candidate，不另開topic或Pythonplan。
+七 decisions／async-exempt citation／Non-goals／五testcategories／scope／writer／schema已明定，設計疑點 none。
+未來classification結果／actualSHA／testresults／threadresolution尚未產生，不預填。
+十二locks保持；unlisted三筆open；scope外requirements只inventory／Human一次決定。
+Post-merge／release actions：none；Humanalone PRreview／merge／release／postmerge／tag。
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+此為independenthandoffschema、非Creator預填receipt。
+Workflow state：current_step=c50-plan-authoring；next_step=bounded-candidate-commit；
+status=COMPLETE（draft handoff only，非approval／implementation／evidencegate／topiccomplete）。
+
+### C50 Actionable Evidence / Publish Stages（非 implementation completion gate）
+
+- [X] **Actor: Plan-Creator.** Standard-five bounded C50 draft／four requirements／Python profile／new pending six steps。
+- [ ] **Actor: Implementer.** Planner preflight 後 exact-five LOCAL candidate-only commit。
+- [ ] **Actor: Independent Plan-Reviewer.** Fresh candidate-SHA-bound review receipt，outcome依actualreview。
+- [ ] **Actor: Implementer.** Approved planning receipt unchanged sole LOCAL commit。
+- [ ] **Actor: Implementer / Tester.** Test-only RED subject／independent collection-controls-pass、four-assertion-fail factual record。
+- [ ] **Actor: Implementer.** RED factual failing T unchanged sole evidence-only commit。
+- [ ] **Actor: Implementer.** Bounded green new immutable S，only declared test path。
+- [ ] **Actor: Tester.** Same-new-S actual pytest／Ruff／strict Pyright passing factual record。
+- [ ] **Actor: Implementer.** Green passing T unchanged sole evidence-only commit。
+- [ ] **Actor: Plan-Creator / Implementer.** ONLYplanstep actual review-ready alignment separatecommit，canonicalCLI real0。
+- [ ] **Actor: Independent Reviewer.** Consume committed same-new-S passing T，fresh independent implementation V。
+- [ ] **Actor: Implementer.** Approved V unchanged sole evidence-only commit。
+- [ ] **Actor: Planner / Plan-Creator / Implementer.** Phase4.5 ONLYplanstep factual alignment separate normalcommit／push PR7。
+- [ ] **Actor: Independent Reviewer.** Actual fixed published-head／new-S/T/V exact-four immutable classification。
+- [ ] **Actor: Implementer.** Classification unchanged sole commit／normal push。
+- [ ] **Actor: Planner / Implementer.** Exact committed R&R original reply／resolve／actualIDs，other outcomes open。
+- [ ] **Actor: Plan-Creator.** ONLYplanstep final factual draft，未完成requirements不虛勾。
+
+Final alignment separate normal commit／push只由actualGitfacts證；singleaudit後human-check，
+不預填自身SHA／新增自指completioncheckbox，不把currentunlisted三筆加入repair或classification。
