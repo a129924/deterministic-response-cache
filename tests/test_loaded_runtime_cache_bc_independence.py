@@ -2196,3 +2196,240 @@ def test_c50_preserves_benign_comprehension_targets_attributes_and_rhs(
     )
 
     assert not _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "pattern",
+    [
+        "{name}",
+        "ordinary as {name}",
+        "[ordinary, *{name}]",
+        "{{'factory': {name}}}",
+        "{{'ordinary': ordinary, **{name}}}",
+        "[{{'factory': [ordinary, {name}]}}]",
+        "Box(factory=[ordinary, *{name}])",
+        "[({name}, ordinary)] | [(ordinary, {name})]",
+    ],
+)
+def test_c52_rejects_foreign_semantic_match_capture_bindings(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    pattern: str,
+) -> None:
+    """Only genuine nested pattern capture slots establish foreign local bindings."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "pattern.py").write_text(
+        "match subject:\n    case "
+        + pattern.format(name=foreign_name)
+        + f":\n        {foreign_name}()\n",
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "source",
+    [
+        "match subject:\n    case ordinary:\n        pass\n",
+        "match subject:\n    case [ordinary, *rest]:\n        pass\n",
+        "match subject:\n    case {{'factory': ordinary, **rest}}:\n        pass\n",
+        "match subject:\n    case {name}(ordinary):\n        pass\n",
+        "match subject:\n    case Box({name}=ordinary):\n        pass\n",
+        "match subject:\n    case holder.{name}:\n        pass\n",
+        "match subject:\n    case {{holder.{name}: ordinary}}:\n        pass\n",
+        "match subject:\n    case '{name}':\n        pass\n",
+        "match holder.{name}:\n    case ordinary if holder.{name}:\n        pass\n",
+    ],
+)
+def test_c52_preserves_match_references_and_ordinary_capture_names(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    source: str,
+) -> None:
+    """Class, keyword, value, subject and guard references are not capture bindings."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "pattern_controls.py").write_text(
+        source.format(name=foreign_name),
+        encoding="utf-8",
+    )
+
+    assert not _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "(__import__,)[0]('identity')\n",
+        "import importlib\n[importlib.import_module][0]('identity')\n",
+        "import builtins\n(len, builtins.__import__)[1]('identity')\n",
+        "import importlib\n[len, importlib.__import__][-1]('identity')\n",
+        "{'load': __import__}['load']('identity')\n",
+        "import importlib\n{7: importlib.import_module, 8: len}[7]('identity')\n",
+        "([__import__],)[0][0]('identity')\n",
+        "{'load': (__import__,)}['load'][0]('identity')\n",
+        "import importlib\nload = [importlib.import_module][0]\nagain = load\nagain('identity')\n",
+        "executor.submit((__import__,)[0], 'identity')\n",
+    ],
+)
+def test_c52_rejects_forbidden_use_of_selected_literal_container_element(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Only the statically selected direct literal element is resolved for later use."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "selected_literal.py").write_text(source, encoding="utf-8")
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "load = (__import__,)[0]\n",
+        "import importlib\nload = {'load': importlib.import_module}['load']\n",
+        "(len, __import__)[0]('identity')\n",
+        "import importlib\n[importlib.import_module, len][1]('identity')\n",
+        "{'load': __import__, 'ordinary': len}['ordinary']('identity')\n",
+        "(__import__,)[index]('identity')\n",
+        "{'load': __import__}[key]('identity')\n",
+        "(__import__,)[0:1]('identity')\n",
+        "(*unknown_values, __import__)[1]('identity')\n",
+        "[__import__, *unknown_values][0]('identity')\n",
+        "{'load': __import__, **unknown_mapping}['load']('identity')\n",
+        "container = (__import__,)\ncontainer[0]('identity')\n",
+        "container_factory()[0]('identity')\n",
+        "(__import__,)[2]('identity')\n",
+        "{'load': __import__}['missing']('identity')\n",
+        "{'load': len, 'load': __import__}['load']('identity')\n",
+        "{'load': __import__, 'load': len}['load']('identity')\n",
+        "{unknown_key: len, 'load': __import__}['load']('identity')\n",
+        "{1: len, True: __import__}[1]('identity')\n",
+    ],
+)
+def test_c52_preserves_unselected_unused_and_uncertain_literal_controls(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Unknown selection, unpacking and duplicate/colliding keys confer no inferred alias."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "literal_controls.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_module"),
+    [("loaded_runtime_cache", _IDENTITY_BC), ("identity", _RUNTIME_CACHE_BC)],
+)
+def test_c52_rejects_pyi_foreign_bc_imports_in_direct_import_scan(
+    tmp_path: Path,
+    bc: str,
+    foreign_module: str,
+) -> None:
+    """Stub imports enter the same normalized direct-import inventory as Python source."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "surface.pyi").write_text(f"import {foreign_module}\n", encoding="utf-8")
+
+    assert foreign_module in _direct_imports_from(directory, package_root=tmp_path)
+
+
+@pytest.mark.parametrize("bc", ["loaded_runtime_cache", "identity"])
+def test_c52_rejects_pyi_forbidden_dynamic_import_use(tmp_path: Path, bc: str) -> None:
+    """Stub discovery changes only the suffix, preserving existing callable-use rules."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "dynamic.pyi").write_text(
+        "import importlib\nimportlib.import_module('foreign_bc')\n",
+        encoding="utf-8",
+    )
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+def test_c52_rejects_pyi_foreign_semantic_declarations(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+) -> None:
+    """Both BCs apply the original semantic ownership rule to stub declarations."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "semantic.pyi").write_text(f"class {foreign_name}: ...\n", encoding="utf-8")
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    "boundary",
+    [
+        ("loaded_runtime_cache", _IDENTITY_BC, "ModelIdentity"),
+        ("identity", _RUNTIME_CACHE_BC, "RuntimeReuseKey"),
+    ],
+)
+@pytest.mark.parametrize("scanner", ["direct_imports", "dynamic_imports", "semantic_names"])
+def test_c52_preserves_existing_py_rule_results(
+    tmp_path: Path,
+    boundary: tuple[str, str, str],
+    scanner: str,
+) -> None:
+    """Existing .py inputs keep their original positive results for all three scanners."""
+    bc, foreign_module, foreign_name = boundary
+    directory = tmp_path / bc
+    directory.mkdir()
+    sources = {
+        "direct_imports": f"import {foreign_module}\n",
+        "dynamic_imports": "import importlib\nimportlib.import_module('foreign_bc')\n",
+        "semantic_names": f"class {foreign_name}: ...\n",
+    }
+    (directory / "surface.py").write_text(sources[scanner], encoding="utf-8")
+
+    if scanner == "direct_imports":
+        assert foreign_module in _direct_imports_from(directory, package_root=tmp_path)
+    elif scanner == "dynamic_imports":
+        assert _uses_dynamic_import_substitution(directory)
+    else:
+        assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize("suffix", [".py", ".pyi"])
+def test_c52_preserves_benign_source_and_stub_rules(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    suffix: str,
+) -> None:
+    """Benign stubs and source do not acquire forbidden bindings or unused-callable bans."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / f"ordinary{suffix}").write_text(
+        "import importlib\nload = importlib.import_module\nclass Ordinary: ...\n",
+        encoding="utf-8",
+    )
+
+    assert not _uses_dynamic_import_substitution(directory)
+    assert not _declares_forbidden_semantic_type(directory, foreign_name)
+    assert _direct_imports_from(directory, package_root=tmp_path) <= {"importlib"}
