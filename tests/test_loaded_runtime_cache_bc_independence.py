@@ -2514,3 +2514,248 @@ def test_c52_preserves_benign_source_and_stub_rules(
     assert not _uses_dynamic_import_substitution(directory)
     assert not _declares_forbidden_semantic_type(directory, foreign_name)
     assert _direct_imports_from(directory, package_root=tmp_path) <= {"importlib"}
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize("parameter", ["{name}", "*{name}", "**{name}"])
+@pytest.mark.parametrize(
+    "definition",
+    [
+        "class Ordinary[{parameter}]: pass\n",
+        "def ordinary[{parameter}](): pass\n",
+        "async def ordinary[{parameter}](): pass\n",
+        "type Ordinary[{parameter}] = object\n",
+    ],
+)
+def test_c54_rejects_foreign_semantic_type_parameter_bindings(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    parameter: str,
+    definition: str,
+) -> None:
+    """PEP 695 parameter names are bindings across all four definition kinds."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "type_parameters.py").write_text(
+        definition.format(parameter=parameter.format(name=foreign_name)),
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize("handler", ["except", "except*"])
+def test_c54_rejects_foreign_semantic_exception_handler_bindings(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    handler: str,
+) -> None:
+    """Both handler syntaxes establish only the explicit local name binding."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "exception_binding.py").write_text(
+        f"try:\n    pass\n{handler} ValueError as {foreign_name}:\n    pass\n",
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "source",
+    [
+        "class Ordinary[T: {name}]: pass\n",
+        "def ordinary[T: ({name}, object)](): pass\n",
+        "async def ordinary[*Ts, **P](): pass\n",
+        "type Ordinary[T] = {name}\n",
+        "try:\n    pass\nexcept {name} as ordinary:\n    pass\n",
+        "try:\n    pass\nexcept* ({name}, ValueError) as ordinary:\n    pass\n",
+    ],
+)
+def test_c54_preserves_type_parameter_and_exception_references(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    source: str,
+) -> None:
+    """Bounds, constraints, exception types and ordinary names are not foreign bindings."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "semantic_controls.py").write_text(
+        source.format(name=foreign_name),
+        encoding="utf-8",
+    )
+
+    assert not _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize("bc", ["loaded_runtime_cache", "identity"])
+@pytest.mark.parametrize(
+    "source",
+    [
+        pytest.param(
+            "import sys\nsys.__dict__['modules']['foreign_bc'] = object()\n",
+            id="sys_namespace_subscript",
+        ),
+        pytest.param(
+            "import sys as system\nsystem.__dict__.get('modules')['foreign_bc']\n",
+            id="sys_namespace_get",
+        ),
+        pytest.param(
+            "import sys\ncache = sys.__dict__['modules']\ncache['foreign_bc']\n",
+            id="sys_namespace_alias_use",
+        ),
+        pytest.param(
+            "import importlib\n(False or importlib.import_module)('foreign_bc')\n",
+            id="bool_or_selected",
+        ),
+        pytest.param(
+            "import importlib\n(True and importlib.import_module)('foreign_bc')\n",
+            id="bool_and_selected",
+        ),
+        pytest.param(
+            "import importlib\n(importlib.import_module or len)('foreign_bc')\n",
+            id="bool_known_callable_truth",
+        ),
+        pytest.param(
+            "import importlib\nmap((True and importlib.import_module), names)\n",
+            id="bool_higher_order_use",
+        ),
+        pytest.param(
+            "import importlib\nvars(importlib)['import_module']('foreign_bc')\n",
+            id="vars_importlib_namespace",
+        ),
+        pytest.param(
+            "import builtins as builtin_module\n"
+            "vars(builtin_module).get('__import__')('foreign_bc')\n",
+            id="vars_builtins_namespace",
+        ),
+        pytest.param(
+            "import sys\nvars(sys)['modules']['foreign_bc']\n",
+            id="vars_sys_namespace",
+        ),
+        pytest.param(
+            "if condition:\n    import importlib as loader\n"
+            "else:\n    import builtins as loader\nloader.import_module('foreign_bc')\n",
+            id="import_alternatives_importlib_first",
+        ),
+        pytest.param(
+            "if condition:\n    import builtins as loader\n"
+            "else:\n    import importlib as loader\nloader.import_module('foreign_bc')\n",
+            id="import_alternatives_importlib_last",
+        ),
+        pytest.param(
+            "if condition:\n    import sys as loader\n"
+            "else:\n    import builtins as loader\nloader.modules['foreign_bc']\n",
+            id="import_alternatives_sys_first",
+        ),
+        pytest.param(
+            "if condition:\n    import builtins as loader\n"
+            "else:\n    import sys as loader\nloader.modules['foreign_bc']\n",
+            id="import_alternatives_sys_last",
+        ),
+        pytest.param(
+            "import importlib\ndef loader():\n    return importlib.import_module\n"
+            "loader()('foreign_bc')\n",
+            id="factory_import_module_immediate_use",
+        ),
+        pytest.param(
+            "def loader():\n    return __import__\nloader()('foreign_bc')\n",
+            id="factory_builtin_immediate_use",
+        ),
+    ],
+)
+def test_c54_rejects_bounded_forbidden_callable_and_module_cache_uses(
+    tmp_path: Path,
+    bc: str,
+    source: str,
+) -> None:
+    """Five bounded resolution findings retain the existing use-based prohibition."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "bounded_use.py").write_text(source, encoding="utf-8")
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize("bc", ["loaded_runtime_cache", "identity"])
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import sys\ncache = sys.__dict__['modules']\n",
+        "unknown.__dict__['modules']['foreign_bc']\n",
+        "import sys\nsys.__dict__[key]['foreign_bc']\n",
+        "import sys\nsys.__dict__['ordinary']['foreign_bc']\n",
+        "import sys\nsys.__dict__.get('modules', {})['foreign_bc']\n",
+        "import sys\nsys.__dict__.get(key='modules')['foreign_bc']\n",
+        "import importlib\n(True or importlib.import_module)('foreign_bc')\n",
+        "import importlib\n(False and importlib.import_module)('foreign_bc')\n",
+        "import importlib\nload = False or importlib.import_module\n",
+        "import importlib\n(False or len)('foreign_bc')\n",
+        "import importlib\n(unknown or importlib.import_module)('foreign_bc')\n",
+        "import importlib\n(unknown and importlib.import_module)('foreign_bc')\n",
+        "import importlib\nload = vars(importlib)['import_module']\n",
+        "vars(unknown)['import_module']('foreign_bc')\n",
+        "vars(module_factory())['import_module']('foreign_bc')\n",
+        "import importlib\nvars(importlib)[key]('foreign_bc')\n",
+        "import importlib\nvars(importlib)['ordinary']('foreign_bc')\n",
+        "import importlib\nvars()['import_module']('foreign_bc')\n",
+        "import importlib\nvars(importlib, other)['import_module']('foreign_bc')\n",
+        "import importlib\nvars(module=importlib)['import_module']('foreign_bc')\n",
+        "import importlib\nnamespace = vars(importlib)\nnamespace['import_module']('foreign_bc')\n",
+        "if condition:\n    import importlib as loader\nelse:\n    import builtins as loader\n",
+        (
+            "if condition:\n    import importlib as loader\n"
+            "else:\n    import builtins as loader\nloader.len('foreign_bc')\n"
+        ),
+        "import importlib\ndef loader():\n    return importlib.import_module\n",
+        "import importlib\ndef loader():\n    return importlib.import_module\nloader()\n",
+        "def loader():\n    return len\nloader()('foreign_bc')\n",
+        (
+            "import importlib\n@decorate\ndef loader():\n"
+            "    return importlib.import_module\nloader()('foreign_bc')\n"
+        ),
+        (
+            "import importlib\nasync def loader():\n"
+            "    return importlib.import_module\nloader()('foreign_bc')\n"
+        ),
+        (
+            "import importlib\ndef loader():\n"
+            "    yield importlib.import_module\nloader()('foreign_bc')\n"
+        ),
+        (
+            "import importlib\ndef loader():\n    pass\n"
+            "    return importlib.import_module\nloader()('foreign_bc')\n"
+        ),
+        (
+            "import importlib\ndef loader():\n    if condition:\n"
+            "        return importlib.import_module\n    return len\nloader()('foreign_bc')\n"
+        ),
+        "def loader(factory):\n    return factory\nloader(ordinary)('foreign_bc')\n",
+        "def loader():\n    return loader()\nloader()('foreign_bc')\n",
+    ],
+)
+def test_c54_preserves_dead_unused_unknown_and_excluded_resolution_controls(
+    tmp_path: Path,
+    bc: str,
+    source: str,
+) -> None:
+    """Unknown selection and excluded factory shapes do not acquire new inference."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "resolution_controls.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(directory)
