@@ -2976,3 +2976,84 @@ def test_c57_preserves_dead_unused_unknown_cardinality_and_constructor_controls(
     )
 
     assert not _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize("bc", ["loaded_runtime_cache", "identity"])
+@pytest.mark.parametrize(
+    "source",
+    [
+        (
+            "import builtins, importlib\nresolve = builtins.getattr\n"
+            "resolve(importlib, 'import_module')('foreign_bc')\n"
+        ),
+        (
+            "import builtins as builtin, importlib\nresolve = builtin.getattr\n"
+            "lookup = resolve\nlookup(importlib, 'import_module')('foreign_bc')\n"
+        ),
+        (
+            "import builtins, importlib\nbuiltin = builtins\nresolve = builtin.getattr\n"
+            "resolve(importlib, 'import_module')('foreign_bc')\n"
+        ),
+        "__builtins__['__import__']('foreign_bc')\n",
+        "load = __builtins__['__import__']\nload('foreign_bc')\n",
+    ],
+)
+def test_c59_rejects_qualified_getter_alias_and_direct_builtins_literal_import_use(
+    tmp_path: Path,
+    bc: str,
+    source: str,
+) -> None:
+    """Known getter identity and a direct builtin import lookup reach existing USE."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "bounded_builtin_use.py").write_text(source, encoding="utf-8")
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize("bc", ["loaded_runtime_cache", "identity"])
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import builtins\nresolve = builtins.getattr\n",
+        (
+            "import builtins, importlib\nresolve = builtins.getattr\n"
+            "load = resolve(importlib, 'import_module')\n"
+        ),
+        "import builtins\nresolve = builtins.getattr\nresolve(builtins, 'len')('ordinary')\n",
+        (
+            "import importlib\nresolve = unknown.getattr\n"
+            "resolve(importlib, 'import_module')('foreign_bc')\n"
+        ),
+        (
+            "import builtins, importlib\nresolve = builtins.getattr\n"
+            "resolve(importlib, field)('foreign_bc')\n"
+        ),
+        (
+            "import builtins, importlib\nresolve = builtins.getattr\n"
+            "resolve(importlib, 'import_module', fallback)('foreign_bc')\n"
+        ),
+        (
+            "import builtins, importlib\nresolve = builtins.getattr\n"
+            "resolve(importlib, name='import_module')('foreign_bc')\n"
+        ),
+        "__builtins__['__import__']\n",
+        "load = __builtins__['__import__']\n",
+        "__builtins__['len']('ordinary')\n",
+        "__builtins__[field]('foreign_bc')\n",
+        "field = '__import__'\n__builtins__[field]('foreign_bc')\n",
+        "namespace = __builtins__\nnamespace['__import__']('foreign_bc')\n",
+        "unknown['__import__']('foreign_bc')\n",
+    ],
+)
+def test_c59_preserves_unused_ordinary_unknown_and_excluded_lookup_controls(
+    tmp_path: Path,
+    bc: str,
+    source: str,
+) -> None:
+    """Possession and excluded receivers, keys, aliases or lookup shapes stay benign."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "bounded_builtin_controls.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(directory)
