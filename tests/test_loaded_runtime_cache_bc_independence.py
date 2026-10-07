@@ -624,6 +624,7 @@ def _add_assignment_aliases(
     preserved_modules: frozenset[str] = frozenset(),
 ) -> None:
     """Resolve fixed-point local aliases for forbidden modules and callables."""
+    _add_getter_assignment_aliases(tree, callables)
     assignments = _static_alias_bindings(tree)
     for _ in range(len(assignments) + 1):
         changed = False
@@ -637,6 +638,28 @@ def _add_assignment_aliases(
             aliases = modules if kind == "module" else callables
             if aliases.get(target) != imported_name:
                 aliases[target] = imported_name
+                changed = True
+        if not changed:
+            break
+
+
+def _add_getter_assignment_aliases(tree: ast.AST, callables: dict[str, str]) -> None:
+    """Preserve imported getter identity through simple-name assignments only."""
+    assignments = [
+        (target.id, statement.value.id)
+        for statement in ast.walk(tree)
+        if isinstance(statement, ast.Assign) and isinstance(statement.value, ast.Name)
+        for target in statement.targets
+        if isinstance(target, ast.Name)
+    ]
+    for _ in range(len(assignments) + 1):
+        changed = False
+        for target, source in assignments:
+            if (
+                callables.get(source) == "builtins.getattr"
+                and callables.get(target) != "builtins.getattr"
+            ):
+                callables[target] = "builtins.getattr"
                 changed = True
         if not changed:
             break
@@ -741,7 +764,11 @@ def _resolve_forbidden_alias(
                 return resolved
         return body or alternative
     if isinstance(value, ast.Call):
-        return _resolve_getattr_alias(value, modules, callables)
+        return _resolve_namespace_import_callable(value, modules) or _resolve_getattr_alias(
+            value,
+            modules,
+            callables,
+        )
     return (
         _resolve_namespace_import_callable(value, modules)
         if isinstance(value, ast.Subscript)
@@ -767,12 +794,23 @@ def _resolve_import_callable_attribute(
 
 
 def _resolve_namespace_import_callable(
-    value: ast.Subscript,
+    value: ast.Subscript | ast.Call,
     modules: dict[str, str],
 ) -> tuple[str, str] | None:
-    """Resolve direct literal __dict__ import entries on known module receivers only."""
-    namespace = value.value
-    key = value.slice
+    """Resolve bounded literal __dict__ subscript/get entries on known modules only."""
+    if isinstance(value, ast.Call):
+        if not (
+            isinstance(value.func, ast.Attribute)
+            and value.func.attr == "get"
+            and len(value.args) == 1
+            and not value.keywords
+        ):
+            return None
+        namespace = value.func.value
+        key = value.args[0]
+    else:
+        namespace = value.value
+        key = value.slice
     if not (
         isinstance(namespace, ast.Attribute)
         and namespace.attr == "__dict__"
@@ -996,15 +1034,26 @@ def _declares_forbidden_semantic_type(source_directory: Path, type_name: str) ->
 
 
 def _binds_foreign_semantic_name(statement: ast.AST, type_name: str) -> bool:
-    """Inspect authorized import, loop, and context-manager local binding syntax."""
+    """Inspect authorized local binding syntax without evaluating expressions."""
     if isinstance(statement, ast.Import):
         return any(
             (alias.asname or alias.name.split(".", 1)[0]) == type_name for alias in statement.names
         )
     if isinstance(statement, ast.ImportFrom):
         return any((alias.asname or alias.name) == type_name for alias in statement.names)
-    if isinstance(statement, (ast.For, ast.AsyncFor)):
+    if isinstance(statement, (ast.For, ast.AsyncFor, ast.comprehension)):
         return _semantic_target_names(statement.target, type_name)
+    if isinstance(statement, ast.arguments):
+        return any(
+            argument is not None and argument.arg == type_name
+            for argument in (
+                *statement.posonlyargs,
+                *statement.args,
+                statement.vararg,
+                *statement.kwonlyargs,
+                statement.kwarg,
+            )
+        )
     if isinstance(statement, (ast.With, ast.AsyncWith)):
         return any(
             item.optional_vars is not None and _semantic_target_names(item.optional_vars, type_name)
