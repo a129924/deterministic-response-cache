@@ -4212,9 +4212,11 @@ Human-only PRreview／merge／release／postmerge不授權。
 
 ## C49 Current-Head Four-Pair Classification（authoritative current routing）
 
+C49 draft-time／pending 字樣為 nonrouting candidate snapshot；已完成事實以下方 final alignment 為準。
+
 ### Goal / Scope / Locked Decisions
 
-Current：`planned`；step phase：`plan-authoring`；existing PR #7 保持 pr-open。
+Current：`human-check`；step phase：`human-check`；existing PR #7 保持 pr-open。
 Goal：以已通過同 subject evidence 的 current head，獨立分類下列四筆 actual comments，
 只對 committed REPLY_AND_RESOLVE outcome 執行原文回覆與 resolve。
 本 successor 是 classification-only，不授權任何修復、重新設計或繞過 gate。
@@ -4337,7 +4339,8 @@ Risks：以 historic allegation 取代 current evidence、錯認 syntax／alias�
 跨 subject evidence、scope expansion、duplicate replies 或 self-tracking loop。
 Rollback：only bounded exact-five planning repair／必要 fresh immutable successor；
 保留已提交 candidate／receipts／S/T/V，不 broad reset、overwrite evidence、修改 implementation。
-Open Questions：四筆 independent outcomes 尚未產生；o7gvv parameter 修復未授權。
+Open Questions：四筆 independent outcomes 已提交且唯一 permitted action 已完成；
+o7gvv 與三筆新 ADDRESS 修復未授權／未實作，仍 open，詳 final facts。
 此輪無 code 設計待補；若分類要求 scope 外修復，ADDRESS／HUMAN_CHECK 留 open，Human 一次決定。
 Post-merge／release actions：none；Human alone PR review／merge／release／post-merge／tag。
 
@@ -4345,5 +4348,35 @@ Reviewer handoff schema（不是預填 receipt）：
 ```json
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
-Workflow state：current_step=c49-plan-authoring；next_step=bounded-candidate-commit；
-status=COMPLETE（draft handoff only，非approval／classification／actions／topic-complete）。
+Workflow state：current_step=human-check-final-factual-alignment；next_step=bounded-alignment-commit-normal-push；
+status=COMPLETE（final factual draft handoff only，非merge approval／topic-complete）。
+
+### C49 Final Committed Classification / Permitted Action Facts（current human-check）
+
+C49 candidate `bd27be3aa20a92829f31ad5bb483ae3a1c3de0c3` 是 exact-five planning-only commit；
+approved Plan-Reviewer receipt 的 unchanged sole commit 是
+`86c6e2ec81bcd8ed16a79897a836207cbc65c2ae`；
+exact-four classification receipt 的 unchanged sole commit／normal push 是
+`f74a69376e51913d7287def98191738ce6222020`。
+SHA-bound planning receipt 與 classification receipt 已提交，原 S/T/V 與所有 immutable evidence 保留。
+
+| Pair | Committed outcome | Actual disposition |
+| --- | --- | --- |
+| `o93-C/4182313668` | REPLY_AND_RESOLVE | 已原樣回覆 receipt 原文；reply ID `4202433177`，isResolved=true；只確認 current valid chain，不補成 historical approval。 |
+| `o93-F/4182313675` | ADDRESS | getter simple-name assignment alias 未修復／未授權；仍 open。 |
+| `o-rDd/4182633560` | ADDRESS | namespace.__dict__.get literal lookup 未修復／未授權；仍 open。 |
+| `o-rDg/4182633565` | ADDRESS | comprehension semantic target 未修復／未授權；仍 open，非 comprehension alias-inference lock。 |
+
+Planner／Implementer 核對的完整兩頁 audit as-of `2026-10-07T02:30:16Z`：
+124 threads／120 resolved／4 open，沒有新 unlisted pairs；
+當時 local／origin／PR head 均為 `f74a69376e51913d7287def98191738ce6222020`，
+PR #7 為 OPEN／MERGEABLE／CLEAN，無 merge conflict。
+其餘 open 是 `o7gvv/4181373623` ADDRESS：function／lambda parameter-name 修復未授權。
+四 ADDRESS 都未修復、未 resolve，不是 requirement completed；必要 scope 決定一次交還 Human。
+十二 Human threads 的 C48 不修改處置與原十二 semantic locks 保持不變；
+不擴 code／grammar／architecture／README／contract scope，不更改原 mission／protocol／visualization。
+
+Current／step phase 為 human-check，既有 PR #7 保持 pr-open；本 ONLY plan／step final factual draft
+待 Implementer separate normal commit／push，完成由 actual Git facts 證明，
+不預填自身 alignment SHA／commit／push，不新增自指 checkbox 或 candidate／receipt chain。
+analysis／spec 保留 committed C49 candidate snapshot；舊 draft-time／pending 字樣只作 nonrouting provenance。
