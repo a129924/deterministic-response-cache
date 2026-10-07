@@ -2606,6 +2606,7 @@ def test_c54_preserves_type_parameter_and_exception_references(
 @pytest.mark.parametrize(
     "source",
     [
+        "import sys\ncache = sys.__dict__['modules']\n",
         pytest.param(
             "import sys\nsys.__dict__['modules']['foreign_bc'] = object()\n",
             id="sys_namespace_subscript",
@@ -2695,7 +2696,6 @@ def test_c54_rejects_bounded_forbidden_callable_and_module_cache_uses(
 @pytest.mark.parametrize(
     "source",
     [
-        "import sys\ncache = sys.__dict__['modules']\n",
         "unknown.__dict__['modules']['foreign_bc']\n",
         "import sys\nsys.__dict__[key]['foreign_bc']\n",
         "import sys\nsys.__dict__['ordinary']['foreign_bc']\n",
