@@ -4484,3 +4484,128 @@ CanonicalCLI0僅反映C57三completed，不是C58approval/classificationgate。
 HumanonlyPRapproval/merge/release/postmerge/tag。
 Workflowstate：current_step=c58-plan-authoring；next_step=bounded-candidate-commit；
 status=COMPLETE（draftonly，非candidate/review/classification approval）。
+
+## C59 Bounded Qualified-Getter / Builtins-Literal Repair（authoritative current routing）
+
+Current：planned；phase：plan-authoring；existing PR #7 pr-open。
+Human只授權下列exact-two pairs，唯一implementation path
+`tests/test_loaded_runtime_cache_bc_independence.py`。原mission／scope／outcomes／RuntimeRegistryprotocol／
+API／Architecture Visualization／follow-ups不變；C58分類與C57三completedsteps保留歷史。
+
+### In-Scope / Goal / TestCase / Locked Bounds
+
+| 唯一 original pair | Bounded repair |
+| --- | --- |
+| pzqsL / 4204404462 | known builtins／既有modulealias.getattr，simple-name assignment保留getter identity，沿existing exact-two lookup |
+| pzqsO / 4204404469 | ONLY direct __builtins__['__import__'] literal subscript，再沿existing forbidden USE |
+
+Getter只knownbuiltinsreceiver/既有modulealias之getattr surface與simple-name assignment，
+不得解析arbitraryreceiver/callgraph/scopeinference；原lookup仍exact-two positional arguments，
+不接受keywords或擴張arity/lookupgrammar，不因只持有getter/callable拒絕。
+Builtin namespace只AST直接name `__builtins__` 與direct stringliteral `'__import__'` subscript，
+後續既有forbiddenUSE才拒絕；不用runtime__builtins__ object、不得執行fixture。
+排除dynamic keys／namespacealiases／scope-shadowing推論／其他lookupgrammar，
+未USE的__import__ callable仍negative，不新設possession規則。
+兩BC正向fixtures與controls對稱；既有directimports/fixtures/mocks/assertions/十二locks全保留。
+RED append-only tests，不改既有scanner/helpers；green僅修上述boundedresolver與existingUSE接合。
+
+Out-Of-Scope／Non-Goal：dynamic key/namespacealias/arbitraryreceiver或callgraph、
+新增scope/shadowing/lookupgrammar；其他code/architecture/publicAPI或十二locks解除；
+backend/DI/lifecycle、production/stubs/Archify/config/dependency/uv.lock/sharedcontracts；
+merge/release/postmerge/tag、historyrewrite、newunlistedrepair或新PR。
+ReadOnly：production／其他tests／architecture/Archify／config／repositorycontracts／historicalreceipts/STV。
+Written／Modify：Plan-Creator candidate onlystandard-five；Implementer only上述testmodule；
+fresh evidence依下表唯一writers/path。Deleted：none。No devwrites，不revertotheragent edits；
+三rejected untracked保留，不stage/overwrite/delete或當routingauthority。
+
+### Actual Base / Inventory
+
+Actual local／origin／PRhead `9fce05295e80c8858fd384bf16976d57db6398d2`，
+OPEN／MERGEABLE／CLEAN；verifiedaudit139threads／137resolved／2open，僅上列authorizedpairs，
+無額外inventory；未提供UTC不猜timestamp。
+Newunlisted只inventory/open，不分類/修復/留言resolve；C59修復不借C57 S/T/V背書新subject。
+
+### Python Implementation Metadata
+
+- Async-planning status: exempt — cite exemption evidence: pure synchronousAST inspection，
+  fixtures只parse、不execute，無asyncboundary/lifecycle/timeout/cancellation。
+- Module/packageplacement：唯一existing testmodule，不新增productionmodule/package。
+- NewpublicAPI/interfacechanges：none，directmodule與Registry/outcomecontracts不變。
+- Breakingchangesallowed：no，保留old tests/imports/fixtures/mocks/assertions/negativecontrols／十二locks。
+- Newdependencies：none，existingast/pytest/Ruff/strictPyright，config/uv.lock不動。
+- Error-handlingstrategy：existingparse/assertion propagation，不swallowerrors，
+  unknownreceiver/key/alias不推論、不新增failclosed或possession拒絕。
+- Typingstrategy：existing Python3.12strictPyright、preciseASThelpertypes，不引入Any/dynamicimports。
+
+TestPlan五類：happy qualifiedgetter simpleassignment後exact2 forbiddenlookupUSE、
+direct__builtins__literal__import__後forbiddenUSE；
+invalid unknownreceiver/dynamickey/namespacealias/excludedarity-or-keywords不新增推論；
+edge unusedgetter/importcallable、ordinarynames及兩BCsymmetry；
+regression所有old directimport fixtures/mocks/assertions、existingexact2arity與十二locks；
+backwardcompatibility production/API/Archify/Registry未改。
+風險：aliasidentity被錯解成arbitraryresolver，或namespace值「出現」即拒絕；
+以originalfindingisolated RED、negativecontrols與sameS獨立T/V收斂。
+Rollback：停止publish/actions交Planner，以新subject重走完整chain，不覆寫receipts或自行reset/historyrewrite。
+
+### Fresh Immutable Evidence / Schemas / Sole Writers
+
+Actual candidate/RED/newS/T/V/publishedhead須完整40hex；不預填futureSHA/results，
+所有receiptfresh不可覆寫，每份由Implementer原樣sole evidence-only commit，不混source/planning/otherreceipt。
+Independent Plan-Reviewer唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<actual-C59-candidate-full40SHA>.json`。
+Exact3keys verdict／blocking_issues／copilot_feedback_triage；
+approved|needs-rework，blockerobjectarray(each exactnonemptystring issue/file/fix)，
+approved空/rework非空；triage exact ADDRESS/DISCUSS/SKIP arrays。Implementer soleLOCAL receiptcommit。
+
+Independent Tester唯一寫RED
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<actual-C59-RED-full40SHA>.json`
+及green `plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<actual-C59-green-S-full40SHA>.json`。
+Exact6keys schema_version／topic／implementation_subject_commit／status／commands／recorded_by；
+integer1／loaded-runtime-cache／actualRED或newS／passing|failing／nonemptycommands／Tester；
+command entry exactnonemptystring command＋integer exit_code，passing全0、failing至少一nonzero。
+REDcollection/controls0、兩originalfinding genuineassertionfail，不以parse/collectionfailure代RED；
+不review failingRED。Implementer分別unchangedsole failingT/passingTcommit，不借oldsubjectevidence。
+
+Independent Reviewer唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<actual-C59-green-S-full40SHA>.json`。
+Exact7keys schema_version／topic／implementation_subject_commit／tester_evidence_commit／
+verdict／blocking_issues／recorded_by；
+integer1／topic／sameS／committedsameSsolepassingT fullSHA／approved|needs-rework／
+stringarray（approved空、rework非空）／Independent Reviewer。
+Missing/wrong/failing/uncommitted/crossS evidence failclosed不產V；Implementer unchangedsoleVcommit。
+
+Independent Reviewer唯一寫
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<actual-C59-green-S-full40SHA>-<actual-reviewed-published-PR-head-full40SHA>.json`。
+Exact8keys schema_version／topic／implementation_subject_commit／tester_evidence_commit／
+implementation_review_evidence_commit／pr_head_commit／classifications／recorded_by；
+integer1／topic／newS／sameT／sameV／actualfixedpublishedhead fullSHA／exacttwo／Independent Reviewer。
+Entries恰兩originalpairs各一次，每項exactthread/comment/outcome/reply；
+suffixthread pzqsL/pzqsO、comment4204404462/4204404469必strings；
+outcome REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK獨立判定不預設。
+R&R必nonempty factualoriginalreply；ADDRESS/HUMAN必null/open。
+Reviewer只write、不commit/comment/resolve；Implementer unchangedsole class normalcommitpush，
+Planner核committedreceipt/sourceunchanged後只route permittedoriginalR&Rreplyresolve。
+
+### Commands / Ordered Gates / Stop
+
+REDtestnames含c59，rejecting另含rejects，controls不含rejects：
+```sh
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c59 --collect-only -q
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k 'c59 and not rejects' -q
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c59 -q
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py -q
+uv run --frozen ruff check tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py
+uv run --frozen pyright tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py
+```
+StrictPyright沿existingpyproject，uv.lock不改，不擴C28 --no-verify exception。
+LOCALexact-five candidate→independent freshapprovedreceiptsole→append-only test-onlyRED
+→independent failingTsole→boundedgreennewS→sameS independentpassingTsole
+→exact-two review-readyfactualalignment/canonicalCLI0→independentVsole
+→PlannerPhase4.5 exact-two normalpublish existingPR7→actualfixedhead exact-two independentclassification
+→soleclassnormalpush→僅permittedoriginalreplyresolve→finalexact-two facts normalpush/singlefullaudit/human-check。
+C59四canonicalstepspending，不繼承C57completion/T/V；後續review/publish/class/actions不是implementationcompletiongate。
+Head/subject/evidence/topic/scope drift或needs-rework停Planner，真正Humandecisions一次彙整；
+不改sharedcontract/locks、不selfSHA/futuregate預填/checkboxloop。
+HumanonlyPRapproval/merge/release/postmerge/tag。
+Workflowstate：current_step=c59-plan-authoring；next_step=bounded-candidate-commit；
+status=COMPLETE（onlydraft，非executionapproval/implementation/classificationgate）。
