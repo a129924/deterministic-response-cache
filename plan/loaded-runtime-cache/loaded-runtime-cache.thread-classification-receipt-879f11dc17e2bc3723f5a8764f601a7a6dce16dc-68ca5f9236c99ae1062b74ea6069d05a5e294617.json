@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "879f11dc17e2bc3723f5a8764f601a7a6dce16dc",
+  "tester_evidence_commit": "c568a07306096d69f5435f329f2b1202c3b60d6b",
+  "implementation_review_evidence_commit": "d1e12cca941dcfff72311658e61889a2c44bd58a",
+  "pr_head_commit": "68ca5f9236c99ae1062b74ea6069d05a5e294617",
+  "classifications": [
+    {
+      "thread": "pzqsL",
+      "comment": "4204404462",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "pzqsO",
+      "comment": "4204404469",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "p0U79",
+      "comment": "4204671560",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已以目前實際待合併 PR head 68ca5f9236c99ae1062b74ea6069d05a5e294617 重验 current chain：C57 subject 879f11dc17e2bc3723f5a8764f601a7a6dce16dc、passing Tester evidence-only commit c568a07306096d69f5435f329f2b1202c3b60d6b、approved Independent Reviewer evidence-only commit d1e12cca941dcfff72311658e61889a2c44bd58a 對該 head 的 git merge-base --is-ancestor 均 exit 0；T 的 parent 是受審 S，T／V 各自只新增其 SHA-bound receipt，且該 head 的 src/tests 與 S 無 diff。原始 same-subject evidence chain 仍保留。留言指出的 966cbff2e05b5e2ad0ab098697640a765630fd86 在本次本地 Git objects 中不存在，亦不是目前 published PR head；不宣稱該 proposed history 合法，也不將目前 approval 套用至該 target 或其他新 subject。本回覆只確認實際 current PR graph 由原始獨立 chain 支持，未改寫歷史或補建 historical approval。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}
