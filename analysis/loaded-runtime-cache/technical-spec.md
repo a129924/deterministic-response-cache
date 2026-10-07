@@ -3519,7 +3519,10 @@ Post-merge／release actions：none；Humanalone PRreview／merge／release／po
 Workflow state：current_step=c50-plan-authoring；next_step=bounded-candidate-commit；
 status=COMPLETE（draft handoff only，非approval／implementation／evidencegate／topiccomplete）。
 
-## C51 Current-Head Three-Pair Classification（authoritative current routing）
+## C51 Current-Head Three-Pair Classification（completed predecessor routing）
+
+C51finalalignment `165087337ac5dea9fdbd307021c322ca7226c2e9` 已normalcommit／push，
+C52是唯一currentrepairroute；C51pending／Current字樣onlyfrozenprovenance。
 
 ### Goal / Outcome / Scope / Locked Decisions
 
@@ -3662,3 +3665,259 @@ boundedclassification／threadresolution不等於Humanapproval／workflowclose�
 此為IndependentPlanReviewerhandoffschema，不是Creatorreceipt／approval。
 Workflowstate：current_step=c51-plan-authoring；next_step=bounded-candidate-commit；
 status=COMPLETE（draftonly，非approval／classification／actions／topic-complete）。
+
+## C52 Bounded Three-ADDRESS Repair（authoritative current routing）
+
+### Goal / Outcome / Scope
+
+Current：`planned`；phase：`plan-authoring`；existing PR #7 pr-open。
+C52是唯一current repair route，Human明確授權下列三必要finding的bounded修復；
+C51及更早Current／pending字樣是frozen nonrouting provenance，不建立C52 execution approval。
+原Loaded Runtime Cache mission／scope／outcomes／Registry protocol／API／Architecture Visualization／follow-up missions不變。
+Analysis strict mode：technical-spec為execution-facingtruth、requirements為intentguardrail；
+本C52契約逐字同步standard-five，後續ONLYplanstep factualalignment不重開candidatechain。
+
+| Exact pair | Goal／In-Scope：唯一test-module repair |
+| --- | --- |
+| `pu_ja/4202486092` | match patterns 的 genuine binding slots：MatchAs.name、MatchStar.name、MatchMapping.rest及nestedpatterns，兩BCforeign semantic-name ownership；不是patternclass／keyword／value refs。 |
+| `pu_jo/4202486109` | directtuple/list可確定integerindex、directdict可確定literalkey，取selectedelement後遞迴existingforbiddenaliasresolver／既有USE；未選取或unusedcallable不新增拒絕。 |
+| `pu_j0/4202486122` | 原三current-source scanners同時discover .py／.pyi，對兩suffix沿用全部existingrules；不新增productionstub或stubgrammar。 |
+
+In-Scope：only `tests/test_loaded_runtime_cache_bc_independence.py` 的三repair＋isolated RED/control fixtures，
+newimmutableRED／green S／same-S independentT/V、exact-threefixedpublishedheadclassification／permittedactions。
+Out-Of-Scope／Non-Goal：其他scannergrammar、任意eval／dynamicindex/key／slice／unpack／containeralias／
+orderedbinding／CFG／comprehensionaliasinference／新semanticrules；
+productioncode／stub／API／README／VERSION／dependencies／uv.lock／architecture／Archify／sharedcontract；
+解除十二locks、merge／release／postmerge／tag／重寫歷史／新PR。
+ReadOnly：allother source/tests/config/contracts/oldreceipts/architecture/Archify，舊fixtures／mocks／assertions／directimports保持。
+Written／Modify：candidate exact-fiveplanning由Plan-Creator唯一author、implementationonlysingledeclaredtest，
+freshindependentevidence如後表；Deleted：none。
+devworktree不動，非唯一agent不revertothers；三rejecteduntrackedimmutable不stage／改寫／刪除／當routingauthority。
+
+### Locked Decisions / Boundaries
+
+1. Match：只檢查真正capture binding slot，MatchAs／MatchStar 的name、MatchMapping的rest，
+   遞迴nestedpatterns至同類slots，LoadedRuntimeCache禁localModelIdentity、Identity禁localRuntimeReuseKey。
+   Pattern MatchClass.cls／kwd_attrs、MatchValue／mappingkey／ordinaryreference不是capturebinding；
+   不因出現相同reference額外判ownership違規、不執行matchsubject／guard／pattern或source。
+2. Literalcontainer：只在directtuple/list/dict字面container、可確定selector／selectedposition／key時，
+   將selected AST element遞迴existingresolver，仍依後續forbiddenUSE；
+   unselectedforbiddencallable／unusedpossession合法，不新增全container fail-closed／possessionban。
+   不解析arbitrarycallresult／mapping／containeralias／dynamicselector／slice／unpacking；
+   dictduplicatekeys、無法確定的key／collision／position不推論，不選last-wins、不以保守拒絕假裝確定。
+   不為此創造另一keygrammar或重解identity。缺失／out-of-range不推定selectedforbiddencallable。
+3. .pyi：只對 _direct_imports_from、_uses_dynamic_import_substitution、
+   _declares_forbidden_semantic_type 擴filediscovery的suffix集合為 .py＋.pyi；
+   同existingparse／imports／dynamicimport／semanticownership規則，不新增stubsyntaxexemption／grammar／productionstubs，
+   不執行fixturesource、不以dynamicimport或sys.modules替代directimports。
+4. 原十二semantic／grammar／architecture／READMElocks維持；exact-two getattrs／comprehensionalias／
+   nestedForalias／ordered-scope等不擴張。C48 Human不修改處置非解除requirements。
+5. 下列七筆仍inventory-only／open，不分類／修復／留言／resolve：
+   `pvzDA/4202824859`、`pvzDF/4202824865`、`pvzDH/4202824868`、
+   `pv59N/4202868919`、`pv59R/4202868923`、`pv59T/4202868925`、`pv59V/4202868928`。
+   後續newunlisted同樣onlyinventory，不借C52授權擴scope。
+6. 不改localRuntimeReuseKey／RuntimeRegistry／RuntimeRetention／outcomes／taxonomy／publicsurface；
+   productionprotocol-only／Identityauthority／BCindependence／Archify交付不變。
+   超過explicitpath／scope或需要新lockeddecision即交Planner／Human，不猜需求。
+
+### Actual Base / Status / Allowed Transitions
+
+Authoringbase actualHEAD：`165087337ac5dea9fdbd307021c322ca7226c2e9`，
+C51 completedclassification／finalalignment frozenhistory。
+C51 candidate `3f317223c880349e9071cfdc7d21daef044bd8a6`、
+approvedreceiptsole `a1e8e95baa045ed2814d418fb3c3e92012f6ab86`、
+classificationsolepush `9dc60be5877a4af00277f3238cff2b7e9ac9a04c`；
+三ADDRESS已分類、尚未修復，不能把分類completed當三requirementsdone。
+Plannerfreshsnapshot：134threads／124resolved／10open（本三ADDRESS＋七inventory-only），
+不猜auditUTC或預填C52candidate／futureSHA／結果。
+舊S `4aff14e3009f46ba82ee5fe78a11ca05a635db37`、
+T `6da6292e8a7a2aac726fcca90bfc559cc8ae9928`、
+V `7281f494597e3253de0170b0257a3302c2fcde8c` 只作C50predecessor，
+C52新subject必獨立建立新same-S T/V，禁止借舊evidence背書。
+
+planned → committedcandidate／independentapprovedreceiptsoleLOCAL → creator-in-progress test-onlyRED →
+independentTesteractualfailingRED／soleT → distinctgreencreator-in-progress →
+tester-in-progressnewS passingT／sole → review-readyfactualalignment／canonicalCLI0 →
+independentreviewer-in-progress → approved|needs-rework。
+needs-rework交boundedImplementer新immutableS，完整同-ST/V重走；不得覆寫evidence／借舊subject。
+approved → PlannerPhase4.5factualalignment → publish-in-progress → existingPR7pr-open →
+actualfixedpublishedheadexact-threeclassification → individuallypermittedactions → finalfacts／human-check。
+Planningapproval非executionapproval，Reviewer非HumanPRreviewer；
+只有Human PRapproval／merge，無directpublish-in-progress→merged。
+
+### Artifact Paths / Owners / Immutable Schemas / Sole Commits
+
+Plan-Creator exact-fivecandidatepaths；review-ready／Phase4.5／finalalignmentONLYplan／step：
+- `analysis/loaded-runtime-cache/requirements.md`
+- `analysis/loaded-runtime-cache/technical-spec.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.step.md`
+
+ImplementeronlyRED/greenModify `tests/test_loaded_runtime_cache_bc_independence.py`。
+ReadOnlyvalidationinput `tests/test_loaded_runtime_cache_contracts.py`、`pyproject.toml`；
+unlistedpaths—includingproduction .pyi—不可write。
+Evidenceparameters只在actualcommittedfull40lowercasehexSHA存在後展開freshpath；
+不能symbolicHEAD／short／futureSHA／pre-filledoutcome；existingpaths不overwrite，包括rejecteduncommitted。
+各independentwriter只寫自己record不commit；Implementer原樣、各自soleevidence-onlynon-mergecommit，
+不與implementation／planning／anotherreceipt同commit。Namedsolepath／schema／subject／writer以actualGitfacts核。
+
+IndependentPlanReviewerwriter：
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<actual-C52-candidate-full40SHA>.json`。
+exact3keys verdict／blocking_issues／copilot_feedback_triage；
+verdictapproved|needs-rework，blocking_issuesobjectarray（entry恰non-emptyissue／file／fixstrings），
+approved[]／needs-reworknonempty，triage恰ADDRESS／DISCUSS／SKIParrays。
+Committedexact-fiveLOCALcandidate才review，不commit；approved才Implementer unchangedsoleLOCALreceipt。
+candidate／approval先LOCAL、不推head。
+
+IndependentTesterREDwriter：
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<actual-C52-RED-full40SHA>.json`；
+greenwriter：
+`plan/loaded-runtime-cache/loaded-runtime-cache.tester-evidence-<actual-C52-green-S-full40SHA>.json`。
+exact6keys schema_version／topic／implementation_subject_commit／status／commands／recorded_by；
+integer1／loaded-runtime-cache／actualRED或newgreenS／passing|failing／Tester。
+commandsnon-emptyarray，entry恰commandnon-emptystring／exit_codeinteger；
+passing只全部actual0，failing至少一actualnonzero。
+REDcollection／controls必0，三originalfindingrejectingtests genuineassertionfail，
+不是parse／collection／importerror；尤其pyi各scanner正向fixture必同規則可parse。
+REDfactualfailure不是expected-failingpass，failingT不得交Reviewer寫reviewevidence。
+Tester獨立實测immutableS、不commit；Implementer unchangedsolefailing／passingT各別commit。
+
+IndependentReviewerwriter：
+`plan/loaded-runtime-cache/loaded-runtime-cache.implementation-review-log-<actual-C52-green-S-full40SHA>.json`。
+exact7keys schema_version／topic／implementation_subject_commit／tester_evidence_commit／
+verdict／blocking_issues／recorded_by；integer1／loaded-runtime-cache／sameactualnewS／
+same-ScommittedsolepassingT fullSHA／approved|needs-rework／stringarray；recorded_by 必為 `Independent Reviewer`。
+approvedblockers[]，needs-rework至少一string；未committed／failing／cross-S／malformedT failclosed，
+不得產V。Reviewer只independentreview/write，不commit；Implementer unchangedsoleV。
+
+Independentclassificationwriter：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-<actual-C52-green-S-full40SHA>-<actual-reviewed-published-PR-head-full40SHA>.json`。
+newpassingT／approvedV／Phase4.5normalpublishactualcommit後由Planner核fixedhead才展開freshpath。
+exact8keys schema_version／topic／implementation_subject_commit／tester_evidence_commit／
+implementation_review_evidence_commit／pr_head_commit／classifications／recorded_by。
+integer1／loaded-runtime-cache／actualnewS／same-SpassingT／same-SapprovedV／actualfixedreviewedpublishedhead／
+recorded_by 必為 `Independent Reviewer`。classifications恰三entries各exactpair一次，entryexactthread／comment／outcome／reply；
+suffixstring／commentstring；outcomeREPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK不預定。
+R&R須non-emptyoriginalfactualreply支持actualfix；ADDRESS／HUMAN_CHECKreplynull且open。
+Reviewer只寫、不留言commit；Implementer unchangedsoleclasscommit／normalpush。
+後續sourceunchanged／headancestry／actualcommittedreceipt由Planner核exactactionsgate。
+Wrongkeys／SHA／topic／writer／pair／solecommit／overwrite／drift failclosed，回Planner不改contract。
+
+### Python implementation metadata（C52 current bounded profile）
+
+#### Non-goals
+- 不改productioncontracts／stub／API／Identityauthority／ArchitectureVisualization。
+- 不新增dynamicindex/key／slice／unpack／containeralias／arbitraryeval／duplicate-keylastwins或failclosed策略。
+- 不改十二locks／七inventory-only，不擴其他scannergrammar或orderedbinding／comprehensionalias。
+- 不新增dependency／config／uv.lock／README／VERSION／release／merge，dev不write。
+
+#### Current Context / Requirements
+既有semantichelper未遍歷match genuinecaptures；forbiddenaliasresolver尚未選directliteralcontainerelement；
+三scannerfilediscovery只.py會略.pyi。C52只補三已授權、可單獨RED重現的缺口。
+各原finding都有isolatedrejectingfixture；pyi覆蓋兩BC三checks。舊ASTrules全部保留，
+selectedelement與forbiddenUSE依existingresolver，privatehelperrepresentation由Implementerbounded選擇。
+不能靠弱化assertions／跳tests／executingsource／dynamicimport達green。
+
+#### Decisions
+- Async-planning status: exempt — cite exemption evidence: 同步ast.parse／ast.walk／filesuffixdiscovery及fixtures，
+  無asyncboundary／resourceownership／I/Oconcurrency／timeout／retry／cancellation／lifecycle變更，
+  即使existingAST含asyncsyntax也只parse不execute。
+- Module/package placement: only `tests/test_loaded_runtime_cache_bc_independence.py` scanner／isolatedfixtures。
+- NewpublicAPI: no，no newmodule/packageexports／productionstub。
+- Interfacechanges: no productioninterfacechanges，只三declaredscannerbehavior。
+- Breakingchangesallowed: no，existingdirectimports／fixtures／mocks／assertions／negativeboundaries保持。
+- Newdependencies: no，existingast／pytest／Ruff／strictPyright；uv.lock不改。
+- Error-handlingstrategy: existingparse/assertionfailure與propagation保持，不swallowerrors／改outcomes；
+  不確定containerselector不推論，不用failclosed拒絕未確定forbiddenUSE。
+- Typingstrategy: Python3.12strictPyright、preciseASTtypes／typedhelper，noAny／dynamicimport／sys.modules substitution。
+
+#### Public Contract / API Changes / Affected Files
+No public/productioncontractchange；onlydeclaredsingleimplementationtestpath。
+Candidateinspectpaths：同test、ReadOnlycontractstest／pyproject；allsourceincludingstubs ReadOnly。
+Planning／freshSHAevidenceowners前表明定，Deletednone。
+
+#### Test Plan / TestCase
+- Happypath：兩BCmatchas／matchstar／mappingrest＋nestedcaptures；
+  directtuple/list確定integerindex／directdictunique確定literalkey選forbiddencallable後USE；
+  .pyi對兩BC三existingchecks沿existing規則reject。
+- Invalidinput：dynamicindex/key／slice／unpack／unknowncontainer／missingkey／outofrange；
+  duplicate-key／uncertaincollision／position不推論，不用語法error冒充RED。
+- Edgecase：nestedpatterncapturevsclass／keyword／value refs；
+  selectedordinaryelementvsunselectedforbiddencallable、unusedliteralcallablepossession；
+  dictionarykey不確定無新lastwins/failclosed；py與pyi同existinggrammar/parserfailurepolicy。
+- Regression：所有existingfixtures／mocks／assertions／directimports、十二locks／C50boundedgetattr／namespaceget／
+  arguments／comprehensionsemantic／modulealternatives／sys.modulesbehavior不變；
+  realpassing兩檔pytest／Ruff／strictPyright。
+- Backwardcompatibility：productionprotocol／outcomes／API／taxonomy／ArchitectureVisualization／BCauthority不变，
+  無newproductionstub，fixturesource不執行。
+Givenoldscanner＋originalthreepositivefixtures，WhenREDparse，Thencollection／controls0且各findinggenuineassertionsfail。
+Givennewboundedscanner，Whenselectedliteralknownforbiddencallable後USE／genuineforeigncapture／pyistub違existingrules，
+Then正確reject；Givenunknown/uncertain/unselected/unused／patternreferences，Then本輪不新增誤拒。
+Givennew-ScommittedpassingT／approvedV及actualpublishedhead，Then才能exact-threeindependentclassifications，
+不能以完成code勾選直接resolve。
+以上即specAcceptanceCriteria／BehavioralScenarios／ErrorEdgeCases，co-artifact非第二Pythonplan。
+
+#### Risks / Rollback Plan
+Risks：把patternreference當capture、整container拒絕、duplicatekeylastwins臆測／不確定碰撞推論、
+.py／.pyi規則歧異、REDparsefailure、oldsubjectreuse／stalehead／duplicate replies／selftrackingloop。
+Rollback：onlysingledeclaredtestbounded修回且newimmutableS重走T/V；planning只declaredfive經Plannerroute；
+所有committedcandidate／RED／S/T/V／receipts保持，不broadreset／overwrite／改contracts／清三rejected；
+normalhooks，不沿用C28noverify subject-local授權。
+
+### Implementation Steps（source for canonical completion gate）
+
+1. C52 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增三原finding的isolated RED/control fixtures（兩BCmatchcapture、selectedliteralcallable、兩BC三scanner .pyi），testnames含c52、rejecting另含rejects、controls不含rejects；只新增fixtures，不修scanner、不執行source，collection/controls0且三類genuineassertionfail。
+2. C52 在 `tests/test_loaded_runtime_cache_bc_independence.py` 遍歷nestedmatchpatterns的MatchAs.name／MatchStar.name／MatchMapping.rest genuinebinding，依兩BCforeignsemanticownership；排除class／keyword／value refs，不求值pattern或subject/guard，不改旧assertions。
+3. C52 在 `tests/test_loaded_runtime_cache_bc_independence.py` 對directtuple/list確定integerindex／directdict確定literalkey取selectedelement後遞迴existingforbiddenaliasresolver與USE；未選／unusednegative保持，不推dynamic/slice/unpack/alias/arbitraryeval或duplicatekey／uncertaincollision／position，不新增lastwins／failclosed。
+4. C52 在 `tests/test_loaded_runtime_cache_bc_independence.py` 將三existingcurrent-source scannersdiscover suffix擴為.py＋.pyi並原樣沿existingrules，對兩BC各三checks設regression，不新增stubgrammar／productionstub或fixtureexecution。
+5. C52 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保留existingdirectimports／fixtures／mocks／assertions／十二locks，實際通過sameimmutablegreenS兩檔pytest／Ruff／strictPyright；完成需same-ScommittedpassingT實證，review／publish／class/actions非implementationcompletion。
+
+### Validation / Acceptance / Ordered Evidence Chain
+
+IndependentTesterREDcommands：
+```bash
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c52 --collect-only -q
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k 'c52 and not rejects' -q
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py -k c52 -q
+```
+REDgenuineassertionfail／collectioncontrols0→factualfailingT；parse/collectionfailure、controlsnonzero或需求未RED不得稱gate。
+Greenactualcommands：
+```bash
+uv run --frozen pytest -p no:tach tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py -q
+uv run --frozen ruff check tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py
+uv run --frozen pyright tests/test_loaded_runtime_cache_bc_independence.py tests/test_loaded_runtime_cache_contracts.py
+```
+1. Exact-fiveplanningdraft→Planner→LOCALexact-fivecandidate→independentfreshPlanReviewerreceipt→approvedsoleLOCALcommit。
+2. Test-onlyREDsinglepath→independentTesterfailingfactualrecord→solefailingTcommit→boundedgreennewimmutableSsinglepath。
+3. IndependentTestersame-Sactualpassingrecord→solepassingTcommit；不借C50evidence／不把expectedfail當pass。
+4. PlanCreatorONLYplanstepreview-readyfactualalignment→ImplementerseparateLOCALalignmentcommit→PlannercanonicalCLIactual0
+   →IndependentReviewerconsumecommittedsame-SpassingT寫freshV→Implementer unchangedsoleapprovedV。
+5. PlannerPhase4.5→PlanCreatorONLYplanstepfactualalignment→Implementerseparatenormalcommit／push existingPR7。
+6. Planner核actualfixedpublishedhead／newS/T/V／sourceunchanged→IndependentReviewerexact-threefreshclassification
+   →Implementer unchangedsoleclassnormalcommit／push→PlannerrouteonlycommittedR&R。
+7. ImplementeronlyexactR&Roriginalreply／resolve，重核避免duplicate、記actualreplyID／resolvedfacts；
+   ADDRESS／HUMAN_CHECKopen，scope-requiredHumanchoice一次彙整；七inventory-only不得act。
+8. PlanCreatorONLYplanstepfinalactualfacts（真完成才[X]，需求未修不勾）→Implementerseparatenormalcommit／push
+   →singlefull-paginationaudit→human-check。No future ownSHA／commitpush預填／selfcheckbox-loop，
+   不為bot新留言無限續修，newunlistedinventory-only。
+各stageactualGitfullSHA／namedsolepath／schema／sourcebounds檢查、`git diff --check`；
+`python .agents/skills/plan-step-tracker/scripts/step_tracker.py check_impl_steps_succeeded loaded-runtime-cache`
+draftactualexit1=五pending，review-ready才actual0。
+Headdrift／sourcedrift／required evidence欠缺／wrongwriter/schema/solecommit／scope或contractdrift停相應gate交Planner，
+不改candidate／head／contract或自算approval。普通hooks，失敗不自行noverify。
+
+### Open Questions / Reviewer Handoff / Post-merge
+
+C52D1non-trivial：三AST/filediscovery behavior與完整newsubject-boundchain；requiredspec／step同candidate。
+七decisions、non-goals、五testcategories、scope/writer/schema皆明定；designnone。
+Unknownselectors／duplicatekeys／collision不推論已固定，不需要補新dictionaryprecedence決策。
+actualcandidate／RED／newS／T/V／publishedhead／classifications／replyids/results尚未產生，不預fill。
+七inventory-only與十二locks不變，scope外requirements onlyinventory／Human一次決定。
+Post-merge／releaseactionsnone；HumanalonePRreview／merge／release／postmerge／tag；reviewapproval不等於merge。
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+Independenthandoffschema非Creator預填receipt。
+Workflowstate：current_step=c52-plan-authoring；next_step=bounded-candidate-commit；
+status=COMPLETE（draftonly，非executionapproval／evidencegate／topiccomplete）。
