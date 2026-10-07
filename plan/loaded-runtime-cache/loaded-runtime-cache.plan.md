@@ -4407,7 +4407,7 @@ analysis／spec 保留 committed C49 candidate snapshot；舊 draft-time／pendi
 
 ### Goal / Outcome / Scope
 
-Current：`publish-in-progress`；phase：`publish-in-progress`。C50 是本 topic 唯一 current repair route；
+Current：`human-check`；phase：`human-check`。C50 是本 topic 唯一 current repair route；
 C49 及更早 draft-time／pending／Current 字樣是 frozen nonrouting provenance，不授權 C50 implementation。
 Human 已明確授權下表四修復；本修正不取代 original Loaded Runtime Cache mission。
 原 mission／scope／outcomes／Runtime Registry reuse protocol／Architecture Visualization／follow-up missions 不變。
@@ -4671,8 +4671,8 @@ Post-merge／release actions：none；Humanalone PRreview／merge／release／po
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 此為independenthandoffschema、非Creator預填receipt。
-Workflow state：current_step=c50-phase4.5-factual-alignment；next_step=bounded-alignment-normal-commit-push；
-status=COMPLETE（Phase4.5 factual draft handoff only，publish未完成／非Human approval／topiccomplete）。
+Workflow state：current_step=c50-human-check-final-factual-alignment；next_step=bounded-alignment-normal-commit-push；
+status=COMPLETE（final factual draft handoff only，非Human approval／topiccomplete）。
 
 ### C50 Committed RED / New-S Passing Evidence（current review-ready facts）
 
@@ -4702,6 +4702,8 @@ Independent V verdict／V commit、Phase4.5 publish、classification outcome與t
 
 ### C50 Phase4.5 Alignment / Committed Independent Approval（current publish-in-progress）
 
+以下publish-in-progress／pending字樣為當時snapshot；actualpublish與currenthuman-check見finalfacts。
+
 Actual review-ready exact-two LOCAL alignment commit：
 `f082fab0f47e54d24787122360dfee754ccd6490`。
 New S：`4aff14e3009f46ba82ee5fe78a11ca05a635db37`；
@@ -4719,3 +4721,47 @@ Current／phase publish-in-progress；本draft需Implementer separate normal ali
 classificationreceipt／solecommit／normalpush／threads actions皆pending。
 十二semanticlocks／newunlisted三筆inventory-only保留，production／ArchitectureVisualization／contracts不變。
 不新candidate／receiptchain；analysis／spec保留candidate snapshots，earlierpendingfacts為時點provenance。
+
+### C50 Final Committed Publish / Classification / Exact Actions（current human-check）
+
+C50 candidate `579e480c7d2180a235120e0034b5adcffc1642f0`；
+approved planning receipt sole `b1eb6a315664f9bd2ce1bdec0eaf78af9a21612b`；
+RED subject `4ce6113d783da3967c55f13bf691b419c5f5bff8`；
+failing Tester evidence sole `a26c3f1b7597903f1b7ee4d3009bf58619f9b9e2`；
+green S `4aff14e3009f46ba82ee5fe78a11ca05a635db37`；
+same-S passing T sole `6da6292e8a7a2aac726fcca90bfc559cc8ae9928`；
+same-S approved independent V sole `7281f494597e3253de0170b0257a3302c2fcde8c`。
+Phase4.5 exact-two alignment normal commit／push：
+`a27c84ee070171dffb9801a092960d46b08a1b5e`，亦為 actual independently reviewed fixed published head。
+新 same-S／fixed-head classification receipt：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-4aff14e3009f46ba82ee5fe78a11ca05a635db37-a27c84ee070171dffb9801a092960d46b08a1b5e.json`；
+unchanged sole classification commit／normal push：
+`3e4d76c30fc508baa7834067f3f0378cf4d75d53`。
+Independent Reviewer 的 exact-four outcomes 全部 REPLY_AND_RESOLVE，未預定結果；
+Planner依committedreceipt核exactactions後，由Implementer原樣留言及resolve。
+
+| Exact pair | Actual original reply ID | Actual disposition |
+| --- | --- | --- |
+| `o7gvv/4181373623` | `4202764118` | receipt原文body-match，isResolved=true，無duplicate；parameter-name finding修復完成。 |
+| `o93-F/4182313675` | `4202765483` | receipt原文body-match，isResolved=true，無duplicate；boundedgetterassignmentalias修復完成。 |
+| `o-rDd/4182633560` | `4202766582` | receipt原文body-match，isResolved=true，無duplicate；boundednamespace.get修復完成。 |
+| `o-rDg/4182633565` | `4202767587` | receipt原文body-match，isResolved=true，無duplicate；comprehensionsemantic-targetsyntax修復完成。 |
+
+完整兩頁 threads／all-comments audit as-of `2026-10-07T03:28:26Z`：
+127 threads／124 resolved／3 open，無新 unlisted；
+當時 local／origin／PR head `3e4d76c30fc508baa7834067f3f0378cf4d75d53`，
+PR #7 OPEN／MERGEABLE／CLEAN、無mergeconflict。
+剩餘只有inventory UNCLASSIFIED：
+- `pu_ja/4202486092`：match-pattern capture semantic-name 建議。
+- `pu_jo/4202486109`：literal-container callable lookup 建議。
+- `pu_j0/4202486122`：pyi boundary scan 建議。
+三筆未分類／未修復／未留言／未resolve、保持open，非C50completedrequirements。
+必要scope決定一次交Human；不追新增botcomments無限續修／不將inventory當classificationreceipt。
+
+Current／phase human-check，既有PR7保持pr-open。六implementationsteps與C50已授權review／publish／
+classification／exact-action workflow實際完成；code-review勾選只代表此boundedcomment-review sequence，
+不代表Human PR approval／merge／workflowclosure。十二locks／原mission／API／Registryprotocol／Archify不變。
+本ONLYplan／stepfinalfactualdraft尚待Implementer separate normal commit／push；
+完成由actualGitfacts證，不預填自身SHA／commitpush、不新增selfcheckbox／candidatechain。
+analysis／spec保留committedcandidate snapshots；earlierC50review-ready／publishpending字樣只作時點provenance，
+currentphase與remainingitems以本finalfacts為準。
