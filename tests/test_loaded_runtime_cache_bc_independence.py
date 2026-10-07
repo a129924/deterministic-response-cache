@@ -681,9 +681,9 @@ def _add_assignment_aliases(
     preserved_modules: frozenset[str] = frozenset(),
 ) -> None:
     """Resolve fixed-point local aliases for forbidden modules and callables."""
-    _add_getter_assignment_aliases(tree, callables)
     assignments = _static_alias_bindings(tree)
     for _ in range(len(assignments) + 1):
+        _add_getter_assignment_aliases(tree, modules, callables)
         changed = False
         for target, value in assignments:
             resolved = _resolve_forbidden_alias(value, modules, callables)
@@ -700,12 +700,16 @@ def _add_assignment_aliases(
             break
 
 
-def _add_getter_assignment_aliases(tree: ast.AST, callables: dict[str, str]) -> None:
-    """Preserve imported getter identity through simple-name assignments only."""
+def _add_getter_assignment_aliases(
+    tree: ast.AST,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> None:
+    """Preserve imported or known-qualified getter identity in simple assignments."""
     assignments = [
-        (target.id, statement.value.id)
+        (target.id, statement.value)
         for statement in ast.walk(tree)
-        if isinstance(statement, ast.Assign) and isinstance(statement.value, ast.Name)
+        if isinstance(statement, ast.Assign)
         for target in statement.targets
         if isinstance(target, ast.Name)
     ]
@@ -713,9 +717,14 @@ def _add_getter_assignment_aliases(tree: ast.AST, callables: dict[str, str]) -> 
         changed = False
         for target, source in assignments:
             if (
-                callables.get(source) == "builtins.getattr"
-                and callables.get(target) != "builtins.getattr"
-            ):
+                (isinstance(source, ast.Name) and callables.get(source.id) == "builtins.getattr")
+                or (
+                    isinstance(source, ast.Attribute)
+                    and source.attr == "getattr"
+                    and isinstance(source.value, ast.Name)
+                    and modules.get(source.value.id) == "builtins"
+                )
+            ) and callables.get(target) != "builtins.getattr":
                 callables[target] = "builtins.getattr"
                 changed = True
         if not changed:
@@ -910,6 +919,13 @@ def _resolve_subscript_alias(
     callables: dict[str, str],
 ) -> tuple[str, str] | None:
     """Resolve existing module namespaces or a certain selected direct literal element."""
+    if (
+        isinstance(value.value, ast.Name)
+        and value.value.id == "__builtins__"
+        and isinstance(value.slice, ast.Constant)
+        and value.slice.value == "__import__"
+    ):
+        return "callable", "builtins.__import__"
     namespace_callable = _resolve_namespace_import_callable(value, modules)
     if namespace_callable is not None:
         return namespace_callable
