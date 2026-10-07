@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: plan-authoring
+phase: review-ready
 created: 2026-09-17
 ---
 
@@ -10,9 +10,9 @@ created: 2026-09-17
 
 C50 current six stages（下方 old stages only frozen provenance）：
 - [X] C50 plan-authoring
-- [ ] C50 plan-review
-- [ ] C50 tdd-test-authoring
-- [ ] C50 implementation
+- [X] C50 plan-review
+- [X] C50 tdd-test-authoring
+- [X] C50 implementation
 - [ ] C50 implementation-review
 - [ ] C50 code-review
 
@@ -81,13 +81,13 @@ C50 current ordered actionable work依文末 C50 contract；下方 C11–C14 onl
 
 ## Implementation Steps
 
-C50 current implementation completion gate；下列六項初始化 pending，不繼承舊 C47 completed。
-- [ ] 1. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增四 original findings 的 isolated RED fixtures及benign controls；新測試名稱含 c50，rejecting 名稱另含 rejects、controls不含 rejects。只新增tests，不修scanner、不執行fixture source，collection／controls須pass、四類genuineassertionfail。
-- [ ] 2. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 補 FunctionDef／AsyncFunctionDef／Lambda 的全部 ast.arguments local-name semantic syntax，兩BC ownership適用；不判annotation／default／scope，不改既有assertions。
-- [ ] 3. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 沿existing simple-name assignment固定點保留known directly imported builtins.getattr getter identity；lookup仍exact-two-pos/no-keywords／knownmodule／literalattribute／existingUSE，不新增持有拒絕或arbitrary getter。
-- [ ] 4. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 補known module Name／existingalias.__dict__.get的directstringliteral／exact-one-pos/no-keywords/default解析，只三既有forbidden import-callables後續USE；unknown/dynamic/ordinary/missing/unused controls不誤拒，不推namespacealias或arbitrarymapping。
-- [ ] 5. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 將全部 ast.comprehension.target交existingName／Tuple／List／Starred semantic-name traversal，ignoreAttribute，含list/set/dict/generator及asyncTARGETSYNTAX；不擴comprehensionaliasinference／RHSiterable／orderedscope／fixtureexecution。
-- [ ] 6. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保留所有舊direct imports／fixtures／mocks／assertions與十二locks，對sameimmutablegreen S實際通過兩 scoped pytest檔／Ruff／strict Pyright；未完成前canonicalsteps保持pending，不將review／publish／classification算作implementationsteps。
+C50 current implementation completion gate；下列六項依 new-S committed passing T 實際完成，不繼承舊 C47 completed。
+- [X] 1. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 新增四 original findings 的 isolated RED fixtures及benign controls；新測試名稱含 c50，rejecting 名稱另含 rejects、controls不含 rejects。只新增tests，不修scanner、不執行fixture source，collection／controls須pass、四類genuineassertionfail。
+- [X] 2. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 補 FunctionDef／AsyncFunctionDef／Lambda 的全部 ast.arguments local-name semantic syntax，兩BC ownership適用；不判annotation／default／scope，不改既有assertions。
+- [X] 3. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 沿existing simple-name assignment固定點保留known directly imported builtins.getattr getter identity；lookup仍exact-two-pos/no-keywords／knownmodule／literalattribute／existingUSE，不新增持有拒絕或arbitrary getter。
+- [X] 4. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 補known module Name／existingalias.__dict__.get的directstringliteral／exact-one-pos/no-keywords/default解析，只三既有forbidden import-callables後續USE；unknown/dynamic/ordinary/missing/unused controls不誤拒，不推namespacealias或arbitrarymapping。
+- [X] 5. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 將全部 ast.comprehension.target交existingName／Tuple／List／Starred semantic-name traversal，ignoreAttribute，含list/set/dict/generator及asyncTARGETSYNTAX；不擴comprehensionaliasinference／RHSiterable／orderedscope／fixtureexecution。
+- [X] 6. C50 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保留所有舊direct imports／fixtures／mocks／assertions與十二locks，對sameimmutablegreen S實際通過兩 scoped pytest檔／Ruff／strict Pyright；未完成前canonicalsteps保持pending，不將review／publish／classification算作implementationsteps。
 
 Reviewer／Tester evidence／publish／classification／thread actions另依C50 lifecycle，非implementation completion。
 
@@ -173,8 +173,8 @@ exact-four classification／Planner exact permitted action routing／Implementer
 
 ## Handoff / Gate Notes
 
-C50 active routing only；candidate／approval／RED／newS／passingT／V／publish／classification須各actualfacts。
-尚未完成的 C50 canonical六步 pending；Tester→Independent Reviewer實際分離，不用舊S/T/V代替。
+C50 active routing only；candidate／approval／RED／newS／passingT已committed，V／publish／classification尚pending。
+C50 canonical六步依同newS passing T完成；Tester→Independent Reviewer實際分離，不用舊S/T/V代替。
 
 - This tracker and plan name one `loaded-runtime-cache` topic. The feature branch is lineage only, not routing
   authority.
@@ -3931,7 +3931,7 @@ analysis／spec 保留 committed C49 candidate snapshot；舊 draft-time／pendi
 
 ### Goal / Outcome / Scope
 
-Current：`planned`；phase：`plan-authoring`。C50 是本 topic 唯一 current repair route；
+Current：`review-ready`；phase：`review-ready`。C50 是本 topic 唯一 current repair route；
 C49 及更早 draft-time／pending／Current 字樣是 frozen nonrouting provenance，不授權 C50 implementation。
 Human 已明確授權下表四修復；本修正不取代 original Loaded Runtime Cache mission。
 原 mission／scope／outcomes／Runtime Registry reuse protocol／Architecture Visualization／follow-up missions 不變。
@@ -4195,20 +4195,20 @@ Post-merge／release actions：none；Humanalone PRreview／merge／release／po
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 此為independenthandoffschema、非Creator預填receipt。
-Workflow state：current_step=c50-plan-authoring；next_step=bounded-candidate-commit；
-status=COMPLETE（draft handoff only，非approval／implementation／evidencegate／topiccomplete）。
+Workflow state：current_step=c50-review-ready-factual-alignment；next_step=bounded-local-alignment-commit；
+status=COMPLETE（review-ready factual draft handoff only，非Independent Reviewer approval／publish／topiccomplete）。
 
 ### C50 Actionable Evidence / Publish Stages（非 implementation completion gate）
 
 - [X] **Actor: Plan-Creator.** Standard-five bounded C50 draft／four requirements／Python profile／new pending six steps。
-- [ ] **Actor: Implementer.** Planner preflight 後 exact-five LOCAL candidate-only commit。
-- [ ] **Actor: Independent Plan-Reviewer.** Fresh candidate-SHA-bound review receipt，outcome依actualreview。
-- [ ] **Actor: Implementer.** Approved planning receipt unchanged sole LOCAL commit。
-- [ ] **Actor: Implementer / Tester.** Test-only RED subject／independent collection-controls-pass、four-assertion-fail factual record。
-- [ ] **Actor: Implementer.** RED factual failing T unchanged sole evidence-only commit。
-- [ ] **Actor: Implementer.** Bounded green new immutable S，only declared test path。
-- [ ] **Actor: Tester.** Same-new-S actual pytest／Ruff／strict Pyright passing factual record。
-- [ ] **Actor: Implementer.** Green passing T unchanged sole evidence-only commit。
+- [X] **Actor: Implementer.** Planner preflight 後 exact-five LOCAL candidate-only commit。
+- [X] **Actor: Independent Plan-Reviewer.** Fresh candidate-SHA-bound review receipt，outcome依actualreview。
+- [X] **Actor: Implementer.** Approved planning receipt unchanged sole LOCAL commit。
+- [X] **Actor: Implementer / Tester.** Test-only RED subject／independent collection-controls-pass、four-assertion-fail factual record。
+- [X] **Actor: Implementer.** RED factual failing T unchanged sole evidence-only commit。
+- [X] **Actor: Implementer.** Bounded green new immutable S，only declared test path。
+- [X] **Actor: Tester.** Same-new-S actual pytest／Ruff／strict Pyright passing factual record。
+- [X] **Actor: Implementer.** Green passing T unchanged sole evidence-only commit。
 - [ ] **Actor: Plan-Creator / Implementer.** ONLYplanstep actual review-ready alignment separatecommit，canonicalCLI real0。
 - [ ] **Actor: Independent Reviewer.** Consume committed same-new-S passing T，fresh independent implementation V。
 - [ ] **Actor: Implementer.** Approved V unchanged sole evidence-only commit。
@@ -4220,3 +4220,27 @@ status=COMPLETE（draft handoff only，非approval／implementation／evidencega
 
 Final alignment separate normal commit／push只由actualGitfacts證；singleaudit後human-check，
 不預填自身SHA／新增自指completioncheckbox，不把currentunlisted三筆加入repair或classification。
+
+### C50 Committed RED / New-S Passing Evidence（current review-ready facts）
+
+C50 exact-five candidate：`579e480c7d2180a235120e0034b5adcffc1642f0`；
+approved planning receipt unchanged sole commit：`b1eb6a315664f9bd2ce1bdec0eaf78af9a21612b`。
+Test-only RED：`4ce6113d783da3967c55f13bf691b419c5f5bff8`；
+factual failing Tester evidence unchanged sole commit：
+`a26c3f1b7597903f1b7ee4d3009bf58619f9b9e2`。
+RED evidence實記collection／controlsexit0、full c50 exit1；四original rejecting behaviors 的 genuine RED
+與既有negative bounds已經 Planner／Tester核對，不以parseerror或expectedfail假裝pass。
+
+New immutable green S：`4aff14e3009f46ba82ee5fe78a11ca05a635db37`；
+same-S passing Tester evidence unchanged sole commit：
+`6da6292e8a7a2aac726fcca90bfc559cc8ae9928`。
+passing T 的三actualcommands（兩scopedpytest檔／Ruff／strictPyright）exit_code均0，writer Tester，
+subject精確同newS；不是C47舊subject／旧T/V。
+六canonical C50 implementationsteps有同-S passing證據且實際完成；Current／phase review-ready。
+
+本ONLYplan／step factual draft需Implementer separate LOCAL alignmentcommit後，
+Planner再核canonicalCLI0並routeIndependent Reviewer。
+本記錄不預填自身alignmentSHA／commit結果，不新candidate／receiptchain。
+Independent V verdict／V commit、Phase4.5 publish、classification outcome與threadreply／resolve仍pending；
+不可由本draft宣告approval或已resolve四threads。原十二locks／新unlisted三筆inventory-only保持。
+其餘analysis／spec保留committedcandidate snapshot；先前C50draft-time／pending字樣onlynonroutingprovenance。
