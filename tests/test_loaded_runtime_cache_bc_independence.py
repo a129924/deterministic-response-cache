@@ -872,6 +872,14 @@ def _definite_literal_or_callable_truth(
         operand.value is None or isinstance(operand.value, (bool, int, float, complex, str, bytes))
     ):
         return bool(operand.value)
+    if isinstance(operand, (ast.Tuple, ast.List, ast.Set)):
+        return (
+            None
+            if any(isinstance(element, ast.Starred) for element in operand.elts)
+            else bool(operand.elts)
+        )
+    if isinstance(operand, ast.Dict):
+        return None if any(key is None for key in operand.keys) else bool(operand.keys)
     if resolved in {
         ("callable", "builtins.__import__"),
         ("callable", "importlib.__import__"),
