@@ -3415,7 +3415,10 @@ boundedclassification／threadresolution不等於Humanapproval／workflowclose�
 Workflowstate：current_step=c51-plan-authoring；next_step=bounded-candidate-commit；
 status=COMPLETE（draftonly，非approval／classification／actions／topic-complete）。
 
-## C52 Bounded Three-ADDRESS Repair（authoritative current routing）
+## C52 Bounded Three-ADDRESS Repair（completed predecessor routing）
+
+C52finalalignment `5bf16409d19df472eb17f9fb2150c95b47df1478` 已normalcommit/push，
+C53唯一currentclassificationroute，C52pending／Current字樣only歷史snapshot。
 
 ### Goal / Outcome / Scope
 
@@ -3670,3 +3673,134 @@ Post-merge／releaseactionsnone；HumanalonePRreview／merge／release／postmer
 Independenthandoffschema非Creator預填receipt。
 Workflowstate：current_step=c52-plan-authoring；next_step=bounded-candidate-commit；
 status=COMPLETE（draftonly，非executionapproval／evidencegate／topiccomplete）。
+
+## C53 Current-Head Eight-Pair Classification（authoritative current routing）
+
+### Goal / Outcome / Scope / Locked Decisions
+
+Current：`planned`；phase：`plan-authoring`；existingPR7pr-open。
+C53是唯一currentclassification-onlyroute；C52及更早records為completed/frozenprovenance。
+Goal／In-Scope：以fixedpublishedhead與同-ScommittedpassingT／approvedV，獨立分類下列eightactualpairs，
+只對committedREPLY_AND_RESOLVEexactpairs留言原文與resolve。Outcomes不預設，不用「想收束」視為修復。
+原mission／scope／outcomes／Registryprotocol／API／ArchitectureVisualization／follow-upmissions不變。
+Analysisstrictmode：technical-specexecution-facingtruth／requirementsintentguardrail，
+本C53共同契約逐字同步standard-five；finalalignmentONLYplanstep。
+
+Out-Of-Scope／Non-Goal：code／grammar／architecture／publicAPI／typing／dependencies／README／VERSION／
+uv.lock／repositorycontracts／十二locks修改；新RED／S／T／V／語意修復、merge／release／postmerge／tag／新PR／重寫history。
+ReadOnly：allsource／tests／config／oldcandidate/receipt／fixedSTV／architecture／Archify／sharedcontracts。
+Written／Modify：Plan-Creatorcandidateonlyexact-five；finalalignmentonlyplanstep；Deletednone。
+- `analysis/loaded-runtime-cache/requirements.md`
+- `analysis/loaded-runtime-cache/technical-spec.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.plan.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.spec.md`
+- `plan/loaded-runtime-cache/loaded-runtime-cache.step.md`
+dev／unlistedpaths不動；非唯一agent不revertothers；三rejecteduntrackedimmutable不stage／改寫／刪除／當authority。
+十二semantic／grammar／architecture／READMElocks不變；classification不解除locks或批准未授權修復。
+C52canonicalfivecompletedimplementation保留歷史completion，不新增fakecodepending／跨subjectreuse。
+Pythonmetadata／七decisions保留，noAPI/interface/breakingchange/dependency/errorstrategy/typingchange。
+Async-planning status: exempt — cite exemption evidence: classification／tracking-only，无asynccode／lifecycle／I/Oconcurrency變更。
+Stablelibraryintentabsent，不改README／VERSION或releasepolicy。
+
+### Actual Fixed Facts / Exact Inputs
+
+Authoringbase／fixedreviewedPRhead `5bf16409d19df472eb17f9fb2150c95b47df1478`：
+C52finalactualalignment已normalcommit／push，local／origin／PR一致、OPEN／MERGEABLE／CLEAN、
+tracked/indexclean、三rejected保留。Plannerfreshsnapshot135threads／127resolved／8open，不猜UTC。
+FixedS `2bb82f062657d8c9dd0686743c8ee46e247926d4`；
+passingTsole `ff0a3bf6c52facc266682eea2068c305791ad257`；
+approvedVsole `2047839048bcd1ac6b2af915f78f38ff294f0013`。
+Planner已核sameSTV／actualancestry／sourceunchanged；無code改動C53可消費sameSevidence，
+不背書newsubject／historicalalternativehistory或把舊evidence改成新evidence。
+C52三exactactions保留，不重覆。八原始留言已唯讀核body／ID／originaltarget，分類輸入非修復契約：
+
+| Thread suffix | Comment string | Actual original input（outcome由IndependentReviewer決定） |
+| --- | --- | --- |
+| `pvzDA` | `4202824859` | P2：PEP695 class/function/typealias的type_params（TypeVar／TypeVarTuple／ParamSpec）建立foreignsemanticbinding；建議兩BCregression。 |
+| `pvzDF` | `4202824865` | P2：sys.__dict__["modules"]／.get("modules")未納既有sys.modulessurface，建議namespacecachelookupregression。 |
+| `pvzDH` | `4202824868` | P2：BoolOp選出的forbiddencallable如False or importlib.import_module後USE或map，建議operandalternatives；非既有IfExp修復授權。 |
+| `pv59N` | `4202868919` | P2：vars(importlib)["import_module"]／vars(builtins)["__import__"]lookup漏檢，建議knownmodulevarslookup。 |
+| `pv59R` | `4202868923` | P2：ExceptHandler.name的foreignsemanticbinding，建議兩BCregression。 |
+| `pv59T` | `4202868925` | P2：不同branch import同localname最後覆寫module，建議保留finiteimportmodulealternatives及branchorderregression；本輪不實作。 |
+| `pv59V` | `4202868928` | P2：functionreturnforbiddencallable再immediateUSE漏檢，建議boundedreturnresolution及unusednegative；本輪不授權call-graph或return推論。 |
+| `pwUaF` | `4203037740` | P1：alleges historical0a3f417e…／parentd6ff74dd…無C52S/T/Vancestry且co-addedimplementation/evidence；獨立核完整currentfixedheadgraph／solecommits，不因歷史shorttarget將currentapproval補成合法或一概失效。 |
+
+前七path tests/test_loaded_runtime_cache_bc_independence.py；前三originaltarget9a8b46fa72a9800622349b049cc03d06b57e5f9f、
+後四165087337ac5dea9fdbd307021c322ca7226c2e9；
+pwUaF原path為same-S implementationreviewlog，originaltarget5bf16409d19df472eb17f9fb2150c95b47df1478。
+目前eightopen；Reviewer核currentevidence，不預定必要性／已修復／HUMAN。
+新unlistedinventory-only，不分類／回覆／resolve；scope外修復／lockedsemantics需要Human一次決定。
+
+### Artifact Paths / Immutable Schemas / Sole Writers
+
+IndependentPlanReviewerwriter：
+`plan/loaded-runtime-cache/loaded-runtime-cache.plan-review-receipt-<actual-C53-candidate-full40SHA>.json`。
+Actualexact-fiveLOCALcandidatecommit後展開freshpath，不預填SHA/verdict。
+Exact3keys verdict／blocking_issues／copilot_feedback_triage；
+approved|needs-rework，blocking_issuesobjectsarray（each恰issue／file／fixnon-emptystrings），
+approved[]／needs-rework至少一項，triage恰ADDRESS／DISCUSS／SKIParrays。
+PlanRevieweronlyreview/write、不commit；approved才Implementer unchangedsoleLOCALreceiptcommit。
+candidate／approvedreceipt分類前LOCAL，不推fixedremotehead。Freshpath不得overwriteexisting或rejectedreceipt。
+
+IndependentReviewerclassificationwriter：
+`plan/loaded-runtime-cache/loaded-runtime-cache.thread-classification-receipt-2bb82f062657d8c9dd0686743c8ee46e247926d4-5bf16409d19df472eb17f9fb2150c95b47df1478.json`。
+Exact8keys schema_version／topic／implementation_subject_commit／tester_evidence_commit／
+implementation_review_evidence_commit／pr_head_commit／classifications／recorded_by。
+Integer1／topic loaded-runtime-cache／exactfixedS/T/V/head full40lowercasehex；recorded_by `Independent Reviewer`。
+Classifications恰8entries，各上述pair一次；each恰thread／comment／outcome／reply。
+Suffixstring（非fullPRRTID）、commentstring；outcome REPLY_AND_RESOLVE|ADDRESS|HUMAN_CHECK，independently判定。
+R&Rreplynon-emptyoriginalfactualreply、currentcommittedfacts支持；ADDRESS／HUMANreplynull／open。
+不能用留言補未授權fix／historicapproval。Revieweronlyfreshwrite、不commit或留言；
+Implementerunchangedsoleclassnon-mergeevidence-onlycommit／normalpush，不混planning/code/anotherreceipt。
+所有solepath/schema/writer/subject以actualGitfacts驗，missing／wrong／crosssubject／shortSHA／overwrite failclosed。
+
+### Ordered Route / Validation / TestCase
+
+1. PlanCreatorstandard5draft→Plannerpreflight→Implementerexact5LOCALcandidate-onlycommit。
+2. IndependentPlanReviewerfreshSHAreceipt→approved才ImplementerunchangedsoleLOCALreceipt。
+3. Plannerfixedhead／committedsamepassingT/approvedV／ancestry/sourceunchanged／freshpathgate，
+   不自行換head或補推gate，無新RED／implementation／Tester／Vphase。
+4. IndependentReviewerexact8class→Implementerunchangedsoleclassnormalcommit／push。
+5. Planner核committedreceipt／sourceunchangeddescendants後只routeexactR&Ractions；
+   Implementeroriginalreplyresolve前重核防duplicate，記actualID／resolvedfacts。
+   ADDRESS／HUMANopen，Humanrequirements一次彙整。
+6. PlanCreatorONLYplanstepfinalfactualalignment，真completedworkflow才[X]／未fixrequirements不虛勾
+   →Implementerseparatenormalcommit／push→singlefullpaginationaudit→human-check。
+   No futureownSHA/commitpush預填／selfcheckbox-loop，新unlistedinventoryonly，PR7pr-open、不追bot無限續修。
+Normalhooks，C28noverify等歷史subject-only授權不可沿用，blockingerror回Planner不繞過。
+
+TestCase／Acceptance：
+- Happy：approvedreceipt／sameSTV/fixedhead/exact8class支持onlyindividualfactualR&Ractions。
+- Invalid：wrongkeys/type/writer/pair/SHA/solepath/receiptfailclosed。
+- Edge：historical0a3f417e allegation不等於currentfixedheadgraph；technicalinput不等於newgrammar授權。
+- Regression：canonicalC52fivecompleted／sameSTV/sourceblobs/十二locks/oldreceipts保持。
+- Compatibility：productionAPI/protocol/outcomes/directimports/fixtures/assertions/Archify/Pythonmetadata不變。
+Givenapprovedcandidate/eightactualcomments，Whenindependentcurrentfactsreview，Thenexact8outcomes由evidence决定非預设。
+GivenADDRESS/HUMAN，Thenreplynull/threadopen；GivencommittedfactualR&R，Then才能originalreplyresolve。
+Givenhead/source/schema/solepathdrift或requiredevidence欠缺，Thenfailclosed交Planner、不自改contract。
+上述亦specAcceptanceCriteria／BehavioralScenarios／ErrorEdgeCases，no executablefix或新tests。
+
+Planningactualchecks：`git diff --check`；
+`python .agents/skills/plan-step-tracker/scripts/step_tracker.py check_impl_steps_succeeded loaded-runtime-cache`
+應0＝C52existingfivecompletion，非C53codeapproval。
+Read-onlyactual `git rev-parse HEAD`／`git status --short`／namedsolecommit/JSONchecks；
+`git merge-base --is-ancestor 2bb82f062657d8c9dd0686743c8ee46e247926d4 5bf16409d19df472eb17f9fb2150c95b47df1478`
+以及同T/Vancestry；
+`git diff 2bb82f062657d8c9dd0686743c8ee46e247926d4 5bf16409d19df472eb17f9fb2150c95b47df1478 -- src tests`；
+分類前重新read-onlyPRhead／fullthreads/allcomments。
+真正scope/contract/lockeddecision新選擇一次交Human，不guess/nonroutingchat代evidence。
+
+### Risks / Rollback / Open Questions / Reviewer Handoff
+
+Risks：預設outcomes、historicshorttarget冒充currentgraph、scopegrammardrift／跨subject／stalehead、
+duplicate replies／evidencesolecommit污染／selftrackingloop。
+Rollback：onlyboundedstandard5planningrework或必要freshimmutablecandidate；不broadreset／overwrite／sourcefix，
+oldreceipts/STV／三rejected保留。
+OpenQuestions：designnone；八independentoutcomes待實際分類、超scope必要修復Human一次選擇。
+Post-merge/release:none；HumanalonePRreview/merge/release/postmerge/tag。
+```json
+{"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
+```
+Independenthandoffschema，非Creatorapprovalreceipt。
+Workflowstate：current_step=c53-plan-authoring；next_step=bounded-candidate-commit；
+status=COMPLETE（draftonly，非classification/actions/Humanapproval/topiccomplete）。
