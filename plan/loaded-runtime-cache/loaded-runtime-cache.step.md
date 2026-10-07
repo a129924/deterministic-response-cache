@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: review-ready
+phase: publish-in-progress
 created: 2026-09-17
 ---
 
@@ -13,7 +13,7 @@ C52 current six stages：
 - [X] C52 plan-review
 - [X] C52 tdd-test-authoring
 - [X] C52 implementation
-- [ ] C52 implementation-review
+- [X] C52 implementation-review
 - [ ] C52 code-review
 
 C51 completed historical classification-only stages：
@@ -202,7 +202,7 @@ exact-four classification／Planner exact permitted action routing／Implementer
 
 ## Handoff / Gate Notes
 
-C52唯一currentroute，canonical五步依new-ScommittedpassingT完成；IndependentV尚pending，same-ST/V必完整獨立chain。
+C52唯一currentroute，canonical五步／IndependentV依new-Scommitted同T/V完成；publish／classification尚pending。
 下方C51/C50字樣onlycompletedprovenance，不可用舊evidence給C52subject或解除十二locks。
 
 C51 current route以文末classification-only契約為準；下方C50current wording只作completedhistory，
@@ -4556,7 +4556,7 @@ boundedclassificationcompletion不等於HumanPRapproval／merge／workflowclose�
 
 ### Goal / Outcome / Scope
 
-Current：`review-ready`；phase：`review-ready`；existing PR #7 pr-open。
+Current：`publish-in-progress`；phase：`publish-in-progress`；existing PR #7 pr-open。
 C52是唯一current repair route，Human明確授權下列三必要finding的bounded修復；
 C51及更早Current／pending字樣是frozen nonrouting provenance，不建立C52 execution approval。
 原Loaded Runtime Cache mission／scope／outcomes／Registry protocol／API／Architecture Visualization／follow-up missions不變。
@@ -4805,8 +4805,8 @@ Post-merge／releaseactionsnone；HumanalonePRreview／merge／release／postmer
 {"verdict":"approved|needs-rework","blocking_issues":[],"copilot_feedback_triage":{"ADDRESS":[],"DISCUSS":[],"SKIP":[]}}
 ```
 Independenthandoffschema非Creator預填receipt。
-Workflowstate：current_step=c52-review-ready-factual-alignment；next_step=bounded-local-alignment-commit；
-status=COMPLETE（factualdraftonly，非IndependentReviewerapproval／publish／topiccomplete）。
+Workflowstate：current_step=c52-phase4.5-factual-alignment；next_step=bounded-alignment-normal-commit-push；
+status=COMPLETE（Phase4.5factualdraftonly，publish未完成／非Humanapproval／topiccomplete）。
 
 ### C52 Actionable Evidence / Publish Stages（非implementation completion）
 
@@ -4819,9 +4819,9 @@ status=COMPLETE（factualdraftonly，非IndependentReviewerapproval／publish／
 - [X] **Actor: Implementer.** BoundedgreennewimmutableS onlytestpath。
 - [X] **Actor: Tester.** Same-Sactualscopedpytest／Ruff／strictPyright passingrecord。
 - [X] **Actor: Implementer.** PassingT unchangedsolecommit。
-- [ ] **Actor: Plan-Creator / Implementer.** ONLYplanstepactualreview-readyalignmentseparateLOCALcommit、canonicalCLI0。
-- [ ] **Actor: Independent Reviewer.** Same-ScommittedpassingT→independentimplementationV。
-- [ ] **Actor: Implementer.** ApprovedV unchangedsolecommit。
+- [X] **Actor: Plan-Creator / Implementer.** ONLYplanstepactualreview-readyalignmentseparateLOCALcommit、canonicalCLI0。
+- [X] **Actor: Independent Reviewer.** Same-ScommittedpassingT→independentimplementationV。
+- [X] **Actor: Implementer.** ApprovedV unchangedsolecommit。
 - [ ] **Actor: Planner / Plan-Creator / Implementer.** Phase4.5 ONLYplanstepfactualalignmentnormalcommit／push PR7。
 - [ ] **Actor: Independent Reviewer.** Actualfixedpublishedhead＋newSTV exact-threeimmutableclassification。
 - [ ] **Actor: Implementer.** Classificationunchangedsolecommit／normalpush。
@@ -4831,6 +4831,8 @@ status=COMPLETE（factualdraftonly，非IndependentReviewerapproval／publish／
 Finalnormalalignmentcommit／push只由actualGitfacts證，不預自身SHA／新增selfcheckbox-loop。
 
 ### C52 Committed RED / Same-New-S Passing Evidence（review-ready facts）
+
+下方review-ready／pending字樣是當時snapshot；currentapproval／phase以末尾Phase4.5facts為準。
 
 Actual exact-five candidate `8f9c26567d4ba6528b515d95c9613296314ed4f0`；
 approved planning receipt unchanged sole commit `b610743be6905464c71ccf7af6a10b4bace1448c`。
@@ -4850,3 +4852,25 @@ Planner核canonicalCLI0才交Independent Reviewer；
 Independent V verdict／approvedVcommit、Phase4.5 publish、classificationoutcome與threadreply／resolve仍pending，
 不得由本稿宣稱reviewapproval／threadsresolved或HumanPRapproval。
 analysis／spec保留committedcandidate snapshots，早前C52pending／draft-time字樣為時點provenance。
+
+### C52 Phase4.5 Committed Independent Approval（publish-in-progress facts）
+
+Actual review-ready exact-two LOCAL alignmentcommit：
+`91e69c5cabf3b3f62799ebf1be4a7ba3b919705f`。
+Same new S `2bb82f062657d8c9dd0686743c8ee46e247926d4`；
+passing T sole `ff0a3bf6c52facc266682eea2068c305791ad257`；
+approved Independent Reviewer V unchanged sole commit：
+`2047839048bcd1ac6b2af915f78f38ff294f0013`，
+Vblob `f42bda8442e2789018ab59353cdad684d3296f20`。
+V schema exact7、recorded_by Independent Reviewer、same S／committedpassingT、
+verdict approved／blocking_issues[]；Independent Revieweractual567tests＋13boundedprobes均0。
+Planner核sameSTV Qgate後route本ONLYplan／step Phase4.5factualdraft，
+五canonicalimplementationsteps完成、independentimplementationreview完成。
+
+Current／phase publish-in-progress；next為Implementer separateexact-two normalalignmentcommit／push
+更新已授權既有PR7。發布未完成，actualpublishedhead／classificationfreshpath/outcome／replyresolve仍pending；
+不預填本alignment自身SHA／commitpush結果，不新candidatechain。
+發布後Planner核actualfixedPRhead與newSTV／sourceunchanged，再交IndependentReviewerexact-threeclassification，
+不得把implementationapproval當直接resolveauthorization或HumanPRapproval。
+七inventory-only／十二locks／sourcecontracts／ArchitectureVisualization／API保持不變；
+analysis／spec保留candidate snapshots，先前review-ready／pending字樣為當時provenance。
