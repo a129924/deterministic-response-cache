@@ -510,6 +510,7 @@ def _uses_dynamic_import_substitution(source_directory: Path) -> bool:
         for modules in contexts:
             callables = imported_callables.copy()
             _add_assignment_aliases(tree, modules, callables, preserved_modules)
+            _add_direct_factory_aliases(tree, modules, callables)
             for statement in ast.walk(tree):
                 if _is_forbidden_dynamic_import_call(statement, modules, callables):
                     return True
@@ -524,7 +525,7 @@ def _for_module_alias_contexts(
     callables: dict[str, str],
 ) -> tuple[list[dict[str, str]], frozenset[str]]:
     """Retain finite known module alternatives from For literals and conditional bindings."""
-    alternatives: dict[str, set[str]] = {}
+    alternatives = _finite_import_module_alternatives(tree)
     for statement in ast.walk(tree):
         if not (
             isinstance(statement, ast.For)
@@ -540,6 +541,53 @@ def _for_module_alias_contexts(
                 alternatives.setdefault(statement.target.id, set()).add(resolved[1])
     _add_conditional_module_alternatives(tree, modules, callables, alternatives)
     return _module_alternative_contexts(modules, alternatives), frozenset(alternatives)
+
+
+def _finite_import_module_alternatives(tree: ast.AST) -> dict[str, set[str]]:
+    """Retain multiple known modules sharing one simple import binding, without CFG."""
+    alternatives: dict[str, set[str]] = {}
+    for statement in ast.walk(tree):
+        if not isinstance(statement, ast.Import):
+            continue
+        for alias in statement.names:
+            if alias.name in {"builtins", "importlib", "sys"}:
+                alternatives.setdefault(alias.asname or alias.name, set()).add(alias.name)
+            elif alias.name.startswith("importlib.") and alias.asname is None:
+                alternatives.setdefault("importlib", set()).add("importlib")
+    return {name: targets for name, targets in alternatives.items() if len(targets) > 1}
+
+
+def _add_direct_factory_aliases(
+    tree: ast.AST,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> None:
+    """Record only direct zero-argument, undecorated single-Return callable factories."""
+    factories: dict[str, str] = {}
+    for statement in ast.walk(tree):
+        if not isinstance(statement, ast.FunctionDef) or statement.decorator_list:
+            continue
+        arguments = statement.args
+        if (
+            arguments.posonlyargs
+            or arguments.args
+            or arguments.vararg is not None
+            or arguments.kwonlyargs
+            or arguments.kwarg is not None
+            or len(statement.body) != 1
+        ):
+            continue
+        returned = statement.body[0]
+        if not isinstance(returned, ast.Return) or returned.value is None:
+            continue
+        resolved = _resolve_forbidden_alias(returned.value, modules, callables)
+        if resolved in {
+            ("callable", "builtins.__import__"),
+            ("callable", "importlib.__import__"),
+            ("callable", "importlib.import_module"),
+        }:
+            factories[statement.name] = f"factory:{resolved[1]}"
+    callables.update(factories)
 
 
 def _add_conditional_module_alternatives(
@@ -766,21 +814,84 @@ def _resolve_forbidden_alias(
     if isinstance(value, ast.Attribute):
         return _resolve_import_callable_attribute(value, modules, callables)
     if isinstance(value, ast.IfExp):
-        body = _resolve_forbidden_alias(value.body, modules, callables)
-        alternative = _resolve_forbidden_alias(value.orelse, modules, callables)
-        for resolved in (body, alternative):
-            if resolved is not None and resolved[0] == "callable":
-                return resolved
-        return body or alternative
+        return _resolve_conditional_alias(value, modules, callables)
+    if isinstance(value, ast.BoolOp):
+        return _resolve_definite_bool_alias(value, modules, callables)
     if isinstance(value, ast.Call):
-        return _resolve_namespace_import_callable(value, modules) or _resolve_getattr_alias(
-            value,
-            modules,
-            callables,
+        return (
+            _resolve_namespace_import_callable(value, modules)
+            or _resolve_getattr_alias(value, modules, callables)
+            or _resolve_direct_factory_call(value, callables)
         )
     return (
         _resolve_subscript_alias(value, modules, callables)
         if isinstance(value, ast.Subscript)
+        else None
+    )
+
+
+def _resolve_conditional_alias(
+    value: ast.IfExp,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> tuple[str, str] | None:
+    """Preserve the existing existential conditional-alternative resolution unchanged."""
+    body = _resolve_forbidden_alias(value.body, modules, callables)
+    alternative = _resolve_forbidden_alias(value.orelse, modules, callables)
+    for resolved in (body, alternative):
+        if resolved is not None and resolved[0] == "callable":
+            return resolved
+    return body or alternative
+
+
+def _resolve_definite_bool_alias(
+    value: ast.BoolOp,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> tuple[str, str] | None:
+    """Select only operands reachable using literal or known import-callable truth."""
+    resolved: tuple[str, str] | None = None
+    for operand in value.values:
+        resolved = _resolve_forbidden_alias(operand, modules, callables)
+        truth = _definite_literal_or_callable_truth(operand, resolved)
+        if truth is None:
+            return None
+        if (isinstance(value.op, ast.Or) and truth) or (
+            isinstance(value.op, ast.And) and not truth
+        ):
+            return resolved
+    return resolved
+
+
+def _definite_literal_or_callable_truth(
+    operand: ast.expr,
+    resolved: tuple[str, str] | None,
+) -> bool | None:
+    """Inspect builtin literal values only; never invoke source-defined truthiness."""
+    if isinstance(operand, ast.Constant) and (
+        operand.value is None or isinstance(operand.value, (bool, int, float, complex, str, bytes))
+    ):
+        return bool(operand.value)
+    if resolved in {
+        ("callable", "builtins.__import__"),
+        ("callable", "importlib.__import__"),
+        ("callable", "importlib.import_module"),
+    }:
+        return True
+    return None
+
+
+def _resolve_direct_factory_call(
+    value: ast.Call,
+    callables: dict[str, str],
+) -> tuple[str, str] | None:
+    """Resolve only an immediate direct zero-argument call to a recorded factory."""
+    if not isinstance(value.func, ast.Name) or value.args or value.keywords:
+        return None
+    target = callables.get(value.func.id)
+    return (
+        ("callable", target.removeprefix("factory:"))
+        if target is not None and target.startswith("factory:")
         else None
     )
 
@@ -885,21 +996,37 @@ def _resolve_namespace_import_callable(
     else:
         namespace = value.value
         key = value.slice
-    if not (
-        isinstance(namespace, ast.Attribute)
-        and namespace.attr == "__dict__"
-        and isinstance(namespace.value, ast.Name)
-        and isinstance(key, ast.Constant)
-        and isinstance(key.value, str)
-    ):
+    if not isinstance(key, ast.Constant) or not isinstance(key.value, str):
         return None
-    module = modules.get(namespace.value.id)
+    module = _known_module_namespace(namespace, modules)
     if (module, key.value) in {
         ("builtins", "__import__"),
         ("importlib", "__import__"),
         ("importlib", "import_module"),
     }:
         return "callable", f"{module}.{key.value}"
+    if module == "sys" and key.value == "modules":
+        return "callable", "sys.modules"
+    return None
+
+
+def _known_module_namespace(namespace: ast.expr, modules: dict[str, str]) -> str | None:
+    """Normalize only known module __dict__ or exact bare builtin vars(module)."""
+    if (
+        isinstance(namespace, ast.Attribute)
+        and namespace.attr == "__dict__"
+        and isinstance(namespace.value, ast.Name)
+    ):
+        return modules.get(namespace.value.id)
+    if (
+        isinstance(namespace, ast.Call)
+        and isinstance(namespace.func, ast.Name)
+        and namespace.func.id == "vars"
+        and len(namespace.args) == 1
+        and not namespace.keywords
+        and isinstance(namespace.args[0], ast.Name)
+    ):
+        return modules.get(namespace.args[0].id)
     return None
 
 
@@ -950,7 +1077,11 @@ def _resolve_name_alias(
         return "module", modules[name]
     if name == "__import__":
         return "callable", "builtins.__import__"
-    if name in callables and callables[name] != "builtins.getattr":
+    if (
+        name in callables
+        and callables[name] != "builtins.getattr"
+        and not callables[name].startswith("factory:")
+    ):
         return "callable", callables[name]
     return None
 
@@ -1133,6 +1264,13 @@ def _binds_foreign_semantic_name(statement: ast.AST, type_name: str) -> bool:
             item.optional_vars is not None and _semantic_target_names(item.optional_vars, type_name)
             for item in statement.items
         )
+    return _additional_semantic_binding(statement, type_name)
+
+
+def _additional_semantic_binding(statement: ast.AST, type_name: str) -> bool:
+    """Inspect only genuine type-parameter, exception-handler and match capture names."""
+    if isinstance(statement, (ast.TypeVar, ast.TypeVarTuple, ast.ParamSpec, ast.ExceptHandler)):
+        return statement.name == type_name
     return _match_capture_names(statement, type_name)
 
 
