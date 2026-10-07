@@ -1,6 +1,6 @@
 ---
 topic: loaded-runtime-cache
-phase: plan-authoring
+phase: review-ready
 created: 2026-09-17
 ---
 
@@ -10,9 +10,9 @@ created: 2026-09-17
 
 C59 current six stages：
 - [X] C59 plan-authoring
-- [ ] C59 plan-review
-- [ ] C59 tdd-test-authoring
-- [ ] C59 implementation
+- [X] C59 plan-review
+- [X] C59 tdd-test-authoring
+- [X] C59 implementation
 - [ ] C59 implementation-review
 - [ ] C59 code-review
 
@@ -166,11 +166,11 @@ C50 current ordered actionable work依文末 C50 contract；下方 C11–C14 onl
 
 ## Implementation Steps
 
-C59 current implementation gate：四pending，不繼承舊completed/S/T/V。
-- [ ] 1. C59 在 `tests/test_loaded_runtime_cache_bc_independence.py` append-only兩BC isolated RED及benign/unused/excluded controls；c59/rejects markers、collection/controls0、兩originalfinding genuineassertionfail，RED不修helpers、不execute source。
-- [ ] 2. C59 在 `tests/test_loaded_runtime_cache_bc_independence.py` 辨識knownbuiltins/既有modulealias.getattr並沿simple-name assignment保留getteridentity，既有lookup exact-two positional/no keywords；不arbitraryreceiver/callgraph/scopeinference。
-- [ ] 3. C59 在 `tests/test_loaded_runtime_cache_bc_independence.py` ONLY解析direct __builtins__['__import__'] literal subscript後existingforbiddenUSE；不dynamic keys/namespacealiases/shadowing/otherlookupgrammar，unusedpossessionnegative保持。
-- [ ] 4. C59 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保留oldtests/directimports/fixtures/mocks/assertions及十二locks，sameimmutablegreenS通過兩檔pytest/Ruff/strictPyright，完成須sameS committedpassingT；review/publish/class/actions另屬後續workflow。
+C59 current implementation gate：四completed，以C59newS/sameS committedpassingT證明，不繼承舊S/T/V。
+- [X] 1. C59 在 `tests/test_loaded_runtime_cache_bc_independence.py` append-only兩BC isolated RED及benign/unused/excluded controls；c59/rejects markers、collection/controls0、兩originalfinding genuineassertionfail，RED不修helpers、不execute source。
+- [X] 2. C59 在 `tests/test_loaded_runtime_cache_bc_independence.py` 辨識knownbuiltins/既有modulealias.getattr並沿simple-name assignment保留getteridentity，既有lookup exact-two positional/no keywords；不arbitraryreceiver/callgraph/scopeinference。
+- [X] 3. C59 在 `tests/test_loaded_runtime_cache_bc_independence.py` ONLY解析direct __builtins__['__import__'] literal subscript後existingforbiddenUSE；不dynamic keys/namespacealiases/shadowing/otherlookupgrammar，unusedpossessionnegative保持。
+- [X] 4. C59 在 `tests/test_loaded_runtime_cache_bc_independence.py` 保留oldtests/directimports/fixtures/mocks/assertions及十二locks，sameimmutablegreenS通過兩檔pytest/Ruff/strictPyright，完成須sameS committedpassingT；review/publish/class/actions另屬後續workflow。
 
 Reviewer/publish/classification/actions另依C59workflow，非此completiongate。
 
@@ -6267,3 +6267,22 @@ Head/subject/evidence/topic/scope drift或needs-rework停Planner，真正Humande
 HumanonlyPRapproval/merge/release/postmerge/tag。
 Workflowstate：current_step=c59-plan-authoring；next_step=bounded-candidate-commit；
 status=COMPLETE（onlydraft，非executionapproval/implementation/classificationgate）。
+
+## C59 Review-Ready Factual Alignment（current state）
+
+Current／phase：review-ready；existing PR #7 pr-open。
+Actual candidate `89b26fd38f28aaca577a89446c435c8d22a04206`；
+approvedreceipt sole `f325ff41b2187b4072c17956b3be1701e13f2d4d`；
+test-onlyRED `b24039c022f93060801e82f781101dce0f9c25e3`；
+independentfailingT sole `b527dcf08e228d9d06eb5d9da6ef230b0cc726b4`；
+newgreenS `6256f6cb9c2f71c1bea1eba3217176bec3c677ce`；
+sameS independentpassingT sole `38e0072c3c13dbfa7a9299d28bddcfd80c4e68ff`。
+ActualpassingT：兩檔scopedpytest797passing，Ruff／strictPyright exit0。
+C59四canonical implementationsteps完成；不借oldsubjectevidence。
+Next：本exact-two factualdraft交Implementer獨立normalLOCALalignmentcommit，
+然後IndependentReviewer消費上述sameS committedpassingT。
+Vapproval／Phase4.5publish／fixed-head classification／originalreply-resolve仍pending。
+不預填selfalignmentSHA/futuregate結果、不建立新candidatechain；
+十二locks／原兩bounds／production/API/Archify/uv.lock／frozenhistory與三rejected保留。
+Workflowstate：current_step=c59-review-ready；next_step=independent-implementation-review；
+status=COMPLETE（only factualdraft，非Vapproval或publish完成）。
