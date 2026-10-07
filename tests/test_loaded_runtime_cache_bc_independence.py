@@ -1863,3 +1863,287 @@ def test_c47_rework_preserves_unused_and_ordinary_conditional_alias_chains(
     (directory / "controls.py").write_text(source, encoding="utf-8")
 
     assert not _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "definition",
+    [
+        "def build({params}):\n    return {name}()\n",
+        "async def build({params}):\n    return {name}()\n",
+        "build = lambda {params}: {name}()\n",
+    ],
+)
+@pytest.mark.parametrize(
+    "parameters",
+    ["{name}", "{name}, /", "*{name}", "*, {name}", "**{name}"],
+)
+def test_c50_rejects_foreign_semantic_parameter_names(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    definition: str,
+    parameters: str,
+) -> None:
+    """All parameter positions bind local semantic names without evaluating source."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "parameters.py").write_text(
+        definition.format(params=parameters.format(name=foreign_name), name=foreign_name),
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "source",
+    [
+        "def build(ordinary):\n    return ordinary()\n",
+        "async def build(ordinary, /, *args, optional=None, **kwargs):\n    pass\n",
+        "build = lambda ordinary, /, *args, optional=None, **kwargs: ordinary\n",
+        "def build(ordinary: {name}):\n    pass\n",
+        "async def build(ordinary={name}):\n    pass\n",
+        "build = lambda ordinary={name}: ordinary\n",
+        "def build(ordinary='{name}'):\n    return holder.{name}\n",
+    ],
+)
+def test_c50_preserves_ordinary_parameters_annotations_and_defaults(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    source: str,
+) -> None:
+    """Annotation/default references and attribute labels are not parameter bindings."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "parameters.py").write_text(source.format(name=foreign_name), encoding="utf-8")
+
+    assert not _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        (
+            "from builtins import getattr as resolve\nimport importlib\nlookup = resolve\n"
+            "lookup(importlib, 'import_module')('deterministic_response_cache.identity')\n"
+        ),
+        (
+            "from builtins import getattr\nimport builtins\nlookup = getattr\n"
+            "lookup(builtins, '__import__')('identity')\n"
+        ),
+        (
+            "from builtins import getattr as resolve\nimport importlib as il\n"
+            "lookup = resolve\nagain = lookup\nload = again(il, '__import__')\nload('identity')\n"
+        ),
+        (
+            "from builtins import getattr as resolve\nimport importlib\n"
+            "again = lookup\nlookup = resolve\n"
+            "again(importlib, 'import_module')('identity')\n"
+        ),
+        (
+            "from builtins import getattr as resolve\nimport importlib\nlookup = resolve\n"
+            "executor.submit(lookup(importlib, 'import_module'), 'identity')\n"
+        ),
+    ],
+)
+def test_c50_rejects_forbidden_use_after_imported_getter_assignment_alias(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Known imported getter identity survives plain/chained fixed-point aliases."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "getter.py").write_text(source, encoding="utf-8")
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "from builtins import getattr as resolve\nlookup = resolve\n",
+        (
+            "from builtins import getattr as resolve\nimport importlib\nlookup = resolve\n"
+            "load = lookup(importlib, 'import_module')\n"
+        ),
+        (
+            "from builtins import getattr as resolve\nimport builtins\nlookup = resolve\n"
+            "lookup(builtins, 'len')('identity')\n"
+        ),
+        (
+            "from builtins import getattr as resolve\nlookup = resolve\n"
+            "lookup(unknown, 'import_module')('identity')\n"
+        ),
+        (
+            "from builtins import getattr as resolve\nimport importlib\nlookup = resolve\n"
+            "lookup(importlib, key)('identity')\n"
+        ),
+        (
+            "from builtins import getattr as resolve\nimport importlib\nlookup = resolve\n"
+            "lookup(importlib, 'import_module', None)('identity')\n"
+        ),
+        (
+            "from builtins import getattr as resolve\nimport importlib\nlookup = resolve\n"
+            "lookup(importlib, name='import_module')('identity')\n"
+        ),
+        (
+            "from builtins import getattr as resolve\nimport importlib\nlookup = resolve\n"
+            "lookup(*(importlib, 'import_module'))('identity')\n"
+        ),
+        "import importlib\nlookup = ordinary\nlookup(importlib, 'import_module')('identity')\n",
+    ],
+)
+def test_c50_preserves_getter_alias_possession_and_bounded_lookup_controls(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """Getter aliases do not add possession bans or widen lookup argument grammar."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "getter_controls.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import importlib\nimportlib.__dict__.get('import_module')('identity')\n",
+        "import importlib\nimportlib.__dict__.get('__import__')('identity')\n",
+        "import builtins\nbuiltins.__dict__.get('__import__')('identity')\n",
+        "import importlib as il\nil.__dict__.get('import_module')('identity')\n",
+        (
+            "import importlib\nmodule = importlib\n"
+            "load = module.__dict__.get('import_module')\nagain = load\nagain('identity')\n"
+        ),
+        ("import builtins\nexecutor.submit(builtins.__dict__.get('__import__'), 'identity')\n"),
+    ],
+)
+def test_c50_rejects_forbidden_use_of_literal_module_namespace_get(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """A known direct namespace literal lookup identifies the existing import callables."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "namespace_get.py").write_text(source, encoding="utf-8")
+
+    assert _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "import importlib\nload = importlib.__dict__.get('import_module')\n",
+        "import builtins\nbuiltins.__dict__.get('len')('identity')\n",
+        "import importlib\nimportlib.__dict__.get('missing')('identity')\n",
+        "unknown.__dict__.get('import_module')('identity')\n",
+        "import importlib\nimportlib.__dict__.get(key)('identity')\n",
+        "import importlib\nimportlib.__dict__.get('import_module', None)('identity')\n",
+        "import importlib\nimportlib.__dict__.get(key='import_module')('identity')\n",
+        "import importlib\nimportlib.__dict__.get('import_module', default=None)('identity')\n",
+        "import importlib\nimportlib.__dict__.get(*keys)('identity')\n",
+        (
+            "import importlib\nnamespace = importlib.__dict__\n"
+            "namespace.get('import_module')('identity')\n"
+        ),
+        "mapping.get('import_module')('identity')\n",
+        "module_factory().__dict__.get('import_module')('identity')\n",
+    ],
+)
+def test_c50_preserves_namespace_get_possession_and_unknown_lookup_controls(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    """No inference is added for unknown namespaces, dynamic keys, defaults or mappings."""
+    directory = tmp_path / "loaded_runtime_cache"
+    directory.mkdir()
+    (directory / "namespace_controls.py").write_text(source, encoding="utf-8")
+
+    assert not _uses_dynamic_import_substitution(directory)
+
+
+@pytest.mark.parametrize(
+    "boundary",
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "[ordinary {loop} {target} in factories]",
+        "{{ordinary {loop} {target} in factories}}",
+        "{{ordinary: ordinary {loop} {target} in factories}}",
+        "(ordinary {loop} {target} in factories)",
+    ],
+)
+@pytest.mark.parametrize("loop", ["for", "async for"])
+@pytest.mark.parametrize(
+    "target",
+    ["{name}", "({name}, other)", "[other, ({name}, tail)]", "(other, *{name})"],
+)
+def test_c50_rejects_foreign_semantic_comprehension_target_names(
+    tmp_path: Path,
+    boundary: tuple[str, str],
+    expression: str,
+    loop: str,
+    target: str,
+) -> None:
+    """Every comprehension target has syntactic ownership, without iterable inference."""
+    bc, foreign_name = boundary
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "comprehension.py").write_text(
+        "async def build():\n    result = "
+        + expression.format(loop=loop, target=target.format(name=foreign_name))
+        + "\n",
+        encoding="utf-8",
+    )
+
+    assert _declares_forbidden_semantic_type(directory, foreign_name)
+
+
+@pytest.mark.parametrize(
+    ("bc", "foreign_name"),
+    [("loaded_runtime_cache", "ModelIdentity"), ("identity", "RuntimeReuseKey")],
+)
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "[ordinary for ordinary in factories]",
+        "{{ordinary for ordinary in factories}}",
+        "{{ordinary: ordinary for ordinary in factories}}",
+        "(ordinary for ordinary in factories)",
+        "[ordinary async for ordinary in factories]",
+        "[ordinary for holder.{name} in factories]",
+        "[ordinary async for holder.{name} in factories]",
+        "[ordinary for [local, (holder.{name}, tail)] in factories]",
+        "[ordinary for (other, *holder.{name}) in factories]",
+        "[holder.{name} for ordinary in factories]",
+        "[ordinary for ordinary in {name}]",
+        "[ordinary for ordinary in factories if {name}]",
+    ],
+)
+def test_c50_preserves_benign_comprehension_targets_attributes_and_rhs(
+    tmp_path: Path,
+    bc: str,
+    foreign_name: str,
+    expression: str,
+) -> None:
+    """Only local target names, not attributes or iterable references, establish ownership."""
+    directory = tmp_path / bc
+    directory.mkdir()
+    (directory / "comprehension_controls.py").write_text(
+        "async def build():\n    result = " + expression.format(name=foreign_name) + "\n",
+        encoding="utf-8",
+    )
+
+    assert not _declares_forbidden_semantic_type(directory, foreign_name)
