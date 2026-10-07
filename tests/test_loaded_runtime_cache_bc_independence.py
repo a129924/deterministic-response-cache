@@ -442,6 +442,15 @@ def test_c37_accepts_benign_unknown_or_out_of_bounds_imported_getters(
     assert not _uses_dynamic_import_substitution(directory)
 
 
+def _python_source_paths(source_directory: Path) -> list[Path]:
+    """Discover source and stub files without changing their shared AST rules."""
+    return [
+        source_path
+        for suffix in ("*.py", "*.pyi")
+        for source_path in source_directory.rglob(suffix)
+    ]
+
+
 def _direct_imports_from(
     source_directory: Path,
     *,
@@ -449,7 +458,7 @@ def _direct_imports_from(
 ) -> set[str]:
     """Return normalized absolute package import targets below one BC directory."""
     imports: set[str] = set()
-    for source_path in source_directory.rglob("*.py"):
+    for source_path in _python_source_paths(source_directory):
         tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
         for statement in ast.walk(tree):
             if isinstance(statement, ast.Import):
@@ -490,7 +499,7 @@ def _normalized_import_from_targets(
 
 def _uses_dynamic_import_substitution(source_directory: Path) -> bool:
     """Detect direct and alias-based import or module-cache substitution constructs."""
-    for source_path in source_directory.rglob("*.py"):
+    for source_path in _python_source_paths(source_directory):
         tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
         imported_modules, imported_callables = _import_aliases(tree)
         contexts, preserved_modules = _for_module_alias_contexts(
@@ -770,10 +779,75 @@ def _resolve_forbidden_alias(
             callables,
         )
     return (
-        _resolve_namespace_import_callable(value, modules)
+        _resolve_subscript_alias(value, modules, callables)
         if isinstance(value, ast.Subscript)
         else None
     )
+
+
+def _resolve_subscript_alias(
+    value: ast.Subscript,
+    modules: dict[str, str],
+    callables: dict[str, str],
+) -> tuple[str, str] | None:
+    """Resolve existing module namespaces or a certain selected direct literal element."""
+    namespace_callable = _resolve_namespace_import_callable(value, modules)
+    if namespace_callable is not None:
+        return namespace_callable
+    selected = _selected_literal_element(value)
+    return _resolve_forbidden_alias(selected, modules, callables) if selected is not None else None
+
+
+def _selected_literal_element(value: ast.Subscript) -> ast.expr | None:
+    """Select a certain direct literal element without evaluating source or aliases."""
+    container = value.value
+    if isinstance(container, ast.Subscript):
+        selected_container = _selected_literal_element(container)
+        if selected_container is None:
+            return None
+        container = selected_container
+    if isinstance(container, (ast.Tuple, ast.List)):
+        index = _literal_sequence_index(value.slice)
+        if (
+            index is not None
+            and not any(isinstance(element, ast.Starred) for element in container.elts)
+            and -len(container.elts) <= index < len(container.elts)
+        ):
+            return container.elts[index]
+    elif isinstance(container, ast.Dict):
+        return _selected_dict_literal_element(container, value.slice)
+    return None
+
+
+def _literal_sequence_index(selector: ast.expr) -> int | None:
+    """Recognize only a direct integer literal, optionally carrying a literal sign."""
+    if isinstance(selector, ast.Constant) and type(selector.value) is int:
+        return selector.value
+    if (
+        isinstance(selector, ast.UnaryOp)
+        and isinstance(selector.op, (ast.USub, ast.UAdd))
+        and isinstance(selector.operand, ast.Constant)
+        and type(selector.operand.value) is int
+    ):
+        return (
+            -selector.operand.value if isinstance(selector.op, ast.USub) else selector.operand.value
+        )
+    return None
+
+
+def _selected_dict_literal_element(container: ast.Dict, selector: ast.expr) -> ast.expr | None:
+    """Select a unique constant key only when every literal key is unambiguous."""
+    if not isinstance(selector, ast.Constant):
+        return None
+    keys: list[ast.Constant] = []
+    for key in container.keys:
+        if not isinstance(key, ast.Constant) or any(key.value == seen.value for seen in keys):
+            return None
+        keys.append(key)
+    for key, value in zip(keys, container.values, strict=True):
+        if key.value == selector.value:
+            return value
+    return None
 
 
 def _resolve_import_callable_attribute(
@@ -1011,7 +1085,7 @@ def _is_module_cache_access(
 
 def _declares_forbidden_semantic_type(source_directory: Path, type_name: str) -> bool:
     """Detect local declarations or Identity imports of a foreign semantic type."""
-    for source_path in source_directory.rglob("*.py"):
+    for source_path in _python_source_paths(source_directory):
         tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
         for statement in ast.walk(tree):
             if (
@@ -1059,7 +1133,14 @@ def _binds_foreign_semantic_name(statement: ast.AST, type_name: str) -> bool:
             item.optional_vars is not None and _semantic_target_names(item.optional_vars, type_name)
             for item in statement.items
         )
-    return False
+    return _match_capture_names(statement, type_name)
+
+
+def _match_capture_names(statement: ast.AST, name: str) -> bool:
+    """Inspect only genuine capture slots, visited recursively by the existing AST walk."""
+    if isinstance(statement, (ast.MatchAs, ast.MatchStar)):
+        return statement.name == name
+    return isinstance(statement, ast.MatchMapping) and statement.rest == name
 
 
 def _imports_identity_semantic_type(statement: ast.AST, type_name: str) -> bool:
