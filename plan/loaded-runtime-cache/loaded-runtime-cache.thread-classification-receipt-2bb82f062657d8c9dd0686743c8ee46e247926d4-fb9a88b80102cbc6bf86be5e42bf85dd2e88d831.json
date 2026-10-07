@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "2bb82f062657d8c9dd0686743c8ee46e247926d4",
+  "tester_evidence_commit": "ff0a3bf6c52facc266682eea2068c305791ad257",
+  "implementation_review_evidence_commit": "2047839048bcd1ac6b2af915f78f38ff294f0013",
+  "pr_head_commit": "fb9a88b80102cbc6bf86be5e42bf85dd2e88d831",
+  "classifications": [
+    {
+      "thread": "pu_ja",
+      "comment": "4202486092",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C52 subject 2bb82f062657d8c9dd0686743c8ee46e247926d4 修復：透過既有 AST traversal 檢查 MatchAs.name、MatchStar.name、MatchMapping.rest 的 genuine capture bindings，包含 nested patterns；兩個 BC 均有 isolated regression，class／keyword／value references 不被誤認為 binding。已完成獨立 RED → green、same-subject passing Tester evidence 與 approved Independent Reviewer evidence；567 scoped tests、Ruff、strict Pyright 通過。既有 locks 保留，本修正不執行 pattern／source。"
+    },
+    {
+      "thread": "pu_jo",
+      "comment": "4202486109",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C52 subject 2bb82f062657d8c9dd0686743c8ee46e247926d4 修復：direct tuple／list 的確定 integer index 與 direct dict 的確定 unique literal key 只取選定 AST element，再遞迴既有 forbidden-alias resolver，仍依後續 USE 判斷。新增 tuple／list／dict、nested lookup 與 alias-use regression；未選取／unused callable、dynamic selector、slice、unpack、container alias、duplicate keys／不確定 collision 保持不推論。獨立 RED → green、same-subject Tester／Reviewer evidence 已完成；567 scoped tests、Ruff、strict Pyright 通過，未擴張既有 locks。"
+    },
+    {
+      "thread": "pu_j0",
+      "comment": "4202486122",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C52 subject 2bb82f062657d8c9dd0686743c8ee46e247926d4 修復：三個 current-source scanners 共用 .py／.pyi discovery，沿用既有 AST parse、direct-import、dynamic-import 與 semantic-ownership 規則。兩個 BC 各具三項 stub regression，並保留 .py 與 benign stub controls；未新增 production stub、stub grammar 或 fixture source execution。完整獨立 RED → green、same-subject passing Tester 與 approved Independent Reviewer evidence 已提交；567 scoped tests、Ruff、strict Pyright 通過。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}
