@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa",
+  "status": "passing",
+  "commands": [
+    {
+      "command": "python3 - <<'PY'\nimport subprocess,re\nfrom pathlib import Path\ns='9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa'\ndef git(*a):return subprocess.check_output(['git',*a],text=True)\nassert git('rev-parse','HEAD').strip()==s\nassert git('show','-s','--format=%P',s).strip().split()==['b3e9b0f242632be4280553f0bed64214020e167f','d6ff74ddf65c615f65eeba252e648784252a2bfd']\npaths=['docs/architecture/business-capability/'+p for p in ['architecture-brief.md','index.html','scene.js']]\nassert set(git('show','--remerge-diff','--format=','--name-only',s).strip().splitlines())==set(paths)\nfor p in paths:assert not re.search(r'^(<<<<<<< |=======|>>>>>>> )',git('show',s+':'+p),re.M),p\nscene=Path(paths[2]).read_text(); html=Path(paths[1]).read_text(); brief=Path(paths[0]).read_text()\nassert scene.strip() in html\nfor t in [scene,html]:\n for fact in ['codec id + bytes','未知 codec 或壞 bytes','protocol-only reuse contracts','不是 backend','runtime access／invocation ports','cross-BC wiring 未來','future integration','no backend or mapper']:assert fact in t,fact\nfor fact in ['固定 codec','bytes envelope','Arrow IPC','equals','不 import Identity','不是 backend','injected runtime access','實際 wiring 尚未整合']:assert fact in brief,fact\nfor p in paths[1:]:\n before=git('show',s+'^1:'+p); after=git('show',s+':'+p)\n for start,end in [(\"  { id: 'runtime-cache'\",\"  { id: 'adapter-boundary'\"),(\"  { from: 'reuse-decision', to: 'runtime-cache'\",\"  { from: 'reuse-bc', to: 'retention-result'\")]:\n  assert before[before.index(start):before.index(end)]==after[after.index(start):after.index(end)],p\nassert git('status','--porcelain').strip()==''\nprint('PASS C29 topology, three-path remerge, no markers, both fact sets, scene/index consistency, clean tracked subject')\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen --extra dataframe pytest -q tests/test_loaded_runtime_cache_contracts.py tests/test_loaded_runtime_cache_bc_independence.py tests/test_response_reuse_codecs.py tests/test_model_response_codecs_integration.py tests/test_model_execution_protocol.py",
+      "exit_code": 0
+    }
+  ],
+  "recorded_by": "Tester"
+}

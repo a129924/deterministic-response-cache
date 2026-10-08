@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "fa1468301af1906a05ee31ba0d267d2270d7af5f",
+  "tester_evidence_commit": "6423f55b6dbcde5bee190ef86dc8c31f5c27c94e",
+  "implementation_review_evidence_commit": "3d0dc9fbb0e9da6d742ac20856b8aac6b0a3035e",
+  "pr_head_commit": "0991c56ec7e562ea512449bda1a41118dbc48203",
+  "classifications": [
+    {
+      "thread": "PRRT_kwDOUJTij86ldeVI",
+      "comment": 4090495760,
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86ldeVO",
+      "comment": 4090495770,
+      "outcome": "ADDRESS",
+      "reply": null
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

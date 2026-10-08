@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "c3f81c1b9814e2b2a16eb914006e7a97f2b74489",
+  "tester_evidence_commit": "7be330e1c6569b992c0b18dbdc6697064dd9c0b5",
+  "implementation_review_evidence_commit": "12afae27b6cde8d558360ecc87f1c5222f0d8368",
+  "pr_head_commit": "7f6f51308307aa70c9b38787e2dd3ad0e99b56f6",
+  "classifications": [
+    {
+      "thread": "py1qI",
+      "comment": "4204068112",
+      "outcome": "ADDRESS",
+      "reply": null
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

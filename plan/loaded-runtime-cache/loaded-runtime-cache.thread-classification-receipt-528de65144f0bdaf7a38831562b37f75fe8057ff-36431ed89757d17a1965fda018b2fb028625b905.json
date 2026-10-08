@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "528de65144f0bdaf7a38831562b37f75fe8057ff",
+  "tester_evidence_commit": "6eafc4b60f727f36539a9c17d32b3e4162b1d868",
+  "implementation_review_evidence_commit": "307361d621fbad9f9eabd8373b6e38816a3a3cc4",
+  "pr_head_commit": "36431ed89757d17a1965fda018b2fb028625b905",
+  "classifications": [
+    {
+      "thread": "o6Apd",
+      "comment": "4180774145",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已核對 C45 committed facts 並由 C46 successor 明確對齊 current routing。已推送的 36431ed89757d17a1965fda018b2fb028625b905 將 C45 planning review、fixed-head verification、Independent Reviewer classification、classification sole commit／push 與 permitted actions 標為完成，記錄 approved receipt sole commit 996e1a6b0d5363954a4b560f7bff2e84efc06b42、classification sole commit c45be35f8ef1d812e910c8726800a735a005a153 及三筆已 resolved replies 4180760739／4180761306／4180761812。C46 candidate dd1d78f6be0903aa1576d1350ac88311da836148 與 approved receipt sole commit 40d7cc3d144be466acc914171dc817670b7ebb6f 再明列 C45 為 completed predecessor、36431ed… final alignment 已完成，舊 pending／Next action 文字只是當時 provenance，不作 current gate。本分類時 C46 planning commits 尚在 LOCAL，並未將其冒稱已在遠端生效；本回覆／resolve 必須在本 receipt 原樣 sole commit 並正常 push 後才執行。原九 HUMAN_CHECK 與五 ADDRESS 保持 open，不將未修復需求或全 PR workflow 宣稱完成。"
+    },
+    {
+      "thread": "o6Apj",
+      "comment": "4180774151",
+      "outcome": "HUMAN_CHECK",
+      "reply": null
+    },
+    {
+      "thread": "o6M73",
+      "comment": "4180852189",
+      "outcome": "HUMAN_CHECK",
+      "reply": null
+    },
+    {
+      "thread": "o6M75",
+      "comment": "4180852193",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "o6M76",
+      "comment": "4180852196",
+      "outcome": "HUMAN_CHECK",
+      "reply": null
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

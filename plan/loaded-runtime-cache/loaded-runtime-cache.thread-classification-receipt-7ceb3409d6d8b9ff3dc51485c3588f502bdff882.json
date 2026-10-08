@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "7ceb3409d6d8b9ff3dc51485c3588f502bdff882",
+  "tester_evidence_commit": "b58cb1e330fe12ccc80a8f39b875a61ea6024067",
+  "implementation_review_evidence_commit": "edbae51a0ee86cff498d6caf4e6aa78b58962a82",
+  "pr_head_commit": "bf63a3c6a0533ad0f367305deff029eddc2b18be",
+  "classifications": [
+    {
+      "thread": "PRRT_kwDOUJTij86jnBpk",
+      "comment": 4043480108,
+      "outcome": "HUMAN_CHECK",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86jqdPV",
+      "comment": 4044836129,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前 PR 已不再以該 squashed subject 作為 routing evidence；C17 保留 subject、passing Tester evidence 與 approved Reviewer evidence 的獨立祖先鏈。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86jqdPZ",
+      "comment": 4044836136,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "被引用的 successor 已是 frozen nonrouting provenance。C18 僅對既有 C17 snapshot 進行 thread classification，architecture paths 均為 ReadOnly，未由此 routing implementation。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86kOjjo",
+      "comment": 4059094458,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前 PR 的 C17 evidence 維持 subject、passing Tester evidence、approved Reviewer evidence 的獨立祖先鏈；被引用的舊 squashed commit 不再是 current routing evidence。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86kQ95O",
+      "comment": 4060023123,
+      "outcome": "HUMAN_CHECK",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86kqiZu",
+      "comment": 4070096548,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "C15 已加入 mixed-assignment regression：simple-name target `load` 會保留為 `importlib.import_module` alias，而 attribute target 不會被記錄。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86kqiZ5",
+      "comment": 4070096561,
+      "outcome": "HUMAN_CHECK",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lAR8J",
+      "comment": 4078761983,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "C15 subject、passing Tester evidence 與 approved Reviewer evidence 均保留在 current PR history 的祖先鏈中，未以 squash commit 取代。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lAR8P",
+      "comment": 4078761993,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "C17 scanner 已解析 literal `getattr(module_alias, attribute)` 取得的 `importlib.import_module` 與 `sys.modules` forbidden surfaces，並有對應 regression fixtures。"
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lAR8T",
+      "comment": 4078761998,
+      "outcome": "HUMAN_CHECK",
+      "reply": null
+    },
+    {
+      "thread": "PRRT_kwDOUJTij86lAR8Y",
+      "comment": 4078762005,
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前 dataflow 將 RuntimeRegistry lookup 直接畫為 `RuntimeT | None` return；Available/Missing outcome 不再是 Registry 的輸出，且圖明示沒有 mapper。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

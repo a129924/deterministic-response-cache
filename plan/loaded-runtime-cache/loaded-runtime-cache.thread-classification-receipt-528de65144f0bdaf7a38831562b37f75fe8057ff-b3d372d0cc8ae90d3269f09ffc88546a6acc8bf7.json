@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "528de65144f0bdaf7a38831562b37f75fe8057ff",
+  "tester_evidence_commit": "6eafc4b60f727f36539a9c17d32b3e4162b1d868",
+  "implementation_review_evidence_commit": "307361d621fbad9f9eabd8373b6e38816a3a3cc4",
+  "pr_head_commit": "b3d372d0cc8ae90d3269f09ffc88546a6acc8bf7",
+  "classifications": [
+    {
+      "thread": "n4uld",
+      "comment": "4153959185",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已核目前實際 proposed PR head b3d372d0cc8ae90d3269f09ffc88546a6acc8bf7：C42 subject 528de65144f0bdaf7a38831562b37f75fe8057ff、sole passing Tester commit 6eafc4b60f727f36539a9c17d32b3e4162b1d868、sole approved Independent Reviewer commit 307361d621fbad9f9eabd8373b6e38816a3a3cc4 各為此 head ancestor，三次 git merge-base --is-ancestor 均 exit 0；原始 subject → Tester evidence-only → Reviewer evidence-only 鏈保留，reviewed source 未變。58ccea6d… 在 local 無可解析 commit，未取得 full SHA／historic tree，故不追認其 parent、合法性或歷史 approval；current routing 僅使用可核原始 evidence chain。"
+    },
+    {
+      "thread": "n4ulj",
+      "comment": "4153959197",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前已推送 audited head b3d372d0cc8ae90d3269f09ffc88546a6acc8bf7 的 C43 Step Tracker 已將 candidate、獨立 planning review、fixed-head verification、six-pair classification、classification sole commit／push、exact permitted actions／audit 全部標為完成，對應 classification commit 46406ee3451fc354565611640a542affae60c5ba。Completed route 僅表示分類／可執行 actions／handoff 完成；__dict__／__call__ ADDRESS 與 Registry architecture HUMAN_CHECK 仍 open，並未虛勾其需求。Local committed C45 successor 明定唯一 current route；本分類時 C45 尚未推送，不把 local alignment 冒稱遠端。"
+    },
+    {
+      "thread": "n4uln",
+      "comment": "4153959205",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "n4ulr",
+      "comment": "4153959210",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "n4uly",
+      "comment": "4153959219",
+      "outcome": "HUMAN_CHECK",
+      "reply": null
+    },
+    {
+      "thread": "n4_wT",
+      "comment": "4154067364",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前已推送 head b3d372d0cc8ae90d3269f09ffc88546a6acc8bf7 的 C44 tracker 已將 candidate、review、fixed-head verification、exact-two classification、classification sole commit／push 與兩筆 reply／resolve／audit 标為完成，對應 d824243e255da5522c05685346ee35405d7af9cb 與 replies 4154037586／4154039479。此 head 本身就是 separate plan／step factual-alignment commit；remote 內其自我 commit action 尚保留當時 pending 字樣，local committed C45 已依實際 Git facts將該 action 標完成並指定 C45 唯一 current route。C45 此刻尚未推送，未冒稱全部 remote tracker 已更新；remaining locked／grammar items仍 open。"
+    },
+    {
+      "thread": "n5MVU",
+      "comment": "4154146529",
+      "outcome": "ADDRESS",
+      "reply": null
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

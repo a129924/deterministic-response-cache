@@ -8,7 +8,7 @@
 
 → Hit 時依保存的 codec id 解碼後回傳原生 `ModelResponse`；Unavailable 停在 Response Reuse boundary
 
-→ Miss 時，未來由 Loaded Runtime Cache 取得或準備 runtime
+→ Miss 時，未來 integration／Model Execution 可在 BC 外取得 `RuntimeReuseKey` 並使用 Loaded Runtime Cache protocol
 
 → Model Execution 已有同步、可注入的 coordination contracts；未來由 cross-BC composition 接上 runtime 與 provider 後執行模型
 
@@ -20,7 +20,7 @@
 
 1. **Identity foundation**：固定模型與完整請求身分的唯一 authority。
 2. **Response Reuse**：以已確認 identity 決定 response 是否可安全重用。
-3. **Loaded Runtime Cache**：以獨立的 Runtime Store／Runtime Registry 重用 initialized runtime。
+3. **Loaded Runtime Cache**：已交付以 local `RuntimeReuseKey` 為核心的 Runtime Registry／Retention protocol；backend 與 lifecycle 另行規劃。
 4. **Model Execution**：已交付 provider-neutral runtime access／invocation ports、outcomes 與同步 protocol orchestration。
 5. **Provider Adapter**：在可替換邊界對接具體 local／remote provider。
 
@@ -38,4 +38,4 @@
 | 4 | Model Execution | `src/deterministic_response_cache/model_execution/`（coordination contracts 已實作；runtime/provider/cross-BC wiring 仍屬未來） |
 | 5 | Provider Adapter | `src/deterministic_response_cache/provider_adapter/`（僅預留 BC topology；具體 provider integration 維持核心外部且可替換） |
 
-Identity 是第一個 conceptual implementation topic，也是模型與完整 request identity 的唯一 authority。Response Reuse Protocol 可獨立規劃與實作，但只消費由 Identity authority 交接的 opaque confirmed identity；它不實作或重解 identity。Model Execution 的 provider-neutral、同步、可注入 coordination contracts 已交付。Loaded Runtime Cache 的實際 wiring／retention/backend、具體 Provider Adapter、cross-BC composition，以及 Response Reuse `Miss`／execution result handoff integration 仍是後續獨立工作；目前不宣稱端到端 pipeline 已完成。
+Identity 是第一個 conceptual implementation topic，也是模型與完整 request identity 的唯一 authority。Response Reuse Protocol 可獨立規劃與實作，但只消費由 Identity authority 交接的 opaque confirmed identity；它不實作或重解 identity。Loaded Runtime Cache 已具備 protocol-only contract：它不 direct import Identity、沒有 mapper、concrete backend 或 lifecycle，並等待外部 integration／ACL 決定 local `RuntimeReuseKey` 的來源。Model Execution 的 provider-neutral、同步、可注入 coordination contracts 已交付。Loaded Runtime Cache 的實際 wiring、具體 Provider Adapter、cross-BC composition，以及 Response Reuse `Miss`／execution result handoff integration 仍是後續獨立工作；目前不宣稱端到端 pipeline 已完成。

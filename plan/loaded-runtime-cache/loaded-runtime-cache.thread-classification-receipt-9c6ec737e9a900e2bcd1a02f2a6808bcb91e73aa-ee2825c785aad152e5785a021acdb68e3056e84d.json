@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "9c6ec737e9a900e2bcd1a02f2a6808bcb91e73aa",
+  "tester_evidence_commit": "31e727d96d4e0843714dca1c7898ac93da9c33ef",
+  "implementation_review_evidence_commit": "fc12dea6be989aaecfdfc71a86fa1b330256fffe",
+  "pr_head_commit": "ee2825c785aad152e5785a021acdb68e3056e84d",
+  "classifications": [
+    {
+      "thread": "m-94E",
+      "comment": "4130289778",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前 PR head ee2825c785aad152e5785a021acdb68e3056e84d 的 C27 tracker 已將 integration subject、Tester evidence／sole commit、independent Reviewer evidence／sole commit、Phase 4.5 alignment 與 bounded push 全部同步為完成；C28 section 也列出 C27 已提交 evidence 作為 frozen inputs。此項 pending gate 與 committed review evidence 的矛盾已消除。"
+    },
+    {
+      "thread": "m-94K",
+      "comment": "4130289786",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "nXkrM",
+      "comment": "4140364926",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "nXrAw",
+      "comment": "4140406331",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "目前 PR head ee2825c785aad152e5785a021acdb68e3056e84d 的 C28 tracker 已同步 actual-head verification、eight-pair classification receipt、receipt-only commit、Planner routing 及 exact eight-pair reply／resolution 為完成。Historical C28 state 明列 classification commit e41235af9eee729b151a06dfeaa36137c58e156b、八個實際 reply IDs 與 isResolved: true；後續 C29／C30 routing 承接這些已完成事實。此項 classification pending 與 committed receipt 的矛盾已消除。"
+    },
+    {
+      "thread": "nXrA0",
+      "comment": "4140406337",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "nXzEu",
+      "comment": "4140459575",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "nXzE1",
+      "comment": "4140459585",
+      "outcome": "ADDRESS",
+      "reply": null
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

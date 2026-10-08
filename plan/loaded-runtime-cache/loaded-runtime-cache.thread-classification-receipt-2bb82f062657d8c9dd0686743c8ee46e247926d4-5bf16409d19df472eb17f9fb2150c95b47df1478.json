@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "2bb82f062657d8c9dd0686743c8ee46e247926d4",
+  "tester_evidence_commit": "ff0a3bf6c52facc266682eea2068c305791ad257",
+  "implementation_review_evidence_commit": "2047839048bcd1ac6b2af915f78f38ff294f0013",
+  "pr_head_commit": "5bf16409d19df472eb17f9fb2150c95b47df1478",
+  "classifications": [
+    {"thread": "pvzDA", "comment": "4202824859", "outcome": "ADDRESS", "reply": null},
+    {"thread": "pvzDF", "comment": "4202824865", "outcome": "ADDRESS", "reply": null},
+    {"thread": "pvzDH", "comment": "4202824868", "outcome": "ADDRESS", "reply": null},
+    {"thread": "pv59N", "comment": "4202868919", "outcome": "ADDRESS", "reply": null},
+    {"thread": "pv59R", "comment": "4202868923", "outcome": "ADDRESS", "reply": null},
+    {"thread": "pv59T", "comment": "4202868925", "outcome": "ADDRESS", "reply": null},
+    {"thread": "pv59V", "comment": "4202868928", "outcome": "ADDRESS", "reply": null},
+    {
+      "thread": "pwUaF",
+      "comment": "4203037740",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已依目前實際待合併 PR head 5bf16409d19df472eb17f9fb2150c95b47df1478 重驗，而非以其他 proposed history 補認 approval：C52 immutable subject 2bb82f062657d8c9dd0686743c8ee46e247926d4 → passing Tester evidence-only commit ff0a3bf6c52facc266682eea2068c305791ad257 → approved Independent Reviewer evidence-only commit 2047839048bcd1ac6b2af915f78f38ff294f0013 的原始祖先鏈仍保留，三者對該實際 PR head 的 git merge-base --is-ancestor 均 exit 0。T、V 各自只提交其 SHA-bound receipt，且該 head 的 src/tests 與受審 subject 無 diff。留言所述 0a3f417e…／d6ff74dd… 在此次本地核對無法解析，並不是實際 PR head；本回覆不宣稱該 proposed history 合法，也不將 existing approval 套用至另一個 subject。current published tree 由原始同-subject evidence chain 支持，故目前 PR 不需改寫歷史或重建另一條 evidence。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "6256f6cb9c2f71c1bea1eba3217176bec3c677ce",
+  "tester_evidence_commit": "38e0072c3c13dbfa7a9299d28bddcfd80c4e68ff",
+  "implementation_review_evidence_commit": "13150f15455dd342ae339cfd71c96c6eb2fe9cfe",
+  "pr_head_commit": "4bba93d78b6a5b292e00d1c24e1d0430d3d1c800",
+  "classifications": [
+    {
+      "thread": "pzqsL",
+      "comment": "4204404462",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C59 subject 6256f6cb9c2f71c1bea1eba3217176bec3c677ce 修復：known builtins／既有 module alias 的 getattr attribute，透過 simple-name assignment 保存 getter identity 並傳遞 alias，沿原 exact-two positional／no-keywords lookup 與 forbidden USE。兩個 BC 均有 qualified getter、module alias 與 assignment-chain regression；unused getter／callable、ordinary member、unknown receiver、dynamic member、第三參數與 keywords 保持排除，未擴 scope/shadowing 或 arbitrary receiver 推論。完整獨立 RED → green、same-subject passing Tester 與 approved Independent Reviewer evidence 已提交；797 scoped tests、Ruff、strict Pyright 通過，另有 12 bounded AST-only probes；原 tests／十二 locks 保留。"
+    },
+    {
+      "thread": "pzqsO",
+      "comment": "4204404469",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已於 C59 subject 6256f6cb9c2f71c1bea1eba3217176bec3c677ce 修復：僅辨識直接 AST name __builtins__ 的 string-literal '__import__' subscript，將選定 callable 接入既有 forbidden USE；兩個 BC 覆蓋直接呼叫與既有 callable assignment 後 USE。未使用 callable 仍合法，dynamic key、namespace alias、arbitrary receiver、ordinary key 不新增推論，也不執行 runtime __builtins__ 或 fixture source。已完成完整獨立 RED → green 與 same-subject Tester／Reviewer evidence；797 scoped tests、Ruff、strict Pyright 及 12 bounded AST-only probes 通過，既有 direct imports／assertions／十二 locks 不變。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

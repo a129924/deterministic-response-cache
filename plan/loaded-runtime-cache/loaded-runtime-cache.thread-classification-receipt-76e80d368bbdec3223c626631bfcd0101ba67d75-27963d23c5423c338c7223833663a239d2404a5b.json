@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "76e80d368bbdec3223c626631bfcd0101ba67d75",
+  "tester_evidence_commit": "157887d31d7e1c819580c96335b2959507df69d4",
+  "implementation_review_evidence_commit": "82b09a1e949df5839ee1dd43edda3e4192b3b8d8",
+  "pr_head_commit": "27963d23c5423c338c7223833663a239d2404a5b",
+  "classifications": [
+    {
+      "thread": "n23da",
+      "comment": "4153205676",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在目前 implementation subject `76e80d368bbdec3223c626631bfcd0101ba67d75` 納入 known builtins／importlib module 的 `__dict__` direct string-literal forbidden import-callable lookup，並沿既有 alias 與後續 USE 判定；unknown receiver、dynamic key、ordinary entry 與未使用 callable 仍不因此拒絕。隔離 regression 已涵蓋 direct／module-alias／callable-alias／傳入呼叫參數的 USE，fixture source 僅 static parse。同 subject 的 passing Tester evidence `157887d31d7e1c819580c96335b2959507df69d4` 與 approved independent review `82b09a1e949df5839ee1dd43edda3e4192b3b8d8` 已提交；指定 324 tests、Ruff、strict Pyright 均通過。"
+    },
+    {
+      "thread": "n3P71",
+      "comment": "4153360189",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在目前 implementation subject `76e80d368bbdec3223c626631bfcd0101ba67d75` 遞迴辨識 known forbidden import-callable receiver 的 `__call__`，保留 direct／imported-alias／assigned-alias／後續 USE regression；ordinary callable、任意 attribute 與未使用 possession 不因此拒絕，fixture source 不執行。同 subject 的 passing Tester evidence `157887d31d7e1c819580c96335b2959507df69d4` 與 approved independent review `82b09a1e949df5839ee1dd43edda3e4192b3b8d8` 已提交；指定 324 tests、Ruff、strict Pyright 均通過。"
+    },
+    {
+      "thread": "n4uln",
+      "comment": "4153959205",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在目前 implementation subject `76e80d368bbdec3223c626631bfcd0101ba67d75` 保存 IfExp 兩個 branch 的 finite known module alternatives，並沿既有 simple-name aliases 傳遞，以任一 known alternative 與後續 forbidden USE 作 existential 判定。新增 branch-order、known＋unknown 與 conditional→plain alias→conditional regressions，保留 unused／ordinary controls；不求值 condition 或推論 CFG／binding order／scope。同 subject 的 passing Tester evidence `157887d31d7e1c819580c96335b2959507df69d4` 與 approved independent review `82b09a1e949df5839ee1dd43edda3e4192b3b8d8` 已提交；指定 324 tests、Ruff、strict Pyright 均通過。"
+    },
+    {
+      "thread": "n4ulr",
+      "comment": "4153959210",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在目前 implementation subject `76e80d368bbdec3223c626631bfcd0101ba67d75` 將 For／AsyncFor TARGET 交既有 Name／Tuple／List／Starred foreign semantic-name traversal，兩個 BC 均有隔離 rejecting regression，attribute targets 與 ordinary local names 保持 benign。此修復只檢查 binding 語法，不解析 RHS iterable、不新增 AsyncFor 或 nested For alias inference，fixture source 不執行。同 subject 的 passing Tester evidence `157887d31d7e1c819580c96335b2959507df69d4` 與 approved independent review `82b09a1e949df5839ee1dd43edda3e4192b3b8d8` 已提交；指定 324 tests、Ruff、strict Pyright 均通過。"
+    },
+    {
+      "thread": "n5MVU",
+      "comment": "4154146529",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在目前 implementation subject `76e80d368bbdec3223c626631bfcd0101ba67d75` 依 Import／ImportFrom 的實際 local binding 檢查 foreign semantic name：優先 asname，無 alias 的 Import 使用 first segment，ImportFrom 使用 imported name。兩個 BC 的隔離 regression 已涵蓋 alias／no-alias／dotted import，並保留 Identity ModelIdentity source-name 即使 renamed 仍拒絕的舊禁則與 benign source-spelling controls。同 subject 的 passing Tester evidence `157887d31d7e1c819580c96335b2959507df69d4` 與 approved independent review `82b09a1e949df5839ee1dd43edda3e4192b3b8d8` 已提交；指定 324 tests、Ruff、strict Pyright 均通過。"
+    },
+    {
+      "thread": "o6M75",
+      "comment": "4180852193",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在目前 implementation subject `76e80d368bbdec3223c626631bfcd0101ba67d75` 將 With／AsyncWith 每個 optional_vars 交既有 Name／Tuple／List／Starred foreign semantic target-name traversal，兩個 BC 均有隔離 rejecting regression；absent optional_vars、ordinary names 與 attribute targets 保持 benign。不求值 context manager 或執行 fixture source。同 subject 的 passing Tester evidence `157887d31d7e1c819580c96335b2959507df69d4` 與 approved independent review `82b09a1e949df5839ee1dd43edda3e4192b3b8d8` 已提交；指定 324 tests、Ruff、strict Pyright 均通過。"
+    },
+    {
+      "thread": "o7gvv",
+      "comment": "4181373623",
+      "outcome": "ADDRESS",
+      "reply": null
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "82e3dc7efa04d7a432568e254ffca82bc3337ecd",
+  "tester_evidence_commit": "eff8eb2f5f554d6eb01f57fcf5755cddcab4adfe",
+  "implementation_review_evidence_commit": "d29da7b8a855b3887c9bcbb7183b1db0cd744043",
+  "pr_head_commit": "71545af8c0d6f87ea4f43bf28d380edfed75aa82",
+  "classifications": [
+    {
+      "thread": "naZCW",
+      "comment": "4141524912",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在 committed planning successor 0e9c84959ec602dbc117413613ce6afd371b6822 對齊 C33 tracking，並由 C36 successor 8a35890310d788d7834be035e891bb0b53baa96d 保留這些事實：C33 completed predecessor 的 classification、sole commit／push 與 exact reply／resolve 均已完成；classification commit 為 e17956b4d83ba81129cc7787d145436e7f73fd95，nZI5l 已留 reply 4141461698 並 resolved。Current successor 明確取代 predecessor 的未完成 routing 敘述，C36 approved Plan-Reviewer receipt 已以 sole commit 55a65a036b20ad566d8a9a9fa410f33f5393fc2c 提交；不再以舊 pending 敘述判定 current gate。"
+    },
+    {
+      "thread": "naZCY",
+      "comment": "4141524919",
+      "outcome": "ADDRESS",
+      "reply": null
+    },
+    {
+      "thread": "na5mB",
+      "comment": "4141737461",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已重新核對固定 audited PR head 71545af8c0d6f87ea4f43bf28d380edfed75aa82：C33 subject 82e3dc7efa04d7a432568e254ffca82bc3337ecd、passing Tester evidence commit eff8eb2f5f554d6eb01f57fcf5755cddcab4adfe、approved Independent Reviewer evidence commit d29da7b8a855b3887c9bcbb7183b1db0cd744043 都是該 head 的 ancestors。Tester commit 的唯一 parent 為 subject，Reviewer commit 的唯一 parent 為 Tester commit；兩個 evidence commits 分別只包含自己的 evidence JSON。原始 subject → Tester evidence-only → Reviewer evidence-only 鏈完整保留，沒有壓入 implementation／evidence 共用 commit；留言引用的 ab12876a… 不代表目前 audited PR history。"
+    },
+    {
+      "thread": "na5mE",
+      "comment": "4141737466",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已由 committed planning successor 0e9c84959ec602dbc117413613ce6afd371b6822 同步 C34 completed predecessor tracking，C36 successor 8a35890310d788d7834be035e891bb0b53baa96d 保留其 Git facts：candidate、approved receipt、fixed S/T/V／head verification、classification、sole commit／push 與 permitted actions routing 已完成，classification sole commit 是 71545af8c0d6f87ea4f43bf28d380edfed75aa82。nZm9b 已回覆 4141853147 並 resolved；nZm9d／nZm9h 為 ADDRESS 且尚未修復，不宣稱其 implementation 或 resolution 完成。Current successor 明確取代 predecessor 未完成 routing 敘述；C36 獨立 approved Plan-Reviewer receipt 已單獨提交於 55a65a036b20ad566d8a9a9fa410f33f5393fc2c。"
+    },
+    {
+      "thread": "na5mM",
+      "comment": "4141737476",
+      "outcome": "ADDRESS",
+      "reply": null
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

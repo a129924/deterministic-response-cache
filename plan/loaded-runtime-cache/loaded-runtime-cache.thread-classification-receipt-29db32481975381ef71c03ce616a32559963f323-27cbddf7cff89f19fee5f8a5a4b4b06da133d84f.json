@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "29db32481975381ef71c03ce616a32559963f323",
+  "tester_evidence_commit": "020777486cf6b4acd6981e5d7ac542315ff19984",
+  "implementation_review_evidence_commit": "25d2f96286b0f0b36432a1452cb3823bddf4cb9d",
+  "pr_head_commit": "27cbddf7cff89f19fee5f8a5a4b4b06da133d84f",
+  "classifications": [
+    {
+      "thread": "nZI5n",
+      "comment": "4141010661",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已依 Human 確認的 literal-only contract 修正 C40：direct tuple/list target 恰有一個 starred target、RHS 為無 starred expansion 且元素足夠的 direct tuple/list literal 時，配對確定位置的 prefix/suffix simple-name targets；attribute siblings 不建立 alias，starred container 不推論。留言中的 suffix load 因此保留 importlib.import_module alias，後續 forbidden call 沿既有 detector 被攔截。未使用的 callable binding 不新增拒絕；任意 iterable／RHS expansion 保持排除。修正 subject 29db32481975381ef71c03ce616a32559963f323 已有獨立 passing Tester commit 020777486cf6b4acd6981e5d7ac542315ff19984 與 approved Independent Reviewer commit 25d2f96286b0f0b36432a1452cb3823bddf4cb9d，包含隔離 starred-binding regressions 與 benign controls；scoped pytest、Ruff、strict Pyright 全部 exit 0。"
+    },
+    {
+      "thread": "nZm9d",
+      "comment": "4141203134",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已依 Human 確認的 literal-only contract 修正 C40：僅同步 ast.For 的 direct simple-name target 與 direct tuple/list literal，將明列的 non-star 元素交給既有 known-forbidden resolver 建立 alias；後續 forbidden callable/module use 沿既有 detector 攔截。因此留言中的 for load in [importlib.import_module] 後續 load(...) 已由新增隔離 regression 涵蓋。取得或未使用 callable 本身不新增拒絕；不執行 source、不展開 starred iterable，也不擴至 arbitrary iterable、AsyncFor、comprehension 或 generator。修正 subject 29db32481975381ef71c03ce616a32559963f323 已有獨立 passing Tester commit 020777486cf6b4acd6981e5d7ac542315ff19984 與 approved Independent Reviewer commit 25d2f96286b0f0b36432a1452cb3823bddf4cb9d；scoped pytest、Ruff、strict Pyright 全部 exit 0。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

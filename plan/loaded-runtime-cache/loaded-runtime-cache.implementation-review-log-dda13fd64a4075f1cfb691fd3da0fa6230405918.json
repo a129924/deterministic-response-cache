@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "dda13fd64a4075f1cfb691fd3da0fa6230405918",
+  "tester_evidence_commit": "e584939e9c6101a1acf2fb40494673e96c10d2c9",
+  "verdict": "needs-rework",
+  "blocking_issues": [
+    "C47 implementation step 4 remains partial at tests/test_loaded_runtime_cache_bc_independence.py:535-558: finite known IfExp module alternatives are lost through an existing simple-name alias before a second conditional binding. Reproducer (source is AST-parsed, never executed): import builtins; import importlib; a = builtins if enabled else importlib; b = a; loader = b if enabled else builtins; loader.import_module('identity'). _add_conditional_module_alternatives evaluates loader using the initial single-valued b binding and preserves loader as builtins; later context-specific assignment propagation updates b to importlib but cannot update preserved loader. The scanner therefore reports no forbidden use although importlib is a finite known alternative. An independent direct-import AST-helper diagnostic actually failed its detection assertion (exit 1); the prescribed scoped pytest (316 passed), Ruff and strict Pyright commands all independently exited 0, demonstrating missing regression coverage rather than a tooling failure. Repair only the approved finite-alternative preservation within existing simple-name alias semantics, add an isolated rejecting regression and benign controls without weakening prior tests or expanding grammar/CFG/scope inference, and establish a new immutable subject with its own RED/green, Tester and independent Reviewer evidence."
+  ],
+  "recorded_by": "Independent Reviewer"
+}

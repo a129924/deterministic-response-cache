@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "6bb8ee90895b566c3def0eb161cce51c14b0e601",
+  "tester_evidence_commit": "437f40788fe1b37b2bcd4698624a478d8e959a13",
+  "implementation_review_evidence_commit": "6328c5a585eb9f4c884b80f8a526a4c09dd68d62",
+  "pr_head_commit": "84a3b0e5220d8efeaffa6e7a887797c5edc248aa",
+  "classifications": [
+    {
+      "thread": "nZm9h",
+      "comment": "4141203139",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已修正 foreign semantic-name assignment target 檢查：遞迴檢查 tuple／list／nested／starred target 的 local Name，attribute targets 不視為本地宣告；僅讀 target syntax，不配對 RHS、不推論 aliases 或 iterables。新增兩 BC 的 foreign names、benign names 與 attribute-only controls；既有 alias inference helpers 保持不變。C37 green subject 6bb8ee90895b566c3def0eb161cce51c14b0e601 已有 committed passing Tester evidence 437f40788fe1b37b2bcd4698624a478d8e959a13 與 approved independent review 6328c5a585eb9f4c884b80f8a526a4c09dd68d62，修正已推送於 audited PR head 84a3b0e5220d8efeaffa6e7a887797c5edc248aa。"
+    },
+    {
+      "thread": "naZCY",
+      "comment": "4141524919",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已將 ast.NamedExpr 的 direct-name target 納入 foreign semantic-name declaration detector，保留既有 class／type alias／import／Assign／AnnAssign 檢查。新增兩 BC 的 foreign walrus regression 與 benign target／foreign RHS controls；僅靜態解析 AST，不執行 fixture source，也不以 RHS 推論 identity。C37 green subject 6bb8ee90895b566c3def0eb161cce51c14b0e601 已有 committed passing Tester evidence 437f40788fe1b37b2bcd4698624a478d8e959a13 與 approved independent review 6328c5a585eb9f4c884b80f8a526a4c09dd68d62，修正已推送於 audited PR head 84a3b0e5220d8efeaffa6e7a887797c5edc248aa。"
+    },
+    {
+      "thread": "na5mM",
+      "comment": "4141737476",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已追蹤直接 from builtins import getattr（含 asname）的 local callable，供既有 literal attribute resolver 使用。保留 exact-two-positional／no-keyword／known-module／literal-string bounds 與原 forbidden set，既有 bare／qualified getter 行為維持；新增 __import__／import_module／sys.modules regression 與 benign attribute／non-builtins／unknown／out-of-bounds controls，不新增任意 getter assignment alias inference。C37 green subject 6bb8ee90895b566c3def0eb161cce51c14b0e601 已有 committed passing Tester evidence 437f40788fe1b37b2bcd4698624a478d8e959a13 與 approved independent review 6328c5a585eb9f4c884b80f8a526a4c09dd68d62，修正已推送於 audited PR head 84a3b0e5220d8efeaffa6e7a887797c5edc248aa。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}

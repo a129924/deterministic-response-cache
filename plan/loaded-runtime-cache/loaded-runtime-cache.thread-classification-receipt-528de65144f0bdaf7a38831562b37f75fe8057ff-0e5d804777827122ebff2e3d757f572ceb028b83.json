@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "topic": "loaded-runtime-cache",
+  "implementation_subject_commit": "528de65144f0bdaf7a38831562b37f75fe8057ff",
+  "tester_evidence_commit": "6eafc4b60f727f36539a9c17d32b3e4162b1d868",
+  "implementation_review_evidence_commit": "307361d621fbad9f9eabd8373b6e38816a3a3cc4",
+  "pr_head_commit": "0e5d804777827122ebff2e3d757f572ceb028b83",
+  "classifications": [
+    {
+      "thread": "ndeMo",
+      "comment": "4142807482",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在 C42 將 importlib.__import__ 納入既有 forbidden-callable use detection，涵蓋 direct module attribute、renamed imported alias、assignment-retained alias 與既有 callback-use；新增 isolated regressions，並保留未使用 callable 不新增拒絕的 controls。未擴 getattr arity／receiver／literal bounds。修正 subject 528de65144f0bdaf7a38831562b37f75fe8057ff 已有 sole passing Tester commit 6eafc4b60f727f36539a9c17d32b3e4162b1d868 與 approved Independent Reviewer commit 307361d621fbad9f9eabd8373b6e38816a3a3cc4；scoped pytest、Ruff、strict Pyright 全部 exit 0。"
+    },
+    {
+      "thread": "n2sm8",
+      "comment": "4153137682",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在 C42 的 foreign semantic declaration check 納入 ast.FunctionDef／ast.AsyncFunctionDef 的 definition name，兩個 BC 的 ModelIdentity／RuntimeReuseKey 均有對稱 sync／async isolated regressions；普通函式名稱、foreign string 與 attribute controls 不誤判，既有 class／type-alias／import／assignment checks 保留。修正只在 declared test path，沒有修改 production source 或跨 BC import。Subject 528de65144f0bdaf7a38831562b37f75fe8057ff 已有 sole passing Tester commit 6eafc4b60f727f36539a9c17d32b3e4162b1d868 與 approved Independent Reviewer commit 307361d621fbad9f9eabd8373b6e38816a3a3cc4；scoped pytest、Ruff、strict Pyright 全部 exit 0。"
+    },
+    {
+      "thread": "n2sm-",
+      "comment": "4153137690",
+      "outcome": "REPLY_AND_RESOLVE",
+      "reply": "已在 C42 保存同步 For 的 direct simple-name target／direct tuple-list literal 中所有可確定 known module alternatives，以有限 alias contexts 對後續既有 forbidden use 作 existential 判定，避免最後 element 覆寫先前 importlib／builtins／sys alternative。新增 original conditional-use fixture、tuple/list、順序交換、single/multi 與 ordinary/unknown element controls；未使用 binding 不新增拒絕。不執行 source、不推論 CFG／branch feasibility、不展開 arbitrary iterable／RHS starred／AsyncFor。Subject 528de65144f0bdaf7a38831562b37f75fe8057ff 已有 sole passing Tester commit 6eafc4b60f727f36539a9c17d32b3e4162b1d868 與 approved Independent Reviewer commit 307361d621fbad9f9eabd8373b6e38816a3a3cc4；scoped pytest、Ruff、strict Pyright 全部 exit 0。"
+    }
+  ],
+  "recorded_by": "Independent Reviewer"
+}
